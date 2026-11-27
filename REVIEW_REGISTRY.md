@@ -9,18 +9,18 @@ recorded with IDs and closed only with evidence (commit, test, or document chang
 
 | # | Perspective | Cycle 1 | Cycle 2 | Cycle 3 |
 |---|---|---|---|---|
-| 1 | Bone biologist / histomorphometrist | — | — | — |
+| 1 | Bone biologist / histomorphometrist | 2026-11-27: 16 findings (BIO) — `docs/reviews/cycle1/REVIEW_BIO_CRO_QUALITY.md`; response `RESPONSE_PART2.md` | — | — |
 | 2 | Micro-CT imaging scientist | 2026-11-27: 16 findings (IMG-01…16; 1 critical, 6 high) — `docs/reviews/cycle1/REVIEW_IMAGING_STATS.md`; response `docs/reviews/cycle1/RESPONSE.md` | — | — |
 | 3 | ML / computer vision scientist | 2026-11-27: 16 findings (ML-01…16; 7 high) — `docs/reviews/cycle1/REVIEW_ML_ARCH.md` | — | — |
 | 4 | Biostatistician | 2026-11-27: 16 findings (STAT-01…16; 1 critical, 7 high) — with #2 | — | — |
 | 5 | Software architect | 2026-11-27: 12 findings (ARC-01…12; 1 critical, 5 high) — with #3 | — | — |
 | 6 | Security engineer | Gen-1 review (S-01…S-21) | — | — |
 | 7 | QA / test engineer | — | — | — |
-| 8 | Quality / regulatory (GLP, Part 11 awareness) | — | — | — |
-| 9 | UX / desktop usability (study director, analyst) | — | — | — |
-| 10 | CRO operations buyer | — | — | — |
-| 11 | Investor / commercial due diligence | — | — | — |
-| 12 | IP / licensing counsel perspective (non-legal) | — | — | — |
+| 8 | Quality / regulatory (GLP, Part 11 awareness) | 2026-11-27: 16 findings (QA-REG; 1 critical) — with #1 | — | — |
+| 9 | UX / desktop usability (study director, analyst) | 2026-11-27: 40 findings (UX-01…40; 10 high) — `docs/reviews/cycle1/REVIEW_UX.md`; remediation in progress | — | — |
+| 10 | CRO operations buyer | 2026-11-27: 13 findings (CRO; 1 critical) — with #1 | — | — |
+| 11 | Investor / commercial due diligence | 2026-11-27: 13 findings (INV; 1 critical) — `docs/reviews/cycle1/REVIEW_INVESTOR_IP.md` | — | — |
+| 12 | IP / licensing counsel perspective (non-legal) | 2026-11-27: 16 findings (IP; 2 critical) — with #11 | — | — |
 
 Generation-1 reviews: scientific review Q-01…Q-14 (`docs/security/SCIENTIFIC_REVIEW.md`), security review
 S-01…S-21 (`docs/security/SECURITY_REVIEW.md`), responses in `docs/security/REVIEW_RESPONSE.md`.

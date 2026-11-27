@@ -13,7 +13,7 @@ three-class truth: none exists yet). A target met on SYN data is evidence of *me
 | B5 | Separability advisor: unsupported cases correctly refused | SYN (overlap regime + held-out materials) | ≥95% of cases whose true graft-volume error >20% are refused, with P(fail | supported) upper 95% bound ≤ 0.10 | Abstention preferred to wrong numbers | not built | — | — |
 | B6 | Failure detection AUROC (predict specimen Dice <0.8 or volume error >20%) | SYN ID+OOD | ≥0.85 | Gen-0 OOD AUROC 0.66 (weak) | 0.66 (OOD) | — | — |
 | B7 | Conformal 90% interval coverage for graft volume | SYN held-out | 0.87–0.93 | Valid marginal coverage at nominal level | not measured | — | — |
-| B8 | Longitudinal graft Dice with granule displacement ≤200 µm + fragmentation | SYN v2 | ≥0.80; registration failures flagged with sensitivity ≥0.95 | Gen-0 tested only shrink-in-place | 0.915 (best case) | — | — |
+| B8 | Longitudinal graft Dice with granule displacement ≤200 µm + fragmentation | SYN v2 | ≥0.80; registration failures flagged with sensitivity ≥0.95 | Gen-0 tested only shrink-in-place | 0.915 (best case) | Dice 0.535 at 50 µm, 0.24 at 200 µm (strut-like, overlap density, σ=150); registration failures flagged 100%; advisor refuses all failed cases | **Not met** (accuracy); safety met |
 | B9 | Morphometry Tb.Th agreement with Scanco IPL, held-out cubes, convention pre-registered | REAL-REF | ICC(2,1) ≥0.95 | Gen-0 0.983 was post hoc on same cubes | 0.983 (post hoc) | — | — |
 | B10 | Segmental ROI success after bridging | SYN | ≥90% success or explicit flagged fallback | Gen-0 50% explicit failures | 50% fail | — | — |
 | B11 | Inference throughput CPU (4 cores) | SYN 256³ | ≥250k voxels/s | Gen-0 49k voxels/s → 34 min per 100 M voxels | 49k | — | — |

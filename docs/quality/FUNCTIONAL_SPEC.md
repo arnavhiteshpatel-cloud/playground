@@ -1,5 +1,8 @@
 # OsteoQuant — Functional Specification (FS)
 
+> **Revision pending (2026-11-27, cycle-1 review QA-REG-02).** This draft describes the Generation-1 architecture (FastAPI server + browser workbench). The Generation-2 product is an offline desktop application (PySide6/VTK, in-process analysis library; the API is an optional integration interface). Requirements and protocols must be re-baselined to the desktop product before any qualification activity. Draft only; no compliance is claimed.
+
+
 | Field | Value |
 |---|---|
 | Document ID | OQ-QMS-FS-001 |

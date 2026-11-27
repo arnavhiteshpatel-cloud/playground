@@ -26,7 +26,7 @@ strategy. Physical phantoms of commercial materials are required to determine wh
 
 ## 1. Introduction
 * FDA special controls for resorbable calcium-salt bone void fillers (21 CFR 888.3045/888.3046) require animal data on
-  resorption and replacement by new bone [V: eCFR 888.3046]. Micro-CT reporting follows Bouxsein et al. 2010
+  resorption and replacement by new bone [V: eCFR 888.3045 (resorbable calcium salt) and 888.3046 (with an aminoglycoside)]. Micro-CT reporting follows Bouxsein et al. 2010
   (JBMR 25:1468) [R1].
 * Graft materials span HA (≈2.8× bone attenuation), microporous β-TCP and BCP (bone-like after resorption), bioactive
   glass and calcium sulfate (energy-dependent bone equivalence), and allograft/xenograft (bone-like by composition)

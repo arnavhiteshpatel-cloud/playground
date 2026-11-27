@@ -5,7 +5,7 @@ residual graft and host bone, with reviewer correction, locked model versions an
 
 **Stage:** research prototype, pre-incorporation, pre-revenue. Not validated on real graft materials; no GLP/Part 11 claim.
 
-**Problem:** bone-void-filler makers must show resorption and replacement by new bone in animal studies (21 CFR 888.3046
+**Problem:** bone-void-filler makers must show resorption and replacement by new bone in animal studies (21 CFR 888.3045
 special controls). Labs separate graft from new bone with manual ROIs and global thresholds, which fail as resorbable
 ceramics approach bone density.
 
@@ -23,7 +23,7 @@ re-authenticated sign-off; hash-chained audit trail; reports); 61 automated test
 longitudinal protocol; audit-ready per-study reports for firms without imaging staff.
 
 **Market (bottom-up):** ≈16 bone-void-filler 510(k)s/yr, 41 active applicants, 24 dental-graft applicants, 67 NIH
-bone-repair projects using micro-CT (lower bound). Graft-defect reports at hypothesised prices ≈ $0.9–4.3M/yr → a
+bone-repair projects using micro-CT (lower bound). Graft-defect reports at the Gen-2 hypothesised prices ≈ $0.8–3.9M/yr (US ceiling, business/REVENUE_MODEL.md) → a
 services-plus-software lab; venture scale requires CRO licensing and expansion modules (osseointegration, spine, histology).
 
 **Pricing (hypotheses to test, not prices charged; no interviews yet):** offline desktop application plus services:

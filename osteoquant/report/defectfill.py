@@ -122,17 +122,38 @@ def _csv_safe(v):
     return v
 
 
+def _support(s: dict, key: str) -> str | None:
+    """Measurement-support status of the endpoint that owns metric ``key`` (None when not assessed)."""
+    from ..advisor.integration import ENDPOINT_METRICS
+    ms = s.get("measurement_support") or {}
+    if not ms:
+        return None
+    for ep, paths in ENDPOINT_METRICS.items():
+        if any(key == p_ or key.startswith(p_ + ".") for p_ in paths):
+            return (ms.get(ep) or {}).get("status")
+    return "supported" if key.startswith("class_volumes.TV") or key.endswith("uncertain_fraction") else None
+
+
+def _fmt_support(v, status):
+    if status == "not_supported":
+        return "n/m"
+    t = _fmt(v)
+    return t + " (c)" if status == "supported_with_conditions" else t
+
+
 def write_csv(bundle, path):
     eps = bundle["endpoints"]
     with open(path, "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["data_class", "review_status", "specimen_id", "group", "timepoint", "scan_sha256", "roi_sha256",
-                    "segmentation_method", "model_sha256", "qc_verdict"] + [k for k, _, _ in eps])
+                    "segmentation_method", "model_sha256", "qc_verdict"] + [k for k, _, _ in eps]
+                   + [f"{k}__support" for k, _, _ in eps])
         for s in bundle["specimens"]:
             w.writerow([_csv_safe(x) for x in [bundle["data_class"], bundle["review_status"], s["specimen_id"], s.get("group"), s.get("timepoint"),
                         _get(s, "scan.sha256", ""), _get(s, "roi.definition_sha256", ""),
                         _get(s, "segmentation.method", ""), _get(s, "segmentation.model_sha256", ""),
-                        _get(s, "qc.verdict", "")] + [_get(s["metrics"], k) for k, _, _ in eps]])
+                        _get(s, "qc.verdict", "")] + [_get(s["metrics"], k) for k, _, _ in eps]
+                        + [_support(s, k) or "not_assessed" for k, _, _ in eps]])
 
 
 def _fmt(v, nd=3):
@@ -263,7 +284,7 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     rows = [["Specimen", "Group", "TP", "QC"] + [l for _, l, _ in eps[:6]]]
     for s in bundle["specimens"]:
         rows.append([str(s["specimen_id"]), str(s.get("group")), str(s.get("timepoint")), _get(s, "qc.verdict", "—")] +
-                    [_fmt(_get(s["metrics"], k)) for k, _, _ in eps[:6]])
+                    [_fmt_support(_get(s["metrics"], k), _support(s, k)) for k, _, _ in eps[:6]])
     flow.append(table(rows))
     if any("truth" in s for s in bundle["specimens"]):
         flow.append(Spacer(1, 4))
@@ -342,22 +363,48 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
             rows.append([str(e.get("specimen_id")), str(e.get("stage")), str(e.get("reason")), str(e.get("action"))])
         flow.append(table(rows, [25 * mm, 25 * mm, 75 * mm, 55 * mm]))
 
-    # ----------------------------------------------------------- measurement support (abstentions)
+    # ----------------------------------------------------------- measurement support (status, conditions)
+    flow.append(Paragraph("Measurement support (identifiability) per specimen", H2))
+    flow.append(Paragraph(
+        "Each endpoint is classified by the measurement-support advisor before it is reported: <b>supported</b>, "
+        "<b>supported with conditions</b> (values marked '(c)'; the conditions below are part of the result) or "
+        "<b>not supported</b> (shown as 'n/m' = not measured; raw values are retained in the audit record only). "
+        "Evidence stage of the advisor and models: computational (stage A of the validation programme) — no physical "
+        "or in-vivo validation of graft/new-bone separation has been performed.", SM))
     sup_rows = []
     for s_ in bundle["specimens"]:
-        seen = set()
-        for sm in s_.get("suppressed_metrics", []) or []:
-            if sm.get("endpoint") in seen:
+        ms = s_.get("measurement_support") or {}
+        if not ms:
+            sup_rows.append([str(s_.get("specimen_id")), "all", "not assessed",
+                             Paragraph("analysis predates the measurement-support advisor; treat graft/new-bone "
+                                       "values as unassessed", SM)])
+            continue
+        for ep, d in ms.items():
+            if d.get("status") == "supported":
                 continue
-            seen.add(sm.get("endpoint"))
-            sup_rows.append([str(s_.get("specimen_id")), str(sm.get("endpoint", "")).replace("_", " "),
-                             Paragraph(esc(str(sm.get("reason", ""))), SM)])
+            text = d.get("reason", "") or ""
+            if d.get("conditions"):
+                text += " Conditions: " + "; ".join(d["conditions"])
+            sup_rows.append([str(s_.get("specimen_id")), ep.replace("_", " "),
+                             "conditional" if d.get("status") == "supported_with_conditions" else "not measured",
+                             Paragraph(esc(text), SM)])
     if sup_rows:
-        flow.append(Paragraph("Endpoints not measured (measurement-support advisor)", H2))
-        flow.append(Paragraph("These endpoints are shown as '—' above because the graft and new bone cannot be "
-                              "reliably separated for this material, scan and study design. Total mineral volume is "
-                              "reported instead where supported. Raw values are retained in the audit record only.", SM))
-        flow.append(table([["Specimen", "Endpoint", "Reason"]] + sup_rows, [25 * mm, 45 * mm, 110 * mm]))
+        flow.append(table([["Specimen", "Endpoint", "Status", "Reason / conditions"]] + sup_rows,
+                          [22 * mm, 38 * mm, 22 * mm, 98 * mm]))
+    else:
+        flow.append(Paragraph("All reported endpoints are supported for all specimens.", SM))
+    par_rows = []
+    for s_ in bundle["specimens"]:
+        ap = s_.get("analysis_parameters") or {}
+        if ap:
+            par_rows.append([str(s_.get("specimen_id")), str(ap.get("method", "")),
+                             _fmt(ap.get("t_mineral")), _fmt(ap.get("t_graft")),
+                             _fmt(ap.get("estimated_graft_share")),
+                             str(s_.get("advisor_version") or ap.get("advisor_version") or "—")])
+    if par_rows:
+        flow.append(Paragraph("Analysis parameters (grey-value thresholds are in the scan's units)", SM))
+        flow.append(table([["Specimen", "Method", "Mineral thr.", "Graft thr.", "Graft share", "Advisor"]] + par_rows,
+                          [25 * mm, 35 * mm, 25 * mm, 25 * mm, 25 * mm, 25 * mm]))
 
     # ----------------------------------------------------------- 8 limitations
     flow.append(Paragraph("8. Scientific limitations and exceptions", H2))

@@ -9,7 +9,7 @@
 
 ---
 
-**OsteoQuant: Ground-truth-validated, material-aware quantification of bone regeneration in preclinical micro-CT**
+**OsteoQuant: Toward ground-truth-validated, material-aware quantification of bone regeneration in preclinical micro-CT**
 
 Bone-graft substitutes and orthobiologics are evaluated in animal defect models largely by micro-CT. The central question in these studies is how much **new bone** formed, how much **graft remains**, and how both relate to the **host bone**. Many graft materials (calcium phosphates, bioactive glasses, allograft and xenograft) have X-ray attenuation that overlaps mineralized tissue. Standard practice therefore relies on global thresholds and manual contouring. This approach (i) cannot reliably separate residual graft from new bone, (ii) varies across operators, scanners and voxel sizes, and (iii) leaves no audit trail that a sponsor, CRO or reviewer can inspect [INF from domain knowledge; cite literature: **[CITATIONS NEEDED: reviews on micro-CT of bone grafts; threshold sensitivity; reporting guidelines, e.g., Bouxsein et al. 2010 JBMR]**]. No public benchmark with physical ground truth currently quantifies *when* graft and new bone are separable as a function of material and voxel size [HYP: confirm with a literature search].
 

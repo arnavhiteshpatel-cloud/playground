@@ -73,7 +73,7 @@ Customers: R&D teams at orthobiologic and bone-graft companies, preclinical CROs
 
 Business model (hypothesis to test in customer discovery): per-study or annual software licenses for CROs and companies, plus validated analysis services early on. Market size is not yet sized from primary data; we will quantify it from interviews and public data on preclinical bone-graft studies.
 
-Competition: general micro-CT software from scanner vendors and analysis packages, and open-source tools, all built around thresholding and manual ROI work; in-house scripts; manual analysis. Our differentiation is graft-vs-new-bone separation validated against physical ground truth, calibrated uncertainty, and audit trails.
+Competition: general micro-CT software from scanner vendors and analysis packages, and open-source tools, all built around thresholding and manual ROI work; in-house scripts; manual analysis. Our intended differentiation is graft-vs-new-bone separation that is checked for identifiability before reporting (abstaining otherwise), with validation against physical ground truth as the proposed work, plus calibrated uncertainty and audit trails.
 ```
 
 ---

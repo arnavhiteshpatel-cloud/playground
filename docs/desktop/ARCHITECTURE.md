@@ -53,8 +53,10 @@ those classes and render their state.
 | users, RBAC, studies, reviews | `osteoquant.study.db.Store` |
 | audit trail | `osteoquant.audit.AuditLog` (hash chain, `verify_chain`) |
 
-Two library changes were made for the desktop, both additive: `build_pdf` gained an optional
-`watermark` argument; nothing else in `study/`, `report/` or `audit/` changed.
+One library change was made for the desktop, and it is additive: `report.build_pdf` gained an
+optional `watermark` argument. Nothing else in `study/`, `report/` or `audit/` changed; the
+desktop's own tables (`desktop_import_log`, `desktop_settings`, `desktop_timing_events`) are
+created by desktop code with `CREATE TABLE IF NOT EXISTS`.
 
 ## Data flow
 

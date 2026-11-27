@@ -1,0 +1,1789 @@
+{
+  "schema_version": "1.0.0",
+  "generated": "2026-11-27",
+  "description": "Machine-readable graft-material knowledge for OsteoQuant. Every numeric value carries an evidence tag; 'assumption' means not sourced and must be replaced by measurement. References are keys into docs/science/references.bib.",
+  "conventions": {
+    "host_bone_reference_mgHA_cm3": 1075.0,
+    "host_bone_reference_note": "advisor convention; desktop micro-CT human trabecular bone TMD 940-1030 and SRmicroCT ~1150 (kazakia2008)",
+    "effective_energy_note": "lab scans at 40-70 kVp with filtration are represented by 30-50 keV monoenergetic calculations [assumption]",
+    "advisor_profile_morphology_values": [
+      "granular",
+      "strut",
+      "trabecular_like",
+      "paste",
+      "membrane",
+      "solid",
+      "metal"
+    ],
+    "advisor_profile_note": "'metal' is used for magnesium and titanium because osteoquant/advisor/separability.py refuses graft endpoints only when morphology == 'metal'",
+    "separability_ratings": [
+      "good",
+      "partial",
+      "poor",
+      "unknown"
+    ],
+    "evidence_tags": [
+      "published",
+      "derived-physics",
+      "inference",
+      "assumption",
+      "unknown"
+    ]
+  },
+  "materials": [
+    {
+      "id": "ha",
+      "name": "Hydroxyapatite (sintered, synthetic)",
+      "aliases": [
+        "HA",
+        "HAp",
+        "hydroxylapatite",
+        "sintered HA",
+        "porous HA granules"
+      ],
+      "material_class": "calcium phosphate ceramic",
+      "composition": {
+        "formula": "Ca10(PO4)6(OH)2",
+        "Ca_P_molar": 1.67,
+        "source": [
+          "eliaz2017"
+        ]
+      },
+      "theoretical_density_g_cm3": {
+        "value": 3.155,
+        "source": [
+          "eliaz2017"
+        ],
+        "evidence": "verified-full-text (Table 3)"
+      },
+      "typical_porosity": {
+        "range": [
+          0.2,
+          0.5
+        ],
+        "note": "sub-voxel microporosity of sintered granules; designed macroporosity 100-500 um is usually resolved",
+        "evidence": "assumption"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          250,
+          2000
+        ],
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "dense_solid_30_50keV": [
+          3155,
+          3154
+        ],
+        "typical_apparent_range": [
+          1577,
+          2523
+        ],
+        "derivation": "HA-equivalent of the dense solid phase computed from NIST XCOM elemental mass attenuation coefficients (mixture rule) at monoenergetic 30/40/50 keV, mapped to a bone model of HA in a soft-tissue matrix (osteoquant/phantom/materials.py; calculation script not shipped). Effective energy 30-50 keV is taken as representative of a filtered 40-70 kVp lab scan [assumption]. Apparent value of a porous granule = dense value x (1 - sub-voxel porosity) [physics; linear mixing with fluid]. Porosity 0.2-0.5 [assumption].",
+        "evidence": "derived-physics"
+      },
+      "resorption": {
+        "mechanism": "very slow dissolution and cell-mediated resorption; osteoconductive surface",
+        "timelines": [
+          {
+            "species_model": "general (review)",
+            "statement": "pure HA implants often remain in the body for several years",
+            "source": [
+              "eliaz2017"
+            ]
+          },
+          {
+            "species_model": "general (review)",
+            "statement": "about 10% of HA resorbed at 12 months vs 60% of beta-TCP",
+            "source": [
+              "fernandezdegrado2018"
+            ]
+          },
+          {
+            "species_model": "minipig mandible defect (nanocrystalline HA-SiO)",
+            "statement": "filler 34.5% at 2 wk, 31.2% at 8 wk",
+            "source": [
+              "broggini2015"
+            ]
+          }
+        ],
+        "evidence": "published"
+      },
+      "separability_intensity_only": {
+        "rating": "good",
+        "reasoning": "Dense or moderately porous sintered HA reads well above mature bone (dense 3154 mgHA/cm3 equivalent, ~2.9x host). Degrades to 'partial' for nanocrystalline/highly microporous HA, thin struts (<3 voxels) and the partial-volume rim at every granule surface, which takes bone-like values.",
+        "conditions_for_good": [
+          "voxel size <= 1/4 of granule size",
+          "partial-volume rim handled (erosion band or edge model)",
+          "beam-hardening-corrected, HA-calibrated scan"
+        ],
+        "source": [
+          "jang2017",
+          "kazakia2008"
+        ],
+        "evidence": "derived-physics + published"
+      },
+      "recommended_measurement_strategy": [
+        "intensity threshold (calibrated) with partial-volume edge correction",
+        "texture/morphology model for porous or nanocrystalline HA",
+        "day-0 registration to quantify residual graft over time"
+      ],
+      "endpoints": {
+        "supportable": [
+          "total mineralised volume in defect",
+          "residual graft volume (dense HA)",
+          "new bone volume outside graft (with edge correction)",
+          "graft volume change vs day-0"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "bone-to-graft contact at voxel > 1/4 granule size",
+          "bone inside graft micropores",
+          "new bone volume for nanocrystalline/highly porous HA (histology calibration required)"
+        ]
+      },
+      "references": [
+        "eliaz2017",
+        "fernandezdegrado2018",
+        "broggini2015",
+        "jang2017",
+        "kazakia2008",
+        "hubbell_nist_xcom"
+      ],
+      "evidence_level": "published + derived-physics; porosity and granule size are assumptions",
+      "advisor_profile": {
+        "rel_mean": 2.054,
+        "rel_sd": 0.15,
+        "struct_um": 500,
+        "morphology": "granular",
+        "radiolucent": false,
+        "bone_derived": false,
+        "evidence": "PUBLISHED: eliaz2017, hubbell_nist_xcom; porosity ASSUMPTION",
+        "source": "dense HA 3.155 g/cm3 -> 3154 mgHA/cm3 at 40 keV (NIST), x(1-0.30 microporosity) / 1075"
+      }
+    },
+    {
+      "id": "beta_tcp",
+      "name": "beta-Tricalcium phosphate",
+      "aliases": [
+        "beta-TCP",
+        "b-TCP",
+        "β-TCP",
+        "TCP",
+        "tricalcium phosphate"
+      ],
+      "material_class": "calcium phosphate ceramic",
+      "composition": {
+        "formula": "beta-Ca3(PO4)2",
+        "Ca_P_molar": 1.5,
+        "source": [
+          "eliaz2017"
+        ]
+      },
+      "theoretical_density_g_cm3": {
+        "value": 3.067,
+        "source": [
+          "eliaz2017"
+        ],
+        "evidence": "verified-full-text (Table 3)"
+      },
+      "typical_porosity": {
+        "range": [
+          0.3,
+          0.7
+        ],
+        "note": "grain size and porosity strongly modified by trace beta-CPP or HA impurities",
+        "source": [
+          "bohner2020"
+        ],
+        "evidence": "range is assumption; variability is published"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          100,
+          3000
+        ],
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "dense_solid_30_50keV": [
+          3026,
+          3022
+        ],
+        "typical_apparent_range": [
+          907,
+          2117
+        ],
+        "derivation": "HA-equivalent of the dense solid phase computed from NIST XCOM elemental mass attenuation coefficients (mixture rule) at monoenergetic 30/40/50 keV, mapped to a bone model of HA in a soft-tissue matrix (osteoquant/phantom/materials.py; calculation script not shipped). Effective energy 30-50 keV is taken as representative of a filtered 40-70 kVp lab scan [assumption]. Apparent value of a porous granule = dense value x (1 - sub-voxel porosity) [physics; linear mixing with fluid]. Porosity 0.3-0.7 [assumption]. Falls further as resorption thins and fragments granules.",
+        "evidence": "derived-physics"
+      },
+      "resorption": {
+        "mechanism": "cell-mediated (osteoclastic) resorption plus dissolution; osteoconductive and osteoinductive",
+        "timelines": [
+          {
+            "species_model": "minipig mandible defect",
+            "statement": "beta-TCP resorbed almost completely over 8 weeks",
+            "source": [
+              "jensen2006"
+            ]
+          },
+          {
+            "species_model": "general (review, citing Bohner 2000)",
+            "statement": "resorbs in approximately 13-20 weeks and is replaced by remodelled bone",
+            "source": [
+              "fernandezdegrado2018"
+            ]
+          },
+          {
+            "species_model": "general (review)",
+            "statement": "60% resorbed at 12 months (vs 10% HA)",
+            "source": [
+              "fernandezdegrado2018"
+            ]
+          },
+          {
+            "species_model": "general CaP (review)",
+            "statement": "CaP replacement by bone may take 3-36 months depending on age, site and metabolism",
+            "source": [
+              "eliaz2017"
+            ]
+          }
+        ],
+        "evidence": "published; timelines differ by model by an order of magnitude"
+      },
+      "separability_intensity_only": {
+        "rating": "partial",
+        "reasoning": "Intact granules at early timepoints are brighter than bone (dense 3024 mgHA/cm3 eq). As resorption proceeds the granules become microporous and fragmented and their apparent density enters the bone range; new bone is deposited directly on granule surfaces. Intensity alone is good at day 0-2 wk and degrades with time.",
+        "source": [
+          "bohner2020",
+          "jensen2006",
+          "stalder2014"
+        ],
+        "evidence": "published + derived-physics"
+      },
+      "recommended_measurement_strategy": [
+        "day-0 registration (strongly recommended; material resorbs)",
+        "intensity threshold only at early timepoints with a measured material reference",
+        "texture/morphology model calibrated against histology for mid/late timepoints"
+      ],
+      "endpoints": {
+        "supportable": [
+          "total mineralised volume in defect",
+          "residual graft volume at early timepoints (<= ~4 wk) when bimodal histogram confirmed",
+          "graft loss vs day-0 (with registration)"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "new bone vs residual TCP at mid/late timepoints by intensity alone",
+          "bone-to-graft contact"
+        ]
+      },
+      "references": [
+        "eliaz2017",
+        "bohner2020",
+        "jensen2006",
+        "fernandezdegrado2018",
+        "stalder2014",
+        "hubbell_nist_xcom"
+      ],
+      "evidence_level": "published + derived-physics; porosity range assumption",
+      "advisor_profile": {
+        "rel_mean": 1.407,
+        "rel_sd": 0.25,
+        "struct_um": 500,
+        "morphology": "granular",
+        "radiolucent": false,
+        "bone_derived": false,
+        "evidence": "PUBLISHED: eliaz2017, bohner2020, hubbell_nist_xcom; porosity ASSUMPTION",
+        "source": "dense beta-TCP 3.067 g/cm3 -> 3024 mgHA/cm3 at 40 keV (NIST), x(1-0.50) / 1075; drops as it resorbs"
+      }
+    },
+    {
+      "id": "bcp",
+      "name": "Biphasic calcium phosphate (HA + beta-TCP)",
+      "aliases": [
+        "BCP",
+        "HA/TCP",
+        "HA/beta-TCP",
+        "biphasic ceramic"
+      ],
+      "material_class": "calcium phosphate ceramic",
+      "composition": {
+        "formula": "HA + beta-TCP mixture (e.g. 60/40, 20/80)",
+        "note": "HA/TCP ratio, dual porosity and interconnected architecture control resorption",
+        "source": [
+          "bouler2017"
+        ]
+      },
+      "theoretical_density_g_cm3": {
+        "value": [
+          3.067,
+          3.155
+        ],
+        "note": "between beta-TCP and HA by phase fraction",
+        "source": [
+          "eliaz2017"
+        ],
+        "evidence": "derived"
+      },
+      "typical_porosity": {
+        "range": [
+          0.3,
+          0.6
+        ],
+        "evidence": "assumption"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          500,
+          2000
+        ],
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "dense_solid_30_50keV": [
+          3103,
+          3101
+        ],
+        "typical_apparent_range": [
+          1241,
+          2171
+        ],
+        "published_check": "SRmicroCT at 25 keV of human socket biopsies: newly formed bone ~3.8 cm-1, BCP augmentation material ~7.5 cm-1, soft tissue ~1 cm-1 (three separable peaks for intact material)",
+        "derivation": "HA-equivalent of the dense solid phase computed from NIST XCOM elemental mass attenuation coefficients (mixture rule) at monoenergetic 30/40/50 keV, mapped to a bone model of HA in a soft-tissue matrix (osteoquant/phantom/materials.py; calculation script not shipped). Effective energy 30-50 keV is taken as representative of a filtered 40-70 kVp lab scan [assumption]. Apparent value of a porous granule = dense value x (1 - sub-voxel porosity) [physics; linear mixing with fluid]. 60/40 HA/TCP; porosity 0.3-0.6 [assumption].",
+        "source": [
+          "stalder2014"
+        ],
+        "evidence": "derived-physics + published"
+      },
+      "resorption": {
+        "mechanism": "beta-TCP phase resorbs preferentially; HA phase persists",
+        "timelines": [
+          {
+            "species_model": "minipig mandible defect (BCP 60/40)",
+            "statement": "filler 23.6% at 2 wk and 23.7% at 8 wk",
+            "source": [
+              "broggini2015"
+            ]
+          },
+          {
+            "species_model": "rabbit parietal 8 mm CSD",
+            "statement": "more biomaterial particles than DBB at 45 days",
+            "source": [
+              "brito2021"
+            ]
+          }
+        ],
+        "evidence": "published"
+      },
+      "separability_intensity_only": {
+        "rating": "partial",
+        "reasoning": "Intact granules: three clear histogram peaks (Stalder 2014). Partially degraded material overlaps the early-bone phase in the micro-CT histogram and was separated only with the joint histology-microCT histogram.",
+        "source": [
+          "stalder2014"
+        ],
+        "evidence": "published"
+      },
+      "recommended_measurement_strategy": [
+        "intensity threshold for intact granules (check for bimodal/trimodal histogram)",
+        "day-0 registration",
+        "histology-calibrated joint-histogram model for degraded material"
+      ],
+      "endpoints": {
+        "supportable": [
+          "total mineralised volume",
+          "residual graft volume while histogram is trimodal",
+          "graft change vs day-0"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "new bone vs degrading BCP at late timepoints",
+          "bone-to-graft contact"
+        ]
+      },
+      "references": [
+        "bouler2017",
+        "eliaz2017",
+        "stalder2014",
+        "broggini2015",
+        "brito2021",
+        "hubbell_nist_xcom"
+      ],
+      "evidence_level": "published",
+      "advisor_profile": {
+        "rel_mean": 1.731,
+        "rel_sd": 0.2,
+        "struct_um": 600,
+        "morphology": "granular",
+        "radiolucent": false,
+        "bone_derived": false,
+        "evidence": "PUBLISHED: stalder2014, eliaz2017, hubbell_nist_xcom; porosity ASSUMPTION",
+        "source": "60/40 HA/TCP dense -> 3102 mgHA/cm3 at 40 keV, x(1-0.40) / 1075; SRmicroCT ratio BCP/new bone ~2 (stalder2014)"
+      }
+    },
+    {
+      "id": "calcium_sulfate",
+      "name": "Calcium sulfate (hemihydrate set to dihydrate)",
+      "aliases": [
+        "CS",
+        "CaSO4",
+        "plaster of Paris",
+        "gypsum",
+        "calcium sulphate",
+        "antibiotic-loaded calcium sulfate beads"
+      ],
+      "material_class": "calcium salt (non-phosphate)",
+      "composition": {
+        "formula": "CaSO4·2H2O (set); implanted as CaSO4·0.5H2O",
+        "evidence": "chemistry"
+      },
+      "theoretical_density_g_cm3": {
+        "value": 2.32,
+        "note": "dihydrate; anhydrite 2.96 (NIST material table)",
+        "evidence": "assumption (dihydrate handbook value not re-verified); anhydrite from hubbell_nist_xcom"
+      },
+      "typical_porosity": {
+        "range": [
+          0.2,
+          0.4
+        ],
+        "evidence": "assumption"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          1000,
+          6000
+        ],
+        "note": "pellets/beads; also injectable paste",
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "dense_solid_30_50keV": [
+          1634,
+          1679
+        ],
+        "anhydrite_30_50keV": [
+          2613,
+          2649
+        ],
+        "typical_apparent_range": [
+          992,
+          1322
+        ],
+        "energy_dependence": "rises with energy (S, Z=16) relative to HA: contrast vs bone depends on kVp/filtration",
+        "derivation": "HA-equivalent of the dense solid phase computed from NIST XCOM elemental mass attenuation coefficients (mixture rule) at monoenergetic 30/40/50 keV, mapped to a bone model of HA in a soft-tissue matrix (osteoquant/phantom/materials.py; calculation script not shipped). Effective energy 30-50 keV is taken as representative of a filtered 40-70 kVp lab scan [assumption]. Apparent value of a porous granule = dense value x (1 - sub-voxel porosity) [physics; linear mixing with fluid]. Porosity 0.2-0.4 [assumption].",
+        "evidence": "derived-physics"
+      },
+      "resorption": {
+        "mechanism": "dissolution from the surface inward; resorption faster than bone deposition",
+        "timelines": [
+          {
+            "species_model": "general (review)",
+            "statement": "rapid and complete resorption without significant inflammatory response",
+            "source": [
+              "thomas2009"
+            ]
+          },
+          {
+            "species_model": "general (review)",
+            "statement": "resorbs rapidly in 1-3 months; faster than new bone deposition",
+            "source": [
+              "fernandezdegrado2018"
+            ]
+          }
+        ],
+        "evidence": "published (review level)"
+      },
+      "separability_intensity_only": {
+        "rating": "poor",
+        "reasoning": "Porous set dihydrate (~1150 mgHA/cm3 eq at 30% porosity) sits inside the mature-bone band, and dissolving fronts grade continuously into woven-bone values. Dense pellets at day 0 can be brighter than woven bone, but that window closes within weeks. Late mineral is mostly new bone, but residual CS cannot be excluded by intensity.",
+        "source": [
+          "thomas2009",
+          "fernandezdegrado2018",
+          "hubbell_nist_xcom"
+        ],
+        "evidence": "derived-physics + published"
+      },
+      "recommended_measurement_strategy": [
+        "day-0 registration",
+        "timepoint prior (expected near-complete resorption by 4-12 wk)",
+        "texture model (featureless interior vs trabecular pattern)",
+        "histology for any residual-graft claim"
+      ],
+      "endpoints": {
+        "supportable": [
+          "total mineralised volume",
+          "graft loss vs day-0 (registration)"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "new bone volume by intensity alone while CS is present",
+          "residual CS volume after the first weeks"
+        ]
+      },
+      "references": [
+        "thomas2009",
+        "pietrzak2000",
+        "fernandezdegrado2018",
+        "hubbell_nist_xcom"
+      ],
+      "evidence_level": "published (reviews) + derived-physics; density and porosity assumptions",
+      "advisor_profile": {
+        "rel_mean": 1.076,
+        "rel_sd": 0.15,
+        "struct_um": 3000,
+        "morphology": "paste",
+        "radiolucent": false,
+        "bone_derived": false,
+        "evidence": "PUBLISHED: thomas2009, fernandezdegrado2018, hubbell_nist_xcom; density/porosity ASSUMPTION",
+        "source": "CaSO4·2H2O 2.32 g/cm3 -> 1653 mgHA/cm3 at 40 keV (NIST), x(1-0.30) / 1075"
+      }
+    },
+    {
+      "id": "bioglass_45s5",
+      "name": "Bioactive glass 45S5",
+      "aliases": [
+        "45S5",
+        "Bioglass",
+        "Bioglass 45S5",
+        "NovaBone",
+        "bioactive glass"
+      ],
+      "material_class": "silicate bioactive glass",
+      "composition": {
+        "wt_percent": {
+          "SiO2": 45,
+          "Na2O": 24.5,
+          "CaO": 24.5,
+          "P2O5": 6
+        },
+        "source": [
+          "fiume2018"
+        ],
+        "evidence": "verified-full-text"
+      },
+      "theoretical_density_g_cm3": {
+        "value": 2.7,
+        "evidence": "assumption (melt-derived glass; not verified in a fetched source)"
+      },
+      "typical_porosity": {
+        "range": [
+          0.0,
+          0.1
+        ],
+        "note": "melt-derived particulate is essentially dense; sol-gel glasses and scaffolds are porous",
+        "source": [
+          "jones2013"
+        ],
+        "evidence": "assumption for numbers"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          90,
+          710
+        ],
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "dense_solid_30_50keV": [
+          1638,
+          1758
+        ],
+        "typical_apparent_range": [
+          1474,
+          1758
+        ],
+        "energy_dependence": "strong (Na, Si vs Ca, P): glass/bone contrast changes with kVp; calibrate per protocol",
+        "derivation": "HA-equivalent of the dense solid phase computed from NIST XCOM elemental mass attenuation coefficients (mixture rule) at monoenergetic 30/40/50 keV, mapped to a bone model of HA in a soft-tissue matrix (osteoquant/phantom/materials.py; calculation script not shipped). Effective energy 30-50 keV is taken as representative of a filtered 40-70 kVp lab scan [assumption]. Apparent value of a porous granule = dense value x (1 - sub-voxel porosity) [physics; linear mixing with fluid].",
+        "evidence": "derived-physics"
+      },
+      "resorption": {
+        "mechanism": "surface ion exchange, silica-gel layer, then calcium phosphate / hydroxycarbonate apatite layer that bonds to bone; dissolution products stimulate osteoprogenitors",
+        "timelines": [
+          {
+            "species_model": "general (review)",
+            "statement": "45S5 forms a chemical bond with bone; bonds more rapidly than other bioceramics",
+            "source": [
+              "jones2013"
+            ]
+          },
+          {
+            "species_model": "general (review, single cited source)",
+            "statement": "resorption complete in 6 months for silica-based bioglasses",
+            "source": [
+              "fernandezdegrado2018"
+            ]
+          }
+        ],
+        "evidence": "published (reviews); timeline uncertain"
+      },
+      "separability_intensity_only": {
+        "rating": "partial",
+        "reasoning": "Intact glass cores (~1690 mgHA/cm3 eq at 40 keV, 1.6x host) are brighter than bone, but the reacted Ca-P surface layer and bone bonded to it have bone-like intensity and location. Contrast is energy-dependent, so thresholds do not transfer across kVp.",
+        "source": [
+          "jones2013",
+          "hubbell_nist_xcom"
+        ],
+        "evidence": "derived-physics + published mechanism"
+      },
+      "recommended_measurement_strategy": [
+        "kVp-specific calibration with a scan of the material alone",
+        "core-rim morphology model",
+        "dual-energy decomposition (untested here)",
+        "histology/SEM-EDS for rim attribution"
+      ],
+      "endpoints": {
+        "supportable": [
+          "total mineralised volume",
+          "glass core volume (intact particles)"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "bone vs reaction layer",
+          "bone-to-material contact"
+        ]
+      },
+      "references": [
+        "fiume2018",
+        "jones2013",
+        "hench2006",
+        "fernandezdegrado2018",
+        "hubbell_nist_xcom"
+      ],
+      "evidence_level": "published composition + derived-physics; density and size assumptions",
+      "advisor_profile": {
+        "rel_mean": 1.57,
+        "rel_sd": 0.15,
+        "struct_um": 400,
+        "morphology": "granular",
+        "radiolucent": false,
+        "bone_derived": false,
+        "evidence": "PUBLISHED: fiume2018 (composition), hubbell_nist_xcom; density ASSUMPTION",
+        "source": "45S5 2.7 g/cm3 dense -> 1688 mgHA/cm3 at 40 keV (NIST) / 1075; energy-dependent"
+      }
+    },
+    {
+      "id": "s53p4",
+      "name": "Bioactive glass S53P4",
+      "aliases": [
+        "S53P4",
+        "BonAlive",
+        "BAG-S53P4"
+      ],
+      "material_class": "silicate bioactive glass",
+      "composition": {
+        "wt_percent": {
+          "SiO2": 53,
+          "Na2O": 23,
+          "CaO": 20,
+          "P2O5": 4
+        },
+        "source": [
+          "vangestel2015",
+          "fiume2018"
+        ],
+        "evidence": "verified-full-text"
+      },
+      "theoretical_density_g_cm3": {
+        "value": 2.7,
+        "evidence": "assumption"
+      },
+      "typical_porosity": {
+        "range": [
+          0.0,
+          0.1
+        ],
+        "evidence": "assumption"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          500,
+          1000
+        ],
+        "note": "0.5-0.8 and 0.8-1 mm granules reported in a clinical study",
+        "source": [
+          "vangestel2015"
+        ],
+        "evidence": "published (example)"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "dense_solid_30_50keV": [
+          1509,
+          1649
+        ],
+        "typical_apparent_range": [
+          1358,
+          1649
+        ],
+        "energy_dependence": "strong; lower than 45S5 at every energy (more Si, less Ca)",
+        "derivation": "HA-equivalent of the dense solid phase computed from NIST XCOM elemental mass attenuation coefficients (mixture rule) at monoenergetic 30/40/50 keV, mapped to a bone model of HA in a soft-tissue matrix (osteoquant/phantom/materials.py; calculation script not shipped). Effective energy 30-50 keV is taken as representative of a filtered 40-70 kVp lab scan [assumption]. Apparent value of a porous granule = dense value x (1 - sub-voxel porosity) [physics; linear mixing with fluid].",
+        "evidence": "derived-physics"
+      },
+      "resorption": {
+        "mechanism": "as 45S5 (surface reaction layer, slow dissolution); antibacterial use in osteomyelitis",
+        "timelines": [
+          {
+            "species_model": "human clinical (review)",
+            "statement": "used as bone graft substitute with clinical follow-up to years; residual-material kinetics not quantified in the review",
+            "source": [
+              "vangestel2015"
+            ]
+          }
+        ],
+        "evidence": "published (review); quantitative timeline unknown"
+      },
+      "separability_intensity_only": {
+        "rating": "partial",
+        "reasoning": "Dense glass ~1570 mgHA/cm3 eq at 40 keV (1.46x host) separates from woven bone but approaches dense mature bone at low energy; reaction rim is bone-like.",
+        "source": [
+          "vangestel2015",
+          "hubbell_nist_xcom"
+        ],
+        "evidence": "derived-physics"
+      },
+      "recommended_measurement_strategy": [
+        "kVp-specific calibration with material-alone scan",
+        "core-rim morphology model",
+        "day-0 registration",
+        "histology for rim attribution"
+      ],
+      "endpoints": {
+        "supportable": [
+          "total mineralised volume",
+          "intact glass volume when histogram is bimodal"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "bone vs reaction layer",
+          "late residual glass vs mature bone at low kVp"
+        ]
+      },
+      "references": [
+        "vangestel2015",
+        "fiume2018",
+        "hubbell_nist_xcom"
+      ],
+      "evidence_level": "published composition + derived-physics",
+      "advisor_profile": {
+        "rel_mean": 1.457,
+        "rel_sd": 0.15,
+        "struct_um": 650,
+        "morphology": "granular",
+        "radiolucent": false,
+        "bone_derived": false,
+        "evidence": "PUBLISHED: vangestel2015 (composition, granule size), hubbell_nist_xcom; density ASSUMPTION",
+        "source": "S53P4 2.7 g/cm3 dense -> 1566 mgHA/cm3 at 40 keV (NIST) / 1075"
+      }
+    },
+    {
+      "id": "xenograft_dbbm",
+      "name": "Deproteinised bovine bone mineral (xenograft)",
+      "aliases": [
+        "DBBM",
+        "DBB",
+        "ABB",
+        "anorganic bovine bone",
+        "Bio-Oss",
+        "xenograft",
+        "sintered bovine bone",
+        "cerabone"
+      ],
+      "material_class": "bone-derived mineral (xenogeneic)",
+      "composition": {
+        "formula": "carbonated apatite of bovine bone with organic phase removed; sintered variants (e.g. cerabone, 1250 C) are more crystalline",
+        "source": [
+          "kapogianni2019"
+        ],
+        "evidence": "published (abstract) + inference"
+      },
+      "theoretical_density_g_cm3": {
+        "value": null,
+        "note": "strut mineral packing as source bone tissue [inference]",
+        "evidence": "unknown"
+      },
+      "typical_porosity": {
+        "range": [
+          0.5,
+          0.7
+        ],
+        "evidence": "assumption (an unverified search snippet reported ~60% for Bio-Oss)"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          250,
+          2000
+        ],
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "strut_estimate": [
+          1000,
+          1300
+        ],
+        "derivation": "Struts retain the mineral of the source bone tissue at native packing, so the strut HA-equivalent is expected near bone tissue TMD (desktop micro-CT 940-1030, SRmicroCT/ash 1150-1300 for human trabecular bone; kazakia2008). Inference, not a measurement.",
+        "published_check": "micro-CT could not distinguish the BSM-bone interface because of similar grey values (kapogianni2019); human sinus biopsies grafted with DBB: micro-CT volume of mineralised tissue in grafted bone did not correlate with histomorphometry (r=-0.028) (lima2022)",
+        "source": [
+          "kapogianni2019",
+          "lima2022",
+          "kazakia2008"
+        ],
+        "evidence": "inference + published"
+      },
+      "resorption": {
+        "mechanism": "essentially non-resorbing; osteoconductive scaffold integrated into lamellar bone",
+        "timelines": [
+          {
+            "species_model": "human maxillary sinus",
+            "statement": "no significant change in particle length or area between 6 months and 11 years; 17.3% DBBM at 11 years",
+            "source": [
+              "mordenfeld2010"
+            ]
+          },
+          {
+            "species_model": "minipig mandible defect",
+            "statement": "ABB remained stable over 8 weeks",
+            "source": [
+              "jensen2006"
+            ]
+          },
+          {
+            "species_model": "minipig mandible defect",
+            "statement": "filler 35.7% at 2 wk, 31.6% at 8 wk",
+            "source": [
+              "broggini2015"
+            ]
+          }
+        ],
+        "evidence": "published"
+      },
+      "separability_intensity_only": {
+        "rating": "poor",
+        "reasoning": "Bone-derived mineral with grey values similar to new bone (published); micro-CT interprets granule borders as new bone. Intensity alone must not be used to report new bone vs DBBM.",
+        "source": [
+          "kapogianni2019",
+          "lima2022"
+        ],
+        "evidence": "published"
+      },
+      "recommended_measurement_strategy": [
+        "day-0 registration (best option: material barely resorbs, so the day-0 mask stays valid)",
+        "granule morphology model",
+        "histology required for new-bone fraction claims"
+      ],
+      "endpoints": {
+        "supportable": [
+          "total mineralised volume (bone + graft)",
+          "graft volume stability vs day-0 (registration)"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "new bone volume",
+          "residual graft volume without day-0",
+          "bone-to-graft contact"
+        ]
+      },
+      "references": [
+        "kapogianni2019",
+        "lima2022",
+        "mordenfeld2010",
+        "jensen2006",
+        "broggini2015",
+        "kazakia2008"
+      ],
+      "evidence_level": "published",
+      "advisor_profile": {
+        "rel_mean": 1.05,
+        "rel_sd": 0.08,
+        "struct_um": 600,
+        "morphology": "trabecular_like",
+        "radiolucent": false,
+        "bone_derived": true,
+        "evidence": "PUBLISHED: kapogianni2019, lima2022, mordenfeld2010; rel_mean INFERENCE",
+        "source": "bone-mineral struts at native packing ~ bone tissue TMD (kazakia2008) -> ~1.0-1.2 x host; published 'similar grey values' to new bone"
+      }
+    },
+    {
+      "id": "allograft",
+      "name": "Mineralised allograft",
+      "aliases": [
+        "FDBA",
+        "freeze-dried bone allograft",
+        "fresh-frozen allograft",
+        "cortical chips",
+        "cancellous chips",
+        "allogeneic bone"
+      ],
+      "material_class": "bone-derived (allogeneic, mineralised)",
+      "composition": {
+        "formula": "human donor bone, mineral retained",
+        "source": [
+          "delloye2007"
+        ],
+        "evidence": "published (abstract)"
+      },
+      "theoretical_density_g_cm3": {
+        "value": null,
+        "note": "same tissue as host bone",
+        "evidence": "physics"
+      },
+      "typical_porosity": {
+        "range": null,
+        "note": "cortical or cancellous chip architecture",
+        "evidence": "unknown"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          500,
+          5000
+        ],
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "strut_estimate": [
+          940,
+          1300
+        ],
+        "derivation": "same mineralised tissue as host bone (kazakia2008 bone TMD range)",
+        "evidence": "physics + published TMD"
+      },
+      "resorption": {
+        "mechanism": "creeping substitution: revascularisation, osteoclastic resorption and new bone apposition",
+        "timelines": [
+          {
+            "species_model": "general (review)",
+            "statement": "incorporation depends on surgical conditions; slow (months to years for large grafts)",
+            "source": [
+              "delloye2007",
+              "gruskin2012"
+            ],
+            "evidence_note": "'very slow ... may require years to unite a large segmental defect' quoted in gruskin2012 for osteoconductive replacement"
+          }
+        ],
+        "evidence": "published (reviews); timeline qualitative"
+      },
+      "separability_intensity_only": {
+        "rating": "poor",
+        "reasoning": "Same material class as host and remodelled bone: no intensity contrast. Early woven bone may be less mineralised than allograft, giving at best a weak probabilistic difference.",
+        "source": [
+          "delloye2007"
+        ],
+        "evidence": "physics"
+      },
+      "recommended_measurement_strategy": [
+        "day-0 registration",
+        "morphology (cut surfaces, chip geometry)",
+        "histology (empty osteocyte lacunae) required for new-bone claims"
+      ],
+      "endpoints": {
+        "supportable": [
+          "total mineralised volume",
+          "union/bridging"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "new bone vs residual allograft",
+          "graft resorption by intensity"
+        ]
+      },
+      "references": [
+        "delloye2007",
+        "gruskin2012",
+        "kazakia2008"
+      ],
+      "evidence_level": "physics + reviews",
+      "advisor_profile": {
+        "rel_mean": 1.0,
+        "rel_sd": 0.06,
+        "struct_um": 1500,
+        "morphology": "trabecular_like",
+        "radiolucent": false,
+        "bone_derived": true,
+        "evidence": "PUBLISHED: delloye2007, kazakia2008; rel_mean PHYSICS",
+        "source": "mineralised bone tissue = host bone by construction"
+      }
+    },
+    {
+      "id": "autograft",
+      "name": "Autograft (autologous bone)",
+      "aliases": [
+        "autologous bone",
+        "ICBG",
+        "iliac crest bone graft",
+        "particulate autograft",
+        "bone chips"
+      ],
+      "material_class": "bone-derived (autologous)",
+      "composition": {
+        "formula": "patient's own cortical/cancellous bone",
+        "source": [
+          "sen2007"
+        ],
+        "evidence": "published (abstract)"
+      },
+      "theoretical_density_g_cm3": {
+        "value": null,
+        "note": "identical to host bone",
+        "evidence": "physics"
+      },
+      "typical_porosity": {
+        "range": null,
+        "evidence": "unknown"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          500,
+          5000
+        ],
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "strut_estimate": [
+          940,
+          1300
+        ],
+        "derivation": "same tissue as host bone (kazakia2008)",
+        "evidence": "physics"
+      },
+      "resorption": {
+        "mechanism": "rapid substitution (creeping substitution); osteogenic, osteoinductive, osteoconductive",
+        "timelines": [
+          {
+            "species_model": "minipig mandible defect",
+            "statement": "filler 17.1% at 2 wk, 9.3% at 8 wk; most new bone of all groups",
+            "source": [
+              "broggini2015"
+            ]
+          },
+          {
+            "species_model": "minipig mandible defect",
+            "statement": "more new bone than ABB and beta-TCP at 2 wk",
+            "source": [
+              "jensen2006"
+            ]
+          }
+        ],
+        "evidence": "published"
+      },
+      "separability_intensity_only": {
+        "rating": "poor",
+        "reasoning": "Identical material to host and new bone.",
+        "source": [
+          "sen2007"
+        ],
+        "evidence": "physics"
+      },
+      "recommended_measurement_strategy": [
+        "day-0 registration",
+        "histology (necrotic graft fragments with empty lacunae)"
+      ],
+      "endpoints": {
+        "supportable": [
+          "total mineralised volume",
+          "union/bridging"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "new bone vs residual autograft"
+        ]
+      },
+      "references": [
+        "sen2007",
+        "broggini2015",
+        "jensen2006",
+        "kazakia2008"
+      ],
+      "evidence_level": "physics + published",
+      "advisor_profile": {
+        "rel_mean": 1.0,
+        "rel_sd": 0.06,
+        "struct_um": 800,
+        "morphology": "trabecular_like",
+        "radiolucent": false,
+        "bone_derived": true,
+        "evidence": "PUBLISHED: broggini2015, kazakia2008; rel_mean PHYSICS",
+        "source": "autologous bone = host bone by construction"
+      }
+    },
+    {
+      "id": "dbm",
+      "name": "Demineralised bone matrix",
+      "aliases": [
+        "DBM",
+        "DFDBA",
+        "demineralized freeze-dried bone allograft",
+        "DBM putty"
+      ],
+      "material_class": "bone-derived (demineralised)",
+      "composition": {
+        "formula": "acid-extracted allograft matrix: collagens, non-collagenous proteins, growth factors, 1-6% residual calcium phosphate mineral; often in carriers (glycerol, hyaluronate, CMC, poloxamer, gelatin, collagen, calcium sulfate)",
+        "source": [
+          "gruskin2012"
+        ],
+        "evidence": "verified-full-text"
+      },
+      "theoretical_density_g_cm3": {
+        "value": null,
+        "evidence": "unknown"
+      },
+      "typical_porosity": {
+        "range": null,
+        "evidence": "unknown"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          250,
+          840
+        ],
+        "note": "particles <250 um reported less osteoinductive than 420-840 um",
+        "source": [
+          "gruskin2012"
+        ],
+        "evidence": "published"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "estimate": [
+          0,
+          100
+        ],
+        "derivation": "1-6% residual mineral (gruskin2012) gives at most tens of mgHA/cm3; carriers such as calcium sulfate add their own attenuation",
+        "evidence": "derived"
+      },
+      "resorption": {
+        "mechanism": "matrix degradation releases growth factors; osteoinduction varies by lot and donor",
+        "timelines": [],
+        "note": "quantitative timeline not sourced",
+        "source": [
+          "gruskin2012"
+        ],
+        "evidence": "published mechanism; timeline unknown"
+      },
+      "separability_intensity_only": {
+        "rating": "poor",
+        "reasoning": "Near-radiolucent at implantation (counts as soft tissue), so early mineral can be attributed to new bone; but DBM particles that remineralise or are incorporated into new bone are indistinguishable from it. Carrier minerals (e.g. CaSO4) break the radiolucent assumption.",
+        "source": [
+          "gruskin2012"
+        ],
+        "evidence": "derived + published"
+      },
+      "recommended_measurement_strategy": [
+        "report 'mineral in defect' rather than 'new bone'",
+        "check carrier composition",
+        "histology for attribution"
+      ],
+      "endpoints": {
+        "supportable": [
+          "total mineralised volume in defect (attributable to new bone only if carrier is non-mineral and stated as an assumption)"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "residual DBM volume",
+          "new bone vs remineralised DBM"
+        ]
+      },
+      "references": [
+        "gruskin2012"
+      ],
+      "evidence_level": "published",
+      "advisor_profile": {
+        "rel_mean": 0.05,
+        "rel_sd": 0.04,
+        "struct_um": 600,
+        "morphology": "paste",
+        "radiolucent": true,
+        "bone_derived": true,
+        "evidence": "PUBLISHED: gruskin2012",
+        "source": "1-6% residual mineral -> <~100 mgHA/cm3 -> ~0.0-0.1 x host"
+      }
+    },
+    {
+      "id": "collagen_sponge",
+      "name": "Absorbable collagen sponge (incl. rhBMP-2 carrier)",
+      "aliases": [
+        "ACS",
+        "collagen sponge",
+        "rhBMP-2/ACS",
+        "INFUSE",
+        "collagen membrane",
+        "Helistat"
+      ],
+      "material_class": "natural polymer",
+      "composition": {
+        "formula": "type I collagen (bovine); rhBMP-2/ACS at 1.5 mg/cc in the FDA-approved product",
+        "source": [
+          "mckay2007",
+          "geiger2003"
+        ],
+        "evidence": "published (abstract)"
+      },
+      "theoretical_density_g_cm3": {
+        "value": null,
+        "evidence": "unknown"
+      },
+      "typical_porosity": {
+        "range": null,
+        "evidence": "unknown (highly porous sponge)"
+      },
+      "typical_granule_size_um": {
+        "range": null,
+        "evidence": "not applicable (sheet/sponge)"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "estimate": [
+          0,
+          40
+        ],
+        "derivation": "soft-tissue-like organic material; ICRU soft tissue reads +13 to +33 mgHA/cm3 eq at 30-60 keV in our NIST calculation",
+        "evidence": "derived-physics"
+      },
+      "resorption": {
+        "mechanism": "enzymatic degradation; serves to prolong protein residence time",
+        "timelines": [],
+        "source": [
+          "geiger2003"
+        ],
+        "evidence": "published mechanism; timeline unknown"
+      },
+      "separability_intensity_only": {
+        "rating": "good",
+        "reasoning": "Radiolucent: carrier is not visible, so mineral in the defect is new bone (or ectopic bone) unless a mineral component is added. 'Good' refers only to the absence of a mineral graft signal; residual sponge cannot be measured.",
+        "source": [
+          "geiger2003"
+        ],
+        "evidence": "derived"
+      },
+      "recommended_measurement_strategy": [
+        "intensity threshold for mineral (no graft class)",
+        "histology for residual carrier"
+      ],
+      "endpoints": {
+        "supportable": [
+          "new bone volume (all mineral)",
+          "bone volume outside the defect envelope (ectopic bone with rhBMP-2)"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "residual carrier volume"
+        ]
+      },
+      "references": [
+        "geiger2003",
+        "mckay2007"
+      ],
+      "evidence_level": "published + derived",
+      "advisor_profile": {
+        "rel_mean": 0.02,
+        "rel_sd": 0.02,
+        "struct_um": 100,
+        "morphology": "membrane",
+        "radiolucent": true,
+        "bone_derived": false,
+        "evidence": "PUBLISHED: geiger2003; rel_mean DERIVED-PHYSICS",
+        "source": "collagen ~ soft tissue attenuation (+13..33 mgHA eq) / 1075"
+      }
+    },
+    {
+      "id": "plga",
+      "name": "Poly(lactic-co-glycolic acid)",
+      "aliases": [
+        "PLGA",
+        "PLA",
+        "PLLA",
+        "PDLLA",
+        "poly(lactide)",
+        "polylactide"
+      ],
+      "material_class": "synthetic resorbable polyester",
+      "composition": {
+        "formula": "(C3H4O2)x(C2H2O2)y copolymer",
+        "source": [
+          "middleton2000"
+        ],
+        "evidence": "chemistry"
+      },
+      "theoretical_density_g_cm3": {
+        "value": [
+          1.2,
+          1.35
+        ],
+        "evidence": "assumption"
+      },
+      "typical_porosity": {
+        "range": [
+          0.5,
+          0.9
+        ],
+        "evidence": "assumption (scaffolds)"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          200,
+          500
+        ],
+        "note": "strut diameter of printed/porous scaffolds",
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "dense_solid_30_50keV": [
+          12,
+          56
+        ],
+        "derivation": "HA-equivalent of the dense solid phase computed from NIST XCOM elemental mass attenuation coefficients (mixture rule) at monoenergetic 30/40/50 keV, mapped to a bone model of HA in a soft-tissue matrix (osteoquant/phantom/materials.py; calculation script not shipped). Effective energy 30-50 keV is taken as representative of a filtered 40-70 kVp lab scan [assumption]. Apparent value of a porous granule = dense value x (1 - sub-voxel porosity) [physics; linear mixing with fluid]. PLGA 50:50 at 1.30 g/cm3 [assumption].",
+        "evidence": "derived-physics"
+      },
+      "resorption": {
+        "mechanism": "bulk hydrolysis of ester bonds; rate tailored by copolymer composition",
+        "timelines": [],
+        "source": [
+          "middleton2000"
+        ],
+        "evidence": "published mechanism; timeline not sourced"
+      },
+      "separability_intensity_only": {
+        "rating": "good",
+        "reasoning": "Polymer phase is radiolucent (soft-tissue-like), so all mineral is new bone unless a ceramic filler is present (then use polymer_ceramic_composite). Polymer volume itself is not measurable without contrast.",
+        "source": [
+          "hubbell_nist_xcom"
+        ],
+        "evidence": "derived-physics"
+      },
+      "recommended_measurement_strategy": [
+        "intensity threshold for mineral",
+        "known scaffold geometry for ROI",
+        "contrast or histology for residual polymer"
+      ],
+      "endpoints": {
+        "supportable": [
+          "new bone volume (pure polymer, no ceramic filler)",
+          "bone ingrowth depth"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "residual polymer volume"
+        ]
+      },
+      "references": [
+        "middleton2000",
+        "oest2007"
+      ],
+      "evidence_level": "derived-physics; density assumption",
+      "advisor_profile": {
+        "rel_mean": 0.029,
+        "rel_sd": 0.02,
+        "struct_um": 300,
+        "morphology": "strut",
+        "radiolucent": true,
+        "bone_derived": false,
+        "evidence": "ASSUMPTION (density); PHYSICS: hubbell_nist_xcom",
+        "source": "PLGA 1.30 g/cm3 -> 31 mgHA eq at 40 keV / 1075"
+      }
+    },
+    {
+      "id": "pcl",
+      "name": "Polycaprolactone",
+      "aliases": [
+        "PCL",
+        "poly(epsilon-caprolactone)",
+        "MEW PCL",
+        "FDM PCL scaffold"
+      ],
+      "material_class": "synthetic resorbable polyester",
+      "composition": {
+        "formula": "(C6H10O2)n",
+        "evidence": "chemistry"
+      },
+      "theoretical_density_g_cm3": {
+        "value": 1.145,
+        "evidence": "assumption (handbook value; woodruff2010 metadata-only)"
+      },
+      "typical_porosity": {
+        "range": [
+          0.5,
+          0.8
+        ],
+        "evidence": "assumption (scaffolds)"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          10,
+          400
+        ],
+        "note": "melt-electrowritten fibres to printed struts",
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "dense_solid_30_50keV": [
+          -30,
+          -5
+        ],
+        "derivation": "HA-equivalent of the dense solid phase computed from NIST XCOM elemental mass attenuation coefficients (mixture rule) at monoenergetic 30/40/50 keV, mapped to a bone model of HA in a soft-tissue matrix (osteoquant/phantom/materials.py; calculation script not shipped). Effective energy 30-50 keV is taken as representative of a filtered 40-70 kVp lab scan [assumption]. Apparent value of a porous granule = dense value x (1 - sub-voxel porosity) [physics; linear mixing with fluid]. PCL at 1.145 g/cm3 [assumption]; reads at or slightly below water.",
+        "evidence": "derived-physics"
+      },
+      "resorption": {
+        "mechanism": "slow hydrolysis",
+        "timelines": [],
+        "note": "multi-year degradation commonly stated; not verified here",
+        "source": [
+          "woodruff2010"
+        ],
+        "evidence": "assumption"
+      },
+      "separability_intensity_only": {
+        "rating": "good",
+        "reasoning": "Radiolucent polymer; same reasoning as PLGA.",
+        "source": [
+          "hubbell_nist_xcom"
+        ],
+        "evidence": "derived-physics"
+      },
+      "recommended_measurement_strategy": [
+        "intensity threshold for mineral",
+        "known strut geometry"
+      ],
+      "endpoints": {
+        "supportable": [
+          "new bone volume (no ceramic filler)",
+          "bone ingrowth depth"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "residual polymer volume"
+        ]
+      },
+      "references": [
+        "woodruff2010"
+      ],
+      "evidence_level": "derived-physics; most values assumptions",
+      "advisor_profile": {
+        "rel_mean": 0.0,
+        "rel_sd": 0.02,
+        "struct_um": 300,
+        "morphology": "strut",
+        "radiolucent": true,
+        "bone_derived": false,
+        "evidence": "ASSUMPTION (density); PHYSICS: hubbell_nist_xcom",
+        "source": "PCL 1.145 g/cm3 -> -19 mgHA eq at 40 keV (~water) -> 0"
+      }
+    },
+    {
+      "id": "polymer_ceramic_composite",
+      "name": "Polymer-ceramic composite scaffold",
+      "aliases": [
+        "PCL/TCP",
+        "PCL/HA",
+        "PLGA/HA",
+        "PLGA/TCP",
+        "collagen/HA",
+        "composite scaffold"
+      ],
+      "material_class": "composite",
+      "composition": {
+        "formula": "polymer matrix (PCL, PLA, PLGA, collagen) with dispersed CaP filler",
+        "evidence": "general"
+      },
+      "theoretical_density_g_cm3": {
+        "value": null,
+        "evidence": "depends on filler fraction"
+      },
+      "typical_porosity": {
+        "range": [
+          0.5,
+          0.8
+        ],
+        "evidence": "assumption"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          200,
+          500
+        ],
+        "note": "strut size",
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "example": 605,
+        "derivation": "effective value ~ ceramic volume fraction x dense ceramic HA-eq; 20 vol% beta-TCP in PCL -> ~600 mgHA/cm3 eq, inside the woven-bone band [derived-physics]",
+        "evidence": "derived-physics"
+      },
+      "resorption": {
+        "mechanism": "polymer hydrolysis + ceramic resorption",
+        "timelines": [],
+        "evidence": "unknown"
+      },
+      "separability_intensity_only": {
+        "rating": "poor",
+        "reasoning": "Homogeneous composite struts sit in the early-bone density band; separation needs the known print geometry, day-0 registration or a learned model validated on labelled scans.",
+        "source": [
+          "aboutaleb2026",
+          "raymond2022"
+        ],
+        "evidence": "derived-physics + published methods"
+      },
+      "recommended_measurement_strategy": [
+        "known lattice geometry / CAD registration",
+        "day-0 registration",
+        "texture model validated against labels (e.g. U-Net on scaffold+bone patches)"
+      ],
+      "endpoints": {
+        "supportable": [
+          "total mineralised volume",
+          "bone growth fraction with a validated model"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "new bone vs composite strut by intensity"
+        ]
+      },
+      "references": [
+        "aboutaleb2026",
+        "raymond2022",
+        "hubbell_nist_xcom"
+      ],
+      "evidence_level": "derived-physics",
+      "advisor_profile": {
+        "rel_mean": 0.563,
+        "rel_sd": 0.15,
+        "struct_um": 300,
+        "morphology": "strut",
+        "radiolucent": false,
+        "bone_derived": false,
+        "evidence": "ASSUMPTION (filler fraction); PHYSICS: hubbell_nist_xcom",
+        "source": "20 vol% beta-TCP in PCL -> ~605 mgHA eq / 1075"
+      }
+    },
+    {
+      "id": "magnesium",
+      "name": "Magnesium and Mg alloys (degradable metal)",
+      "aliases": [
+        "Mg",
+        "AZ31",
+        "AZ91",
+        "WE43",
+        "LAE442",
+        "ZX00",
+        "Mg-Gd",
+        "Mg-5Gd",
+        "Mg-10Gd"
+      ],
+      "material_class": "degradable metal",
+      "composition": {
+        "formula": "Mg with alloying elements (Zn, Ca, Al, rare earths, Gd)",
+        "source": [
+          "staiger2006",
+          "witte2005"
+        ],
+        "evidence": "published (abstract)"
+      },
+      "theoretical_density_g_cm3": {
+        "value": 1.74,
+        "note": "pure Mg; alloys differ (rare-earth alloys attenuate more)",
+        "evidence": "assumption (handbook value)"
+      },
+      "typical_porosity": {
+        "range": [
+          0,
+          0
+        ],
+        "evidence": "physics (solid implant)"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          1000,
+          4000
+        ],
+        "note": "pin/screw diameter",
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "dense_solid_30_50keV": [
+          617,
+          652
+        ],
+        "derivation": "HA-equivalent of the dense solid phase computed from NIST XCOM elemental mass attenuation coefficients (mixture rule) at monoenergetic 30/40/50 keV, mapped to a bone model of HA in a soft-tissue matrix (osteoquant/phantom/materials.py; calculation script not shipped). Effective energy 30-50 keV is taken as representative of a filtered 40-70 kVp lab scan [assumption]. Apparent value of a porous granule = dense value x (1 - sub-voxel porosity) [physics; linear mixing with fluid]. Pure Mg reads inside the woven-bone band.",
+        "evidence": "derived-physics"
+      },
+      "resorption": {
+        "mechanism": "corrosion; corrosion layer accumulates biological calcium phosphates and contacts bone; hydrogen gas voids",
+        "timelines": [
+          {
+            "species_model": "guinea pig femur, 4 alloys",
+            "statement": "alloy-dependent degradation at 6 and 18 weeks; increased bone mass around rods",
+            "source": [
+              "witte2005"
+            ]
+          },
+          {
+            "species_model": "sheep tibia ZX00 screws",
+            "statement": "SRmicroCT at 6, 12, 24 weeks; four-class labels (residual material, degradation layer, bone, background)",
+            "source": [
+              "lopesmarinho2024"
+            ]
+          }
+        ],
+        "evidence": "published"
+      },
+      "separability_intensity_only": {
+        "rating": "poor",
+        "reasoning": "Residual Mg overlaps woven bone in intensity and the CaP-rich degradation layer is bone-like. Published DL on SRmicroCT (rat, Mg-xGd, 4 classes) reached IoU 96-97% bone, 81% degradation layer, 94% residual material - i.e. learned models with labels work at synchrotron resolution; intensity alone does not.",
+        "source": [
+          "witte2005",
+          "baltruschat2021"
+        ],
+        "evidence": "published"
+      },
+      "recommended_measurement_strategy": [
+        "implant geometry/CAD prior + day-0 registration",
+        "learned model trained on labelled scans of the same alloy and scanner",
+        "metal-artefact-aware acquisition"
+      ],
+      "endpoints": {
+        "supportable": [
+          "implant residual volume and degradation rate with a validated model",
+          "peri-implant BV/TV excluding degradation layer (validated model)"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "any graft/bone split by intensity threshold"
+        ]
+      },
+      "references": [
+        "witte2005",
+        "staiger2006",
+        "baltruschat2021",
+        "lopesmarinho2024",
+        "hubbell_nist_xcom"
+      ],
+      "evidence_level": "published",
+      "advisor_profile": {
+        "rel_mean": 0.585,
+        "rel_sd": 0.05,
+        "struct_um": 2000,
+        "morphology": "metal",
+        "radiolucent": false,
+        "bone_derived": false,
+        "evidence": "PUBLISHED: witte2005, baltruschat2021; PHYSICS: hubbell_nist_xcom",
+        "source": "pure Mg 1.74 g/cm3 -> 629 mgHA eq at 40 keV / 1075; morphology 'metal' triggers the advisor's artefact refusal"
+      }
+    },
+    {
+      "id": "titanium",
+      "name": "Titanium and Ti alloys (permanent implant)",
+      "aliases": [
+        "Ti",
+        "Ti6Al4V",
+        "trabecular titanium",
+        "porous titanium",
+        "titanium mesh"
+      ],
+      "material_class": "permanent metal",
+      "composition": {
+        "formula": "Ti or Ti-6Al-4V",
+        "evidence": "general"
+      },
+      "theoretical_density_g_cm3": {
+        "value": 4.51,
+        "note": "pure Ti",
+        "evidence": "assumption (handbook value)"
+      },
+      "typical_porosity": {
+        "range": [
+          0,
+          0.8
+        ],
+        "note": "solid screws to porous/trabecular lattices",
+        "evidence": "assumption"
+      },
+      "typical_granule_size_um": {
+        "range": [
+          300,
+          4000
+        ],
+        "evidence": "assumption"
+      },
+      "ha_equivalent_mgHA_cm3": {
+        "dense_solid_30_50keV": [
+          10682,
+          9329
+        ],
+        "derivation": "HA-equivalent of the dense solid phase computed from NIST XCOM elemental mass attenuation coefficients (mixture rule) at monoenergetic 30/40/50 keV, mapped to a bone model of HA in a soft-tissue matrix (osteoquant/phantom/materials.py; calculation script not shipped). Effective energy 30-50 keV is taken as representative of a filtered 40-70 kVp lab scan [assumption]. Apparent value of a porous granule = dense value x (1 - sub-voxel porosity) [physics; linear mixing with fluid]. Far outside HA calibration range; beam hardening, streaks and photon starvation dominate near the implant.",
+        "evidence": "derived-physics"
+      },
+      "resorption": {
+        "mechanism": "non-degradable",
+        "timelines": [],
+        "evidence": "physics"
+      },
+      "separability_intensity_only": {
+        "rating": "good",
+        "reasoning": "Metal itself is trivially separable, but artefacts corrupt bone voxels near the surface: micro-CT BIC correlated with histomorphometry (r=0.855) in rabbit tibia but required calibration.",
+        "source": [
+          "park2005"
+        ],
+        "evidence": "published"
+      },
+      "recommended_measurement_strategy": [
+        "threshold metal; exclude an artefact band; metal-artefact reduction; validate peri-implant bone against histology"
+      ],
+      "endpoints": {
+        "supportable": [
+          "implant volume",
+          "peri-implant bone volume outside an artefact band (validated)"
+        ],
+        "not_supportable_without_extra_evidence": [
+          "bone-implant contact at the interface voxel"
+        ]
+      },
+      "references": [
+        "park2005",
+        "hubbell_nist_xcom"
+      ],
+      "evidence_level": "published + physics",
+      "advisor_profile": {
+        "rel_mean": 9.407,
+        "rel_sd": 0.05,
+        "struct_um": 2000,
+        "morphology": "metal",
+        "radiolucent": false,
+        "bone_derived": false,
+        "evidence": "PUBLISHED: park2005; PHYSICS: hubbell_nist_xcom",
+        "source": "Ti 4.51 g/cm3 -> ~10112 mgHA eq (extrapolated) / 1075; morphology 'metal'"
+      }
+    }
+  ],
+  "unsupported_material_workflow": {
+    "trigger": "material id not in this file, or material present but advisor_profile.evidence is ASSUMPTION for the requested endpoint",
+    "steps": [
+      {
+        "step": 1,
+        "name": "identify",
+        "action": "Record product name, lot, composition (supplier data sheet), form (granule/block/paste/strut), granule size, and whether it is bone-derived or contains a mineral carrier."
+      },
+      {
+        "step": 2,
+        "name": "characterise",
+        "action": "Scan the material alone (ex vivo, in the same medium as specimens, e.g. saline or the embedding resin) and a day-0 implanted defect with the SAME protocol (kVp, filter, voxel size, reconstruction, beam-hardening correction) and an HA calibration phantom."
+      },
+      {
+        "step": 3,
+        "name": "measure_intensity",
+        "action": "Convert to mgHA/cm3; compute the material intensity distribution after eroding 2 voxels from every surface (to exclude partial-volume rims); record mean, SD, percentiles and the rim distribution separately."
+      },
+      {
+        "step": 4,
+        "name": "reference_bone",
+        "action": "Measure host bone and, where available, new bone at the study's timepoints (or use a labelled pilot specimen) on the same calibrated scale."
+      },
+      {
+        "step": 5,
+        "name": "compute_separability",
+        "action": "Estimate the overlap of graft vs new-bone intensity distributions (e.g. Bayes error / Dice-optimal threshold), including partial-volume rims at the study voxel size; repeat for morphology features if a texture model is proposed."
+      },
+      {
+        "step": 6,
+        "name": "decide",
+        "action": "If intensity overlap is below the acceptance limit -> intensity threshold allowed (report threshold and overlap). If not -> require day-0 registration or a texture model validated on labelled scans (histology-registered or expert-annotated) from this material. If neither is available -> ABSTAIN: report only total mineralised volume and state that new-bone vs graft is not measurable."
+      },
+      {
+        "step": 7,
+        "name": "record",
+        "action": "Store the characterisation (scans, SHA-256, protocol, measured distributions, decision) as a new entry with evidence 'measured' and link it to the study audit log; re-characterise when the protocol or lot changes."
+      }
+    ],
+    "abstention_rules": [
+      "never report new bone volume for a bone-derived graft (autograft, allograft, DBBM, remineralised DBM) from intensity alone",
+      "never transfer a threshold across kVp/filter for energy-dependent materials (glasses, calcium sulfate, Mg)",
+      "never report bone-to-graft contact when voxel size > 1/4 of the granule size"
+    ],
+    "references": [
+      "fda2025dental",
+      "bouxsein2010",
+      "nazarian2008",
+      "meganck2009"
+    ]
+  }
+}

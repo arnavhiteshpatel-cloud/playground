@@ -87,7 +87,8 @@ def main():
                 # advisor inputs are COMPUTED (no ground truth): naive footprint → motion estimate from tracking
                 # must be within tolerance; tracked footprint → motion compensated, untracked share must be small
                 day0_naive = {"registered": True, "qc_pass": qc["pass"],
-                              "max_displacement_um": tr["summary"]["p90_shift_um"], "untracked_fraction": 0.0}
+                              "max_displacement_um": tr["summary"]["p90_shift_um"],
+                              "untracked_fraction": tr["summary"]["untracked_volume_fraction"]}
                 day0_tracked = {"registered": True, "qc_pass": qc["pass"], "max_displacement_um": 0.0,
                                 "untracked_fraction": tr["summary"]["untracked_volume_fraction"]}
                 adv = assess_support(prof, noise_rel=150 / 950, voxel_um=40, day0=day0_tracked)

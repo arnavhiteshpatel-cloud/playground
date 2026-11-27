@@ -7,3 +7,5 @@ END exp_S1c_control_reference.py  rc=0 21:46
 START exp_S1_advisor.py 21:46
 END exp_S1_advisor.py  rc=0 21:51
 START exp_L3_displacement.py 21:51
+END exp_L3_displacement.py  rc=0 22:00
+START exp_S2_sim2real.py 22:00

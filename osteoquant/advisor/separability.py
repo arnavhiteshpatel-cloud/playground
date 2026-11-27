@@ -47,13 +47,14 @@ MIN_STRUCT_VOXELS = 3.0         # thickness endpoints need structures ≥3 voxel
 HOST_REL_MATURE = 1.0
 MIN_REFERENCE_SAMPLES = 500     # measured reference distributions need at least this many voxels
 MIN_GRAFT_FRACTION = 0.05       # below this share of mineral, relative graft-volume error is unbounded
-ADVISOR_VERSION = "1.2.0"
+ADVISOR_VERSION = "1.2.1"
 # Changelog: 1.0.x (pre-review, used by S1/S1b runs before cycle-1 review) → 1.1.0: decision uses the single-
 # threshold rule actually applied (union oracle kept as upper bound); support must hold at the estimated graft
 # share and at half of it (review IMG-01); metals refused (IMG-02); measured samples need ≥500 voxels and cannot
 # bypass the bone-derived rule (IMG-03); day-0 support requires computed QC/tracking fields (IMG-04).
 # 1.2.0: new-bone vs soft-tissue decision with partial-volume halos of dense phases gates new-bone and mineral
 # endpoints and sets the mineral threshold (S1b re-run finding; review STAT-05).
+# 1.2.1: DBM (radiolucent but bone-derived) new-bone endpoints not supported (review BIO-02).
 
 # Assumed new-bone maturity range in relative units. Early/mid healing: woven 650–1000 mgHA/cm³ vs
 # mature host ≈1075 → (0.60, 0.93) (SCIENTIFIC_EVIDENCE row 4, assumption anchored to a published callus
@@ -351,7 +352,13 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
 
     if prof is not None and prof.radiolucent and graft_samples_rel is None:
         for e in GRAFT_ENDPOINTS:
-            if e.startswith("new_bone"):
+            if e.startswith("new_bone") and prof.bone_derived:
+                # DBM: demineralised bone matrix can retain residual mineral or remineralise; mineralised DBM
+                # particles are indistinguishable from new bone (cycle-1 review BIO-02)
+                ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
+                                        f"{prof.id} is bone-derived: residual or re-mineralised matrix cannot be "
+                                        "distinguished from new bone on micro-CT; use histology")
+            elif e.startswith("new_bone"):
                 ep[e] = EndpointSupport(e, CONDITIONAL, "radiolucent_graft",
                                         f"{prof.id} is near soft-tissue attenuation: mineral in the defect is "
                                         "attributed to new bone", ["graft contains no mineral phase",

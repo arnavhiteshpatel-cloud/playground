@@ -153,9 +153,12 @@ def run_one(work: Path, rel: str, src: str, point, tests, timeout):
         env = dict(os.environ, PYTHONPATH=str(d), PYTHONDONTWRITEBYTECODE="1", HYPOTHESIS_PROFILE="ci")
         t = time.time()
         try:
+            # cwd = the mutant copy: ``python -m`` puts the cwd first on sys.path, so the mutated package is
+            # the one imported (running from the pristine copy silently tested the original code)
             r = subprocess.run([sys.executable, "-m", "pytest", "-x", "-q", "-p", "no:cacheprovider",
-                                "-p", "no:randomly", "--no-header", "-o", "addopts=", *tests],
-                               cwd=str(work / "base"), env=env, capture_output=True, text=True, timeout=timeout)
+                                "--no-header", "-o", "addopts=", "--rootdir", str(work / "base"),
+                                *[str(work / "base" / t) for t in tests]],
+                               cwd=str(d), env=env, capture_output=True, text=True, timeout=timeout)
             status = "survived" if r.returncode == 0 else ("killed" if r.returncode == 1 else f"error{r.returncode}")
         except subprocess.TimeoutExpired:
             status = "timeout(killed)"
@@ -181,7 +184,7 @@ def main():
     if a.lines:
         lo, hi = map(int, a.lines.split("-"))
         pts = [p for p in pts if lo <= p[0] <= hi]
-    work = Path(tempfile.mkdtemp(prefix="oq-mut-"))
+    work = Path(tempfile.mkdtemp(prefix="oq-mut-", dir=os.environ.get("OQ_MUT_TMP")))
     base = work / "base"
     base.mkdir()
     shutil.copytree(ROOT / "osteoquant", base / "osteoquant", ignore=shutil.ignore_patterns("__pycache__", "desktop"))
@@ -196,6 +199,15 @@ def main():
     if b.returncode != 0:
         print(b.stdout[-3000:])
         sys.exit("baseline tests fail")
+    d = Path(tempfile.mkdtemp(dir=work))
+    shutil.copytree(base / "osteoquant", d / "osteoquant")
+    (d / rel).write_text(src + "\nraise RuntimeError('mutation-runner sentinel')\n")
+    r = subprocess.run([sys.executable, "-m", "pytest", "-x", "-q", "-p", "no:cacheprovider", "--rootdir", str(base),
+                        *[str(base / t) for t in a.tests]], cwd=str(d), env=dict(env, PYTHONPATH=str(d)),
+                       capture_output=True, text=True)
+    shutil.rmtree(d, ignore_errors=True)
+    if r.returncode == 0:
+        sys.exit("sentinel mutant survived: the runner is not testing the mutated copy")
     lines = src.splitlines()
     t0 = time.time()
     with ThreadPoolExecutor(a.jobs) as ex:

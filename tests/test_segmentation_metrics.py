@@ -114,3 +114,71 @@ def test_expected_calibration_error():
     assert r["ece"] == pytest.approx(0.4) and r["bins"][0]["n"] == 4
     m = np.array([True, True, False, False])
     assert expected_calibration_error(over, truth, mask=m)["ece"] == pytest.approx(0.1)
+
+
+# ----------------------------------------------------------------------------- mutation-testing follow-ups
+def _brute_surface_distances(a, b, spacing):
+    """Independent oracle: exhaustive point-to-point distances between surface voxels."""
+    from scipy.spatial.distance import cdist
+
+    def surf(m):
+        er = np.zeros_like(m)
+        inner = m[1:-1, 1:-1, 1:-1] & m[:-2, 1:-1, 1:-1] & m[2:, 1:-1, 1:-1] & m[1:-1, :-2, 1:-1] \
+            & m[1:-1, 2:, 1:-1] & m[1:-1, 1:-1, :-2] & m[1:-1, 1:-1, 2:]
+        er[1:-1, 1:-1, 1:-1] = inner
+        return m & ~er                    # voxels on the array border are surface (border_value=0)
+    pa = np.argwhere(surf(a)) * np.asarray(spacing)
+    pb = np.argwhere(surf(b)) * np.asarray(spacing)
+    D = cdist(pa, pb)
+    return D.min(1), D.min(0)
+
+
+def test_hd95_and_assd_match_brute_force_oracle_including_border_objects():
+    rng = np.random.default_rng(4)
+    for k in range(3):
+        a = rng.random((9, 10, 11)) > 0.55
+        b = rng.random((9, 10, 11)) > 0.6
+        sp = (1.0, 2.0, 0.5 + k)
+        r = binary_metrics(a, b, spacing=sp)
+        d1, d2 = _brute_surface_distances(a, b, sp)
+        assert r["hd95_um"] == pytest.approx(max(np.percentile(d1, 95), np.percentile(d2, 95)))
+        assert r["assd_um"] == pytest.approx(np.concatenate([d1, d2]).mean())
+
+
+def test_default_spacing_is_one_micrometre_per_voxel():
+    a = cube((16, 16, 16), 4, 9)
+    b = np.roll(a, 3, axis=1)
+    assert binary_metrics(a, b)["hd95_um"] == pytest.approx(3.0)
+    r = multiclass_metrics(b.astype(np.uint8), a.astype(np.uint8))
+    assert set(r["per_class"]) == {"new_bone", "graft", "host_bone"}
+    assert r["per_class"]["new_bone"]["hd95_um"] == pytest.approx(3.0)
+
+
+def test_iou_when_false_positives_equal_true_positives():
+    a = np.array([True, True, False, False]).reshape(1, 1, 4)
+    b = np.array([True, False, False, False]).reshape(1, 1, 4)     # tp=1, fp=1, fn=0
+    r = binary_metrics(a, b, distances=False)
+    assert r["iou"] == pytest.approx(0.5) and r["dice"] == pytest.approx(2 / 3)
+
+
+def test_multiclass_accuracy_counts_background_errors():
+    t = np.zeros((4, 4, 4), np.uint8)
+    t[0] = 1
+    p = t.copy()
+    p[1] = 1                                   # background predicted as new bone
+    r = multiclass_metrics(p, t, distances=False)
+    assert r["accuracy"] == pytest.approx(48 / 64)
+    assert np.array(r["confusion"])[0, 1] == 16
+
+
+def test_ece_per_bin_signs_do_not_cancel_and_bin_edges():
+    truth = np.array([0, 0, 1, 1])
+    # two under-confident correct voxels (conf 0.3 would be impossible for argmax with 2 classes, so use 3)
+    prob = np.zeros((3, 4))
+    prob[:, 0] = prob[:, 1] = [0.4, 0.3, 0.3]           # predict 0 with 0.4, correct
+    prob[:, 2] = prob[:, 3] = [0.9, 0.05, 0.05]         # predict 0 with 0.9, wrong
+    r = expected_calibration_error(prob, truth, n_bins=10)
+    assert r["ece"] == pytest.approx(0.5 * 0.6 + 0.5 * 0.9)
+    assert [b["bin"] for b in r["bins"]] == pytest.approx([0.4, 0.9])
+    d = expected_calibration_error(prob, truth)               # default 15 bins
+    assert d["bins"][0]["bin"] == pytest.approx(6 / 15)

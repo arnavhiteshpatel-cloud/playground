@@ -14,6 +14,7 @@ ENDPOINTS = [
     ("class_volumes.new_bone_volume_mm3", "New bone volume", "mm³"),
     ("class_volumes.new_bone_fraction", "New bone BV/TV", "fraction"),
     ("class_volumes.residual_graft_fraction", "Residual graft volume fraction", "fraction"),
+    ("class_volumes.mineral_volume_mm3", "Total mineral volume in defect (new bone + graft)", "mm³"),
     ("class_volumes.mineralized_fraction", "Total mineralised fraction", "fraction"),
     ("bridging_new_bone.projected_coverage", "Projected defect coverage by new bone", "fraction"),
     ("class_volumes.uncertain_fraction", "Uncertain (abstained) fraction", "fraction"),
@@ -77,8 +78,14 @@ def bundle_from_store(store, user, sid, ctx=None) -> dict:
             # measured") and listed with their reason (cycle-1 review STAT-01). Raw values stay in the audit record.
             "corrections": corr, "metrics": res.get("reported_metrics", res.get("metrics", {})),
             "suppressed_metrics": res.get("suppressed_metrics", []),
-            "measurement_support": {k: {"status": v.get("status"), "reason": v.get("reason")}
+            "measurement_support": {k: {"status": v.get("status"), "reason": v.get("reason"),
+                                        "mechanism": v.get("mechanism"), "conditions": v.get("conditions", [])}
                                     for k, v in (res.get("measurement_support") or {}).get("endpoints", {}).items()},
+            "advisor_version": (res.get("measurement_support") or {}).get("advisor_version"),
+            "analysis_parameters": {k: v for k, v in (res.get("segmentation") or {}).items()
+                                    if k in ("method", "t_mineral", "t_graft", "t_graft_rel", "thresholds",
+                                             "estimated_graft_share", "advisor_version", "runtime", "onnx_sha256",
+                                             "validation_record", "model_name")},
             "uncertainty": res.get("uncertainty", {}),
             "plausibility": res.get("plausibility", []), "figure": fig,
             "reviews": revs})

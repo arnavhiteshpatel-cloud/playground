@@ -16,7 +16,7 @@ human correction in a tamper-evident audit trail; produces DefectFill PDF/CSV re
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
-pytest -q                                       # 61 tests
+pytest -q                                       # 372 library tests (+ desktop tests in tests/desktop)
 OQ_DEMO_PASSWORD=Choose-A-Pass-1 python scripts/demo_seed.py
 OQ_DB=runtime/demo.db osteoquant serve          # http://127.0.0.1:8765
 ```

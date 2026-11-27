@@ -234,3 +234,9 @@ def test_validation_records_synthetic_never_qualifies(tmp_path, monkeypatch):
     assert not vr.validated_for("m", "abc", "beta_tcp", 80)[0]          # outside voxel range
     assert not vr.validated_for("m", "OTHER", "beta_tcp", 20)[0]        # different model version
     assert not vr.validated_for("m", "abc", "ha", 20)[0]                # different material
+
+
+def test_dbm_new_bone_not_supported():
+    a = assess_support("dbm", noise_rel=0.05, voxel_um=20)
+    assert a.status("new_bone_volume") == NOT_SUPPORTED
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED

@@ -214,13 +214,17 @@ def registration_qc(fixed: np.ndarray, moved_back: np.ndarray, exclude: np.ndarr
 
 
 def track_granules(day0_img: np.ndarray, later_img: np.ndarray, day0_graft: np.ndarray, spacing_um,
-                   search_um: float = 400.0, min_vox: int = 8, margin: int = 1, min_score: float = 0.5) -> dict:
+                   search_um: float = 400.0, min_vox: int = 8, margin: int = 1, min_score: float = 0.5,
+                   min_gain: float = 0.05, min_peak_margin: float = 0.05, distance_penalty: float = 0.10) -> dict:
     """Per-granule template matching of day-0 graft pieces in the registered later image.
 
     Each connected component of the day-0 graft mask (touching granules move as one) is matched by
-    normalised cross-correlation within ±search_um. The tracked footprint places each component at its
-    best shift; components whose best NCC < ``min_score`` are kept in place and reported as untracked
-    (fragmented, heavily resorbed or overgrown). Returns footprint, per-component records and summary.
+    normalised cross-correlation within ±search_um, with a mild distance prior. Each component is classified:
+    *stationary* (the zero-shift match is good and moving does not improve it by ``min_gain``), *moved* (a
+    distinct peak — better than any candidate outside its neighbourhood by ``min_peak_margin`` — that improves on
+    zero shift), or *ambiguous* (kept in place and counted as untracked: fragmented, heavily resorbed, overgrown,
+    or too small/noisy to localise). Revised after Experiment L3, where unconstrained matching produced spurious
+    ~700 µm shifts on strut-like granules in noisy scans.
     """
     from scipy import ndimage as ndi
     from skimage.feature import match_template
@@ -247,16 +251,33 @@ def track_granules(day0_img: np.ndarray, later_img: np.ndarray, day0_graft: np.n
             recs.append({"id": i, "voxels": size, "tracked": False, "reason": "window"})
             continue
         cc = match_template(win, tmpl)
-        best = np.unravel_index(int(np.argmax(cc)), cc.shape)
+        # zero-shift position of the template inside the window
+        zero = tuple(t.start - w.start for t, w in zip(t_sl, w_sl))
+        score0 = float(cc[zero]) if all(0 <= z < n for z, n in zip(zero, cc.shape)) else -1.0
+        # distance prior: prefer small motions (Experiment L3: unpenalised search found spurious matches)
+        grids = np.meshgrid(*[np.arange(n) - z for n, z in zip(cc.shape, zero)], indexing="ij")
+        dist_um = np.sqrt(sum((g * sp) ** 2 for g, sp in zip(grids, spacing_um)))
+        pen = cc - distance_penalty * dist_um / max(search_um, 1e-6)
+        best = np.unravel_index(int(np.argmax(pen)), pen.shape)
         score = float(cc[best])
         shift = np.array([w.start + b - t.start for w, b, t in zip(w_sl, best, t_sl)])
-        ok = score >= min_score
-        if not ok:
+        # peak distinctiveness: best must beat every candidate outside its ±2-voxel neighbourhood by a margin
+        excl = np.ones(cc.shape, bool)
+        excl[tuple(slice(max(0, b - 2), b + 3) for b in best)] = False
+        second = float(cc[excl].max()) if excl.any() else -1.0
+        if score0 >= min_score and score - score0 < min_gain:
+            status, shift, score = "stationary", np.zeros(3, int), score0
+        elif score >= min_score and score - second >= min_peak_margin and score - score0 >= min_gain:
+            status = "moved"
+        else:
+            status = "ambiguous"
             shift = np.zeros(3, int)
+        ok = status in ("stationary", "moved")
         full = np.zeros(day0_graft.shape, bool)
         full[sl] = comp
         foot |= ndi.shift(full, shift, order=0, mode="constant", cval=False) if shift.any() else full
-        recs.append({"id": i, "voxels": size, "tracked": bool(ok), "score": score,
+        recs.append({"id": i, "voxels": size, "tracked": bool(ok), "status": status, "score": score,
+                     "score_zero_shift": score0, "second_peak": second,
                      "shift_um": [float(s * sp) for s, sp in zip(shift, spacing_um)],
                      "shift_mag_um": float(np.linalg.norm(shift * np.asarray(spacing_um, float)))})
     tracked = [r for r in recs if r.get("tracked")]
@@ -265,6 +286,8 @@ def track_granules(day0_img: np.ndarray, later_img: np.ndarray, day0_graft: np.n
     mags = [r["shift_mag_um"] for r in tracked]
     return {"footprint": foot, "components": recs,
             "summary": {"n_components": len(recs), "n_tracked": len(tracked),
+                        "n_moved": sum(1 for r in recs if r.get("status") == "moved"),
+                        "n_ambiguous": sum(1 for r in recs if r.get("status") == "ambiguous"),
                         "untracked_volume_fraction": float(untracked_frac),
                         "median_shift_um": float(np.median(mags)) if mags else 0.0,
                         "p90_shift_um": float(np.percentile(mags, 90)) if mags else 0.0}}

@@ -20,7 +20,7 @@ Customer has run a preclinical bone-defect study and holds reconstructed micro-C
 | Morphometry per ASBMR nomenclature (Bouxsein et al., JBMR 2010): e.g., TV, BV, BV/TV within defect ROI, residual graft volume fraction, Tb.Th/Tb.Sp/Tb.N where applicable | Yes (parameter list in Annex A) |
 | Audit-trailed PDF report + CSV data tables + segmentation masks | Yes |
 | Statistical comparison between groups | [Optional — Annex B] |
-| GLP-supporting package (validation summary, audit trail export, QA statement) | [Only if GLP option selected; requires a Quality Agreement] |
+| GLP-supporting package | **Not offered** (no validation report exists; no GLP or Part 11 claim can be made) |
 
 **Out of scope unless added by change order:** scanning or reconstruction; histology or histomorphometry; additional ROIs, time points or parameters beyond Annex A; re-analysis after Customer protocol changes; regulatory submission writing; any clinical or diagnostic use.
 
@@ -53,7 +53,7 @@ Data Acceptance (T0) → D1 at T0 + [5] bd → D2 at T0 + [15–25] bd depending
 Payment terms: [50% on SOW signature, 50% on D3] / [Net 30]. Prices exclude taxes.
 
 ## 7. Assumptions
-Scans are reconstructed, artifact-free and consistent within the study. The graft material is distinguishable from bone by micro-CT contrast, to be confirmed during D1. If it is not, Provider will advise and the scope may change.
+Scans are reconstructed, artifact-free and consistent within the study. Whether graft and new bone can be separated is assessed by OsteoQuant's measurement-support advisor during D1 (material, scanner protocol, noise, availability of day-0 scans or empty-defect controls). **If an endpoint is assessed as not supported** — in D1 or, exceptionally, after analysis (e.g. unexpected artefacts, metal hardware) — Provider reports it as "not measured" with the reason and reports total mineral volume instead; Customer may (a) accept the reduced endpoint set at a [__]% fee reduction for the affected endpoints, (b) commission a material characterisation or histology-referenced extension by change order, or (c) terminate the affected part of the study with fees limited to work performed. Provider will not deliver a numeric value for an endpoint it has assessed as not supported.
 
 ## 8. Data handling
 Covered by [DPA/Confidentiality terms]. Retention: [90] days after D3, then deletion with certificate, unless the Customer requests archiving under GLP terms.

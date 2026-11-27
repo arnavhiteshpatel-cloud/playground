@@ -21,12 +21,22 @@ Compare OsteoQuant's DefectFill workflow (automated ROI and three-class segmenta
 | Endpoint | Method | Pre-specified success criterion [HYP] |
 |---|---|---|
 | Agreement, defect BV/TV | ICC(2,1), two-way random effects, absolute agreement, single measure (Koo & Li 2016 interpretation) | ICC ≥ 0.90 and lower 95% CI ≥ 0.75 |
-| Agreement, residual graft volume fraction | ICC(2,1) | ICC ≥ 0.85 |
+| Agreement, residual graft volume fraction (only where the advisor marks it supported) | ICC(2,1) vs independent reference where available, else vs customer | ICC ≥ 0.85; if not supported: advisor rationale reported instead |
+| Agreement, total mineral volume in defect | ICC(2,1) | ICC ≥ 0.90 |
 | Bias and limits of agreement | Bland–Altman: mean difference, 95% LoA, check for proportional bias (regression of difference on mean) | |bias| ≤ 2 percentage points BV/TV; LoA judged acceptable by the customer's study director *before* unblinding |
 | Segmentation overlap (if customer masks available) | Dice coefficient per class | Median Dice ≥ 0.80 for bone, ≥ 0.75 for graft |
 | Analyst time saved | Time-stamped hands-on minutes per scan (OsteoQuant reviewer) vs customer-reported minutes | ≥ 50% reduction in hands-on time |
 | Turnaround | Data Acceptance → report | ≤ 10 business days for 30 scans |
 | Reviewer correction rate | % of scans needing manual correction; median edited volume | Reported descriptively |
+
+**Interpreting disagreement (cycle-1 review CRO-01).** Agreement with the customer's own analysis is *not* proof
+that either method is right: for grafts whose intensity overlaps new bone, threshold workflows are themselves biased
+(OsteoQuant Experiments C/C2/S1). The pilot therefore (i) uses agreement only for endpoints OsteoQuant's advisor marks
+**supported** and for total mineral volume; (ii) for graft/new-bone endpoints the advisor marks *conditional* or
+*not supported*, reports the advisor's reasoning instead of an agreement verdict; and (iii) where possible adds an
+**independent reference** agreed before unblinding — histomorphometry on matched sections, a physical-phantom subset
+scanned with the study protocol, or a blinded consensus of two analysts using manual delineation. Disagreements are
+adjudicated against that reference, not against either party's analysis.
 
 Statistical notes: n = 20–30 gives a wide CI on the ICC. With n = 25 and a true ICC of 0.90, the 95% CI is roughly ±0.08 [AE]. Report the CI and do not over-claim. Analyse group-wise results as a secondary check (do both methods reach the same group conclusion?).
 

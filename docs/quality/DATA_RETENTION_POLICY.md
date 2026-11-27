@@ -1,14 +1,15 @@
-# OsteoQuant — Data Retention Policy (Draft)
+# OsteoQuant: Data Retention Policy (Draft)
 
 | Field | Value |
 |---|---|
 | Document ID | OQ-QMS-DRP-001 |
-| Version | 0.1 (DRAFT) |
+| Version | 0.2 (DRAFT), Generation-2 desktop re-baseline |
 | Date | 2026-11-27 |
 | Owner | Quality with Legal/Privacy |
 | Related | URS-105, URS-120…124; FS-105-1, FS-122-1, FS-123-1, FS-124-1; SOP-006 |
 
-> **Status: DRAFT — not validated; not a claim of Part 11 compliance or GLP validation.**
+> **Status: DRAFT. Not approved. No claim of 21 CFR Part 11 compliance, GLP compliance or validation.**
+> Desktop context: records live in project folders on the customer's own workstations and storage. The customer, not OsteoQuant, holds and retains them. The software does not yet enforce retention periods, legal hold or dual-approval deletion (FS-122-1, FS-123-1); until it does, sections 3–4 are procedural controls of the customer.
 > Retention periods below are proposed defaults for a research tool. Customers remain responsible for the retention obligations applicable to them (institutional policy, funder terms, publication requirements, and — if used in regulated studies — 21 CFR 58.195 / OECD GLP). Legal review required.
 
 ## 1. Principles
@@ -16,30 +17,29 @@
 2. **Retain together:** original data, derived data, configuration snapshots, model artifacts/manifests, software version identifiers, audit trail and reports are retained as one information package so a study can be reconstructed (OECD GLP No. 17 ¶114, ¶117).
 3. **Audit trail retention ≥ retention of the records it describes** (21 CFR 11.10(e) benchmark).
 4. **Legal hold overrides** all expiry.
-5. **Tenant ownership:** customer data belong to the customer organisation; OsteoQuant (as processor/host) retains per contract and returns/deletes on termination as agreed.
+5. **Customer ownership:** project folders belong to and are stored by the customer organisation. OsteoQuant (as software supplier) holds no customer study data; for analysis services, retention and return/deletion follow the service contract (which must not conflict with this policy, review CRO-10).
 
 ## 2. Record categories and proposed defaults
 | Category | Examples | Proposed default retention | Rationale / reference |
 |---|---|---|---|
-| A. Study primary data | Original micro-CT files and hashes; acquisition metadata | Customer-configured; **minimum 10 years after study closure** proposed default for hosted service; or until customer export & instructed deletion | Typical institutional research-data policies; GLP 58.195 periods are shorter for some cases but customer obligations vary [INF] |
+| A. Study primary data | Original micro-CT files and hashes; acquisition metadata | Customer-configured; **minimum 10 years after study closure** proposed default | Typical institutional research-data policies; GLP 58.195 periods are shorter for some cases but customer obligations vary [INF] |
 | B. Derived data | ROIs, segmentations (v0 + corrections), metrics, stats outputs | Same as A | Needed for reconstruction |
 | C. Reports & signatures | PDF/CSV reports, signature records | Same as A | — |
-| D. Audit trail | All entries for tenant | ≥ longest retention of A–C in the tenant; never purged while any related record exists | 21 CFR 11.10(e) benchmark |
+| D. Audit trail | All entries in the project | ≥ longest retention of A–C in the project; never purged while any related record exists (the software never deletes audit entries) | 21 CFR 11.10(e) benchmark |
 | E. System records | Software releases, model artifacts & manifests, configuration defaults, validation/verification records, CRs | As long as any retained study result depends on them, plus 2 years | OECD 17 ¶117 |
-| F. Security logs | Login, access, export events | 3 years (proposed) | Security investigation needs |
+| F. Security events | Sign-in, failed sign-in/re-authentication, permission denials, export events (in the project audit trail) | As D (they are audit entries) | Security investigation needs |
 | G. Backups | Daily/weekly/monthly | Per SOP-006 (35 days / 13 weeks / 7 years for monthly) | Recovery; not a substitute for archive |
 | H. Account data | User profiles (deactivated) | Retained as long as D (to keep attributability); personal data minimised | Attributability vs privacy — legal review |
 
 Regulated-use reference (if a customer uses data in GLP studies): 21 CFR 58.195(b) — shortest of ≥2 years after FDA approval of the application; ≥5 years after submission of results; otherwise ≥2 years after study completion/termination [V; see REGULATORY_RESEARCH.md]. Customers in OECD-MAD jurisdictions must apply national GLP retention rules [PK].
 
 ## 3. Configuration (system)
-- Retention policy objects per tenant and optionally per study: period, trigger event (study closure date, report approval date), legal hold flag.
-- Records within retention cannot be deleted (HTTP 423, audited attempt).
-- Changes to retention settings are audited and require admin + Quality (or tenant owner) approval.
+- Target (FS-122-1, not implemented): retention period per project and optionally per study (period, trigger event such as study closure or report approval, legal-hold flag); deletion within retention refused and the attempt audited; changes to retention settings audited and approved by admin + Quality.
+- Current software: `delete_study_data` requires the `delete` permission (admin) and a reason, keeps the audit trail and records the deletion; there is no retention check, legal hold or second approval, and the desktop offers no delete function. Customers control deletion of project folders through OS permissions and this policy.
 
 ## 4. Deletion after expiry
-1. System lists records eligible for deletion; tenant owner reviews.
-2. Deletion request (admin) + approval by a second authorised person (tenant owner/Quality); legal-hold check.
+1. The study lead lists records eligible for deletion; the data owner reviews.
+2. Deletion request (project admin) + written approval by a second authorised person (data owner/Quality); legal-hold check.
 3. Optional pre-deletion archive export (FS-124-1) delivered to customer, with manifest verification.
 4. Deletion executed; audit entry retains object IDs, hashes, approvers and timestamps (not content).
 5. Backups containing deleted data expire naturally per backup schedule; documented in the deletion record.

@@ -259,3 +259,11 @@ def test_knowledge_base_physics_disagreement_requires_measurement():
     a = assess_support("bioglass_45s5", noise_rel=0.03, voxel_um=20, healing_weeks=2)
     assert a.status("residual_graft_volume") == NOT_SUPPORTED
     assert "uncertain" in a.endpoints["residual_graft_volume"].reason
+
+
+def test_characterisation_undeclared_bone_status_is_conservative():
+    from osteoquant.advisor.characterize import MaterialCharacterisation
+    ch = MaterialCharacterisation("x", "material_only", "0" * 64, 20.0, {}, 0.0, 1.0, 2.0, 0.1, {}, 400.0, (300, 500), 1000)
+    assert ch.profile().bone_derived is True
+    ch.bone_derived = False
+    assert ch.profile().bone_derived is False

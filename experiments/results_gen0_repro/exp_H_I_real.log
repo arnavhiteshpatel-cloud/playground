@@ -23,3 +23,4 @@ train 10 test 5 [(75, 113, 58), (149, 128, 63), (575, 256, 113), (81, 256, 131),
 {'method': 'synthetic_unet_zero_shot', 'case': '232558_Beagle.tif', 'dice': 0.23650547424743149, 'hd95_vox': 5.477225575051661, 'vol_err': 6.337582005623243}
 {'method': 'synthetic_unet_zero_shot', 'case': '238046_WH.tif', 'dice': 0.5397741494641445, 'hd95_vox': 5.477225575051661, 'vol_err': 1.317188394731819}
 {'method': 'synthetic_unet_zero_shot', 'case': '239179_Yorkie.tif', 'dice': 0.40952288997089614, 'hd95_vox': 5.385164807134504, 'vol_err': 2.4644990455077282}
+{'method': 'synthetic_unet_zero_shot', 'case': '244195_Lab.tif', 'dice': 0.45218637577722925, 'hd95_vox': 5.477225575051661, 'vol_err': 2.3997133757961784}

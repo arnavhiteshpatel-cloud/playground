@@ -1,48 +1,51 @@
-# SOP-006 — Backup and Restore
+# SOP-006: Backup and Restore of Project Folders (OsteoQuant Desktop)
 
 | Field | Value |
 |---|---|
-| SOP ID / version | SOP-006 / 0.1 (DRAFT) |
+| SOP ID / version | SOP-006 / 0.2 (DRAFT) |
 | Effective date | Not effective (draft) |
-| Owner | Engineering / IT |
-| Related requirements | URS-120, URS-121, URS-124; FS-120-1, FS-121-1, FS-102-2; RSK-30, RSK-33 |
+| Owner | User organisation IT, with Engineering |
+| Related requirements | URS-120, URS-121, URS-124, URS-125; FS-120-1, FS-121-1, FS-125-1; RSK-30, RSK-32, RSK-33 |
 | Benchmarks | 21 CFR 11.10(c); OECD GLP No. 17 ¶73–75, ¶119–122 |
 
-> **Status: DRAFT — not validated; not a claim of Part 11 compliance or GLP validation.**
+> **Status: DRAFT. Not approved or effective. No claim of 21 CFR Part 11 compliance, GLP compliance or validation.**
 
 ## 1. Purpose
-Protect OsteoQuant records against loss and ensure they can be restored completely and verifiably.
+Protect OsteoQuant Desktop projects against loss and ensure they can be restored completely and verifiably. The desktop has no built-in backup function (FS-120-1); backup is by copying the whole project folder.
 
 ## 2. Backup scope
-SQLite database (online backup API snapshot), file store (originals and derived data), model registry and artifacts, configuration, audit-chain head export, application release package for each version in use.
+The entire project folder: `osteoquant-project.json`, `osteoquant.db` (with any `osteoquant.db-wal` / `-shm` files), and the `data/` directory (scan Zarr stores, label revisions, ROI masks, reports). Also: the installer of each OsteoQuant version used for the project, model artifacts used, `models/validation_records.json`, the licence file, and the anchor log (SOP-005).
 
 ## 3. Schedule and retention (proposed defaults)
 | Backup | Frequency | Retention |
 |---|---|---|
-| Incremental file store + DB snapshot | Daily | 35 days |
-| Full | Weekly | 13 weeks |
-| Monthly full | Monthly | 7 years or per DATA_RETENTION_POLICY, whichever is longer |
-At least one copy off-site / different failure domain; backups encrypted; access limited to backup service account and named IT staff (not study personnel).
+| Project folder copy | Daily while the project is active | 35 days |
+| Full copy | Weekly | 13 weeks |
+| Monthly full copy | Monthly | 7 years or per DATA_RETENTION_POLICY, whichever is longer |
+At least one copy off the workstation and in a different failure domain; copies encrypted; access limited to the backup account and named IT staff.
 
-## 4. Procedure — backup monitoring
-1. Automated job writes a backup manifest (file list with SHA-256, DB snapshot hash, chain head).
-2. Job result is audited; failure triggers alert to IT.
-3. IT reviews job status at least weekly and records it.
+## 4. Procedure: backup
+1. **Close the project in every OsteoQuant instance** (*File > Close project*) so that the SQLite write-ahead log is checkpointed. Copying an open project can produce an inconsistent copy.
+2. Run *Verify chain* (SOP-005) and record the anchor.
+3. Copy the whole folder with a tool that preserves file contents; generate a SHA-256 manifest of all files in the copy and store it with the copy.
+4. Record date, project, manifest hash, anchor and operator in the backup log. Failures are reported to IT the same day.
 
-## 5. Procedure — restore test (quarterly, and after major changes)
-1. Raise a CR (standard change) for the test.
-2. Restore the latest full + incrementals to an isolated test instance.
-3. Run restore verification tool: all file hashes match manifest; `PRAGMA integrity_check` = ok; audit-chain verification VALID and chain head matches anchored value.
-4. Regenerate one sample report per tenant (or synthetic tenant) and compare to archived report hash/values.
-5. Record duration (vs. recovery time objective) and outcome; destroy test instance per procedure.
+## 5. Procedure: restore test (quarterly and after major changes)
+1. Raise a CR (standard change).
+2. Restore the latest copy to an isolated location on a qualified workstation.
+3. Verify all files against the manifest.
+4. Open the restored project; *Verify chain*; confirm the anchor from the backup log is present.
+5. Regenerate one report and compare the numeric values with the archived report.
+6. Record duration (vs recovery time objective) and outcome; delete the test copy per procedure.
 
-## 6. Procedure — production restore
-Only under an approved (Emergency allowed) CR. Record point-in-time restored to; identify any data created after that point (may be lost) and inform affected study leads; perform §5 verification steps on production before re-opening to users; audit entry documents the restore event.
+## 6. Procedure: production restore
+Only under an approved (emergency allowed) CR. Record the point in time restored; identify work done after it (may be lost) and inform the study leads; perform §5 steps 3–4 before users resume; record the restore in the study file. (The restore itself is not an event in the restored audit trail.)
 
 ## 7. Records
-Backup manifests, job logs, restore test reports, CRs.
+Backup log, manifests, restore-test reports, CRs.
 
 ## 8. Revision history
 | Version | Date | Change | Author |
 |---|---|---|---|
-| 0.1 | 2026-11-27 | Initial draft | QA/RA |
+| 0.1 | 2026-11-27 | Initial draft (server database, file store, backup job) | QA/RA |
+| 0.2 | 2026-11-27 | Desktop project-folder backup; close-before-copy rule; manual manifest and anchor | QA/RA |

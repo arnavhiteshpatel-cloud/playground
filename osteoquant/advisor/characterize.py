@@ -41,12 +41,16 @@ class MaterialCharacterisation:
     n_voxels: int
     samples_rel: list = field(repr=False, default_factory=list)
     warnings: list = field(default_factory=list)
-    version: str = "1.0.0"
+    bone_derived: bool | None = None    # must be declared by the user; None is treated as bone-derived
+    morphology: str = "granular"
+    version: str = "1.1.0"
 
     def profile(self) -> MaterialProfile:
+        # bone_derived unknown → treated as bone-derived (the conservative choice: never intensity-supported)
         return MaterialProfile(id=self.material_id, rel_mean=self.rel_mean, rel_sd=self.rel_sd,
-                               struct_um=self.thickness_um_median, morphology="granular",
-                               radiolucent=self.rel_mean < 0.15, bone_derived=False,
+                               struct_um=self.thickness_um_median, morphology=self.morphology,
+                               radiolucent=self.rel_mean < 0.15,
+                               bone_derived=True if self.bone_derived is None else bool(self.bone_derived),
                                evidence="MEASURED", source=f"characterisation of scan {self.scan_sha256[:12]}")
 
     def compatible_with(self, voxel_um: float, acquisition: dict | None = None) -> tuple[bool, str]:
@@ -74,7 +78,8 @@ def _levels(image, soft_mask, host_mask):
 def characterise_material(image: np.ndarray, material_mask: np.ndarray, soft_mask: np.ndarray,
                           host_mask: np.ndarray, voxel_um: float, material_id: str, source: str = "material_only",
                           acquisition: dict | None = None, max_samples: int = 50_000,
-                          seed: int = 0) -> MaterialCharacterisation:
+                          seed: int = 0, bone_derived: bool | None = None,
+                          morphology: str = "granular") -> MaterialCharacterisation:
     """Measure a material's appearance. Masks define the material, fluid/soft tissue and reference bone."""
     from ..morphometry import local_thickness
     if material_mask.sum() < MIN_REFERENCE_SAMPLES:
@@ -99,6 +104,8 @@ def characterise_material(image: np.ndarray, material_mask: np.ndarray, soft_mas
     if float(np.median(tv)) < 3 * voxel_um:
         warnings.append("median structure thickness < 3 voxels: intensity is partial-volume dominated; "
                         "re-scan at smaller voxel size for a reliable profile")
+    if bone_derived is None:
+        warnings.append("bone-derived status not declared: treated as bone-derived (never intensity-supported)")
     if rel.std() > 0.35 * max(abs(rel.mean()), 1e-6):
         warnings.append("heterogeneous material intensity (CV > 35%): check for mixed materials or beam hardening")
     h = hashlib.sha256(np.ascontiguousarray(image).tobytes()).hexdigest()
@@ -109,11 +116,12 @@ def characterise_material(image: np.ndarray, material_mask: np.ndarray, soft_mas
         rel_percentiles={str(q): float(np.percentile(rel, q)) for q in (1, 5, 25, 50, 75, 95, 99)},
         thickness_um_median=float(np.median(tv)),
         thickness_um_p10_p90=(float(np.percentile(tv, 10)), float(np.percentile(tv, 90))),
-        n_voxels=int(material_mask.sum()), samples_rel=[float(x) for x in samples], warnings=warnings)
+        n_voxels=int(material_mask.sum()), samples_rel=[float(x) for x in samples], warnings=warnings,
+        bone_derived=bone_derived, morphology=morphology)
 
 
 def characterise_from_day0(day0_image: np.ndarray, roi_mask: np.ndarray, voxel_um: float, material_id: str,
-                           acquisition: dict | None = None) -> MaterialCharacterisation:
+                           acquisition: dict | None = None, bone_derived: bool | None = None) -> MaterialCharacterisation:
     """Day-0 scan: graft = mineral inside the ROI (no new bone yet); host = mineral outside; soft = non-mineral outside."""
     from ..segment.classical import threshold_otsu, robust_values
     keep_out = ~ndi.binary_dilation(roi_mask, iterations=3)
@@ -124,4 +132,5 @@ def characterise_from_day0(day0_image: np.ndarray, roi_mask: np.ndarray, voxel_u
     soft = (day0_image <= t) & keep_out
     host = ndi.binary_erosion(mineral_out, iterations=1)
     graft = ndi.binary_opening((day0_image > t) & roi_mask, iterations=1)
-    return characterise_material(day0_image, graft, soft, host, voxel_um, material_id, "day0", acquisition)
+    return characterise_material(day0_image, graft, soft, host, voxel_um, material_id, "day0", acquisition,
+                                 bone_derived=bone_derived)

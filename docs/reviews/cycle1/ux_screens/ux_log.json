@@ -1,0 +1,547 @@
+{
+  "messages": [],
+  "notes": {
+    "weak_password_error": "ProjectError: Password must be \u226510 characters with an upper-case letter and a digit",
+    "import_candidates": [
+      [
+        "R06_week8_raw.npy",
+        true,
+        null,
+        "missing",
+        [
+          "NumPy arrays carry no spacing; assumed 1 \u00b5m"
+        ]
+      ],
+      [
+        "R07_corrupt.nii.gz",
+        false,
+        "CorruptInput: Could not read nifti input R07_corrupt.nii.gz: ImageFileError: File /tmp/oq_ux_h114ykpq/incoming/R07_corrupt.nii.gz is not a gzip file",
+        null,
+        null
+      ],
+      [
+        "R08_tiffstack",
+        true,
+        null,
+        "missing",
+        [
+          "No voxel spacing found (no vendor log); assumed 1 \u00b5m. Supply spacing explicitly."
+        ]
+      ]
+    ],
+    "import_problems_before": [
+      "R06_week8_raw.npy: enter the voxel spacing (not found in the file).",
+      "R08_tiffstack: enter the voxel spacing (not found in the file)."
+    ],
+    "import_outcomes": [
+      [
+        "R06_week8_raw.npy",
+        "flagged",
+        "QC review: QC-D08 Acquisition metadata completeness (warn); QC-H05 Anatomy truncated by field of view (warn); QC-H07 Partial-volume risk (median structure thickness) (warn)"
+      ],
+      [
+        "R07_corrupt.nii.gz",
+        "rejected",
+        "Unreadable: CorruptInput: Could not read nifti input R07_corrupt.nii.gz: ImageFileError: File /tmp/oq_ux_h114ykpq/incoming/R07_corrupt.nii.gz is not a gzip file"
+      ],
+      [
+        "R08_tiffstack",
+        "rejected",
+        "Duplicate of scan 6 (same hash)"
+      ]
+    ],
+    "scans": {
+      "R01_week8.nii.gz": 1,
+      "R02_week8.nii.gz": 2,
+      "R03_week8.nii.gz": 3,
+      "R04_week8.nii.gz": 4,
+      "R05_week8.nii.gz": 5,
+      "R06_week8_raw.npy": 6
+    },
+    "analysis_seg_options": [
+      [
+        "Multi-Otsu (classical, material-aware)",
+        null
+      ],
+      [
+        "U-Net unet_noctx_s0 (ONNX Runtime, locked model)",
+        "['synthetic'] [commercial_eligible]"
+      ]
+    ],
+    "analysis_material_options": [
+      "Unspecified",
+      "Hydroxyapatite (HA)",
+      "beta-TCP",
+      "Biphasic calcium phosphate",
+      "Calcium sulfate",
+      "Bioglass 45S5",
+      "Xenograft (DBBM)",
+      "Allograft",
+      "Demineralised bone matrix",
+      "Collagen sponge",
+      "No graft (empty defect)"
+    ],
+    "analysis_plan": [
+      [
+        "R01_week8.nii.gz",
+        {},
+        "Unspecified"
+      ],
+      [
+        "R02_week8.nii.gz",
+        {
+          "no_graft": true
+        },
+        "No graft"
+      ],
+      [
+        "R03_week8.nii.gz",
+        {
+          "material": "ha"
+        },
+        "HA"
+      ],
+      [
+        "R04_week8.nii.gz",
+        {
+          "material": "collagen_sponge"
+        },
+        "Collagen sponge"
+      ],
+      [
+        "R05_week8.nii.gz",
+        {
+          "material": "beta_tcp",
+          "segmentation": "onnx:unet_noctx_s0"
+        },
+        "beta-TCP + U-Net"
+      ]
+    ],
+    "ui_event_loop_max_ms_during_analysis": 480.0,
+    "jobs": [
+      [
+        "Import 3 scan(s)",
+        "done",
+        ""
+      ],
+      [
+        "Analyse scan 1",
+        "done",
+        ""
+      ],
+      [
+        "Analyse scan 2",
+        "done",
+        ""
+      ],
+      [
+        "Analyse scan 3",
+        "done",
+        ""
+      ],
+      [
+        "Analyse scan 4",
+        "done",
+        ""
+      ],
+      [
+        "Analyse scan 5",
+        "done",
+        ""
+      ]
+    ],
+    "results_rows": [
+      {
+        "scan": "R01_week8.nii.gz",
+        "status": "flagged",
+        "status_tip": "QC requires review\nautomatic ROI requires review\n4 of 10 endpoints not supported\nTb.Th below 2.5 voxels: partial-volume dominated\nadvisor: graft material not specified: graft/new-bone split cannot be assessed\nautomatic ROI requires review",
+        "values": {
+          "TV_mm3": [
+            2.969471800881391,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "new_bone_volume_mm3": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: graft material not specified: graft/new-bone split cannot be assessed; graft material not specified: graft/new-bone split cannot be assessed"
+          ],
+          "new_bone_fraction": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: graft material not specified: graft/new-bone split cannot be assessed; graft material not specified: graft/new-bone split cannot be assessed"
+          ],
+          "residual_graft_fraction": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: graft material not specified: graft/new-bone split cannot be assessed; graft material not specified: graft/new-bone split cannot be assessed"
+          ],
+          "mineralized_fraction": [
+            27.078753394542865,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "uncertain_fraction": [
+            0.0,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "Tb_Th_um": [
+            null,
+            "not supported",
+            "automatic ROI requires review; Tb.Th below 2.5 voxels: partial-volume dominated; not supported by the measurement-support advisor"
+          ],
+          "Tb_Sp_um": [
+            null,
+            "not supported",
+            "automatic ROI requires review; not supported by the measurement-support advisor"
+          ],
+          "Tb_N_per_mm": [
+            null,
+            "not supported",
+            "automatic ROI requires review; not supported by the measurement-support advisor"
+          ],
+          "projected_coverage": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: graft material not specified: graft/new-bone split cannot be assessed; graft material not specified: graft/new-bone split cannot be assessed"
+          ]
+        }
+      },
+      {
+        "scan": "R02_week8.nii.gz",
+        "status": "flagged",
+        "status_tip": "QC requires review\nautomatic ROI requires review\n1 of 10 endpoints not supported\nadvisor: no graft implanted\nadvisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels\nautomatic ROI requires review\nno-graft configuration",
+        "values": {
+          "TV_mm3": [
+            2.971839800722604,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "new_bone_volume_mm3": [
+            1.007231932459833,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "new_bone_fraction": [
+            33.89253795628298,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "residual_graft_fraction": [
+            null,
+            "not supported",
+            "automatic ROI requires review; no-graft configuration; advisor: no graft implanted; no graft implanted"
+          ],
+          "mineralized_fraction": [
+            33.89253795628298,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "uncertain_fraction": [
+            0.0,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "Tb_Th_um": [
+            139.49929809570312,
+            "flagged",
+            "automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "Tb_Sp_um": [
+            205.49435424804688,
+            "flagged",
+            "automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "Tb_N_per_mm": [
+            2.898604056064211,
+            "flagged",
+            "automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "projected_coverage": [
+            99.76095617529882,
+            "flagged",
+            "automatic ROI requires review"
+          ]
+        }
+      },
+      {
+        "scan": "R03_week8.nii.gz",
+        "status": "flagged",
+        "status_tip": "QC requires review\nautomatic ROI requires review\n7 of 10 endpoints not supported\nadvisor: intensity-only separation insufficient (threshold-rule graft Dice 0.87; requirement \u22650.85 and volume within \u00b110% at graft share 0.01 and 0.01). Report total mineral; add a day-0 scan or histology to separate graft from new bone\nadvisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels\nautomatic ROI requires review",
+        "values": {
+          "TV_mm3": [
+            2.9765758004050302,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "new_bone_volume_mm3": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: intensity-only separation insufficient (threshold-rule graft Dice 0.87; requirement \u22650.85 and volume within \u00b110% at graft share 0.01 and 0.01). Report total mineral; add a day-0 scan or histology to separate graft from new bone; intensity-only separation insufficient (threshold-rule graft Dice 0.87; requirement \u22650.85 and volume within \u00b110% at graft share 0.01 and 0.01). Report total mineral; add a day-0 scan or histology to separate graft from new bone"
+          ],
+          "new_bone_fraction": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: intensity-only separation insufficient (threshold-rule graft Dice 0.87; requirement \u22650.85 and volume within \u00b110% at graft share 0.01 and 0.01). Report total mineral; add a day-0 scan or histology to separate graft from new bone; intensity-only separation insufficient (threshold-rule graft Dice 0.87; requirement \u22650.85 and volume within \u00b110% at graft share 0.01 and 0.01). Report total mineral; add a day-0 scan or histology to separate graft from new bone"
+          ],
+          "residual_graft_fraction": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: intensity-only separation insufficient (threshold-rule graft Dice 0.87; requirement \u22650.85 and volume within \u00b110% at graft share 0.01 and 0.01). Report total mineral; add a day-0 scan or histology to separate graft from new bone; intensity-only separation insufficient (threshold-rule graft Dice 0.87; requirement \u22650.85 and volume within \u00b110% at graft share 0.01 and 0.01). Report total mineral; add a day-0 scan or histology to separate graft from new bone"
+          ],
+          "mineralized_fraction": [
+            37.16915005697822,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "uncertain_fraction": [
+            0.0,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "Tb_Th_um": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels; typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "Tb_Sp_um": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels; typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "Tb_N_per_mm": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels; typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "projected_coverage": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: intensity-only separation insufficient (threshold-rule graft Dice 0.87; requirement \u22650.85 and volume within \u00b110% at graft share 0.01 and 0.01). Report total mineral; add a day-0 scan or histology to separate graft from new bone; intensity-only separation insufficient (threshold-rule graft Dice 0.87; requirement \u22650.85 and volume within \u00b110% at graft share 0.01 and 0.01). Report total mineral; add a day-0 scan or histology to separate graft from new bone"
+          ]
+        }
+      },
+      {
+        "scan": "R04_week8.nii.gz",
+        "status": "flagged",
+        "status_tip": "QC requires review\nautomatic ROI requires review\n1 of 10 endpoints not supported\nadvisor: collagen_sponge is near soft-tissue attenuation: mineral in the defect is attributed to new bone\nadvisor: collagen_sponge is radiolucent (mean \u22480.02 of host bone): residual graft is not visible on micro-CT; use histology\nadvisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels\nautomatic ROI requires review",
+        "values": {
+          "TV_mm3": [
+            2.9671038010401776,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "new_bone_volume_mm3": [
+            0.563327962225915,
+            "flagged",
+            "automatic ROI requires review; advisor: collagen_sponge is near soft-tissue attenuation: mineral in the defect is attributed to new bone"
+          ],
+          "new_bone_fraction": [
+            18.985785466232393,
+            "flagged",
+            "automatic ROI requires review; advisor: collagen_sponge is near soft-tissue attenuation: mineral in the defect is attributed to new bone"
+          ],
+          "residual_graft_fraction": [
+            null,
+            "not supported",
+            "automatic ROI requires review; advisor: collagen_sponge is radiolucent (mean \u22480.02 of host bone): residual graft is not visible on micro-CT; use histology; collagen_sponge is radiolucent (mean \u22480.02 of host bone): residual graft is not visible on micro-CT; use histology"
+          ],
+          "mineralized_fraction": [
+            28.899290351804318,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "uncertain_fraction": [
+            0.0,
+            "flagged",
+            "automatic ROI requires review"
+          ],
+          "Tb_Th_um": [
+            102.07225799560547,
+            "flagged",
+            "automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "Tb_Sp_um": [
+            227.6674041748047,
+            "flagged",
+            "automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "Tb_N_per_mm": [
+            3.0326955314316963,
+            "flagged",
+            "automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "projected_coverage": [
+            93.61532322426177,
+            "flagged",
+            "automatic ROI requires review; advisor: collagen_sponge is near soft-tissue attenuation: mineral in the defect is attributed to new bone"
+          ]
+        }
+      },
+      {
+        "scan": "R05_week8.nii.gz",
+        "status": "flagged",
+        "status_tip": "QC requires review\nautomatic ROI requires review\n7 of 10 endpoints not supported\nadvisor: beta_tcp resorbs into the bone intensity range; intensity separation accepted only at known timepoints \u22644 weeks (timepoint: unknown); material appearance is uncertain (physics model (NIST, assumed porosity) gives 1.12 vs knowledge base 1.41: profile uncertain); measure it with a material-only or day-0 scan. Report total mineral; add a day-0 scan or histology to separate graft from new bone\nadvisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels\nautomatic ROI requires review\nplausibility: graft outside defect ROI (fraction of graft)",
+        "values": {
+          "TV_mm3": [
+            2.9765758004050302,
+            "flagged",
+            "plausibility: graft outside defect ROI (fraction of graft); automatic ROI requires review"
+          ],
+          "new_bone_volume_mm3": [
+            null,
+            "not supported",
+            "plausibility: graft outside defect ROI (fraction of graft); automatic ROI requires review; advisor: beta_tcp resorbs into the bone intensity range; intensity separation accepted only at known timepoints \u22644 weeks (timepoint: unknown); material appearance is uncertain (physics model (NIST, assumed porosity) gives 1.12 vs knowledge base 1.41: profile uncertain); measure it with a material-only or day-0 scan. Report total mineral; add a day-0 scan or histology to separate graft from new bone; beta_tcp resorbs into the bone intensity range; intensity separation accepted only at known timepoints \u22644 weeks (timepoint: unknown); material appearance is uncertain (physics model (NIST, assumed porosity) gives 1.12 vs knowledge base 1.41: profile uncertain); measure it with a material-only or day-0 scan. Report total mineral; add a day-0 scan or histology to separate graft from new bone"
+          ],
+          "new_bone_fraction": [
+            null,
+            "not supported",
+            "plausibility: graft outside defect ROI (fraction of graft); automatic ROI requires review; advisor: beta_tcp resorbs into the bone intensity range; intensity separation accepted only at known timepoints \u22644 weeks (timepoint: unknown); material appearance is uncertain (physics model (NIST, assumed porosity) gives 1.12 vs knowledge base 1.41: profile uncertain); measure it with a material-only or day-0 scan. Report total mineral; add a day-0 scan or histology to separate graft from new bone; beta_tcp resorbs into the bone intensity range; intensity separation accepted only at known timepoints \u22644 weeks (timepoint: unknown); material appearance is uncertain (physics model (NIST, assumed porosity) gives 1.12 vs knowledge base 1.41: profile uncertain); measure it with a material-only or day-0 scan. Report total mineral; add a day-0 scan or histology to separate graft from new bone"
+          ],
+          "residual_graft_fraction": [
+            null,
+            "not supported",
+            "plausibility: graft outside defect ROI (fraction of graft); automatic ROI requires review; advisor: beta_tcp resorbs into the bone intensity range; intensity separation accepted only at known timepoints \u22644 weeks (timepoint: unknown); material appearance is uncertain (physics model (NIST, assumed porosity) gives 1.12 vs knowledge base 1.41: profile uncertain); measure it with a material-only or day-0 scan. Report total mineral; add a day-0 scan or histology to separate graft from new bone; beta_tcp resorbs into the bone intensity range; intensity separation accepted only at known timepoints \u22644 weeks (timepoint: unknown); material appearance is uncertain (physics model (NIST, assumed porosity) gives 1.12 vs knowledge base 1.41: profile uncertain); measure it with a material-only or day-0 scan. Report total mineral; add a day-0 scan or histology to separate graft from new bone"
+          ],
+          "mineralized_fraction": [
+            32.789352598421814,
+            "flagged",
+            "plausibility: graft outside defect ROI (fraction of graft); automatic ROI requires review"
+          ],
+          "uncertain_fraction": [
+            2.3844847233868713,
+            "flagged",
+            "plausibility: graft outside defect ROI (fraction of graft); automatic ROI requires review"
+          ],
+          "Tb_Th_um": [
+            null,
+            "not supported",
+            "plausibility: graft outside defect ROI (fraction of graft); automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels; typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "Tb_Sp_um": [
+            null,
+            "not supported",
+            "plausibility: graft outside defect ROI (fraction of graft); automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels; typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "Tb_N_per_mm": [
+            null,
+            "not supported",
+            "plausibility: graft outside defect ROI (fraction of graft); automatic ROI requires review; advisor: typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels; typical woven-bone trabeculae \u2248150 \u00b5m = 3.8 voxels"
+          ],
+          "projected_coverage": [
+            null,
+            "not supported",
+            "plausibility: graft outside defect ROI (fraction of graft); automatic ROI requires review; advisor: beta_tcp resorbs into the bone intensity range; intensity separation accepted only at known timepoints \u22644 weeks (timepoint: unknown); material appearance is uncertain (physics model (NIST, assumed porosity) gives 1.12 vs knowledge base 1.41: profile uncertain); measure it with a material-only or day-0 scan. Report total mineral; add a day-0 scan or histology to separate graft from new bone; beta_tcp resorbs into the bone intensity range; intensity separation accepted only at known timepoints \u22644 weeks (timepoint: unknown); material appearance is uncertain (physics model (NIST, assumed porosity) gives 1.12 vs knowledge base 1.41: profile uncertain); measure it with a material-only or day-0 scan. Report total mineral; add a day-0 scan or histology to separate graft from new bone"
+          ]
+        }
+      },
+      {
+        "scan": "R06_week8_raw.npy",
+        "status": "not analysed",
+        "status_tip": "Analysis not run",
+        "values": {
+          "TV_mm3": [
+            null,
+            "not supported",
+            "no analysis result (ROI not detected or analysis not run); analysis not run"
+          ],
+          "new_bone_volume_mm3": [
+            null,
+            "not supported",
+            "no analysis result (ROI not detected or analysis not run); analysis not run"
+          ],
+          "new_bone_fraction": [
+            null,
+            "not supported",
+            "no analysis result (ROI not detected or analysis not run); analysis not run"
+          ],
+          "residual_graft_fraction": [
+            null,
+            "not supported",
+            "no analysis result (ROI not detected or analysis not run); analysis not run"
+          ],
+          "mineralized_fraction": [
+            null,
+            "not supported",
+            "no analysis result (ROI not detected or analysis not run); analysis not run"
+          ],
+          "uncertain_fraction": [
+            null,
+            "not supported",
+            "no analysis result (ROI not detected or analysis not run); analysis not run"
+          ],
+          "Tb_Th_um": [
+            null,
+            "not supported",
+            "no analysis result (ROI not detected or analysis not run); analysis not run"
+          ],
+          "Tb_Sp_um": [
+            null,
+            "not supported",
+            "no analysis result (ROI not detected or analysis not run); analysis not run"
+          ],
+          "Tb_N_per_mm": [
+            null,
+            "not supported",
+            "no analysis result (ROI not detected or analysis not run); analysis not run"
+          ],
+          "projected_coverage": [
+            null,
+            "not supported",
+            "no analysis result (ROI not detected or analysis not run); analysis not run"
+          ]
+        }
+      }
+    ],
+    "window_presets": [
+      "Auto (1-99.5 %)",
+      "Full range",
+      "Mineralised (median-max)",
+      "Soft tissue (1 % - median)"
+    ],
+    "title_with_edits": "* UX review study - OsteoQuant Desktop",
+    "seg_versions_combo": [
+      "v1  automatic  multiotsu",
+      "v2  corrected  multiotsu"
+    ],
+    "analyst_self_sign": "PermissionError: Separation of duties: you cannot approve a segmentation you created",
+    "reviewer_sign": 1,
+    "short_meaning_error": "ValueError: State the meaning of the signature (at least 5 characters)",
+    "infobar_blinded": "Scan 0001   \u00b7   48 x 72 x 72 voxels   \u00b7   40, 40, 40 \u00b5m   \u00b7   segmentation v2 (corrected, multiotsu)",
+    "qc_banner_blinded": "Scan 0001   QC verdict: REVIEW   (0 fail, 3 warn)",
+    "jobs_titles_blinded": [
+      "Import 3 scan(s)",
+      "Analyse scan 1",
+      "Analyse scan 2",
+      "Analyse scan 3",
+      "Analyse scan 4",
+      "Analyse scan 5",
+      "Save label revision (scan 1)"
+    ],
+    "report": {
+      "id": 1,
+      "status": "ready",
+      "pdf_path": "/tmp/oq_ux_h114ykpq/ux_project/data/org1/reports/report1.pdf",
+      "unblinded": 0
+    },
+    "report_self_approve": "PermissionError: Separation of duties: you cannot approve a segmentation you created",
+    "audit_leaks_in_blinded_mode": [
+      [
+        14,
+        "scan.import",
+        "{\"content_sha256\": \"c23eb07c63ab30188b3df4b2bc5afc620fe89d579245f5fd01769e6a6148148b\", \"file_sha256\": \"71ef2dc0df84883f2961c707192f091d1f45418e224d6c79c38ed11dcc414d42\", \"source\": \"R02_week8.nii.gz\"}"
+      ],
+      [
+        11,
+        "scan.import",
+        "{\"content_sha256\": \"13609bb4ffffc76848d3e483a5ff4243b1708d46d04fc160d8c2acdb35504abc\", \"file_sha256\": \"4e597b635bfe18ae1981a962a833b2a4150c53edf7b56d9d11404ed73f23251a\", \"source\": \"R01_week8.nii.gz\"}"
+      ]
+    ],
+    "audit_leak_count": 2,
+    "cancel_job": [
+      "cancelled",
+      "cancelled by user"
+    ]
+  }
+}

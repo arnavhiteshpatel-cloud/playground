@@ -204,3 +204,16 @@ def test_hd95_asymmetric_sets_match_oracle(swap):
     r = binary_metrics(a, b)
     assert r["hd95_um"] == pytest.approx(max(np.percentile(d1, 95), np.percentile(d2, 95)))
     assert r["hd95_um"] != pytest.approx(max(np.percentile(d1, 96), np.percentile(d2, 96)))
+
+
+@pytest.mark.parametrize("tp,fp,fn", [(0, 1, 1), (1, 3, 1), (1, 1, 2), (2, 1, 5)])
+def test_overlap_closed_forms_for_count_patterns(tp, fp, fn):
+    n = tp + fp + fn + 1
+    p = np.zeros(n, bool)
+    t = np.zeros(n, bool)
+    p[:tp] = t[:tp] = True
+    p[tp:tp + fp] = True
+    t[tp + fp:tp + fp + fn] = True
+    r = binary_metrics(p.reshape(1, 1, n), t.reshape(1, 1, n), distances=False)
+    assert r["dice"] == pytest.approx(2 * tp / (2 * tp + fp + fn))
+    assert r["iou"] == pytest.approx(tp / (tp + fp + fn))

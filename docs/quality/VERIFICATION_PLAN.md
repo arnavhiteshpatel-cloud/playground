@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Document ID | OQ-QMS-VP-001 |
-| Version | 0.1 (DRAFT) |
+| Version | 0.2 (DRAFT), Generation-2 desktop re-baseline |
 | Date | 2026-11-27 |
 | Owner | Engineering Lead |
 | Related | URS, FS, RISK_ASSESSMENT.md, traceability_matrix.csv, OQ_PROTOCOL.md |
@@ -20,25 +20,26 @@ Define how engineering verifies that the implementation meets the FS (design ver
 
 | Risk tier | Examples | Required verification |
 |---|---|---|
-| High (S ≥ 4) | Voxel spacing, label map, hashing, audit chain, blinding, signatures, morphometry, tenant isolation, retention | Unit + integration tests with explicit expected values; negative/challenge tests; code review by second engineer; mutation or property-based tests where practical; 100% of FS items traced |
+| High (S ≥ 4) | Voxel spacing, label map, hashing, audit chain, blinding, signatures, re-authentication, morphometry, measurement support, validation records, retention | Unit + integration tests with explicit expected values; negative/challenge tests; code review by second engineer; mutation or property-based tests where practical; 100% of FS items traced |
 | Medium | QC plug-ins, exports, reporting layout | Unit/integration tests; code review |
 | Low | Cosmetic UI | Exploratory test notes |
 
-## 3. Test levels and tooling (proposed)
-| Level | Tooling | Location (proposed) |
+## 3. Test levels and tooling
+| Level | Tooling | Location (as built, 2026-11-27) |
 |---|---|---|
-| Static analysis | `ruff`, `mypy --strict` on core packages, `bandit`, `pip-audit` | CI |
-| Unit | `pytest`, `hypothesis` (property-based: e.g., hash-chain verification, spacing normalisation, CSV round-trip) | `tests/unit/` |
-| Integration | `pytest` + FastAPI TestClient, temp SQLite, temp file store, two-tenant fixtures | `tests/integration/` |
-| System / E2E | Scripted API flows; optional Playwright for browser viewer | `tests/system/` |
-| Numerical regression ("golden") | Frozen golden datasets with expected metrics JSON and tolerances; run on every PR touching io/roi/segment/morphometry/stats | `tests/golden/`, data in `validation/golden/` |
-| Model evaluation | Held-out test set metrics, label-map check, determinism check | `validation/model_eval/` |
+| Static analysis | `ruff`, `bandit`, `pip-audit` (manual runs recorded in `docs/security/`); `mypy --strict` proposed | CI (partly) |
+| Unit / property | `pytest`, property-style randomised tests (hash chain, I/O round-trips, morphometry invariances) | `tests/test_*.py` |
+| Integration (library + store) | `pytest`, temporary SQLite project stores, temporary scan stores | `tests/test_*.py` |
+| Desktop (model/service and widget) | `pytest-qt`, `QT_QPA_PLATFORM=offscreen`; services and models tested without windows, widgets off-screen | `tests/desktop/` |
+| System / end-to-end | `python -m osteoquant.desktop --selftest` (headless import → QC → analysis → edit → report → chain verification); exercised by `tests/desktop/test_main_window.py::test_selftest_entry_point` | `osteoquant/desktop/selftest.py` |
+| Optional API interface | FastAPI TestClient | `tests/test_api.py`, `tests/test_store_api_workflows.py`, `tests/test_security_gen2.py` |
+| Numerical / scientific experiments | Scripted experiments with recorded results (not part of the pytest suite) | `experiments/`, `experiments/results/` |
 
-Test naming: `test_<behaviour>` as proposed in traceability_matrix.csv; each test docstring cites FS ID(s), e.g. `"""FS-054-1; RSK-08"""`. A CI script shall parse docstrings to fill `test_id`/`test_file` columns and fail if any FS row lacks a test.
+Traceability: `scripts/build_traceability.py` holds the requirement → test mapping, checks every referenced test against `pytest --collect-only -q`, checks URS/FS/protocol consistency and writes `traceability_matrix.csv`. Run it (or `--check` in CI) whenever tests or requirements change.
 
 ## 4. Coverage targets
 - Requirements coverage: 100% of FS items with ≥ 1 test (or documented review for documentation FS).
-- Code coverage (line/branch): ≥ 90% for `audit`, `io`, `roi`, `segment` (label handling), `morphometry`, `stats`, `api` auth layer; ≥ 75% overall. Coverage is a guide, not acceptance on its own.
+- Code coverage (line/branch): ≥ 90% for `audit`, `io`, `roi`, `segment` (label handling), `morphometry`, `stats`, `study` (access control), `licensing`, `advisor`; ≥ 75% overall. The recorded baseline (`docs/qa/coverage_baseline.txt`, library only, desktop excluded) is 62% overall. Coverage is a guide, not acceptance on its own.
 
 ## 5. Numerical tolerances (proposed, to be approved)
 | Quantity | Phantom | Tolerance |
@@ -52,11 +53,12 @@ Test naming: `test_<behaviour>` as proposed in traceability_matrix.csv; each tes
 
 ## 6. Special verification topics
 - **Audit chain:** property-based tests generating random sequences of tamper operations (modify, insert, delete, swap, truncate) — verification must detect 100%.
-- **Tenant isolation:** generated test that enumerates all routes × object types and asserts cross-tenant access fails.
+- **Role enforcement (desktop):** test that enumerates desktop actions × roles and asserts the permission matrix (FS-011-2). Organisation isolation remains tested for the optional API.
 - **Label map:** tests with permuted maps, extra labels, wrong dtype; legend generation from map.
 - **Blinding:** search all exports/filenames/log lines produced pre-unblinding for allocation strings.
 - **Dependency drift:** golden regression run when lock file changes.
-- **Security:** authentication/authorization tests; OWASP-style checks for injection on query params; secrets not logged.
+- **Security:** authentication/authorisation and re-authentication lockout tests (including the desktop path, FS-092-2); malicious-input corpus (FS-133-1); a network-blocked self-test for offline operation (FS-210-1, FS-211-1).
+- **Measurement support:** tests that read the rendered PDF/CSV for support status, conditions and advisor version (FS-152-2).
 
 ## 7. Defect management
 Defects tracked with ID, severity (mapped to risk tiers), affected FS/URS, fix commit, verifying test. High-severity defects block release.

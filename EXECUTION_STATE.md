@@ -11,7 +11,7 @@ FORENSIC_AUDIT.md (Gen-0 audit), REVIEW_REGISTRY.md (reviews), DEFECT_REGISTRY.m
 | Gen | Scope | Status |
 |---|---|---|
 | 0 | Forensic audit, reproduction (G exact, P exact, C ±0.004, H/I running), remediation register, §55 ledgers | done (H/I reproduction pending) |
-| 1–2 | Science: measurement-support advisor (v1.2.0) + pipeline abstention; generator v2 (granule motion); granule tracking; displacement-based registration QC; ROI propagation; DR synthesis; ONNX runtime; experiments S1/S1b/S1c/F2/L3/L4/S2/U1/O2 | in progress (compute queue) |
+| 1–2 | Science: measurement-support advisor (v1.3.0) + pipeline abstention; generator v2 (granule motion); granule tracking; displacement-based registration QC; ROI propagation; DR synthesis; ONNX runtime; experiments S1/S1b/S1c/F2/L3/L4/S2/U1/O2 | in progress (compute queue) |
 | 3 | Desktop application (PySide6+VTK), licensing, packaging, CI | in progress (desktop stream) |
 | 4 | QA (coverage/property/fuzz/mutation), security Gen-2, CI | in progress (QA stream) |
 | 4 | Independent reviews | cycle 1 done for imaging, statistics, ML, architecture (60 findings, all critical/high closed); cycle 1 running for biology/CRO/quality and investor/IP |
@@ -20,7 +20,7 @@ FORENSIC_AUDIT.md (Gen-0 audit), REVIEW_REGISTRY.md (reviews), DEFECT_REGISTRY.m
 ## Component status (Generation 2 changes)
 | Component | Status | Evidence |
 |---|---|---|
-| Measurement-support advisor | ✅ v1.2.0, 22 unit tests; validation re-runs queued | osteoquant/advisor, tests/test_advisor.py, docs/science/MEASUREMENT_SUPPORT.md |
+| Measurement-support advisor | ✅ v1.3.0 (knowledge-base profiles), 28 unit tests; validation re-runs queued | osteoquant/advisor, tests/test_advisor.py, docs/science/MEASUREMENT_SUPPORT.md |
 | Reports honour abstention | ✅ | api/bundle.py, report/defectfill.py |
 | Endpoint definitions / pre-registration / histology scope | ✅ docs | docs/science/ |
 | Longitudinal v2 (tracking, QC, ROI propagation) | ✅ tested; L3/L4 running | tests/test_longitudinal_v2.py |

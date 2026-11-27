@@ -702,6 +702,10 @@ def main(argv=None) -> int:
         by_urs[r.urs].add(r.status)
     urs_status = collections.Counter(V if s == {V} else G if s == {G} else P for s in by_urs.values())
     print("per URS (all FS rows VERIFIED / any mix / all GAP): " + ", ".join(f"{k} {urs_status.get(k, 0)}" for k in (V, P, G)))
+    by_area = collections.defaultdict(collections.Counter)
+    for r in ROWS:
+        by_area[r.area][r.status] += 1
+    print("per area (VERIFIED/PARTIAL/GAP): " + "; ".join(f"{k} {v[V]}/{v[P]}/{v[G]}" for k, v in by_area.items()))
     if errors:
         return 1
     if a.check:

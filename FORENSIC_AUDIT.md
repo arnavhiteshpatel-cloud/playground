@@ -1,5 +1,8 @@
 # Forensic Audit of the Generation-0 Baseline
 
+**Naming.** "Generation 0" in this mandate = the baseline delivered under the first mandate (called Generation 1 in
+some earlier documents: SCIENTIFIC_EVIDENCE, DECISIONS, docs/security). Both refer to commit `ee09a70`.
+
 **Baseline snapshot:** git commit `ee09a70` on branch `claude/osteoquant-autonomous-dev-ujqgkl` (27 Nov 2026). The
 commit is the recoverable snapshot: `git checkout ee09a70` restores every file, result JSON and document exactly as
 audited. Data (`data/`, 12 GB) and model weights (`models/`, 40 MB) are git-ignored; their regeneration commands are

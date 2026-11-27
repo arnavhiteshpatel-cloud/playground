@@ -107,8 +107,9 @@ class Project:
 
     def reauthenticate(self, password: str, object_type=None, object_id=None) -> bool:
         """Re-check the signed-in user's password (used before electronic signatures)."""
-        row = self.store.q1("SELECT pw_hash FROM users WHERE id=?", (self.require_user()["id"],))
-        ok = bool(row) and check_password(password, row["pw_hash"])
+        # Delegate to Store.reauthenticate so failures count towards the same temporary lockout as login
+        # (cycle-1 finding: the desktop path previously bypassed the lockout fixed for the API).
+        ok = self.store.reauthenticate(self.require_user(), password)
         if not ok:
             self.store.audit.record("review.reauth_failed", self.user["id"], self.user["org_id"], object_type, object_id)
         return ok

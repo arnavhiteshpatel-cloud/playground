@@ -23,7 +23,7 @@ comes from a result file in this repository; synthetic results are labelled. Sta
 | Viewer, correction with versioning, re-authenticated sign-off, audit trail, PDF/CSV reports | 58 automated tests + a real headless-browser session |
 
 ## 3. What was tested — and how many tests
-58 pytest tests (unit, integration, end-to-end API, security regressions, numerical reference values); 16 experiments;
+61 pytest tests (unit, integration, end-to-end API, security regressions, numerical reference values); 16 experiments;
 a headless-browser run of the full UI workflow; an independent adversarial review (21 security + 18 scientific findings).
 
 ## 4. Models trained (all CPU, all research prototypes)

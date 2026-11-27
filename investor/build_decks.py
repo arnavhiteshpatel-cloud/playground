@@ -125,7 +125,7 @@ def s_built(d):
         "Morphometry verified vs analytic truth and vs Scanco IPL on public data",
         "Web workbench: orthogonal viewer, brush correction with versioning, 3D surfaces, re-authenticated sign-off",
         "Hash-chained audit trail, RBAC, tenant isolation, blinding; DefectFill PDF/CSV reports",
-        "60 automated tests; 16 computational experiments; independent security + science review; 3 sample reports",
+        "61 automated tests; 16 computational experiments; independent security + science review; 3 sample reports",
     ], image=SHOT / "04_viewer_edit_measure_3d.png", img_w=6.4, kicker="Product")
 
 

@@ -93,7 +93,7 @@ def main():
         "quality control, automatic defect ROI, classical and learned three-class segmentation with uncertainty, "
         "verified morphometry, biostatistics, longitudinal registration, an experimental histology module, a multi-user "
         "web workbench with correction tools and re-authenticated sign-off, a hash-chained audit trail, and DefectFill "
-        "PDF/CSV reports. 58 automated tests pass.",
+        "PDF/CSV reports. 61 automated tests pass.",
         f"<b>Real-data result:</b> morphometry agreed with Scanco IPL reference maps on 8 public trabecular samples "
         f"(Tb.Th ICC(2,1) {f3(g.get('TbTh', {}).get('icc_2_1', {}).get('icc'))}, mean difference "
         f"{f3(100 * g.get('TbTh', {}).get('mean_rel_error', 0), 1)}%) — after identifying that the border convention alone "

@@ -109,7 +109,7 @@
 | Block | Draft |
 |---|---|
 | Customer segments | CROs (bone-defect models); orthobiologic / graft companies; academic MSK labs and imaging cores |
-| Value propositions | Graft vs. new-bone separation; CIs on endpoints; time savings; audit trail |
+| Value propositions | Graft vs. new-bone separation where identifiable (and explicit abstention where not); CIs on endpoints; hypothesised analyst time savings (unmeasured — to be tested in a timed study); audit trail |
 | Channels | Direct sales to CRO study directors; ORS/TERMIS conferences; academic design partners; imaging-core referrals |
 | Customer relationships | Design-partner pilots; validation reports per material; support SLAs |
 | Revenue streams | Per-study fee; annual site license; validation-as-a-service for new materials |

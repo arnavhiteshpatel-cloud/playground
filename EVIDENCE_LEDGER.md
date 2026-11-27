@@ -21,7 +21,6 @@ ledger `SCIENTIFIC_EVIDENCE.md` (rows 1–7, R1–R12, which remain valid with t
 | G2-001 | The Gen-0 product UI required a local server and a browser | E3 (code fact) | FORENSIC_AUDIT FA-13 |
 | G2-002 | "≈78% analyst time saving" is an assumption-derived model output, not a measurement | E6 | FORENSIC_AUDIT FA-06; exp_K_M effort_model |
 | G2-003 | Synthetic-trained U-Net zero-shot on real dog micro-CT: Dice 0.379 | E3 | exp_H_I_real.json (n=5 test) |
-
 | G2-004 | Day-0 graft-footprint propagation degrades sharply with post-implantation granule motion: graft Dice 0.80 → 0.535 (50 µm) → 0.35 (100 µm) in the overlap regime | E4 | exp_L3_displacement.json (3 specimens/condition) |
 | G2-005 | With advisor 1.3.2 and conservative tracking, all 60 failed day-0 measurements in L3 were refused; none supported failed | E4 | exp_L3_displacement.json |
 | G2-006 | Assumption-based material profiles can mis-set thresholds (BCP profile vs simulated scanner: −42…−49% graft volume while "supported"); advisor 1.3.1 adds a scan-vs-profile consistency check | E4 | exp_S1b_advisor_threshold.json (1.3.0 run) |

@@ -11,13 +11,14 @@ and host bone in micro-CT, yet laboratories rely on thresholds whose validity de
 **Methods.** We built a procedural phantom generator with exact voxel ground truth (three defect models; 15 materials
 with attenuation from NIST elemental coefficients), and benchmarked (i) intensity-only thresholding (global, Otsu,
 multi-Otsu, GMM, k-means), (ii) a multi-scale feature random forest (RF), (iii) a 3D U-Net, and (iv) registration of a
-day-0 scan, under controlled graft–bone density overlap, noise, resolution and artefacts. An oracle *intensity-only
-Bayes bound* quantified the information available from voxel intensity alone.
+day-0 scan, under controlled graft–bone density overlap, noise, resolution and artefacts. A *Dice-optimal
+intensity-only oracle* (best union of intensity bins given the true class-conditional histograms) upper-bounds what
+any voxel-wise intensity rule can achieve.
 **Results.** On 16 held-out phantoms (4 ceramic materials), the U-Net reached graft Dice 0.918 (95% CI 0.886–0.950)
 and new-bone Dice 0.861 (0.837–0.884), versus 0.771/0.674 for a CTAn-style two-threshold workflow. When graft density
-fell inside the new-bone range (900 mgHA/cm³) at high noise, the intensity-only bound fell to graft Dice 0.30–0.65,
-whereas the RF retained 0.88 — but only when granules were morphologically compact; with strut-like granules it fell to
-0.66–0.70. A registered day-0 graft footprint gave graft Dice 0.915 (compact) and 0.816 (strut-like) with sub-voxel
+fell inside the new-bone range (800–1000 mgHA/cm³), the intensity-only oracle fell to graft Dice 0.52–0.77 (noise
+dependent), whereas an RF with shape/texture features retained 0.85–0.92 — but only when granules were morphologically
+compact; with strut-like granules the oracle was 0.36 and the RF 0.66–0.70. A registered day-0 graft footprint gave graft Dice 0.915 (compact) and 0.816 (strut-like) with sub-voxel
 registration error. An explicit ROI-context channel did not improve the U-Net (0.919 vs 0.918).
 **Conclusions.** In simulation, intensity is sufficient only when graft and new bone differ in density by more than the
 noise; spatial context compensates only when graft morphology is distinctive; a day-0 baseline scan is the most robust
@@ -58,8 +59,10 @@ local SD at 0–160 µm, Hessian eigenvalues, distance to ROI boundary; 15k voxe
 day-0 propagation (Section 2.6). All single-timepoint methods received the true ROI so ROI error does not confound.
 2.5 **Separability benchmark.** Graft modelled as mineral of HA-equivalent density X ∈ {2200…650} mgHA/cm³ (new
 bone 650–1000 by maturity; host 1000–1150) × noise σ ∈ {30, 80, 150, 250}; 4 specimens (RF trained on 1, tested on 3).
-Intensity-only Bayes bound: the optimal rule given the test volumes' true class-conditional intensity histograms
-(128 bins) — an upper bound for any voxel-wise intensity method. Ablation (C2): RF feature sets and granule
+Intensity-only oracle: with the test volumes' true class-conditional histograms (256 bins), the Dice-maximising union
+of bins (a superlevel set of the graft likelihood ratio) — an upper bound for any voxel-wise intensity method at this
+binning. (An earlier draft reported the accuracy-optimal rule's Dice, which is not a Dice bound; corrected after
+independent review.) Ablation (C2): RF feature sets and granule
 morphology (compact 300–600 µm, roughness 0.15 vs strut-like 120–250 µm, roughness 0.6).
 2.6 **Longitudinal.** For each specimen, day-0 (s=0) and later (s=0.6) phantoms share host anatomy and initial packing;
 the later scan undergoes random rigid motion (≤5°, ≤200 µm) and is registered (rigid, normalised correlation, metric
@@ -77,16 +80,17 @@ graft Dice 0.72–0.77 and new-bone Dice 0.57–0.72 for intensity methods; RF 0
 3.2 **3D U-Net (Experiment B).** Graft 0.918 (0.886–0.950), new bone 0.861 (0.837–0.884), host 0.960; HD95 graft
 47 µm; ECE 0.008; inference 0.7 s per ~0.4 Mvoxel volume on 4 CPU cores. By material: HA 0.968, BCP 0.950, CaSO4
 0.889, β-TCP 0.886. Context ablation: without ROI channel 0.919 / 0.866 / 0.966 — no benefit from explicit context.
-3.3 **Separability (Figure 1; Experiment C).** At noise σ=80: graft density 1600 → intensity bound 0.955, multi-Otsu
-0.951, RF 0.962; 1000 → 0.760 / 0.749 / 0.917; 900 → 0.651 / 0.683 / 0.899. At σ=250 and 900 mgHA/cm³: bound 0.299,
+3.3 **Separability (Figure 1; Experiment C).** At noise σ=80: graft density 1600 → intensity oracle 0.955, multi-Otsu
+0.951, RF 0.962; 1000 → 0.771 / 0.749 / 0.917; 900 → 0.686 / 0.683 / 0.899. At σ=250 and 900 mgHA/cm³: oracle 0.551,
 multi-Otsu 0.508, RF 0.877. Resolution (D): RF graft Dice 0.947→0.880 from 40→120 µm voxels at 1300 mgHA/cm³.
 Artefacts (E): rings and 20% cupping cost ≤0.01 Dice; a 60 µm PSF cut multi-Otsu to 0.846 (RF 0.925); an unnormalised
 gain/offset shift cut RF to 0.810, restored to 0.962 by percentile normalisation.
-3.4 **What carries the information (C2).** Overlap regime (900 mgHA/cm³, σ=150), compact granules: raw intensity
-0.486, multi-scale intensity 0.720, + shape/texture 0.857, + spatial prior 0.881. Strut-like granules: 0.246 / 0.534 /
-0.646 / 0.704.
+3.4 **What carries the information (C2).** Overlap regime (900 mgHA/cm³, σ=150), compact granules: intensity oracle
+0.610, RF raw intensity 0.486, multi-scale intensity 0.720, + shape/texture 0.857, + spatial prior (true-ROI distance)
+0.881. Strut-like granules: oracle 0.357; 0.246 / 0.534 / 0.646 / 0.704. Multi-scale smoothing alone exceeds the
+voxel-wise oracle because it pools neighbouring voxels (denoising), which a voxel-wise rule cannot.
 3.5 **Day-0 propagation (L, L2).** Rigid TRE 0.3–4 µm (sub-voxel). Compact granules, 900 mgHA/cm³: day-0 0.915 vs RF
-0.887, multi-Otsu 0.558, bound 0.394. Strut-like: day-0 **0.816** vs RF 0.663, multi-Otsu 0.318. At 1600 mgHA/cm³
+0.887, multi-Otsu 0.558, bound 0.394. Strut-like: day-0 **0.816** vs RF 0.663, multi-Otsu 0.318, intensity oracle 0.323. At 1600 mgHA/cm³
 (easy regime) day-0 (0.893) is slightly *worse* than single-timepoint RF (0.955) because new bone formed inside the
 original footprint is counted as graft (creeping substitution).
 3.6 **Morphometry vs Scanco IPL (real data).** Tb.Th ICC(2,1) 0.983, mean difference −2.4%; Tb.Sp ICC 0.948, −4.1%;
@@ -105,6 +109,11 @@ voxel thicknesses (+1 voxel for odd); digitised rods ≈1 voxel thin.
 * Border conventions alone change thickness by ~18% against a reference implementation; methods sections should state them.
 
 ## 5. Limitations
+**Independent-review caveats (2026-11-27):** (i) RF "spatial" features and the U-Net context channel use the *true*
+ROI, whose geometry partly determines labels in the generator — the no-context U-Net and no-spatial RF are the fair
+comparisons; (ii) the day-0 experiment is best-case: graft only shrinks in place between timepoints (no migration,
+fragmentation or swelling); (iii) the thickness edge convention was chosen after seeing the IPL comparison set;
+(iv) RF baselines in an earlier run were trained on fewer materials than the U-Net (rerun with balanced training).
 Synthetic morphology and biology are simplified assumptions; single generator family for training and test (optimistic);
 attenuation model ignores carbonate substitution and real granule microstructure; Mode A imaging is not projection
 physics; rigid registration only (no biological deformation); n of specimens per condition is small (3–16); one

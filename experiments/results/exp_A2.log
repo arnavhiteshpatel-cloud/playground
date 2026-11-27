@@ -1,2 +1,26 @@
 test_000_condyle_beta_tcp {'global_fixed_sop': 0.347, 'otsu_ctan_style': 0.415, 'adaptive': 0.541, 'multiotsu': 0.41, 'multiotsu_smoothed': 0.408, 'gmm3': 0.23, 'kmeans3': 0.309, 'intensity_morphology': 0.46, 'random_forest': 0.533, 'random_forest_no_spatial': 0.452}
 test_001_calvarial_beta_tcp {'global_fixed_sop': 0.401, 'otsu_ctan_style': 0.383, 'adaptive': 0.441, 'multiotsu': 0.365, 'multiotsu_smoothed': 0.404, 'gmm3': 0.266, 'kmeans3': 0.271, 'intensity_morphology': 0.436, 'random_forest': 0.527, 'random_forest_no_spatial': 0.504}
+test_002_segmental_beta_tcp {'global_fixed_sop': 0.781, 'otsu_ctan_style': 0.762, 'adaptive': 0.697, 'multiotsu': 0.76, 'multiotsu_smoothed': 0.681, 'gmm3': 0.719, 'kmeans3': 0.684, 'intensity_morphology': 0.715, 'random_forest': 0.787, 'random_forest_no_spatial': 0.519}
+test_003_condyle_bcp {'global_fixed_sop': 0.546, 'otsu_ctan_style': 0.624, 'adaptive': 0.531, 'multiotsu': 0.624, 'multiotsu_smoothed': 0.559, 'gmm3': 0.587, 'kmeans3': 0.617, 'intensity_morphology': 0.618, 'random_forest': 0.581, 'random_forest_no_spatial': 0.566}
+test_004_calvarial_bcp {'global_fixed_sop': 0.548, 'otsu_ctan_style': 0.603, 'adaptive': 0.589, 'multiotsu': 0.604, 'multiotsu_smoothed': 0.543, 'gmm3': 0.583, 'kmeans3': 0.6, 'intensity_morphology': 0.605, 'random_forest': 0.593, 'random_forest_no_spatial': 0.58}
+test_005_segmental_bcp {'global_fixed_sop': 0.722, 'otsu_ctan_style': 0.731, 'adaptive': 0.67, 'multiotsu': 0.737, 'multiotsu_smoothed': 0.627, 'gmm3': 0.769, 'kmeans3': 0.789, 'intensity_morphology': 0.715, 'random_forest': 0.834, 'random_forest_no_spatial': 0.557}
+test_006_condyle_ha {'global_fixed_sop': 0.475, 'otsu_ctan_style': 0.418, 'adaptive': 0.381, 'multiotsu': 0.422, 'multiotsu_smoothed': 0.333, 'gmm3': 0.506, 'kmeans3': 0.493, 'intensity_morphology': 0.411, 'random_forest': 0.482, 'random_forest_no_spatial': 0.491}
+test_007_calvarial_ha {'global_fixed_sop': 0.456, 'otsu_ctan_style': 0.498, 'adaptive': 0.426, 'multiotsu': 0.503, 'multiotsu_smoothed': 0.38, 'gmm3': 0.55, 'kmeans3': 0.556, 'intensity_morphology': 0.49, 'random_forest': 0.588, 'random_forest_no_spatial': 0.595}
+test_008_segmental_ha {'global_fixed_sop': 0.679, 'otsu_ctan_style': 0.859, 'adaptive': 0.714, 'multiotsu': 0.86, 'multiotsu_smoothed': 0.831, 'gmm3': 0.884, 'kmeans3': 0.898, 'intensity_morphology': 0.852, 'random_forest': 0.859, 'random_forest_no_spatial': 0.572}
+test_009_condyle_calcium_sulfate {'global_fixed_sop': 0.311, 'otsu_ctan_style': 0.333, 'adaptive': 0.449, 'multiotsu': 0.328, 'multiotsu_smoothed': 0.333, 'gmm3': 0.205, 'kmeans3': 0.225, 'intensity_morphology': 0.455, 'random_forest': 0.478, 'random_forest_no_spatial': 0.429}
+test_010_calvarial_calcium_sulfate {'global_fixed_sop': 0.502, 'otsu_ctan_style': 0.465, 'adaptive': 0.484, 'multiotsu': 0.463, 'multiotsu_smoothed': 0.393, 'gmm3': 0.422, 'kmeans3': 0.418, 'intensity_morphology': 0.473, 'random_forest': 0.544, 'random_forest_no_spatial': 0.552}
+test_011_segmental_calcium_sulfate {'global_fixed_sop': 0.713, 'otsu_ctan_style': 0.692, 'adaptive': 0.648, 'multiotsu': 0.692, 'multiotsu_smoothed': 0.617, 'gmm3': 0.633, 'kmeans3': 0.627, 'intensity_morphology': 0.681, 'random_forest': 0.716, 'random_forest_no_spatial': 0.463}
+test_012_condyle_beta_tcp {'global_fixed_sop': 0.424, 'otsu_ctan_style': 0.387, 'adaptive': 0.513, 'multiotsu': 0.383, 'multiotsu_smoothed': 0.386, 'gmm3': 0.288, 'kmeans3': 0.309, 'intensity_morphology': 0.321, 'random_forest': 0.523, 'random_forest_no_spatial': 0.506}
+test_013_calvarial_beta_tcp {'global_fixed_sop': 0.538, 'otsu_ctan_style': 0.526, 'adaptive': 0.545, 'multiotsu': 0.519, 'multiotsu_smoothed': 0.467, 'gmm3': 0.449, 'kmeans3': 0.414, 'intensity_morphology': 0.55, 'random_forest': 0.582, 'random_forest_no_spatial': 0.585}
+test_014_segmental_beta_tcp {'global_fixed_sop': 0.499, 'otsu_ctan_style': 0.615, 'adaptive': 0.574, 'multiotsu': 0.615, 'multiotsu_smoothed': 0.518, 'gmm3': 0.624, 'kmeans3': 0.665, 'intensity_morphology': 0.601, 'random_forest': 0.84, 'random_forest_no_spatial': 0.564}
+test_015_condyle_bcp {'global_fixed_sop': 0.574, 'otsu_ctan_style': 0.606, 'adaptive': 0.578, 'multiotsu': 0.602, 'multiotsu_smoothed': 0.563, 'gmm3': 0.593, 'kmeans3': 0.593, 'intensity_morphology': 0.607, 'random_forest': 0.584, 'random_forest_no_spatial': 0.576}
+adaptive                 mineral 0.790  meanDiceROI 0.549 new 0.698 graft 0.742  0.01s
+global_fixed_sop         mineral 0.926  meanDiceROI 0.532 new 0.649 graft 0.736  0.02s
+gmm3                     mineral 0.866  meanDiceROI 0.519 new 0.598 graft 0.733  0.62s
+intensity_morphology     mineral 0.933  meanDiceROI 0.562 new 0.715 graft 0.748  0.10s
+kmeans3                  mineral 0.884  meanDiceROI 0.529 new 0.630 graft 0.728  0.84s
+multiotsu                mineral 0.934  meanDiceROI 0.555 new 0.673 graft 0.764  0.01s
+multiotsu_smoothed       mineral 0.877  meanDiceROI 0.503 new 0.568 graft 0.736  0.02s
+otsu_ctan_style          mineral 0.933  meanDiceROI 0.557 new 0.673 graft 0.770  0.03s
+random_forest            mineral 0.916  meanDiceROI 0.628 new 0.745 graft 0.888  0.95s
+random_forest_no_spatial mineral 0.905  meanDiceROI 0.532 new 0.705 graft 0.878  1.08s

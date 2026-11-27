@@ -266,6 +266,8 @@ class RFSegmenter:
         for x, y, sp, roi in zip(images, labels, spacings, rois):
             f = self._feats(x, sp, roi)
             for c in np.unique(y):
+                if c == 255:          # ignore label (unlabelled / out-of-scope voxels)
+                    continue
                 idx = np.flatnonzero(y.ravel() == c)
                 if idx.size == 0:
                     continue

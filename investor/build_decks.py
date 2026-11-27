@@ -145,8 +145,8 @@ def s_evidence(d):
 def s_insight(d):
     d.slide("Key finding: when is graft separable from new bone?", [
         "If graft density stays well above new bone: thresholds suffice.",
-        "If densities overlap: intensity alone collapses (oracle bound graft Dice 0.30–0.65 at high noise).",
-        "Shape/context recovers it only when granules look different from new bone (0.88 compact vs 0.70 strut-like).",
+        "If densities overlap: the best possible intensity-only rule drops to graft Dice 0.52–0.77 (0.36 when granules resemble new bone).",
+        "Shape/texture features recover it only when granules look different from new bone (0.86–0.88 compact vs 0.65–0.70 strut-like).",
         "A registered day-0 scan keeps graft Dice ≥0.8 in both cases → study-design advice is part of the product.",
         "All of this is simulation; the physical phantom study decides where real materials fall.",
     ], image=FIG / "exp_C_separability.png", img_w=7.0, kicker="Science")

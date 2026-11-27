@@ -2,7 +2,11 @@
 
 Data: SPROUT dog forelimb micro-CT (Zenodo 10.5281/zenodo.24047383, CC-BY-4.0): 15 specimens,
 manually corrected reference segmentations of 4 bones; official split train 10 / test 5 (by
-specimen). Task: bone vs background (union of the 4 bone labels). Voxel spacing is not stored in
+specimen). Task: bone vs non-bone WITHIN A BAND around the labelled bones (union of the 4 forelimb-bone
+labels dilated by 6 voxels at the ×2 working resolution). The scans contain the whole thoracic
+region and only the forelimb bones are labelled, so whole-volume bone-vs-background is ill-posed
+(unlabelled vertebrae/ribs would count as false positives — observed in a first run and corrected).
+Outside the band labels are set to IGNORE (255) for training and excluded from evaluation. Voxel spacing is not stored in
 the files, so surface distances are reported in voxels. Volumes are block-mean downsampled ×2
 (labels by majority) for all methods to bound CPU time.
 
@@ -36,7 +40,8 @@ def load(name):
     s = [n // 2 * 2 for n in img.shape]
     img = img[: s[0], : s[1], : s[2]].reshape(s[0] // 2, 2, s[1] // 2, 2, s[2] // 2, 2).mean(axis=(1, 3, 5))
     lab = (downsample_labels(lab[: s[0], : s[1], : s[2]], 2) > 0).astype(np.uint8)
-    roi = ndi.binary_dilation(lab > 0, iterations=4)
+    roi = ndi.binary_dilation(lab > 0, iterations=6)
+    lab = np.where(roi, lab, 255).astype(np.uint8)       # ignore outside the evaluation band
     return Case(name, img, lab, roi, (1.0, 1.0, 1.0), "public-real", "allowed", {"dataset": "SPROUT dog forelimb"})
 
 
@@ -47,7 +52,7 @@ print("train", len(train), "test", len(test), [c.image.shape for c in test], flu
 
 
 def score(pred, c):
-    m = binary_metrics(pred, c.labels > 0, spacing=(1, 1, 1))
+    m = binary_metrics(pred & c.roi, (c.labels == 1) & c.roi, spacing=(1, 1, 1))
     return {"dice": m["dice"], "hd95_vox": m["hd95_um"], "vol_err": m["volume_error_rel"]}
 
 
@@ -65,8 +70,8 @@ def add(method, c, pred):
 rf = C.RFSegmenter(40, 16, 0, scales_um=(0, 1, 2, 4), feature_set="no_spatial").fit(
     [c.image for c in train], [c.labels for c in train], [x.spacing for x in train], [x.roi for x in train], 6000)
 for c in test:
-    add("otsu", c, C.threshold_otsu(c.image)[0])
-    g, order = C.gmm_threshold(c.image, None, k=2)
+    add("otsu_in_band", c, c.image > C.threshold_otsu(c.image, c.roi)[1])
+    g, order = C.gmm_threshold(c.image, c.roi, k=2)
     mu = np.sort(g.means_.ravel())
     add("gmm2", c, c.image > mu.mean())
     add("random_forest_10train", c, rf.predict(c.image, c.spacing, None)[0] > 0)
@@ -85,7 +90,7 @@ for c in test:
     add("synthetic_unet_zero_shot", c, predict_proba(ms, c, cks["cfg"]).argmax(0) > 0)
 for k in (1, 3):
     sub = train[:k]
-    sub3 = [Case(c.case_id, c.image, np.where(c.labels > 0, 3, 0).astype(np.uint8), c.roi, c.spacing, c.provenance,
+    sub3 = [Case(c.case_id, c.image, np.where(c.labels == 1, 3, c.labels).astype(np.uint8), c.roi, c.spacing, c.provenance,
                  c.commercial_use) for c in sub]   # map real bone -> 'host bone' class of the 3-class model
     ft = dict(cks["cfg"], iters=300, lr=1e-3, val_every=10 ** 9, log_every=300, seed=7)
     train_model(sub3, [], ft, f"unet_synth_ft_dog_k{k}", log=lambda s: None, init_from=str(MODEL_DIR / "unet_noctx_s0.pt"))

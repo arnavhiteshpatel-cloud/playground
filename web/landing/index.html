@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OsteoQuant — Research Prototype</title>
+<meta name="description" content="OsteoQuant is a research-stage project building auditable micro-CT analysis for preclinical bone-graft studies. Not a validated product.">
+<style>
+  :root { --bg:#f7f8fa; --ink:#18202c; --muted:#5b6575; --acc:#1f4e79; --card:#fff; --line:#e1e5ea; --warn:#7a1f1f; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0f1318; --ink:#e7eaee; --muted:#9aa4b2; --acc:#7fb2e5; --card:#171c23; --line:#273040; } }
+  * { box-sizing: border-box; }
+  body { margin:0; font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif; background:var(--bg); color:var(--ink); }
+  .banner { background:var(--warn); color:#fff; text-align:center; padding:8px 16px; font-size:14px; }
+  main { max-width: 980px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: clamp(30px, 5vw, 46px); line-height:1.1; margin: 24px 0 8px; color: var(--acc); }
+  h2 { margin-top: 44px; font-size: 24px; }
+  .lead { font-size: 19px; color: var(--muted); max-width: 760px; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px 18px 8px; }
+  .card h3 { margin: 0 0 6px; font-size: 17px; }
+  .tag { display:inline-block; font-size:12px; padding:2px 8px; border-radius:10px; border:1px solid var(--line); color:var(--muted); margin-left:6px; }
+  table { border-collapse: collapse; width:100%; font-size: 15px; }
+  th, td { text-align:left; padding:8px 6px; border-bottom:1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight:600; }
+  img { max-width:100%; border-radius:8px; border:1px solid var(--line); }
+  .cta { display:inline-block; margin-top: 12px; background:var(--acc); color:#fff; padding:10px 16px; border-radius:8px; text-decoration:none; }
+  footer { margin-top: 48px; color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="banner">Research-stage project · not a validated product · not for GLP, clinical or regulatory use</div>
+<main>
+  <h1>Measure bone-graft healing the same way, every time.</h1>
+  <p class="lead">OsteoQuant is building auditable micro-CT analysis for preclinical bone-defect studies: separating
+  newly formed bone, residual graft and host bone, with human review, locked model versions and a traceable report.
+  We are at the research-prototype stage and are looking for scientific collaborators and pilot partners.</p>
+  <a class="cta" href="mailto:CONTACT_EMAIL_TO_BE_ADDED">Talk to us about a pilot</a>
+
+  <h2>Where we are (November 2026)</h2>
+  <table>
+    <tr><th>Built and tested</th><td>Analysis pipeline (ingestion incl. Zeiss TXM, QC, defect ROI, segmentation, morphometry), researcher viewer with correction and sign-off, hash-chained audit trail, PDF/CSV reports</td></tr>
+    <tr><th>Shown on real public data</th><td>Trabecular thickness agreement with Scanco IPL reference maps on 8 public samples (ICC 0.98); ingestion and ROI detection on public ovine callus scans</td></tr>
+    <tr><th>Shown only in simulation</th><td>Three-class graft / new-bone / host-bone segmentation; when graft and new bone become inseparable; benefit of a day-0 baseline scan</td></tr>
+    <tr><th>Not yet done</th><td>Validation on real graft materials (physical phantom study planned), customer pilots, GLP validation</td></tr>
+  </table>
+
+  <h2>What we are building</h2>
+  <div class="grid">
+    <div class="card"><h3>Separability check <span class="tag">research</span></h3><p>Before a study: can micro-CT alone distinguish your graft from new bone at your voxel size — or do you need a day-0 scan or histology?</p></div>
+    <div class="card"><h3>DefectFill report <span class="tag">prototype</span></h3><p>Defect ROI, three-class segmentation with reviewer correction, ASBMR-style endpoints, animal-level statistics and a reproducible record.</p></div>
+    <div class="card"><h3>Audit-ready process <span class="tag">prototype</span></h3><p>Locked model hashes, versioned corrections, re-authenticated sign-off and tamper-evident logs. Not yet validated for Part 11 or GLP.</p></div>
+  </div>
+
+  <h2>Prototype workbench</h2>
+  <img src="../../investor/screenshots/04_viewer_edit_measure_3d.png" alt="OsteoQuant viewer showing orthogonal slices of a synthetic phantom with segmentation overlay, a correction, a measurement and a 3D graft surface">
+  <p class="lead" style="font-size:14px">Screenshot of the research prototype on a synthetic phantom (not real tissue).</p>
+
+  <h2>Who we want to hear from</h2>
+  <ul>
+    <li>Orthobiologic and bone-graft R&amp;D teams who run animal defect studies</li>
+    <li>Preclinical CRO imaging and pathology groups</li>
+    <li>Bone biologists and micro-CT scientists interested in a known-truth phantom benchmark</li>
+  </ul>
+  <footer>OsteoQuant is a student-founded research project at the pre-incorporation stage. No customer data has been analysed.
+  Statements about performance refer to simulations or public datasets as labelled above.</footer>
+</main>
+</body>
+</html>

@@ -76,7 +76,19 @@ ROLES = {
     "admin": {"read", "write", "run", "review", "manage_users", "unblind", "delete", "export"},
     "analyst": {"read", "write", "run", "export"},
     "reviewer": {"read", "review", "export"},
+    # same permissions as a reviewer; the role is recorded so that report sign-off can be attributed
+    # to the study director (desktop signature rows)
+    "study_director": {"read", "review", "export"},
     "viewer": {"read"},
+}
+
+
+SELF_APPROVAL_MESSAGES = {
+    "segmentation": "Separation of duties: you cannot approve a segmentation you created",
+    "report": ("Separation of duties: you cannot approve a report you generated. Another reviewer or the study "
+               "director must approve it"),
+    "roi": ("Separation of duties: you cannot accept an ROI that you created (or that your analysis run created). "
+            "Another reviewer must accept it"),
 }
 
 
@@ -174,6 +186,18 @@ class Store:
         if not active:   # S-20: deactivation ends existing sessions immediately
             self.exec("DELETE FROM sessions WHERE user_id=?", (user_id,))
         self.audit.record("user.activate" if active else "user.deactivate", actor["id"], u["org_id"], "user", user_id)
+
+    def reset_password(self, actor, user_id, new_password):
+        """Administrator password reset: policy-checked, clears the lockout, ends sessions, audited."""
+        u = self.q1("SELECT * FROM users WHERE id=?", (user_id,))
+        if not u:
+            raise KeyError("user not found")
+        self.require(actor, "manage_users", u["org_id"])
+        password_policy(new_password)
+        self.exec("UPDATE users SET pw_hash=?, failed_logins=0, locked_until=0 WHERE id=?",
+                  (hash_password(new_password), user_id))
+        self.exec("DELETE FROM sessions WHERE user_id=?", (user_id,))
+        self.audit.record("user.password_reset", actor["id"], u["org_id"], "user", user_id, {"username": u["username"]})
 
     LOCK_SECONDS = 15 * 60
     _DUMMY_HASH = None
@@ -474,12 +498,19 @@ class Store:
             if not seg or int(seg["org_id"]) != int(user["org_id"]):
                 raise KeyError("report not found")
             obj_sha = seg["labels_sha256"]
+        elif object_type == "roi":
+            seg = self.q1("SELECT r.created_by, r.def_sha256 AS labels_sha256, sc.org_id FROM rois r JOIN scans sc "
+                          "ON r.scan_id=sc.id WHERE r.id=?", (object_id,))
+            if not seg or int(seg["org_id"]) != int(user["org_id"]):
+                raise KeyError("ROI not found")
+            obj_sha = seg["labels_sha256"]
         else:
             seg = None
         if seg is not None:   # separation of duties: authors cannot approve their own work
             if seg["created_by"] == user["id"] and decision == "approved":
                 self.audit.record("review.self_approval_denied", user["id"], user["org_id"], object_type, object_id)
-                raise PermissionError("Separation of duties: you cannot approve a segmentation you created")
+                raise PermissionError(SELF_APPROVAL_MESSAGES.get(
+                    object_type, f"Separation of duties: you cannot approve a {object_type} you created"))
         rid = self.exec("INSERT INTO reviews(org_id,object_type,object_id,reviewer_id,decision,meaning,comment,created,"
                         "object_sha256) VALUES (?,?,?,?,?,?,?,?,?)",
                         (user["org_id"], object_type, object_id, user["id"], decision, meaning, comment, now(), obj_sha))

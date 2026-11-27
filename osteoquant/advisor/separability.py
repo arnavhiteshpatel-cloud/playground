@@ -47,7 +47,7 @@ MIN_STRUCT_VOXELS = 3.0         # thickness endpoints need structures ≥3 voxel
 HOST_REL_MATURE = 1.0
 MIN_REFERENCE_SAMPLES = 500     # measured reference distributions need at least this many voxels
 MIN_GRAFT_FRACTION = 0.05       # below this share of mineral, relative graft-volume error is unbounded
-ADVISOR_VERSION = "1.3.1"
+ADVISOR_VERSION = "1.3.2"
 PROFILE_SCAN_MISMATCH_TOL = 0.15   # observed bright-mode vs profile graft level (relative)
 # Resorbable materials whose granules become microporous/fragmented and enter the bone intensity range as they
 # resorb (knowledge base: beta-TCP almost fully resorbed by 8 weeks in minipig; CaSO4 and glasses similar or faster).
@@ -64,6 +64,8 @@ EARLY_WEEKS_MAX = 4.0
 # material reference; resorbable materials are intensity-supported only at known timepoints ≤4 weeks.
 # 1.3.1: scan-vs-profile consistency check — if the scan's observed graft-like bright mode deviates >15% from the
 # profile level, support requires a measured reference (S1b 1.3.0: BCP profile 1.73 vs scan 1.43 → −42…−49% errors).
+# 1.3.2: measured new-bone references (empty-defect controls) get graft-adjacent partial-volume mixing (S1c: control
+# new bone is dimmer than new bone next to dense graft; threshold too low → graft +24%).
 
 # Assumed new-bone maturity range in relative units. Early/mid healing: woven 650–1000 mgHA/cm³ vs
 # mature host ≈1075 → (0.60, 0.93) (SCIENTIFIC_EVIDENCE row 4, assumption anchored to a published callus
@@ -163,8 +165,12 @@ class ClassModel:
         elif self.kind == "normal":
             v = rng.normal(self.a, self.b, n)
         elif self.kind == "samples":
+            # measured samples already contain noise and their own partial volume; they do NOT contain mixing with
+            # neighbours absent from the reference scan (e.g. dense graft next to new bone when the reference comes
+            # from empty-defect controls — Experiment S1c). ``surface_fraction`` > 0 adds that mixing.
             v = rng.choice(np.asarray(self.samples, float), n, replace=True)
-            return v                                  # measured samples already contain noise & PV
+            if self.surface_fraction <= 0:
+                return v
         else:
             raise ValueError(self.kind)
         pv = rng.random(n) < self.surface_fraction
@@ -196,7 +202,8 @@ def intensity_separability(graft: ClassModel, new: ClassModel, noise_rel: float,
     # Contact assumptions (ASSUMPTION, documented in MEASUREMENT_SUPPORT.md): graft surfaces touch soft
     # tissue or new bone (osteoconduction); new-bone surfaces touch soft tissue, graft or host bone.
     g = graft.draw(ng, rng, neighbors=((0.0, 0.6), (n_level, 0.4)))
-    v = new.draw(nn, rng, neighbors=((0.0, 0.5), (g_level, 0.2), (HOST_REL_MATURE, 0.3)))
+    v = new.draw(nn, rng, neighbors=((g_level, 1.0),) if new.kind == "samples"
+                 else ((0.0, 0.5), (g_level, 0.2), (HOST_REL_MATURE, 0.3)))
     if graft.kind != "samples":
         g = g + rng.normal(0, noise_rel, g.size)
     if new.kind != "samples":
@@ -413,12 +420,13 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
 
     # --- intensity mechanism
     if graft_samples_rel is not None:
-        gm = ClassModel("samples", samples=np.asarray(graft_samples_rel, float))
+        gm = ClassModel("samples", samples=np.asarray(graft_samples_rel, float), surface_fraction=0.0)
     else:
         gm = ClassModel("normal", prof.rel_mean, prof.rel_sd,
                         surface_fraction=surface_fraction(prof.struct_um, voxel_um))
     if new_samples_rel is not None:
-        nm = ClassModel("samples", samples=np.asarray(new_samples_rel, float))
+        # control-derived new bone lacks graft-adjacent blur: add it (S1c; advisor 1.3.2)
+        nm = ClassModel("samples", samples=np.asarray(new_samples_rel, float), surface_fraction=0.2)
     else:
         nm = ClassModel("uniform", *nb_range, surface_fraction=surface_fraction(150.0, voxel_um))
     # Support must hold at the graft share expected in THIS scan and at half of it: the volume error of a

@@ -77,12 +77,25 @@ def _separability_assessment(result: dict) -> list[dict]:
     return out
 
 
-def measurement_support(result: dict) -> dict:
+def _qc_problem_names(qc: dict, statuses) -> list[str]:
+    return [c.get("name", c.get("id", "?")) for c in qc.get("checks", []) if c.get("status") in statuses]
+
+
+def roi_requires_review(result: dict) -> bool:
+    roi = (result or {}).get("roi") or {}
+    return bool((roi.get("diagnostics") or {}).get("requires_review"))
+
+
+def measurement_support(result: dict, roi_accepted: bool = False) -> dict:
     """Return ``{"overall": status, "endpoints": {key: {"status", "reasons"}}, "reasons": [...]}``.
 
     ``overall`` is *supported* when every endpoint is supported, *not supported* when none is
     (or there is no analysis), otherwise *flagged* (some endpoints need caution or are not
     reportable; see the per-endpoint statuses).
+
+    States are combined honestly: an endpoint is never *supported* while the scan's QC verdict is
+    "review" or "unsuitable", or while an automatic ROI that requires review has not been accepted
+    (``roi_accepted``: a reviewer signed "Accept ROI" for the ROI definition used by the result).
 
     ``result`` is a stored measurement (``public(analyze(...))`` or a corrected-version record)
     or a job result; missing parts are treated conservatively."""
@@ -106,19 +119,23 @@ def measurement_support(result: dict) -> dict:
     qc = result.get("qc") or {}
     verdict = qc.get("verdict")
     if verdict == "unsuitable":
-        failed = [c["name"] for c in qc.get("checks", []) if c.get("status") == "fail"]
+        failed = _qc_problem_names(qc, ("fail",))
         flag(all_keys, FLAGGED, "QC unsuitable: " + ", ".join(failed[:3]))
     elif verdict == "review":
-        general.append("QC requires review")
+        warned = _qc_problem_names(qc, ("warn", "fail"))
+        flag(all_keys, FLAGGED, "QC verdict 'review'" + (": " + ", ".join(warned[:3]) if warned else ""))
+    elif verdict is None:
+        general.append("QC not run")
 
     for p in result.get("plausibility") or []:
         if not p.get("ok", True):
             flag(all_keys, FLAGGED, f"plausibility: {p.get('check')}")
 
-    roi = result.get("roi") or {}
-    if (roi.get("diagnostics") or {}).get("requires_review"):
-        general.append("automatic ROI requires review")
-        flag(all_keys, FLAGGED, "automatic ROI requires review")
+    if roi_requires_review(result):
+        if roi_accepted:
+            general.append("automatic ROI accepted by a reviewer")
+        else:
+            flag(all_keys, FLAGGED, "automatic ROI not yet accepted (review the ROI outline, then Accept ROI)")
 
     unc = get_path(metrics, "class_volumes.uncertain_fraction", 0.0) or 0.0
     if unc > 0.25:
@@ -155,6 +172,35 @@ def measurement_support(result: dict) -> dict:
     reasons = general + ([f"{n_ns} of {len(sts)} endpoints not supported"] if n_ns and overall != NOT_SUPPORTED else []) \
         + sorted({r for e in eps.values() for r in e["reasons"]})
     return {"overall": overall, "endpoints": eps, "reasons": reasons}
+
+
+def _norm_reason(r: str) -> str:
+    r = (r or "").strip()
+    return r[len("advisor:"):].strip() if r.lower().startswith("advisor:") else r
+
+
+ENDPOINT_BY_KEY = {k: (label, unit, path, scale) for k, label, unit, path, scale in ENDPOINTS}
+
+
+def endpoint_value(result: dict, support: dict, key: str) -> tuple:
+    """(display value or None, status, reasons) for one endpoint.
+
+    The single rule used by every view and export: an endpoint whose status is *not supported*
+    never yields a number, whatever the stored value; the reasons say why. Reasons are de-duplicated
+    (advisor reasons appear once, with or without the "advisor:" prefix)."""
+    _, _, path, scale = ENDPOINT_BY_KEY[key]
+    e = (support or {}).get("endpoints", {}).get(key) or {"status": NOT_SUPPORTED, "reasons": []}
+    v, why = reported_value(result, path)
+    reasons: list[str] = []
+    seen = set()
+    for r in list(e["reasons"]) + ([why] if why else []):
+        n = _norm_reason(r)
+        if n and n not in seen:
+            seen.add(n)
+            reasons.append(r)
+    if e["status"] == NOT_SUPPORTED or not isinstance(v, (int, float)) or isinstance(v, bool):
+        return None, NOT_SUPPORTED, reasons or ["not computed"]
+    return float(v) * scale, e["status"], reasons
 
 
 def suppressed_reasons(result: dict) -> dict:

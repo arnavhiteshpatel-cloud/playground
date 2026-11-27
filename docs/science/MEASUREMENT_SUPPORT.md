@@ -1,6 +1,6 @@
 # Measurement Support (Identifiability) Policy
 
-Implementation: `osteoquant/advisor/` (version **1.3.1**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
+Implementation: `osteoquant/advisor/` (version **1.3.2**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
 
 ## Why
 Graft and new bone are both mineral. For many materials their X-ray attenuation overlaps (Experiments C, C2; the

@@ -105,9 +105,32 @@ def _looks_like_dicom(p: Path) -> bool:
         return False
 
 
+class UnsafeInput(ValueError):
+    pass
+
+
+def check_safe_input(path) -> None:
+    """Reject inputs that can make a reader open OTHER files (detached headers): MetaImage
+    (.mhd ElementDataFile), detached NRRD (.nhdr or 'data file' field). Used for all uploads."""
+    p = Path(path)
+    files = [f for f in p.rglob("*") if f.is_file()] if p.is_dir() else [p]
+    for f in files:
+        n = f.name.lower()
+        if n.endswith((".mhd", ".nhdr", ".raw", ".mha")):
+            raise UnsafeInput(f"Detached-header/raw formats are not accepted for upload: {f.name}")
+        if n.endswith(".nrrd"):
+            import nrrd
+            hdr = nrrd.read_header(str(f))
+            if any(k.replace(" ", "").lower() == "datafile" for k in hdr):
+                raise UnsafeInput("NRRD files that reference external data files are not accepted")
+
+
 def read_volume(path, spacing_um=None, zrange=None, step: int = 1, do_hash: bool = True,
-                **kw) -> tuple[Volume, IngestReport]:
-    """Read any supported volume. ``spacing_um`` overrides/fills missing voxel size."""
+                safe: bool = False, **kw) -> tuple[Volume, IngestReport]:
+    """Read any supported volume. ``spacing_um`` overrides/fills missing voxel size.
+    ``safe=True`` (all untrusted uploads) rejects formats that can reference external files."""
+    if safe:
+        check_safe_input(path)
     fmt = detect_format(path)
     fn = {
         "tiff-stack": read_tiff_stack, "image-stack": read_tiff_stack, "tiff": read_tiff,

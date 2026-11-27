@@ -134,7 +134,7 @@ def train_model(train_cases: list[Case], val_cases: list[Case], cfg: dict, name:
     model = UNet3D(in_ch=in_ch, n_classes=cfg.get("n_classes", 4), base=cfg.get("base", 12),
                    levels=cfg.get("levels", 4), p_drop=cfg.get("dropout", 0.0))
     if init_from:
-        ck = torch.load(init_from, map_location="cpu", weights_only=False)
+        ck = torch.load(init_from, map_location="cpu", weights_only=True)
         model.load_state_dict(ck["state_dict"])
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.get("lr", 3e-3), weight_decay=1e-4)
     iters = cfg.get("iters", 1000)
@@ -194,8 +194,8 @@ def save_model(model, cfg, name, train_cases, hist, seconds) -> dict:
     manifest = [{"case_id": c.case_id, "provenance": c.provenance, "commercial_use": c.commercial_use,
                  "image_sha256": hashlib.sha256(np.ascontiguousarray(c.image).tobytes()).hexdigest()[:16]}
                 for c in train_cases]
-    ck = {"state_dict": model.state_dict(), "hparams": model.hparams, "cfg": cfg, "name": name,
-          "provenance": prov, "licence_tag": tag, "train_manifest": manifest, "history": hist,
+    ck = {"state_dict": model.state_dict(), "hparams": _plain(model.hparams), "cfg": _plain(cfg), "name": name,
+          "provenance": prov, "licence_tag": tag, "train_manifest": _plain(manifest), "history": _plain(hist),
           "created": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
           "env": {"torch": torch.__version__, "python": platform.python_version(), "numpy": np.__version__},
           "n_params": n_params(model), "train_seconds": round(seconds, 1)}
@@ -216,15 +216,36 @@ def save_model(model, cfg, name, train_cases, hist, seconds) -> dict:
     return card
 
 
-def load_model(name_or_path) -> tuple[UNet3D, dict]:
-    p = Path(name_or_path)
-    if not p.exists():
-        p = MODEL_DIR / f"{name_or_path}.pt"
-    ck = torch.load(p, map_location="cpu", weights_only=False)
+def _plain(o):
+    """JSON round-trip so checkpoints contain only types accepted by torch.load(weights_only=True)."""
+    return json.loads(json.dumps(o, default=lambda x: x.item() if hasattr(x, "item") else str(x)))
+
+
+MODEL_NAME_RE = r"^[A-Za-z0-9_\-]{1,64}$"
+
+
+def load_model(name, verify_registry: bool = True) -> tuple[UNet3D, dict]:
+    """Load a registered model by NAME only (no arbitrary paths). The file's SHA-256 is checked
+    against models/registry.json BEFORE deserialisation, and deserialisation uses
+    torch.load(weights_only=True) (tensors and plain containers only — no pickled code)."""
+    import re
+    if not re.fullmatch(MODEL_NAME_RE, str(name)):
+        raise ValueError("Invalid model name")
+    p = MODEL_DIR / f"{name}.pt"
+    if not p.is_file():
+        raise FileNotFoundError(f"Model {name} not found")
+    data = p.read_bytes()
+    sha = hashlib.sha256(data).hexdigest()
+    if verify_registry:
+        reg = json.loads((MODEL_DIR / "registry.json").read_text()) if (MODEL_DIR / "registry.json").exists() else {}
+        if name not in reg or reg[name]["sha256"] != sha:
+            raise RuntimeError(f"Model {name}: file hash does not match registry (locked model version changed)")
+    import io as _io
+    ck = torch.load(_io.BytesIO(data), map_location="cpu", weights_only=True)
     m = UNet3D(**ck["hparams"])
     m.load_state_dict(ck["state_dict"])
     m.eval()
-    ck["sha256"] = hashlib.sha256(p.read_bytes()).hexdigest()
+    ck["sha256"] = sha
     return m, ck
 
 

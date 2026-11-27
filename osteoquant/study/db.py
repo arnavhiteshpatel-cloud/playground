@@ -17,13 +17,18 @@ import json
 import os
 import secrets
 import sqlite3
+import threading
 import time
 from pathlib import Path
 
 from ..audit import AuditLog
 
-SCHEMA_VERSION = 1
-MIGRATIONS = {1: """
+SCHEMA_VERSION = 2
+MIGRATIONS = {2: """
+ALTER TABLE reports ADD COLUMN unblinded INTEGER DEFAULT 0;
+ALTER TABLE users ADD COLUMN locked_until REAL DEFAULT 0;
+ALTER TABLE reviews ADD COLUMN object_sha256 TEXT;
+""", 1: """
 CREATE TABLE orgs (id INTEGER PRIMARY KEY, name TEXT UNIQUE NOT NULL, created TEXT NOT NULL,
   retention_days INTEGER DEFAULT 3650);
 CREATE TABLE users (id INTEGER PRIMARY KEY, org_id INTEGER NOT NULL REFERENCES orgs(id),
@@ -108,8 +113,9 @@ class Store:
         self.conn.execute("PRAGMA journal_mode=WAL")
         self.conn.execute("PRAGMA foreign_keys=ON")
         self.conn.row_factory = sqlite3.Row
+        self.lock = threading.RLock()   # one shared connection: serialise all access (review S-10)
         self.migrate()
-        self.audit = AuditLog(self.conn)
+        self.audit = AuditLog(self.conn, self.lock)
 
     # ------------------------------------------------------------------ infra
     def migrate(self):
@@ -121,15 +127,18 @@ class Store:
                 self.conn.execute("INSERT INTO schema_version VALUES (?)", (v,))
 
     def q(self, sql, args=()):
-        return [dict(r) for r in self.conn.execute(sql, args).fetchall()]
+        with self.lock:
+            return [dict(r) for r in self.conn.execute(sql, args).fetchall()]
 
     def q1(self, sql, args=()):
-        r = self.conn.execute(sql, args).fetchone()
-        return dict(r) if r else None
+        with self.lock:
+            r = self.conn.execute(sql, args).fetchone()
+            return dict(r) if r else None
 
     def exec(self, sql, args=()) -> int:
-        cur = self.conn.execute(sql, args)
-        return cur.lastrowid
+        with self.lock:
+            cur = self.conn.execute(sql, args)
+            return cur.lastrowid
 
     def backup(self, dest) -> dict:
         """Online consistent backup (SQLite backup API) + SHA-256 of the copy."""
@@ -163,17 +172,30 @@ class Store:
         self.exec("UPDATE users SET active=? WHERE id=?", (int(active), user_id))
         self.audit.record("user.activate" if active else "user.deactivate", actor["id"], u["org_id"], "user", user_id)
 
+    LOCK_SECONDS = 15 * 60
+    _DUMMY_HASH = None
+
     def login(self, username, password, ttl_s=8 * 3600) -> str | None:
         u = self.q1("SELECT * FROM users WHERE username=?", (username,))
-        if not u or not u["active"] or u["failed_logins"] >= 5:
+        if Store._DUMMY_HASH is None:
+            Store._DUMMY_HASH = hash_password("timing-equaliser-Aa1")
+        locked = bool(u) and (u.get("locked_until") or 0) > time.time()
+        ok = check_password(password, u["pw_hash"] if u else Store._DUMMY_HASH)   # same cost for unknown users
+        if not u or not u["active"] or locked:
             self.audit.record("auth.login_failed", None, u and u["org_id"], "user", u and u["id"],
-                              {"username": username, "reason": "unknown/inactive/locked"})
+                              {"username": username, "reason": "unknown/inactive/temporarily locked"})
             return None
-        if not check_password(password, u["pw_hash"]):
-            self.exec("UPDATE users SET failed_logins=failed_logins+1 WHERE id=?", (u["id"],))
-            self.audit.record("auth.login_failed", u["id"], u["org_id"], "user", u["id"], {"reason": "bad password"})
+        if not ok:
+            with self.lock:
+                self.exec("UPDATE users SET failed_logins=failed_logins+1 WHERE id=?", (u["id"],))
+                n = self.q1("SELECT failed_logins FROM users WHERE id=?", (u["id"],))["failed_logins"]
+                if n >= 5:   # temporary lock (not permanent) limits the denial-of-service impact
+                    self.exec("UPDATE users SET locked_until=?, failed_logins=0 WHERE id=?",
+                              (time.time() + self.LOCK_SECONDS, u["id"]))
+            self.audit.record("auth.login_failed", u["id"], u["org_id"], "user", u["id"],
+                              {"reason": "bad password", "locked": n >= 5})
             return None
-        self.exec("UPDATE users SET failed_logins=0 WHERE id=?", (u["id"],))
+        self.exec("UPDATE users SET failed_logins=0, locked_until=0 WHERE id=?", (u["id"],))
         tok = secrets.token_urlsafe(32)
         self.exec("INSERT INTO sessions VALUES (?,?,?,?)",
                   (hashlib.sha256(tok.encode()).hexdigest(), u["id"], now(), time.time() + ttl_s))
@@ -268,6 +290,9 @@ class Store:
     def add_specimen(self, user, sid, animal_id, group_id=None, sex=None, notes=""):
         s = self.study(user, sid)
         self.require(user, "write", s["org_id"])
+        if group_id is not None and not self.q1("SELECT id FROM groups_ WHERE id=? AND study_id=?", (group_id, sid)):
+            self.audit.record("authz.invalid_group_reference", user["id"], user["org_id"], "study", sid, {"group_id": group_id})
+            raise PermissionError("Group does not belong to this study")
         xid = self.exec("INSERT INTO specimens(study_id,group_id,animal_id,sex,notes) VALUES (?,?,?,?,?)",
                         (sid, group_id, animal_id, sex, notes))
         self.audit.record("specimen.create", user["id"], s["org_id"], "specimen", xid, {"animal_id": animal_id})
@@ -407,11 +432,29 @@ class Store:
         self.require(user, "review")
         if decision not in ("approved", "rejected", "needs_changes"):
             raise ValueError(decision)
-        rid = self.exec("INSERT INTO reviews(org_id,object_type,object_id,reviewer_id,decision,meaning,comment,created)"
-                        " VALUES (?,?,?,?,?,?,?,?)", (user["org_id"], object_type, object_id, user["id"], decision,
-                                                      meaning, comment, now()))
+        obj_sha = None
+        if object_type == "segmentation":
+            seg = self.q1("SELECT s.created_by, s.labels_sha256, sc.org_id FROM segmentations s JOIN scans sc ON s.scan_id=sc.id "
+                          "WHERE s.id=?", (object_id,))
+            if not seg or int(seg["org_id"]) != int(user["org_id"]):
+                raise KeyError("segmentation not found")
+            obj_sha = seg["labels_sha256"]
+        elif object_type == "report":
+            seg = self.q1("SELECT created_by, sha256 AS labels_sha256, org_id FROM reports WHERE id=?", (object_id,))
+            if not seg or int(seg["org_id"]) != int(user["org_id"]):
+                raise KeyError("report not found")
+            obj_sha = seg["labels_sha256"]
+        else:
+            seg = None
+        if seg is not None:   # separation of duties: authors cannot approve their own work
+            if seg["created_by"] == user["id"] and decision == "approved":
+                self.audit.record("review.self_approval_denied", user["id"], user["org_id"], object_type, object_id)
+                raise PermissionError("Separation of duties: you cannot approve a segmentation you created")
+        rid = self.exec("INSERT INTO reviews(org_id,object_type,object_id,reviewer_id,decision,meaning,comment,created,"
+                        "object_sha256) VALUES (?,?,?,?,?,?,?,?,?)",
+                        (user["org_id"], object_type, object_id, user["id"], decision, meaning, comment, now(), obj_sha))
         self.audit.record("review." + decision, user["id"], user["org_id"], object_type, object_id,
-                          {"meaning": meaning, "comment": comment, "reviewer": user["username"]})
+                          {"meaning": meaning, "comment": comment, "reviewer": user["username"], "object_sha256": obj_sha})
         return rid
 
     def reviews(self, user, object_type, object_id):
@@ -426,7 +469,8 @@ class Store:
         out = {"study": s, "groups": self.groups(user, sid), "specimens": self.specimens(user, sid),
                "timepoints": self.q("SELECT * FROM timepoints WHERE study_id=?", (sid,)),
                "scans": self.scans(user, sid), "measurements": self.latest_measurements(user, sid),
-               "audit": self.audit.events(org_id=s["org_id"], limit=100000)}
+               "audit": (self.audit.events(org_id=s["org_id"], limit=100000)
+                         if (self.can(user, "review") or self.can(user, "manage_users")) else "omitted: requires reviewer/admin")}
         self.audit.record("study.export", user["id"], s["org_id"], "study", sid)
         return out
 
@@ -440,6 +484,13 @@ class Store:
                 shutil.rmtree(sc["store_path"], ignore_errors=True)
             for t in ("rois", "segmentations", "measurements"):
                 self.exec(f"DELETE FROM {t} WHERE scan_id=?", (sc["id"],))
+        for rp in self.q("SELECT id, pdf_path, csv_path FROM reports WHERE study_id=?", (sid,)):
+            for f in (rp["pdf_path"], rp["csv_path"]):
+                if f and Path(f).exists():
+                    Path(f).unlink()
+            self.exec("DELETE FROM reviews WHERE object_type='report' AND object_id=?", (rp["id"],))
+        self.exec("DELETE FROM reports WHERE study_id=?", (sid,))
+        self.exec("DELETE FROM analysis_configs WHERE study_id=?", (sid,))
         for t in ("scans", "specimens", "timepoints", "groups_"):
             self.exec(f"DELETE FROM {t} WHERE study_id=?", (sid,))
         self.exec("UPDATE studies SET status='deleted' WHERE id=?", (sid,))

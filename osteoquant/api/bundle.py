@@ -15,7 +15,7 @@ ENDPOINTS = [
     ("class_volumes.new_bone_fraction", "New bone BV/TV", "fraction"),
     ("class_volumes.residual_graft_fraction", "Residual graft volume fraction", "fraction"),
     ("class_volumes.mineralized_fraction", "Total mineralised fraction", "fraction"),
-    ("bridging_all_mineral.projected_coverage", "Projected defect coverage", "fraction"),
+    ("bridging_new_bone.projected_coverage", "Projected defect coverage by new bone", "fraction"),
     ("class_volumes.uncertain_fraction", "Uncertain (abstained) fraction", "fraction"),
 ]
 
@@ -46,7 +46,8 @@ def bundle_from_store(store, user, sid, ctx=None) -> dict:
         sc = store.scan(user, m["scan_id"])
         seg = store.q1("SELECT * FROM segmentations WHERE id=?", (m["segmentation_id"],))
         revs = store.reviews(user, "segmentation", seg["id"])
-        if not any(r["decision"] == "approved" for r in revs):
+        latest = revs[-1] if revs else None   # the latest decision governs; a later rejection voids an approval
+        if not latest or latest["decision"] != "approved" or latest.get("object_sha256") not in (None, seg["labels_sha256"]):
             reviewed_all = False
         sp = specs.get(sc["specimen_id"], {})
         res = m["metrics"]
@@ -65,7 +66,8 @@ def bundle_from_store(store, user, sid, ctx=None) -> dict:
         roi_row = store.q1("SELECT * FROM rois WHERE id=?", (m["roi_id"],)) if m["roi_id"] else None
         roi_def = json.loads(roi_row["definition"]) if roi_row else {}
         out_specs.append({
-            "specimen_id": sp.get("animal_id", f"scan{m['scan_id']}"), "group": sp.get("group_name", "—"),
+            "specimen_id": sp.get("animal_id", f"scan{m['scan_id']}"), "animal_id": sp.get("animal_id"),
+            "group": sp.get("group_name", "—"),
             "timepoint": tps.get(sc["timepoint_id"], "—"),
             "scan": {"source": sc["source_name"], "sha256": sc["file_sha256"], "shape": sc["shape"],
                      "spacing_um": sc["spacing_um"], "acquisition": sc.get("acquisition")},

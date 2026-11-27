@@ -12,7 +12,7 @@ import zipfile
 from pathlib import Path, PurePosixPath
 
 MAX_FILES = 20000
-MAX_TOTAL_BYTES = 40 * 1024 ** 3     # 40 GB uncompressed
+MAX_TOTAL_BYTES = 16 * 1024 ** 3     # 16 GB uncompressed
 MAX_RATIO = 200                       # per-member compression ratio
 
 
@@ -29,10 +29,11 @@ def _safe_name(name: str) -> str:
 
 
 def safe_extract(archive: str | os.PathLike, dest: str | os.PathLike, max_total=MAX_TOTAL_BYTES,
-                 max_files=MAX_FILES) -> list[str]:
+                 max_files=MAX_FILES, allow_tar: bool = False) -> list[str]:
     dest = Path(dest).resolve()
     dest.mkdir(parents=True, exist_ok=True)
     out = []
+    total_written = 0
     a = str(archive)
     if zipfile.is_zipfile(a):
         with zipfile.ZipFile(a) as z:
@@ -62,10 +63,15 @@ def safe_extract(archive: str | os.PathLike, dest: str | os.PathLike, max_total=
                         if not b:
                             break
                         written += len(b)
+                        total_written += len(b)
                         if written > i.file_size + 1024:
                             raise UnsafeArchive("Member larger than declared size")
+                        if total_written > max_total:
+                            raise UnsafeArchive("Total extracted size exceeds limit")
                         dst.write(b)
                 out.append(str(target))
+    elif tarfile.is_tarfile(a) and not allow_tar:
+        raise UnsafeArchive("TAR archives are not accepted; upload a ZIP")
     elif tarfile.is_tarfile(a):
         with tarfile.open(a) as t:
             members = t.getmembers()
@@ -84,8 +90,16 @@ def safe_extract(archive: str | os.PathLike, dest: str | os.PathLike, max_total=
                     raise UnsafeArchive(f"Path escapes destination: {m.name}")
                 target.parent.mkdir(parents=True, exist_ok=True)
                 f = t.extractfile(m)
+                written = 0
                 with open(target, "wb") as dst:
-                    dst.write(f.read())
+                    while True:
+                        b = f.read(1 << 20)
+                        if not b:
+                            break
+                        written += len(b)
+                        if written > m.size:
+                            raise UnsafeArchive("Member larger than declared size")
+                        dst.write(b)
                 out.append(str(target))
     else:
         raise UnsafeArchive("Not a ZIP or TAR archive")

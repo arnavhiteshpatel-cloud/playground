@@ -6,7 +6,7 @@ specimen). Task: bone vs background (union of the 4 bone labels). Voxel spacing 
 the files, so surface distances are reported in voxels. Volumes are block-mean downsampled ×2
 (labels by majority) for all methods to bound CPU time.
 
-H (real-data segmentation): Otsu, GMM-2, Random Forest (3 training specimens), and a 2-class
+H (real-data segmentation): Otsu, GMM-2, Random Forest (all 10 training specimens), and a 2-class
   U-Net trained on the 10 training specimens (licence: CC-BY-4.0 → commercial-eligible with
   attribution; provenance 'public-real').
 I (cross-domain generalisation): the SYNTHETIC-trained 3-class U-Net (unet_noctx_s0) applied
@@ -61,14 +61,15 @@ def add(method, c, pred):
 
 
 # ---------------------------------------------------------------- H: classical + RF
+# RF trained on ALL 10 training specimens (same data as the U-Net; review finding Q-03)
 rf = C.RFSegmenter(40, 16, 0, scales_um=(0, 1, 2, 4), feature_set="no_spatial").fit(
-    [c.image for c in train[:3]], [c.labels for c in train[:3]], [c.spacing] * 3, [c.roi for c in train[:3]], 20000)
+    [c.image for c in train], [c.labels for c in train], [c.spacing] * len(train), [c.roi for c in train], 6000)
 for c in test:
     add("otsu", c, C.threshold_otsu(c.image)[0])
     g, order = C.gmm_threshold(c.image, None, k=2)
     mu = np.sort(g.means_.ravel())
     add("gmm2", c, c.image > mu.mean())
-    add("random_forest_3train", c, rf.predict(c.image, c.spacing, None)[0] > 0)
+    add("random_forest_10train", c, rf.predict(c.image, c.spacing, None)[0] > 0)
 
 # ---------------------------------------------------------------- H: real-trained U-Net
 cfg = dict(patch=(48, 48, 48), batch=2, iters=800, lr=3e-3, base=12, levels=4, threads=4, n_classes=2, log_every=200,

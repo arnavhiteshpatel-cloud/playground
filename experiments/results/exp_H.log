@@ -1,0 +1,6 @@
+train 10 test 5 [(75, 113, 58), (149, 128, 63), (575, 256, 113), (81, 256, 131), (374, 256, 118)]
+Traceback (most recent call last):
+  File "/home/user/playground/experiments/exp_H_I_real.py", line 66, in <module>
+    [c.image for c in train], [c.labels for c in train], [c.spacing] * len(train), [c.roi for c in train], 6000)
+                                                          ^
+NameError: name 'c' is not defined. Did you mean: 'C'?

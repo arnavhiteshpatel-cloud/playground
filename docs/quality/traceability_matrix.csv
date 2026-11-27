@@ -1,82 +1,82 @@
-URS,FS,test_id,test_file,status,proposed_test_name,test_level,risk_ids,protocol_ref
-URS-001,FS-001-1,,,NOT_STARTED,test_ui_displays_ruo_not_validated_banner,system,RSK-34,OQ-GEN-01
-URS-001,FS-001-2,,,NOT_STARTED,test_report_footer_and_csv_header_contain_ruo_statement,integration,RSK-34,OQ-GEN-01
-URS-002,FS-002-1,,,NOT_STARTED,test_version_endpoint_and_outputs_embed_semver_and_commit,integration,RSK-18,OQ-GEN-02
-URS-010,FS-010-1,,,NOT_STARTED,test_username_unique_and_user_id_immutable,unit,RSK-23,OQ-ACC-01
-URS-010,FS-010-2,,,NOT_STARTED,test_installer_disables_bootstrap_credentials,integration,RSK-23,IQ-11
-URS-011,FS-011-1,,,NOT_STARTED,test_permission_matrix_matches_documented_roles,unit,RSK-24,OQ-ACC-02
-URS-011,FS-011-2,,,NOT_STARTED,test_every_api_route_declares_required_permission,unit,RSK-24,OQ-ACC-03
-URS-012,FS-012-1,,,NOT_STARTED,test_repository_queries_always_scoped_by_tenant,integration,RSK-25,OQ-ACC-04
-URS-012,FS-012-2,,,NOT_STARTED,test_cross_tenant_access_returns_404_and_logs_security_event,integration,RSK-25,OQ-ACC-04
-URS-013,FS-013-1,,,NOT_STARTED,test_password_policy_and_argon2id_hashing,unit,RSK-23,OQ-ACC-05
-URS-013,FS-013-2,,,NOT_STARTED,test_account_lockout_after_failed_logins_and_audited_unlock,integration,RSK-23,OQ-ACC-05
-URS-013,FS-013-3,,,NOT_STARTED,test_session_inactivity_timeout_and_revocation,integration,RSK-23,OQ-ACC-05
-URS-014,FS-014-1,,,NOT_STARTED,test_users_cannot_be_deleted_only_deactivated,integration,RSK-23,OQ-ACC-06
-URS-015,FS-015-1,,,NOT_STARTED,test_admin_plus_analyst_role_requires_justification,integration,RSK-20,OQ-ACC-07
-URS-015,FS-015-2,,,NOT_STARTED,test_author_cannot_approve_own_report,integration,RSK-26,OQ-SIG-04
-URS-016,FS-016-1,,,NOT_STARTED,test_user_and_role_changes_emit_audit_events,integration,RSK-23,OQ-ACC-06
-URS-020,FS-020-1,,,NOT_STARTED,test_ingest_computes_and_stores_sha256_before_parsing,unit,RSK-04,OQ-ING-01
-URS-020,FS-020-2,,,NOT_STARTED,test_file_store_content_addressed_write_once,integration,RSK-04,OQ-ING-01
-URS-021,FS-021-1,,,NOT_STARTED,test_run_aborts_on_hash_mismatch_tampered_byte,integration,RSK-04,OQ-ING-02
-URS-021,FS-021-2,,,NOT_STARTED,test_on_demand_verify_endpoint_audited,integration,RSK-04,OQ-ING-02
-URS-022,FS-022-1,,,NOT_STARTED,test_metadata_extractor_missing_fields_are_null_not_defaulted,unit,RSK-01,OQ-ING-03
-URS-023,FS-023-1,,,NOT_STARTED,test_voxel_spacing_validation_units_range_anisotropy_conflict,unit,RSK-01;RSK-02,OQ-ING-04
-URS-023,FS-023-2,,,NOT_STARTED,test_morphometry_refuses_unverified_spacing,integration,RSK-01,OQ-ING-04
-URS-024,FS-024-1,,,NOT_STARTED,test_no_code_path_writes_to_original_files,integration,RSK-04,OQ-ING-01
-URS-025,FS-025-1,,,NOT_STARTED,test_duplicate_specimen_timepoint_and_duplicate_hash_detection,integration,RSK-03,OQ-ING-05
-URS-026,FS-026-1,,,NOT_STARTED,test_malformed_file_rejected_with_reason_code,unit,RSK-04,OQ-ING-06
-URS-030,FS-030-1,,,NOT_STARTED,test_qc_plugins_detect_saturation_missing_slices_fov_orientation,unit,RSK-05;RSK-36,OQ-QC-01
-URS-031,FS-031-1,,,NOT_STARTED,test_qc_results_store_check_version_threshold_value,unit,RSK-05,OQ-QC-01
-URS-032,FS-032-1,,,NOT_STARTED,test_qc_fail_blocks_analysis_unless_override_with_reason,integration,RSK-05,OQ-QC-02
-URS-040,FS-040-1,,,NOT_STARTED,test_roi_versions_immutable_physical_units,unit,RSK-06,OQ-ROI-01
-URS-041,FS-041-1,,,NOT_STARTED,test_roi_update_requires_reason_and_is_audited,integration,RSK-06,OQ-ROI-02
-URS-042,FS-042-1,,,NOT_STARTED,test_analysis_requires_roi_verified_action,system,RSK-06;RSK-36,OQ-ROI-03
-URS-050,FS-050-1,,,NOT_STARTED,test_canonical_label_map_persisted_with_results,unit,RSK-08,OQ-SEG-01
-URS-051,FS-051-1,,,NOT_STARTED,test_segmentation_record_contains_model_hash_and_preproc_config,integration,RSK-10,OQ-SEG-01
-URS-052,FS-052-1,,,NOT_STARTED,test_prediction_v0_immutable_and_corrections_versioned,integration,RSK-13,OQ-SEG-03
-URS-053,FS-053-1,,,NOT_STARTED,test_correction_requires_reason_and_records_voxel_deltas,integration,RSK-13,OQ-SEG-03
-URS-054,FS-054-1,,,NOT_STARTED,test_model_load_rejects_label_map_mismatch_and_mask_import_rejects_bad_values,unit,RSK-08,OQ-SEG-02
-URS-054,FS-054-2,,,NOT_STARTED,test_report_legend_generated_from_stored_label_map,integration,RSK-08,OQ-SEG-02
-URS-055,FS-055-1,,,NOT_STARTED,test_high_uncertainty_flags_review_required,integration,RSK-09;RSK-11,OQ-SEG-04
-URS-060,FS-060-1,,,NOT_STARTED,test_metric_registry_definitions_units_symbols,unit,RSK-14,OQ-MOR-01
-URS-061,FS-061-1,,,NOT_STARTED,test_metric_rows_store_units_voxel_size_versions,unit,RSK-14,OQ-MOR-01
-URS-062,FS-062-1,,,NOT_STARTED,test_phantom_volumes_and_thickness_within_tolerance,unit,RSK-14;RSK-01;RSK-02,OQ-MOR-02
-URS-063,FS-063-1,,,NOT_STARTED,test_density_suppressed_without_calibration,unit,RSK-15,OQ-MOR-03
-URS-070,FS-070-1,,,NOT_STARTED,test_sap_lock_immutable_and_amendment_versioned,integration,RSK-16,OQ-STA-01
-URS-070,FS-070-2,,,NOT_STARTED,test_unblinding_requires_locked_sap,integration,RSK-16,OQ-STA-01
-URS-071,FS-071-1,,,NOT_STARTED,test_stats_output_records_versions_seed_and_table_hash,unit,RSK-17,OQ-STA-04
-URS-072,FS-072-1,,,NOT_STARTED,test_all_specimens_present_exclusions_listed_with_reason,integration,RSK-16,OQ-STA-02
-URS-075,FS-075-1,,,NOT_STARTED,test_allocation_hidden_before_unblinding_in_ui_api_exports,integration,RSK-12,OQ-BLD-01
-URS-076,FS-075-2,,,NOT_STARTED,test_unblind_requires_permission_reauth_reason_and_is_audited,integration,RSK-12,OQ-BLD-02
-URS-076,FS-076-1,,,NOT_STARTED,test_post_unblinding_edits_flagged_in_report,integration,RSK-12,OQ-BLD-03
-URS-080,FS-080-1,,,NOT_STARTED,test_report_provenance_section_complete,integration,RSK-18,OQ-REP-01
-URS-081,FS-081-1,,,NOT_STARTED,test_exports_pdf_csv_json_nifti_audit_available,integration,RSK-33,OQ-REP-02
-URS-082,FS-082-1,,,NOT_STARTED,test_report_regeneration_matches_original_numerics,system,RSK-18;RSK-28,OQ-REP-03
-URS-083,FS-083-1,,,NOT_STARTED,test_csv_locale_independent_full_precision_units_in_header,unit,RSK-19,OQ-REP-04
-URS-090,FS-090-1,,,NOT_STARTED,test_review_state_machine_rejects_invalid_transitions,unit,RSK-26,OQ-SIG-01
-URS-091,FS-091-1,,,NOT_STARTED,test_signature_manifestation_name_time_meaning_in_ui_and_pdf,integration,RSK-26,OQ-SIG-02
-URS-092,FS-092-1,,,NOT_STARTED,test_signing_requires_password_reentry,integration,RSK-26,OQ-SIG-02
-URS-093,FS-093-1,,,NOT_STARTED,test_change_after_signature_invalidates_signature,integration,RSK-26;RSK-18,OQ-SIG-03
-URS-100,FS-100-1,,,NOT_STARTED,test_audit_log_rejects_update_and_delete_via_triggers,unit,RSK-20,OQ-AUD-01
-URS-101,FS-101-1,,,NOT_STARTED,test_audit_entry_fields_complete_old_new_reason,unit,RSK-20,OQ-AUD-02
-URS-102,FS-102-1,,,NOT_STARTED,test_chain_verification_detects_modify_insert_delete_reorder,unit,RSK-20,OQ-AUD-03
-URS-102,FS-102-2,,,NOT_STARTED,test_chain_head_anchor_detects_full_chain_replacement,integration,RSK-21,OQ-AUD-05
-URS-103,FS-103-1,,,NOT_STARTED,test_no_endpoint_or_config_disables_audit_in_production,integration,RSK-20,OQ-AUD-04
-URS-104,FS-104-1,,,NOT_STARTED,test_audit_viewer_filters_and_human_readable_export,system,RSK-20,OQ-AUD-07
-URS-105,FS-105-1,,,NOT_STARTED,test_retention_purge_preserves_audit_entries,integration,RSK-31,OQ-RET-03
-URS-106,FS-106-1,,,NOT_STARTED,test_audit_timestamps_server_utc_monotonic,unit,RSK-22,OQ-AUD-06
-URS-110,FS-110-1,,,NOT_STARTED,test_run_stores_resolved_config_snapshot_hash,unit,RSK-27,OQ-CFG-01
-URS-111,FS-111-1,,,NOT_STARTED,test_model_loader_rejects_hash_mismatch,unit,RSK-10,OQ-MOD-01
-URS-112,FS-112-1,,,NOT_STARTED,test_only_released_models_in_production_runs,integration,RSK-10,OQ-MOD-02
-URS-113,FS-113-1,,,NOT_STARTED,test_rerun_reproducible_within_tolerance,system,RSK-28;RSK-29,OQ-CFG-02
-URS-120,FS-120-1,,,NOT_STARTED,test_backup_job_manifest_includes_db_files_models_chain_head,integration,RSK-30,OQ-BKP-01
-URS-121,FS-121-1,,,NOT_STARTED,test_restore_verifies_hashes_and_audit_chain,system,RSK-30,OQ-BKP-02
-URS-122,FS-122-1,,,NOT_STARTED,test_delete_blocked_during_retention_returns_423,integration,RSK-31,OQ-RET-01
-URS-123,FS-123-1,,,NOT_STARTED,test_post_expiry_deletion_dual_approval_and_legal_hold,integration,RSK-31,OQ-RET-02
-URS-124,FS-124-1,,,NOT_STARTED,test_study_archive_export_manifest_verifies,system,RSK-33,OQ-ARC-01
-URS-130,FS-130-1,,,NOT_STARTED,test_tls_required_http_redirect_hsts,system,RSK-25,IQ-07
-URS-131,FS-131-1,,,NOT_STARTED,test_dependencies_pinned_with_hashes_and_vuln_audit_in_ci,static,RSK-29,IQ-02
-URS-132,FS-132-1,,,NOT_STARTED,test_security_events_logged,integration,RSK-23;RSK-25,OQ-ACC-08
-URS-140,FS-140-1,,,NOT_STARTED,review_user_manual_covers_all_functions_and_metrics,document review,RSK-35,OQ-DOC-01
-URS-141,FS-141-1,,,NOT_STARTED,review_release_notes_reference_changes_and_verification,document review,RSK-29,OQ-DOC-02
-(non-functional),(IQ),,,NOT_STARTED,test_sqlite_wal_mode_integrity_check_on_startup,integration,RSK-32,OQ-DB-01
+URS,FS,test_id,test_file,status,proposed_test_name,test_level,risk_ids,protocol_ref,notes
+URS-001,FS-001-1,test_ui_displays_research_prototype_banner,tests/test_controls.py,VERIFIED,test_ui_displays_ruo_not_validated_banner,system,RSK-34,OQ-GEN-01,
+URS-001,FS-001-2,test_report_contains_ruo_and_not_validated_statements,tests/test_controls.py,PARTIAL,test_report_footer_and_csv_header_contain_ruo_statement,integration,RSK-34,OQ-GEN-01,"PDF banner verified; CSV header carries data_class/review_status, not full RUO text"
+URS-002,FS-002-1,test_end_to_end,tests/test_api.py,PARTIAL,test_version_endpoint_and_outputs_embed_semver_and_commit,integration,RSK-18,OQ-GEN-02,/api/health returns version; report embeds git commit (bundle)
+URS-010,FS-010-1,,,GAP,test_username_unique_and_user_id_immutable,unit,RSK-23,OQ-ACC-01,not implemented/tested in prototype
+URS-010,FS-010-2,,,GAP,test_installer_disables_bootstrap_credentials,integration,RSK-23,IQ-11,not implemented/tested in prototype
+URS-011,FS-011-1,test_rbac_and_tenant_isolation,tests/test_api.py,PARTIAL,test_permission_matrix_matches_documented_roles,unit,RSK-24,OQ-ACC-02,roles admin/analyst/reviewer/viewer tested for key permissions
+URS-011,FS-011-2,,,GAP,test_every_api_route_declares_required_permission,unit,RSK-24,OQ-ACC-03,not implemented/tested in prototype
+URS-012,FS-012-1,test_rbac_and_tenant_isolation; test_end_to_end,tests/test_api.py,PARTIAL,test_repository_queries_always_scoped_by_tenant,integration,RSK-25,OQ-ACC-04,cross-tenant read denied; independent review pending (docs/security)
+URS-012,FS-012-2,test_end_to_end,tests/test_api.py,PARTIAL,test_cross_tenant_access_returns_404_and_logs_security_event,integration,RSK-25,OQ-ACC-04,returns 403 (not 404) and logs authz.cross_tenant_denied
+URS-013,FS-013-1,test_password_policy_and_lockout,tests/test_api.py,PARTIAL,test_password_policy_and_argon2id_hashing,unit,RSK-23,OQ-ACC-05,policy enforced; hashing is scrypt (not argon2id) — deviation to resolve in FS
+URS-013,FS-013-2,test_password_policy_and_lockout,tests/test_api.py,PARTIAL,test_account_lockout_after_failed_logins_and_audited_unlock,integration,RSK-23,OQ-ACC-05,lockout after 5 verified; admin unlock not implemented
+URS-013,FS-013-3,,,GAP,test_session_inactivity_timeout_and_revocation,integration,RSK-23,OQ-ACC-05,not implemented/tested in prototype
+URS-014,FS-014-1,,,GAP,test_users_cannot_be_deleted_only_deactivated,integration,RSK-23,OQ-ACC-06,not implemented/tested in prototype
+URS-015,FS-015-1,,,GAP,test_admin_plus_analyst_role_requires_justification,integration,RSK-20,OQ-ACC-07,not implemented/tested in prototype
+URS-015,FS-015-2,test_author_cannot_approve_own_segmentation,tests/test_controls.py,PARTIAL,test_author_cannot_approve_own_report,integration,RSK-26,OQ-SIG-04,enforced for segmentations; reports not yet
+URS-016,FS-016-1,test_end_to_end,tests/test_api.py,PARTIAL,test_user_and_role_changes_emit_audit_events,integration,RSK-23,OQ-ACC-06,user.create audited; role change endpoint not implemented
+URS-020,FS-020-1,test_end_to_end,tests/test_api.py,VERIFIED,test_ingest_computes_and_stores_sha256_before_parsing,unit,RSK-04,OQ-ING-01,file SHA-256 computed on upload before parsing; stored on scan record
+URS-020,FS-020-2,,,GAP,test_file_store_content_addressed_write_once,integration,RSK-04,OQ-ING-01,not implemented/tested in prototype
+URS-021,FS-021-1,,,GAP,test_run_aborts_on_hash_mismatch_tampered_byte,integration,RSK-04,OQ-ING-02,not implemented/tested in prototype
+URS-021,FS-021-2,,,GAP,test_on_demand_verify_endpoint_audited,integration,RSK-04,OQ-ING-02,not implemented/tested in prototype
+URS-022,FS-022-1,test_tiff_without_spacing_warns,tests/test_core.py,PARTIAL,test_metadata_extractor_missing_fields_are_null_not_defaulted,unit,RSK-01,OQ-ING-03,assumed spacing recorded in metadata_assumed + QC-D01 fail
+URS-023,FS-023-1,test_volume_rejects_bad_spacing; test_decimation_scales_spacing,tests/test_core.py,PARTIAL,test_voxel_spacing_validation_units_range_anisotropy_conflict,unit,RSK-01;RSK-02,OQ-ING-04,
+URS-023,FS-023-2,,,GAP,test_morphometry_refuses_unverified_spacing,integration,RSK-01,OQ-ING-04,not implemented/tested in prototype
+URS-024,FS-024-1,,,GAP,test_no_code_path_writes_to_original_files,integration,RSK-04,OQ-ING-01,not implemented/tested in prototype
+URS-025,FS-025-1,test_end_to_end,tests/test_api.py,PARTIAL,test_duplicate_specimen_timepoint_and_duplicate_hash_detection,integration,RSK-03,OQ-ING-05,duplicate hash rejected; duplicate animal_id per study blocked by UNIQUE
+URS-026,FS-026-1,test_zip_traversal_rejected; test_zip_bomb_rejected,tests/test_api.py,PARTIAL,test_malformed_file_rejected_with_reason_code,unit,RSK-04,OQ-ING-06,unsafe archives rejected; corrupt image files rely on reader errors
+URS-030,FS-030-1,test_tiff_stack_missing_slice_detection,tests/test_core.py,PARTIAL,test_qc_plugins_detect_saturation_missing_slices_fov_orientation,unit,RSK-05;RSK-36,OQ-QC-01,"missing slices tested; saturation/FOV/orientation exercised in Exp E and real data, not unit-tested"
+URS-031,FS-031-1,,,GAP,test_qc_results_store_check_version_threshold_value,unit,RSK-05,OQ-QC-01,not implemented/tested in prototype
+URS-032,FS-032-1,,,GAP,test_qc_fail_blocks_analysis_unless_override_with_reason,integration,RSK-05,OQ-QC-02,not implemented/tested in prototype
+URS-040,FS-040-1,test_cylinder_roi_volume_and_hash,tests/test_core.py,VERIFIED,test_roi_versions_immutable_physical_units,unit,RSK-06,OQ-ROI-01,"physical-µm definition, hash stable, revision creates new version"
+URS-041,FS-041-1,test_cylinder_roi_volume_and_hash,tests/test_core.py,PARTIAL,test_roi_update_requires_reason_and_is_audited,integration,RSK-06,OQ-ROI-02,API PUT /roi requires reason (min 3); audit roi.save
+URS-042,FS-042-1,,,GAP,test_analysis_requires_roi_verified_action,system,RSK-06;RSK-36,OQ-ROI-03,not implemented/tested in prototype
+URS-050,FS-050-1,,,GAP,test_canonical_label_map_persisted_with_results,unit,RSK-08,OQ-SEG-01,not implemented/tested in prototype
+URS-051,FS-051-1,test_end_to_end,tests/test_api.py,PARTIAL,test_segmentation_record_contains_model_hash_and_preproc_config,integration,RSK-10,OQ-SEG-01,model sha256 stored; config hash in measurement record
+URS-052,FS-052-1,test_end_to_end,tests/test_api.py,VERIFIED,test_prediction_v0_immutable_and_corrections_versioned,integration,RSK-13,OQ-SEG-03,correction creates v2 with parent; v1 unchanged
+URS-053,FS-053-1,test_correction_requires_reason; test_end_to_end,tests/test_controls.py,VERIFIED,test_correction_requires_reason_and_records_voxel_deltas,integration,RSK-13,OQ-SEG-03,reason mandatory; voxel_count_change stored
+URS-054,FS-054-1,,,GAP,test_model_load_rejects_label_map_mismatch_and_mask_import_rejects_bad_values,unit,RSK-08,OQ-SEG-02,not implemented/tested in prototype
+URS-054,FS-054-2,,,GAP,test_report_legend_generated_from_stored_label_map,integration,RSK-08,OQ-SEG-02,not implemented/tested in prototype
+URS-055,FS-055-1,,,GAP,test_high_uncertainty_flags_review_required,integration,RSK-09;RSK-11,OQ-SEG-04,not implemented/tested in prototype
+URS-060,FS-060-1,,,GAP,test_metric_registry_definitions_units_symbols,unit,RSK-14,OQ-MOR-01,not implemented/tested in prototype
+URS-061,FS-061-1,,,GAP,test_metric_rows_store_units_voxel_size_versions,unit,RSK-14,OQ-MOR-01,not implemented/tested in prototype
+URS-062,FS-062-1,test_plate_thickness_and_bvtv; test_sphere_volume_and_surface; test_connectivity_exact,tests/test_core.py,VERIFIED,test_phantom_volumes_and_thickness_within_tolerance,unit,RSK-14;RSK-01;RSK-02,OQ-MOR-02,plus Experiment G vs Scanco IPL
+URS-063,FS-063-1,test_density_suppressed_without_calibration,tests/test_controls.py,VERIFIED,test_density_suppressed_without_calibration,unit,RSK-15,OQ-MOR-03,
+URS-070,FS-070-1,,,GAP,test_sap_lock_immutable_and_amendment_versioned,integration,RSK-16,OQ-STA-01,not implemented/tested in prototype
+URS-070,FS-070-2,,,GAP,test_unblinding_requires_locked_sap,integration,RSK-16,OQ-STA-01,not implemented/tested in prototype
+URS-071,FS-071-1,,,GAP,test_stats_output_records_versions_seed_and_table_hash,unit,RSK-17,OQ-STA-04,not implemented/tested in prototype
+URS-072,FS-072-1,,,GAP,test_all_specimens_present_exclusions_listed_with_reason,integration,RSK-16,OQ-STA-02,not implemented/tested in prototype
+URS-075,FS-075-1,test_blinding,tests/test_api.py,PARTIAL,test_allocation_hidden_before_unblinding_in_ui_api_exports,integration,RSK-12,OQ-BLD-01,group names masked in store; export path not separately tested
+URS-076,FS-075-2,test_blinding,tests/test_api.py,PARTIAL,test_unblind_requires_permission_reauth_reason_and_is_audited,integration,RSK-12,OQ-BLD-02,permission + reason + audit; no re-authentication
+URS-076,FS-076-1,,,GAP,test_post_unblinding_edits_flagged_in_report,integration,RSK-12,OQ-BLD-03,not implemented/tested in prototype
+URS-080,FS-080-1,,,GAP,test_report_provenance_section_complete,integration,RSK-18,OQ-REP-01,not implemented/tested in prototype
+URS-081,FS-081-1,,,GAP,test_exports_pdf_csv_json_nifti_audit_available,integration,RSK-33,OQ-REP-02,not implemented/tested in prototype
+URS-082,FS-082-1,,,GAP,test_report_regeneration_matches_original_numerics,system,RSK-18;RSK-28,OQ-REP-03,not implemented/tested in prototype
+URS-083,FS-083-1,,,GAP,test_csv_locale_independent_full_precision_units_in_header,unit,RSK-19,OQ-REP-04,not implemented/tested in prototype
+URS-090,FS-090-1,,,GAP,test_review_state_machine_rejects_invalid_transitions,unit,RSK-26,OQ-SIG-01,not implemented/tested in prototype
+URS-091,FS-091-1,test_end_to_end,tests/test_api.py,PARTIAL,test_signature_manifestation_name_time_meaning_in_ui_and_pdf,integration,RSK-26,OQ-SIG-02,meaning stored and printed in PDF sign-off table
+URS-092,FS-092-1,test_end_to_end,tests/test_api.py,VERIFIED,test_signing_requires_password_reentry,integration,RSK-26,OQ-SIG-02,"wrong password → 401, audited"
+URS-093,FS-093-1,,,GAP,test_change_after_signature_invalidates_signature,integration,RSK-26;RSK-18,OQ-SIG-03,not implemented/tested in prototype
+URS-100,FS-100-1,test_audit_chain_detects_tampering,tests/test_api.py,VERIFIED,test_audit_log_rejects_update_and_delete_via_triggers,unit,RSK-20,OQ-AUD-01,
+URS-101,FS-101-1,,,GAP,test_audit_entry_fields_complete_old_new_reason,unit,RSK-20,OQ-AUD-02,not implemented/tested in prototype
+URS-102,FS-102-1,test_audit_chain_detects_tampering,tests/test_api.py,PARTIAL,test_chain_verification_detects_modify_insert_delete_reorder,unit,RSK-20,OQ-AUD-03,"modification detected; delete/reorder via prev_hash logic, not separately tested"
+URS-102,FS-102-2,test_audit_chain_detects_tampering,tests/test_api.py,PARTIAL,test_chain_head_anchor_detects_full_chain_replacement,integration,RSK-21,OQ-AUD-05,anchor verify implemented; full replacement scenario not tested
+URS-103,FS-103-1,,,GAP,test_no_endpoint_or_config_disables_audit_in_production,integration,RSK-20,OQ-AUD-04,not implemented/tested in prototype
+URS-104,FS-104-1,,,GAP,test_audit_viewer_filters_and_human_readable_export,system,RSK-20,OQ-AUD-07,not implemented/tested in prototype
+URS-105,FS-105-1,,,GAP,test_retention_purge_preserves_audit_entries,integration,RSK-31,OQ-RET-03,not implemented/tested in prototype
+URS-106,FS-106-1,test_audit_timestamps_utc_monotonic,tests/test_controls.py,VERIFIED,test_audit_timestamps_server_utc_monotonic,unit,RSK-22,OQ-AUD-06,
+URS-110,FS-110-1,,,GAP,test_run_stores_resolved_config_snapshot_hash,unit,RSK-27,OQ-CFG-01,not implemented/tested in prototype
+URS-111,FS-111-1,test_model_loader_rejects_hash_mismatch,tests/test_controls.py,VERIFIED,test_model_loader_rejects_hash_mismatch,unit,RSK-10,OQ-MOD-01,
+URS-112,FS-112-1,,,GAP,test_only_released_models_in_production_runs,integration,RSK-10,OQ-MOD-02,not implemented/tested in prototype
+URS-113,FS-113-1,Experiment P,experiments/exp_P_reproducibility.py,VERIFIED,test_rerun_reproducible_within_tolerance,system,RSK-28;RSK-29,OQ-CFG-02,bit-identical reruns (see results)
+URS-120,FS-120-1,,,GAP,test_backup_job_manifest_includes_db_files_models_chain_head,integration,RSK-30,OQ-BKP-01,not implemented/tested in prototype
+URS-121,FS-121-1,test_backup_restores,tests/test_api.py,PARTIAL,test_restore_verifies_hashes_and_audit_chain,system,RSK-30,OQ-BKP-02,DB backup restored and chain verified; scan files not included
+URS-122,FS-122-1,,,GAP,test_delete_blocked_during_retention_returns_423,integration,RSK-31,OQ-RET-01,not implemented/tested in prototype
+URS-123,FS-123-1,,,GAP,test_post_expiry_deletion_dual_approval_and_legal_hold,integration,RSK-31,OQ-RET-02,not implemented/tested in prototype
+URS-124,FS-124-1,,,GAP,test_study_archive_export_manifest_verifies,system,RSK-33,OQ-ARC-01,not implemented/tested in prototype
+URS-130,FS-130-1,,,GAP,test_tls_required_http_redirect_hsts,system,RSK-25,IQ-07,not implemented/tested in prototype
+URS-131,FS-131-1,pip-audit run,docs/security/IP_PROVENANCE.md,PARTIAL,test_dependencies_pinned_with_hashes_and_vuln_audit_in_ci,static,RSK-29,IQ-02,scan run manually; pinning with hashes and CI not set up
+URS-132,FS-132-1,test_rbac_and_tenant_isolation; test_end_to_end,tests/test_api.py,PARTIAL,test_security_events_logged,integration,RSK-23;RSK-25,OQ-ACC-08,"authz.denied, login_failed, cross_tenant_denied logged"
+URS-140,FS-140-1,,,GAP,review_user_manual_covers_all_functions_and_metrics,document review,RSK-35,OQ-DOC-01,not implemented/tested in prototype
+URS-141,FS-141-1,,,GAP,review_release_notes_reference_changes_and_verification,document review,RSK-29,OQ-DOC-02,not implemented/tested in prototype
+(non-functional),(IQ),,,GAP,test_sqlite_wal_mode_integrity_check_on_startup,integration,RSK-32,OQ-DB-01,not implemented/tested in prototype

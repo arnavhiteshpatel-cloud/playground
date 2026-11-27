@@ -46,8 +46,10 @@ def _row_hash(prev, ts, user, org, action, otype, oid, details):
 
 
 class AuditLog:
-    def __init__(self, conn: sqlite3.Connection):
+    def __init__(self, conn: sqlite3.Connection, lock=None):
+        import threading
         self.conn = conn
+        self.lock = lock or threading.RLock()
         conn.executescript(SCHEMA)
 
     def record(self, action: str, user_id=None, org_id=None, object_type=None, object_id=None,
@@ -58,22 +60,38 @@ class AuditLog:
         org_id = None if org_id is None else str(org_id)
         object_id = None if object_id is None else str(object_id)
         ts = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime()) + f".{int(time.time() * 1e6) % 1000000:06d}Z"
-        cur = self.conn.execute("SELECT row_hash FROM audit_log ORDER BY seq DESC LIMIT 1")
-        r = cur.fetchone()
-        prev = r[0] if r else GENESIS
-        h = _row_hash(prev, ts, user_id, org_id, action, object_type, object_id, details_s)
-        self.conn.execute("INSERT INTO audit_log(ts,user_id,org_id,action,object_type,object_id,details,prev_hash,row_hash)"
-                          " VALUES (?,?,?,?,?,?,?,?,?)",
-                          (ts, user_id, org_id, action, object_type, object_id,
-                           details_s, prev, h))
-        self.conn.commit()
+        # read-last + insert must be atomic: in-process lock + BEGIN IMMEDIATE (cross-process) (review S-10)
+        with self.lock:
+            in_tx = self.conn.in_transaction
+            if not in_tx:
+                self.conn.execute("BEGIN IMMEDIATE")
+            try:
+                r = self.conn.execute("SELECT row_hash FROM audit_log ORDER BY seq DESC LIMIT 1").fetchone()
+                prev = r[0] if r else GENESIS
+                h = _row_hash(prev, ts, user_id, org_id, action, object_type, object_id, details_s)
+                self.conn.execute("INSERT INTO audit_log(ts,user_id,org_id,action,object_type,object_id,details,prev_hash,row_hash)"
+                                  " VALUES (?,?,?,?,?,?,?,?,?)",
+                                  (ts, user_id, org_id, action, object_type, object_id, details_s, prev, h))
+                if not in_tx:
+                    self.conn.execute("COMMIT")
+            except Exception:
+                if not in_tx:
+                    self.conn.execute("ROLLBACK")
+                raise
         return {"ts": ts, "row_hash": h}
 
-    def verify_chain(self) -> dict:
+    def verify_chain(self, anchor: dict | None = None) -> dict:
+        """Recompute the chain. Detects modified, inserted, deleted or reordered rows. A full
+        rewrite or truncation of the tail is detectable only against an externally stored
+        ``anchor`` (seq, row_hash) — export anchors regularly (see founder/OPERATING_MANUAL.md)."""
+        if anchor is not None and not self.verify_anchor(anchor):
+            return {"ok": False, "reason": "anchor mismatch (chain rewritten or truncated)", "n": 0}
         prev = GENESIS
         n = 0
-        for row in self.conn.execute("SELECT seq,ts,user_id,org_id,action,object_type,object_id,details,prev_hash,row_hash "
-                                     "FROM audit_log ORDER BY seq"):
+        with self.lock:
+            rows = list(self.conn.execute("SELECT seq,ts,user_id,org_id,action,object_type,object_id,details,prev_hash,row_hash "
+                                     "FROM audit_log ORDER BY seq"))
+        for row in rows:
             seq, ts, u, o, a, ot, oid, det, ph, rh = row
             if ph != prev:
                 return {"ok": False, "first_bad_seq": seq, "reason": "prev_hash mismatch (row removed or reordered)", "n": n}

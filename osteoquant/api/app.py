@@ -41,8 +41,9 @@ def _load_scan(store, user, scan_id):
     from ..io import read_volume
     sc = store.scan(user, scan_id)
     vol, _ = read_volume(sc["store_path"])
-    vol.meta.setdefault("ingest", {}).update({"metadata_found": {"spacing_um": sc["spacing_um"]}, "metadata_assumed":
-                                             (sc["meta"] or {}).get("ingest", {}).get("metadata_assumed", {})})
+    stored = dict((sc["meta"] or {}).get("ingest", {}))   # original ingest record: missing slices, errors, assumptions
+    stored.setdefault("metadata_found", {})["spacing_um"] = sc["spacing_um"]
+    vol.meta["ingest"] = stored
     return sc, vol
 
 
@@ -79,6 +80,7 @@ def job_analyze(store, user, params, ctx):
     store.exec("UPDATE segmentations SET labels_key=? WHERE id=?", (key, sid))
     write_labels_zarr(sc["store_path"], key, res["_labels"])
     write_labels_zarr(sc["store_path"], "roi_current", res["_roi_mask"].astype(np.uint8))
+    write_labels_zarr(sc["store_path"], f"roi_v{v}", res["_roi_mask"].astype(np.uint8))
     if "_entropy" in res:
         write_labels_zarr(sc["store_path"], f"unc_v{v}", np.clip(res["_entropy"] * 255, 0, 255).astype(np.uint8))
     store.save_measurement(user, scan_id, sid, rid, public(res), __version__)
@@ -93,8 +95,10 @@ def job_report(store, user, params, ctx):
     bundle = bundle_from_store(store, user, sid, ctx)
     out = store.data_dir / f"org{user['org_id']}" / "reports"
     out.mkdir(parents=True, exist_ok=True)
-    rid = store.exec("INSERT INTO reports(org_id,study_id,status,created_by,created) VALUES (?,?,?,?,datetime('now'))",
-                     (user["org_id"], sid, "building", user["id"]))
+    st_row = store.study(user, sid)
+    unblinded = int(bool(st_row["blinded"]) and store.can(user, "unblind"))
+    rid = store.exec("INSERT INTO reports(org_id,study_id,status,created_by,created,unblinded) VALUES (?,?,?,?,datetime('now'),?)",
+                     (user["org_id"], sid, "building", user["id"], unblinded))
     pdf, csvp = out / f"report{rid}.pdf", out / f"report{rid}.csv"
     r = build_pdf(bundle, pdf, csvp)
     store.exec("UPDATE reports SET pdf_path=?, csv_path=?, sha256=?, status='ready' WHERE id=?",
@@ -158,7 +162,7 @@ class EditOp(BaseModel):
 class EditsIn(BaseModel):
     base_version: int
     ops: list[EditOp] = Field(min_length=1, max_length=5000)
-    reason: str = Field(default="", max_length=500)
+    reason: str = Field(min_length=3, max_length=500)   # required: recorded in audit trail
 
 
 class ReviewIn(BaseModel):
@@ -175,8 +179,23 @@ class ROIIn(BaseModel):
     reason: str = Field(min_length=3, max_length=500)
 
 
+class AnalyzeConfig(BaseModel):
+    model_config = {"extra": "forbid"}
+    defect_model: str = Field(default="condyle", pattern=r"^(condyle|calvarial|segmental)$")
+    nominal_diameter_um: float | None = Field(default=None, gt=0, lt=1e5)
+    segmentation: str = Field(default="multiotsu", pattern=r"^(multiotsu|ctan_style|unet:[A-Za-z0-9_\-]{1,64})$")
+    graft_brighter: bool = True
+    abstain_tau: float = Field(default=0.6, ge=0, le=1)
+    tta: bool = True
+    thickness_metrics: bool = True
+    no_graft: bool = False
+    t_mineral: float | None = None
+    t_graft: float | None = None
+    expected_model_sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
+
+
 class AnalyzeIn(BaseModel):
-    config: dict = {}
+    config: AnalyzeConfig = AnalyzeConfig()
     use_saved_roi: bool = True
 
 
@@ -316,16 +335,18 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
                     f.write(b)
             fsha = sha256_file(dest)
             src = dest
-            if name.lower().endswith((".zip", ".tar", ".tgz", ".tar.gz")):
+            if name.lower().endswith((".tar", ".tgz", ".tar.gz")):
+                raise HTTPException(400, "TAR archives are not accepted; upload a ZIP")
+            if name.lower().endswith(".zip"):
                 ex = tmp / "extracted"
-                safe_extract(dest, ex)
+                safe_extract(dest, ex, allow_tar=False)
                 subdirs = {Path(p).parent for p in ex.rglob("*") if p.is_file()}
                 src = max(subdirs, key=lambda d: len(list(d.iterdir())))
             try:
                 acq = json.loads(acquisition or "{}")
             except json.JSONDecodeError:
                 raise HTTPException(400, "acquisition must be JSON")
-            vol, rep = read_volume(src, spacing_um=spacing_um)
+            vol, rep = read_volume(src, spacing_um=spacing_um, safe=True)
             if rep.errors:
                 raise HTTPException(422, f"Ingest errors: {rep.errors[:3]}")
             scan_id = store.register_scan(u, sid, specimen_id, timepoint_id, "", name, rep.format, fsha,
@@ -395,12 +416,14 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
             return {"vertices": [], "faces": []}
         sp = [s * step / 1000 for s in sc["spacing_um"]]
         v, f, _, _ = marching_cubes(np.pad(m, 1), 0.5, spacing=sp)
-        return {"vertices": np.round(v, 3).ravel().tolist(), "faces": f.ravel().tolist(), "units": "mm"}
+        v = v[:, ::-1]                       # (z,y,x) -> (x,y,z) so exported OBJ is not mirrored
+        f = f[:, ::-1]                       # keep outward-facing winding after the axis swap
+        return {"vertices": np.round(v, 3).ravel().tolist(), "faces": f.ravel().tolist(), "units": "mm", "order": "xyz"}
 
     @app.post("/api/scans/{scan_id}/analyze")
     def analyze_scan(scan_id: int, b: AnalyzeIn, u=Depends(current_user)):
         store.scan(u, scan_id)
-        return {"job_id": runner.submit(u, "analyze", {"scan_id": scan_id, "config": b.config,
+        return {"job_id": runner.submit(u, "analyze", {"scan_id": scan_id, "config": b.config.model_dump(exclude_none=True),
                                                        "use_saved_roi": b.use_saved_roi})}
 
     @app.put("/api/scans/{scan_id}/roi")
@@ -463,10 +486,16 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
         key = f"seg_v{v}"
         store.exec("UPDATE segmentations SET labels_key=? WHERE id=?", (key, sid))
         write_labels_zarr(sc["store_path"], key, lab)
-        roi = np.asarray(g["labels/roi_current"][:]).astype(bool) if "labels/roi_current" in g else np.ones(lab.shape, bool)
+        rk = f"labels/roi_v{b.base_version}"
+        rk = rk if rk in g else ("labels/roi_current" if "labels/roi_current" in g else None)
+        roi = np.asarray(g[rk][:]).astype(bool) if rk else np.ones(lab.shape, bool)
+        base_m = store.q1("SELECT metrics FROM measurements WHERE segmentation_id=? ORDER BY id DESC LIMIT 1", (base["id"],))
+        thick = json.loads(base_m["metrics"]).get("config", {}).get("thickness_metrics", True) if base_m else True
         vol = Volume(np.asarray(g["image"][:]), tuple(sc["spacing_um"]))
-        met = defect_report_metrics(lab, roi, vol, thickness=False)
-        store.save_measurement(u, scan_id, sid, base["roi_id"], {"metrics": met, "corrected_from": b.base_version}, __version__)
+        met = defect_report_metrics(lab, roi, vol, thickness=thick)   # same ROI and endpoint set as the base version
+        write_labels_zarr(sc["store_path"], f"roi_v{v}", roi.astype(np.uint8))
+        store.save_measurement(u, scan_id, sid, base["roi_id"], {"metrics": met, "corrected_from": b.base_version,
+                                                                "config": {"thickness_metrics": thick}}, __version__)
         return {"segmentation_id": sid, "version": v, "voxel_count_change": changed,
                 "class_volumes": met["class_volumes"]}
 
@@ -491,6 +520,9 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
         if not r:
             raise HTTPException(404, "report not found")
         store.require(u, "read", r["org_id"])
+        if r.get("unblinded") and not store.can(u, "unblind"):
+            store.audit.record("report.blinded_download_denied", u["id"], u["org_id"], "report", rid)
+            raise HTTPException(403, "This report contains unblinded group allocation")
         if kind not in ("pdf", "csv") or r["status"] != "ready":
             raise HTTPException(400, "not available")
         store.audit.record("report.download", u["id"], u["org_id"], "report", rid, {"kind": kind})

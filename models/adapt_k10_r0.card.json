@@ -112,7 +112,8 @@
  },
  "n_params": 788944,
  "train_seconds": 97.5,
- "sha256": "315b9e1b11e2ca65e1b3ac5a7d6b32825b3c40e867d3568b286e0f22ece51763",
+ "sha256": "e705ee8914895494b3f76a489a3f76ffa59eac825e39bc959f0a473430e644d8",
  "path": "models/adapt_k10_r0.pt",
- "warning": "SYNTHETIC-TRAINED \u2014 research prototype, not for study decisions"
+ "warning": "SYNTHETIC-TRAINED \u2014 research prototype, not for study decisions",
+ "previous_sha256": "315b9e1b11e2ca65e1b3ac5a7d6b32825b3c40e867d3568b286e0f22ece51763"
 }

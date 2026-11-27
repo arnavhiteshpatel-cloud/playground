@@ -70,6 +70,8 @@ def segment(vol: Volume, roi_mask: np.ndarray, cfg: dict, progress=lambda f, m: 
         info["thresholds"] = {"t_mineral": cfg["t_mineral"], "t_graft": cfg["t_graft"]}
         return lab, None, info
     if method.startswith("rf:"):
+        if not cfg.get("_trusted_local", False):
+            raise PermissionError("Pickled RF models can only be used from the trusted local CLI")
         import joblib
         rf = joblib.load(method[3:])
         lab, p = rf.predict(vol.data, vol.spacing, roi_mask)
@@ -80,7 +82,7 @@ def segment(vol: Volume, roi_mask: np.ndarray, cfg: dict, progress=lambda f, m: 
     if method.startswith("unet:"):
         from .ml.train import load_model, predict_proba, Case
         name = method[5:]
-        model, ck = load_model(name)
+        model, ck = load_model(name)   # name-only, registry-hash verified before safe deserialisation
         info.update({"model_name": name, "model_sha256": ck["sha256"], "model_provenance": ck["provenance"],
                      "licence_tag": ck["licence_tag"]})
         if cfg.get("expected_model_sha256") and cfg["expected_model_sha256"] != ck["sha256"]:

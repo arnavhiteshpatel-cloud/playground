@@ -29,6 +29,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from xml.sax.saxutils import escape as esc   # neutralise ReportLab markup in user-supplied text (review S-04)
+
 import numpy as np
 
 from .. import __version__
@@ -57,10 +59,32 @@ def _get(d, path, default=float("nan")):
     return cur
 
 
+def _per_animal(specimens, eps):
+    """Collapse multiple scans of the same animal at the same timepoint to one mean value per
+    endpoint (the animal is the experimental unit; review Q-05)."""
+    by = {}
+    for s in specimens:
+        key = (s.get("animal_id") or s["specimen_id"], s.get("group", "—"), s.get("timepoint", "—"))
+        by.setdefault(key, []).append(s)
+    out = []
+    for (aid, g, tp), ss in by.items():
+        m = {}
+        for k, _, _ in eps:
+            vals = [_get(x["metrics"], k) for x in ss]
+            vals = [v for v in vals if isinstance(v, (int, float)) and np.isfinite(v)]
+            node = m
+            parts = k.split(".")
+            for p_ in parts[:-1]:
+                node = node.setdefault(p_, {})
+            node[parts[-1]] = float(np.mean(vals)) if vals else float("nan")
+        out.append({"specimen_id": aid, "group": g, "timepoint": tp, "metrics": m, "n_scans": len(ss)})
+    return out
+
+
 def group_stats(bundle):
     eps = bundle["endpoints"]
     groups = {}
-    for s in bundle["specimens"]:
+    for s in _per_animal(bundle["specimens"], eps):
         groups.setdefault((s.get("group", "—"), s.get("timepoint", "—")), []).append(s)
     table = []
     for (g, tp), ss in sorted(groups.items(), key=lambda x: (str(x[0][1]), str(x[0][0]))):
@@ -140,7 +164,7 @@ def build_pdf(bundle, pdf_path, csv_path=None) -> dict:
         return t
 
     def table(data, widths=None, fs=7.4, header=True):
-        rows = [[Paragraph(str(c), SM) if isinstance(c, str) else c for c in r] for r in data]
+        rows = [[Paragraph(esc(str(c)), SM) if isinstance(c, str) else c for c in r] for r in data]
         t = Table(rows, colWidths=widths, repeatRows=1 if header else 0)
         st = [("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#BBBBBB")),
               ("VALIGN", (0, 0), (-1, -1), "TOP"), ("FONTSIZE", (0, 0), (-1, -1), fs),
@@ -154,7 +178,7 @@ def build_pdf(bundle, pdf_path, csv_path=None) -> dict:
     st = bundle["study"]
     flow = []
     flow.append(Paragraph("OsteoQuant · DefectFill Report", ParagraphStyle("k", parent=SM, textColor=ACC)))
-    flow.append(Paragraph(bundle["title"], H1))
+    flow.append(Paragraph(esc(bundle["title"]), H1))
     flow.append(banner(BANNERS[bundle["data_class"]], colors.HexColor("#8B1E1E" if bundle["data_class"] == "synthetic"
                                                                          else "#7A5B00" if bundle["data_class"] == "public"
                                                                          else "#1F4E79")))
@@ -190,7 +214,7 @@ def build_pdf(bundle, pdf_path, csv_path=None) -> dict:
 
     # ----------------------------------------------------------- 3 group results
     gt, comps = group_stats(bundle)
-    flow.append(Paragraph("3. Group summaries (specimen-level; mean ± SD [95% CI])", H2))
+    flow.append(Paragraph("3. Group summaries (animal-level: repeated scans of an animal are averaged; mean ± SD [95% CI])", H2))
     hdr = ["Group", "Timepoint", "n"] + [l for _, l, _ in eps[:5]]
     rows = [hdr]
     for r in gt:
@@ -251,7 +275,7 @@ def build_pdf(bundle, pdf_path, csv_path=None) -> dict:
         flow.append(Paragraph("Orthogonal mid-ROI slices with segmentation overlay (orange new bone, blue residual graft, "
                               "pink host bone, yellow uncertain) and ROI outline. Scale bar shown in each panel.", SM))
         for s in figs[: bundle.get("max_figures", 4)]:
-            flow.append(KeepTogether([Paragraph(f"Specimen {s['specimen_id']} — {s.get('group')} · {s.get('timepoint')}", SM),
+            flow.append(KeepTogether([Paragraph(esc(f"Specimen {s['specimen_id']} — {s.get('group')} · {s.get('timepoint')}"), SM),
                                       Image(s["figure"], width=175 * mm, height=175 * mm * 0.36)]))
 
     # ----------------------------------------------------------- 6 imaging / QC / ROI / segmentation provenance

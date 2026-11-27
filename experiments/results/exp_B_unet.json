@@ -526,7 +526,530 @@
      "graft_frac_true": 0.10580287779504154
     }
    ]
+  },
+  "unet_noctx_s0": {
+   "train_seconds": 744.7412261962891,
+   "sha256": "85d5bb93e8a015e674e71e1e113625736395bb04c6c1f8a3ee870cd3b1c12d1b",
+   "n_params": 788620,
+   "cfg": {
+    "patch": [
+     48,
+     48,
+     48
+    ],
+    "batch": 2,
+    "iters": 1500,
+    "lr": 0.003,
+    "base": 12,
+    "levels": 4,
+    "threads": 4,
+    "log_every": 100,
+    "val_every": 500,
+    "loss": {
+     "dice": 1.0,
+     "ce": 1.0,
+     "boundary_w": 1.0
+    },
+    "eval_in_roi": false,
+    "roi_distance_channel": false,
+    "seed": 0
+   },
+   "history": [
+    {
+     "iter": 100,
+     "loss": 1.5421366691589355,
+     "sec": 31.4
+    },
+    {
+     "iter": 200,
+     "loss": 0.7193669080734253,
+     "sec": 56.6
+    },
+    {
+     "iter": 300,
+     "loss": 0.5320141315460205,
+     "sec": 81.5
+    },
+    {
+     "iter": 400,
+     "loss": 0.781620442867279,
+     "sec": 136.7
+    },
+    {
+     "iter": 500,
+     "loss": 0.340564489364624,
+     "sec": 209.1,
+     "val_mean_dice": 0.8570707706539864
+    },
+    {
+     "iter": 600,
+     "loss": 0.6403998136520386,
+     "sec": 247.8
+    },
+    {
+     "iter": 700,
+     "loss": 0.440120130777359,
+     "sec": 286.1
+    },
+    {
+     "iter": 800,
+     "loss": 0.6524938344955444,
+     "sec": 326.1
+    },
+    {
+     "iter": 900,
+     "loss": 0.5742048025131226,
+     "sec": 393.3
+    },
+    {
+     "iter": 1000,
+     "loss": 0.44673243165016174,
+     "sec": 459.3,
+     "val_mean_dice": 0.8940320695612095
+    },
+    {
+     "iter": 1100,
+     "loss": 0.37011730670928955,
+     "sec": 506.5
+    },
+    {
+     "iter": 1200,
+     "loss": 0.4712705910205841,
+     "sec": 572.4
+    },
+    {
+     "iter": 1300,
+     "loss": 0.28148359060287476,
+     "sec": 669.5
+    },
+    {
+     "iter": 1400,
+     "loss": 0.25970470905303955,
+     "sec": 701.6
+    },
+    {
+     "iter": 1500,
+     "loss": 0.42292264103889465,
+     "sec": 729.1,
+     "val_mean_dice": 0.8989105395344158
+    }
+   ],
+   "summary": {
+    "dice_new_roi": {
+     "mean": 0.865822990074608,
+     "ci95": [
+      0.8430780910277864,
+      0.8885678891214295
+     ],
+     "n": 16,
+     "sd": 0.04268437710703239
+    },
+    "dice_graft_roi": {
+     "mean": 0.9187057317341911,
+     "ci95": [
+      0.8875065591505846,
+      0.9499049043177976
+     ],
+     "n": 16,
+     "sd": 0.05855014987073072
+    },
+    "hd95_new_um": {
+     "mean": 68.89338763797554,
+     "ci95": [
+      29.55823532051192,
+      108.22853995543915
+     ],
+     "n": 16,
+     "sd": 73.81859429777522
+    },
+    "hd95_graft_um": {
+     "mean": 44.3301270189222,
+     "ci95": [
+      37.93957257664802,
+      50.72068146119638
+     ],
+     "n": 16,
+     "sd": 11.99287959799367
+    },
+    "dice_host_all": {
+     "mean": 0.9663537460202405,
+     "ci95": [
+      0.9567006551675381,
+      0.9760068368729429
+     ],
+     "n": 16,
+     "sd": 0.018115541834544727
+    },
+    "dice_new_all": {
+     "mean": 0.832216123589468,
+     "ci95": [
+      0.8044393592922388,
+      0.8599928878866971
+     ],
+     "n": 16,
+     "sd": 0.0521274629373115
+    },
+    "dice_graft_all": {
+     "mean": 0.9081915427651026,
+     "ci95": [
+      0.8708326976441871,
+      0.9455503878860181
+     ],
+     "n": 16,
+     "sd": 0.07010974329416572
+    },
+    "ece_roi": {
+     "mean": 0.009890733518955513,
+     "ci95": [
+      0.00619144104680632,
+      0.013590025991104706
+     ],
+     "n": 16,
+     "sd": 0.006942303616532776
+    },
+    "infer_s": {
+     "mean": 0.6200473010540009,
+     "ci95": [
+      0.5119593977877879,
+      0.7281352043202138
+     ],
+     "n": 16,
+     "sd": 0.20284393499509498
+    },
+    "new_frac_pred": {
+     "mean": 0.2404796593451578,
+     "ci95": [
+      0.18219389025297256,
+      0.29876542843734305
+     ],
+     "n": 16,
+     "sd": 0.1093824045023366
+    },
+    "new_frac_true": {
+     "mean": 0.26502658837880566,
+     "ci95": [
+      0.20079928250067347,
+      0.32925389425693785
+     ],
+     "n": 16,
+     "sd": 0.12053263191133035
+    },
+    "graft_frac_pred": {
+     "mean": 0.10755291224476263,
+     "ci95": [
+      0.08865482681964189,
+      0.12645099766988338
+     ],
+     "n": 16,
+     "sd": 0.03546522687246175
+    },
+    "graft_frac_true": {
+     "mean": 0.10958060850329499,
+     "ci95": [
+      0.08922819928227026,
+      0.1299330177243197
+     ],
+     "n": 16,
+     "sd": 0.03819449400230516
+    },
+    "by_material_graft_dice": {
+     "bcp": 0.9465108081674442,
+     "beta_tcp": 0.8918221175273198,
+     "calcium_sulfate": 0.8816632708289184,
+     "ha": 0.9724419858088688
+    }
+   },
+   "rows": [
+    {
+     "case": "test_000_condyle_beta_tcp",
+     "material": "beta_tcp",
+     "model": "condyle",
+     "dice_new_roi": 0.9171066397411255,
+     "dice_graft_roi": 0.8930809566440722,
+     "hd95_new_um": 40.0,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9626194521704311,
+     "dice_new_all": 0.8974868748437481,
+     "dice_graft_all": 0.8925102249488752,
+     "ece_roi": 0.00460530267608118,
+     "infer_s": 0.8971290588378906,
+     "new_frac_pred": 0.36267917182799503,
+     "new_frac_true": 0.38641604179333017,
+     "graft_frac_pred": 0.07225269863740931,
+     "graft_frac_true": 0.07254948321286225
+    },
+    {
+     "case": "test_001_calvarial_beta_tcp",
+     "material": "beta_tcp",
+     "model": "calvarial",
+     "dice_new_roi": 0.874794392382332,
+     "dice_graft_roi": 0.7882378757954794,
+     "hd95_new_um": 40.0,
+     "hd95_graft_um": 80.0,
+     "dice_host_all": 0.9430142792270044,
+     "dice_new_all": 0.8226896003633061,
+     "dice_graft_all": 0.7433774834437086,
+     "ece_roi": 0.03135893440936804,
+     "infer_s": 0.3813052177429199,
+     "new_frac_pred": 0.3759493670886076,
+     "new_frac_true": 0.4181808799245106,
+     "graft_frac_pred": 0.051242381622128456,
+     "graft_frac_true": 0.06060539042226941
+    },
+    {
+     "case": "test_002_segmental_beta_tcp",
+     "material": "beta_tcp",
+     "model": "segmental",
+     "dice_new_roi": 0.8228830490241279,
+     "dice_graft_roi": 0.9342574064131973,
+     "hd95_new_um": 56.568542494923804,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9889727052861914,
+     "dice_new_all": 0.8195767803160755,
+     "dice_graft_all": 0.9342574064131973,
+     "ece_roi": 0.013538281469213518,
+     "infer_s": 0.7059011459350586,
+     "new_frac_pred": 0.13960448392554992,
+     "new_frac_true": 0.15078889953171562,
+     "graft_frac_pred": 0.11370558375634518,
+     "graft_frac_true": 0.108877447850149
+    },
+    {
+     "case": "test_003_condyle_bcp",
+     "material": "bcp",
+     "model": "condyle",
+     "dice_new_roi": 0.9088108915618117,
+     "dice_graft_roi": 0.9539734876522441,
+     "hd95_new_um": 40.0,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9634663679272831,
+     "dice_new_all": 0.8873417340831855,
+     "dice_graft_all": 0.9538130319238403,
+     "ece_roi": 0.009301055334159009,
+     "infer_s": 0.8949220180511475,
+     "new_frac_pred": 0.287073084409839,
+     "new_frac_true": 0.30798937152379025,
+     "graft_frac_pred": 0.13199433728543622,
+     "graft_frac_true": 0.14162557139318604
+    },
+    {
+     "case": "test_004_calvarial_bcp",
+     "material": "bcp",
+     "model": "calvarial",
+     "dice_new_roi": 0.9088504577822991,
+     "dice_graft_roi": 0.9296392042261437,
+     "hd95_new_um": 40.0,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9615843663178538,
+     "dice_new_all": 0.8569510167540606,
+     "dice_graft_all": 0.9171656686626747,
+     "ece_roi": 0.005737719121766808,
+     "infer_s": 0.3958418369293213,
+     "new_frac_pred": 0.32926629160806375,
+     "new_frac_true": 0.375196095777306,
+     "graft_frac_pred": 0.10839193624003751,
+     "graft_frac_true": 0.10713464260438782
+    },
+    {
+     "case": "test_005_segmental_bcp",
+     "material": "bcp",
+     "model": "segmental",
+     "dice_new_roi": 0.8229150668100138,
+     "dice_graft_roi": 0.9528433284253254,
+     "hd95_new_um": 97.97958971132712,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9935560307461134,
+     "dice_new_all": 0.8203950390445567,
+     "dice_graft_all": 0.9528433284253254,
+     "ece_roi": 0.005403482954627634,
+     "infer_s": 0.5910930633544922,
+     "new_frac_pred": 0.10040186125211506,
+     "new_frac_true": 0.11889633886760324,
+     "graft_frac_pred": 0.13829314720812183,
+     "graft_frac_true": 0.13451335674755216
+    },
+    {
+     "case": "test_006_condyle_ha",
+     "material": "ha",
+     "model": "condyle",
+     "dice_new_roi": 0.7785630153121319,
+     "dice_graft_roi": 0.9771547833935018,
+     "hd95_new_um": 120.0,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9387608763123816,
+     "dice_new_all": 0.697234400237334,
+     "dice_graft_all": 0.9771547833935018,
+     "ece_roi": 0.005329920404243385,
+     "infer_s": 0.8583981990814209,
+     "new_frac_pred": 0.12197841090072553,
+     "new_frac_true": 0.1328109167060731,
+     "graft_frac_pred": 0.15781277649973455,
+     "graft_frac_true": 0.1662692247067036
+    },
+    {
+     "case": "test_007_calvarial_ha",
+     "material": "ha",
+     "model": "calvarial",
+     "dice_new_roi": 0.8811135035373732,
+     "dice_graft_roi": 0.97803212110024,
+     "hd95_new_um": 40.0,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9629154993940117,
+     "dice_new_all": 0.7790318194180038,
+     "dice_graft_all": 0.9772383517172686,
+     "ece_roi": 0.007580757565862696,
+     "infer_s": 0.38522911071777344,
+     "new_frac_pred": 0.1484060009376465,
+     "new_frac_true": 0.1676471455531965,
+     "graft_frac_pred": 0.15935302390998593,
+     "graft_frac_true": 0.16655313753243692
+    },
+    {
+     "case": "test_008_segmental_ha",
+     "material": "ha",
+     "model": "segmental",
+     "dice_new_roi": 0.8600867262749914,
+     "dice_graft_roi": 0.9621390529328647,
+     "hd95_new_um": 40.0,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9856474668143205,
+     "dice_new_all": 0.8570281431630468,
+     "dice_graft_all": 0.9621390529328647,
+     "ece_roi": 0.011648622378643865,
+     "infer_s": 0.5371112823486328,
+     "new_frac_pred": 0.2592851099830795,
+     "new_frac_true": 0.31023174755214983,
+     "graft_frac_pred": 0.14744077834179356,
+     "graft_frac_true": 0.15395913154533844
+    },
+    {
+     "case": "test_009_condyle_calcium_sulfate",
+     "material": "calcium_sulfate",
+     "model": "condyle",
+     "dice_new_roi": 0.8964972212308163,
+     "dice_graft_roi": 0.799706221802539,
+     "hd95_new_um": 40.0,
+     "hd95_graft_um": 69.2820323027551,
+     "dice_host_all": 0.9532594933341845,
+     "dice_new_all": 0.8744607044722674,
+     "dice_graft_all": 0.7814230059462784,
+     "ece_roi": 0.008149090138204852,
+     "infer_s": 0.7955508232116699,
+     "new_frac_pred": 0.341868695806052,
+     "new_frac_true": 0.3753619761760003,
+     "graft_frac_pred": 0.047354450539727484,
+     "graft_frac_true": 0.04146231619716724
+    },
+    {
+     "case": "test_010_calvarial_calcium_sulfate",
+     "material": "calcium_sulfate",
+     "model": "calvarial",
+     "dice_new_roi": 0.8452553589790914,
+     "dice_graft_roi": 0.9284893078868706,
+     "hd95_new_um": 40.0,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9573407311607152,
+     "dice_new_all": 0.7734883945374704,
+     "dice_graft_all": 0.8921785240830755,
+     "ece_roi": 0.013167655002369456,
+     "infer_s": 0.36722421646118164,
+     "new_frac_pred": 0.21704172526957338,
+     "new_frac_true": 0.24012738853503188,
+     "graft_frac_pred": 0.1005743084857009,
+     "graft_frac_true": 0.10962196272705828
+    },
+    {
+     "case": "test_011_segmental_calcium_sulfate",
+     "material": "calcium_sulfate",
+     "model": "segmental",
+     "dice_new_roi": 0.7980605189907516,
+     "dice_graft_roi": 0.9167942827973455,
+     "hd95_new_um": 56.568542494923804,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9885020990521806,
+     "dice_new_all": 0.793181919593057,
+     "dice_graft_all": 0.9167942827973455,
+     "ece_roi": 0.015013491862190347,
+     "infer_s": 0.580805778503418,
+     "new_frac_pred": 0.12202834179357022,
+     "new_frac_true": 0.1261374521072797,
+     "graft_frac_pred": 0.09939720812182741,
+     "graft_frac_true": 0.09243827160493828
+    },
+    {
+     "case": "test_012_condyle_beta_tcp",
+     "material": "beta_tcp",
+     "model": "condyle",
+     "dice_new_roi": 0.8927781871775976,
+     "dice_graft_roi": 0.8521200948116935,
+     "hd95_new_um": 40.0,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9477233155700945,
+     "dice_new_all": 0.8685327687982347,
+     "dice_graft_all": 0.8251195409627032,
+     "ece_roi": 0.014097053593891847,
+     "infer_s": 0.8025972843170166,
+     "new_frac_pred": 0.38310918421518314,
+     "new_frac_true": 0.41014659190704583,
+     "graft_frac_pred": 0.07377455317642895,
+     "graft_frac_true": 0.06686820239140714
+    },
+    {
+     "case": "test_013_calvarial_beta_tcp",
+     "material": "beta_tcp",
+     "model": "calvarial",
+     "dice_new_roi": 0.8991861628807191,
+     "dice_graft_roi": 0.9146661001345514,
+     "hd95_new_um": 40.0,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9654706157226514,
+     "dice_new_all": 0.8546609713198607,
+     "dice_graft_all": 0.887392648574373,
+     "ece_roi": 0.006602419619402645,
+     "infer_s": 0.34536027908325195,
+     "new_frac_pred": 0.30161744022503517,
+     "new_frac_true": 0.3353473696626563,
+     "graft_frac_pred": 0.08381387716830754,
+     "graft_frac_true": 0.08761647794291108
+    },
+    {
+     "case": "test_014_segmental_beta_tcp",
+     "material": "beta_tcp",
+     "model": "segmental",
+     "dice_new_roi": 0.8461951656222023,
+     "dice_graft_roi": 0.968570271364925,
+     "hd95_new_um": 331.1775275064339,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9933181627121592,
+     "dice_new_all": 0.8341717412408437,
+     "dice_graft_all": 0.968570271364925,
+     "ece_roi": 0.003315701301630366,
+     "infer_s": 0.6033868789672852,
+     "new_frac_pred": 0.06275380710659899,
+     "new_frac_true": 0.06267427628778204,
+     "graft_frac_pred": 0.13218062605752962,
+     "graft_frac_true": 0.13739224137931036
+    },
+    {
+     "case": "test_015_condyle_bcp",
+     "material": "bcp",
+     "model": "condyle",
+     "dice_new_roi": 0.9000714838863406,
+     "dice_graft_roi": 0.9495872123660636,
+     "hd95_new_um": 40.0,
+     "hd95_graft_um": 40.0,
+     "dice_host_all": 0.9555084745762712,
+     "dice_new_all": 0.8792260692464359,
+     "dice_graft_all": 0.9490870786516854,
+     "ece_roi": 0.003402248471632544,
+     "infer_s": 0.7789006233215332,
+     "new_frac_pred": 0.2946115731728898,
+     "new_frac_true": 0.32247292215541895,
+     "graft_frac_pred": 0.10326490886568748,
+     "graft_frac_true": 0.10580287779504154
+    }
+   ]
   }
  },
- "saved": "2026-11-27T07:25:01Z"
+ "saved": "2026-11-27T07:37:26Z"
 }

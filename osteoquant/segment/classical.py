@@ -27,8 +27,24 @@ BG, NEW, GRAFT, HOST = 0, 1, 2, 3
 
 
 # ----------------------------------------------------------------------------- helpers
+def robust_values(v: np.ndarray, pad_frac=0.02, upper_q=99.95):
+    """Drop reconstruction padding (a large mass at the minimum value, e.g. zeros outside the
+    reconstruction circle) and extreme high outliers (metal/hardware) before threshold estimation."""
+    v = v.ravel()
+    if v.size == 0:
+        return v
+    mn = v.min()
+    if (v == mn).mean() > pad_frac:
+        v = v[v != mn]
+    if v.size > 1000:
+        hi = np.percentile(v, upper_q)
+        v = v[v <= hi]
+    return v
+
+
 def _sample(x, mask=None, n=400_000, seed=0):
     v = x[mask] if mask is not None else x.ravel()
+    v = robust_values(v)
     if v.size > n:
         v = np.random.default_rng(seed).choice(v, n, replace=False)
     return v.astype(np.float64)

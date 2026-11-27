@@ -123,7 +123,8 @@ def _mineral_mask(img, spacing, smooth_um=30.0):
     from skimage.filters import threshold_otsu
     s = smooth_um / float(np.mean(spacing))
     g = ndi.gaussian_filter(img.astype(np.float32), s) if s > 0.3 else img.astype(np.float32)
-    v = g[:: max(1, g.shape[0] // 48), :: 2, :: 2].ravel()
+    from ..segment.classical import robust_values
+    v = robust_values(g[:: max(1, g.shape[0] // 48), :: 2, :: 2])
     t = float(threshold_otsu(v))
     return g > t, t
 
@@ -223,8 +224,11 @@ def detect_segmental_gap(img: np.ndarray, spacing, axis=0, min_gap_um=500.0, rad
     spx = np.r_[sp[axis], np.delete(sp, axis)]
     from skimage.filters import threshold_multiotsu
     g = ndi.gaussian_filter(x.astype(np.float32), 1.0)
-    v = g[:: max(1, g.shape[0] // 64), :: 2, :: 2].ravel()
+    from ..segment.classical import robust_values
+    v = robust_values(g[:: max(1, g.shape[0] // 64), :: 2, :: 2])
     t_lo, t_hi = threshold_multiotsu(v, classes=3)
+    metal = g > np.percentile(v, 99.95) * 1.15 if v.size else np.zeros_like(g, bool)
+    g = np.where(metal, t_lo, g)  # suppress hardware/metal so it is not mistaken for cortex
     dense = g > t_hi
     # cortical envelope from the max projection of dense bone along the axis; score each slice by
     # dense occupancy of the envelope's outer annulus (cortex), so dense graft inside the cavity

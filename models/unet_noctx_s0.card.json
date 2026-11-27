@@ -1,0 +1,419 @@
+{
+ "hparams": {
+  "in_ch": 1,
+  "n_classes": 4,
+  "base": 12,
+  "levels": 4,
+  "p_drop": 0.0,
+  "max_ch": 96
+ },
+ "cfg": {
+  "patch": [
+   48,
+   48,
+   48
+  ],
+  "batch": 2,
+  "iters": 1500,
+  "lr": 0.003,
+  "base": 12,
+  "levels": 4,
+  "threads": 4,
+  "log_every": 100,
+  "val_every": 500,
+  "loss": {
+   "dice": 1.0,
+   "ce": 1.0,
+   "boundary_w": 1.0
+  },
+  "eval_in_roi": false,
+  "roi_distance_channel": false,
+  "seed": 0
+ },
+ "name": "unet_noctx_s0",
+ "provenance": [
+  "synthetic"
+ ],
+ "licence_tag": "commercial_eligible",
+ "train_manifest": [
+  {
+   "case_id": "train_000_condyle_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "fb75648baea731be"
+  },
+  {
+   "case_id": "train_001_calvarial_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "1eb71ffa7b49f8c3"
+  },
+  {
+   "case_id": "train_002_segmental_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "0a92ced3a60c2584"
+  },
+  {
+   "case_id": "train_003_condyle_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "3ef455006da8edb6"
+  },
+  {
+   "case_id": "train_004_calvarial_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "53f21e47e0a596be"
+  },
+  {
+   "case_id": "train_005_segmental_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "37f3a6bbd13bb90c"
+  },
+  {
+   "case_id": "train_006_condyle_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "459e6c8d8d4de799"
+  },
+  {
+   "case_id": "train_007_calvarial_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "eb7f4d9e8306e80c"
+  },
+  {
+   "case_id": "train_008_segmental_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "686efa09348657e2"
+  },
+  {
+   "case_id": "train_009_condyle_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "15086d75144e8235"
+  },
+  {
+   "case_id": "train_010_calvarial_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "6876f834597712e6"
+  },
+  {
+   "case_id": "train_011_segmental_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "68310d506f6847e5"
+  },
+  {
+   "case_id": "train_012_condyle_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "b60ba40238c63f76"
+  },
+  {
+   "case_id": "train_013_calvarial_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "3b64a482ab005293"
+  },
+  {
+   "case_id": "train_014_segmental_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "732ef9d097a4df2b"
+  },
+  {
+   "case_id": "train_015_condyle_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "8b0e5bd498a31623"
+  },
+  {
+   "case_id": "train_016_calvarial_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "a945b1fa9b7635c8"
+  },
+  {
+   "case_id": "train_017_segmental_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "99f37d26c8f0cdb5"
+  },
+  {
+   "case_id": "train_018_condyle_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "086ee7490b41e1df"
+  },
+  {
+   "case_id": "train_019_calvarial_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "a6d22fca49558f21"
+  },
+  {
+   "case_id": "train_020_segmental_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "3da4072d43b3a997"
+  },
+  {
+   "case_id": "train_021_condyle_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "ada0774a43773549"
+  },
+  {
+   "case_id": "train_022_calvarial_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "6616bfaff695c445"
+  },
+  {
+   "case_id": "train_023_segmental_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "fd73fc57561a89c9"
+  },
+  {
+   "case_id": "train_024_condyle_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "58d3ff65c350d2d4"
+  },
+  {
+   "case_id": "train_025_calvarial_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "d7540120148dd99f"
+  },
+  {
+   "case_id": "train_026_segmental_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "44e5a0dd9052f3b8"
+  },
+  {
+   "case_id": "train_027_condyle_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "739216af3b3b73cb"
+  },
+  {
+   "case_id": "train_028_calvarial_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "d5c34178c85d4731"
+  },
+  {
+   "case_id": "train_029_segmental_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "adc1061ef5447281"
+  },
+  {
+   "case_id": "train_030_condyle_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "b187012f9d0aaaae"
+  },
+  {
+   "case_id": "train_031_calvarial_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "75ebcd6349d5e614"
+  },
+  {
+   "case_id": "train_032_segmental_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "27599048c4e0fbb2"
+  },
+  {
+   "case_id": "train_033_condyle_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "ec89471f9cd7cac4"
+  },
+  {
+   "case_id": "train_034_calvarial_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "781e5185090a8a98"
+  },
+  {
+   "case_id": "train_035_segmental_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "df0cf76a02f1647d"
+  },
+  {
+   "case_id": "train_036_condyle_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "a2881b6aeac4fda3"
+  },
+  {
+   "case_id": "train_037_calvarial_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "971ccfbfcfca374e"
+  },
+  {
+   "case_id": "train_038_segmental_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "15f34a92e44fd57d"
+  },
+  {
+   "case_id": "train_039_condyle_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "f718d0b25fca7e8f"
+  },
+  {
+   "case_id": "train_040_calvarial_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "20f57d1ff5b4e9a3"
+  },
+  {
+   "case_id": "train_041_segmental_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "2b9216a9f67c3f8f"
+  },
+  {
+   "case_id": "train_042_condyle_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "818092e43efa2422"
+  },
+  {
+   "case_id": "train_043_calvarial_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "9085ac5a4b7fc5c7"
+  },
+  {
+   "case_id": "train_044_segmental_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "4e7212ef8bc454ee"
+  },
+  {
+   "case_id": "train_045_condyle_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "6820e01397eb376a"
+  },
+  {
+   "case_id": "train_046_calvarial_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "25b22cb351d6613c"
+  },
+  {
+   "case_id": "train_047_segmental_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "222328d682cb5cf1"
+  }
+ ],
+ "history": [
+  {
+   "iter": 100,
+   "loss": 1.5421366691589355,
+   "sec": 31.4
+  },
+  {
+   "iter": 200,
+   "loss": 0.7193669080734253,
+   "sec": 56.6
+  },
+  {
+   "iter": 300,
+   "loss": 0.5320141315460205,
+   "sec": 81.5
+  },
+  {
+   "iter": 400,
+   "loss": 0.781620442867279,
+   "sec": 136.7
+  },
+  {
+   "iter": 500,
+   "loss": 0.340564489364624,
+   "sec": 209.1,
+   "val_mean_dice": 0.8570707706539864
+  },
+  {
+   "iter": 600,
+   "loss": 0.6403998136520386,
+   "sec": 247.8
+  },
+  {
+   "iter": 700,
+   "loss": 0.440120130777359,
+   "sec": 286.1
+  },
+  {
+   "iter": 800,
+   "loss": 0.6524938344955444,
+   "sec": 326.1
+  },
+  {
+   "iter": 900,
+   "loss": 0.5742048025131226,
+   "sec": 393.3
+  },
+  {
+   "iter": 1000,
+   "loss": 0.44673243165016174,
+   "sec": 459.3,
+   "val_mean_dice": 0.8940320695612095
+  },
+  {
+   "iter": 1100,
+   "loss": 0.37011730670928955,
+   "sec": 506.5
+  },
+  {
+   "iter": 1200,
+   "loss": 0.4712705910205841,
+   "sec": 572.4
+  },
+  {
+   "iter": 1300,
+   "loss": 0.28148359060287476,
+   "sec": 669.5
+  },
+  {
+   "iter": 1400,
+   "loss": 0.25970470905303955,
+   "sec": 701.6
+  },
+  {
+   "iter": 1500,
+   "loss": 0.42292264103889465,
+   "sec": 729.1,
+   "val_mean_dice": 0.8989105395344158
+  }
+ ],
+ "created": "2026-11-27T07:37:14Z",
+ "env": {
+  "torch": "2.15.0+cpu",
+  "python": "3.13.18",
+  "numpy": "2.5.3"
+ },
+ "n_params": 788620,
+ "train_seconds": 732.4,
+ "sha256": "85d5bb93e8a015e674e71e1e113625736395bb04c6c1f8a3ee870cd3b1c12d1b",
+ "path": "models/unet_noctx_s0.pt",
+ "warning": "SYNTHETIC-TRAINED \u2014 research prototype, not for study decisions"
+}

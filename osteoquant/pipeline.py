@@ -28,6 +28,7 @@ DEFAULT_CONFIG = {
     "tta": True,
     "thickness_metrics": True,
     "qc": True,
+    "no_graft": False,                    # e.g. distraction osteogenesis / empty-defect controls
 }
 
 
@@ -118,6 +119,11 @@ def analyze(vol: Volume, cfg: dict | None = None, roi_dict: dict | None = None, 
     progress(0.3, "segmentation")
     t = time.time()
     lab, prob, info = segment(vol, roi_mask, c, progress)
+    if c.get("no_graft"):
+        lab = np.where(lab == 2, 1, lab).astype(np.uint8)   # no graft present: all mineral in ROI is new bone
+        if prob is not None:
+            prob = prob.copy(); prob[1] += prob[2]; prob[2] = 0
+        info["no_graft"] = True
     out["timings"]["segmentation_s"] = round(time.time() - t, 2)
     out["segmentation"] = info
     if prob is not None:

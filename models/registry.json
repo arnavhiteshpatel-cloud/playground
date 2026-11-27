@@ -30,5 +30,165 @@
    "roi_distance_channel": true,
    "seed": 0
   }
+ },
+ "unet_noctx_s0": {
+  "sha256": "85d5bb93e8a015e674e71e1e113625736395bb04c6c1f8a3ee870cd3b1c12d1b",
+  "created": "2026-11-27T07:37:14Z",
+  "provenance": [
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 48,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 1500,
+   "lr": 0.003,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 100,
+   "val_every": 500,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": false,
+   "seed": 0
+  }
+ },
+ "adapt_k1_r0": {
+  "sha256": "973e9f23639d1524edd09cce846ee9ce52832314a60f4154ffbdb92ad776e652",
+  "created": "2026-11-27T07:40:00Z",
+  "provenance": [
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 1,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": true,
+   "seed": 100
+  }
+ },
+ "adapt_k1_r1": {
+  "sha256": "31a479ad209183bd592a8d9cfed2b6022a6e93cd77d9dead7e2d24c9be743727",
+  "created": "2026-11-27T07:41:52Z",
+  "provenance": [
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 1,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": true,
+   "seed": 101
+  }
+ },
+ "adapt_k3_r0": {
+  "sha256": "038878a09390f9ccf6b643e0a969d00f5033470f55b8ba0d907a29bc7a598ff6",
+  "created": "2026-11-27T07:43:58Z",
+  "provenance": [
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 3,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": true,
+   "seed": 100
+  }
+ },
+ "adapt_k3_r1": {
+  "sha256": "9153e2462d3f873d0ed1587830697384d7457f8107e6ccc05bb71899186b1dbc",
+  "created": "2026-11-27T07:47:59Z",
+  "provenance": [
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 3,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": true,
+   "seed": 101
+  }
  }
 }

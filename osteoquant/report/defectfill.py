@@ -301,6 +301,14 @@ def build_pdf(bundle, pdf_path, csv_path=None) -> dict:
                          e["row_hash"][:12]])
         flow.append(table(rows))
 
+    # ----------------------------------------------------------- exceptions
+    if bundle.get("exceptions"):
+        flow.append(Paragraph("Exceptions (specimens not analysed automatically)", H2))
+        rows = [["Specimen", "Stage", "Reason", "Required action"]]
+        for e in bundle["exceptions"]:
+            rows.append([str(e.get("specimen_id")), str(e.get("stage")), str(e.get("reason")), str(e.get("action"))])
+        flow.append(table(rows, [25 * mm, 25 * mm, 75 * mm, 55 * mm]))
+
     # ----------------------------------------------------------- 8 limitations
     flow.append(Paragraph("8. Scientific limitations and exceptions", H2))
     for l in bundle.get("limitations", []):

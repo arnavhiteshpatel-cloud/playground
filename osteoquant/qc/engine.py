@@ -40,8 +40,9 @@ def _sample(vol: Volume, max_vox=2_000_000):
 def _modes(x):
     """Two-class Otsu split of a sample; returns (t, low-mode stats, high-mode stats)."""
     from skimage.filters import threshold_otsu
+    from ..segment.classical import robust_values
     v = x.ravel()
-    v = v[np.isfinite(v)]
+    v = robust_values(v[np.isfinite(v)])
     t = float(threshold_otsu(v))
     lo, hi = v[v <= t], v[v > t]
     return t, lo, hi
@@ -187,6 +188,31 @@ def partial_volume_risk(vol: Volume) -> dict:
     return {"median_thickness_vox": float(np.median(th)), "p10_thickness_vox": float(np.percentile(th, 10))}
 
 
+def high_density_outliers(vol: Volume) -> dict:
+    """Metal/hardware/holder detection (heuristic): (a) voxels within 2% of the integer dtype
+    maximum (saturation), or (b) a small (<3% of tissue) top class in 4-class multi-Otsu whose
+    mean exceeds 1.5× the next class (a distinct super-dense material)."""
+    from skimage.filters import threshold_multiotsu
+    from ..segment.classical import robust_values
+    x, _ = _sample(vol)
+    d = vol.data
+    sat = 0.0
+    if np.issubdtype(d.dtype, np.integer):
+        sat = float((x >= 0.98 * np.iinfo(d.dtype).max).mean())
+    v = x.ravel()
+    v = v[v != v.min()] if (v == v.min()).mean() > 0.02 else v
+    top = {"frac": 0.0, "ratio": 0.0}
+    try:
+        t = threshold_multiotsu(v[:: max(1, v.size // 300000)], classes=4)
+        c4, c3 = v[v > t[2]], v[(v > t[1]) & (v <= t[2])]
+        if c4.size and c3.size:
+            top = {"frac": float(c4.size / v.size), "ratio": float(c4.mean() / max(c3.mean(), 1e-9))}
+    except Exception:
+        pass
+    flagged = sat > 1e-5 or top["ratio"] > 3.0 or (top["frac"] < 0.03 and top["ratio"] > 1.5)
+    return {"frac": sat, "top_class": top, "flag": bool(flagged)}
+
+
 def histogram(vol: Volume, bins=256) -> dict:
     x, _ = _sample(vol)
     h, e = np.histogram(x, bins=bins)
@@ -256,6 +282,10 @@ def run_qc(vol: Volume, extra_metadata: dict | None = None, intended_analysis: s
     checks.append(_rec("QC-H07", "Partial-volume risk (median structure thickness)", "warn" if np.isfinite(mtv) and mtv < 3
                        else "pass", None if not np.isfinite(mtv) else round(mtv, 2), 3.0, "heuristic",
                        "Structures < 3 voxels thick: BV and Tb.Th strongly resolution-dependent" if np.isfinite(mtv) and mtv < 3 else ""))
+    hd = high_density_outliers(vol)
+    checks.append(_rec("QC-H08", "High-density outliers (possible metal/hardware/saturation)", "warn" if hd["flag"] else "pass",
+                       {"saturated_frac": round(hd["frac"], 6), **{k: round(v, 3) for k, v in hd["top_class"].items()}}, None,
+                       "heuristic", "Very dense objects present: exclude/mask hardware; expect streak artefacts nearby" if hd["flag"] else ""))
     n_fail = sum(c["status"] == "fail" for c in checks)
     n_warn = sum(c["status"] == "warn" for c in checks)
     verdict = "unsuitable" if n_fail else ("review" if n_warn else "suitable")

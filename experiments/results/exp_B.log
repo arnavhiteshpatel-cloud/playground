@@ -30,3 +30,6 @@ unet_noctx_s0 {"iter": 1000, "loss": 0.44673243165016174, "sec": 459.3, "val_mea
 unet_noctx_s0 {"iter": 1100, "loss": 0.37011730670928955, "sec": 506.5}
 unet_noctx_s0 {"iter": 1200, "loss": 0.4712705910205841, "sec": 572.4}
 unet_noctx_s0 {"iter": 1300, "loss": 0.28148359060287476, "sec": 669.5}
+unet_noctx_s0 {"iter": 1400, "loss": 0.25970470905303955, "sec": 701.6}
+unet_noctx_s0 {"iter": 1500, "loss": 0.42292264103889465, "sec": 729.1, "val_mean_dice": 0.8989105395344158}
+unet_noctx_s0 {"dice_new_roi": 0.866, "dice_graft_roi": 0.919, "hd95_new_um": 68.893, "hd95_graft_um": 44.33, "dice_host_all": 0.966, "dice_new_all": 0.832, "dice_graft_all": 0.908, "ece_roi": 0.01, "infer_s": 0.62, "new_frac_pred": 0.24, "new_frac_true": 0.265, "graft_frac_pred": 0.108, "graft_frac_true": 0.11}

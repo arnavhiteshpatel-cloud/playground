@@ -1,0 +1,76 @@
+{
+ "hparams": {
+  "in_ch": 2,
+  "n_classes": 4,
+  "base": 12,
+  "levels": 4,
+  "p_drop": 0.0,
+  "max_ch": 96
+ },
+ "cfg": {
+  "patch": [
+   48,
+   48,
+   48
+  ],
+  "batch": 2,
+  "iters": 300,
+  "lr": 0.001,
+  "base": 12,
+  "levels": 4,
+  "threads": 4,
+  "log_every": 300,
+  "val_every": 1000000000,
+  "loss": {
+   "dice": 1.0,
+   "ce": 1.0,
+   "boundary_w": 1.0
+  },
+  "eval_in_roi": false,
+  "roi_distance_channel": true,
+  "seed": 100
+ },
+ "name": "adapt_k3_r0",
+ "provenance": [
+  "synthetic"
+ ],
+ "licence_tag": "commercial_eligible",
+ "train_manifest": [
+  {
+   "case_id": "ood_mat_006_condyle_bioglass_45s5",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "63a726afaf2f9391"
+  },
+  {
+   "case_id": "ood_mat_007_calvarial_bioglass_45s5",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "6781ba72a83a4ffb"
+  },
+  {
+   "case_id": "ood_mat_011_segmental_xenograft_dbbm",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "8543d4878173ad1e"
+  }
+ ],
+ "history": [
+  {
+   "iter": 300,
+   "loss": 0.33828386664390564,
+   "sec": 101.2
+  }
+ ],
+ "created": "2026-11-27T07:43:58Z",
+ "env": {
+  "torch": "2.15.0+cpu",
+  "python": "3.13.18",
+  "numpy": "2.5.3"
+ },
+ "n_params": 788944,
+ "train_seconds": 101.2,
+ "sha256": "038878a09390f9ccf6b643e0a969d00f5033470f55b8ba0d907a29bc7a598ff6",
+ "path": "models/adapt_k3_r0.pt",
+ "warning": "SYNTHETIC-TRAINED \u2014 research prototype, not for study decisions"
+}

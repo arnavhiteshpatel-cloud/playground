@@ -1,0 +1,11 @@
+pool 24 test 16
+{'arm': 'unet_zero_shot', 'k': 0, 'rep': 0, 'dice_graft': 0.8425969442410771, 'dice_new': 0.8515019208774333, 'graft_bioglass_45s5': 0.7892357785462416, 'graft_xenograft_dbbm': 0.9112041572772945}
+/home/user/playground/osteoquant/ml/train.py:168: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  rec = {"iter": it + 1, "loss": float(loss), "sec": round(time.time() - t0, 1)}
+{'arm': 'unet_finetune', 'k': 1, 'rep': 0, 'dice_graft': 0.8859110308429177, 'dice_new': 0.8225928805149435, 'graft_bioglass_45s5': 0.8822724133838665, 'graft_xenograft_dbbm': 0.8905892532902691}
+{'arm': 'rf_from_scratch', 'k': 1, 'rep': 0, 'dice_graft': 0.5753806543763795, 'dice_new': 0.7066044334142956, 'graft_bioglass_45s5': 0.743067328461342, 'graft_xenograft_dbbm': 0.35978350198142783}
+{'arm': 'unet_finetune', 'k': 1, 'rep': 1, 'dice_graft': 0.8612586548825638, 'dice_new': 0.7823404775841086, 'graft_bioglass_45s5': 0.8159034799946593, 'graft_xenograft_dbbm': 0.9195724511670125}
+{'arm': 'rf_from_scratch', 'k': 1, 'rep': 1, 'dice_graft': 0.7319008284831587, 'dice_new': 0.6799222557470666, 'graft_bioglass_45s5': 0.6757885503766817, 'graft_xenograft_dbbm': 0.804045186048629}
+{'arm': 'unet_finetune', 'k': 3, 'rep': 0, 'dice_graft': 0.9079560901722483, 'dice_new': 0.8557475092314408, 'graft_bioglass_45s5': 0.8799783127358335, 'graft_xenograft_dbbm': 0.9439275183047817}
+{'arm': 'rf_from_scratch', 'k': 3, 'rep': 0, 'dice_graft': 0.8550848510739215, 'dice_new': 0.785357915829564, 'graft_bioglass_45s5': 0.8358505795691079, 'graft_xenograft_dbbm': 0.8798146287229675}

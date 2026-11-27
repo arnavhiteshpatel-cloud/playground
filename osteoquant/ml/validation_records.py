@@ -51,23 +51,49 @@ def _path():
     return MODEL_DIR / "validation_records.json"
 
 
-def load_records() -> dict:
+def _lock_path():
+    return MODEL_DIR / "validation_records.sha256"
+
+
+def load_records(verify: bool = True) -> dict:
+    """Load records; the file's SHA-256 must match the lock written by ``add_record`` (a hand-edited file — e.g. an
+    added record granting support — is rejected; quality review gap 'validation records unprotected')."""
+    import hashlib
     p = _path()
-    return json.loads(p.read_text()) if p.exists() else {}
+    if not p.exists():
+        return {}
+    data = p.read_bytes()
+    if verify:
+        lock = _lock_path()
+        if not lock.exists() or lock.read_text().strip() != hashlib.sha256(data).hexdigest():
+            raise RuntimeError("validation_records.json does not match its lock: records were modified outside "
+                               "osteoquant.ml.validation_records.add_record")
+    return json.loads(data)
 
 
-def add_record(rec: ValidationRecord) -> None:
+def add_record(rec: ValidationRecord, audit=None, user_id=None, org_id=None) -> None:
+    """Append a record and update the lock. If an audit log is supplied the addition is recorded in it."""
+    import hashlib
     R = load_records()
     d = asdict(rec)
     d["date"] = d["date"] or time.strftime("%Y-%m-%d")
     R.setdefault(rec.model_name, []).append(d)
-    _path().write_text(json.dumps(R, indent=1))
+    data = json.dumps(R, indent=1).encode()
+    _path().write_bytes(data)
+    _lock_path().write_text(hashlib.sha256(data).hexdigest())
+    if audit is not None:
+        audit.record("model.validation_record_added", user_id, org_id, "model", rec.model_name,
+                     {"material": rec.material, "data_class": rec.data_class, "sha256": hashlib.sha256(data).hexdigest()})
 
 
 def validated_for(model_name: str, model_sha256: str, material: str, voxel_um: float) -> tuple[bool, str]:
     """True only if a record for this exact model version (SHA-256) and material qualifies at this voxel size."""
     reasons = []
-    for d in load_records().get(model_name, []):
+    try:
+        records = load_records()
+    except RuntimeError as e:
+        return False, str(e)
+    for d in records.get(model_name, []):
         if d.get("model_sha256") != model_sha256 or d.get("material") != material:
             continue
         d = dict(d)

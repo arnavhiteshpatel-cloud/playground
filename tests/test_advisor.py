@@ -267,3 +267,18 @@ def test_characterisation_undeclared_bone_status_is_conservative():
     assert ch.profile().bone_derived is True
     ch.bone_derived = False
     assert ch.profile().bone_derived is False
+
+
+def test_validation_records_tamper_detected(tmp_path, monkeypatch):
+    import json
+    import osteoquant.ml.validation_records as vr
+    monkeypatch.setattr(vr, "MODEL_DIR", tmp_path)
+    base = dict(model_name="m", model_sha256="abc", material="ha", n_specimens=20, voxel_um_range=(10, 40),
+                scanner_class="desktop", graft_volume_abs_rel_error_p95=0.08, reference_method="gravimetric",
+                evidence_location="x", data_class="synthetic")
+    vr.add_record(vr.ValidationRecord(**base))
+    R = json.loads((tmp_path / "validation_records.json").read_text())
+    R["m"][0]["data_class"] = "in_vivo"                    # hand edit to grant support
+    (tmp_path / "validation_records.json").write_text(json.dumps(R))
+    ok, why = vr.validated_for("m", "abc", "ha", 20)
+    assert not ok and "lock" in why

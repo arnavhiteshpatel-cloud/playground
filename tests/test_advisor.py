@@ -1,0 +1,143 @@
+import numpy as np
+import pytest
+
+from osteoquant.advisor import (CONDITIONAL, NOT_SUPPORTED, SUPPORTED, MaterialProfile, assess_support,
+                                dice_oracle_hist, dice_oracle_samples, scan_relative_units)
+from osteoquant.advisor.integration import apply_support
+
+
+def test_oracle_perfectly_separable():
+    g = np.array([0, 0, 0, 10, 10])
+    n = np.array([10, 10, 0, 0, 0])
+    r = dice_oracle_hist(g, n)
+    assert r["dice_graft"] == pytest.approx(1.0)
+    assert r["dice_new"] == pytest.approx(1.0)
+    assert r["graft_volume_ratio"] == pytest.approx(1.0)
+
+
+def test_oracle_identical_distributions_is_select_all():
+    h = np.array([5, 10, 5])
+    r = dice_oracle_hist(h, h, dice_slack=0.0)
+    # with identical class distributions the Dice-optimal rule is "everything is graft": 2G/(2G+N)
+    assert r["dice_graft"] == pytest.approx(2 * 20 / (40 + 20))
+
+
+def test_oracle_is_upper_bound_for_threshold_rules():
+    rng = np.random.default_rng(0)
+    g = rng.normal(1.2, 0.15, 20000)
+    n = rng.normal(0.9, 0.15, 20000)
+    r = dice_oracle_samples(g, n)
+    for t in np.linspace(0.8, 1.3, 26):
+        tp = (g > t).sum()
+        fp = (n > t).sum()
+        dice = 2 * tp / (tp + fp + g.size)
+        assert dice <= r["dice_graft_max"] + 1e-3
+
+
+def test_dense_ha_low_noise_supported():
+    a = assess_support("ha", noise_rel=0.05, voxel_um=20)
+    assert a.status("residual_graft_volume") == SUPPORTED
+    assert a.endpoints["residual_graft_volume"].mechanism == "intensity"
+
+
+def test_bone_derived_never_intensity_supported():
+    for m in ("allograft", "xenograft_dbbm"):
+        a = assess_support(m, noise_rel=0.01, voxel_um=20)
+        assert a.status("residual_graft_volume") == NOT_SUPPORTED
+        assert "bone-derived" in a.endpoints["residual_graft_volume"].reason
+
+
+def test_radiolucent_graft_not_visible():
+    a = assess_support("collagen_sponge", noise_rel=0.05, voxel_um=20)
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED
+    assert a.status("new_bone_volume") == CONDITIONAL
+
+
+def test_unknown_material_refused():
+    a = assess_support("mystery_putty", noise_rel=0.05, voxel_um=20)
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED
+    assert "knowledge base" in a.endpoints["residual_graft_volume"].reason
+
+
+def test_measured_samples_override_unknown_material():
+    rng = np.random.default_rng(1)
+    a = assess_support("mystery_putty", noise_rel=0.05, voxel_um=20,
+                       graft_samples_rel=rng.normal(2.5, 0.05, 5000))
+    assert a.status("residual_graft_volume") == SUPPORTED
+
+
+def test_day0_conditions_and_displacement_limit():
+    prof = MaterialProfile("x", rel_mean=0.85, rel_sd=0.05, struct_um=400)
+    a = assess_support(prof, noise_rel=0.1, voxel_um=20)
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED
+    a = assess_support(prof, noise_rel=0.1, voxel_um=20, day0={"registered": True, "qc_pass": True})
+    assert a.status("residual_graft_volume") == CONDITIONAL
+    assert any("day-0" in c for c in a.endpoints["residual_graft_volume"].conditions)
+    a = assess_support(prof, noise_rel=0.1, voxel_um=20,
+                       day0={"registered": True, "qc_pass": True, "max_displacement_um": 500, "tolerance_um": 200})
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED
+    a = assess_support(prof, noise_rel=0.1, voxel_um=20, day0={"registered": True, "qc_pass": False})
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED
+
+
+def test_density_requires_calibration():
+    assert assess_support("ha", noise_rel=0.05, voxel_um=20).status("tissue_mineral_density") == NOT_SUPPORTED
+    assert assess_support("ha", noise_rel=0.05, voxel_um=20, calibrated=True).status("tissue_mineral_density") == SUPPORTED
+
+
+def test_no_graft_design():
+    a = assess_support(None, noise_rel=0.05, voxel_um=20, no_graft=True)
+    assert a.status("new_bone_volume") == SUPPORTED
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED
+
+
+def test_supported_set_shrinks_with_noise():
+    order = [SUPPORTED, CONDITIONAL, NOT_SUPPORTED]
+    prev = -1
+    for nr in (0.02, 0.1, 0.3, 0.6):
+        s = order.index(assess_support("bcp", noise_rel=nr, voxel_um=20).status("residual_graft_volume"))
+        assert s >= prev
+        prev = s
+
+
+def test_scan_relative_units_excludes_defect():
+    rng = np.random.default_rng(0)
+    img = rng.normal(100, 10, (40, 40, 40)).astype(np.float32)
+    img[:, :, :15] += 900          # host bone at 1000
+    roi = np.zeros(img.shape, bool)
+    roi[10:30, 20:35, 20:35] = True
+    img[roi] = 2500                 # very dense graft inside the defect must not be taken as host
+    est = scan_relative_units(img, exclude_mask=roi)
+    assert est["host"] == pytest.approx(1000, abs=30)
+    assert est["soft"] == pytest.approx(100, abs=10)
+    assert est["noise_rel"] == pytest.approx(10 / 900, rel=0.3)
+
+
+def test_apply_support_suppresses_unsupported():
+    metrics = {"class_volumes": {"new_bone_volume_mm3": 1.0, "residual_graft_volume_mm3": 2.0,
+                                 "residual_graft_fraction": 0.2, "new_bone_fraction": 0.1, "mineralized_fraction": 0.3}}
+    support = assess_support("allograft", noise_rel=0.05, voxel_um=20).to_dict()
+    rep, sup = apply_support(metrics, support)
+    assert rep["class_volumes"]["residual_graft_volume_mm3"] is None
+    assert rep["class_volumes"]["new_bone_volume_mm3"] is None
+    assert rep["class_volumes"]["mineral_volume_mm3"] == pytest.approx(3.0)
+    assert rep["class_volumes"]["mineralized_fraction"] == 0.3
+    assert {s["endpoint"] for s in sup} >= {"residual_graft_volume", "new_bone_volume"}
+    assert metrics["class_volumes"]["residual_graft_volume_mm3"] == 2.0      # raw metrics untouched
+
+
+def test_pipeline_reports_support():
+    from osteoquant.phantom import PhantomConfig, generate_phantom, ImagingConfig, render_fast
+    from osteoquant.pipeline import analyze
+    ph = generate_phantom(PhantomConfig(model="condyle", shape=(40, 48, 48), voxel_um=40, defect_diameter_um=1200,
+                                        graft_material="ha", healing_stage=0.4, seed=3))
+    vol = render_fast(ph.mu, 40, ImagingConfig(seed=1, noise_sigma=30))
+    out = analyze(vol, {"defect_model": "condyle", "nominal_diameter_um": 1200, "thickness_metrics": False})
+    if out.get("status") == "needs_manual_roi":
+        pytest.skip("ROI not found on tiny phantom")
+    assert "measurement_support" in out
+    assert out["reported_metrics"]["class_volumes"]["residual_graft_volume_mm3"] is None   # material unspecified
+    out2 = analyze(vol, {"defect_model": "condyle", "nominal_diameter_um": 1200, "thickness_metrics": False,
+                         "material": "ha"})
+    assert out2["measurement_support"]["endpoints"]["residual_graft_volume"]["status"] == SUPPORTED
+    assert out2["reported_metrics"]["class_volumes"]["residual_graft_volume_mm3"] is not None

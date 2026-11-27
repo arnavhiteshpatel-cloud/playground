@@ -126,7 +126,13 @@ def _pad_to(x, y, ps):
 
 # ----------------------------------------------------------------------------- training
 def train_model(train_cases: list[Case], val_cases: list[Case], cfg: dict, name: str,
-                log=print, init_from: str | None = None) -> dict:
+                log=print, init_from: str | None = None, sample_fn=None) -> dict:
+    """Train a U-Net. ``sample_fn(rng) -> (x[C,Z,Y,X], y[Z,Y,X])`` optionally replaces patch sampling
+    + augmentation (used for on-the-fly domain-randomised synthesis); it is recorded in the config
+    by name (``cfg['sampler']``) for provenance."""
+    if cfg.get("require_commercial_eligible") and any(c.commercial_use != "allowed" for c in train_cases):
+        bad = sorted({c.case_id for c in train_cases if c.commercial_use != "allowed"})[:5]
+        raise PermissionError(f"Commercial-release training refused: non-commercial or unresolved licence data {bad}")
     seed_everything(cfg.get("seed", 0))
     torch.set_num_threads(cfg.get("threads", 4))
     rng = np.random.default_rng(cfg.get("seed", 0))
@@ -149,10 +155,14 @@ def train_model(train_cases: list[Case], val_cases: list[Case], cfg: dict, name:
     for it in range(iters):
         xb, yb = [], []
         for _ in range(bs):
-            x, y, roi = prepped[rng.integers(len(prepped))]
-            xp, yp = sample_patch(x, y, roi, ps, rng, cfg.get("fg_prob", 0.67))
-            xp, yp = augment(xp, yp, rng, cfg)
-            xp, yp = _pad_to(xp, yp, ps)
+            if sample_fn is not None and (not prepped or rng.random() < cfg.get("synth_prob", 1.0)):
+                xp, yp = sample_fn(rng)
+                xp, yp = _pad_to(xp.astype(np.float32), yp.astype(np.int64), ps)
+            else:
+                x, y, roi = prepped[rng.integers(len(prepped))]
+                xp, yp = sample_patch(x, y, roi, ps, rng, cfg.get("fg_prob", 0.67))
+                xp, yp = augment(xp, yp, rng, cfg)
+                xp, yp = _pad_to(xp, yp, ps)
             xb.append(xp)
             yb.append(yp)
         xb = torch.from_numpy(np.stack(xb))
@@ -188,8 +198,8 @@ def evaluate_quick(model, cases, cfg) -> float:
 
 def save_model(model, cfg, name, train_cases, hist, seconds) -> dict:
     MODEL_DIR.mkdir(exist_ok=True)
-    prov = sorted({c.provenance for c in train_cases})
-    lic = sorted({c.commercial_use for c in train_cases})
+    prov = sorted({c.provenance for c in train_cases} | set(cfg.get("extra_provenance", [])))
+    lic = sorted({c.commercial_use for c in train_cases} | ({"allowed"} if cfg.get("extra_provenance") == ["synthetic"] else set()))
     tag = "commercial_eligible" if lic == ["allowed"] else "research_only"
     manifest = [{"case_id": c.case_id, "provenance": c.provenance, "commercial_use": c.commercial_use,
                  "image_sha256": hashlib.sha256(np.ascontiguousarray(c.image).tobytes()).hexdigest()[:16]}

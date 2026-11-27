@@ -146,3 +146,85 @@ def class_volume_change(labs, roi, spacing_um, times) -> list[dict]:
     for r in rows:
         r["graft_remaining_frac"] = r["graft_mm3"] / g0 if g0 else float("nan")
     return rows
+
+
+# ----------------------------------------------------------------------------- v2: QC and granule tracking
+def registration_qc(fixed: np.ndarray, moved_back: np.ndarray, exclude: np.ndarray | None = None,
+                    min_host_dice: float = 0.85, min_ncc: float = 0.6) -> dict:
+    """Registration quality from anatomy that should not change: host mineral outside the defect.
+
+    Host bone remodels slowly relative to defect healing, so after a correct registration the host
+    mineral masks of both timepoints overlap closely. Returns Dice of host mineral masks, normalised
+    cross-correlation of intensities in the host region, and a pass flag (policy thresholds above;
+    synthetic host bone does not remodel, real host bone does — thresholds must be revisited on real data).
+    """
+    from scipy import ndimage as ndi
+    from ..segment.classical import threshold_otsu
+    keep = np.ones(fixed.shape, bool) if exclude is None else ~ndi.binary_dilation(exclude, iterations=3)
+    valid = keep & (moved_back != 0)
+    a = threshold_otsu(fixed)[0] & valid
+    b = threshold_otsu(moved_back)[0] & valid
+    inter = int((a & b).sum())
+    dice = 2 * inter / max(1, int(a.sum() + b.sum()))
+    host_region = ndi.binary_dilation(a | b, iterations=2) & valid
+    x, y = fixed[host_region].astype(np.float64), moved_back[host_region].astype(np.float64)
+    ncc = float(np.corrcoef(x, y)[0, 1]) if x.size > 10 else float("nan")
+    return {"host_dice": float(dice), "host_ncc": ncc, "pass": bool(dice >= min_host_dice and ncc >= min_ncc),
+            "policy": {"min_host_dice": min_host_dice, "min_ncc": min_ncc}}
+
+
+def track_granules(day0_img: np.ndarray, later_img: np.ndarray, day0_graft: np.ndarray, spacing_um,
+                   search_um: float = 400.0, min_vox: int = 8, margin: int = 1, min_score: float = 0.5) -> dict:
+    """Per-granule template matching of day-0 graft pieces in the registered later image.
+
+    Each connected component of the day-0 graft mask (touching granules move as one) is matched by
+    normalised cross-correlation within ±search_um. The tracked footprint places each component at its
+    best shift; components whose best NCC < ``min_score`` are kept in place and reported as untracked
+    (fragmented, heavily resorbed or overgrown). Returns footprint, per-component records and summary.
+    """
+    from scipy import ndimage as ndi
+    from skimage.feature import match_template
+    lab, n = ndi.label(day0_graft)
+    objs = ndi.find_objects(lab)
+    sv = int(np.ceil(search_um / float(np.mean(spacing_um))))
+    foot = np.zeros(day0_graft.shape, bool)
+    recs = []
+    for i, sl in enumerate(objs, start=1):
+        if sl is None:
+            continue
+        comp = lab[sl] == i
+        size = int(comp.sum())
+        if size < min_vox:
+            foot[sl] |= comp
+            recs.append({"id": i, "voxels": size, "tracked": False, "reason": "too small"})
+            continue
+        t_sl = tuple(slice(max(0, a.start - margin), min(N, a.stop + margin)) for a, N in zip(sl, day0_img.shape))
+        tmpl = day0_img[t_sl].astype(np.float32)
+        w_sl = tuple(slice(max(0, a.start - sv), min(N, a.stop + sv)) for a, N in zip(t_sl, day0_img.shape))
+        win = later_img[w_sl].astype(np.float32)
+        if any(w < t for w, t in zip(win.shape, tmpl.shape)) or tmpl.std() == 0:
+            foot[sl] |= comp
+            recs.append({"id": i, "voxels": size, "tracked": False, "reason": "window"})
+            continue
+        cc = match_template(win, tmpl)
+        best = np.unravel_index(int(np.argmax(cc)), cc.shape)
+        score = float(cc[best])
+        shift = np.array([w.start + b - t.start for w, b, t in zip(w_sl, best, t_sl)])
+        ok = score >= min_score
+        if not ok:
+            shift = np.zeros(3, int)
+        full = np.zeros(day0_graft.shape, bool)
+        full[sl] = comp
+        foot |= ndi.shift(full, shift, order=0, mode="constant", cval=False) if shift.any() else full
+        recs.append({"id": i, "voxels": size, "tracked": bool(ok), "score": score,
+                     "shift_um": [float(s * sp) for s, sp in zip(shift, spacing_um)],
+                     "shift_mag_um": float(np.linalg.norm(shift * np.asarray(spacing_um, float)))})
+    tracked = [r for r in recs if r.get("tracked")]
+    vox_total = sum(r["voxels"] for r in recs) or 1
+    untracked_frac = sum(r["voxels"] for r in recs if not r.get("tracked")) / vox_total
+    mags = [r["shift_mag_um"] for r in tracked]
+    return {"footprint": foot, "components": recs,
+            "summary": {"n_components": len(recs), "n_tracked": len(tracked),
+                        "untracked_volume_fraction": float(untracked_frac),
+                        "median_shift_um": float(np.median(mags)) if mags else 0.0,
+                        "p90_shift_um": float(np.percentile(mags, 90)) if mags else 0.0}}

@@ -34,7 +34,7 @@ from .materials import Material, default_materials
 from .structures import (block_fractions, block_mean, cylinder_mask, grf, pack_granules, shell,
                          smooth_field, erode_instances, trabecular_network)
 
-GENERATOR_VERSION = "1.0.0"
+GENERATOR_VERSION = "2.0.0"   # v2 adds displacement/fragmentation/resorption variability (defaults = v1 output)
 
 # high-resolution tissue codes
 T_MARROW, T_FIBROUS, T_VOID = 0, 1, 2
@@ -84,6 +84,12 @@ class PhantomConfig:
     effective_energy_keV: float = 40.0
     material_overrides: dict = field(default_factory=dict)
     periodic_texture: bool = True   # legacy default (dataset v1). False = non-periodic fields (use for registration)
+    # ---- generator v2 options (defaults reproduce v1 exactly) ----
+    granule_displacement_um: float = 0.0   # mean post-implantation granule translation (uniform 0..2×mean)
+    granule_rotation_deg: float = 0.0      # reserved (rigid rotation of granules not yet simulated)
+    fragment_prob: float = 0.0             # probability a granule fractures into two pieces
+    fragment_sep_um: float = 120.0         # separation of fragments along the fracture normal
+    resorption_cv: float = 0.0             # extra per-granule lognormal variability of resorption
     seed: int = 0
 
     def to_dict(self):
@@ -188,23 +194,30 @@ def generate_phantom(cfg: PhantomConfig, keep_highres: bool = False) -> Phantom:
     graft0 = np.zeros(S, bool)
     graft = np.zeros(S, bool)
     granules = []
+    disp_info = {}
     d_host = ndi.distance_transform_edt(~host).astype(np.float32) * v  # µm from host bone
     if gm:
         inner_def = defect & (ndi.distance_transform_edt(defect) > 1)
         inst, granules = pack_granules(inner_def, v, cfg.graft_diam_um, cfg.graft_fill, rng,
                                        roughness=cfg.graft_roughness)
         graft0 = inst > 0
+        if cfg.granule_displacement_um > 0 or cfg.fragment_prob > 0:
+            inst, granules, disp_info = displace_and_fragment(inst, granules, inner_def | (defect & ~host), v, cfg)
+        else:
+            disp_info = {}
         rate = cfg.resorption_rate if cfg.resorption_rate is not None else DEFAULT_RESORPTION.get(gm, 0.3)
         f_base = rate * cfg.healing_stage
         if f_base > 0 and len(granules):
             # per-granule resorption: more near host bone (vascular access)
             objs = ndi.find_objects(inst)
+            rng2 = np.random.default_rng(cfg.seed + 104729)
             fr = np.zeros(len(granules))
             for g in granules:
                 sl = objs[g["id"] - 1]
                 dmean = float(d_host[sl][inst[sl] == g["id"]].mean())
                 w = np.exp(-dmean / max(R * v, 1))
-                fr[g["id"] - 1] = np.clip(f_base * (0.6 + 0.8 * w) * rng.uniform(0.8, 1.2), 0, 1)
+                extra = float(rng2.lognormal(0.0, cfg.resorption_cv)) if cfg.resorption_cv > 0 else 1.0
+                fr[g["id"] - 1] = np.clip(f_base * (0.6 + 0.8 * w) * rng.uniform(0.8, 1.2) * extra, 0, 1)
             inst = erode_instances(inst, fr, v, rng)
         graft = inst > 0
         tissue[graft] = T_GRAFT
@@ -313,6 +326,7 @@ def generate_phantom(cfg: PhantomConfig, keep_highres: bool = False) -> Phantom:
     truth["BV_TV_new_bone"] = truth["new_bone_fraction"]
     truth["mineralized_fraction"] = truth["new_bone_fraction"] + truth["graft_fraction"] + truth["host_bone_fraction"]
     truth["graft_initial_volume_mm3"] = float(block_mean((graft0 & defect).astype(np.float32), ss).sum()) * vox_mm3
+    truth["graft_motion"] = disp_info
     truth["graft_resorbed_fraction"] = (1 - truth["graft_volume_mm3"] / truth["graft_initial_volume_mm3"]
                                         if truth["graft_initial_volume_mm3"] > 0 else float("nan"))
     truth["host_bv_tv_outside_roi"] = float(host[~defect & bone_dom].mean()) if (~defect & bone_dom).any() else float("nan")
@@ -337,3 +351,66 @@ def _abs_field(S, v, tb_sp_um, rng, mode="wrap"):
     g = ndi.gaussian_filter(rng.standard_normal(S).astype(np.float32), sigma, mode=mode)
     g2 = ndi.gaussian_filter(rng.standard_normal(S).astype(np.float32), sigma * 2.5, mode=mode)
     return g / (g.std() + 1e-8) + 0.35 * g2 / (g2.std() + 1e-8)
+
+
+def displace_and_fragment(inst: np.ndarray, granules: list[dict], region: np.ndarray, v: float, cfg) -> tuple:
+    """Post-implantation granule motion (generator v2).
+
+    Each granule is translated by a random vector (magnitude uniform in [0, 2·mean]); with probability
+    ``fragment_prob`` it is first cut by a random plane through its centre and the two fragments are
+    separated by ``fragment_sep_um``. Moves that leave the defect region or overlap already-placed
+    granules by >10% of their volume are retried with half the displacement (up to 4 times), else the
+    piece stays in place. Uses its own RNG so the rest of the phantom is unchanged.
+    Returns (new instance array, granule records, info).
+    """
+    rng = np.random.default_rng(cfg.seed + 7919)
+    out = np.zeros_like(inst)
+    recs = []
+    objs = ndi.find_objects(inst)
+    pad = int(np.ceil((2 * cfg.granule_displacement_um + cfg.fragment_sep_um) / v)) + 2
+    moved, fractured, stuck = [], 0, 0
+    for g in granules:
+        sl = objs[g["id"] - 1]
+        if sl is None:
+            continue
+        sl = tuple(slice(max(0, a.start - pad), min(n, a.stop + pad)) for a, n in zip(sl, inst.shape))
+        m = inst[sl] == g["id"]
+        pieces = [m]
+        if rng.random() < cfg.fragment_prob:
+            cz = np.argwhere(m).mean(0)
+            nrm = rng.normal(size=3)
+            nrm /= np.linalg.norm(nrm)
+            idx = np.indices(m.shape).reshape(3, -1).T - cz
+            side = (idx @ nrm > 0).reshape(m.shape)
+            pieces = [(m & side, nrm), (m & ~side, -nrm)]
+            fractured += 1
+        else:
+            pieces = [(m, None)]
+        d = rng.normal(size=3)
+        d /= np.linalg.norm(d)
+        mag = rng.uniform(0, 2 * cfg.granule_displacement_um) / v
+        for piece, nrm in pieces:
+            if not piece.any():
+                continue
+            t = d * mag + (nrm * cfg.fragment_sep_um / 2 / v if nrm is not None else 0)
+            placed = False
+            for _ in range(5):
+                ti = np.round(t).astype(int)
+                sh = ndi.shift(piece, ti, order=0, mode="constant", cval=False)
+                if sh.sum() >= 0.9 * piece.sum() and (sh & ~region[sl]).sum() <= 0.1 * sh.sum() \
+                        and (sh & (out[sl] > 0)).sum() <= 0.1 * sh.sum():
+                    placed = True
+                    break
+                t = t / 2
+            if not placed:
+                sh, ti = piece, np.zeros(3, int)
+                stuck += 1
+            new_id = len(recs) + 1
+            out[sl][sh & (out[sl] == 0) & region[sl]] = new_id
+            recs.append({"id": new_id, "parent": g["id"], "shift_um": [float(x * v) for x in ti],
+                         "diameter_um": g.get("diameter_um"), "center_vox": g.get("center_vox")})
+            moved.append(float(np.linalg.norm(ti) * v))
+    info = {"n_pieces": len(recs), "n_fractured": fractured, "n_unmoved_fallback": stuck,
+            "mean_shift_um": float(np.mean(moved)) if moved else 0.0,
+            "max_shift_um": float(np.max(moved)) if moved else 0.0}
+    return out, recs, info

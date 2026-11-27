@@ -5,6 +5,7 @@ artifact hash are returned so that results are reproducible and auditable.
 Segmentation methods:
   "multiotsu"   classical, material-aware intensity split (needs graft_brighter)
   "ctan_style"  manual/global two-threshold workflow (thresholds in config)
+  "advisor_threshold"  threshold implied by the measurement-support advisor (material model + scan levels)
   "rf:<path>"   pickled RFSegmenter (joblib)
   "unet:<name>" locked U-Net from models/registry.json (sha256 verified)
 """
@@ -29,6 +30,10 @@ DEFAULT_CONFIG = {
     "thickness_metrics": True,
     "qc": True,
     "no_graft": False,                    # e.g. distraction osteogenesis / empty-defect controls
+    "material": None,                     # graft material id (osteoquant.knowledge); None = unspecified
+    "calibrated": False,                  # HA phantom calibration recorded for this scan
+    "day0": None,                         # {"registered", "qc_pass", "max_displacement_um", "tolerance_um"}
+    "measurement_support": True,          # run the advisor; unsupported endpoints are not reported
 }
 
 
@@ -64,6 +69,11 @@ def segment(vol: Volume, roi_mask: np.ndarray, cfg: dict, progress=lambda f, m: 
     if method == "multiotsu":
         lab, th = C.seg_multiotsu(vol.data, roi_mask, cfg.get("graft_brighter", True))
         info["thresholds"] = th
+        return lab, None, info
+    if method == "advisor_threshold":
+        from .advisor.integration import advisor_threshold_segmentation
+        lab, info2 = advisor_threshold_segmentation(vol.data, roi_mask, vol.spacing, cfg)
+        info.update(info2)
         return lab, None, info
     if method == "ctan_style":
         lab = C.seg_ctan_style(vol.data, roi_mask, cfg["t_mineral"], cfg["t_graft"], cfg.get("graft_brighter", True))
@@ -146,6 +156,13 @@ def analyze(vol: Volume, cfg: dict | None = None, roi_dict: dict | None = None, 
     t = time.time()
     out["metrics"] = defect_report_metrics(lab_report, roi_mask, vol, axis=0, thickness=c["thickness_metrics"])
     out["timings"]["morphometry_s"] = round(time.time() - t, 2)
+    if c.get("measurement_support", True):
+        progress(0.9, "measurement support")
+        from .advisor.integration import support_for_scan, apply_support
+        t = time.time()
+        out["measurement_support"] = support_for_scan(vol.data, roi_mask, vol.spacing, c)
+        out["reported_metrics"], out["suppressed_metrics"] = apply_support(out["metrics"], out["measurement_support"])
+        out["timings"]["support_s"] = round(time.time() - t, 2)
     out["timings"]["total_s"] = round(time.time() - t0, 2)
     out["status"] = "complete_unreviewed"
     progress(1.0, "done")

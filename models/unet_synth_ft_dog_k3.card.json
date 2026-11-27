@@ -1,0 +1,76 @@
+{
+ "hparams": {
+  "in_ch": 1,
+  "n_classes": 4,
+  "base": 12,
+  "levels": 4,
+  "p_drop": 0.0,
+  "max_ch": 96
+ },
+ "cfg": {
+  "patch": [
+   48,
+   48,
+   48
+  ],
+  "batch": 2,
+  "iters": 300,
+  "lr": 0.001,
+  "base": 12,
+  "levels": 4,
+  "threads": 4,
+  "log_every": 300,
+  "val_every": 1000000000,
+  "loss": {
+   "dice": 1.0,
+   "ce": 1.0,
+   "boundary_w": 1.0
+  },
+  "eval_in_roi": false,
+  "roi_distance_channel": false,
+  "seed": 7
+ },
+ "name": "unet_synth_ft_dog_k3",
+ "provenance": [
+  "public-real"
+ ],
+ "licence_tag": "commercial_eligible",
+ "train_manifest": [
+  {
+   "case_id": "241035_FB.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "3171181e415f2f32"
+  },
+  {
+   "case_id": "247854_WHWT.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "76fd7b8a776f0d9f"
+  },
+  {
+   "case_id": "248812_WHWT.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "6c6c3aadc597af22"
+  }
+ ],
+ "history": [
+  {
+   "iter": 300,
+   "loss": 1.0706861019134521,
+   "sec": 86.9
+  }
+ ],
+ "created": "2026-11-27T09:26:59Z",
+ "env": {
+  "torch": "2.15.0+cpu",
+  "python": "3.13.18",
+  "numpy": "2.5.3"
+ },
+ "n_params": 788620,
+ "train_seconds": 86.9,
+ "sha256": "651add372dbfef2ecdf8cfd20d85277f5b0428c2857d399b40d7cdbcb686d0c4",
+ "path": "models/unet_synth_ft_dog_k3.pt",
+ "warning": "Research prototype \u2014 not validated"
+}

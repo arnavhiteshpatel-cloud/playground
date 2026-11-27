@@ -1,0 +1,64 @@
+{
+ "hparams": {
+  "in_ch": 1,
+  "n_classes": 4,
+  "base": 12,
+  "levels": 4,
+  "p_drop": 0.0,
+  "max_ch": 96
+ },
+ "cfg": {
+  "patch": [
+   48,
+   48,
+   48
+  ],
+  "batch": 2,
+  "iters": 300,
+  "lr": 0.001,
+  "base": 12,
+  "levels": 4,
+  "threads": 4,
+  "log_every": 300,
+  "val_every": 1000000000,
+  "loss": {
+   "dice": 1.0,
+   "ce": 1.0,
+   "boundary_w": 1.0
+  },
+  "eval_in_roi": false,
+  "roi_distance_channel": false,
+  "seed": 7
+ },
+ "name": "unet_synth_ft_dog_k1",
+ "provenance": [
+  "public-real"
+ ],
+ "licence_tag": "commercial_eligible",
+ "train_manifest": [
+  {
+   "case_id": "241035_FB.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "3171181e415f2f32"
+  }
+ ],
+ "history": [
+  {
+   "iter": 300,
+   "loss": 1.0594658851623535,
+   "sec": 84.4
+  }
+ ],
+ "created": "2026-11-27T09:24:02Z",
+ "env": {
+  "torch": "2.15.0+cpu",
+  "python": "3.13.18",
+  "numpy": "2.5.3"
+ },
+ "n_params": 788620,
+ "train_seconds": 84.4,
+ "sha256": "b94cba52073c400a9194c52cb82ee042fee95f985e9091b0a0d83bbe0d109b43",
+ "path": "models/unet_synth_ft_dog_k1.pt",
+ "warning": "Research prototype \u2014 not validated"
+}

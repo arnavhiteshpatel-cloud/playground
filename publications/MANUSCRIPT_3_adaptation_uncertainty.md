@@ -20,6 +20,11 @@ uncertainty can direct analyst review to cut hands-on time while preserving accu
   AUROC and failure-detection sensitivity/specificity. Effort model uses ASSUMED constants (20 s per reviewed slice,
   90 s per manually delineated slice) and must be replaced by a timed user study.
 
+* **H/I — real-data transfer (completed)**: SPROUT dog forelimb micro-CT (Zenodo 10.5281/zenodo.24047383, CC-BY-4.0),
+  10 train / 5 test specimens, bone vs non-bone within a band around labelled bones. U-Net trained on 10 real scans Dice
+  0.826; synthetic-trained U-Net zero-shot 0.379 (domain gap); fine-tuned with 1 / 3 real scans 0.787 / 0.781; RF on 10
+  real scans 0.758; Otsu 0.508. This is the first real-data evidence for the low-label premise (bone/soft tissue, not graft).
+
 ## Pending (requires real data) — [PENDING RESULT]
 * Adaptation across real scanners (Bruker/Scanco/Zeiss) and real materials.
 * Timed analyst study (n ≥ 3 analysts, ≥ 10 scans) measuring hands-on time and inter-operator ICC with/without

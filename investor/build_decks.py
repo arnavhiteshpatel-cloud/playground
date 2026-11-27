@@ -29,6 +29,7 @@ def J(name):
 
 A, B, C2, G, L, L2, Jd = (J("exp_A_baselines"), J("exp_B_unet"), J("exp_C2_ablation"), J("exp_G_morphometry"),
                           J("exp_L_longitudinal"), J("exp_L2_strutlike"), J("exp_J_adaptation"))
+H = J("exp_H_I_real").get("summary", {})
 FM = json.loads((ROOT / "business" / "financial_model_outputs.json").read_text())
 
 
@@ -137,6 +138,8 @@ def s_evidence(d):
             ["CTAn-style two-threshold workflow, same phantoms", "SYNTHETIC", f"{fmt(a.get('otsu_ctan_style', {}).get('dice_graft', {}).get('mean', 0), 3)} / {fmt(a.get('otsu_ctan_style', {}).get('dice_new_bone', {}).get('mean', 0), 3)}"],
             ["Day-0 registration when graft mimics new bone (graft Dice)", "SYNTHETIC", f"{fmt(L2.get('summary', {}).get('day0_estimated_registration', {}).get('dice_graft', 0), 3)} vs single-scan {fmt(L2.get('summary', {}).get('rf_single_timepoint', {}).get('dice_graft', 0), 3)}"],
             ["Adaptation to unseen material: labelled scans to reach graft Dice ≥0.8", "SYNTHETIC", str(Jd.get("curves", {}).get("unet_finetune", {}).get("min_k_reaching_0.8"))],
+            ["Real micro-CT bone segmentation (dog, 5 test): U-Net on 10 real scans", "REAL public data", fmt(H.get("unet_trained_on_10_real", {}).get("dice", 0), 3)],
+            ["Synthetic pre-training + 1 real labelled scan (zero-shot fails)", "REAL public data", f"{fmt(H.get('synthetic_unet_finetuned_k1', {}).get('dice', 0), 3)} (zero-shot {fmt(H.get('synthetic_unet_zero_shot', {}).get('dice', 0), 3)})"],
             ["Real graft vs new bone on physical samples", "NOT YET TESTED", "phantom protocol ready; needs scanner time"]]
     d.table("Evidence so far — and what it does not show", ["Result", "Data", "Value"], rows, kicker="Technical evidence",
             col_w=[6.2, 2.4, 3.5], note="synthetic = computational phantoms with exact ground truth; not proof of real-world performance")

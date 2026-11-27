@@ -156,12 +156,12 @@ def main():
     flow += [P("3.2 Separability under graft/new-bone density overlap (C, C2, D, E)", H2), fig("exp_C_separability.png", 178, 0.27),
              P("Figure 2. Graft Dice vs graft HA-equivalent density at four noise levels (SYNTHETIC, compact granules). Dashed: "
                "Dice-optimal intensity-only oracle (upper bound for any voxel-wise intensity rule).", SM)]
-    c2r = [["Condition", "Features / method", "Graft Dice"]] + [[r["morphology"], r["features"], f3(r["dice_graft"])] for r in C2.get("rows", [])]
+    c2r = [["Condition", "Features / method", "Graft Dice"]] + [[r["morphology"], r["features"], f3(r["dice_graft"])] for r in C2.get("rows", []) if "bayes" not in r["features"]]
     flow += [table(c2r, [40 * mm, 80 * mm, 30 * mm])]
     ls = L2.get("summary", {})
     flow += [P("3.3 Longitudinal day-0 propagation (L, L2)", H2), table(
         [["Method (strut-like granules, overlap regime)", "Graft Dice", "New-bone Dice"]] +
-        [[k, f3(v.get("dice_graft")), f3(v.get("dice_new"))] for k, v in ls.items()], [95 * mm, 35 * mm, 35 * mm]),
+        [[k, f3(v.get("dice_graft")), f3(v.get("dice_new"))] for k, v in ls.items() if "bayes" not in k], [95 * mm, 35 * mm, 35 * mm]),
         P(f"Rigid TRE below 4 µm. Best case: simulated graft only shrinks in place between timepoints (review Q-11). In the easy "
           f"regime day-0 propagation is slightly worse than single-scan methods because new bone inside the original footprint is "
           f"counted as graft.", SM)]

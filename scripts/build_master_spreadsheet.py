@@ -83,11 +83,15 @@ def main():
     c2 = load("exp_C2_ablation")
     if c2:
         for r in c2["rows"]:
+            if "bayes" in r["features"]:
+                continue   # superseded accuracy-optimal rule (review Q-01); oracle rows kept
             bench.append(["C2", f"SYNTHETIC overlap regime, {r['morphology']}", f"RF features={r['features']}", "graft Dice", r["dice_graft"], None, None])
     for name in ("exp_L_longitudinal", "exp_L2_strutlike"):
         L = load(name)
         if L:
             for k, v in L["summary"].items():
+                if "bayes" in k:
+                    continue
                 bench.append([name.split("_")[1], "SYNTHETIC", k, "graft Dice", v["dice_graft"], None, None])
     g = load("exp_G_morphometry")
     if g:

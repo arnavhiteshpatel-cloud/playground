@@ -32,7 +32,7 @@ a headless-browser run of the full UI workflow; an independent adversarial revie
 | `unet_noctx_s0` | 48 synthetic phantoms | 3-class, no ROI input (fairest) | SYNTHETIC-TRAINED |
 | `unet_ctx_s0` | same + ROI channel | context ablation | SYNTHETIC-TRAINED |
 | `adapt_k{1,3,5,10,20}_*` | fine-tuned on held-out simulated materials | Exp J | SYNTHETIC-TRAINED |
-| `unet_dog_bone_real` | 10 real dog-forelimb micro-CT (CC-BY-4.0) | real bone segmentation (Exp H) | research |
+| `unet_dog_bone_real` | 10 real dog-forelimb micro-CT (CC-BY-4.0) | real bone segmentation (Exp H): Dice 0.826 | research |
 | `unet_synth_ft_dog_k{1,3}` | synthetic model fine-tuned on 1/3 real scans | transfer (Exp I) | research |
 Registry with SHA-256: `models/registry.json` (model files are git-ignored; regenerate with the experiment scripts).
 
@@ -48,6 +48,9 @@ specimens. **No customer, university or restricted data.** Blocked: BONe (Dryad 
 3. **A registered day-0 scan is the most robust strategy** (graft Dice 0.82 where single-scan methods give 0.66), but
    it needs an in-vivo post-op scan and is best-case in simulation. [SYNTHETIC]
 4. **Adaptation to a new simulated material needs 1–3 labelled scans** — optimistic; real materials will need more. [SYNTHETIC]
+   On **real** micro-CT (dog forelimb bone), synthetic-only training failed zero-shot (Dice 0.38) but synthetic pre-training
+   plus **one** labelled real scan reached 0.79 vs 0.83 for a model trained on 10 real scans. [REAL] — strongest evidence so
+   far that a "phantom-pretrained + few customer labels" workflow is viable; never use synthetic-only models on real scans.
 5. **Morphometry matches Scanco IPL** once the border convention is handled (−2.4% Tb.Th) — but I chose the convention
    after seeing the data, so confirm on new references. [REAL]
 6. **Real scans break naive code**: zero padding, saturated hardware, unlabelled anatomy. Fixed or made explicit. [REAL]

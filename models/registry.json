@@ -370,5 +370,69 @@
    "fg_prob": 0.6
   },
   "previous_sha256": "3f6af60a4ca1a41bb753fe1b3f35b4fe6af4fbd9143e03267277f2f25e69e2c6"
+ },
+ "unet_synth_ft_dog_k1": {
+  "sha256": "b94cba52073c400a9194c52cb82ee042fee95f985e9091b0a0d83bbe0d109b43",
+  "created": "2026-11-27T09:24:02Z",
+  "provenance": [
+   "public-real"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 1,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": false,
+   "seed": 7
+  }
+ },
+ "unet_synth_ft_dog_k3": {
+  "sha256": "651add372dbfef2ecdf8cfd20d85277f5b0428c2857d399b40d7cdbcb686d0c4",
+  "created": "2026-11-27T09:26:59Z",
+  "provenance": [
+   "public-real"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 3,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": false,
+   "seed": 7
+  }
  }
 }

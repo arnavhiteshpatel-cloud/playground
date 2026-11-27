@@ -16,3 +16,31 @@ train 10 test 5 [(75, 113, 58), (149, 128, 63), (575, 256, 113), (81, 256, 131),
 {'method': 'random_forest_10train', 'case': '244195_Lab.tif', 'dice': 0.9159863049776139, 'hd95_vox': 1.0, 'vol_err': 0.17662420382165606}
 {'method': 'unet_trained_on_10_real', 'case': '228420_Dachshund.tif', 'dice': 0.873352165725047, 'hd95_vox': 2.23606797749979, 'vol_err': 0.05465538089480049}
 {'method': 'unet_trained_on_10_real', 'case': '232558_Beagle.tif', 'dice': 0.8307277200222205, 'hd95_vox': 2.23606797749979, 'vol_err': 0.3619493908153702}
+{'method': 'unet_trained_on_10_real', 'case': '238046_WH.tif', 'dice': 0.7006981070676433, 'hd95_vox': 2.23606797749979, 'vol_err': -0.4456098492078641}
+{'method': 'unet_trained_on_10_real', 'case': '239179_Yorkie.tif', 'dice': 0.8340333946610199, 'hd95_vox': 1.4142135623730951, 'vol_err': -0.2260607180245089}
+{'method': 'unet_trained_on_10_real', 'case': '244195_Lab.tif', 'dice': 0.8931804071496259, 'hd95_vox': 1.0, 'vol_err': -0.05076433121019108}
+{'method': 'synthetic_unet_zero_shot', 'case': '228420_Dachshund.tif', 'dice': 0.2552360887346635, 'hd95_vox': 5.385164807134504, 'vol_err': 5.805562273276904}
+{'method': 'synthetic_unet_zero_shot', 'case': '232558_Beagle.tif', 'dice': 0.23650547424743149, 'hd95_vox': 5.477225575051661, 'vol_err': 6.337582005623243}
+{'method': 'synthetic_unet_zero_shot', 'case': '238046_WH.tif', 'dice': 0.5397741494641445, 'hd95_vox': 5.477225575051661, 'vol_err': 1.317188394731819}
+{'method': 'synthetic_unet_zero_shot', 'case': '239179_Yorkie.tif', 'dice': 0.40952288997089614, 'hd95_vox': 5.385164807134504, 'vol_err': 2.4644990455077282}
+{'method': 'synthetic_unet_zero_shot', 'case': '244195_Lab.tif', 'dice': 0.45218637577722925, 'hd95_vox': 5.477225575051661, 'vol_err': 2.3997133757961784}
+/home/user/playground/osteoquant/ml/train.py:168: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  rec = {"iter": it + 1, "loss": float(loss), "sec": round(time.time() - t0, 1)}
+{'method': 'synthetic_unet_finetuned_k1', 'case': '228420_Dachshund.tif', 'dice': 0.7949837644160789, 'hd95_vox': 3.605551275463989, 'vol_err': 0.15985489721886337}
+{'method': 'synthetic_unet_finetuned_k1', 'case': '232558_Beagle.tif', 'dice': 0.6817464492372436, 'hd95_vox': 4.47213595499958, 'vol_err': 0.8506091846298032}
+{'method': 'synthetic_unet_finetuned_k1', 'case': '238046_WH.tif', 'dice': 0.7143524444471406, 'hd95_vox': 2.23606797749979, 'vol_err': -0.42677037602595913}
+{'method': 'synthetic_unet_finetuned_k1', 'case': '239179_Yorkie.tif', 'dice': 0.8488659027143968, 'hd95_vox': 1.7320508075688772, 'vol_err': -0.17827452429336782}
+{'method': 'synthetic_unet_finetuned_k1', 'case': '244195_Lab.tif', 'dice': 0.8927490336701904, 'hd95_vox': 2.8284271247461903, 'vol_err': 0.05156050955414013}
+{'method': 'synthetic_unet_finetuned_k3', 'case': '228420_Dachshund.tif', 'dice': 0.8005286925872893, 'hd95_vox': 3.7416573867739413, 'vol_err': 0.19564691656590086}
+{'method': 'synthetic_unet_finetuned_k3', 'case': '232558_Beagle.tif', 'dice': 0.6853992294406802, 'hd95_vox': 4.47213595499958, 'vol_err': 0.8217432052483599}
+{'method': 'synthetic_unet_finetuned_k3', 'case': '238046_WH.tif', 'dice': 0.6929382752492175, 'hd95_vox': 2.23606797749979, 'vol_err': -0.44809123878602786}
+{'method': 'synthetic_unet_finetuned_k3', 'case': '239179_Yorkie.tif', 'dice': 0.8404924760601915, 'hd95_vox': 1.7320508075688772, 'vol_err': -0.19939651456370466}
+{'method': 'synthetic_unet_finetuned_k3', 'case': '244195_Lab.tif', 'dice': 0.8873257490786733, 'hd95_vox': 2.449489742783178, 'vol_err': -0.012420382165605096}
+otsu_in_band                       Dice 0.508  HD95 4.4 vox  vol err +3.325
+gmm2                               Dice 0.607  HD95 3.3 vox  vol err +2.552
+random_forest_10train              Dice 0.758  HD95 3.0 vox  vol err -0.206
+unet_trained_on_10_real            Dice 0.826  HD95 1.8 vox  vol err -0.061
+synthetic_unet_zero_shot           Dice 0.379  HD95 5.4 vox  vol err +3.665
+synthetic_unet_finetuned_k1        Dice 0.787  HD95 3.0 vox  vol err +0.091
+synthetic_unet_finetuned_k3        Dice 0.781  HD95 2.9 vox  vol err +0.071

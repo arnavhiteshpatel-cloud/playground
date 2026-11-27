@@ -37,7 +37,9 @@ def case_specs():
     splits = {"train": (48, ["beta_tcp", "bcp", "ha", "calcium_sulfate"], 1000),
               "val": (8, ["beta_tcp", "bcp", "ha", "calcium_sulfate"], 2000),
               "test": (16, ["beta_tcp", "bcp", "ha", "calcium_sulfate"], 3000),
-              "ood_mat": (40, ["bioglass_45s5", "xenograft_dbbm"], 4000)}
+              "ood_mat": (40, ["bioglass_45s5", "xenograft_dbbm"], 4000),
+              # Gen-2 addition (appended last so earlier specs are unchanged): conformal calibration split
+              "cal": (40, ["beta_tcp", "bcp", "ha", "calcium_sulfate"], 5000)}
     for split, (n, mats, seed0) in splits.items():
         for i in range(n):
             model = list(MODELS)[i % 3]

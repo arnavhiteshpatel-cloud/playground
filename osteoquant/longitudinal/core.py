@@ -228,3 +228,24 @@ def track_granules(day0_img: np.ndarray, later_img: np.ndarray, day0_graft: np.n
                         "untracked_volume_fraction": float(untracked_frac),
                         "median_shift_um": float(np.median(mags)) if mags else 0.0,
                         "p90_shift_um": float(np.percentile(mags, 90)) if mags else 0.0}}
+
+
+def propagate_roi(reference_img: np.ndarray, reference_roi: np.ndarray, current_img: np.ndarray, spacing_um,
+                  exclude_margin_vox: int = 3) -> dict:
+    """Carry a defect ROI from an earlier (unbridged) timepoint to a later scan of the same animal.
+
+    Segmental-gap detection fails once regenerate bridges the gap (Experiment F); the gap is still known
+    from an early timepoint. The current scan is the fixed image; the reference is registered onto it
+    (host anatomy only, ROI excluded) and the ROI mask is resampled with nearest-neighbour interpolation.
+    Returns the propagated mask plus registration QC (``registration_qc``); callers must treat a failed
+    QC as "manual ROI required".
+    """
+    from scipy import ndimage as ndi
+    # register reference → current: fixed = current; the fixed-frame mask cannot use the (unknown) current
+    # ROI, so the default central mask is used; healing inside the gap is a small part of the field of view
+    tx, metric = register(current_img, reference_img, spacing_um, "rigid", mask=None)
+    roi = resample(reference_roi.astype(np.uint8), current_img.shape, spacing_um, tx, labels=True) > 0
+    moved_ref = resample(reference_img, current_img.shape, spacing_um, tx)
+    excl = ndi.binary_dilation(roi, iterations=exclude_margin_vox)
+    qc = registration_qc(current_img, moved_ref, exclude=excl)
+    return {"roi": roi, "qc": qc, "metric": metric, "transform": tx}

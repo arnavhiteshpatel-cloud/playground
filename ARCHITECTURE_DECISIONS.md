@@ -41,3 +41,15 @@ Evaluation mode runs without a licence and watermarks reports.
 
 ### ADR-G2-07 — Experiment outputs redirectable via `OQ_RESULTS`
 Reproduction runs write to a separate directory so original results are never overwritten during audits.
+
+### ADR-G2-08 — Projection-domain simulation: TIGRE/ASTRA evaluated, not adopted (FA-22)
+**Findings (2026-11-27, this container: 4 CPU, no CUDA).** `astra-toolbox` 2.5.0 installs from PyPI but its 3-D
+cone-beam projectors require CUDA (`create_sino3d_gpu` fails: "CUDA driver version is insufficient"); only 2-D CPU
+projectors (parallel/fan) work. The TIGRE CT toolbox is not on PyPI: the PyPI package named `tigre` (2.0.4) is an
+unrelated MIT-licensed bioinformatics tool ("Tool for InterGenic Region Extraction") — a name collision and a
+dependency-confusion hazard; never `pip install tigre` for CT. The CT toolbox is built from its source repository
+and its projectors are CUDA kernels, so it cannot run here.
+**Licences.** ASTRA is GPL-3.0: it must not be linked into the commercial desktop distribution; TIGRE is BSD-3-Clause
+(compatible). **Decision.** Keep the in-house simulator (image-domain mode A + skimage parallel-beam mode B) for
+the product and CPU experiments. On a CUDA workstation, add an optional research-only TIGRE cone-beam path for
+cone-beam artefacts (Feldkamp cone-angle artefacts, scatter) — record as future work; never ship ASTRA.

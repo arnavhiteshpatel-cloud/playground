@@ -172,6 +172,7 @@ QLabel[role="banner-info"] {{ background: {t['surface']}; border-left: 3px solid
 QMenuBar {{ background: {t['surface']}; border-bottom: 1px solid {t['border']}; padding: 1px 4px; }}
 QMenuBar::item {{ background: transparent; padding: 4px 9px; border-radius: 3px; }}
 QMenuBar::item:selected {{ background: {t['surface_alt']}; }}
+QMenuBar::item:disabled {{ color: {t['text_disabled']}; }}
 QMenu {{ background: {t['surface']}; border: 1px solid {t['border_strong']}; padding: 4px 0; }}
 QMenu::item {{ padding: 5px 28px 5px 22px; background: transparent; }}
 QMenu::item:selected {{ background: {t['selection']}; color: {t['selection_text']}; }}

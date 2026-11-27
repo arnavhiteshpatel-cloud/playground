@@ -686,6 +686,11 @@ def sign_review(project, password: str, object_type: str, object_id: int, decisi
         if pending:
             raise PermissionError(f"{len(pending)} reported segmentation(s) of this study are not approved yet. "
                                   "Approve the segmentations first (Review panel), or choose 'Request changes'.")
+        bp = report_meta(project, object_id).get("bundle_path")
+        if bp and Path(bp).exists():
+            if json.loads(Path(bp).read_text(encoding="utf-8")).get("review_status") != "reviewed":
+                raise PermissionError("This report was generated before all segmentations were approved and is marked "
+                                      "UNREVIEWED. Generate a new report, then approve it (or request changes).")
     if not project.reauthenticate(password, object_type, object_id):
         raise PermissionError("Re-authentication failed: password incorrect (5 failed attempts lock the account "
                               "for 15 minutes)")

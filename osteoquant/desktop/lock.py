@@ -94,8 +94,8 @@ class LockPage(QWidget):
         outer.addLayout(row)
         outer.addStretch(2)
 
-    def prepare(self, user: dict, project_name: str, minutes: int):
-        self.who.setText(f"{project_name} is locked after {minutes} min without input" if minutes else
+    def prepare(self, user: dict, project_name: str, minutes: int, idle: bool = True):
+        self.who.setText(f"{project_name} was locked after {minutes} min without input" if (idle and minutes) else
                          f"{project_name} is locked")
         self.who.setText(self.who.text() + f". Signed in as {user.get('full_name') or user['username']}: "
                                            "enter your password to continue. Unsaved edits are kept.")

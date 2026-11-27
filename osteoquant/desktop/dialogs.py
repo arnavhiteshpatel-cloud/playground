@@ -175,8 +175,7 @@ class AnalysisDialog(_Dialog):
             tip = m.get("provenance_text", "") + (": not validated on real tissue" if m.get("synthetic") else "")
             self.seg.setItemData(self.seg.count() - 1, tip[:300], Qt.ToolTipRole)
             self._synthetic[m["id"]] = bool(m.get("synthetic"))
-        self.chip = QLabel(f"{SYNTHETIC_CHIP}: this model was trained on synthetic phantoms only and is not "
-                           "validated on real tissue. Results are labelled accordingly.")
+        self.chip = QLabel(f"{SYNTHETIC_CHIP}: trained on synthetic phantoms only; not validated on real tissue")
         self.chip.setProperty("role", "chip-bad")
         self.chip.setWordWrap(True)
         self.chip.hide()
@@ -198,12 +197,12 @@ class AnalysisDialog(_Dialog):
         f.addRow("Defect model", self.model)
         f.addRow("Nominal defect diameter", self.diam)
         f.addRow("Segmentation", self.seg)
-        f.addRow("", self.chip)
         f.addRow("Graft material", self.material)
         f.addRow("", self.bright)
         f.addRow("", self.thick)
         f.addRow("", self.saved_roi)
         self.lay.addLayout(f)
+        self.lay.addWidget(self.chip)
         self.lay.addWidget(muted("The graft material is used by the measurement-support advisor to decide which "
                                  "endpoints can be separated reliably. Endpoints it does not support are reported as "
                                  "'not measured' with the reason."))
@@ -304,7 +303,7 @@ class SignDialog(_Dialog):
 
     def __init__(self, user: dict, object_desc: str, decision: str, parent=None, object_type: str = "segmentation",
                  signature_roles: list | None = None):
-        super().__init__("Electronic signature", parent, 540)
+        super().__init__("Electronic signature", parent, 620)
         verb = "Accept" if (object_type == "roi" and decision == "approved") else self.VERBS.get(decision, decision)
         head = QLabel(f"{verb} {object_desc}")
         head.setProperty("role", "heading")
@@ -326,6 +325,7 @@ class SignDialog(_Dialog):
         mm = self.MEANINGS.get(object_type, self.MEANINGS["segmentation"])
         self.meaning.addItems([mm[decision]] + [v for k, v in mm.items() if k != decision])
         self.meaning.setMinimumContentsLength(30)
+        self.meaning.lineEdit().setCursorPosition(0)
         self.comment = QLineEdit()
         self.pw = QLineEdit()
         self.pw.setEchoMode(QLineEdit.Password)

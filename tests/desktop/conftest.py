@@ -51,3 +51,33 @@ def labels():
     lab[:, :3] = 3
     lab[rng.random(lab.shape) < 0.01] = 255
     return lab
+
+
+from desktop_helpers import DIR_PW, REV_PW  # noqa: E402
+
+
+@pytest.fixture
+def window(qtbot, tmp_path):
+    """Off-screen main window (modules may override this fixture)."""
+    from PySide6.QtCore import QSettings
+    from PySide6.QtWidgets import QApplication
+    from osteoquant.desktop import theme
+    from osteoquant.desktop.main_window import MainWindow
+    from osteoquant.desktop.settings import AppSettings
+    from osteoquant.licensing import evaluation_status
+    theme.apply_theme(QApplication.instance(), "light")
+    w = MainWindow(AppSettings(QSettings(str(tmp_path / "s.ini"), QSettings.IniFormat)), evaluation_status())
+    qtbot.addWidget(w)
+    w.resize(1300, 850)
+    w.show()
+    yield w
+    w.jobs.wait()
+
+
+@pytest.fixture
+def team(analysed):
+    """The analysed project plus a reviewer and a study director: (project, sid, scan, reviewer_id, director_id)."""
+    project, sid, scan = analysed
+    rid = project.add_user("rev", "Rita Reviewer", "reviewer", REV_PW)
+    did = project.add_user("dir", "Dora Director", "study_director", DIR_PW)
+    return project, sid, scan, rid, did

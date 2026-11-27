@@ -233,7 +233,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.stack)
         self.idle = IdleWatcher(self)
         QApplication.instance().installEventFilter(self.idle)
-        self.idle.idle.connect(self.lock_session)
+        self.idle.idle.connect(lambda: self.lock_session(idle=True))
 
         # ---------------- docks
         self.tree = ProjectTree()
@@ -392,7 +392,7 @@ class MainWindow(QMainWindow):
         pm = mb.addMenu("&Project")
         self.a_users = self._act("Users...", self.manage_users, tip="Add users, set roles, deactivate, reset passwords")
         self.a_idle = self._act("Idle lock...", self.configure_idle_lock, tip="Minutes without input before the window locks")
-        self.a_lock = self._act("Lock now", self.lock_session, "Ctrl+L")
+        self.a_lock = self._act("Lock now", lambda: self.lock_session(), "Ctrl+L")
         for a in (self.a_users, self.a_idle, None, self.a_lock):
             pm.addSeparator() if a is None else pm.addAction(a)
         pm.setToolTipsVisible(True)
@@ -1144,7 +1144,7 @@ class MainWindow(QMainWindow):
 
     def _tab_changed(self, i):
         w = self.tabs.widget(i)
-        viewer_docks = [self.d_display, self.d_seg, self.d_review, self.d_oblique, self.d_voxel]
+        viewer_docks = [self.d_display, self.d_seg, self.d_review, self.d_oblique, self.d_voxel, self.d_qc]
         if self.project is not None:
             if w is self.workspace:
                 for d in getattr(self, "_hidden_viewer_docks", []):
@@ -1209,7 +1209,7 @@ class MainWindow(QMainWindow):
         self.idle.set_timeout_minutes(self.project.idle_lock_minutes)
         self.statusBar().showMessage(f"Idle lock: {minutes} min" if minutes else "Idle lock off", 6000)
 
-    def lock_session(self):
+    def lock_session(self, idle: bool = False):
         """Hide the project and require the signed-in user's password (idle lock, Ctrl+L)."""
         if self.project is None or self._locked:
             return
@@ -1223,10 +1223,10 @@ class MainWindow(QMainWindow):
             a.setEnabled(False)
         self.toolbar.setEnabled(False)
         u = self.project.user
-        self.lock_page.prepare(u, self.project.name, self.project.idle_lock_minutes)
+        self.lock_page.prepare(u, self.project.name, self.project.idle_lock_minutes, idle)
         self.stack.setCurrentWidget(self.lock_page)
         self.project.store.audit.record("session.lock", u["id"], u["org_id"], details={
-            "idle_minutes": self.project.idle_lock_minutes})
+            "reason": "idle" if idle else "manual", "idle_minutes": self.project.idle_lock_minutes})
 
     def unlock_session(self, password: str) -> bool:
         if not self._locked or self.project is None:

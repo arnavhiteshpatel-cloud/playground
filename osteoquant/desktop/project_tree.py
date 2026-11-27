@@ -53,7 +53,8 @@ class ProjectTree(QTreeWidget):
                 v = node.get("qc_verdict") or ""
                 item.setIcon(0, dot(theme.status_color(v or "queued")))
                 item.setText(1, STATUS_TEXT.get(node["status"], node["status"]))
-                item.setToolTip(0, f"Scan {node['id']} · {' x '.join(map(str, node['shape']))} voxels · "
+                item.setToolTip(0, f"{node['name'] if node.get('blinded') else 'Scan ' + str(node['id'])} · "
+                                   f"{' x '.join(map(str, node['shape']))} voxels · "
                                    f"{', '.join(f'{s:g}' for s in node['spacing_um'])} µm · QC {v or 'not run'}")
                 item.setForeground(1, theme.status_color(v or ""))
             elif k == "rejected":

@@ -254,16 +254,32 @@ class MetadataPage(QWizardPage):
         lay = QVBoxLayout(self)
         allrow = QHBoxLayout()
         allrow.addWidget(QLabel("Spacing for all scans without file spacing (µm):"))
-        self.all_sp = QDoubleSpinBox()
-        self.all_sp.setRange(0.1, 5000)
-        self.all_sp.setDecimals(3)
-        self.all_sp.setValue(10.0)
-        b = QPushButton("Apply and confirm")
-        b.clicked.connect(self._apply_all)
-        allrow.addWidget(self.all_sp)
-        allrow.addWidget(b)
+        # never pre-filled: a value must be typed (or read from the file) before it can be confirmed (UX-22)
+        self.all_fields = []
+        for ax in ("z", "y", "x"):
+            sb = QDoubleSpinBox()
+            sb.setRange(0, 5000)
+            sb.setDecimals(3)
+            sb.setSpecialValueText(f"{ax}: enter")
+            sb.setValue(0)
+            sb.setPrefix(f"{ax} ")
+            sb.setToolTip(f"Voxel spacing along {ax} in µm")
+            sb.valueChanged.connect(self._all_changed)
+            self.all_fields.append(sb)
+            allrow.addWidget(sb)
+        self.all_sp = self.all_fields[0]
+        from PySide6.QtWidgets import QCheckBox as _QCheckBox
+        self.iso = _QCheckBox("isotropic")
+        self.iso.setChecked(True)
+        self.iso.setToolTip("Use the z value for y and x as well")
+        self.iso.toggled.connect(self._all_changed)
+        allrow.addWidget(self.iso)
+        self.apply_btn = QPushButton("Apply and confirm")
+        self.apply_btn.clicked.connect(self._apply_all)
+        allrow.addWidget(self.apply_btn)
         allrow.addStretch(1)
         lay.addLayout(allrow)
+        self._all_changed()
         split = QSplitter(Qt.Vertical)
         self.table = make_table(["Source", "Spacing source", "z (µm)", "y (µm)", "x (µm)", "Confirmed", "Warnings"])
         self.table.setSelectionMode(QAbstractItemView.SingleSelection)
@@ -340,8 +356,27 @@ class MetadataPage(QWizardPage):
         self.model.candidates[i].confirmed = bool(on)
         self._update_problems()
 
+    def _all_values(self):
+        z = self.all_fields[0].value()
+        return [z, z, z] if self.iso.isChecked() else [f.value() for f in self.all_fields]
+
+    def _all_changed(self, *_):
+        iso = self.iso.isChecked()
+        for f in self.all_fields[1:]:
+            f.setEnabled(not iso)
+            if iso:
+                f.blockSignals(True)
+                f.setValue(self.all_fields[0].value())
+                f.blockSignals(False)
+        ok = all(v > 0 for v in self._all_values())
+        self.apply_btn.setEnabled(ok)
+        self.apply_btn.setToolTip("" if ok else "Type the voxel spacing first (no default is assumed)")
+
     def _apply_all(self):
-        self.model.apply_spacing_to_all([self.all_sp.value()] * 3)
+        vals = self._all_values()
+        if not all(v > 0 for v in vals):
+            return
+        self.model.apply_spacing_to_all(vals)
         self.refresh()
 
     def _details(self):
@@ -527,7 +562,7 @@ class RunPage(QWizardPage):
             st = ro_item(o.status if o else "not processed")
             st.setForeground(theme.status_color(o.status if o else "cancelled"))
             for j, it in enumerate([ro_item(c.path.name, tip=str(c.path)), st, ro_item(o.scan_id if o else ""),
-                                    ro_item(o.reason if o else "", tip=o.reason if o else "")]):
+                                    ro_item(_reason_text(o) if o else "", tip=o.reason if o else "")]):
                 t.setItem(r, j, it)
         t.resizeColumnsToContents()
         t.horizontalHeader().setStretchLastSection(True)
@@ -573,3 +608,11 @@ class ImportWizard(QWizard):
             QMessageBox.information(self, "Import running", "Cancel the running import first.")
             return
         super().reject()
+
+
+def _reason_text(o) -> str:
+    """Plain-language reason for a rejected import (technical text in the tooltip)."""
+    if o.status != "rejected":
+        return o.reason
+    from .messages import friendly
+    return friendly(o.reason)

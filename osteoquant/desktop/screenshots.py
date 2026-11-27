@@ -27,7 +27,10 @@ def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
     from ..licensing import evaluation_status
     from . import theme
     from .demo import build_demo_project
-    from .dialogs import AboutDialog, LicenceDialog, SaveRevisionDialog
+    from . import services as S
+    from .demo import REVIEWER_PASSWORD
+    from .dialogs import AboutDialog, AnalysisDialog, LicenceDialog, SaveRevisionDialog, SignDialog, UserAdminDialog
+    from .project import Project
     from .import_wizard import ImportWizard
     from .main_window import MainWindow
     from .settings import AppSettings
@@ -64,8 +67,10 @@ def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
     w.open_scan(scans[0])
     w.workspace.view3d.rebuild_surfaces(synchronous=True)
     w.state.set_cursor(*[n // 2 for n in w.state.shape])
+    w.state.add_measurement(0, w.state.cursor[0], (30.0, 20.0), (30.0, 70.0))
     _settle(app)
     save(w, "02_viewer_light.png")
+    w.state.clear_measurements()
 
     # segmentation editing: brush stroke + region grow on the axial view
     st = w.state
@@ -89,6 +94,47 @@ def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
     _wait_jobs(app, w)
     st.set_tool("navigate")
     _settle(app)
+
+    # review: what changed in v2 (detail pane + changed voxels highlighted), ROI awaiting acceptance
+    w.d_review.raise_()
+    w.d_voxel.hide()
+    w.review.table.selectRow(w.review.table.rowCount() - 1)
+    w.review.compare.setChecked(True)
+    st.set_cursor(z, *st.cursor[1:])
+    w.workspace.view3d.rebuild_surfaces(synchronous=True)
+    from PySide6.QtWidgets import QScrollArea
+    sa = w.review.findChild(QScrollArea)
+    sa.ensureWidgetVisible(w.review.compare, 0, 0)
+    _settle(app, 12)
+    save(w, "15_review_what_changed.png")
+    w.review.compare.setChecked(False)
+    sa.verticalScrollBar().setValue(0)
+    w.d_voxel.show()
+
+    # a second person (reviewer) accepts the ROIs and approves the segmentations of every scan
+    rev = Project(folder)
+    assert rev.login("reviewer", REVIEWER_PASSWORD)
+    sd = w._own(SignDialog(rev.user, "analysis ROI v1 of Scan 1 - R01_week4.nii.gz", "approved", w, "roi"))
+    sd.comment.setText("Outline checked on axial, coronal and sagittal slices")
+    sd.show()
+    _settle(app)
+    save(sd, "16_sign_accept_roi_dialog.png")
+    sd.close()
+    for sc_id in scans:
+        segs = rev.store.segmentations(rev.user, sc_id)
+        if not segs:
+            continue
+        roi_id = segs[-1]["roi_id"]
+        if roi_id and not S.roi_state(rev, roi_id)["accepted"]:
+            S.sign_review(rev, REVIEWER_PASSWORD, "roi", roi_id, "approved",
+                          "Reviewed the analysis ROI on the slices and accept it as the analysis volume")
+        S.sign_review(rev, REVIEWER_PASSWORD, "segmentation", segs[-1]["id"], "approved",
+                      "Reviewed the segmentation and approve it for reporting")
+    w.review.refresh()
+    w.d_review.raise_()
+    _settle(app)
+    save(w, "17_review_roi_accepted.png")
+    w.d_seg.raise_()
 
     # import wizard: metadata page with a file lacking spacing, and the results page
     from .demo import write_phantom
@@ -118,15 +164,31 @@ def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
 
     w.tabs.setCurrentWidget(w.results)
     w.results.set_project(w.project, sid)
+    w.results.view.selectRow(0)
     _settle(app)
     save(w, "07_results.png")
 
-    w.generate_report(sid)
+    job = w.generate_report(sid)
     _wait_jobs(app, w)
     _settle(app, 20)
     w.reports.preview.go(1)
     _settle(app, 10)
     save(w, "08_report_preview.png")
+    if job is not None and job.status == "done":
+        rid = job.result["report_id"]
+        try:
+            S.sign_review(rev, REVIEWER_PASSWORD, "report", rid, "approved",
+                          "Reviewed the report and approve its release", signature_role="reviewer")
+        except PermissionError as e:       # e.g. a new import is not yet approved: record a change request
+            print("report approval:", e)
+            S.sign_review(rev, REVIEWER_PASSWORD, "report", rid, "needs_changes",
+                          "Reviewed the report; changes are required before release", signature_role="reviewer")
+        w.reports.refresh(rid)
+        w.reports.show_signed.setChecked(True)
+        w.reports.preview.go(w.reports.preview.page_count() - 1)
+        _settle(app, 10)
+        save(w, "18_report_signoff.png")
+        w.reports.show_signed.setChecked(False)
 
     w.tabs.setCurrentWidget(w.audit)
     w.audit.refresh()
@@ -140,7 +202,34 @@ def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
     w.d_review.raise_()
     _settle(app)
     save(w, "10_review_blinded.png")
+    w.tabs.setCurrentWidget(w.audit)
+    w.audit.refresh()
+    _settle(app)
+    save(w, "19_audit_blinded.png")
+    w.tabs.setCurrentWidget(w.workspace)
     w.set_blinded(False)
+
+    ud = w._own(UserAdminDialog(w.project, w))
+    ud.add_user({"username": "director", "full_name": "S. Director", "role": "study_director",
+                 "password": "Director-Password-2026"})
+    ud.show()
+    _settle(app)
+    save(ud, "20_users.png")
+    ud.close()
+    ad = w._own(AnalysisDialog(3, "condyle", w))
+    ad.material.setCurrentIndex(2)
+    for i in range(ad.seg.count()):
+        if "SYNTHETIC" in ad.seg.itemText(i):
+            ad.seg.setCurrentIndex(i)
+    ad.show()
+    _settle(app)
+    save(ad, "21_analysis_dialog.png")
+    ad.close()
+    w.lock_session()
+    _settle(app)
+    save(w, "22_idle_lock.png")
+    w.unlock_session("Demo-Password-2026")
+    _settle(app)
 
     ab = w._own(AboutDialog(lic, w))
     ab.show()
@@ -166,6 +255,14 @@ def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
         _settle(app)
         save(w, "14_results_dark.png")
         w.set_theme("light")
+    # a reviewer sees the editing tools disabled, with the reason
+    w.close_project(ask=False)
+    assert w.open_project(str(folder), "reviewer", REVIEWER_PASSWORD)
+    w.open_scan(scans[0])
+    w.d_seg.raise_()
+    _settle(app, 10)
+    save(w, "23_reviewer_read_only.png")
+    rev.close()
     w.close()
     shutil.rmtree(tmp, ignore_errors=True)
     print("\n".join(files))

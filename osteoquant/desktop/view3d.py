@@ -99,7 +99,7 @@ def extract_surfaces(labels: np.ndarray, spacing_um, classes=EDIT_LABELS, smooth
     return {"surfaces": out, "step": step}
 
 
-def roi_surface(roi: np.ndarray, spacing_um, max_voxels: int = 96 ** 3):
+def roi_surface(roi: np.ndarray, spacing_um, max_voxels: int = 40 ** 3):
     """Surface of the ROI mask (strided to ``max_voxels``) for the 3D wireframe, or None."""
     step = 1
     while np.prod([int(np.ceil(n / step)) for n in roi.shape]) > max_voxels:
@@ -301,7 +301,7 @@ class View3D(QWidget):
         pr = a.GetProperty()
         pr.SetRepresentationToWireframe()
         pr.SetColor(*(c / 255 for c in ROI_COLOR))
-        pr.SetOpacity(0.35)
+        pr.SetOpacity(0.3)
         pr.LightingOff()
         a.SetVisibility(bool(st.show_roi))
         self.roi_actor = a

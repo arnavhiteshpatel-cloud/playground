@@ -1,12 +1,38 @@
 # Execution State
 
-_Last updated: 2026-11-27 (session 1). Repository: `arnavhiteshpatel-cloud/playground`, branch `claude/osteoquant-autonomous-dev-ujqgkl`._
+_Last updated: 2026-11-27 (Generation 2 in progress). Branch `claude/osteoquant-autonomous-dev-ujqgkl` (public
+repository — founder decision recorded in docs/ip/IP_STRATEGY.md). Ledgers: TASK_REGISTRY.md (tasks),
+FORENSIC_AUDIT.md (Gen-0 audit), REVIEW_REGISTRY.md (reviews), DEFECT_REGISTRY.md, BENCHMARK_SCORECARD.md._
 
-## Environment (inspected)
-Cloud Linux container: 4 vCPU Xeon @2.3 GHz, 15 GB RAM, **no GPU**, ~55 GB free disk, Python 3.13,
-PyTorch 2.15 CPU, Node 22. (Founder's Apple-Silicon Mac was not available to this session.)
+## Environment
+4 vCPU, 15 GB RAM, no GPU, Python 3.13, PyTorch 2.15 CPU, ONNX Runtime 1.29, PySide6 6.12, VTK 9.7.2 (EGL offscreen).
 
-## Status by component
+## Generation status
+| Gen | Scope | Status |
+|---|---|---|
+| 0 | Forensic audit, reproduction (G exact, P exact, C ±0.004, H/I running), remediation register, §55 ledgers | done (H/I reproduction pending) |
+| 1–2 | Science: measurement-support advisor (v1.2.0) + pipeline abstention; generator v2 (granule motion); granule tracking; displacement-based registration QC; ROI propagation; DR synthesis; ONNX runtime; experiments S1/S1b/S1c/F2/L3/L4/S2/U1/O2 | in progress (compute queue) |
+| 3 | Desktop application (PySide6+VTK), licensing, packaging, CI | in progress (desktop stream) |
+| 4 | QA (coverage/property/fuzz/mutation), security Gen-2, CI | in progress (QA stream) |
+| 4 | Independent reviews | cycle 1 done for imaging, statistics, ML, architecture (60 findings, all critical/high closed); cycle 1 running for biology/CRO/quality and investor/IP |
+| 5 | Website, documentation set, final deliverables | not started |
+
+## Component status (Generation 2 changes)
+| Component | Status | Evidence |
+|---|---|---|
+| Measurement-support advisor | ✅ v1.2.0, 22 unit tests; validation re-runs queued | osteoquant/advisor, tests/test_advisor.py, docs/science/MEASUREMENT_SUPPORT.md |
+| Reports honour abstention | ✅ | api/bundle.py, report/defectfill.py |
+| Endpoint definitions / pre-registration / histology scope | ✅ docs | docs/science/ |
+| Longitudinal v2 (tracking, QC, ROI propagation) | ✅ tested; L3/L4 running | tests/test_longitudinal_v2.py |
+| ONNX Runtime inference (no PyTorch needed at analysis time) | ✅ verified identical labels | osteoquant/ml/runtime.py, pipeline `onnx:` |
+| Model registry safety (locked atomic writes, provenance inheritance, code version) | ✅ | osteoquant/ml/train.py |
+| Claims checker | ✅ 8 claims pass | scripts/check_claims.py |
+| Competitor matrix, patents, invention register, IP strategy | ✅ | docs/research, docs/ip |
+| Revenue model, pricing validation, funding strategy | ✅ | business/, investor/ |
+| Validation programme A–F | ✅ plan | validation/VALIDATION_PROGRAM.md |
+
+## Generation-1 component table (history)
+
 | Component | Status | Evidence |
 |---|---|---|
 | Ingestion (TIFF stack, OME-TIFF, DICOM, NIfTI, NRRD, MHA, Zarr, Zeiss TXM) | ✅ working, tested | tests/test_core.py; real TXM (2.1 GB) + DICOM (829 slices) read |

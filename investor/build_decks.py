@@ -191,7 +191,7 @@ def s_model(d):
 
 def s_pricing(d):
     d.slide("Pricing hypotheses to test, not claims", [
-        "Per non-GLP study ≈$12K; GLP ≈$25K; academic licence ≈$4K/yr; CRO licence ≈$40K/yr [HYP, playbook]",
+        "Paid pilot $2.5–5K; non-GLP study analysis $8–15K; material characterisation $5–15K; academic licence $4–10K/yr; enterprise licence $30–75K/yr [HYPOTHESES under test — business/PRICING_VALIDATION_PLAN.md]",
         "Test three formats in interviews: per scan, per study, subscription (business/PRICING_EXPERIMENT.md)",
         "Go signal: ≥3 of 15 buyers willing to pay ≥$10K per study; pivot signal: <$5K or analysis <5% of study cost",
         "First offer: free/discounted retrospective pilot on 20–30 scans alongside the customer's own analysis",

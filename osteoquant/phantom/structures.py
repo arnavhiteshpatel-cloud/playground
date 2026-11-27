@@ -5,16 +5,16 @@ import numpy as np
 from scipy import ndimage as ndi
 
 
-def grf(shape, sigma_vox: float, rng: np.random.Generator) -> np.ndarray:
+def grf(shape, sigma_vox: float, rng: np.random.Generator, mode: str = "wrap") -> np.ndarray:
     """Zero-mean unit-variance Gaussian random field (Gaussian-filtered white noise)."""
-    g = ndi.gaussian_filter(rng.standard_normal(shape).astype(np.float32), sigma_vox, mode="wrap")
+    g = ndi.gaussian_filter(rng.standard_normal(shape).astype(np.float32), sigma_vox, mode=mode)
     g -= g.mean()
     g /= g.std() + 1e-8
     return g
 
 
 def trabecular_network(shape, voxel_um: float, tb_sp_um: float, bv_tv: float,
-                       rng: np.random.Generator, anisotropy=(1.0, 1.0, 1.0)) -> np.ndarray:
+                       rng: np.random.Generator, anisotropy=(1.0, 1.0, 1.0), mode: str = "wrap") -> np.ndarray:
     """Plate/rod network from the zero level-set of a band-limited Gaussian random field.
 
     ``|g| < t`` around the zero crossing of a smooth GRF yields an interconnected sheet/rod
@@ -24,9 +24,9 @@ def trabecular_network(shape, voxel_um: float, tb_sp_um: float, bv_tv: float,
     """
     sigma = max(0.8, 0.30 * tb_sp_um / voxel_um)
     sig = tuple(sigma * a for a in anisotropy)
-    g = ndi.gaussian_filter(rng.standard_normal(shape).astype(np.float32), sig, mode="wrap")
+    g = ndi.gaussian_filter(rng.standard_normal(shape).astype(np.float32), sig, mode=mode)
     # second, coarser octave adds heterogeneity
-    g2 = ndi.gaussian_filter(rng.standard_normal(shape).astype(np.float32), [s * 2.5 for s in sig], mode="wrap")
+    g2 = ndi.gaussian_filter(rng.standard_normal(shape).astype(np.float32), [s * 2.5 for s in sig], mode=mode)
     g = g / (g.std() + 1e-8) + 0.35 * g2 / (g2.std() + 1e-8)
     a = np.abs(g)
     t = np.quantile(a[:: max(1, shape[0] // 32)], bv_tv)

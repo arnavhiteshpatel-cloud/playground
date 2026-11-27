@@ -18,3 +18,15 @@ unet_ctx_s0 {"iter": 1400, "loss": 0.2750994563102722, "sec": 666.9}
 unet_ctx_s0 {"iter": 1500, "loss": 0.3964528441429138, "sec": 695.8, "val_mean_dice": 0.8880448387495887}
 unet_ctx_s0 {"dice_new_roi": 0.861, "dice_graft_roi": 0.918, "hd95_new_um": 66.861, "hd95_graft_um": 47.071, "dice_host_all": 0.96, "dice_new_all": 0.813, "dice_graft_all": 0.917, "ece_roi": 0.008, "infer_s": 0.672, "new_frac_pred": 0.242, "new_frac_true": 0.265, "graft_frac_pred": 0.103, "graft_frac_true": 0.11}
 unet_noctx_s0 {"iter": 100, "loss": 1.5421366691589355, "sec": 31.4}
+unet_noctx_s0 {"iter": 200, "loss": 0.7193669080734253, "sec": 56.6}
+unet_noctx_s0 {"iter": 300, "loss": 0.5320141315460205, "sec": 81.5}
+unet_noctx_s0 {"iter": 400, "loss": 0.781620442867279, "sec": 136.7}
+unet_noctx_s0 {"iter": 500, "loss": 0.340564489364624, "sec": 209.1, "val_mean_dice": 0.8570707706539864}
+unet_noctx_s0 {"iter": 600, "loss": 0.6403998136520386, "sec": 247.8}
+unet_noctx_s0 {"iter": 700, "loss": 0.440120130777359, "sec": 286.1}
+unet_noctx_s0 {"iter": 800, "loss": 0.6524938344955444, "sec": 326.1}
+unet_noctx_s0 {"iter": 900, "loss": 0.5742048025131226, "sec": 393.3}
+unet_noctx_s0 {"iter": 1000, "loss": 0.44673243165016174, "sec": 459.3, "val_mean_dice": 0.8940320695612095}
+unet_noctx_s0 {"iter": 1100, "loss": 0.37011730670928955, "sec": 506.5}
+unet_noctx_s0 {"iter": 1200, "loss": 0.4712705910205841, "sec": 572.4}
+unet_noctx_s0 {"iter": 1300, "loss": 0.28148359060287476, "sec": 669.5}

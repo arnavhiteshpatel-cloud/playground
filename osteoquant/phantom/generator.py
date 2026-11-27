@@ -83,6 +83,7 @@ class PhantomConfig:
     dural_osteogenesis: float = 0.5           # calvarial only
     effective_energy_keV: float = 40.0
     material_overrides: dict = field(default_factory=dict)
+    periodic_texture: bool = True   # legacy default (dataset v1). False = non-periodic fields (use for registration)
     seed: int = 0
 
     def to_dict(self):
@@ -172,7 +173,8 @@ def generate_phantom(cfg: PhantomConfig, keep_highres: bool = False) -> Phantom:
     else:
         raise ValueError(f"Unknown model {cfg.model}")
 
-    trab = trabecular_network(S, v, cfg.host_tb_sp_um, cfg.host_bv_tv, rng)
+    gmode = "wrap" if cfg.periodic_texture else "reflect"
+    trab = trabecular_network(S, v, cfg.host_tb_sp_um, cfg.host_bv_tv, rng, mode=gmode)
     if cfg.model == "segmental":
         trab &= False  # diaphysis: marrow cavity without trabeculae (simplification)
     host_cort = cort & ~defect
@@ -213,7 +215,7 @@ def generate_phantom(cfg: PhantomConfig, keep_highres: bool = False) -> Phantom:
     maturity = np.zeros(S, np.float32)
     if s > 0:
         front = s * cfg.ingrowth * R * v                      # µm
-        front_noise = grf(S, max(2.0, 0.15 * R), rng) * 0.2 * front
+        front_noise = grf(S, max(2.0, 0.15 * R), rng, gmode) * 0.2 * front
         d_eff = d_host.copy()
         if dura is not None and cfg.dural_osteogenesis > 0:
             zz = np.arange(S[0], dtype=np.float32)[:, None, None]
@@ -221,7 +223,7 @@ def generate_phantom(cfg: PhantomConfig, keep_highres: bool = False) -> Phantom:
             d_eff = np.minimum(d_eff, np.broadcast_to(d_dura, S))
         reach = (d_eff < front + front_noise) & defect
         # woven network with local BV/TV decaying from wall to front
-        g = np.abs(_abs_field(S, v, cfg.new_bone_tb_sp_um, rng))
+        g = np.abs(_abs_field(S, v, cfg.new_bone_tb_sp_um, rng, gmode))
         rel = np.clip(d_eff / max(front, 1e-6), 0, 1)
         target_bv = cfg.new_bone_bv_tv_wall + (cfg.new_bone_bv_tv_front - cfg.new_bone_bv_tv_wall) * rel
         qs = np.linspace(0, 1, 201)
@@ -330,8 +332,8 @@ def generate_phantom(cfg: PhantomConfig, keep_highres: bool = False) -> Phantom:
                    roi_mask, roi, truth, M, meta)
 
 
-def _abs_field(S, v, tb_sp_um, rng):
+def _abs_field(S, v, tb_sp_um, rng, mode="wrap"):
     sigma = max(0.8, 0.30 * tb_sp_um / v)
-    g = ndi.gaussian_filter(rng.standard_normal(S).astype(np.float32), sigma, mode="wrap")
-    g2 = ndi.gaussian_filter(rng.standard_normal(S).astype(np.float32), sigma * 2.5, mode="wrap")
+    g = ndi.gaussian_filter(rng.standard_normal(S).astype(np.float32), sigma, mode=mode)
+    g2 = ndi.gaussian_filter(rng.standard_normal(S).astype(np.float32), sigma * 2.5, mode=mode)
     return g / (g.std() + 1e-8) + 0.35 * g2 / (g2.std() + 1e-8)

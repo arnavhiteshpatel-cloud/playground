@@ -1,0 +1,826 @@
+{
+ "experiment": "L",
+ "rows": [
+  {
+   "graft_mgHA": 900,
+   "specimen": 801,
+   "method": "day0_true_alignment",
+   "acc": 0.8511401118600316,
+   "dice_graft": 0.9142750093668041,
+   "dice_new": 0.8843763576947052,
+   "tre_mean_um": 0.266590964582885,
+   "tre_max_um": 0.40664972422738,
+   "true_motion_rot_deg": [
+    2.7395604855596334,
+    -0.6112156024794766,
+    3.585979199113824
+   ],
+   "true_motion_trans_um": [
+    78.94721162374555,
+    -162.3290608449402,
+    190.24894065470238
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 801,
+   "method": "day0_true_footprint_true_alignment",
+   "acc": 0.8830728046273723,
+   "dice_graft": 0.9638517618469016,
+   "dice_new": 0.9102133488450641,
+   "tre_mean_um": 0.266590964582885,
+   "tre_max_um": 0.40664972422738,
+   "true_motion_rot_deg": [
+    2.7395604855596334,
+    -0.6112156024794766,
+    3.585979199113824
+   ],
+   "true_motion_trans_um": [
+    78.94721162374555,
+    -162.3290608449402,
+    190.24894065470238
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 801,
+   "method": "day0_estimated_registration",
+   "acc": 0.918614656532339,
+   "dice_graft": 0.9145343647723891,
+   "dice_new": 0.9388818046301118,
+   "tre_mean_um": 0.266590964582885,
+   "tre_max_um": 0.40664972422738,
+   "true_motion_rot_deg": [
+    2.7395604855596334,
+    -0.6112156024794766,
+    3.585979199113824
+   ],
+   "true_motion_trans_um": [
+    78.94721162374555,
+    -162.3290608449402,
+    190.24894065470238
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 801,
+   "method": "multiotsu_single_timepoint",
+   "acc": 0.5819589846550982,
+   "dice_graft": 0.5670096504122196,
+   "dice_new": 0.6403641253749871,
+   "tre_mean_um": 0.266590964582885,
+   "tre_max_um": 0.40664972422738,
+   "true_motion_rot_deg": [
+    2.7395604855596334,
+    -0.6112156024794766,
+    3.585979199113824
+   ],
+   "true_motion_trans_um": [
+    78.94721162374555,
+    -162.3290608449402,
+    190.24894065470238
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 801,
+   "method": "rf_single_timepoint",
+   "acc": 0.9187341651130552,
+   "dice_graft": 0.8826945412311266,
+   "dice_new": 0.9408776142255628,
+   "tre_mean_um": 0.266590964582885,
+   "tre_max_um": 0.40664972422738,
+   "true_motion_rot_deg": [
+    2.7395604855596334,
+    -0.6112156024794766,
+    3.585979199113824
+   ],
+   "true_motion_trans_um": [
+    78.94721162374555,
+    -162.3290608449402,
+    190.24894065470238
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 801,
+   "method": "bayes_intensity_bound",
+   "acc": 0.7165483606161572,
+   "dice_graft": 0.442833607907743,
+   "dice_new": 0.8103986801428777,
+   "tre_mean_um": 0.266590964582885,
+   "tre_max_um": 0.40664972422738,
+   "true_motion_rot_deg": [
+    2.7395604855596334,
+    -0.6112156024794766,
+    3.585979199113824
+   ],
+   "true_motion_trans_um": [
+    78.94721162374555,
+    -162.3290608449402,
+    190.24894065470238
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 802,
+   "method": "day0_true_alignment",
+   "acc": 0.854784040286655,
+   "dice_graft": 0.9151571508275991,
+   "dice_new": 0.8866790009250693,
+   "tre_mean_um": 0.7441780580770551,
+   "tre_max_um": 1.0262437695789615,
+   "true_motion_rot_deg": [
+    2.6113970199035297,
+    2.8606430527695377,
+    -3.7188636732445413
+   ],
+   "true_motion_trans_um": [
+    -19.845624841773144,
+    -51.68079030696751,
+    170.70599553944072
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 802,
+   "method": "day0_true_footprint_true_alignment",
+   "acc": 0.8863306217315514,
+   "dice_graft": 0.9632137215075603,
+   "dice_new": 0.9122961657117673,
+   "tre_mean_um": 0.7441780580770551,
+   "tre_max_um": 1.0262437695789615,
+   "true_motion_rot_deg": [
+    2.6113970199035297,
+    2.8606430527695377,
+    -3.7188636732445413
+   ],
+   "true_motion_trans_um": [
+    -19.845624841773144,
+    -51.68079030696751,
+    170.70599553944072
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 802,
+   "method": "day0_estimated_registration",
+   "acc": 0.9019223319775325,
+   "dice_graft": 0.9159527326440178,
+   "dice_new": 0.9247227803825259,
+   "tre_mean_um": 0.7441780580770551,
+   "tre_max_um": 1.0262437695789615,
+   "true_motion_rot_deg": [
+    2.6113970199035297,
+    2.8606430527695377,
+    -3.7188636732445413
+   ],
+   "true_motion_trans_um": [
+    -19.845624841773144,
+    -51.68079030696751,
+    170.70599553944072
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 802,
+   "method": "multiotsu_single_timepoint",
+   "acc": 0.5668942475305055,
+   "dice_graft": 0.5548156059558962,
+   "dice_new": 0.6214022454675217,
+   "tre_mean_um": 0.7441780580770551,
+   "tre_max_um": 1.0262437695789615,
+   "true_motion_rot_deg": [
+    2.6113970199035297,
+    2.8606430527695377,
+    -3.7188636732445413
+   ],
+   "true_motion_trans_um": [
+    -19.845624841773144,
+    -51.68079030696751,
+    170.70599553944072
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 802,
+   "method": "rf_single_timepoint",
+   "acc": 0.9194266899089677,
+   "dice_graft": 0.8895653514180024,
+   "dice_new": 0.9407933372484117,
+   "tre_mean_um": 0.7441780580770551,
+   "tre_max_um": 1.0262437695789615,
+   "true_motion_rot_deg": [
+    2.6113970199035297,
+    2.8606430527695377,
+    -3.7188636732445413
+   ],
+   "true_motion_trans_um": [
+    -19.845624841773144,
+    -51.68079030696751,
+    170.70599553944072
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 802,
+   "method": "bayes_intensity_bound",
+   "acc": 0.701540719002201,
+   "dice_graft": 0.3874794397647411,
+   "dice_new": 0.8035174674234551,
+   "tre_mean_um": 0.7441780580770551,
+   "tre_max_um": 1.0262437695789615,
+   "true_motion_rot_deg": [
+    2.6113970199035297,
+    2.8606430527695377,
+    -3.7188636732445413
+   ],
+   "true_motion_trans_um": [
+    -19.845624841773144,
+    -51.68079030696751,
+    170.70599553944072
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 803,
+   "method": "day0_true_alignment",
+   "acc": 0.8569861374289418,
+   "dice_graft": 0.914046452836151,
+   "dice_new": 0.8899730689668631,
+   "tre_mean_um": 0.452834198702989,
+   "tre_max_um": 0.6679769165513042,
+   "true_motion_rot_deg": [
+    1.4386512008066452,
+    3.227616132708299,
+    -0.5658580117266885
+   ],
+   "true_motion_trans_um": [
+    -109.10451128608925,
+    21.833914806333922,
+    -174.47309755832987
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 803,
+   "method": "day0_true_footprint_true_alignment",
+   "acc": 0.8874788072205047,
+   "dice_graft": 0.9618204398862225,
+   "dice_new": 0.9144330096711049,
+   "tre_mean_um": 0.452834198702989,
+   "tre_max_um": 0.6679769165513042,
+   "true_motion_rot_deg": [
+    1.4386512008066452,
+    3.227616132708299,
+    -0.5658580117266885
+   ],
+   "true_motion_trans_um": [
+    -109.10451128608925,
+    21.833914806333922,
+    -174.47309755832987
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 803,
+   "method": "day0_estimated_registration",
+   "acc": 0.9079734716266081,
+   "dice_graft": 0.9144716211978676,
+   "dice_new": 0.9306137794905536,
+   "tre_mean_um": 0.452834198702989,
+   "tre_max_um": 0.6679769165513042,
+   "true_motion_rot_deg": [
+    1.4386512008066452,
+    3.227616132708299,
+    -0.5658580117266885
+   ],
+   "true_motion_trans_um": [
+    -109.10451128608925,
+    21.833914806333922,
+    -174.47309755832987
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 803,
+   "method": "multiotsu_single_timepoint",
+   "acc": 0.5684152787473821,
+   "dice_graft": 0.5518545075288442,
+   "dice_new": 0.6248147179353039,
+   "tre_mean_um": 0.452834198702989,
+   "tre_max_um": 0.6679769165513042,
+   "true_motion_rot_deg": [
+    1.4386512008066452,
+    3.227616132708299,
+    -0.5658580117266885
+   ],
+   "true_motion_trans_um": [
+    -109.10451128608925,
+    21.833914806333922,
+    -174.47309755832987
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 803,
+   "method": "rf_single_timepoint",
+   "acc": 0.9199162261892889,
+   "dice_graft": 0.888603221789258,
+   "dice_new": 0.9414765687632097,
+   "tre_mean_um": 0.452834198702989,
+   "tre_max_um": 0.6679769165513042,
+   "true_motion_rot_deg": [
+    1.4386512008066452,
+    3.227616132708299,
+    -0.5658580117266885
+   ],
+   "true_motion_trans_um": [
+    -109.10451128608925,
+    21.833914806333922,
+    -174.47309755832987
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 900,
+   "specimen": 803,
+   "method": "bayes_intensity_bound",
+   "acc": 0.7089356772276231,
+   "dice_graft": 0.35074045206547155,
+   "dice_new": 0.8126706717640634,
+   "tre_mean_um": 0.452834198702989,
+   "tre_max_um": 0.6679769165513042,
+   "true_motion_rot_deg": [
+    1.4386512008066452,
+    3.227616132708299,
+    -0.5658580117266885
+   ],
+   "true_motion_trans_um": [
+    -109.10451128608925,
+    21.833914806333922,
+    -174.47309755832987
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 801,
+   "method": "day0_true_alignment",
+   "acc": 0.7975046608346479,
+   "dice_graft": 0.8919323924028576,
+   "dice_new": 0.8292279782301956,
+   "tre_mean_um": 0.6873727167465847,
+   "tre_max_um": 0.9413424942077543,
+   "true_motion_rot_deg": [
+    3.27631171992582,
+    1.3166439912206487,
+    2.5808774008537387
+   ],
+   "true_motion_trans_um": [
+    -58.18961274805267,
+    188.27920975796133,
+    157.24844852887907
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 801,
+   "method": "day0_true_footprint_true_alignment",
+   "acc": 0.8508054878340264,
+   "dice_graft": 0.9670910945705974,
+   "dice_new": 0.8795864037964428,
+   "tre_mean_um": 0.6873727167465847,
+   "tre_max_um": 0.9413424942077543,
+   "true_motion_rot_deg": [
+    3.27631171992582,
+    1.3166439912206487,
+    2.5808774008537387
+   ],
+   "true_motion_trans_um": [
+    -58.18961274805267,
+    188.27920975796133,
+    157.24844852887907
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 801,
+   "method": "day0_estimated_registration",
+   "acc": 0.8619197858406233,
+   "dice_graft": 0.8888966068141562,
+   "dice_new": 0.889551668100564,
+   "tre_mean_um": 0.6873727167465847,
+   "tre_max_um": 0.9413424942077543,
+   "true_motion_rot_deg": [
+    3.27631171992582,
+    1.3166439912206487,
+    2.5808774008537387
+   ],
+   "true_motion_trans_um": [
+    -58.18961274805267,
+    188.27920975796133,
+    157.24844852887907
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 801,
+   "method": "multiotsu_single_timepoint",
+   "acc": 0.8154309479420623,
+   "dice_graft": 0.911400037686075,
+   "dice_new": 0.8508402549739231,
+   "tre_mean_um": 0.6873727167465847,
+   "tre_max_um": 0.9413424942077543,
+   "true_motion_rot_deg": [
+    3.27631171992582,
+    1.3166439912206487,
+    2.5808774008537387
+   ],
+   "true_motion_trans_um": [
+    -58.18961274805267,
+    188.27920975796133,
+    157.24844852887907
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 801,
+   "method": "rf_single_timepoint",
+   "acc": 0.9597973134471055,
+   "dice_graft": 0.949942151947551,
+   "dice_new": 0.9706774519716885,
+   "tre_mean_um": 0.6873727167465847,
+   "tre_max_um": 0.9413424942077543,
+   "true_motion_rot_deg": [
+    3.27631171992582,
+    1.3166439912206487,
+    2.5808774008537387
+   ],
+   "true_motion_trans_um": [
+    -58.18961274805267,
+    188.27920975796133,
+    157.24844852887907
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 801,
+   "method": "bayes_intensity_bound",
+   "acc": 0.9489111014534743,
+   "dice_graft": 0.9158514276624513,
+   "dice_new": 0.9638475995216128,
+   "tre_mean_um": 0.6873727167465847,
+   "tre_max_um": 0.9413424942077543,
+   "true_motion_rot_deg": [
+    3.27631171992582,
+    1.3166439912206487,
+    2.5808774008537387
+   ],
+   "true_motion_trans_um": [
+    -58.18961274805267,
+    188.27920975796133,
+    157.24844852887907
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 802,
+   "method": "day0_true_alignment",
+   "acc": 0.8037478210342824,
+   "dice_graft": 0.9002717959439682,
+   "dice_new": 0.8334360744667735,
+   "tre_mean_um": 0.992713939324732,
+   "tre_max_um": 1.0799159501901245,
+   "true_motion_rot_deg": [
+    2.783834970737619,
+    -3.0536129214803243,
+    -0.3327899627296578
+   ],
+   "true_motion_trans_um": [
+    -182.4784936851085,
+    -138.28420317298088,
+    73.21958129698186
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 802,
+   "method": "day0_true_footprint_true_alignment",
+   "acc": 0.8516124346310284,
+   "dice_graft": 0.9668874172185431,
+   "dice_new": 0.8789620238165768,
+   "tre_mean_um": 0.992713939324732,
+   "tre_max_um": 1.0799159501901245,
+   "true_motion_rot_deg": [
+    2.783834970737619,
+    -3.0536129214803243,
+    -0.3327899627296578
+   ],
+   "true_motion_trans_um": [
+    -182.4784936851085,
+    -138.28420317298088,
+    73.21958129698186
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 802,
+   "method": "day0_estimated_registration",
+   "acc": 0.8676157272903351,
+   "dice_graft": 0.8971767892488801,
+   "dice_new": 0.893419616404179,
+   "tre_mean_um": 0.992713939324732,
+   "tre_max_um": 1.0799159501901245,
+   "true_motion_rot_deg": [
+    2.783834970737619,
+    -3.0536129214803243,
+    -0.3327899627296578
+   ],
+   "true_motion_trans_um": [
+    -182.4784936851085,
+    -138.28420317298088,
+    73.21958129698186
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 802,
+   "method": "multiotsu_single_timepoint",
+   "acc": 0.8185163664536123,
+   "dice_graft": 0.9154019534184823,
+   "dice_new": 0.8522781018445531,
+   "tre_mean_um": 0.992713939324732,
+   "tre_max_um": 1.0799159501901245,
+   "true_motion_rot_deg": [
+    2.783834970737619,
+    -3.0536129214803243,
+    -0.3327899627296578
+   ],
+   "true_motion_trans_um": [
+    -182.4784936851085,
+    -138.28420317298088,
+    73.21958129698186
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 802,
+   "method": "rf_single_timepoint",
+   "acc": 0.9620375750532636,
+   "dice_graft": 0.9578429109931533,
+   "dice_new": 0.9720688303822722,
+   "tre_mean_um": 0.992713939324732,
+   "tre_max_um": 1.0799159501901245,
+   "true_motion_rot_deg": [
+    2.783834970737619,
+    -3.0536129214803243,
+    -0.3327899627296578
+   ],
+   "true_motion_trans_um": [
+    -182.4784936851085,
+    -138.28420317298088,
+    73.21958129698186
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 802,
+   "method": "bayes_intensity_bound",
+   "acc": 0.9490584494986549,
+   "dice_graft": 0.9186296339700769,
+   "dice_new": 0.9634619095230578,
+   "tre_mean_um": 0.992713939324732,
+   "tre_max_um": 1.0799159501901245,
+   "true_motion_rot_deg": [
+    2.783834970737619,
+    -3.0536129214803243,
+    -0.3327899627296578
+   ],
+   "true_motion_trans_um": [
+    -182.4784936851085,
+    -138.28420317298088,
+    73.21958129698186
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 803,
+   "method": "day0_true_alignment",
+   "acc": 0.8066719856387753,
+   "dice_graft": 0.8972628143312811,
+   "dice_new": 0.8393619225191631,
+   "tre_mean_um": 0.6128454555911486,
+   "tre_max_um": 1.1385792150737601,
+   "true_motion_rot_deg": [
+    2.447621559078171,
+    4.675097324342101,
+    -1.7417464186184803
+   ],
+   "true_motion_trans_um": [
+    -51.81611758605246,
+    -12.17767548967683,
+    -124.21145636628572
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 803,
+   "method": "day0_true_footprint_true_alignment",
+   "acc": 0.8537199561184801,
+   "dice_graft": 0.9648024873440427,
+   "dice_new": 0.88299930202413,
+   "tre_mean_um": 0.6128454555911486,
+   "tre_max_um": 1.1385792150737601,
+   "true_motion_rot_deg": [
+    2.447621559078171,
+    4.675097324342101,
+    -1.7417464186184803
+   ],
+   "true_motion_trans_um": [
+    -51.81611758605246,
+    -12.17767548967683,
+    -124.21145636628572
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 803,
+   "method": "day0_estimated_registration",
+   "acc": 0.8488580831754263,
+   "dice_graft": 0.8940463431760227,
+   "dice_new": 0.878667787518514,
+   "tre_mean_um": 0.6128454555911486,
+   "tre_max_um": 1.1385792150737601,
+   "true_motion_rot_deg": [
+    2.447621559078171,
+    4.675097324342101,
+    -1.7417464186184803
+   ],
+   "true_motion_trans_um": [
+    -51.81611758605246,
+    -12.17767548967683,
+    -124.21145636628572
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 803,
+   "method": "multiotsu_single_timepoint",
+   "acc": 0.8218310561483994,
+   "dice_graft": 0.9142471838806917,
+   "dice_new": 0.8571371451419432,
+   "tre_mean_um": 0.6128454555911486,
+   "tre_max_um": 1.1385792150737601,
+   "true_motion_rot_deg": [
+    2.447621559078171,
+    4.675097324342101,
+    -1.7417464186184803
+   ],
+   "true_motion_trans_um": [
+    -51.81611758605246,
+    -12.17767548967683,
+    -124.21145636628572
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 803,
+   "method": "rf_single_timepoint",
+   "acc": 0.9643462650842725,
+   "dice_graft": 0.9579557514899175,
+   "dice_new": 0.9741494631042337,
+   "tre_mean_um": 0.6128454555911486,
+   "tre_max_um": 1.1385792150737601,
+   "true_motion_rot_deg": [
+    2.447621559078171,
+    4.675097324342101,
+    -1.7417464186184803
+   ],
+   "true_motion_trans_um": [
+    -51.81611758605246,
+    -12.17767548967683,
+    -124.21145636628572
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  },
+  {
+   "graft_mgHA": 1600,
+   "specimen": 803,
+   "method": "bayes_intensity_bound",
+   "acc": 0.951921623935929,
+   "dice_graft": 0.9200753611052962,
+   "dice_new": 0.9661110223500382,
+   "tre_mean_um": 0.6128454555911486,
+   "tre_max_um": 1.1385792150737601,
+   "true_motion_rot_deg": [
+    2.447621559078171,
+    4.675097324342101,
+    -1.7417464186184803
+   ],
+   "true_motion_trans_um": [
+    -51.81611758605246,
+    -12.17767548967683,
+    -124.21145636628572
+   ],
+   "substitution_note": "new bone inside original footprint is counted as graft by day-0 methods"
+  }
+ ],
+ "noise_sigma": 150,
+ "summary": {
+  "900/bayes_intensity_bound": {
+   "dice_graft": 0.39368449991265186,
+   "dice_new": 0.8088622731101321,
+   "n": 3
+  },
+  "900/day0_estimated_registration": {
+   "dice_graft": 0.9149862395380914,
+   "dice_new": 0.9314061215010637,
+   "n": 3
+  },
+  "900/day0_true_alignment": {
+   "dice_graft": 0.9144928710101848,
+   "dice_new": 0.8870094758622126,
+   "n": 3
+  },
+  "900/day0_true_footprint_true_alignment": {
+   "dice_graft": 0.9629619744135615,
+   "dice_new": 0.9123141747426455,
+   "n": 3
+  },
+  "900/multiotsu_single_timepoint": {
+   "dice_graft": 0.5578932546323201,
+   "dice_new": 0.6288603629259376,
+   "n": 3
+  },
+  "900/rf_single_timepoint": {
+   "dice_graft": 0.8869543714794622,
+   "dice_new": 0.9410491734123947,
+   "n": 3
+  },
+  "1600/bayes_intensity_bound": {
+   "dice_graft": 0.9181854742459414,
+   "dice_new": 0.9644735104649028,
+   "n": 3
+  },
+  "1600/day0_estimated_registration": {
+   "dice_graft": 0.8933732464130196,
+   "dice_new": 0.8872130240077523,
+   "n": 3
+  },
+  "1600/day0_true_alignment": {
+   "dice_graft": 0.8964890008927023,
+   "dice_new": 0.8340086584053773,
+   "n": 3
+  },
+  "1600/day0_true_footprint_true_alignment": {
+   "dice_graft": 0.9662603330443944,
+   "dice_new": 0.8805159098790499,
+   "n": 3
+  },
+  "1600/multiotsu_single_timepoint": {
+   "dice_graft": 0.9136830583284162,
+   "dice_new": 0.8534185006534732,
+   "n": 3
+  },
+  "1600/rf_single_timepoint": {
+   "dice_graft": 0.9552469381435406,
+   "dice_new": 0.9722985818193982,
+   "n": 3
+  }
+ },
+ "tre_mean_um": 0.6260892221708991,
+ "saved": "2026-11-27T07:35:22Z"
+}

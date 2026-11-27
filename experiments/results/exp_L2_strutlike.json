@@ -1,0 +1,120 @@
+{
+ "experiment": "L2",
+ "rows": [
+  {
+   "specimen": 1,
+   "method": "day0_estimated_registration",
+   "acc": 0.8962836879432624,
+   "dice_graft": 0.8165102470791036,
+   "dice_new": 0.9382745717326376,
+   "tre_um": 3.9599758405470182
+  },
+  {
+   "specimen": 1,
+   "method": "rf_single_timepoint",
+   "acc": 0.8824397163120568,
+   "dice_graft": 0.6693923062627765,
+   "dice_new": 0.9301633467482837,
+   "tre_um": 3.9599758405470182
+  },
+  {
+   "specimen": 1,
+   "method": "multiotsu",
+   "acc": 0.508,
+   "dice_graft": 0.3279315551082033,
+   "dice_new": 0.6297936371453139,
+   "tre_um": 3.9599758405470182
+  },
+  {
+   "specimen": 1,
+   "method": "bayes_intensity_bound",
+   "acc": 0.8583218707015131,
+   "dice_graft": 0.0,
+   "dice_new": 0.9237955669536545,
+   "tre_um": 3.9599758405470182
+  },
+  {
+   "specimen": 2,
+   "method": "day0_estimated_registration",
+   "acc": 0.8922601136743564,
+   "dice_graft": 0.8100496403606524,
+   "dice_new": 0.9357929883138564,
+   "tre_um": 2.170284558593698
+  },
+  {
+   "specimen": 2,
+   "method": "rf_single_timepoint",
+   "acc": 0.8865763958542293,
+   "dice_graft": 0.6638362109632985,
+   "dice_new": 0.9329992912594155,
+   "tre_um": 2.170284558593698
+  },
+  {
+   "specimen": 2,
+   "method": "multiotsu",
+   "acc": 0.511813217430068,
+   "dice_graft": 0.3210420841683367,
+   "dice_new": 0.6349591794012979,
+   "tre_um": 2.170284558593698
+  },
+  {
+   "specimen": 2,
+   "method": "bayes_intensity_bound",
+   "acc": 0.8670212765957447,
+   "dice_graft": 0.0,
+   "dice_new": 0.9289966430436404,
+   "tre_um": 2.170284558593698
+  },
+  {
+   "specimen": 3,
+   "method": "day0_estimated_registration",
+   "acc": 0.9054269640907946,
+   "dice_graft": 0.8207914701660857,
+   "dice_new": 0.944490720687702,
+   "tre_um": 3.750440392700208
+  },
+  {
+   "specimen": 3,
+   "method": "rf_single_timepoint",
+   "acc": 0.8829802121525931,
+   "dice_graft": 0.6550218340611353,
+   "dice_new": 0.9310447662281719,
+   "tre_um": 3.750440392700208
+  },
+  {
+   "specimen": 3,
+   "method": "multiotsu",
+   "acc": 0.5022810602031963,
+   "dice_graft": 0.30543483818191114,
+   "dice_new": 0.6290844863114513,
+   "tre_um": 3.750440392700208
+  },
+  {
+   "specimen": 3,
+   "method": "bayes_intensity_bound",
+   "acc": 0.8680557518871391,
+   "dice_graft": 0.0,
+   "dice_new": 0.9296124867059123,
+   "tre_um": 3.750440392700208
+  }
+ ],
+ "summary": {
+  "day0_estimated_registration": {
+   "dice_graft": 0.8157837858686139,
+   "dice_new": 0.9395194269113988
+  },
+  "multiotsu": {
+   "dice_graft": 0.31813615915281707,
+   "dice_new": 0.6312791009526877
+  },
+  "bayes_intensity_bound": {
+   "dice_graft": 0.0,
+   "dice_new": 0.9274682322344024
+  },
+  "rf_single_timepoint": {
+   "dice_graft": 0.6627501170957367,
+   "dice_new": 0.9314024680786237
+  }
+ },
+ "saved": "2026-11-27T07:36:15Z"
+}

@@ -1,6 +1,6 @@
 # Measurement Support (Identifiability) Policy
 
-Implementation: `osteoquant/advisor/` (version **1.2.1**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
+Implementation: `osteoquant/advisor/` (version **1.3.0**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
 
 ## Why
 Graft and new bone are both mineral. For many materials their X-ray attenuation overlaps (Experiments C, C2; the
@@ -39,6 +39,14 @@ by which mechanism, and under which conditions — and abstains otherwise.
 7. **Unknown materials**: not supported until characterised (unsupported-material workflow below). Measured
    reference samples need ≥500 voxels.
 7a. **Metals** (titanium, magnesium): never supported — streak/beam-hardening artefacts are not modelled.
+7b. **Material profiles** come from the knowledge base (`osteoquant/knowledge/materials.json`, verified references);
+    where the knowledge base and the NIST physics model disagree by >25%, intensity support requires a measured
+    material reference (material-only or day-0 scan).
+7c. **Resorbable materials** (β-TCP, calcium sulfate, bioactive glasses, polymer–ceramic composites) are intensity-
+    supported only at a known timepoint ≤4 weeks after implantation: resorbing granules become microporous and enter
+    the bone intensity range.
+9. **New bone vs soft tissue** (advisor ≥1.2.0): the mineral threshold and the new-bone/mineral endpoints are gated by
+   a partial-volume model of soft tissue next to dense phases, using the surface-shell fraction measured in the scan.
 8. **Density**: only with HA calibration.
 
 ## Unsupported-material workflow

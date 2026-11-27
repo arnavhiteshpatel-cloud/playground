@@ -8,7 +8,8 @@
 Steps
   1. PyInstaller with packaging/osteoquant_desktop.spec -> packaging/dist/OsteoQuant/
      (macOS: packaging/dist/OsteoQuant.app as well)
-  2. copy licence texts of bundled third-party distributions to THIRD_PARTY_LICENSES/
+  2. licences: licenses/ (LGPL/GPL texts + licence files of bundled distributions),
+     THIRD_PARTY_NOTICES.txt, then packaging/check_bundle_licences.py (fails on GPL-only Qt modules)
   3. run the packaged console executable with --selftest (headless) and fail on non-zero exit
   4. write build-info.json (size, platform, selftest result) and an archive for CI upload
 
@@ -63,33 +64,84 @@ def run_pyinstaller():
     subprocess.run(cmd, check=True, cwd=ROOT)
 
 
-def copy_licences():
-    out = app_dir() / "THIRD_PARTY_LICENSES"
+NOTICE_HEAD = """OsteoQuant Desktop - third-party notices
+=========================================
+
+This folder contains OsteoQuant Desktop together with third-party open-source components. Each
+component remains under its own licence; the licence texts are in the "licenses" folder next to
+this file. INDEX.json in that folder lists component, version, declared licence and files.
+
+Qt and Qt for Python (PySide6, shiboken6) - LGPL-3.0
+-----------------------------------------------------
+This application uses the Qt libraries and Qt for Python under the GNU Lesser General Public
+License version 3 (licenses/LGPL-3.0.txt, which incorporates licenses/GPL-3.0.txt). Qt is
+Copyright (C) The Qt Company Ltd. and other contributors. Source code of Qt and Qt for Python
+is available from https://download.qt.io/official_releases/ and
+https://code.qt.io/cgit/pyside/pyside-setup.git/ (versions: see INDEX.json).
+
+Replacing / relinking the LGPL libraries: this is a one-folder build. Qt and PySide6 are NOT
+statically linked; they are separate shared libraries in the "_internal" folder (Windows:
+_internal\\PySide6\\*.dll and _internal\\PySide6\\Qt*.dll; Linux: _internal/PySide6/Qt/lib/libQt6*.so.6
+and _internal/PySide6/*.so; macOS: Contents/Frameworks/PySide6/Qt/lib/Qt*.framework). You may
+replace them with modified, ABI-compatible builds of the same Qt / PySide6 version; the
+application loads whatever libraries are present in that location. Nothing in the OsteoQuant
+licence terms restricts modification of these libraries or reverse engineering for the purpose
+of debugging such modifications, as permitted by the LGPL-3.0. Only LGPL-licensed Qt modules are
+included; Qt modules offered solely under GPL/commercial terms (e.g. Qt Virtual Keyboard, Qt
+Charts, Qt Quick 3D) are excluded and checked by the build (packaging/check_bundle_licences.py).
+
+Other components (summary; full texts in licenses/)
+----------------------------------------------------
+"""
+
+
+def write_notices():
+    """licenses/ folder (LGPL/GPL texts + licence files of bundled distributions) and
+    THIRD_PARTY_NOTICES.txt at the top of the application folder."""
+    root = app_dir()
+    out = root / "licenses"
+    old = root / "THIRD_PARTY_LICENSES"
+    if old.exists():
+        shutil.rmtree(old)
     out.mkdir(exist_ok=True)
+    for f in ("LGPL-3.0.txt", "GPL-3.0.txt"):
+        shutil.copyfile(PKG / "licenses" / f, out / f)
     index = []
     for name in LICENSED:
         try:
             dist = md.distribution(name)
         except md.PackageNotFoundError:
             continue
-        files = [f for f in (dist.files or []) if any(k in f.name.upper() for k in ("LICEN", "COPYING", "NOTICE"))]
+        files = [f for f in (dist.files or []) if any(k in f.name.upper() for k in ("LICEN", "COPYING", "NOTICE"))
+                 and not f.name.endswith((".py", ".pyc", ".so", ".dll", ".pyd", ".qml"))]
         meta_lic = dist.metadata.get("License-Expression") or dist.metadata.get("License") or ""
         written = []
         for f in files:
             src = Path(dist.locate_file(f))
-            if src.is_file():
+            if src.is_file() and src.stat().st_size < 2_000_000:
                 dst = out / f"{dist.metadata['Name']}-{f.name}"
                 shutil.copyfile(src, dst)
                 written.append(dst.name)
-        index.append({"name": dist.metadata["Name"], "version": dist.version, "license": meta_lic.splitlines()[0][:120]
-                      if meta_lic else "", "files": written})
+        if dist.metadata["Name"].lower().startswith(("pyside6", "shiboken6")):
+            written += ["LGPL-3.0.txt", "GPL-3.0.txt"]
+        index.append({"name": dist.metadata["Name"], "version": dist.version,
+                      "license": meta_lic.splitlines()[0][:120] if meta_lic else "", "files": written})
     (out / "INDEX.json").write_text(json.dumps(index, indent=1))
-    (out / "README.txt").write_text(
-        "Licence texts of third-party components bundled with OsteoQuant Desktop.\n"
-        "Qt / PySide6 are used under the GNU LGPL v3 as dynamically linked libraries; the Qt\n"
-        "libraries in this folder's parent directory can be replaced by the user with compatible\n"
-        "builds. Source code of Qt is available from https://download.qt.io/ .\n")
+    lines = [NOTICE_HEAD]
+    for e in index:
+        lines.append(f"{e['name']} {e['version']}: {e['license'] or 'see licence file'}"
+                     + (f"  [{', '.join(e['files'][:3])}]" if e["files"] else ""))
+    lines.append("\nPython runtime: Python Software Foundation License (see the Python distribution).")
+    (root / "THIRD_PARTY_NOTICES.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     return index
+
+
+def check_licences() -> dict:
+    r = subprocess.run([sys.executable, str(PKG / "check_bundle_licences.py"), str(app_dir()),
+                        "--report", str(DIST / "licence-check.json")], capture_output=True, text=True)
+    (DIST / "licence-check.txt").write_text(r.stdout)
+    print(r.stdout, flush=True)
+    return {"exit_code": r.returncode}
 
 
 def run_selftest(out: Path) -> dict:
@@ -122,14 +174,18 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     if not a.skip_build:
         run_pyinstaller()
-    lic = copy_licences()
+    lic = write_notices()
+    info_lic = check_licences()
     info = {"platform": platform.platform(), "python": platform.python_version(), "machine": platform.machine(),
             "bundle_torch": os.environ.get("OQ_BUNDLE_TORCH", "0") == "1",
             "bundle_simpleitk": os.environ.get("OQ_BUNDLE_SITK", "0") == "1",
-            "size_bytes": dir_size(app_dir()), "licence_files": sum(len(x["files"]) for x in lic)}
+            "size_bytes": dir_size(app_dir()), "licence_files": sum(len(x["files"]) for x in lic),
+            "licence_check": info_lic}
     print(f"bundle size: {info['size_bytes'] / 2**20:,.0f} MiB", flush=True)
-    rc = 0
-    if not a.skip_selftest:
+    rc = 0 if info_lic["exit_code"] == 0 else 2
+    if rc:
+        print("licence check FAILED: see packaging/dist/licence-check.txt", flush=True)
+    if not a.skip_selftest and rc == 0:
         st_out = PKG / "selftest-output"
         shutil.rmtree(st_out, ignore_errors=True)
         st_out.mkdir(parents=True)

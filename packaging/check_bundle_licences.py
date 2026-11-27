@@ -52,7 +52,7 @@ def scan(root: Path) -> dict:
         if not f.is_file() or not LIB_SUFFIX.search(f.name):
             continue
         rel = f.relative_to(root).as_posix()
-        libs.append({"path": rel, "bytes": f.stat().st_size})
+        libs.append({"path": rel, "bytes": 0 if f.is_symlink() else f.stat().st_size, "symlink": f.is_symlink()})
         low = rel.lower()
         if any(k in low for k in QT_PLUGIN_GPL):
             violations.append(f"GPL-only Qt plugin: {rel}")
@@ -85,7 +85,8 @@ def main(argv=None) -> int:
     res = scan(Path(a.root))
     if a.report:
         Path(a.report).write_text(json.dumps(res, indent=1))
-    print(f"shared libraries: {res['n_libraries']} ({res['library_bytes'] / 2**20:,.0f} MiB)")
+    n_real = sum(not x["symlink"] for x in res["libraries"])
+    print(f"shared libraries: {n_real} files + {res['n_libraries'] - n_real} symlinks ({res['library_bytes'] / 2**20:,.0f} MiB)")
     print("Qt modules: " + ", ".join(res["qt_modules"]))
     print(f"top-level host libraries: {len(res['host_libraries_top_level'])}")
     for h in res["host_libraries_top_level"]:

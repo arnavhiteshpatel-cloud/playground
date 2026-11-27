@@ -47,7 +47,11 @@ MIN_STRUCT_VOXELS = 3.0         # thickness endpoints need structures ≥3 voxel
 HOST_REL_MATURE = 1.0
 MIN_REFERENCE_SAMPLES = 500     # measured reference distributions need at least this many voxels
 MIN_GRAFT_FRACTION = 0.05       # below this share of mineral, relative graft-volume error is unbounded
-ADVISOR_VERSION = "1.2.1"
+ADVISOR_VERSION = "1.3.0"
+# Resorbable materials whose granules become microporous/fragmented and enter the bone intensity range as they
+# resorb (knowledge base: beta-TCP almost fully resorbed by 8 weeks in minipig; CaSO4 and glasses similar or faster).
+RESORBABLE_EARLY_ONLY = {"beta_tcp", "calcium_sulfate", "bioglass_45s5", "s53p4", "polymer_ceramic_composite"}
+EARLY_WEEKS_MAX = 4.0
 # Changelog: 1.0.x (pre-review, used by S1/S1b runs before cycle-1 review) → 1.1.0: decision uses the single-
 # threshold rule actually applied (union oracle kept as upper bound); support must hold at the estimated graft
 # share and at half of it (review IMG-01); metals refused (IMG-02); measured samples need ≥500 voxels and cannot
@@ -55,6 +59,8 @@ ADVISOR_VERSION = "1.2.1"
 # 1.2.0: new-bone vs soft-tissue decision with partial-volume halos of dense phases gates new-bone and mineral
 # endpoints and sets the mineral threshold (S1b re-run finding; review STAT-05).
 # 1.2.1: DBM (radiolucent but bone-derived) new-bone endpoints not supported (review BIO-02).
+# 1.3.0: knowledge-base material profiles (verified references); KB/physics disagreement >25% requires a measured
+# material reference; resorbable materials are intensity-supported only at known timepoints ≤4 weeks.
 
 # Assumed new-bone maturity range in relative units. Early/mid healing: woven 650–1000 mgHA/cm³ vs
 # mature host ≈1075 → (0.60, 0.93) (SCIENTIFIC_EVIDENCE row 4, assumption anchored to a published callus
@@ -210,6 +216,7 @@ class MaterialProfile:
     bone_derived: bool = False       # allograft/xenograft: chemically bone-like
     evidence: str = "ASSUMPTION"
     source: str = ""
+    uncertain: bool = False          # knowledge base and physics model disagree (>25%): measure the material
 
 
 def _profiles_from_physics(energy_keV: float = 40.0, host_mgHA: float = 1075.0) -> dict[str, MaterialProfile]:
@@ -245,15 +252,24 @@ def material_profile(material: str | dict | MaterialProfile, energy_keV: float =
         return material
     if isinstance(material, dict):
         return MaterialProfile(**material)
+    phys = _profiles_from_physics(energy_keV).get(material)
     try:
-        from ..knowledge import load_materials  # machine-readable knowledge base, when present
+        from ..knowledge import load_materials  # machine-readable knowledge base (verified references)
         kb = load_materials()
         e = kb.get(material) if isinstance(kb, dict) else None
         if e and e.get("advisor_profile"):
-            return MaterialProfile(id=material, **e["advisor_profile"])
+            ap = {k: v for k, v in e["advisor_profile"].items() if k in MaterialProfile.__dataclass_fields__}
+            prof = MaterialProfile(id=material, **ap)
+            if phys is not None and not prof.radiolucent and phys.rel_mean > 0:
+                rel_diff = abs(prof.rel_mean - phys.rel_mean) / phys.rel_mean
+                if rel_diff > 0.25:
+                    prof.uncertain = True
+                    prof.source += (f" | physics model (NIST, assumed porosity) gives {phys.rel_mean:.2f} vs knowledge "
+                                    f"base {prof.rel_mean:.2f}: profile uncertain")
+            return prof
     except Exception:
         pass
-    return _profiles_from_physics(energy_keV).get(material)
+    return phys
 
 
 # --------------------------------------------------------------------------- assessment
@@ -299,7 +315,7 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
                    new_samples_rel=None, day0: dict | None = None, calibrated: bool = False,
                    no_graft: bool = False, validated_texture_model: bool = False,
                    graft_prior: float = 0.5, energy_keV: float = 40.0, seed: int = 0,
-                   new_bone_rel_range: tuple | None = None) -> SupportAssessment:
+                   new_bone_rel_range: tuple | None = None, healing_weeks: float | None = None) -> SupportAssessment:
     """Decide which endpoints can be reported.
 
     noise_rel          scan noise σ divided by (host − soft) grey contrast.
@@ -423,6 +439,15 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
         # including one computed from measured samples — is not accepted as identifiability (row 5; IMG-03)
         intensity_ok = False
         intensity["bone_derived_rule"] = True
+    if intensity_ok and prof is not None and prof.uncertain and graft_samples_rel is None:
+        intensity_ok = False
+        intensity["uncertain_profile_rule"] = prof.source
+    if intensity_ok and prof is not None and prof.id in RESORBABLE_EARLY_ONLY and \
+            (healing_weeks is None or healing_weeks > EARLY_WEEKS_MAX):
+        intensity_ok = False
+        intensity["resorbable_timepoint_rule"] = (
+            f"{prof.id} resorbs into the bone intensity range; intensity separation accepted only at known timepoints "
+            f"≤{EARLY_WEEKS_MAX:.0f} weeks (timepoint: {'unknown' if healing_weeks is None else f'{healing_weeks:g} weeks'})")
     intensity["passes_policy"] = bool(intensity_ok)
 
     required = ("registered", "qc_pass", "untracked_fraction", "max_displacement_um")
@@ -469,6 +494,11 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
             why = (f"intensity-only separation insufficient (threshold-rule graft Dice {rule:.2f}; requirement "
                    f"≥{ORACLE_DICE_MIN} and volume within ±{ORACLE_VOLUME_TOL:.0%} at graft share "
                    f"{priors[-1]:.2f} and {priors[0]:.2f})")
+            if intensity.get("uncertain_profile_rule"):
+                why = ("material appearance is uncertain (" + intensity["uncertain_profile_rule"].split(" | ")[-1] +
+                       "); measure it with a material-only or day-0 scan")
+            if intensity.get("resorbable_timepoint_rule"):
+                why = intensity["resorbable_timepoint_rule"]
             if bone_like:
                 why = "graft is bone-derived and remodels towards bone intensity, so neither intensity nor texture separates it"
             why += ". Report total mineral; add a day-0 scan or histology to separate graft from new bone"
@@ -566,7 +596,7 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
                    no_graft: bool = False, validated_texture_model: bool = False,
                    graft_prior: float = 0.5, energy_keV: float = 40.0, seed: int = 0,
                    new_bone_rel_range: tuple | None = None, soft_halo_fraction: float = 0.10,
-                   new_bone_share: float = 0.3) -> SupportAssessment:
+                   new_bone_share: float = 0.3, healing_weeks: float | None = None) -> SupportAssessment:
     """Decide which endpoints can be reported (see module docstring and docs/science/MEASUREMENT_SUPPORT.md).
 
     noise_rel          scan noise σ divided by (host − soft) grey contrast.
@@ -575,11 +605,13 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
     day0               {"registered", "qc_pass", "untracked_fraction", "max_displacement_um", "tolerance_um"}.
     soft_halo_fraction share of non-mineral ROI voxels adjacent to dense phases (measured by the integration).
     new_bone_share     expected new-bone share of non-graft ROI voxels (measured by the integration).
+    healing_weeks      time since implantation (needed for resorbable materials).
     """
     a = _assess_core(material, noise_rel=noise_rel, voxel_um=voxel_um, graft_samples_rel=graft_samples_rel,
                      new_samples_rel=new_samples_rel, day0=day0, calibrated=calibrated, no_graft=no_graft,
                      validated_texture_model=validated_texture_model, graft_prior=graft_prior,
-                     energy_keV=energy_keV, seed=seed, new_bone_rel_range=new_bone_rel_range)
+                     energy_keV=energy_keV, seed=seed, new_bone_rel_range=new_bone_rel_range,
+                     healing_weeks=healing_weeks)
     mr = mineral_rule(None if no_graft else material, noise_rel=noise_rel, voxel_um=voxel_um,
                       graft_samples_rel=graft_samples_rel, new_samples_rel=new_samples_rel,
                       new_bone_rel_range=new_bone_rel_range, soft_halo_fraction=soft_halo_fraction,

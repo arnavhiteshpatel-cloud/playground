@@ -22,6 +22,24 @@ BUNDLE_TORCH = os.environ.get("OQ_BUNDLE_TORCH", "0") == "1"
 BUNDLE_ONNX = os.environ.get("OQ_BUNDLE_ONNX", "1") == "1"
 BUNDLE_SITK = os.environ.get("OQ_BUNDLE_SITK", "0") == "1"
 
+# ---------------------------------------------------------------- Qt plugin selection (licence + size)
+# PyInstaller's PySide6 hooks collect every plugin type of QtGui/QtNetwork. Several are not
+# needed and pull in GPL-only Qt modules (platforminputcontexts -> Qt Virtual Keyboard, which Qt 6
+# offers only under GPL-3/commercial terms) or the build host's GTK/cairo/pango/ICU stack
+# (platformthemes/gtk3). They are removed *before* binary dependency analysis so their
+# dependencies are not collected either. The compose input context (dead keys) is added back.
+from PyInstaller.utils.hooks.qt import _modules_info as _qt_info  # noqa: E402
+
+_DROP_QT_PLUGINS = {"platformthemes", "platforminputcontexts", "egldeviceintegrations", "generic", "iconengines",
+                    "imageformats", "tls", "networkinformation", "networkaccess", "virtualkeyboard", "qmltooling"}
+for _entry in _qt_info.QT_MODULES_INFO:
+    _entry.plugins = [p for p in _entry.plugins if p not in _DROP_QT_PLUGINS]
+
+# Qt 6 modules that are not available under the LGPL (see packaging/check_bundle_licences.py)
+GPL_ONLY_QT = ("VirtualKeyboard", "Qt6Charts", "DataVisualization", "Qt6Graphs", "Quick3D", "NetworkAuth",
+               "HttpServer", "Lottie", "ShaderTools", "WaylandCompositor", "Qt6Coap", "Qt6Mqtt", "OpcUa",
+               "QuickTimeline", "CanvasPainter", "LabsStyleKit", "qtvirtualkeyboard")
+
 hidden = []
 hidden += collect_submodules("osteoquant", filter=lambda m: not m.startswith(("osteoquant.experiments",)))
 hidden += [
@@ -70,6 +88,21 @@ a = Analysis(  # noqa: F821
     excludes=excludes,
     noarchive=False,
 )
+
+
+def _keep(entry):
+    name = entry[0].replace("\\", "/")
+    return not any(g.lower() in name.lower() for g in GPL_ONLY_QT)
+
+
+a.binaries = [b for b in a.binaries if _keep(b)]
+a.datas = [d for d in a.datas if _keep(d)]
+if sys.platform.startswith("linux"):
+    import PySide6
+    _compose = Path(PySide6.__file__).parent / "Qt" / "plugins" / "platforminputcontexts" / \
+        "libcomposeplatforminputcontextplugin.so"
+    if _compose.exists():
+        a.binaries.append(("PySide6/Qt/plugins/platforminputcontexts/" + _compose.name, str(_compose), "BINARY"))
 pyz = PYZ(a.pure)  # noqa: F821
 
 _icon = ROOT / "packaging" / "icons" / ("osteoquant.ico" if sys.platform.startswith("win") else "osteoquant.icns")

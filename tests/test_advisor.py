@@ -240,3 +240,22 @@ def test_dbm_new_bone_not_supported():
     a = assess_support("dbm", noise_rel=0.05, voxel_um=20)
     assert a.status("new_bone_volume") == NOT_SUPPORTED
     assert a.status("residual_graft_volume") == NOT_SUPPORTED
+
+
+def test_resorbable_material_needs_early_known_timepoint():
+    late = assess_support("beta_tcp", noise_rel=0.03, voxel_um=20)
+    assert late.status("residual_graft_volume") == NOT_SUPPORTED
+    assert "timepoint" in late.endpoints["residual_graft_volume"].reason
+    assert assess_support("beta_tcp", noise_rel=0.03, voxel_um=20, healing_weeks=12).status("residual_graft_volume") == NOT_SUPPORTED
+    early = assess_support("beta_tcp", noise_rel=0.03, voxel_um=20, healing_weeks=2)
+    assert "resorbable_timepoint_rule" not in early.intensity
+
+
+def test_knowledge_base_physics_disagreement_requires_measurement():
+    from osteoquant.advisor.separability import material_profile
+    prof = material_profile("bioglass_45s5")
+    if not prof.uncertain:
+        pytest.skip("knowledge base and physics agree for this material")
+    a = assess_support("bioglass_45s5", noise_rel=0.03, voxel_um=20, healing_weeks=2)
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED
+    assert "uncertain" in a.endpoints["residual_graft_volume"].reason

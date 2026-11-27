@@ -35,6 +35,7 @@ DEFAULT_CONFIG = {
     "calibrated": False,                  # HA phantom calibration recorded for this scan
     "day0": None,                         # {"registered", "qc_pass", "max_displacement_um", "tolerance_um"}
     "measurement_support": True,          # run the advisor; unsupported endpoints are not reported
+    "healing_weeks": None,                # time since implantation (resorbable materials need it)
 }
 
 

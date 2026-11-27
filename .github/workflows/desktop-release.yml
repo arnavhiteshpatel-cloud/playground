@@ -75,7 +75,7 @@ jobs:
       - name: Desktop tests
         run: python -m pytest tests/desktop -q
 
-      - name: Build one-folder app and run packaged self-test
+      - name: Build one-folder app, check bundled licences, run packaged self-test
         run: python packaging/build.py
 
       # ---------------------------------------------------------------- signing (needs secrets)
@@ -126,6 +126,7 @@ jobs:
           path: |
             packaging/dist/OsteoQuant-desktop-*
             packaging/dist/build-info.json
+            packaging/dist/licence-check.txt
           if-no-files-found: error
           retention-days: 14
 

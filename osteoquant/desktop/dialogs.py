@@ -394,8 +394,11 @@ class AboutDialog(_Dialog):
         tbl.resizeColumnsToContents()
         tbl.horizontalHeader().setStretchLastSection(True)
         tl.addWidget(tbl)
-        tl.addWidget(muted("Full licence texts of bundled components are in the THIRD_PARTY_LICENSES folder of the "
-                           "installed application. Qt is used under the LGPL-3.0 and can be replaced by the user."))
+        tl.addWidget(muted("Licence texts of bundled components are in the 'licenses' folder and in "
+                           "THIRD_PARTY_NOTICES.txt of the installed application. Qt and Qt for Python are used under "
+                           "the LGPL-3.0 as separate shared libraries that you may replace with modified versions; "
+                           "nothing in the OsteoQuant licence terms restricts modifying them or reverse engineering "
+                           "for debugging such modifications."))
         tabs.addTab(tp, "Third-party licences")
         tabs.setMinimumHeight(300)
         self.lay.addWidget(tabs)

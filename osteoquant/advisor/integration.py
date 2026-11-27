@@ -43,7 +43,8 @@ def _assess_scan(image: np.ndarray, roi_mask: np.ndarray, spacing, cfg: dict):
               no_graft=bool(cfg.get("no_graft", False)),
               validated_texture_model=bool(cfg.get("validated_texture_model", False)),
               new_bone_rel_range=cfg.get("new_bone_rel_range"),
-              energy_keV=float(cfg.get("effective_energy_keV", 40.0)))   # from acquisition metadata (IMG-10)
+              energy_keV=float(cfg.get("effective_energy_keV", 40.0)),   # from acquisition metadata (IMG-10)
+              healing_weeks=cfg.get("healing_weeks"))
     prior = float(cfg.get("graft_prior", 0.5))
     a = assess_support(material, graft_prior=prior, **kw)
     if roi_mask is not None and roi_mask.any():

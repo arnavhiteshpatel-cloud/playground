@@ -1,0 +1,287 @@
+{
+ "experiment": "F2",
+ "summary": {
+  "n": 16,
+  "auto_fail_rate": 0.0,
+  "auto_dice_when_found": 0.845682263261908,
+  "propagated_dice_mean": 0.9954276242081961,
+  "propagated_dice_min": 0.9926618086107692,
+  "propagated_qc_pass_rate": 1.0,
+  "success_rate_dice_ge_0_9_and_qc": 1.0
+ },
+ "rows": [
+  {
+   "noise": 40,
+   "seed": 0,
+   "auto_late_dice": 0.6474372413793104,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8870269106127033,
+   "propagated_dice": 0.9980964710190906,
+   "propagated_qc": {
+    "host_dice": 0.9836054887389589,
+    "host_ncc": 0.9956863164199742,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 40,
+   "seed": 1,
+   "auto_late_dice": 0.8225328682131066,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.7980907953929788,
+   "propagated_dice": 0.9926618086107692,
+   "propagated_qc": {
+    "host_dice": 0.9780625884573046,
+    "host_ncc": 0.9941124091909335,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 40,
+   "seed": 2,
+   "auto_late_dice": 0.844180225281602,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8350896749594154,
+   "propagated_dice": 0.9959928288243786,
+   "propagated_qc": {
+    "host_dice": 0.9746583243035408,
+    "host_ncc": 0.9906817774296106,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 40,
+   "seed": 3,
+   "auto_late_dice": 0.6426874638300217,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8504020867124464,
+   "propagated_dice": 0.9932996826613848,
+   "propagated_qc": {
+    "host_dice": 0.9821567609654814,
+    "host_ncc": 0.9950598350193797,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 80,
+   "seed": 0,
+   "auto_late_dice": 0.8752443575617558,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8319128268630552,
+   "propagated_dice": 0.9965505199771738,
+   "propagated_qc": {
+    "host_dice": 0.9790089961445095,
+    "host_ncc": 0.9876521672273008,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 80,
+   "seed": 1,
+   "auto_late_dice": 0.8640644053556936,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8574444296006516,
+   "propagated_dice": 0.9983516694138843,
+   "propagated_qc": {
+    "host_dice": 0.984899845916795,
+    "host_ncc": 0.9882950875696853,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 80,
+   "seed": 2,
+   "auto_late_dice": 0.8860047275631379,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8360687362959153,
+   "propagated_dice": 0.9958853345827832,
+   "propagated_qc": {
+    "host_dice": 0.9786290960899161,
+    "host_ncc": 0.9879015637470119,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 80,
+   "seed": 3,
+   "auto_late_dice": 0.896874936544358,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8944145879832122,
+   "propagated_dice": 0.9959327952982262,
+   "propagated_qc": {
+    "host_dice": 0.9745224827915016,
+    "host_ncc": 0.9771553683116873,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 120,
+   "seed": 0,
+   "auto_late_dice": 0.8481931841837796,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8122749349406009,
+   "propagated_dice": 0.9949413227504216,
+   "propagated_qc": {
+    "host_dice": 0.9692731510913329,
+    "host_ncc": 0.9722598699880022,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 120,
+   "seed": 1,
+   "auto_late_dice": 0.8791700321872298,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8672817031775455,
+   "propagated_dice": 0.9980661759694678,
+   "propagated_qc": {
+    "host_dice": 0.9749482877499426,
+    "host_ncc": 0.9758413562440638,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 120,
+   "seed": 2,
+   "auto_late_dice": 0.9105362338139221,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8618052374510845,
+   "propagated_dice": 0.9940672660445743,
+   "propagated_qc": {
+    "host_dice": 0.9701803679869483,
+    "host_ncc": 0.9734048952235654,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 120,
+   "seed": 3,
+   "auto_late_dice": 0.8887637910134982,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8416012964465686,
+   "propagated_dice": 0.997653631760713,
+   "propagated_qc": {
+    "host_dice": 0.9702409391850385,
+    "host_ncc": 0.9700122946507631,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 250,
+   "seed": 0,
+   "auto_late_dice": 0.9040039933553186,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8598941829647598,
+   "propagated_dice": 0.9938970635207939,
+   "propagated_qc": {
+    "host_dice": 0.8908959785706927,
+    "host_ncc": 0.8650680962611628,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 250,
+   "seed": 1,
+   "auto_late_dice": 0.8933873894622315,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8124813577323733,
+   "propagated_dice": 0.9939407358833624,
+   "propagated_qc": {
+    "host_dice": 0.9054776219104876,
+    "host_ncc": 0.8742523403620431,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 250,
+   "seed": 2,
+   "auto_late_dice": 0.8637692251325099,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8165825631254229,
+   "propagated_dice": 0.9940755316475645,
+   "propagated_qc": {
+    "host_dice": 0.9009955913695951,
+    "host_ncc": 0.8628598861456999,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  },
+  {
+   "noise": 250,
+   "seed": 3,
+   "auto_late_dice": 0.864066137313052,
+   "auto_late_failed": false,
+   "auto_late_conf": 0.8308835399544177,
+   "propagated_dice": 0.9934291493665496,
+   "propagated_qc": {
+    "host_dice": 0.9032846160858071,
+    "host_ncc": 0.8719915780683088,
+    "pass": true,
+    "policy": {
+     "min_host_dice": 0.85,
+     "min_ncc": 0.6
+    }
+   }
+  }
+ ],
+ "saved": "2026-11-27T21:26:23Z"
+}

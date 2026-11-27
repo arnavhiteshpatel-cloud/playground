@@ -24,10 +24,10 @@ server, not a desktop application. The commercial numbers (time saving, pricing,
 
 | Experiment | Original | Reproduced | Status |
 |---|---|---|---|
-| G morphometry vs Scanco IPL (8 real cubes) | Tb.Th ICC 0.983, Tb.Sp 0.948 | see `experiments/results_gen0_repro/` | filled in by Section 7 |
-| P reproducibility | all bit-identical | " | " |
-| C separability | oracle 0.52–0.77 in overlap regime | " | " |
-| H/I real dog | U-Net 0.826; synthetic zero-shot 0.379 | " | " |
+| G morphometry vs Scanco IPL (8 real cubes) | Tb.Th ICC 0.983, Tb.Sp 0.948 | Tb.Th 0.983, Tb.Sp 0.948 (identical to 16 digits) | **reproduced exactly** (153 s) |
+| P reproducibility | all bit-identical | all checks pass | **reproduced** (89 s) |
+| C separability (32 conditions) | RF/multi-Otsu graft Dice per condition | max absolute difference 0.0036 Dice across 64 values | **reproduced within 0.004** (335 s); not bit-identical — RF voxel sampling/threading; note the script still emits the superseded `bayes_*` fields, the corrected oracle comes from `recompute_intensity_oracle.py` |
+| H/I real dog | U-Net 0.826; synthetic zero-shot 0.379 | see §7 | running (CPU-bound retraining) |
 | Test suite | 61 pass | **61 pass (24 s)** | reproduced |
 
 ## 3. Findings and remediation register

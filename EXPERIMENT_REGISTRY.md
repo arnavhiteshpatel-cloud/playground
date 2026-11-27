@@ -34,3 +34,17 @@ Several experiments were corrected after an independent review (docs/security/RE
 | U3 real adaptation | labelled scans from ≥2 scanners/materials | `exp_J_adaptation.py` accepts any Case list |
 | A7/E6 time saving & ICC vs analysts | partner retrospective scans + timed analysts | viewer logs edits; stats.icc/bland_altman ready |
 | E8 micro-CT vs histology | matched sections | histology module + 2D–3D registration ready |
+
+## Generation 2 experiments (2026-11-27 onward)
+Pre-registered conventions and acceptance criteria: `docs/science/PREREGISTRATION.md`. Reproduction of Gen-0
+results: `FORENSIC_AUDIT.md` §2 (G exact, P exact, C within 0.004 Dice).
+
+| ID | Question | Data | Status | Key result | Result file |
+|---|---|---|---|---|---|
+| **S1** | Does the measurement-support advisor refuse the measurements that fail (graft-volume error >20%)? | SYNTHETIC: 56 dataset specimens (4 trained + 2 held-out materials) + 96 density×noise conditions | Done (rerun with final advisor queued) | Multi-Otsu: all 32/32 failures refused, 7 supported all accurate (median error 11%); synthetic U-Net: 6/6 failures refused but 43 accurate U-Net measurements also refused (advisor reasons only from intensity); sweep: 54/54 failures refused, 0 supported-but-failed | exp_S1_advisor.json |
+| **S1b** | Does the advisor's own threshold approach the oracle where support is granted? | as S1 | Done | Sweep: 46/46 failures refused, 0/21 supported cases failed, median error of supported 6.6%; advisor threshold within ≈20 grey units of the true-oracle threshold for X ≤1600 mgHA/cm³; advisor oracle is conservative (lower than true oracle) → 29 accurate cases refused. Dataset specimens: 40/41 failures refused, 1/7 supported failed | exp_S1b_advisor_threshold.json |
+| **F2** | Segmental ROI at a late (bridged) timepoint by propagating the early ROI through registration | SYNTHETIC 16 animals (4 noise levels), late stage 0.9 + random rigid motion | Done | Propagated ROI Dice 0.995 (min 0.993), registration QC pass 16/16; automatic detection on the late scan did not fail in this configuration (Dice 0.846) — the Gen-0 failure mode was not reproduced here, so F2 shows accuracy gain, not failure recovery | exp_F2_roi_propagation.json |
+| **S2** | Closing the synthetic→real gap: rescaling diagnosis, domain-randomised pretraining, few-shot curves (3 seeds) | REAL dog forelimb (10/5) | Running | — | exp_S2_sim2real_*.json |
+| **L3** | Day-0 propagation with granule displacement (0–400 µm) and fragmentation; granule tracking; registration-failure detection | SYNTHETIC generator v2 | Queued | — | exp_L3_displacement.json |
+| **U1** | 5-seed variance, measurement-based selection, ensemble failure detection, conformal volume intervals | SYNTHETIC incl. new 40-specimen calibration split | Queued | — | exp_U1_ensemble_conformal.json |
+| **O2** | ONNX Runtime fp32/int8 vs PyTorch, patch overlap | SYNTHETIC test | Queued (spot check done: ORT fp32 max prob diff 5×10⁻⁶, labels identical, 8.5× faster than PyTorch under the same load) | — | exp_O2_runtime.json |

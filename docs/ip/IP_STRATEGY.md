@@ -95,3 +95,21 @@ Until decisions D-IP-1 to D-IP-4 are made:
 | **D-IP-5** | Trademark clearance for "OsteoQuant" | Founder + counsel/clinic | Knockout search | Before wider outreach or incorporation |
 | **D-IP-6** | Incorporation and IP assignment from founder to company (after OTM) | Founder + counsel | OTM outcome | With entity formation |
 | **D-IP-7** | Publication plan: what to publish (INV-05, INV-07, benchmark protocol) and when | Founder | Sections 2 and 4 | After D-IP-3 |
+
+## Addendum (2026-11-27) — repository visibility verified: PUBLIC
+The GitHub repository `arnavhiteshpatel-cloud/playground` was checked through the GitHub search API and is
+**public** (`"visibility": "public"`). Commits pushed between 2026-11-27 06:58 UTC (`deab961`) and 09:30 UTC
+(`ee09a70`) are therefore publicly accessible. This publicly discloses the Generation-1 material: the day-0 graft
+footprint propagation method, the Dice-optimal intensity-only oracle as a separability bound, the cortical-annulus
+segmental ROI detector, the hash-chained audit design, the manuscripts in `publications/` and all experiment results.
+
+Consequences to raise with a registered patent attorney (not legal advice):
+* In the United States an inventor's own public disclosure starts a one-year grace period (35 U.S.C. 102(b)(1)(A)),
+  so a US application covering those items would need to be filed by 2027-11-27.
+* Most other jurisdictions apply absolute novelty; foreign patent rights for the disclosed items may already be lost.
+* Generation-2 work (material-aware endpoint gating / measurement-support advisor, granule tracking, ROI
+  propagation, ONNX runtime) has been **committed locally but not pushed** pending the founder's decision to make the
+  repository private or to accept publication.
+
+Founder actions: (1) decide repository visibility now; (2) include the disclosure dates above in the OTM/attorney
+conversation; (3) note that the repository also contains copies of public datasets' derived results but no raw data.

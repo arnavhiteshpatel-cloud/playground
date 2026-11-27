@@ -1,176 +1,704 @@
-"""Build business/FINANCIAL_MODEL.xlsx — formula-driven 5-year model (2027–2031).
+"""Build business/FINANCIAL_MODEL.xlsx and business/financial_model_outputs.json.
 
-Every input is on the 'Inputs' sheet with an evidence label ([V], [AE], [HYP]). Two structures:
-  * Bootstrapped services lab (lean, hire against revenue)
-  * Venture-backed platform (seed raise, earlier hires, expansion modules from year 3)
-Three scenarios each: Conservative / Base / Optimistic. Outputs use Excel formulas only.
+Formula-driven 5-year model (2027-2031) for OsteoQuant, an offline desktop micro-CT analysis application sold
+together with analysis services. Every driver is an assumption [AE] or a pricing/conversion hypothesis [HYP];
+no interviews, pilots or sales have happened. See business/REVENUE_MODEL.md for the rationale of each input.
+
+Offerings (founder pricing hypotheses, to be tested - not facts):
+  paid pilot $2.5-5K | non-GLP study analysis $8-15K | material characterisation $5-15K
+  academic desktop licence $4-10K/yr | enterprise desktop licence $30-75K/yr
+
+Structures: 'Bootstrapped' (founder-led services + desktop licences) and 'Venture' (pre-seed funded team,
+same prices and conversion rates, more conversations and expansion modules from year 3).
+Scenarios: Conservative / Base / Optimistic.
+
+Reproducibility:
+  python business/build_financial_model.py
+  * writes the workbook (all outputs are Excel formulas that reference the 'Inputs' sheet);
+  * evaluates the same model in Python (the 'mirror') and writes financial_model_outputs.json and
+    revenue_model_sensitivity.json;
+  * checks that no formula references its own cell;
+  * if LibreOffice is installed, recalculates a temporary copy of the workbook headlessly and asserts that every
+    output cell agrees with the Python mirror (and that no cell evaluates to an error).
 """
-from openpyxl import Workbook
-from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-from openpyxl.utils import get_column_letter
-from openpyxl.chart import LineChart, Reference
+from __future__ import annotations
 
+import json
+import re
+import shutil
+import subprocess
+import tempfile
+from pathlib import Path
+
+from openpyxl import Workbook, load_workbook
+from openpyxl.chart import LineChart, Reference
+from openpyxl.chart.series import SeriesLabel
+from openpyxl.styles import Alignment, Font, PatternFill
+from openpyxl.utils import get_column_letter
+
+HERE = Path(__file__).resolve().parent
 YEARS = [2027, 2028, 2029, 2030, 2031]
 SC = ["Conservative", "Base", "Optimistic"]
-BLUE = Font(color="1F4E79")
+STRUCTS = ["Bootstrapped", "Venture"]
 HDR = PatternFill("solid", fgColor="DCE6F1")
 INP = PatternFill("solid", fgColor="FFF2CC")
-thin = Side(style="thin", color="BBBBBB")
+FTE_HOURS = 1600  # productive delivery hours per full-time analyst per year [AE]
 
-# name -> (unit, label, {structure: {scenario: value or [5 yearly values]}})
+
 def S(c, b, o):
     return {"Conservative": c, "Base": b, "Optimistic": o}
 
-INPUTS = {
-    "Bootstrapped": {
-        "Study customers (paying, cumulative active)": ("#", "[HYP]", S([1, 4, 7, 10, 13], [2, 6, 11, 16, 22], [3, 9, 17, 26, 36])),
-        "Studies per customer per year": ("#", "[AE] BVF firms 0.5–3/yr", S(1.2, 1.5, 2.0)),
-        "Blended price per study": ("$", "[HYP] playbook $12K non-GLP/$25K GLP", S(9000, 14600, 18000)),
-        "Academic subscriptions": ("#", "[HYP]", S([0, 2, 5, 9, 13], [1, 5, 12, 20, 30], [3, 10, 22, 36, 50])),
-        "Academic price per year": ("$", "[HYP] playbook $4K", S(3000, 4000, 5000)),
-        "CRO enterprise licences": ("#", "[HYP]", S([0, 0, 0, 1, 1], [0, 0, 1, 2, 3], [0, 1, 2, 4, 6])),
-        "CRO licence price per year": ("$", "[HYP] playbook $40K", S(30000, 40000, 50000)),
-        "Expansion-module revenue share of core": ("%", "[HYP] osseointegration/spine/histology", S([0, 0, 0, 0, 0], [0, 0, 0, 0.05, 0.1], [0, 0, 0.05, 0.1, 0.15])),
-        "Analyst hours per study": ("h", "[AE] intake, QC, ROI, material labels, review, statistics, report, client calls; falls as models generalise", S([110, 95, 80, 70, 60], [85, 70, 55, 45, 38], [65, 50, 40, 32, 26])),
-        "Loaded analyst cost per hour": ("$", "[AE]", S(60, 55, 55)),
-        "Compute + storage per study": ("$", "[AE] cloud GPU hours + storage", S(250, 150, 120)),
-        "Validation & QA spend": ("$", "[AE] phantoms Y1; CSV package Y2–3; audits", S([12000, 40000, 60000, 30000, 30000], [15000, 60000, 80000, 40000, 40000], [20000, 80000, 100000, 50000, 50000])),
-        "Founder & staff salaries": ("$", "[AE] stipend → salaries as revenue allows", S([0, 30000, 90000, 160000, 230000], [12000, 60000, 140000, 240000, 330000], [24000, 90000, 200000, 330000, 450000])),
-        "Other opex (legal, IP, insurance, software, travel)": ("$", "[AE]", S([20000, 30000, 40000, 50000, 60000], [25000, 40000, 55000, 70000, 85000], [30000, 50000, 70000, 90000, 110000])),
-        "Customer acquisition cost per new customer": ("$", "[AE] travel, conferences, pilots", S(6000, 5000, 4000)),
-        "Non-dilutive grants & prizes received": ("$", "[HYP] Cozad/I-Corps/SBIR (see grants/)", S([10000, 50000, 0, 0, 0], [25000, 150000, 150000, 0, 0], [50000, 305000, 300000, 0, 0])),
-    },
-    "Venture": {
-        "Study customers (paying, cumulative active)": ("#", "[HYP]", S([2, 6, 12, 20, 30], [3, 10, 22, 38, 58], [5, 15, 35, 60, 95])),
-        "Studies per customer per year": ("#", "[AE]", S(1.3, 1.7, 2.2)),
-        "Blended price per study": ("$", "[HYP]", S(10000, 15000, 19000)),
-        "Academic subscriptions": ("#", "[HYP]", S([1, 5, 12, 22, 35], [3, 12, 30, 55, 85], [5, 20, 50, 90, 140])),
-        "Academic price per year": ("$", "[HYP]", S(3000, 4000, 5000)),
-        "CRO enterprise licences": ("#", "[HYP]", S([0, 0, 1, 2, 4], [0, 1, 3, 6, 10], [0, 2, 5, 10, 16])),
-        "CRO licence price per year": ("$", "[HYP]", S(35000, 45000, 60000)),
-        "Expansion-module revenue share of core": ("%", "[HYP] modules launched from Y3", S([0, 0, 0.05, 0.15, 0.25], [0, 0, 0.1, 0.25, 0.4], [0, 0.05, 0.2, 0.4, 0.6])),
-        "Analyst hours per study": ("h", "[AE] as bootstrapped, faster automation from platform investment", S([100, 80, 62, 50, 42], [80, 60, 45, 35, 28], [60, 45, 34, 26, 20])),
-        "Loaded analyst cost per hour": ("$", "[AE]", S(60, 55, 55)),
-        "Compute + storage per study": ("$", "[AE]", S(250, 150, 120)),
-        "Validation & QA spend": ("$", "[AE]", S([30000, 120000, 150000, 120000, 120000], [40000, 150000, 200000, 150000, 150000], [50000, 180000, 250000, 200000, 200000])),
-        "Founder & staff salaries": ("$", "[AE] 3–4 FTE Y2, 8–12 FTE Y4", S([150000, 450000, 750000, 1000000, 1250000], [200000, 600000, 1000000, 1400000, 1800000], [250000, 750000, 1300000, 1900000, 2500000])),
-        "Other opex (legal, IP, insurance, software, travel)": ("$", "[AE]", S([60000, 120000, 180000, 240000, 300000], [80000, 150000, 220000, 300000, 380000], [100000, 180000, 260000, 360000, 460000])),
-        "Customer acquisition cost per new customer": ("$", "[AE]", S(9000, 8000, 7000)),
-        "Non-dilutive grants & prizes received": ("$", "[HYP]", S([25000, 305000, 300000, 0, 0], [50000, 305000, 1250000, 0, 0], [100000, 305000, 1250000, 0, 0])),
-    },
-}
-ORDER = list(INPUTS["Bootstrapped"].keys())
+
+# ---------------------------------------------------------------------------------------------------------------
+# Inputs: key -> (label, unit, evidence, {structure: S(...)}). A value is a scalar (same every year) or 5 values.
+# ---------------------------------------------------------------------------------------------------------------
+def same(v):
+    return {"Bootstrapped": v, "Venture": v}
 
 
-def main(path="business/FINANCIAL_MODEL.xlsx"):
+P = {}  # ordered
+
+
+def add(key, label, unit, evidence, per_struct):
+    P[key] = (label, unit, evidence, per_struct)
+
+
+# Industry funnel ------------------------------------------------------------------------------------------------
+add("conv", "Qualified industry discovery conversations (distinct buying units)", "#",
+    "[AE] founder capacity; capped by ~200 US-visible industry buying units (MARKET_MODEL_INPUTS.md §1b, §2)",
+    {"Bootstrapped": S([12, 20, 25, 25, 25], [20, 30, 35, 35, 35], [25, 40, 45, 50, 50]),
+     "Venture": S([20, 30, 40, 45, 45], [30, 45, 55, 60, 60], [35, 55, 70, 80, 80])})
+add("r_pilot", "Conversation -> paid pilot rate", "%", "[HYP] untested; decision threshold in PRICING_VALIDATION_PLAN.md",
+    same(S(0.08, 0.15, 0.22)))
+add("r_cust", "Paid pilot -> recurring study customer rate", "%", "[HYP] untested", same(S(0.25, 0.40, 0.50)))
+add("ret_cust", "Study customer annual retention", "%", "[HYP] untested", same(S(0.60, 0.75, 0.85)))
+add("studies", "Non-GLP studies per active study customer per year", "#",
+    "[AE] BVF firms 0.5/1.5/3 per year (MARKET_MODEL_INPUTS.md §4)", same(S(1.0, 1.5, 1.8)))
+add("p_pilot", "Price: paid pilot", "$", "[HYP] founder range $2.5-5K", same(S(2500, 3500, 5000)))
+add("p_study", "Price: non-GLP study analysis", "$", "[HYP] founder range $8-15K", same(S(8000, 11000, 15000)))
+add("r_char", "Material characterisations per paid pilot (attach rate)", "%", "[HYP] untested", same(S(0.20, 0.40, 0.50)))
+add("p_char", "Price: material characterisation", "$", "[HYP] founder range $5-15K", same(S(5000, 9000, 15000)))
+# Academic ---------------------------------------------------------------------------------------------------------
+add("evals", "Academic labs/cores starting a licence evaluation", "#",
+    "[AE] vs 45-49 orgs with NIH micro-CT bone-repair projects (MARKET_MODEL_INPUTS.md §3)",
+    {"Bootstrapped": S([2, 4, 6, 8, 8], [4, 8, 12, 15, 18], [6, 12, 18, 22, 25]),
+     "Venture": S([4, 8, 12, 16, 20], [6, 12, 18, 24, 28], [10, 18, 28, 36, 42])})
+add("r_acad", "Evaluation -> academic licence rate", "%", "[HYP] untested", same(S(0.20, 0.35, 0.45)))
+add("ret_acad", "Academic licence annual retention", "%", "[HYP] grant-cycle dependent", same(S(0.70, 0.80, 0.85)))
+add("p_acad", "Price: academic desktop licence per year", "$", "[HYP] founder range $4-10K/yr", same(S(4000, 6000, 10000)))
+# Enterprise -------------------------------------------------------------------------------------------------------
+add("ent_new", "New enterprise licences signed (CROs / high-volume manufacturers)", "#", "[HYP] untested; long sales cycle",
+    {"Bootstrapped": S([0, 0, 0, 0, 1], [0, 0, 1, 0, 1], [0, 0, 1, 1, 1]),
+     "Venture": S([0, 0, 1, 1, 1], [0, 1, 1, 2, 2], [0, 1, 1, 2, 2])})
+add("ret_ent", "Enterprise licence annual retention", "%", "[HYP] untested", same(S(0.80, 0.85, 0.90)))
+add("p_ent", "Price: enterprise desktop licence per year", "$", "[HYP] founder range $30-75K/yr", same(S(30000, 45000, 75000)))
+add("exp", "Expansion-module revenue (% of core revenue)", "%",
+    "[HYP] osseointegration / spine fusion / histology modules - not built",
+    {"Bootstrapped": S(0, 0, 0),
+     "Venture": S([0, 0, 0, 0.05, 0.10], [0, 0, 0.05, 0.15, 0.25], [0, 0, 0.10, 0.25, 0.40])})
+add("exp_cogs", "Expansion-module delivery cost (% of its revenue)", "%", "[AE]", same(S(0.40, 0.30, 0.25)))
+# Delivery cost ----------------------------------------------------------------------------------------------------
+add("h_pilot", "Analyst hours per paid pilot", "h", "[AE] 10-20 retrospective scans; measure in first pilot", same(S(35, 25, 15)))
+add("h_study", "Analyst hours per non-GLP study", "h",
+    "[AE] intake/QC, ROI review, material adaptation, review, statistics, report, calls; learning curve",
+    {"Bootstrapped": S([90, 80, 70, 60, 55], [60, 50, 42, 36, 32], [45, 36, 30, 25, 22]),
+     "Venture": S([80, 65, 55, 45, 40], [55, 42, 34, 28, 24], [40, 30, 24, 20, 16])})
+add("h_char", "Analyst hours per material characterisation", "h", "[AE]", same(S(60, 40, 30)))
+add("h_acad", "Support hours per academic licence per year", "h", "[AE]", same(S(16, 10, 6)))
+add("h_ent", "Support hours per enterprise licence per year", "h", "[AE] onboarding, validation-evidence pack, support",
+    same(S(120, 80, 50)))
+add("rate", "Loaded analyst cost per hour", "$", "[AE] PhD-level imaging analyst incl. overhead", same(S(65, 60, 55)))
+add("data", "Data handling per pilot/study/characterisation (compute ~$0: runs on local desktop)", "$",
+    "[AE] encrypted drives, shipping, backup storage", same(S(75, 40, 25)))
+add("pass", "Pass-through per material characterisation (scanner time, reference samples)", "$",
+    "[AE] ~6-20 scanner h at $60-79/h (Beckman external rates [V], validation/BILL_OF_MATERIALS.csv)",
+    same(S(1500, 1000, 500)))
+# Operating costs --------------------------------------------------------------------------------------------------
+add("sal", "Founder & non-delivery staff salaries", "$", "[AE] stipend -> salaries as revenue / grants allow",
+    {"Bootstrapped": S([0, 12000, 24000, 36000, 48000], [12000, 40000, 60000, 80000, 100000],
+                       [24000, 60000, 90000, 120000, 150000]),
+     "Venture": S([150000, 400000, 650000, 850000, 1000000], [200000, 500000, 800000, 1050000, 1250000],
+                  [250000, 600000, 950000, 1250000, 1500000])})
+add("val", "Validation & QA spend", "$", "[AE] phantom study Y1 ($10-20K, validation/BILL_OF_MATERIALS.csv); evidence packs",
+    {"Bootstrapped": S([15000, 20000, 15000, 15000, 15000], [15000, 35000, 30000, 20000, 20000],
+                       [20000, 50000, 40000, 30000, 30000]),
+     "Venture": S([30000, 100000, 120000, 100000, 100000], [40000, 120000, 150000, 120000, 120000],
+                  [50000, 150000, 180000, 150000, 150000])})
+add("opex", "Other opex (legal, insurance, software, code signing, travel)", "$", "[AE]",
+    {"Bootstrapped": S([12000, 15000, 18000, 20000, 22000], [15000, 22000, 28000, 34000, 40000],
+                       [20000, 30000, 40000, 50000, 60000]),
+     "Venture": S([50000, 100000, 150000, 200000, 240000], [60000, 120000, 180000, 240000, 300000],
+                  [80000, 150000, 220000, 290000, 360000])})
+add("sm", "Sales & marketing cost per conversation / evaluation", "$", "[AE] travel, conference share, demo media",
+    {"Bootstrapped": S(200, 150, 120), "Venture": S(400, 350, 300)})
+add("grant", "Non-dilutive grants & prizes received (conditional on eligibility)", "$",
+    "[HYP] Phase I up to $305K NSF [V]; PI-eligibility unresolved (grants/NSF_vs_NIH_ELIGIBILITY.md)",
+    {"Bootstrapped": S([0, 0, 0, 0, 0], [20000, 150000, 155000, 0, 0], [40000, 150000, 155000, 0, 0]),
+     "Venture": S([0, 150000, 155000, 0, 0], [20000, 150000, 155000, 500000, 750000],
+                  [40000, 150000, 155000, 500000, 750000])})
+
+KEYS = list(P.keys())
+
+
+def val(key, st, sc, j):
+    v = P[key][3][st][sc]
+    return v[j] if isinstance(v, list) else v
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Line definitions: (name, fmt, bold, python_fn(ctx, j), excel_fn(X, j))
+#   ctx.i(key, j)  -> input value ; ctx.l(name, j) -> line value (j may be -1 => 0)
+#   X.i(key, j)    -> Inputs!cell ; X.l(name, j)  -> P&L cell (j == -1 => "0")
+# ---------------------------------------------------------------------------------------------------------------
+LINES = [
+    ("Industry conversations", "0", False, lambda c, j: c.i("conv", j), lambda x, j: x.i("conv", j)),
+    ("Paid pilots", "0.0", False, lambda c, j: c.i("conv", j) * c.i("r_pilot", j),
+     lambda x, j: f"{x.i('conv', j)}*{x.i('r_pilot', j)}"),
+    ("New study customers", "0.0", False, lambda c, j: c.l("Paid pilots", j) * c.i("r_cust", j),
+     lambda x, j: f"{x.l('Paid pilots', j)}*{x.i('r_cust', j)}"),
+    ("Active study customers (year end)", "0.0", False,
+     lambda c, j: c.l("Active study customers (year end)", j - 1) * c.i("ret_cust", j) + c.l("New study customers", j),
+     lambda x, j: f"{x.l('Active study customers (year end)', j - 1)}*{x.i('ret_cust', j)}+{x.l('New study customers', j)}"),
+    ("Non-GLP studies analysed", "0.0", False,
+     lambda c, j: (c.l("Active study customers (year end)", j - 1) * c.i("ret_cust", j)
+                   + 0.5 * c.l("New study customers", j)) * c.i("studies", j),
+     lambda x, j: f"({x.l('Active study customers (year end)', j - 1)}*{x.i('ret_cust', j)}"
+                  f"+0.5*{x.l('New study customers', j)})*{x.i('studies', j)}"),
+    ("Material characterisations", "0.0", False, lambda c, j: c.l("Paid pilots", j) * c.i("r_char", j),
+     lambda x, j: f"{x.l('Paid pilots', j)}*{x.i('r_char', j)}"),
+    ("Academic evaluations", "0", False, lambda c, j: c.i("evals", j), lambda x, j: x.i("evals", j)),
+    ("New academic licences", "0.0", False, lambda c, j: c.i("evals", j) * c.i("r_acad", j),
+     lambda x, j: f"{x.i('evals', j)}*{x.i('r_acad', j)}"),
+    ("Active academic licences", "0.0", False,
+     lambda c, j: c.l("Active academic licences", j - 1) * c.i("ret_acad", j) + c.l("New academic licences", j),
+     lambda x, j: f"{x.l('Active academic licences', j - 1)}*{x.i('ret_acad', j)}+{x.l('New academic licences', j)}"),
+    ("Active enterprise licences", "0.0", False,
+     lambda c, j: c.l("Active enterprise licences", j - 1) * c.i("ret_ent", j) + c.i("ent_new", j),
+     lambda x, j: f"{x.l('Active enterprise licences', j - 1)}*{x.i('ret_ent', j)}+{x.i('ent_new', j)}"),
+    ("Pilot revenue", "#,##0", False, lambda c, j: c.l("Paid pilots", j) * c.i("p_pilot", j),
+     lambda x, j: f"{x.l('Paid pilots', j)}*{x.i('p_pilot', j)}"),
+    ("Study analysis revenue", "#,##0", False, lambda c, j: c.l("Non-GLP studies analysed", j) * c.i("p_study", j),
+     lambda x, j: f"{x.l('Non-GLP studies analysed', j)}*{x.i('p_study', j)}"),
+    ("Material characterisation revenue", "#,##0", False,
+     lambda c, j: c.l("Material characterisations", j) * c.i("p_char", j),
+     lambda x, j: f"{x.l('Material characterisations', j)}*{x.i('p_char', j)}"),
+    ("Academic licence revenue", "#,##0", False, lambda c, j: c.l("Active academic licences", j) * c.i("p_acad", j),
+     lambda x, j: f"{x.l('Active academic licences', j)}*{x.i('p_acad', j)}"),
+    ("Enterprise licence revenue", "#,##0", False, lambda c, j: c.l("Active enterprise licences", j) * c.i("p_ent", j),
+     lambda x, j: f"{x.l('Active enterprise licences', j)}*{x.i('p_ent', j)}"),
+]
+CORE_REV = ["Pilot revenue", "Study analysis revenue", "Material characterisation revenue", "Academic licence revenue",
+            "Enterprise licence revenue"]
+LINES += [
+    ("Expansion-module revenue", "#,##0", False, lambda c, j: sum(c.l(n, j) for n in CORE_REV) * c.i("exp", j),
+     lambda x, j: f"({'+'.join(x.l(n, j) for n in CORE_REV)})*{x.i('exp', j)}"),
+    ("Total revenue", "#,##0", True, lambda c, j: sum(c.l(n, j) for n in CORE_REV + ["Expansion-module revenue"]),
+     lambda x, j: "+".join(x.l(n, j) for n in CORE_REV + ["Expansion-module revenue"])),
+    ("Delivery hours", "#,##0", False,
+     lambda c, j: (c.l("Paid pilots", j) * c.i("h_pilot", j) + c.l("Non-GLP studies analysed", j) * c.i("h_study", j)
+                   + c.l("Material characterisations", j) * c.i("h_char", j)
+                   + c.l("Active academic licences", j) * c.i("h_acad", j)
+                   + c.l("Active enterprise licences", j) * c.i("h_ent", j)),
+     lambda x, j: f"{x.l('Paid pilots', j)}*{x.i('h_pilot', j)}+{x.l('Non-GLP studies analysed', j)}*{x.i('h_study', j)}"
+                  f"+{x.l('Material characterisations', j)}*{x.i('h_char', j)}"
+                  f"+{x.l('Active academic licences', j)}*{x.i('h_acad', j)}"
+                  f"+{x.l('Active enterprise licences', j)}*{x.i('h_ent', j)}"),
+    ("Implied delivery FTE", "0.00", False, lambda c, j: c.l("Delivery hours", j) / FTE_HOURS,
+     lambda x, j: f"{x.l('Delivery hours', j)}/{FTE_HOURS}"),
+    ("Analyst & support labour (COGS)", "#,##0", False, lambda c, j: c.l("Delivery hours", j) * c.i("rate", j),
+     lambda x, j: f"{x.l('Delivery hours', j)}*{x.i('rate', j)}"),
+    ("Data handling (COGS)", "#,##0", False,
+     lambda c, j: (c.l("Paid pilots", j) + c.l("Non-GLP studies analysed", j) + c.l("Material characterisations", j))
+     * c.i("data", j),
+     lambda x, j: f"({x.l('Paid pilots', j)}+{x.l('Non-GLP studies analysed', j)}+{x.l('Material characterisations', j)})"
+                  f"*{x.i('data', j)}"),
+    ("Characterisation pass-through (COGS)", "#,##0", False,
+     lambda c, j: c.l("Material characterisations", j) * c.i("pass", j),
+     lambda x, j: f"{x.l('Material characterisations', j)}*{x.i('pass', j)}"),
+    ("Expansion-module delivery (COGS)", "#,##0", False,
+     lambda c, j: c.l("Expansion-module revenue", j) * c.i("exp_cogs", j),
+     lambda x, j: f"{x.l('Expansion-module revenue', j)}*{x.i('exp_cogs', j)}"),
+]
+COGS = ["Analyst & support labour (COGS)", "Data handling (COGS)", "Characterisation pass-through (COGS)",
+        "Expansion-module delivery (COGS)"]
+LINES += [
+    ("Gross profit", "#,##0", True, lambda c, j: c.l("Total revenue", j) - sum(c.l(n, j) for n in COGS),
+     lambda x, j: f"{x.l('Total revenue', j)}-" + "-".join(x.l(n, j) for n in COGS)),
+    ("Gross margin %", "0%", False,
+     lambda c, j: 0 if c.l("Total revenue", j) == 0 else c.l("Gross profit", j) / c.l("Total revenue", j),
+     lambda x, j: f"IF({x.l('Total revenue', j)}=0,0,{x.l('Gross profit', j)}/{x.l('Total revenue', j)})"),
+    ("Salaries", "#,##0", False, lambda c, j: c.i("sal", j), lambda x, j: x.i("sal", j)),
+    ("Validation & QA", "#,##0", False, lambda c, j: c.i("val", j), lambda x, j: x.i("val", j)),
+    ("Other opex", "#,##0", False, lambda c, j: c.i("opex", j), lambda x, j: x.i("opex", j)),
+    ("Sales & marketing", "#,##0", False, lambda c, j: (c.i("conv", j) + c.i("evals", j)) * c.i("sm", j),
+     lambda x, j: f"({x.i('conv', j)}+{x.i('evals', j)})*{x.i('sm', j)}"),
+]
+OPEX = ["Salaries", "Validation & QA", "Other opex", "Sales & marketing"]
+LINES += [
+    ("EBITDA", "#,##0", True, lambda c, j: c.l("Gross profit", j) - sum(c.l(n, j) for n in OPEX),
+     lambda x, j: f"{x.l('Gross profit', j)}-" + "-".join(x.l(n, j) for n in OPEX)),
+    ("Grants & prizes (non-dilutive)", "#,##0", False, lambda c, j: c.i("grant", j), lambda x, j: x.i("grant", j)),
+    ("Net cash flow before equity", "#,##0", True, lambda c, j: c.l("EBITDA", j) + c.l("Grants & prizes (non-dilutive)", j),
+     lambda x, j: f"{x.l('EBITDA', j)}+{x.l('Grants & prizes (non-dilutive)', j)}"),
+    ("Cumulative cash before equity", "#,##0", True,
+     lambda c, j: c.l("Cumulative cash before equity", j - 1) + c.l("Net cash flow before equity", j),
+     lambda x, j: (x.l("Net cash flow before equity", j) if j == 0
+                   else f"{x.l('Cumulative cash before equity', j - 1)}+{x.l('Net cash flow before equity', j)}")),
+]
+LINES += [
+    ("Cumulative cash if no grants are won", "#,##0", False,
+     lambda c, j: c.l("Cumulative cash if no grants are won", j - 1) + c.l("EBITDA", j),
+     lambda x, j: (x.l("EBITDA", j) if j == 0 else f"{x.l('Cumulative cash if no grants are won', j - 1)}+{x.l('EBITDA', j)}")),
+]
+LINE_NAMES = [n for n, *_ in LINES]
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Python mirror
+# ---------------------------------------------------------------------------------------------------------------
+class Ctx:
+    def __init__(self, st, sc, override=None):
+        self.st, self.sc, self.override = st, sc, override or {}
+        self.v = {}
+
+    def i(self, key, j):
+        if key in self.override:
+            o = self.override[key]
+            return o[j] if isinstance(o, list) else o
+        return val(key, self.st, self.sc, j)
+
+    def l(self, name, j):
+        return 0.0 if j < 0 else self.v[(name, j)]
+
+
+def compute(st, sc, override=None):
+    c = Ctx(st, sc, override)
+    for j in range(5):
+        for name, _fmt, _b, pf, _xf in LINES:
+            c.v[(name, j)] = pf(c, j)
+    out = {n: [c.v[(n, j)] for j in range(5)] for n in LINE_NAMES}
+    out["Equity funding requirement (max cumulative deficit)"] = -min(0.0, min(out["Cumulative cash before equity"]))
+    out["Equity requirement if no grants are won"] = -min(0.0, min(out["Cumulative cash if no grants are won"]))
+    return out
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Workbook
+# ---------------------------------------------------------------------------------------------------------------
+def build_workbook(path):
     wb = Workbook()
     ws = wb.active
     ws.title = "README"
-    notes = ["OsteoQuant 5-year financial model (2027–2031) — DRAFT, all revenue drivers are hypotheses.",
-             "No customer interviews have been conducted. Prices are the founder playbook's unvalidated hypotheses.",
-             "Yellow cells on 'Inputs' are editable; every other number is a formula.",
-             "Market sanity check: the bottom-up serviceable pool for graft-defect reports at playbook prices is ≈$0.9M/$2.1M/$4.3M per year "
-             "(business/MARKET_MODEL_INPUTS.md). Revenue above that requires CRO licences, academic subscriptions or expansion modules.",
-             "Structures: 'Bootstrapped' = services-plus-software lab; 'Venture' = seed-funded platform with expansion modules.",
-             "Outputs per structure × scenario: revenue lines, COGS, gross margin, opex, EBITDA, grants, cumulative cash before equity, "
-             "and the equity funding requirement (= most negative cumulative cash)."]
+    notes = [
+        "OsteoQuant 5-year revenue and cash model (2027-2031). DRAFT. Every revenue driver is a hypothesis.",
+        "Status: pre-revenue, unincorporated, no customer interviews, no pilots, no letters of intent. Prices are the founder's "
+        "pricing hypotheses to test, not quotes and not market facts.",
+        "Offerings: paid pilot $2.5-5K | non-GLP study analysis $8-15K | material characterisation $5-15K | academic desktop "
+        "licence $4-10K/yr | enterprise desktop licence $30-75K/yr. No GLP-study offering is modelled; no GLP, Part 11 or "
+        "regulatory-acceptance claim is made.",
+        "Yellow cells on 'Inputs' are editable. Every number on the P&L, Unit economics and Market check sheets is a formula. "
+        "The 'Sensitivity' sheet holds values computed by build_financial_model.py with a Python mirror of the same formulas.",
+        "Compute cost is ~$0 per study because the application runs on the analyst's or customer's desktop; the dominant "
+        "cost is analyst time, which is an assumption to measure in the first pilot.",
+        "Revenue timing: new study customers contribute half a year of studies in the year they convert; licences are booked "
+        "for the full year in which they are active.",
+        "Structures: 'Bootstrapped' = founder-led services + desktop licences; 'Venture' = pre-seed funded team with the same "
+        "prices and conversion rates, more conversations, and hypothetical expansion modules from 2029.",
+        "Grants are conditional: SBIR/STTR PI-eligibility for a full-time student is unresolved (grants/NSF_vs_NIH_ELIGIBILITY.md).",
+        "Rationale for every input: business/REVENUE_MODEL.md. Rebuild: python business/build_financial_model.py",
+    ]
     for i, n in enumerate(notes, 1):
-        ws.cell(i, 1, n)
-    ws.column_dimensions["A"].width = 140
+        ws.cell(i, 1, n).alignment = Alignment(wrap_text=True)
+    ws.column_dimensions["A"].width = 150
 
     inp = wb.create_sheet("Inputs")
-    inp.append(["Structure", "Parameter", "Unit", "Evidence", "Scenario"] + YEARS)
+    inp.append(["Structure", "Parameter", "Unit", "Evidence / rationale", "Scenario"] + YEARS)
     for c in inp[1]:
-        c.font = Font(bold=True); c.fill = HDR
-    ref = {}  # (structure, scenario, param) -> row
+        c.font = Font(bold=True)
+        c.fill = HDR
+    ref = {}
     r = 2
-    for st in ("Bootstrapped", "Venture"):
-        for p in ORDER:
-            unit, lab, vals = INPUTS[st][p]
+    for st in STRUCTS:
+        for k in KEYS:
+            label, unit, ev, _ = P[k]
             for sc in SC:
-                v = vals[sc]
-                yearly = v if isinstance(v, list) else [v] * 5
-                inp.cell(r, 1, st); inp.cell(r, 2, p); inp.cell(r, 3, unit); inp.cell(r, 4, lab); inp.cell(r, 5, sc)
-                for j, y in enumerate(yearly):
-                    c = inp.cell(r, 6 + j, y)
+                inp.cell(r, 1, st)
+                inp.cell(r, 2, label)
+                inp.cell(r, 3, unit)
+                inp.cell(r, 4, ev)
+                inp.cell(r, 5, sc)
+                for j in range(5):
+                    c = inp.cell(r, 6 + j, val(k, st, sc, j))
                     c.fill = INP
-                    c.number_format = "0%" if unit == "%" else ("#,##0" if unit in ("$", "#", "h") else "0.0")
-                ref[(st, sc, p)] = r
+                    c.number_format = "0%" if unit == "%" else "#,##0.0" if k == "studies" else "#,##0"
+                ref[(st, sc, k)] = r
                 r += 1
-    for col, w in zip("ABCDE", (14, 48, 6, 44, 13)):
+    for col, w in zip("ABCDE", (14, 62, 6, 70, 13)):
         inp.column_dimensions[col].width = w
+    inp.freeze_panes = "F2"
 
-    for st in ("Bootstrapped", "Venture"):
+    line_cells = {}  # (st, sc, line) -> row on P&L sheet
+    for st in STRUCTS:
         sh = wb.create_sheet(f"P&L {st}")
         row = 1
-        summary_rows = {}
         for sc in SC:
-            sh.cell(row, 1, f"{st} — {sc}").font = Font(bold=True, size=12, color="1F4E79")
+            sh.cell(row, 1, f"{st} - {sc} (all drivers hypothetical)").font = Font(bold=True, size=12, color="1F4E79")
             row += 1
             sh.cell(row, 1, "Line")
             for j, y in enumerate(YEARS):
                 sh.cell(row, 2 + j, y)
             for c in sh[row]:
-                c.font = Font(bold=True); c.fill = HDR
+                c.font = Font(bold=True)
+                c.fill = HDR
             row += 1
-            I = lambda p, j: f"Inputs!{get_column_letter(6 + j)}{ref[(st, sc, p)]}"
-            lines = {}
+            # pre-assign rows so formulas can reference any line
+            rows = {}
+            for name in LINE_NAMES:
+                rows[name] = row
+                row += 1
 
-            def add(name, f, fmt="#,##0", bold=False):
-                nonlocal row
-                lines[name] = row
-                sh.cell(row, 1, name).font = Font(bold=bold)
+            class X:
+                @staticmethod
+                def i(key, j, _st=st, _sc=sc):
+                    return f"Inputs!{get_column_letter(6 + j)}{ref[(_st, _sc, key)]}"
+
+                @staticmethod
+                def l(name, j, _rows=rows):
+                    return "0" if j < 0 else f"{get_column_letter(2 + j)}{_rows[name]}"
+
+            for name, fmt, bold, _pf, xf in LINES:
+                rr = rows[name]
+                sh.cell(rr, 1, name).font = Font(bold=bold)
                 for j in range(5):
-                    c = sh.cell(row, 2 + j, "=" + f(j))
+                    c = sh.cell(rr, 2 + j, "=" + xf(X, j))
                     c.number_format = fmt
                     if bold:
                         c.font = Font(bold=True)
-                lines[name] = row
-                row += 1
-
-            col = lambda name, j: f"{get_column_letter(2 + j)}{lines[name]}"
-            add("Studies analysed", lambda j: f"{I('Study customers (paying, cumulative active)', j)}*{I('Studies per customer per year', j)}", "0.0")
-            add("Study revenue", lambda j: f"{col('Studies analysed', j)}*{I('Blended price per study', j)}")
-            add("Academic subscription revenue", lambda j: f"{I('Academic subscriptions', j)}*{I('Academic price per year', j)}")
-            add("CRO licence revenue", lambda j: f"{I('CRO enterprise licences', j)}*{I('CRO licence price per year', j)}")
-            add("Expansion-module revenue", lambda j: f"({col('Study revenue', j)}+{col('Academic subscription revenue', j)}+{col('CRO licence revenue', j)})*{I('Expansion-module revenue share of core', j)}")
-            add("Total revenue", lambda j: "+".join(col(n, j) for n in ("Study revenue", "Academic subscription revenue", "CRO licence revenue", "Expansion-module revenue")), bold=True)
-            add("Analyst labour (COGS)", lambda j: f"{col('Studies analysed', j)}*{I('Analyst hours per study', j)}*{I('Loaded analyst cost per hour', j)}")
-            add("Compute & storage (COGS)", lambda j: f"{col('Studies analysed', j)}*{I('Compute + storage per study', j)}")
-            add("Gross profit", lambda j: f"{col('Total revenue', j)}-{col('Analyst labour (COGS)', j)}-{col('Compute & storage (COGS)', j)}", bold=True)
-            add("Gross margin %", lambda j: f"IF({col('Total revenue', j)}=0,0,{col('Gross profit', j)}/{col('Total revenue', j)})", "0%")
-            add("Salaries", lambda j: I("Founder & staff salaries", j))
-            add("Validation & QA", lambda j: I("Validation & QA spend", j))
-            add("Other opex", lambda j: I("Other opex (legal, IP, insurance, software, travel)", j))
-            prevcust = lambda j: "0" if j == 0 else I("Study customers (paying, cumulative active)", j - 1)
-            add("Customer acquisition", lambda j: f"MAX(0,{I('Study customers (paying, cumulative active)', j)}-{prevcust(j)})*{I('Customer acquisition cost per new customer', j)}")
-            add("EBITDA", lambda j: f"{col('Gross profit', j)}-{col('Salaries', j)}-{col('Validation & QA', j)}-{col('Other opex', j)}-{col('Customer acquisition', j)}", bold=True)
-            add("Grants & prizes (non-dilutive)", lambda j: I("Non-dilutive grants & prizes received", j))
-            add("Net cash flow before equity", lambda j: f"{col('EBITDA', j)}+{col('Grants & prizes (non-dilutive)', j)}", bold=True)
-            add("Cumulative cash before equity", lambda j: col("Net cash flow before equity", 0) if j == 0 else f"{col('Cumulative cash before equity', j - 1)}+{col('Net cash flow before equity', j)}", bold=True)
+                line_cells[(st, sc, name)] = rr
             sh.cell(row, 1, "Equity funding requirement (max cumulative deficit)").font = Font(bold=True, color="8B1E1E")
-            c = sh.cell(row, 2, f"=-MIN(0,MIN(B{lines['Cumulative cash before equity']}:F{lines['Cumulative cash before equity']}))")
-            c.number_format = "#,##0"; c.font = Font(bold=True, color="8B1E1E")
-            summary_rows[sc] = (lines, row)
+            cr = rows["Cumulative cash before equity"]
+            c = sh.cell(row, 2, f"=-MIN(0,MIN(B{cr}:F{cr}))")
+            c.number_format = "#,##0"
+            c.font = Font(bold=True, color="8B1E1E")
+            line_cells[(st, sc, "Equity funding requirement (max cumulative deficit)")] = row
+            row += 1
+            sh.cell(row, 1, "Equity requirement if no grants are won")
+            nr = rows["Cumulative cash if no grants are won"]
+            c = sh.cell(row, 2, f"=-MIN(0,MIN(B{nr}:F{nr}))")
+            c.number_format = "#,##0"
+            line_cells[(st, sc, "Equity requirement if no grants are won")] = row
             row += 2
         sh.column_dimensions["A"].width = 52
         for j in range(5):
             sh.column_dimensions[get_column_letter(2 + j)].width = 14
+        sh.freeze_panes = "B1"
         ch = LineChart()
-        ch.title = f"{st}: cumulative cash before equity"
+        ch.title = f"{st}: total revenue by scenario (hypothetical)"
         ch.y_axis.title = "$"
         for sc in SC:
-            lines, _ = summary_rows[sc]
-            rr = lines["Cumulative cash before equity"]
-            data = Reference(sh, min_col=2, max_col=6, min_row=rr, max_row=rr)
-            ch.add_data(data, from_rows=True, titles_from_data=False)
+            rr = line_cells[(st, sc, "Total revenue")]
+            ch.add_data(Reference(sh, min_col=2, max_col=6, min_row=rr, max_row=rr), from_rows=True, titles_from_data=False)
         for s_, sc in zip(ch.series, SC):
-            from openpyxl.chart.series import SeriesLabel
             s_.tx = SeriesLabel(v=sc)
         ch.height, ch.width = 8, 18
         sh.add_chart(ch, "H2")
+
+    # Unit economics (formulas) -------------------------------------------------------------------------------
+    ue = wb.create_sheet("Unit economics")
+    ue.append(["Contribution per unit = price - (analyst hours x loaded rate) - data handling - pass-through. "
+               "Bootstrapped structure; year shown in column header. All inputs hypothetical."])
+    ue.append([])
+    ue.append(["Offering", "Scenario", "Price 2027", "Delivery cost 2027", "Contribution 2027", "Margin 2027",
+               "Price 2031", "Delivery cost 2031", "Contribution 2031", "Margin 2031"])
+    for c in ue[3]:
+        c.font = Font(bold=True)
+        c.fill = HDR
+    offers = [("Paid pilot", "p_pilot", "h_pilot", True, False), ("Non-GLP study analysis", "p_study", "h_study", True, False),
+              ("Material characterisation", "p_char", "h_char", True, True),
+              ("Academic licence (per year)", "p_acad", "h_acad", False, False),
+              ("Enterprise licence (per year)", "p_ent", "h_ent", False, False)]
+    r = 4
+    unit_rows = {}
+    for name, pk, hk, has_data, has_pass in offers:
+        for sc in SC:
+            I = lambda k, j: f"Inputs!{get_column_letter(6 + j)}{ref[('Bootstrapped', sc, k)]}"
+            ue.cell(r, 1, name)
+            ue.cell(r, 2, sc)
+            for off, j in ((3, 0), (7, 4)):
+                cost = f"{I(hk, j)}*{I('rate', j)}"
+                if has_data:
+                    cost += f"+{I('data', j)}"
+                if has_pass:
+                    cost += f"+{I('pass', j)}"
+                pc, cc, kc = (get_column_letter(off + n) for n in range(3))
+                ue.cell(r, off, f"={I(pk, j)}").number_format = "#,##0"
+                ue.cell(r, off + 1, f"={cost}").number_format = "#,##0"
+                ue.cell(r, off + 2, f"={pc}{r}-{cc}{r}").number_format = "#,##0"
+                ue.cell(r, off + 3, f"=IF({pc}{r}=0,0,{kc}{r}/{pc}{r})").number_format = "0%"
+            unit_rows[(name, sc)] = r
+            r += 1
+    ue.column_dimensions["A"].width = 32
+    ue.column_dimensions["B"].width = 13
+    for col in "CDEFGHIJ":
+        ue.column_dimensions[col].width = 15
+
+    # Market check (formulas) ---------------------------------------------------------------------------------
+    mk = wb.create_sheet("Market check")
+    mk.append(["Serviceable pool at the Base price hypotheses vs modelled revenue. Counts are [V] (openFDA / NIH RePORTER, "
+               "business/MARKET_MODEL_INPUTS.md); volumes are [AE]; prices are [HYP]."])
+    mk.append([])
+    mk.append(["Segment", "Organisations", "Evidence", "Studies/org/yr low", "mid", "high", "Pool low $", "Pool mid $",
+               "Pool high $"])
+    for c in mk[3]:
+        c.font = Font(bold=True)
+        c.fill = HDR
+    pb = f"Inputs!F{ref[('Bootstrapped', 'Base', 'p_study')]}"
+    pa = f"Inputs!F{ref[('Bootstrapped', 'Base', 'p_acad')]}"
+    segs = [("Ortho bone-void-filler manufacturers (active 2023-26)", 41, "[V] openFDA", 0.5, 1.5, 3, pb),
+            ("Dental graft + barrier manufacturers (active 2023-26)", 24, "[V] openFDA", 0.5, 1, 2, pb),
+            ("Spine fusion firms (graft-related studies only)", 117, "[V] count; [AE] share", 0.1, 0.2, 0.3, pb),
+            ("PMA biologic sponsors", 3, "[V] openFDA PMA", 1, 2, 4, pb)]
+    r = 4
+    for name, n, ev, lo, mid, hi, pr in segs:
+        mk.append([name, n, ev, lo, mid, hi])
+        for k, col in enumerate("DEF"):
+            mk.cell(r, 7 + k, f"=B{r}*{col}{r}*{pr}").number_format = "#,##0"
+        r += 1
+    mk.cell(r, 1, "Industry per-study pool").font = Font(bold=True)
+    for k, col in enumerate("GHI"):
+        mk.cell(r, 7 + k, f"=SUM({col}4:{col}{r - 1})").number_format = "#,##0"
+    ind_row = r
+    r += 1
+    mk.cell(r, 1, "Academic licences (labs: 49 [V] lower bound / 100 / 250 [AE])")
+    mk.cell(r, 3, "[V]/[AE]")
+    for k, n in enumerate((49, 100, 250)):
+        mk.cell(r, 7 + k, f"={n}*{pa}").number_format = "#,##0"
+    acad_row = r
+    r += 1
+    mk.cell(r, 1, "Total serviceable pool (excl. characterisation, enterprise overlap)").font = Font(bold=True)
+    for k, col in enumerate("GHI"):
+        mk.cell(r, 7 + k, f"={col}{ind_row}+{col}{acad_row}").number_format = "#,##0"
+    tot_row = r
+    r += 2
+    mk.cell(r, 1, "Modelled 2031 revenue as share of the MID pool").font = Font(bold=True)
+    r += 1
+    mk.append(["Structure - scenario", "2031 study revenue", "share of mid industry pool", "2031 academic revenue",
+               "share of mid academic pool", "2031 total revenue", "share of mid total pool",
+               "Cumulative industry conversations 2027-31", "vs ~200 US-visible industry buying units"])
+    for c in mk[r]:
+        c.font = Font(bold=True)
+        c.fill = HDR
+    r += 1
+    for st in STRUCTS:
+        for sc in SC:
+            sheet = f"'P&L {st}'"
+            sr = line_cells[(st, sc, "Study analysis revenue")]
+            ar = line_cells[(st, sc, "Academic licence revenue")]
+            tr = line_cells[(st, sc, "Total revenue")]
+            cv = line_cells[(st, sc, "Industry conversations")]
+            mk.cell(r, 1, f"{st} - {sc}")
+            mk.cell(r, 2, f"={sheet}!F{sr}").number_format = "#,##0"
+            mk.cell(r, 3, f"=B{r}/H{ind_row}").number_format = "0%"
+            mk.cell(r, 4, f"={sheet}!F{ar}").number_format = "#,##0"
+            mk.cell(r, 5, f"=D{r}/H{acad_row}").number_format = "0%"
+            mk.cell(r, 6, f"={sheet}!F{tr}").number_format = "#,##0"
+            mk.cell(r, 7, f"=F{r}/H{tot_row}").number_format = "0%"
+            mk.cell(r, 8, f"=SUM({sheet}!B{cv}:F{cv})").number_format = "#,##0"
+            mk.cell(r, 9, f"=H{r}/200").number_format = "0%"
+            r += 1
+    mk.cell(r + 1, 1, "Read: a share above ~30% of the mid pool, or cumulative conversations above ~100% of US-visible "
+                      "buying units, means the scenario depends on non-US sponsors, higher volumes or expansion modules.")
+    mk.column_dimensions["A"].width = 58
+    for col in "BCDEFGHI":
+        mk.column_dimensions[col].width = 18
+
     wb.save(path)
-    print("saved", path)
+    return line_cells, unit_rows, (ind_row, acad_row, tot_row)
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Sensitivity (Python mirror, Bootstrapped Base)
+# ---------------------------------------------------------------------------------------------------------------
+SENS_KEYS = ["p_study", "studies", "r_cust", "r_pilot", "conv", "ret_cust", "h_study", "rate", "p_acad", "r_acad",
+             "evals", "p_ent", "ent_new", "p_char", "r_char", "p_pilot"]
+
+
+def sensitivity(st="Bootstrapped"):
+    base = compute(st, "Base")
+    b_rev = base["Total revenue"][4]
+    b_cum = sum(base["EBITDA"])
+    rows = []
+    for k in SENS_KEYS:
+        res = {}
+        for sc in ("Conservative", "Optimistic"):
+            ov = {k: P[k][3][st][sc]}
+            o = compute(st, "Base", ov)
+            res[sc] = (o["Total revenue"][4], sum(o["EBITDA"]))
+        rows.append({"parameter": P[k][0], "key": k,
+                     "low_value": P[k][3][st]["Conservative"], "base_value": P[k][3][st]["Base"],
+                     "high_value": P[k][3][st]["Optimistic"],
+                     "rev2031_low": round(res["Conservative"][0]), "rev2031_high": round(res["Optimistic"][0]),
+                     "cum_ebitda_low": round(res["Conservative"][1]), "cum_ebitda_high": round(res["Optimistic"][1]),
+                     "rev2031_swing": round(abs(res["Optimistic"][0] - res["Conservative"][0]))})
+    rows.sort(key=lambda d: -d["rev2031_swing"])
+    # two-way grid: study price x pilot->customer conversion (2031 revenue)
+    grid = {"rows_p_study": [8000, 11000, 15000], "cols_r_cust": [0.25, 0.40, 0.50], "rev2031": []}
+    for p in grid["rows_p_study"]:
+        grid["rev2031"].append([round(compute(st, "Base", {"p_study": p, "r_cust": rc})["Total revenue"][4])
+                                for rc in grid["cols_r_cust"]])
+    # break-even: lowest study price at which Base cumulative 5-yr EBITDA + grants >= 0 (bisection)
+    def cum_cash(p):
+        return compute(st, "Base", {"p_study": p})["Cumulative cash if no grants are won"][4]
+    lo, hi = 0.0, 200000.0
+    be = None
+    if cum_cash(hi) >= 0:
+        for _ in range(60):
+            mid = (lo + hi) / 2
+            if cum_cash(mid) >= 0:
+                hi = mid
+            else:
+                lo = mid
+        be = round(hi)
+    return {"structure": st, "base_rev2031": round(b_rev), "base_cum_ebitda": round(b_cum), "one_way": rows,
+            "two_way_rev2031": grid, "breakeven_study_price_no_grants_cum_cash_2031": be}
+
+
+def write_sensitivity_sheet(path, sens_b, sens_v):
+    wb = load_workbook(path)
+    sh = wb.create_sheet("Sensitivity")
+    sh.append(["One-way sensitivity on the Base scenario: each parameter moved to its Conservative and Optimistic value "
+               "with all others at Base. VALUES computed by build_financial_model.py (Python mirror of the sheet formulas)."])
+    for sens in (sens_b, sens_v):
+        sh.append([])
+        sh.append([f"{sens['structure']} - Base: 2031 revenue {sens['base_rev2031']:,} ; cumulative 2027-31 EBITDA "
+                   f"{sens['base_cum_ebitda']:,}"])
+        sh.cell(sh.max_row, 1).font = Font(bold=True)
+        sh.append(["Parameter", "Low value", "Base value", "High value", "2031 revenue (low)", "2031 revenue (high)",
+                   "Swing", "Cum. EBITDA (low)", "Cum. EBITDA (high)"])
+        for c in sh[sh.max_row]:
+            c.font = Font(bold=True)
+            c.fill = HDR
+        for d in sens["one_way"]:
+            fmt = lambda v: json.dumps(v) if isinstance(v, list) else v
+            sh.append([d["parameter"], fmt(d["low_value"]), fmt(d["base_value"]), fmt(d["high_value"]), d["rev2031_low"],
+                       d["rev2031_high"], d["rev2031_swing"], d["cum_ebitda_low"], d["cum_ebitda_high"]])
+        g = sens["two_way_rev2031"]
+        sh.append([])
+        sh.append(["2031 revenue: study price (rows) x pilot->customer rate (columns)"] + [f"{c:.0%}" for c in g["cols_r_cust"]])
+        sh.cell(sh.max_row, 1).font = Font(bold=True)
+        for p, vals in zip(g["rows_p_study"], g["rev2031"]):
+            sh.append([f"${p:,}"] + vals)
+        be = sens["breakeven_study_price_no_grants_cum_cash_2031"]
+        sh.append(["Study price at which Base cumulative cash WITHOUT grants reaches 0 by 2031",
+                   "not reached below $200K" if be is None else be])
+    sh.column_dimensions["A"].width = 64
+    for col in "BCDEFGHI":
+        sh.column_dimensions[col].width = 17
+    wb.save(path)
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Checks
+# ---------------------------------------------------------------------------------------------------------------
+REF_RE = re.compile(r"(?:(?:'([^']+)'|([A-Za-z][\w&]*))!)?\$?([A-Z]{1,3})\$?(\d+)(?::\$?([A-Z]{1,3})\$?(\d+))?")
+
+
+def check_no_self_reference(path):
+    from openpyxl.utils import column_index_from_string as ci
+    wb = load_workbook(path)
+    n = 0
+    for ws in wb.worksheets:
+        for row in ws.iter_rows():
+            for cell in row:
+                if isinstance(cell.value, str) and cell.value.startswith("="):
+                    n += 1
+                    for m in REF_RE.finditer(cell.value[1:]):
+                        sheet = m.group(1) or m.group(2) or ws.title
+                        if sheet != ws.title:
+                            continue
+                        c1, r1 = ci(m.group(3)), int(m.group(4))
+                        c2, r2 = (ci(m.group(5)), int(m.group(6))) if m.group(5) else (c1, r1)
+                        if c1 <= cell.column <= c2 and r1 <= cell.row <= r2:
+                            raise AssertionError(f"self-reference in {ws.title}!{cell.coordinate}: {cell.value}")
+    return n
+
+
+XL_ERRORS = {"#DIV/0!", "#REF!", "#NAME?", "#VALUE!", "#N/A", "#NUM!", "#NULL!"}
+
+
+def libreoffice_check(path, results, line_cells):
+    exe = shutil.which("soffice") or shutil.which("libreoffice")
+    if not exe:
+        return "LibreOffice not found - skipped recalculation check"
+    with tempfile.TemporaryDirectory() as td:
+        src = Path(td) / "in.xlsx"
+        shutil.copy(path, src)
+        outdir = Path(td) / "out"
+        subprocess.run([exe, "--headless", "--calc", "--convert-to", "xlsx", "--outdir", str(outdir), str(src)],
+                       check=True, capture_output=True, timeout=180)
+        wb = load_workbook(outdir / "in.xlsx", data_only=True)
+        errors = []
+        for ws in wb.worksheets:
+            for row in ws.iter_rows():
+                for cell in row:
+                    if isinstance(cell.value, str) and (cell.value.startswith("Err:") or cell.value in XL_ERRORS):
+                        errors.append(f"{ws.title}!{cell.coordinate}={cell.value}")
+        if errors:
+            raise AssertionError("formula errors after recalculation: " + ", ".join(errors[:10]))
+        worst = 0.0
+        for (st, sc, name), rr in line_cells.items():
+            ws = wb[f"P&L {st}"]
+            exp = results[f"{st} — {sc}"][name]
+            exp = exp if isinstance(exp, list) else [exp]
+            for j, e in enumerate(exp):
+                got = ws.cell(rr, 2 + j).value
+                if got is None:
+                    raise AssertionError(f"no cached value for {st}/{sc}/{name}/{j}")
+                worst = max(worst, abs(got - e) / max(1.0, abs(e)))
+        if worst > 1e-9:
+            raise AssertionError(f"Excel/LibreOffice and Python mirror disagree (max rel diff {worst})")
+        return f"LibreOffice recalculation matches the Python mirror on {len(line_cells)} lines (max rel diff {worst:.1e})"
+
+
+def main(path=HERE / "FINANCIAL_MODEL.xlsx"):
+    path = Path(path)
+    results = {f"{st} — {sc}": compute(st, sc) for st in STRUCTS for sc in SC}
+    line_cells, _unit_rows, _mk = build_workbook(path)
+    sens_b, sens_v = sensitivity("Bootstrapped"), sensitivity("Venture")
+    write_sensitivity_sheet(path, sens_b, sens_v)
+    nf = check_no_self_reference(path)
+    print(f"{nf} formulas, no self-references")
+    print(libreoffice_check(path, results, line_cells))
+
+    keep = ["Total revenue"] + CORE_REV + ["Expansion-module revenue", "Paid pilots", "Non-GLP studies analysed",
+                                             "Material characterisations", "Active study customers (year end)",
+                                             "Active academic licences", "Active enterprise licences",
+                                             "Implied delivery FTE", "Gross margin %", "EBITDA",
+                                             "Grants & prizes (non-dilutive)", "Cumulative cash before equity",
+                                             "Cumulative cash if no grants are won"]
+    out = {}
+    for k, v in results.items():
+        d = {}
+        for n in keep:
+            if n == "Gross margin %":
+                d[n] = [round(x, 2) for x in v[n]]
+            elif n in ("Paid pilots", "Non-GLP studies analysed", "Material characterisations", "Implied delivery FTE",
+                       "Active study customers (year end)", "Active academic licences", "Active enterprise licences"):
+                d[n] = [round(x, 1) for x in v[n]]
+            else:
+                d[n] = [round(x) for x in v[n]]
+        d["Equity funding requirement (max cumulative deficit)"] = [
+            round(v["Equity funding requirement (max cumulative deficit)"]), None, None, None, None]
+        d["Equity requirement if no grants are won"] = [round(v["Equity requirement if no grants are won"]), None, None, None,
+                                                        None]
+        out[k] = d
+    (HERE / "financial_model_outputs.json").write_text(json.dumps(out, indent=1, ensure_ascii=True) + "\n")
+    (HERE / "revenue_model_sensitivity.json").write_text(
+        json.dumps({"Bootstrapped": sens_b, "Venture": sens_v}, indent=1) + "\n")
+    print("saved", path, "and JSON outputs")
+    for k, v in out.items():
+        print(f"{k:28s} rev {v['Total revenue']}  GM31 {v['Gross margin %'][4]:.0%}  "
+              f"cum {v['Cumulative cash before equity'][4]:,}  equity {v['Equity funding requirement (max cumulative deficit)'][0]:,}")
 
 
 if __name__ == "__main__":

@@ -63,8 +63,11 @@ Detailed citations: docs/science/REFERENCES.md, docs/research/COMPETITOR_INTELLI
 | Reviewer effort: 20 s/slice review vs 90 s/slice manual | Experiment M | timed user study with analysts |
 
 ## 6. Commercial hypotheses (untested; no interviews done)
-$12K/non-GLP study; $25K/GLP study; $4K/yr academic; $40K/yr CRO licence; ≥70% analyst time saving; ≥3 of 15 buyers pay ≥$10K;
-serviceable graft-report pool ≈$0.9–4.3M/yr at playbook prices (bottom-up, business/MARKET_MODEL_INPUTS.md).
+Generation-2 pricing hypotheses (superseding the Gen-1 $12K/$25K/$4K/$40K figures): paid pilot $2.5–5K; non-GLP study
+analysis $8–15K; material characterisation $5–15K; academic licence $4–10K/yr; enterprise licence $30–75K/yr
+(business/REVENUE_MODEL.md, business/PRICING_VALIDATION_PLAN.md). No GLP package is offered. Analyst time saving is an
+assumption-derived model output, not a measurement (EVIDENCE_LEDGER G2-002). Reachable market recomputed at the new
+prices ≈$0.8–3.9M/yr (bottom-up hypothesis, business/REVENUE_MODEL.md).
 
 ## 7. Unresolved
 Real graft-vs-new-bone separability for any commercial material; real cross-scanner transfer; whether CROs already have

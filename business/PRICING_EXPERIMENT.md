@@ -1,5 +1,7 @@
 # Pricing Experiment Design: DefectFill Report
 
+> **Update 2026-11-27:** the price hypotheses are now: paid pilot $2.5–5K, non-GLP study analysis $8–15K, material characterisation $5–15K, academic desktop licence $4–10K/yr, enterprise desktop licence $30–75K/yr. No GLP-study price is tested until a validation report exists. The question scripts, ladders, logging fields and decision thresholds in `PRICING_VALIDATION_PLAN.md` replace §3 Phase 1 and §5 below where they differ. The cost-to-serve floor in §4 is now estimated in `REVENUE_MODEL.md` §2 (compute ≈ $0 because the product runs locally). The playbook anchors below are kept for history.
+
 **Every price in this document is a hypothesis [HYP].** None has been validated with a customer. The founder-playbook anchors (~$12K per non-GLP study, ~$25K per GLP study, ~$4K/yr academic licence, ~$40K/yr CRO licence) are starting points to test. They are not targets.
 
 ## 1. Questions to answer

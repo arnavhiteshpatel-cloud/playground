@@ -102,6 +102,17 @@ Price inputs (founder playbook, unvalidated): non-GLP study $12K, GLP study $25K
 - Upside depends on: (a) higher study volumes than assumed; (b) adjacent modules (fracture callus, implant osseointegration, spine fusion mass, dental ridge); (c) non-US sponsors under EU MDR; (d) per-scan academic volume through cores; (e) a vendor or CRO licence that reaches the installed base.
 - Interviews should check (a) first. If typical manufacturers run fewer than one qualifying study a year, the per-study model is unlikely to sustain the business.
 
+## 5b. Pool recomputed at the 2026-11-27 price hypotheses [HYP]
+At Base prices of $11K per non-GLP study (no GLP study priced) and $6K per academic licence, with the same counts and volumes as §5, the pool is:
+
+| | Low | Mid | High |
+|---|---|---|---|
+| Industry per-study pool | $0.52M | $1.26M | $2.40M |
+| Academic licences | $0.29M | $0.60M | $1.50M |
+| **Total** | **$0.81M** | **$1.86M** | **$3.90M** per year |
+
+Formulas are in the `Market check` sheet of `FINANCIAL_MODEL.xlsx`; the rationale is in `REVENUE_MODEL.md` §5d. Material characterisation and enterprise licences are excluded (characterisation is not sized; enterprise licences overlap the industry rows). The §5 conclusion is unchanged: low single-digit millions per year.
+
 ## 6. Inputs still missing (collect in interviews or pilots)
 - [ ] Actual studies per year and scans per study by segment (§4)
 - [ ] Share of studies where micro-CT analysis is outsourced vs in-house

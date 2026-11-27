@@ -26,6 +26,14 @@ longitudinal protocol; audit-ready per-study reports for firms without imaging s
 bone-repair projects using micro-CT (lower bound). Graft-defect reports at hypothesised prices ≈ $0.9–4.3M/yr → a
 services-plus-software lab; venture scale requires CRO licensing and expansion modules (osseointegration, spine, histology).
 
+**Pricing (hypotheses to test, not prices charged; no interviews yet):** offline desktop application plus services:
+paid pilot $2.5–5K · non-GLP study analysis $8–15K · material characterisation $5–15K · academic licence $4–10K/yr ·
+enterprise licence $30–75K/yr. No GLP-study offering until a validation report exists. Compute cost ≈ $0 (runs locally);
+analyst time is the main cost (assumed 22–90 h/study across scenarios). Published anchor: one academic core lists $200/h for corporate
+analysis (HSS, accessed 2026-11-27). Serviceable pool at these Base prices ≈ $0.8–3.9M/yr. Hypothetical 2031 revenue:
+$58K / $288K / $1.05M (bootstrapped conservative / base / optimistic). Validation plan and thresholds:
+business/PRICING_VALIDATION_PLAN.md; model: business/REVENUE_MODEL.md.
+
 **Next 90 days:** OTM/IP clearance → physical phantom study on the Beckman Zeiss Versa 630 → 15 buyer interviews →
 Cozad (Feb 2) → first retrospective pilot. **Decision gate ~25 Feb 2027:** ≥3/15 buyers at ≥$10K/study and a separable path.
 

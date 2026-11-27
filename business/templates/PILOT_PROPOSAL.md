@@ -9,7 +9,7 @@ Compare OsteoQuant's DefectFill workflow (automated ROI and three-class segmenta
 
 ## 2. Offer [HYP]
 - **Option A (free):** no fee in exchange for (i) a 45-minute debrief interview and (ii) permission to report **anonymized, aggregate** agreement statistics. Publication requires the customer's prior written approval.
-- **Option B (discounted):** $[___] [HYP], with no publication rights and full confidentiality.
+- **Option B (paid pilot):** $[2,500–5,000] [HYP; see `business/REVENUE_MODEL.md`], with no publication rights and full confidentiality. Credited against a follow-on study if one is ordered within [90] days.
 
 ## 3. Data requested
 - 20–30 reconstructed scans: at least 2 groups (e.g. graft vs empty defect), ideally ≥2 graft types or time points.

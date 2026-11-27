@@ -43,9 +43,10 @@ Data Acceptance (T0) → D1 at T0 + [5] bd → D2 at T0 + [15–25] bd depending
 ## 6. Fees [HYP — placeholders]
 | Item | Basis | Amount |
 |---|---|---|
-| Non-GLP study report (≤[40] scans, ≤[2] time points) | Fixed | $[12,000] [HYP] |
+| Non-GLP study report (≤[40] scans, ≤[2] time points) | Fixed | $[8,000–15,000] [HYP] |
+| Material characterisation (optional) | Fixed | $[5,000–15,000] [HYP] |
 | Additional scans beyond allowance | Per scan | $[___] [HYP] |
-| GLP-supporting option | Fixed uplift | $[___] [HYP] |
+| GLP-supporting option | Not offered | Not offered until a validation report and a Quality Agreement exist |
 | Statistical analysis (optional) | Fixed | $[___] [HYP] |
 | Change orders | Hourly | $[___]/h [HYP] |
 

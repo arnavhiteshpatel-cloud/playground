@@ -13,14 +13,14 @@ DefectFill Report for [n] reconstructed micro-CT scans from [model] study, [k] t
 ## Pricing [HYP]
 | Line | Description | Qty | Unit price | Total |
 |---|---|---|---|---|
-| 1 | DefectFill study report, non-GLP (includes ≤[40] scans) | 1 | $[12,000] | $[ ] |
+| 1 | DefectFill study report, non-GLP (includes ≤[40] scans) | 1 | $[8,000–15,000; set from scope] | $[ ] |
 | 2 | Additional scans | [ ] | $[ ] | $[ ] |
-| 3 | GLP-supporting package (validation summary, QA statement, audit export) | [0/1] | $[ ] | $[ ] |
+| 3 | Material characterisation (separability assessment of the customer's graft material at their scan settings) | [0/1] | $[5,000–15,000] | $[ ] |
 | 4 | Optional group statistics | [0/1] | $[ ] | $[ ] |
 | 5 | Pilot credit (if a pilot was completed) | 1 | –$[ ] | –$[ ] |
 | | **Total (excl. tax)** | | | **$[ ]** |
 
-Alternative (for comparison, if offered): annual subscription with [x] included studies at $[ ]/yr [HYP].
+Alternative (for comparison, if offered): desktop licence at $[4,000–10,000]/yr (academic) or $[30,000–75,000]/yr (enterprise) [HYP]. Price ranges follow `business/REVENUE_MODEL.md`; pick one figure per quote and record it in `business/PRICING_VALIDATION_PLAN.md` §6. Do not quote a GLP-supporting package: no validation report exists and no GLP or Part 11 claim can be made.
 
 ## Terms
 - Payment: [50% on order / 50% on final report] or [Net 30].

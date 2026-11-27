@@ -1,0 +1,841 @@
+{
+ "meta": {
+  "version": "1.0",
+  "date": "2026-11-27",
+  "units": {
+   "density": "mg HA/cm3 equivalent (HA-in-water-like-matrix calibration)",
+   "size": "micrometres",
+   "time": "days/weeks/months as labelled"
+  },
+  "evidence_legend": {
+   "RF": "literature-supported; see 'source' (keys R# in REFERENCES.md). 'RF-derived' in evidence_detail = computed by us from cited reference data (NIST SRD 126)",
+   "ASSUMPTION": "engineering placeholder; no direct literature value found in this review",
+   "PK": "(evidence_detail only) author prior knowledge not re-verified in this review"
+  },
+  "how_to_use": "Sample a per-object density uniformly or from a truncated normal within density_mgHA_cm3; apply sub-voxel microporosity as solid-fraction multiplier on dense-material density; build geometry at >=4x target voxel resolution, assign densities, then blur with PSF (FWHM 1.5-3 voxels, ASSUMPTION) and add correlated noise. Non-CaP materials must use energy_dependence_haeq for the declared effective energy.",
+  "caveats": [
+   "Desktop microCT underestimates TMD by ~13-15% vs SRmicroCT; ash ~9-11% above SRmicroCT (R23).",
+   "Grey values are scanner/protocol-specific; morphometry differs across scanners by up to 236% for Tb.Th (R26).",
+   "Web-search budget was exhausted mid-review; several values are PK/ASSUMPTION and listed for verification in BONE_BIOLOGY_AND_GRAFTS.md section 5."
+  ]
+ },
+ "attenuation_tables": {
+  "energies_keV": [
+   20,
+   25,
+   30,
+   40,
+   50,
+   60,
+   80
+  ],
+  "linear_attenuation_per_cm": {
+   "HA_dense": [
+    20.727,
+    11.063,
+    6.634,
+    3.121,
+    1.853,
+    1.285,
+    0.818
+   ],
+   "beta_TCP_dense": [
+    19.919,
+    10.633,
+    6.376,
+    3.002,
+    1.784,
+    1.239,
+    0.79
+   ],
+   "CaSO4_anhydrite": [
+    17.261,
+    9.239,
+    5.554,
+    2.643,
+    1.592,
+    1.121,
+    0.732
+   ],
+   "CaSO4_dihydrate": [
+    11.091,
+    5.982,
+    3.625,
+    1.768,
+    1.097,
+    0.795,
+    0.543
+   ],
+   "bioglass_45S5": [
+    11.047,
+    5.983,
+    3.633,
+    1.799,
+    1.137,
+    0.838,
+    0.588
+   ],
+   "bioglass_S53P4": [
+    10.21,
+    5.546,
+    3.377,
+    1.69,
+    1.081,
+    0.806,
+    0.575
+   ],
+   "Mg_metal": [
+    4.808,
+    2.641,
+    1.619,
+    0.849,
+    0.573,
+    0.447,
+    0.339
+   ],
+   "Ti_metal": [
+    71.483,
+    37.767,
+    22.424,
+    9.985,
+    5.471,
+    3.455,
+    1.827
+   ],
+   "bone_cortical_ICRU44": [
+    7.682,
+    4.179,
+    2.556,
+    1.278,
+    0.814,
+    0.604,
+    0.428
+   ],
+   "soft_tissue_ICRU44": [
+    0.872,
+    0.565,
+    0.402,
+    0.285,
+    0.24,
+    0.217,
+    0.193
+   ],
+   "adipose_ICRU44": [
+    0.539,
+    0.381,
+    0.291,
+    0.228,
+    0.202,
+    0.187,
+    0.171
+   ],
+   "water": [
+    0.81,
+    0.528,
+    0.376,
+    0.268,
+    0.227,
+    0.206,
+    0.184
+   ]
+  },
+  "haeq_mgHA_cm3": {
+   "HA_dense": [
+    3160,
+    3160,
+    3160,
+    3160,
+    3160,
+    3160,
+    3160
+   ],
+   "beta_TCP_dense": [
+    3032,
+    3031,
+    3030,
+    3028,
+    3026,
+    3024,
+    3020
+   ],
+   "CaSO4_anhydrite": [
+    2610,
+    2613,
+    2615,
+    2630,
+    2653,
+    2680,
+    2732
+   ],
+   "CaSO4_dihydrate": [
+    1631,
+    1636,
+    1641,
+    1661,
+    1691,
+    1724,
+    1789
+   ],
+   "bioglass_45S5": [
+    1624,
+    1636,
+    1645,
+    1696,
+    1769,
+    1852,
+    2014
+   ],
+   "bioglass_S53P4": [
+    1491,
+    1505,
+    1515,
+    1575,
+    1661,
+    1758,
+    1947
+   ],
+   "Mg_metal": [
+    634,
+    634,
+    628,
+    644,
+    672,
+    707,
+    776
+   ],
+   "Ti_metal": [
+    11213,
+    11170,
+    11133,
+    10765,
+    10190,
+    9514,
+    8185
+   ],
+   "bone_cortical_ICRU44": [
+    1090,
+    1095,
+    1101,
+    1118,
+    1141,
+    1167,
+    1217
+   ],
+   "soft_tissue_ICRU44": [
+    10,
+    11,
+    13,
+    18,
+    25,
+    33,
+    48
+   ],
+   "adipose_ICRU44": [
+    -43,
+    -44,
+    -43,
+    -45,
+    -49,
+    -54,
+    -63
+   ],
+   "water": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "evidence": "RF",
+  "evidence_detail": "RF-derived: NIST SRD 126 elemental mu/rho, log-log interpolation; ICRU-44 compositions; densities HA 3.16, b-TCP 3.07 (R32), CaSO4 2.96 (R59), CaSO4.2H2O 2.32 (PK), glass 2.70 (PK), Mg 1.74 (PK), Ti 4.51 (PK)",
+  "source": "R59, R32",
+  "validation_point": "SRmicroCT 25 keV: new bone ~3.8 /cm, BCP granules ~7.5 /cm, soft tissue/embedding ~1 /cm (R30); computed cortical bone 4.18 /cm, dense HA 11.06 /cm at 25 keV"
+ },
+ "classes": {
+  "air_void": {
+   "density_mgHA_cm3": [
+    -450,
+    -180
+   ],
+   "relative_attenuation_note": "mu~0; in an HA-in-water calibration air reads below zero: approx -190 (30 keV) to -440 (50 keV) mgHA/cm3 equivalent; includes H2 gas pockets from Mg corrosion",
+   "structure_size_um": "defect voids, gas pockets 100-2000 (ASSUMPTION)",
+   "resorption": "n/a",
+   "evidence": "RF",
+   "evidence_detail": "RF-derived from R59 (calibration extrapolation); sizes ASSUMPTION",
+   "source": "R59"
+  },
+  "marrow_fatty": {
+   "density_mgHA_cm3": [
+    -65,
+    -40
+   ],
+   "relative_attenuation_note": "adipose ICRU-44 (0.95 g/cm3): -43 (30 keV) to -63 (80 keV)",
+   "structure_size_um": "fills Tb.Sp spaces",
+   "resorption": "n/a",
+   "evidence": "RF",
+   "evidence_detail": "RF-derived R59",
+   "source": "R59"
+  },
+  "marrow_soft_tissue": {
+   "density_mgHA_cm3": [
+    0,
+    50
+   ],
+   "relative_attenuation_note": "water/soft tissue ICRU-44: +13 (30 keV) to +48 (80 keV); indistinguishable from PMMA embedding and low-mineralized bone in histograms (R30)",
+   "structure_size_um": "fills Tb.Sp spaces (mouse 230-290 um; R26)",
+   "resorption": "n/a",
+   "evidence": "RF",
+   "evidence_detail": "RF-derived R59; R30 for PMMA overlap",
+   "source": "R59, R30, R26"
+  },
+  "fibrous_tissue": {
+   "density_mgHA_cm3": [
+    0,
+    60
+   ],
+   "relative_attenuation_note": "soft-tissue-like; untreated 8 mm rat calvarial defects contain thin fibrous tissue with only ~5-15% mineralized volume (R13)",
+   "structure_size_um": "membrane ~ calvarial thickness (~1000 um rat) (R13); thickness otherwise ASSUMPTION",
+   "resorption": "n/a",
+   "evidence": "RF",
+   "evidence_detail": "density RF-derived (soft tissue); upper bound +60 ASSUMPTION for dense collagen",
+   "source": "R59, R13"
+  },
+  "osteoid_unmineralized_matrix": {
+   "density_mgHA_cm3": [
+    0,
+    100
+   ],
+   "relative_attenuation_note": "unmineralized matrix ~ soft tissue; seam thickness O.Th per R6 nomenclature",
+   "structure_size_um": "seams ~5-20 (PK)",
+   "resorption": "mineralizes after mineralization lag time Mlt (R6 definition)",
+   "evidence": "ASSUMPTION",
+   "evidence_detail": "PK",
+   "source": "R6 (definitions only)"
+  },
+  "cartilage_callus": {
+   "density_mgHA_cm3": [
+    0,
+    60
+   ],
+   "relative_attenuation_note": "hyaline cartilage ~ soft tissue; calcified cartilage would be intermediate (not quantified here)",
+   "structure_size_um": "callus mm-scale",
+   "resorption": "soft callus removed during endochondral phase; day ~7-21 rodents (R45 figure timepoints day 3/14/21; ranges PK)",
+   "evidence": "ASSUMPTION",
+   "evidence_detail": "density ASSUMPTION; biology RF R45, R47",
+   "source": "R45, R47"
+  },
+  "cortical_host_bone": {
+   "density_mgHA_cm3": [
+    1000,
+    1300
+   ],
+   "relative_attenuation_note": "ICRU cortical bone 1.92 g/cm3 -> 1100 (30 keV) to 1217 (80 keV) HA-eq; desktop microCT reads ~13-15% below SRmicroCT; ash-referenced bone 1250-1300",
+   "structure_size_um": "rat calvaria ~1000 thick (R13); mouse femoral Ct.Th ~150-250 (PK)",
+   "resorption": "remodelling only (R48)",
+   "evidence": "RF",
+   "evidence_detail": "RF R23 (human trabecular tissue 940-1030 desktop, 1150 SR, 1250-1300 ash), RF-derived R59; upper/lower bounds widened as ASSUMPTION",
+   "source": "R23, R59, R13"
+  },
+  "trabecular_host_bone": {
+   "density_mgHA_cm3": [
+    900,
+    1150
+   ],
+   "relative_attenuation_note": "tissue TMD by desktop microCT 940-1030 (human, Scanco uCT40 70 kV); thin trabeculae read lower due to PVE",
+   "structure_size_um": {
+    "mouse_Tb.Th": [
+     21,
+     63
+    ],
+    "mouse_Tb.Th_note": "scanner-dependent (GE 21-29, Scanco 37-45, SkyScan 50-63; R26); ~40 nominal (R7)",
+    "mouse_Tb.Sp": [
+     230,
+     290
+    ],
+    "rat_Tb.Th": [
+     70,
+     110
+    ],
+    "rabbit_Tb.Th": [
+     100,
+     200
+    ],
+    "sheep_Tb.Th": [
+     150,
+     250
+    ],
+    "human_Tb.Th": [
+     120,
+     190
+    ],
+    "allometric_Tb.Th_estimate_um": {
+     "mouse": 67,
+     "rat": 102,
+     "rabbit": 143,
+     "sheep": 223,
+     "human": 226
+    },
+    "BV/TV_fraction": {
+     "mouse_distal_femur": [
+      0.08,
+      0.12
+     ],
+     "other_species": "PK 0.08-0.45 depending on site; BV/TV ~ size-independent (R54)"
+    }
+   },
+   "resorption": "remodelling only",
+   "evidence": "RF",
+   "evidence_detail": "mouse values RF (R26,R7); allometric RF-derived (R54: Tb.Th ~ Mb^0.155 anchored 0.052 mm @5 g, 0.511 mm @3400 kg); rat/rabbit/sheep/human measured ranges PK",
+   "source": "R23, R26, R7, R54, R56"
+  },
+  "woven_bone_early": {
+   "density_mgHA_cm3": [
+    400,
+    800
+   ],
+   "relative_attenuation_note": "early (<=2-4 wk) mineralizing woven bone; spans below and above the Scanco callus threshold of 641.9 mgHA/cm3 (=~45% cortical attenuation, R21); in SRmicroCT forms a poorly defined peak between embedding and bone (R30)",
+   "structure_size_um": "spicules/trabeculae 20-100 (ASSUMPTION); random collagen orientation (R58)",
+   "resorption": "remodelled to lamellar bone over weeks-months (R58 stages; timing PK)",
+   "evidence": "ASSUMPTION",
+   "evidence_detail": "range ASSUMPTION anchored to R21 threshold and R30 histogram description",
+   "source": "R21, R30, R58"
+  },
+  "woven_bone_mid": {
+   "density_mgHA_cm3": [
+    650,
+    1000
+   ],
+   "relative_attenuation_note": "4-8 wk; maturing; TMD rises over healing time (R8, R21)",
+   "structure_size_um": "trabeculae 40-150 (ASSUMPTION)",
+   "resorption": "coupled remodelling (R45, R47)",
+   "evidence": "ASSUMPTION",
+   "evidence_detail": "anchored to R21/R23",
+   "source": "R8, R21, R23"
+  },
+  "new_bone_late_remodelled": {
+   "density_mgHA_cm3": [
+    850,
+    1150
+   ],
+   "relative_attenuation_note": ">=12 wk; approaches host trabecular TMD; indistinguishable from host bone and allograft by intensity",
+   "structure_size_um": "approaches species host Tb.Th",
+   "resorption": "remodelling",
+   "evidence": "ASSUMPTION",
+   "evidence_detail": "anchored to R23 host tissue values",
+   "source": "R23"
+  }
+ },
+ "materials": {
+  "HA_sintered_dense": {
+   "density_mgHA_cm3": [
+    2200,
+    3160
+   ],
+   "theoretical_density_g_cm3": 3.155,
+   "relative_attenuation_note": "chemically bone-mineral-like: energy-independent HA-eq; dense = 3160 (~2.8x cortical bone); radiopaque, 'as high as cortical bone' for granules and can inflate BMD/BV/TV (R31)",
+   "structure_size_um": {
+    "granule": [
+     250,
+     2000
+    ],
+    "macropore": [
+     100,
+     600
+    ],
+    "micropore": "<10"
+   },
+   "porosity_solid_fraction_subvoxel": [
+    0.7,
+    1.0
+   ],
+   "resorption": {
+    "mechanism": "very slow dissolution + cell-mediated",
+    "timescale": "years; 'often remain in the body for several years' (R32)",
+    "model_suggestion": "residual fraction ~1.0 over study (<=5%/yr loss; ASSUMPTION)"
+   },
+   "separability": "EASY early and late except edge halo",
+   "evidence": "RF",
+   "evidence_detail": "density R32; HA-eq RF-derived R59; sizes PK/ASSUMPTION except pore >300 um recommendation R44",
+   "source": "R32, R31, R44, R59"
+  },
+  "HA_microporous_or_nanocrystalline": {
+   "density_mgHA_cm3": [
+    950,
+    1900
+   ],
+   "relative_attenuation_note": "apparent HA-eq = solid fraction x 3160; at 0.3-0.6 solid fraction overlaps mature bone",
+   "structure_size_um": {
+    "granule": [
+     250,
+     2000
+    ]
+   },
+   "porosity_solid_fraction_subvoxel": [
+    0.3,
+    0.6
+   ],
+   "resorption": {
+    "timescale": "slow; minipig HA-SiO filler 34.5% (2 wk) -> 31.2% (8 wk) (R41)"
+   },
+   "separability": "HARD",
+   "evidence": "ASSUMPTION",
+   "evidence_detail": "solid-fraction range ASSUMPTION; resorption RF R41",
+   "source": "R41, R59"
+  },
+  "beta_TCP": {
+   "density_mgHA_cm3": [
+    1200,
+    3030
+   ],
+   "theoretical_density_g_cm3": 3.067,
+   "relative_attenuation_note": "HA-eq of dense b-TCP 3020-3030 (~96% of HA), energy-independent; porous/resorbing granules fall into bone range",
+   "structure_size_um": {
+    "granule": [
+     100,
+     3000
+    ],
+    "macropore": [
+     100,
+     600
+    ],
+    "micropore": "<10"
+   },
+   "porosity_solid_fraction_subvoxel": [
+    0.4,
+    1.0
+   ],
+   "resorption": {
+    "mechanism": "cell-mediated (osteoclastic) + dissolution (R33); -logKsp 29.5 vs HA 117 (R32)",
+    "timescale": "CaP replacement 3-36 months (R32)",
+    "model_suggestion": "exponential residual with half-life 3-12 months in rodents/rabbits, with surface erosion + increasing microporosity (ASSUMPTION)"
+   },
+   "separability": "EASY early; HARD mid/late",
+   "evidence": "RF",
+   "evidence_detail": "density/solubility R32; resorption R32,R33; sizes PK; kinetics model ASSUMPTION",
+   "source": "R32, R33, R59"
+  },
+  "BCP_HA_TCP": {
+   "density_mgHA_cm3": [
+    1500,
+    3100
+   ],
+   "composition_examples": [
+    "60/40 HA/b-TCP (R41)",
+    "easy-graft HA/TCP granules ~600 um with PLA coating (R30)"
+   ],
+   "relative_attenuation_note": "SRmicroCT 25 keV: BCP ~7.5 /cm vs new bone ~3.8 /cm vs soft tissue ~1 /cm (R30) -> ~2x bone",
+   "structure_size_um": {
+    "granule": [
+     400,
+     2000
+    ],
+    "macropore": [
+     300,
+     600
+    ]
+   },
+   "resorption": {
+    "mechanism": "b-TCP phase preferentially resorbed; rate depends on HA/TCP ratio (R32, R35)",
+    "timescale": "minipig BCP60/40 filler 23.6% at 2 and 8 wk (R41); months-years",
+    "model_suggestion": "TCP fraction decays as beta_TCP, HA fraction persists (ASSUMPTION)"
+   },
+   "separability": "EASY intact; HARD when degrading (overlaps preliminary bone, R30)",
+   "evidence": "RF",
+   "evidence_detail": "R30 measured attenuation; granule sizes partly PK",
+   "source": "R30, R32, R35, R41"
+  },
+  "calcium_sulfate": {
+   "density_mgHA_cm3": [
+    900,
+    2700
+   ],
+   "phases": {
+    "dihydrate_CaSO4_2H2O": {
+     "g_cm3": 2.32,
+     "haeq_30_60keV": [
+      1641,
+      1724
+     ],
+     "evidence": "PK density, RF-derived HA-eq"
+    },
+    "anhydrite_CaSO4": {
+     "g_cm3": 2.96,
+     "haeq_30_60keV": [
+      2615,
+      2680
+     ],
+     "evidence": "RF (NIST R59)"
+    }
+   },
+   "relative_attenuation_note": "HA-eq rises with energy (S content); porous/dissolving fronts drop into bone range",
+   "structure_size_um": {
+    "pellet_bead": [
+     3000,
+     6000
+    ],
+    "note": "pellet sizes ASSUMPTION/PK"
+   },
+   "resorption": {
+    "mechanism": "dissolution from surface inward",
+    "timescale": "'rapid and complete resorption' (R36); ~4-12 weeks (PK)",
+    "model_suggestion": "linear shrinking-core over 4-12 wk (ASSUMPTION)"
+   },
+   "separability": "EASY-HARD early; moot late",
+   "evidence": "RF",
+   "evidence_detail": "qualitative resorption RF R36; weeks PK",
+   "source": "R36, R59"
+  },
+  "bioactive_glass_45S5": {
+   "density_mgHA_cm3": [
+    1600,
+    2050
+   ],
+   "composition_wt_pct": {
+    "SiO2": 45,
+    "Na2O": 24.5,
+    "CaO": 24.5,
+    "P2O5": 6,
+    "evidence": "PK"
+   },
+   "density_g_cm3": 2.7,
+   "relative_attenuation_note": "energy-dependent: 1645 (30 keV) -> 2014 (80 keV); glass/bone ratio ~1.5-1.65",
+   "structure_size_um": {
+    "particulate": [
+     90,
+     710
+    ],
+    "note": "PK"
+   },
+   "resorption": {
+    "mechanism": "ion exchange -> silica gel -> HCA layer; bonds to bone (R37, R38)",
+    "timescale": "months-years (PK)",
+    "model_suggestion": "core shrinks; add 10-50 um Ca-P rim at ~bone density (ASSUMPTION)"
+   },
+   "separability": "EASY-HARD (core vs rim)",
+   "evidence": "RF",
+   "evidence_detail": "HA-eq RF-derived; composition/density/size PK",
+   "source": "R37, R38, R59"
+  },
+  "bioactive_glass_S53P4": {
+   "density_mgHA_cm3": [
+    1450,
+    1950
+   ],
+   "composition_wt_pct": {
+    "SiO2": 53,
+    "Na2O": 23,
+    "CaO": 20,
+    "P2O5": 4,
+    "evidence": "PK"
+   },
+   "density_g_cm3": 2.7,
+   "relative_attenuation_note": "1515 (30 keV) -> 1947 (80 keV)",
+   "structure_size_um": {
+    "granule": [
+     500,
+     3150
+    ],
+    "note": "PK (0.5-0.8, 1-2, 2-3.15 mm)"
+   },
+   "resorption": {
+    "timescale": "slow; months-years (PK)"
+   },
+   "separability": "EASY-HARD",
+   "evidence": "RF",
+   "evidence_detail": "HA-eq RF-derived; others PK",
+   "source": "R37, R59"
+  },
+  "DBM": {
+   "density_mgHA_cm3": [
+    0,
+    100
+   ],
+   "relative_attenuation_note": "demineralized (0.5-0.6 N HCl); residual mineral 1-6% -> near soft tissue; carriers (glycerol, hyaluronate, CMC, poloxamer) radiolucent; calcium sulfate carrier adds density",
+   "structure_size_um": {
+    "particle": [
+     250,
+     850
+    ],
+    "note": "<250 um less osteoinductive than ~420-840 um (R39)"
+   },
+   "resorption": {
+    "timescale": "matrix degrades; osteoconductive replacement 'very slow' (R39)"
+   },
+   "separability": "EASY (invisible) early; UNDERDETERMINED once mineralized/incorporated",
+   "evidence": "RF",
+   "evidence_detail": "composition/size RF R39; HA-eq range RF-derived assuming residual mineral fraction; upper 100 ASSUMPTION",
+   "source": "R39"
+  },
+  "allograft_mineralized": {
+   "density_mgHA_cm3": [
+    900,
+    1300
+   ],
+   "relative_attenuation_note": "same material as host bone",
+   "structure_size_um": {
+    "chips": [
+     1000,
+     10000
+    ],
+    "note": "PK"
+   },
+   "resorption": {
+    "timescale": "creeping substitution, very slow (R39)"
+   },
+   "separability": "HARD early (vs woven); UNDERDETERMINED late",
+   "evidence": "RF",
+   "evidence_detail": "density by identity with host bone (R23); sizes PK",
+   "source": "R23, R39"
+  },
+  "autograft": {
+   "density_mgHA_cm3": [
+    900,
+    1300
+   ],
+   "relative_attenuation_note": "identical to host bone",
+   "structure_size_um": {
+    "chips": [
+     500,
+     5000
+    ],
+    "note": "PK"
+   },
+   "resorption": {
+    "timescale": "rapid substitution: minipig filler 17.1% (2 wk) -> 9.3% (8 wk) (R41)"
+   },
+   "separability": "UNDERDETERMINED",
+   "evidence": "RF",
+   "evidence_detail": "R41, R23",
+   "source": "R41, R23"
+  },
+  "DBBM_xenograft_BioOss": {
+   "density_mgHA_cm3": [
+    900,
+    1300
+   ],
+   "relative_attenuation_note": "deproteinized bone mineral; 'similar gray values' to new bone, granule borders misclassified as bone (R14)",
+   "structure_size_um": {
+    "granule": [
+     250,
+     2000
+    ],
+    "granule_note": "S 0.25-1 mm, L 1-2 mm (UNR)",
+    "porosity_total": "~60% incl. submicron (UNR)"
+   },
+   "resorption": {
+    "timescale": "essentially non-resorbing: no change in particle size 6 mo -> 11 yr; 17.3% DBBM at 11 yr (R40); minipig 35.7% -> 31.6% (2-8 wk) (R41)",
+    "model_suggestion": "residual fraction 1.0 (ASSUMPTION consistent with R40)"
+   },
+   "separability": "UNDERDETERMINED by intensity; recoverable with day-0 registration",
+   "evidence": "RF",
+   "evidence_detail": "intensity similarity RF R14 (qualitative); numeric range = host bone range (ASSUMPTION by physical reasoning)",
+   "source": "R14, R30, R40, R41"
+  },
+  "sintered_bovine_HA_cerabone": {
+   "density_mgHA_cm3": [
+    1000,
+    1600
+   ],
+   "relative_attenuation_note": "sintered at 1250 C (R14); possibly denser than DBBM (PK)",
+   "structure_size_um": {
+    "granule": [
+     250,
+     2000
+    ]
+   },
+   "resorption": {
+    "timescale": "very slow (PK)"
+   },
+   "separability": "HARD",
+   "evidence": "ASSUMPTION",
+   "evidence_detail": "processing RF R14; density ASSUMPTION",
+   "source": "R14"
+  },
+  "composite_polymer_CaP": {
+   "density_mgHA_cm3": [
+    150,
+    1500
+   ],
+   "relative_attenuation_note": "effective HA-eq ~ ceramic volume fraction x 3030 (b-TCP) or 3160 (HA); e.g. 20 vol% -> ~600 (woven-bone band); polymer ~ soft tissue",
+   "structure_size_um": {
+    "strut": [
+     200,
+     500
+    ],
+    "pore": [
+     300,
+     600
+    ],
+    "note": "pore >300 um recommended (R44); strut ASSUMPTION"
+   },
+   "resorption": {
+    "timescale": "polymer PLGA weeks-months, PCL 2-4 yr (PK); ceramic as above"
+   },
+   "separability": "HARD",
+   "evidence": "ASSUMPTION",
+   "evidence_detail": "mixing rule RF-derived; volume fractions ASSUMPTION",
+   "source": "R44, R59"
+  },
+  "Mg_alloy": {
+   "density_mgHA_cm3": [
+    600,
+    800
+   ],
+   "density_g_cm3": [
+    1.74,
+    1.85
+   ],
+   "relative_attenuation_note": "pure Mg 628 (30 keV) -> 776 (80 keV) HA-eq: inside woven-bone band; rare-earth alloys higher (PK)",
+   "structure_size_um": {
+    "implant": "device geometry (pins 1000-3000 dia; ASSUMPTION)"
+   },
+   "resorption": {
+    "mechanism": "corrosion; alloy-dependent; corrosion layer accumulates biological Ca-P; increased bone mass around rods (R42)",
+    "timescale": "weeks to >1 yr (PK)",
+    "byproducts": [
+     "Ca-P-rich corrosion layer (bone-like density, ASSUMPTION 500-1100)",
+     "H2 gas pockets (air-like)"
+    ]
+   },
+   "separability": "HARD",
+   "evidence": "RF",
+   "evidence_detail": "HA-eq RF-derived; corrosion biology RF R42, R43; densities PK",
+   "source": "R42, R43, R59"
+  },
+  "titanium_fixation": {
+   "density_mgHA_cm3": [
+    8000,
+    11200
+   ],
+   "relative_attenuation_note": "far above calibration range; streak/beam-hardening artifacts",
+   "structure_size_um": "device",
+   "resorption": "none",
+   "separability": "EASY (but corrupts neighbourhood)",
+   "evidence": "RF",
+   "evidence_detail": "RF-derived R59; Ti density PK",
+   "source": "R59"
+  }
+ },
+ "scanner_personalities": {
+  "note": "For harmonization training; parameters are ASSUMPTION unless stated",
+  "psf_fwhm_voxels": [
+   1.5,
+   3.0
+  ],
+  "psf_reference": "SRmicroCT 10% MTF = 4.37 um at 2.17 um pixel (R30)",
+  "beam_hardening_TMD_bias_pct": [
+   -15,
+   0
+  ],
+  "bh_reference": "desktop vs SR TMD -12.9 to -15% (R23); BH artifacts up to 32.6% (R24); BH-correction choice changes TMD 4.7-9.7% (R21, R23)",
+  "morphometry_cross_scanner_Tb.Th_ratio": [
+   1.0,
+   2.36
+  ],
+  "morph_reference": "R26",
+  "evidence": "RF"
+ }
+}

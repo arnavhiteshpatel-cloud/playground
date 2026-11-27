@@ -1,0 +1,1 @@
+scan_id,Q1_warmup_ref,Q2_motion,Q3_rings,Q4_cupping_pct,Q5_cal_r2,Q6_drift_pct,Q7_noise_sd,Q8_tre_voxels,Q9_displacement_voxels,Q10_roi_in_fov,Q11_mass_change_pct,Q12_checksum_ok,Q13_metadata_complete,Q14_mass_balance_ok,overall_pass,reviewer,date,notes

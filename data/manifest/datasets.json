@@ -1,0 +1,1334 @@
+[
+ {
+  "slug": "dryad_bone_4j0zpc8qq",
+  "name": "BONe: Deep learning software and revised 2D model to segment bone in micro-CT scans (BP-2D-03 dataset)",
+  "doi": "10.5061/dryad.4j0zpc8qq",
+  "url": "https://datadryad.org/dataset/doi:10.5061/dryad.4j0zpc8qq",
+  "license": "CC0-1.0",
+  "commercial_use": "allowed",
+  "access": "open (Dryad; scripted download requires Dryad API bearer token, or browser)",
+  "species": "Mus musculus (6 scans, 12 mice); Lontra canadensis (11 label sets); Panthera pardus; Hydrochoerus hydrochaeris; Enhydra lutris",
+  "site": "limb long bones (humerus, femur; otter also radius/ulna/tibia/fibula)",
+  "modality": "lab micro-CT (Nikon XT H 225 ST); museum scans from MorphoSource",
+  "voxel_um": "9.1-11.3 (mouse); 30-120.7 (museum)",
+  "labels": "2D TIFF slice masks 'BP' (bone vs pores/background) made in Avizo 2024.2: Otsu threshold + filtering + ambient occlusion + manual correction; numeric class values not stated in README [UNR]",
+  "size_bytes": 44638405276,
+  "files": [
+   {
+    "name": "README.md",
+    "url": "https://datadryad.org/api/v2/files/4859595/download",
+    "size_bytes": 30467,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859595 returns 403 to scripted curl"
+   },
+   {
+    "name": "1R_1U_HF.zip",
+    "url": "https://datadryad.org/api/v2/files/4859575/download",
+    "size_bytes": 2031389746,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859575 returns 403 to scripted curl"
+   },
+   {
+    "name": "2R_2U_HF.zip",
+    "url": "https://datadryad.org/api/v2/files/4859576/download",
+    "size_bytes": 4170762024,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859576 returns 403 to scripted curl"
+   },
+   {
+    "name": "5R_5U_HF.zip",
+    "url": "https://datadryad.org/api/v2/files/4859578/download",
+    "size_bytes": 4294422299,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859578 returns 403 to scripted curl"
+   },
+   {
+    "name": "7R_7U_HF.zip",
+    "url": "https://datadryad.org/api/v2/files/4859577/download",
+    "size_bytes": 5017819508,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859577 returns 403 to scripted curl"
+   },
+   {
+    "name": "12R_12U_HF.zip",
+    "url": "https://datadryad.org/api/v2/files/4859579/download",
+    "size_bytes": 4957324559,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859579 returns 403 to scripted curl"
+   },
+   {
+    "name": "19R_19U_HF.zip",
+    "url": "https://datadryad.org/api/v2/files/4859580/download",
+    "size_bytes": 12115604842,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859580 returns 403 to scripted curl"
+   },
+   {
+    "name": "AMNH_Mammals_M-89009_F.zip",
+    "url": "https://datadryad.org/api/v2/files/4859581/download",
+    "size_bytes": 7986549084,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859581 returns 403 to scripted curl"
+   },
+   {
+    "name": "AMNH_Mammals_M-206440_mixed.zip",
+    "url": "https://datadryad.org/api/v2/files/4859582/download",
+    "size_bytes": 35542801,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859582 returns 403 to scripted curl"
+   },
+   {
+    "name": "OMNH_Mammals_44262_HRU.zip",
+    "url": "https://datadryad.org/api/v2/files/4859583/download",
+    "size_bytes": 11457271,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859583 returns 403 to scripted curl"
+   },
+   {
+    "name": "OMNH_Mammals_53994_FTFi.zip",
+    "url": "https://datadryad.org/api/v2/files/4859584/download",
+    "size_bytes": 17689387,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859584 returns 403 to scripted curl"
+   },
+   {
+    "name": "OMNH_Mammals_53994_HRU.zip",
+    "url": "https://datadryad.org/api/v2/files/4859585/download",
+    "size_bytes": 13599904,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859585 returns 403 to scripted curl"
+   },
+   {
+    "name": "UAM_Mamm_24789_FTFi.zip",
+    "url": "https://datadryad.org/api/v2/files/4859586/download",
+    "size_bytes": 17467240,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859586 returns 403 to scripted curl"
+   },
+   {
+    "name": "UAM_Mamm_67696_HF.zip",
+    "url": "https://datadryad.org/api/v2/files/4859587/download",
+    "size_bytes": 25427790,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859587 returns 403 to scripted curl"
+   },
+   {
+    "name": "UAM_Mamm_67696_TFiRU.zip",
+    "url": "https://datadryad.org/api/v2/files/4859588/download",
+    "size_bytes": 19431995,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859588 returns 403 to scripted curl"
+   },
+   {
+    "name": "UF_Mammals_23593-24550_HF.zip",
+    "url": "https://datadryad.org/api/v2/files/4859589/download",
+    "size_bytes": 30369184,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859589 returns 403 to scripted curl"
+   },
+   {
+    "name": "UF_Mammals_31151_HRU.zip",
+    "url": "https://datadryad.org/api/v2/files/4859590/download",
+    "size_bytes": 12342435,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859590 returns 403 to scripted curl"
+   },
+   {
+    "name": "UWBM_Mamm_78743_FTFi.zip",
+    "url": "https://datadryad.org/api/v2/files/4859591/download",
+    "size_bytes": 18278986,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859591 returns 403 to scripted curl"
+   },
+   {
+    "name": "UWBM_Mamm_81969_FTFi.zip",
+    "url": "https://datadryad.org/api/v2/files/4859592/download",
+    "size_bytes": 21723722,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859592 returns 403 to scripted curl"
+   },
+   {
+    "name": "UWBM_Mamm_81969_HRU.zip",
+    "url": "https://datadryad.org/api/v2/files/4859593/download",
+    "size_bytes": 20057351,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859593 returns 403 to scripted curl"
+   },
+   {
+    "name": "ZMB_Mam_30740_HRU.zip",
+    "url": "https://datadryad.org/api/v2/files/4859594/download",
+    "size_bytes": 71553769,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859594 returns 403 to scripted curl"
+   },
+   {
+    "name": "_Models.zip",
+    "url": "https://datadryad.org/api/v2/files/4859596/download",
+    "size_bytes": 3749422956,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859596 returns 403 to scripted curl"
+   },
+   {
+    "name": "_BONe_Avizo.zip",
+    "url": "https://datadryad.org/api/v2/files/4859597/download",
+    "size_bytes": 48843,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859597 returns 403 to scripted curl"
+   },
+   {
+    "name": "_BONe_standalone.zip",
+    "url": "https://datadryad.org/api/v2/files/4859598/download",
+    "size_bytes": 89113,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/4859598 returns 403 to scripted curl"
+   }
+  ],
+  "priority": "download_now (subset)",
+  "notes": "Publications 10.3389/fbinf.2025.1677527 (primary) and 10.1002/ar.25633. Version 11, published 2026-07-13. Mouse zips hold raw slices (_Scan, .xtekct/.info) + BP-label TIFFs; otter zips hold labels only (raw in dryad.b2rbnzsq4); ZMB sea otter labels only (scan on MorphoSource); capybara labels cover a subvolume only. Recommended <6 GB subset: README + 1R_1U_HF.zip + OMNH_Mammals_44262_HRU.zip (+ SNM_44262_HRU.zip from dryad.b2rbnzsq4) = ~4.13 GB. Leopard/capybara/sea-otter scans originate from MorphoSource; the CC0 waiver covers this deposit, but check the upstream MorphoSource media terms before commercial training on those three. Healthy adult bone only, no defects/implants."
+ },
+ {
+  "slug": "dryad_otter_ctp_b2rbnzsq4",
+  "name": "Segmentation of cortical bone, trabecular bone, and medullary pores from micro-CT images using 2D and 3D deep learning models (otter limb bones)",
+  "doi": "10.5061/dryad.b2rbnzsq4",
+  "url": "https://datadryad.org/dataset/doi:10.5061/dryad.b2rbnzsq4",
+  "license": "CC0-1.0",
+  "commercial_use": "allowed",
+  "access": "open (Dryad; scripted download requires API bearer token, or browser)",
+  "species": "Lontra canadensis (9 individuals, 38 bones, 12 scan sets)",
+  "site": "limb long bones",
+  "modality": "lab micro-CT, Nikon XT H 225 ST (Univ. Arkansas)",
+  "voxel_um": "49.99",
+  "labels": "CTP labels (cortical bone / trabecular bone / medullary pores) as TIFF slices; Avizo 2024.1: sigmoid remap, auto-threshold + manual check, top-hat for thin trabeculae, ambient occlusion for pores, shrink-wrap mask (Herbst 2021) to split cortical vs trabecular. Also model predictions (BP/CTP 2D/3D). Class values not stated [UNR]",
+  "size_bytes": 72772712823,
+  "files": [
+   {
+    "name": "README.md",
+    "url": "https://datadryad.org/api/v2/files/3926508/download",
+    "size_bytes": 26703,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926508 returns 403 to scripted curl"
+   },
+   {
+    "name": "SNM_44262_HRU.zip",
+    "url": "https://datadryad.org/api/v2/files/3926474/download",
+    "size_bytes": 2091127128,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926474 returns 403 to scripted curl"
+   },
+   {
+    "name": "UF_31151_HRU.zip",
+    "url": "https://datadryad.org/api/v2/files/3926482/download",
+    "size_bytes": 2183694093,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926482 returns 403 to scripted curl"
+   },
+   {
+    "name": "UF_24550_TFiRU.zip",
+    "url": "https://datadryad.org/api/v2/files/3926481/download",
+    "size_bytes": 2321508823,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926481 returns 403 to scripted curl"
+   },
+   {
+    "name": "SNM_53994_HRU.zip",
+    "url": "https://datadryad.org/api/v2/files/3926476/download",
+    "size_bytes": 2499740268,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926476 returns 403 to scripted curl"
+   },
+   {
+    "name": "BM_78743_FTFi.zip",
+    "url": "https://datadryad.org/api/v2/files/3926471/download",
+    "size_bytes": 3741853041,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926471 returns 403 to scripted curl"
+   },
+   {
+    "name": "SNM_53994_FTFi.zip",
+    "url": "https://datadryad.org/api/v2/files/3926475/download",
+    "size_bytes": 3774201000,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926475 returns 403 to scripted curl"
+   },
+   {
+    "name": "BM_81969_FTFi.zip",
+    "url": "https://datadryad.org/api/v2/files/3926472/download",
+    "size_bytes": 3967713735,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926472 returns 403 to scripted curl"
+   },
+   {
+    "name": "UAM_67696_TFiRU.zip",
+    "url": "https://datadryad.org/api/v2/files/3926479/download",
+    "size_bytes": 4358176633,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926479 returns 403 to scripted curl"
+   },
+   {
+    "name": "UAM_24789_FTFi.zip",
+    "url": "https://datadryad.org/api/v2/files/3926477/download",
+    "size_bytes": 4740116392,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926477 returns 403 to scripted curl"
+   },
+   {
+    "name": "BM_81969_HRU.zip",
+    "url": "https://datadryad.org/api/v2/files/3926473/download",
+    "size_bytes": 5064788100,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926473 returns 403 to scripted curl"
+   },
+   {
+    "name": "UF_23593-24550_HF.zip",
+    "url": "https://datadryad.org/api/v2/files/3926480/download",
+    "size_bytes": 6695386558,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926480 returns 403 to scripted curl"
+   },
+   {
+    "name": "UAM_67696_HF.zip",
+    "url": "https://datadryad.org/api/v2/files/3926478/download",
+    "size_bytes": 8126271610,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926478 returns 403 to scripted curl"
+   },
+   {
+    "name": "_composite.zip",
+    "url": "https://datadryad.org/api/v2/files/3926483/download",
+    "size_bytes": 22370099574,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926483 returns 403 to scripted curl"
+   },
+   {
+    "name": "_Models.zip",
+    "url": "https://datadryad.org/api/v2/files/3926470/download",
+    "size_bytes": 838005852,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926470 returns 403 to scripted curl"
+   },
+   {
+    "name": "_Scripts.zip",
+    "url": "https://datadryad.org/api/v2/files/3926500/download",
+    "size_bytes": 3313,
+    "note": "Dryad API download needs a bearer token (HTTP 401 without); browser URL https://datadryad.org/downloads/file_stream/3926500 returns 403 to scripted curl"
+   }
+  ],
+  "priority": "download_now (1 fitting sample) / later (rest)",
+  "notes": "Publication 10.1002/ar.25633. 8 fitting + 4 blind-test volumes (testing: BM_81969_FTFi, BM_81969_HRU, SNM_53994_HRU, UAM_24789_FTFi). Pair SNM_44262_HRU.zip (raw + CTP labels) with BONe OMNH_Mammals_44262_HRU.zip (updated BP labels). Coarse 50 um voxels, non-rodent; useful for cross-dataset/compartment (Ct/Tb) generalisation, not for defect/callus."
+ },
+ {
+  "slug": "zenodo_3909552_mouse_oa_knee",
+  "name": "MicroCT Data of Mice for Osteoarthritis Biomarkers Project (Kitware HASI benchmark), v1.0.1 per-file release",
+  "doi": "10.5281/zenodo.3909552",
+  "url": "https://zenodo.org/records/3909552",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Mus musculus (factor VIII-deficient haemophilia model + controls)",
+  "site": "knee (distal femur / proximal tibia, multiple bones)",
+  "modality": "ex vivo micro-CT, DICOM (scanner [UNR])",
+  "voxel_um": "10 (from NRRD header of label files)",
+  "labels": "AUTO-* automatic multi-bone labels for all 28 knees (bones-label, label, per-bone bone1..N NRRD); MAN-907-L manual label map with 8 anatomical compartments (1 epiphysis, 2 growth plate, 3 spongiosa region, 4 cortical metaphysis, 5 metaphysis medullary cavity, 6 diaphysis medullary cavity, 7 diaphysis cortical shell, 8 shaft rest) + MAN-SegmentationFinal.seg.nrrd",
+  "size_bytes": 35280913455,
+  "files": [
+   {
+    "name": "ORIG-907-L.zip",
+    "url": "https://zenodo.org/api/records/3909552/files/ORIG-907-L.zip/content",
+    "size_bytes": 1896492641
+   },
+   {
+    "name": "MAN-907-L-label.nrrd",
+    "url": "https://zenodo.org/api/records/3909552/files/MAN-907-L-label.nrrd/content",
+    "size_bytes": 3191848
+   },
+   {
+    "name": "MAN-907-L-label_ColorTable.ctbl",
+    "url": "https://zenodo.org/api/records/3909552/files/MAN-907-L-label_ColorTable.ctbl/content",
+    "size_bytes": 410
+   },
+   {
+    "name": "MAN-SegmentationFinal.seg.nrrd",
+    "url": "https://zenodo.org/api/records/3909552/files/MAN-SegmentationFinal.seg.nrrd/content",
+    "size_bytes": 11068200
+   },
+   {
+    "name": "AUTO-907-L-label.nrrd",
+    "url": "https://zenodo.org/api/records/3909552/files/AUTO-907-L-label.nrrd/content",
+    "size_bytes": 9797481
+   },
+   {
+    "name": "AUTO-907-L-bones-label.nrrd",
+    "url": "https://zenodo.org/api/records/3909552/files/AUTO-907-L-bones-label.nrrd/content",
+    "size_bytes": 11789624
+   },
+   {
+    "name": "ORIG-907-R.zip",
+    "url": "https://zenodo.org/api/records/3909552/files/ORIG-907-R.zip/content",
+    "size_bytes": 1378355851
+   },
+   {
+    "name": "AUTO-907-R-label.nrrd",
+    "url": "https://zenodo.org/api/records/3909552/files/AUTO-907-R-label.nrrd/content",
+    "size_bytes": 6967323
+   }
+  ],
+  "priority": "download_now (907-L subset ~1.93 GB)",
+  "notes": "Original data: Lau AG et al. 2014 Haemophilia 20(5):716-722 (PMC4396845; article DOI [UNR]). v1.0.0 = 10.5281/zenodo.3890144 (single 35 GB zip). 28 ORIG zips 0.64-1.9 GB each. Only one knee has manual labels; AUTO labels are algorithm output (pseudo-labels). Label files downloaded to data/raw/zenodo_3909552_mouse_oa_knee/ and verified (NRRD, gzip, 1392x983x829, 0.01 mm). Haemophilic arthropathy, not a defect model."
+ },
+ {
+  "slug": "zenodo_11061947_trab_tbth",
+  "name": "MicroCT Trabecular Bone Samples for Trabecular Thickness and Separation Measures",
+  "doi": "10.5281/zenodo.11061947",
+  "url": "https://zenodo.org/records/11061947",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "[UNR] (sample IDs BMLPL_xxx REF/BML; likely human bone-marrow-lesion study)",
+  "site": "[UNR] trabecular cubes",
+  "modality": "micro-CT, Xradia (segmented only; no greyscale)",
+  "voxel_um": "17.59 per description; NIfTI header says 16.56",
+  "labels": "Binary trabecular segmentation (values 0/127, int16) for 8 samples, 100^3 voxels; reference distance-transform maps for Tb.Th and Tb.Sp from Scanco IPL and from Python (ORMIR_XCT)",
+  "size_bytes": 242264080,
+  "files": [
+   {
+    "name": "BMLPL_005_REF_17_SEG_SUB.nii",
+    "url": "https://zenodo.org/api/records/11061947/files/BMLPL_005_REF_17_SEG_SUB.nii/content",
+    "size_bytes": 2000352
+   },
+   {
+    "name": "BMLPL_005_REF_17_SEG_SUB_DT_THICK_CONVERT.nii",
+    "url": "https://zenodo.org/api/records/11061947/files/BMLPL_005_REF_17_SEG_SUB_DT_THICK_CONVERT.nii/content",
+    "size_bytes": 8000352
+   },
+   {
+    "name": "BMLPL_005_REF_17_SEG_SUB_DT_SP_CONVERT.nii",
+    "url": "https://zenodo.org/api/records/11061947/files/BMLPL_005_REF_17_SEG_SUB_DT_SP_CONVERT.nii/content",
+    "size_bytes": 8000352
+   },
+   {
+    "name": "BMLPL_005_REF_17_SEG_SUB_dt_py.nii",
+    "url": "https://zenodo.org/api/records/11061947/files/BMLPL_005_REF_17_SEG_SUB_dt_py.nii/content",
+    "size_bytes": 8000352
+   }
+  ],
+  "priority": "download_now (all 40 files, 242 MB)",
+  "notes": "Ideal for validating OsteoQuant morphometry (Tb.Th/Tb.Sp) against Scanco IPL reference maps. Two files downloaded and verified. Voxel-size discrepancy between description and header must be resolved before using as absolute reference. Not useful for segmentation training (no greyscale)."
+ },
+ {
+  "slug": "zenodo_3608390_synthetic_trab",
+  "name": "3D Cortical Bone and Trabecular Bone Structure [synthetic data, simple, capsule shell model]",
+  "doi": "10.5281/zenodo.3608390",
+  "url": "https://zenodo.org/records/3608390",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "synthetic",
+  "site": "synthetic cortical shell + trabecular pattern",
+  "modality": "synthetic volumes (noisy TIFF stacks)",
+  "voxel_um": null,
+  "labels": "Ground truth 4 labels: 0 background, 11 cortical bone, 21 trabecular bone, 31 cavity (TIFF slices)",
+  "size_bytes": 769295918,
+  "files": [
+   {
+    "name": "gt.zip",
+    "url": "https://zenodo.org/api/records/3608390/files/gt.zip/content",
+    "size_bytes": 17039548
+   },
+   {
+    "name": "noisy.zip",
+    "url": "https://zenodo.org/api/records/3608390/files/noisy.zip/content",
+    "size_bytes": 752256370
+   }
+  ],
+  "priority": "download_now (small; unit/regression tests)",
+  "notes": "gt.zip downloaded and verified (8034 entries incl. __MACOSX). Synthetic only: for pipeline/unit tests, not for real-world accuracy claims."
+ },
+ {
+  "slug": "zenodo_24047383_sprout",
+  "name": "Data for: SPROUT - multi-class segmentation of volumetric images (dog forelimb, mammal skull, foraminifera micro-CT)",
+  "doi": "10.5281/zenodo.24047383",
+  "url": "https://zenodo.org/records/24047383",
+  "license": "CC-BY-4.0 (8 mammal-skull scans keep their original MorphoSource licences)",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Canis familiaris (15 forelimbs); 11 mammal skulls; foraminifera",
+  "site": "forelimb bones; skull",
+  "modality": "micro-CT",
+  "voxel_um": "[UNR]",
+  "labels": "Reference multi-class segmentations made with SPROUT + manual correction; 9 dog forelimbs with Biomedisa-interpolation reference; baselines (watershed, Biomedisa, nnInteractive, SAM, SAM2)",
+  "size_bytes": 13188869439,
+  "files": [
+   {
+    "name": "data_dog_forelimb.zip",
+    "url": "https://zenodo.org/api/records/24047383/files/data_dog_forelimb.zip/content",
+    "size_bytes": 189279122
+   },
+   {
+    "name": "README.md",
+    "url": "https://zenodo.org/api/records/24047383/files/README.md/content",
+    "size_bytes": 3573
+   },
+   {
+    "name": "dog_forelimb_interpolation_ref.zip",
+    "url": "https://zenodo.org/api/records/24047383/files/dog_forelimb_interpolation_ref.zip/content",
+    "size_bytes": 703447843
+   },
+   {
+    "name": "data_mammal_skull.zip",
+    "url": "https://zenodo.org/api/records/24047383/files/data_mammal_skull.zip/content",
+    "size_bytes": 916297388
+   }
+  ],
+  "priority": "download_now (data_dog_forelimb.zip 189 MB)",
+  "notes": "Code: github.com/EchanHe/SPROUT; paper DOI [UNR]. Labels are per-bone instance-like classes (individual bones), not bone-vs-defect. Good cheap cross-dataset test of bone foreground segmentation. README downloaded. Commercial-use detail: allowed (dog forelimb/foraminifera); unclear for MorphoSource-derived skulls"
+ },
+ {
+  "slug": "zenodo_6108435_human_skull",
+  "name": "A micro-CT of a human skull (raw projections, reconstruction, bone segmentation)",
+  "doi": "10.5281/zenodo.6108435",
+  "url": "https://zenodo.org/records/6108435",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Homo sapiens (1 specimen)",
+  "site": "skull",
+  "modality": "micro-CT (details in README.pdf [UNR])",
+  "voxel_um": "[UNR]",
+  "labels": "Bone segmentation (semi-manual per arXiv 2202.11519) as NRRD",
+  "size_bytes": 18166930918,
+  "files": [
+   {
+    "name": "halle_skull.nrrd",
+    "url": "https://zenodo.org/api/records/6108435/files/halle_skull.nrrd/content",
+    "size_bytes": 2833296569
+   },
+   {
+    "name": "halle_skull_segmented.nrrd",
+    "url": "https://zenodo.org/api/records/6108435/files/halle_skull_segmented.nrrd/content",
+    "size_bytes": 37249251
+   },
+   {
+    "name": "README.pdf",
+    "url": "https://zenodo.org/api/records/6108435/files/README.pdf/content",
+    "size_bytes": 5010385
+   }
+  ],
+  "priority": "later",
+  "notes": "Single specimen, human cranial bone; ingestion test for large NRRD and one extra bone-mask pair. Skip the 15.3 GB projections zip."
+ },
+ {
+  "slug": "zenodo_17255310_ovine_callus",
+  "name": "PID2020-113790RB-I00: micro-CT of bone lengthening (distraction osteogenesis) on ovine metatarsus",
+  "doi": "10.5281/zenodo.17255311 (concept 10.5281/zenodo.17255310)",
+  "url": "https://zenodo.org/records/17255311",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Ovis aries (6 animals, 1 per time point)",
+  "site": "metatarsus distraction callus (15 mm gap)",
+  "modality": "ex vivo micro-CT, Yxlon Y.Cougar SMT, 50 kV/90 uA, x4",
+  "voxel_um": "3.72",
+  "labels": "none",
+  "size_bytes": 12518944768,
+  "files": [
+   {
+    "name": "18DAYS_recon.txm",
+    "url": "https://zenodo.org/api/records/17255311/files/18DAYS_recon.txm/content",
+    "size_bytes": 2097692672
+   },
+   {
+    "name": "22DAYS_recon.txm",
+    "url": "https://zenodo.org/api/records/17255311/files/22DAYS_recon.txm/content",
+    "size_bytes": 2005544960
+   },
+   {
+    "name": "47DAYS_recon.txm",
+    "url": "https://zenodo.org/api/records/17255311/files/47DAYS_recon.txm/content",
+    "size_bytes": 2105974784
+   },
+   {
+    "name": "64DAYS_recon.txm",
+    "url": "https://zenodo.org/api/records/17255311/files/64DAYS_recon.txm/content",
+    "size_bytes": 2101899264
+   },
+   {
+    "name": "112DAYS_recon.txm",
+    "url": "https://zenodo.org/api/records/17255311/files/112DAYS_recon.txm/content",
+    "size_bytes": 2105974784
+   },
+   {
+    "name": "161DAYS_recon.txm",
+    "url": "https://zenodo.org/api/records/17255311/files/161DAYS_recon.txm/content",
+    "size_bytes": 2101858304
+   }
+  ],
+  "priority": "download_now (already in progress)",
+  "notes": "Already known. Publication: Blazquez-Carmona et al. 2024 Front Bioeng Biotechnol 12 (DOI [UNR]). Cross-sectional time series (different animals), not longitudinal in the same animal. data/raw/zenodo_17255310/ exists with 18DAYS complete and 161DAYS partially downloaded by another process (not by this survey). Zeiss/Xradia .txm (OLE2 compound file) requires a TXM reader."
+ },
+ {
+  "slug": "zenodo_19045245_pla_bone_substitute",
+  "name": "Micro-CT data of bone substitutes (PLA and PLA-chitosan)",
+  "doi": "10.5281/zenodo.19045245",
+  "url": "https://zenodo.org/records/19045245",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "none (biomaterial)",
+  "site": "scaffold only",
+  "modality": "micro-CT (scanner [UNR])",
+  "voxel_um": "[UNR]",
+  "labels": "none",
+  "size_bytes": 7705670445,
+  "files": [
+   {
+    "name": "Zenodo_PLA_CS.zip",
+    "url": "https://zenodo.org/api/records/19045245/files/Zenodo_PLA_CS.zip/content",
+    "size_bytes": 7705670445
+   }
+  ],
+  "priority": "later",
+  "notes": "Minimal metadata (one-line description). Polymer scaffold without bone; only useful for scaffold-porosity module tests."
+ },
+ {
+  "slug": "zenodo_24081554_voronoi_ha_scaffold",
+  "name": "Data from: 3D Printed Voronoi Hydroxyapatite Scaffolds with Engineered Trabecular Orientation",
+  "doi": "10.5281/zenodo.24081554",
+  "url": "https://zenodo.org/records/24081554",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "none (HA ceramic)",
+  "site": "scaffold only (8 samples)",
+  "modality": "micro-CT, binarized TIFF",
+  "voxel_um": "15",
+  "labels": "binarized (material vs pore) TIFF stacks",
+  "size_bytes": 15323555,
+  "files": [
+   {
+    "name": "uCT_binarized.rar",
+    "url": "https://zenodo.org/api/records/24081554/files/uCT_binarized.rar/content",
+    "size_bytes": 15323555
+   }
+  ],
+  "priority": "download_now (15 MB; done)",
+  "notes": "Downloaded; RAR v5 archive (needs unrar/7z, not extracted). Useful for scaffold porosity / strut thickness / anisotropy tests (orientations 0-90 deg + ISO)."
+ },
+ {
+  "slug": "zenodo_14628379_pan_chitosan_scaffold",
+  "name": "Polyacrylonitrile-Chitosan IPN composite scaffolds mimicking trabecular bone (source data)",
+  "doi": "10.5281/zenodo.14628379",
+  "url": "https://zenodo.org/records/14628379",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "none (polymer)",
+  "site": "scaffold only",
+  "modality": "micro-CT",
+  "voxel_um": "[UNR]",
+  "labels": "none",
+  "size_bytes": 2401119166,
+  "files": [
+   {
+    "name": "uCT scans Orlons.zip",
+    "url": "https://zenodo.org/api/records/14628379/files/uCT%20scans%20Orlons.zip/content",
+    "size_bytes": 2394831573
+   }
+  ],
+  "priority": "later",
+  "notes": "Publication 10.1016/j.mtchem.2024.102253. Scaffold porosity tests only."
+ },
+ {
+  "slug": "zenodo_taox_scaffold_longitudinal",
+  "name": "In vivo Study of the Effect of Composition and Implantation Site on Scaffold Degradation Rate (6 Zenodo records, TaOx-loaded PCL/PLGA)",
+  "doi": "10.5281/zenodo.22111464 (+22013590, 22081039, 22095634, 22100103, 22100918)",
+  "url": "https://zenodo.org/records/22111464",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Mus musculus (n=6 per group)",
+  "site": "intramuscular / intraperitoneal scaffolds (not bone)",
+  "modality": "longitudinal in vivo micro-CT, 20 weeks",
+  "voxel_um": "50",
+  "labels": "none",
+  "size_bytes": 271960000000,
+  "files": [
+   {
+    "name": "PLGA85-15 20wtTaOx IP.zip",
+    "url": "https://zenodo.org/api/records/22111464/files/PLGA85-15%2020wtTaOx%20IP.zip/content",
+    "size_bytes": 46003683796
+   }
+  ],
+  "priority": "not_useful (size) / later for longitudinal-registration tests",
+  "notes": "Publication 10.1038/s43246-026-01308-5. The only verified open longitudinal in vivo micro-CT found, but soft-tissue implant sites and 38-50 GB per record exceed our disk budget."
+ },
+ {
+  "slug": "zenodo_4360730_pemf_ring_mineralization",
+  "name": "PEMF stimulates mineralization in a 3D ring culture model of osteogenesis",
+  "doi": "10.5068/D17957",
+  "url": "https://zenodo.org/records/4360730",
+  "license": "CC0-1.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Mus musculus calvarial pre-osteoblasts (in vitro)",
+  "site": "in vitro mineralized ring constructs",
+  "modality": "micro-CT DICOM",
+  "voxel_um": "[UNR]",
+  "labels": "none (density profiles in xlsx)",
+  "size_bytes": 40611013446,
+  "files": [
+   {
+    "name": "Fig_6a_7abcd_DICOM__27day_uCT.zip",
+    "url": "https://zenodo.org/api/records/4360730/files/Fig_6a_7abcd_DICOM__27day_uCT.zip/content",
+    "size_bytes": 19741974344
+   },
+   {
+    "name": "Read_Me.docx",
+    "url": "https://zenodo.org/api/records/4360730/files/Read_Me.docx/content",
+    "size_bytes": 26958
+   }
+  ],
+  "priority": "not_useful",
+  "notes": "In vitro; 20 GB per zip."
+ },
+ {
+  "slug": "kaggle_bone_lab_calvarial",
+  "name": "bone-lab cranial defect micro-CT slices (Kaggle chzpan/bone-lab)",
+  "doi": null,
+  "url": "https://www.kaggle.com/chzpan/bone-lab",
+  "license": "[UNR] not stated (repo code MIT)",
+  "commercial_use": "unclear",
+  "access": "Kaggle account required",
+  "species": "mouse or rat (source contradicts itself) [UNR]",
+  "site": "calvarial circular defect",
+  "modality": "micro-CT slices, PNG 2048x2048",
+  "voxel_um": "[UNR]",
+  "labels": "expert circle ROI (defect centre) per slice; 5606 slices / 65 samples",
+  "size_bytes": null,
+  "files": [],
+  "priority": "not_useful until licence clarified",
+  "notes": "Described at github.com/ChZPan/CT-image-DeepLearningRegression (Univ. Toronto Bone Interface Group). Only calvarial-defect labelled set found, but licence unknown."
+ },
+ {
+  "slug": "zenodo_19404386_lumbarsr",
+  "name": "LumbarSR: paired clinical CT and photon-counting micro-CT of human lumbar vertebrae",
+  "doi": "10.5281/zenodo.19404387",
+  "url": "https://zenodo.org/records/19404387",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Homo sapiens (30 dry vertebrae)",
+  "site": "lumbar vertebral body",
+  "modality": "clinical helical CT (8 configs) + Micro-PCCT",
+  "voxel_um": "105 (Micro-PCCT); clinical 195/586 in-plane x 500/1000 slice",
+  "labels": "BoneMask ROI volumes registered to Micro-PCCT",
+  "size_bytes": 26820555806,
+  "files": [
+   {
+    "name": "BoneMask.zip",
+    "url": "https://zenodo.org/api/records/19404387/files/BoneMask.zip/content",
+    "size_bytes": 706334179
+   },
+   {
+    "name": "lumbarSR.zip",
+    "url": "https://zenodo.org/api/records/19404387/files/lumbarSR.zip/content",
+    "size_bytes": 344417851
+   },
+   {
+    "name": "lumbarSR.z01",
+    "url": "https://zenodo.org/api/records/19404387/files/lumbarSR.z01/content",
+    "size_bytes": 4294967296
+   },
+   {
+    "name": "lumbarSR.z02",
+    "url": "https://zenodo.org/api/records/19404387/files/lumbarSR.z02/content",
+    "size_bytes": 4294967296
+   },
+   {
+    "name": "lumbarSR.z03",
+    "url": "https://zenodo.org/api/records/19404387/files/lumbarSR.z03/content",
+    "size_bytes": 4294967296
+   },
+   {
+    "name": "lumbarSR.z04",
+    "url": "https://zenodo.org/api/records/19404387/files/lumbarSR.z04/content",
+    "size_bytes": 4294967296
+   },
+   {
+    "name": "lumbarSR.z05",
+    "url": "https://zenodo.org/api/records/19404387/files/lumbarSR.z05/content",
+    "size_bytes": 4294967296
+   },
+   {
+    "name": "lumbarSR.z06",
+    "url": "https://zenodo.org/api/records/19404387/files/lumbarSR.z06/content",
+    "size_bytes": 4294967296
+   }
+  ],
+  "priority": "later",
+  "notes": "Paper 10.1038/s41597-026-07748-5 (from Sci Data URL). Split zip (all 7 parts needed, ~26 GB). Multi-resolution trabecular benchmark; dry human bone, not preclinical."
+ },
+ {
+  "slug": "zenodo_8405457_trab_screw",
+  "name": "Trabecular bone - screw interaction: micro-CT models and experimental push-in results",
+  "doi": "10.5281/zenodo.8405457",
+  "url": "https://zenodo.org/records/8405457",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "[UNR] (10 trabecular bone samples; likely human)",
+  "site": "trabecular bone cores with inserted screw",
+  "modality": "micro-CT derived voxel models (.mat)",
+  "voxel_um": "20",
+  "labels": "voxel models of bone before screw insertion and bone + screw after insertion (segmented); force/displacement curves",
+  "size_bytes": 13224536230,
+  "files": [
+   {
+    "name": "Data.zip",
+    "url": "https://zenodo.org/api/records/8405457/files/Data.zip/content",
+    "size_bytes": 13224534026
+   },
+   {
+    "name": "_readMe.txt",
+    "url": "https://zenodo.org/api/records/8405457/files/_readMe.txt/content",
+    "size_bytes": 2204
+   }
+  ],
+  "priority": "later",
+  "notes": "Implant-in-bone segmented models usable for BIC / peri-implant morphometry tests. Single 13 GB zip; MATLAB .mat. Related: Steiner et al. 2017 J Orthop Res 35(11):2415 (DOI [UNR]). readMe downloaded."
+ },
+ {
+  "slug": "zenodo_3539508_glenoid_dvc",
+  "name": "Micro-CT scans of unloaded and loaded glenoid bone used for DVC",
+  "doi": "10.5281/zenodo.3539508",
+  "url": "https://zenodo.org/records/3539508",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Homo sapiens (1 glenoid)",
+  "site": "scapular glenoid",
+  "modality": "micro-CT, MHD",
+  "voxel_um": "[UNR]",
+  "labels": "rigidly registered, bone-masked volumes; 6 repeated unloaded scans",
+  "size_bytes": 15087441985,
+  "files": [
+   {
+    "name": "mCT1.mhd",
+    "url": "https://zenodo.org/api/records/3539508/files/mCT1.mhd/content",
+    "size_bytes": 584
+   },
+   {
+    "name": "mCT1.mhd.raw",
+    "url": "https://zenodo.org/api/records/3539508/files/mCT1.mhd.raw/content",
+    "size_bytes": 1591352040
+   },
+   {
+    "name": "mCT2.mhd",
+    "url": "https://zenodo.org/api/records/3539508/files/mCT2.mhd/content",
+    "size_bytes": 584
+   },
+   {
+    "name": "mCT2.mhd.raw",
+    "url": "https://zenodo.org/api/records/3539508/files/mCT2.mhd.raw/content",
+    "size_bytes": 1592570880
+   }
+  ],
+  "priority": "later",
+  "notes": "Repeat scans with repositioning: good for scan-rescan precision of morphometry (QC module)."
+ },
+ {
+  "slug": "zenodo_4073082_hrpqct_demo",
+  "name": "HR-pQCT demo images (Scanco ISQ)",
+  "doi": "10.5281/zenodo.4073082",
+  "url": "https://zenodo.org/records/4073082",
+  "license": "CC-BY-NC-SA-4.0",
+  "commercial_use": "research_only",
+  "access": "open",
+  "species": "Homo sapiens (2)",
+  "site": "distal radius/tibia [UNR]",
+  "modality": "HR-pQCT (Scanco XtremeCT) ISQ",
+  "voxel_um": "[UNR]",
+  "labels": "none",
+  "size_bytes": 1038096592,
+  "files": [
+   {
+    "name": "C0000221.ISQ",
+    "url": "https://zenodo.org/api/records/4073082/files/C0000221.ISQ/content",
+    "size_bytes": 519048192
+   },
+   {
+    "name": "C0000222.ISQ",
+    "url": "https://zenodo.org/api/records/4073082/files/C0000222.ISQ/content",
+    "size_bytes": 519048192
+   },
+   {
+    "name": "subjects_data.csv",
+    "url": "https://zenodo.org/api/records/4073082/files/subjects_data.csv/content",
+    "size_bytes": 208
+   }
+  ],
+  "priority": "later (research-only)",
+  "notes": "NON-COMMERCIAL. Only value is ISQ reader testing; restrict to internal research after legal review; never use for training or ship as test fixtures."
+ },
+ {
+  "slug": "zenodo_6990764_chicken_bone_dose",
+  "name": "Cone-beam CT dataset of a chicken bone at 4 dose levels (projections)",
+  "doi": "10.5281/zenodo.6990764",
+  "url": "https://zenodo.org/records/6990764",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Gallus gallus (cooked, dried bone)",
+  "site": "leg bone",
+  "modality": "in-house CBCT projections (Univ. Helsinki)",
+  "voxel_um": "[UNR]",
+  "labels": "none",
+  "size_bytes": 7182603714,
+  "files": [
+   {
+    "name": "20220811_chicken_bone_dose_10.zip",
+    "url": "https://zenodo.org/api/records/6990764/files/20220811_chicken_bone_dose_10.zip/content",
+    "size_bytes": 1507097237
+   }
+  ],
+  "priority": "later",
+  "notes": "Noise/dose robustness testing; requires own reconstruction."
+ },
+ {
+  "slug": "zenodo_8181250_lumvbcanseg",
+  "name": "LumVBCanSeg: lumbar vertebral body cancellous bone segmentation (clinical CT)",
+  "doi": "10.5281/zenodo.8181250",
+  "url": "https://zenodo.org/records/8181250",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Homo sapiens (185 CT)",
+  "site": "L1-L5",
+  "modality": "clinical CT, 1 mm isotropic",
+  "voxel_um": "1000",
+  "labels": "cancellous bone masks L1-L5 (3 physicians + senior review)",
+  "size_bytes": 10075438693,
+  "files": [
+   {
+    "name": "LumVBCanSeg.zip",
+    "url": "https://zenodo.org/api/records/8181250/files/LumVBCanSeg.zip/content",
+    "size_bytes": 10075438693
+   }
+  ],
+  "priority": "not_useful",
+  "notes": "Clinical resolution; out of scope for micro-CT."
+ },
+ {
+  "slug": "zenodo_21494458_femhals",
+  "name": "FEMHALS: multiscale imaging and mechanical testing of 94 human proximal femora (QCT, uCT)",
+  "doi": "10.5281/zenodo.21494458",
+  "url": "https://zenodo.org/records/21494458",
+  "license": "[UNR] restricted record",
+  "commercial_use": "unclear",
+  "access": "restricted (request via Zenodo)",
+  "species": "Homo sapiens (47 donors)",
+  "site": "proximal femur / femoral neck",
+  "modality": "QCT + micro-CT + mechanics",
+  "voxel_um": "[UNR]",
+  "labels": "[UNR]",
+  "size_bytes": null,
+  "files": [],
+  "priority": "later (request access)",
+  "notes": "Multi-resolution human femur; access request needed."
+ },
+ {
+  "slug": "figshare_ovx_mouse_femur",
+  "name": "Murine femur micro-CT and biomechanical datasets for an ovariectomy-induced osteoporosis model",
+  "doi": "10.6084/m9.figshare.c.5202233",
+  "url": "https://springernature.figshare.com/collections/_/5202233",
+  "license": "CC0 (per-article)",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Mus musculus C57BL/6JOlaHsd (15: 7 OVX, 8 sham)",
+  "site": "whole femur",
+  "modality": "ex vivo micro-CT, Bruker SkyScan 1172, NRecon",
+  "voxel_um": "13.7 (pixel size per paper)",
+  "labels": "none (biomechanics only)",
+  "size_bytes": 86048754334,
+  "files": [
+   {
+    "name": "01ov.rar",
+    "url": "https://ndownloader.figshare.com/files/25472981",
+    "size_bytes": 5479578509
+   }
+  ],
+  "priority": "later",
+  "notes": "Paper 10.1038/s41597-021-01012-8. Each animal ~5.5 GB RAR (raw projection TIFFs + reconstructed BMP + test data). Good for SkyScan/NRecon ingestion + cross-scanner generalisation; RAR needs unrar."
+ },
+ {
+  "slug": "figshare_oi_mouse_tibia",
+  "name": "Micro-CT reconstructions of tibiae of stem cell transplanted osteogenesis imperfecta mice",
+  "doi": "10.6084/m9.figshare.c.3795019.v1",
+  "url": "https://springernature.figshare.com/collections/_/3795019",
+  "license": "CC0 (per-article)",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Mus musculus (21: WT, oim/oim, oim/oim + hAFSC)",
+  "site": "proximal tibia",
+  "modality": "micro-CT, 991 x 8-bit BMP per sample + PLY mesh",
+  "voxel_um": "[UNR]",
+  "labels": "none",
+  "size_bytes": null,
+  "files": [
+   {
+    "name": "MicroCT of mouse tibiae-wild-type1.zip",
+    "url": "https://ndownloader.figshare.com/files/9567568",
+    "size_bytes": 538250253
+   },
+   {
+    "name": "Wild-type1 3D.ply",
+    "url": "https://ndownloader.figshare.com/files/9637678",
+    "size_bytes": 206147992
+   }
+  ],
+  "priority": "later (1 sample now optional)",
+  "notes": "Paper 10.1038/sdata.2018.100. Slice zips total 9.79 GB; PLY meshes ~0.2 GB each. Disease (brittle bone) phenotype gives cross-dataset shift."
+ },
+ {
+  "slug": "shef_orda_mouse_tibia_invivo",
+  "name": "MicroCT Dataset of mouse tibiae for DVC precision analyses (repeated scans ex vivo and in vivo)",
+  "doi": "10.15131/shef.data.5528104.v1",
+  "url": "https://orda.shef.ac.uk/articles/online_resource/_/5528104",
+  "license": "CC-BY-4.0 (record)",
+  "commercial_use": "unclear",
+  "access": "request (images on Sheffield file-store; contact author)",
+  "species": "Mus musculus",
+  "site": "tibia",
+  "modality": "in vivo + ex vivo micro-CT (repeated)",
+  "voxel_um": "[UNR]",
+  "labels": "none",
+  "size_bytes": null,
+  "files": [],
+  "priority": "later (request)",
+  "notes": "Also 10.15131/shef.data.5562529.v1 (integration-time study, results only). Repeated in vivo scans relevant to longitudinal module."
+ },
+ {
+  "slug": "miceBoneChallenge",
+  "name": "MiceBoneChallenge: micro-CT public dataset for growth-plate detection (83 mouse femurs)",
+  "doi": null,
+  "url": "https://arxiv.org/abs/2411.17260",
+  "license": "[UNR]",
+  "commercial_use": "unclear",
+  "access": "[UNR] repository not identified",
+  "species": "Mus musculus (83)",
+  "site": "distal femur",
+  "modality": "micro-CT",
+  "voxel_um": "[UNR]",
+  "labels": "growth-plate plane annotations",
+  "size_bytes": null,
+  "files": [],
+  "priority": "later (locate)",
+  "notes": "Paper says data 'is being made public'; no URL/licence found."
+ },
+ {
+  "slug": "hereon_mg_implant_srct",
+  "name": "Hereon P05 SRuCT of Mg-xGd / Ti screws in rat bone (segmentation studies)",
+  "doi": null,
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8844220/",
+  "license": "[UNR]",
+  "commercial_use": "unclear",
+  "access": "[UNR] no public deposit found",
+  "species": "Rattus norvegicus",
+  "site": "tibia with screw implants",
+  "modality": "synchrotron micro-CT (DESY P05)",
+  "voxel_um": "[UNR]",
+  "labels": "(in papers) residual material / degradation layer / bone / background",
+  "size_bytes": null,
+  "files": [],
+  "priority": "not_available",
+  "notes": "Sci Rep 2021 'Scaling the U-net' (10.1038/s41598-021-03542-y) and J Synchrotron Rad 2026 CycleGAN paired uCT/toluidine-blue histology (53 pairs) describe ideal labelled implant data, but no open repository located; contact authors."
+ },
+ {
+  "slug": "zenodo_7558211_bone_metal_ct",
+  "name": "Bone Metal 3D Segmentation (clinical CT with metallic implants)",
+  "doi": "10.5281/zenodo.7558211",
+  "url": "https://zenodo.org/records/7558211",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Homo sapiens [UNR]",
+  "site": "[UNR]",
+  "modality": "clinical CT [UNR]",
+  "voxel_um": "[UNR]",
+  "labels": "bone/metal masks [UNR]",
+  "size_bytes": 1008935968,
+  "files": [
+   {
+    "name": "Task_bone_metal_segmentation.zip",
+    "url": "https://zenodo.org/api/records/7558211/files/Task_bone_metal_segmentation.zip/content",
+    "size_bytes": 1008935968
+   }
+  ],
+  "priority": "not_useful",
+  "notes": "Sparse, unclear provenance; clinical CT."
+ },
+ {
+  "slug": "idr0096_marrowquant",
+  "name": "MarrowQuant: H&E whole-bone sections (mouse femur/tibia/vertebra/sternum/tail; human iliac crest)",
+  "doi": "10.17867/10000170",
+  "url": "https://idr.openmicroscopy.org/webclient/?show=project-2104",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Mus musculus C57BL/6 (aging, irradiation aplasia); Homo sapiens (BM biopsies)",
+  "site": "whole bones incl. marrow",
+  "modality": "bright-field WSI, H&E, 20x, OME-TIFF",
+  "voxel_um": "0.344 (pixel)",
+  "labels": "1 ROI per image (per IDR annotation CSV); quantification of bone, adipocyte ghosts, haematopoietic, interstitial compartments in paper",
+  "size_bytes": 352900000000,
+  "files": [
+   {
+    "name": "21_D21_RF (20x).ome.tiff",
+    "url": "https://ftp.ebi.ac.uk/pub/databases/IDR/idr0096-tratwal-marrowquant/20210609-ftp-ome-tiffs/21_D21_RF%20(20x).ome.tiff",
+    "size_bytes": 588331927
+   },
+   {
+    "name": "idr0096-experimentA-annotation.csv",
+    "url": "https://raw.githubusercontent.com/IDR/idr0096-tratwal-marrowquant/HEAD/experimentA/idr0096-experimentA-annotation.csv",
+    "size_bytes": 68557
+   }
+  ],
+  "priority": "download_now (2-3 WSIs)",
+  "notes": "Paper 10.3389/fendo.2020.00480. 205 OME-TIFFs, 79 MB-11 GB each (~353 GB total). Bone-specific H&E with marrow; labels are ROIs, not pixel masks (verify ROI content in OMERO). EBI FTP over HTTPS intermittently resets; retry."
+ },
+ {
+  "slug": "idr0144_jawbone_histology",
+  "name": "Reconstructing 3D histological structures (human jaw trabecular bone serial sections)",
+  "doi": "10.17867/10000184",
+  "url": "https://idr.openmicroscopy.org/webclient/?show=project-2501",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Homo sapiens",
+  "site": "jaw trabecular bone",
+  "modality": "bright-field serial histology sections",
+  "voxel_um": "[UNR]",
+  "labels": "[UNR]",
+  "size_bytes": null,
+  "files": [],
+  "priority": "later",
+  "notes": "Files under https://ftp.ebi.ac.uk/pub/databases/IDR/idr0144-baskay-jawbone/ ; stain and annotations not verified."
+ },
+ {
+  "slug": "zenodo_10518968_nuinsseg",
+  "name": "NuInsSeg: fully annotated nuclei instance segmentation in H&E images",
+  "doi": "10.5281/zenodo.10518968",
+  "url": "https://zenodo.org/records/10518968",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Homo sapiens + Mus musculus (multiple organs)",
+  "site": "various organs",
+  "modality": "H&E bright-field patches",
+  "voxel_um": null,
+  "labels": "nuclei instance masks (manual)",
+  "size_bytes": 1627427342,
+  "files": [
+   {
+    "name": "NuInsSeg.zip",
+    "url": "https://zenodo.org/api/records/10518968/files/NuInsSeg.zip/content",
+    "size_bytes": 1627427342
+   }
+  ],
+  "priority": "download_now",
+  "notes": "Commercially usable nuclei dataset; not bone-specific. Paper DOI [UNR]."
+ },
+ {
+  "slug": "zenodo_5022015_oc_finder",
+  "name": "OC_Finder: osteoclast segmentation/classification/counting source data",
+  "doi": "10.5281/zenodo.5022015",
+  "url": "https://zenodo.org/records/5022015",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Mus musculus (bone-marrow-derived osteoclast cultures)",
+  "site": "cell culture wells (not tissue)",
+  "modality": "bright-field microscopy TIFF (stain [UNR])",
+  "voxel_um": null,
+  "labels": "point coordinates of osteoclasts / non-osteoclasts (xls/csv) for 3 collections (170, 288, ... images)",
+  "size_bytes": 5880456009,
+  "files": [
+   {
+    "name": "OC_Finder.zip",
+    "url": "https://zenodo.org/api/records/5022015/files/OC_Finder.zip/content",
+    "size_bytes": 5880456009
+   }
+  ],
+  "priority": "later",
+  "notes": "Extra test data: 10.5281/zenodo.5822630 (1.66 GB). Culture images; TRAP tissue-section transfer unproven."
+ },
+ {
+  "slug": "tcia_osteosarcoma_tumor_assessment",
+  "name": "Osteosarcoma Tumor Assessment (H&E tiles)",
+  "doi": "10.7937/tcia.2019.bvhjhdas",
+  "url": "https://www.cancerimagingarchive.net/collection/osteosarcoma-tumor-assessment/",
+  "license": "CC-BY-3.0",
+  "commercial_use": "allowed",
+  "access": "open (IBM Aspera download)",
+  "species": "Homo sapiens (paediatric)",
+  "site": "osteosarcoma resections",
+  "modality": "H&E tiles 1024x1024, 10x, JPG",
+  "voxel_um": null,
+  "labels": "tile class: non-tumour / viable tumour / necrosis (1144 tiles)",
+  "size_bytes": 196840000,
+  "files": [
+   {
+    "name": "ML_Features_1144.csv",
+    "url": "https://www.cancerimagingarchive.net/wp-content/uploads/ML_Features_1144.csv",
+    "size_bytes": 880995
+   }
+  ],
+  "priority": "later",
+  "notes": "Images only via Aspera package link on the TCIA page. Tile-level labels; human tumour bone, useful for bone-tissue texture pretraining only."
+ },
+ {
+  "slug": "zenodo_21666670_fexhis",
+  "name": "FEXHIS: light microscopy of human femoral cortical bone with manual segmentations",
+  "doi": "10.5281/zenodo.21666670",
+  "url": "https://zenodo.org/records/21666670",
+  "license": "[UNR] (restricted record)",
+  "commercial_use": "unclear",
+  "access": "restricted (request)",
+  "species": "Homo sapiens (94 femora, 47 donors)",
+  "site": "femoral diaphysis, femoral neck",
+  "modality": "light microscopy 10x",
+  "voxel_um": null,
+  "labels": "manual: Haversian canal, osteocyte lacuna, cement line, background",
+  "size_bytes": null,
+  "files": [],
+  "priority": "later (request)",
+  "notes": "Paper: Simon et al. Bone 193 (2025) 117404 (DOI [UNR]); code github.com/artorg-unibe-ch/FEXHIP-Histology."
+ },
+ {
+  "slug": "zenodo_23884832_goat_cartilage",
+  "name": "Postnatal articular cartilage maturation in a goat model (H&E histology + synchrotron phase-contrast tomography)",
+  "doi": "10.5281/zenodo.23884832",
+  "url": "https://zenodo.org/records/23884832",
+  "license": "CC-BY-4.0",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Capra hircus (7 ages)",
+  "site": "proximal second phalanx osteochondral cores",
+  "modality": "H&E WSI + SR phase-contrast CT",
+  "voxel_um": "[UNR]",
+  "labels": "none [UNR]",
+  "size_bytes": 6891061835,
+  "files": [
+   {
+    "name": "Histology_Dataset_Full.zip",
+    "url": "https://zenodo.org/api/records/23884832/files/Histology_Dataset_Full.zip/content",
+    "size_bytes": 4634158170
+   },
+   {
+    "name": "PhaseContrast_Tomography_Dataset_Full.zip",
+    "url": "https://zenodo.org/api/records/23884832/files/PhaseContrast_Tomography_Dataset_Full.zip/content",
+    "size_bytes": 2256897881
+   }
+  ],
+  "priority": "later",
+  "notes": "Osteochondral histology + CT of related tissue; no labels."
+ },
+ {
+  "slug": "zenodo_18937854_vbmc_xrh",
+  "name": "Volumetric bone marrow cellularity from trephines with 3D X-ray histology (underlying data)",
+  "doi": "10.5281/zenodo.18937854",
+  "url": "https://zenodo.org/records/18937854",
+  "license": "CC-BY-4.0 (plus governance statement)",
+  "commercial_use": "unclear",
+  "access": "open",
+  "species": "Homo sapiens (6 FFPE trephines)",
+  "site": "iliac crest bone marrow trephine",
+  "modality": "lab X-ray histology (micro-CT of FFPE blocks)",
+  "voxel_um": "[UNR]",
+  "labels": "derived cellularity measures; Avizo segmentation figure",
+  "size_bytes": 9405644890,
+  "files": [
+   {
+    "name": "Renderings.ORSSession",
+    "url": "https://zenodo.org/api/records/18937854/files/Renderings.ORSSession/content",
+    "size_bytes": 9355340821
+   }
+  ],
+  "priority": "not_useful",
+  "notes": "Paper 10.1088/1361-6560/ae9c84. Data locked in a Dragonfly ORS session; record asks reuse to stay within research governance -> treat as research-only."
+ },
+ {
+  "slug": "cellbindb",
+  "name": "CellBinDB: multimodal annotated cell segmentation dataset (DAPI, ssDNA, H&E, mIF)",
+  "doi": "10.5281/zenodo.15370205",
+  "url": "https://zenodo.org/records/15370205",
+  "license": "CC0-1.0 for CellBinDB images; bundled third-party datasets keep original licences (mixed_licenses.txt)",
+  "commercial_use": "allowed",
+  "access": "open",
+  "species": "Mus musculus (844), Homo sapiens (200)",
+  "site": ">30 tissues",
+  "modality": "microscopy incl. H&E",
+  "voxel_um": null,
+  "labels": "semantic + instance cell masks",
+  "size_bytes": 8199513892,
+  "files": [
+   {
+    "name": "mixed_licenses.txt",
+    "url": "https://zenodo.org/api/records/15370205/files/mixed_licenses.txt/content",
+    "size_bytes": 1123
+   }
+  ],
+  "priority": "later",
+  "notes": "Paper 10.1093/gigascience/giaf069. Check mixed_licenses.txt before using the bundled public datasets. Commercial-use detail: allowed (CellBinDB part only)"
+ },
+ {
+  "slug": "nuclei_nc_family",
+  "name": "PanNuke / Lizard / MoNuSeg (nuclei segmentation)",
+  "doi": null,
+  "url": null,
+  "license": "[UNR] commonly reported as CC-BY-NC-SA-4.0",
+  "commercial_use": "research_only",
+  "access": "open",
+  "species": "Homo sapiens",
+  "site": "various",
+  "modality": "H&E patches",
+  "voxel_um": null,
+  "labels": "nuclei instance + type masks",
+  "size_bytes": null,
+  "files": [],
+  "priority": "later (research-only benchmark)",
+  "notes": "Not verified in this survey. Zenodo re-packagings exist (e.g. 10.5281/zenodo.10103514 cc-by-sa-4.0, 10.5281/zenodo.4501372 cc-by-4.0) but derivatives cannot relax upstream NC terms; treat as research-only."
+ },
+ {
+  "slug": "noise_osteoclast",
+  "name": "NOISe osteoclast instance segmentation dataset",
+  "doi": null,
+  "url": "https://github.com/michaelwwan/noise",
+  "license": "none stated (GitHub API: no licence)",
+  "commercial_use": "unclear",
+  "access": "Google Drive link",
+  "species": "Mus musculus (+ human transfer)",
+  "site": "osteoclast cultures",
+  "modality": "bright-field WSI of wells",
+  "voxel_um": "0.7784 um/px",
+  "labels": "~2e5 osteoclast instance masks",
+  "size_bytes": null,
+  "files": [],
+  "priority": "not_useful (no licence)",
+  "notes": "All rights reserved by default; ask authors for a licence."
+ },
+ {
+  "slug": "bambo_bone_marrow",
+  "name": "BaMBo: annotated bone marrow biopsy dataset",
+  "doi": "10.5281/zenodo.13690800",
+  "url": "https://zenodo.org/records/13690800",
+  "license": "CC-BY-4.0 (record metadata) but files restricted",
+  "commercial_use": "unclear",
+  "access": "restricted (request)",
+  "species": "Homo sapiens",
+  "site": "bone marrow biopsy",
+  "modality": "H&E",
+  "voxel_um": null,
+  "labels": "segmentation (185 images)",
+  "size_bytes": null,
+  "files": [],
+  "priority": "later (request)",
+  "notes": ""
+ },
+ {
+  "slug": "simtk_knee_cartilage_histology",
+  "name": "Human Knee Cartilage Histopathology Assessment (HHGS/OARSI scores)",
+  "doi": "10.18735/77ye-yh24",
+  "url": "https://doi.org/10.18735/77ye-yh24",
+  "license": "[UNR] not stated (article CC-BY-NC-ND-4.0)",
+  "commercial_use": "unclear",
+  "access": "SimTK (registration [UNR])",
+  "species": "Homo sapiens (90 TKA patients)",
+  "site": "knee cartilage/subchondral",
+  "modality": "H&E, Safranin-O, PLM TIFF",
+  "voxel_um": null,
+  "labels": "image-level grades only",
+  "size_bytes": 27000000000,
+  "files": [],
+  "priority": "not_useful",
+  "notes": "Grades, no masks."
+ },
+ {
+  "slug": "opara_tud_calibration_phantom",
+  "name": "Micro-CT Data of Calibration Phantom (TU Dresden OPARA)",
+  "doi": null,
+  "url": "https://opara.zih.tu-dresden.de/items/be8ce8d5-f76d-4b1e-be1d-94701646368d",
+  "license": "CC-BY-4.0 [UNR - repository page errored]",
+  "commercial_use": "unclear",
+  "access": "open [UNR]",
+  "species": "phantom",
+  "site": "PMMA cylinder with steel ball bearings",
+  "modality": "micro-CT projections",
+  "voxel_um": "[UNR]",
+  "labels": "known geometry",
+  "size_bytes": null,
+  "files": [],
+  "priority": "later",
+  "notes": "Geometric calibration, not HA density. Linked paper 10.3390/s24165139 [UNR]. No public HA/BMD micro-CT phantom scans were found; plan to scan own QRM/Scanco HA phantom."
+ }
+]

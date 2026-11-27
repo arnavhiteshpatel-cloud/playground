@@ -1,0 +1,1 @@
+scan_id,session_no,date,phantom_id,kV,filter,voxel_um,rod_id,nominal_mgHA_cm3,mean_gray,sd_gray,fit_slope,fit_intercept,fit_r2,drift_pct_vs_session1,cupping_pct,pass,notes

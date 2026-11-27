@@ -1,0 +1,46 @@
+structures 15.7 s
+C 2200 30 {'multiotsu': 0.976, 'gmm': 0.973, 'rf': 0.98, 'bayes_intensity_bound': 0.978}
+C 2200 80 {'multiotsu': 0.97, 'gmm': 0.963, 'rf': 0.973, 'bayes_intensity_bound': 0.972}
+C 2200 150 {'multiotsu': 0.958, 'gmm': 0.953, 'rf': 0.966, 'bayes_intensity_bound': 0.958}
+C 2200 250 {'multiotsu': 0.929, 'gmm': 0.923, 'rf': 0.958, 'bayes_intensity_bound': 0.929}
+C 1600 30 {'multiotsu': 0.964, 'gmm': 0.943, 'rf': 0.971, 'bayes_intensity_bound': 0.968}
+C 1600 80 {'multiotsu': 0.951, 'gmm': 0.953, 'rf': 0.962, 'bayes_intensity_bound': 0.955}
+C 1600 150 {'multiotsu': 0.917, 'gmm': 0.913, 'rf': 0.953, 'bayes_intensity_bound': 0.919}
+C 1600 250 {'multiotsu': 0.835, 'gmm': 0.821, 'rf': 0.944, 'bayes_intensity_bound': 0.831}
+C 1300 30 {'multiotsu': 0.931, 'gmm': 0.909, 'rf': 0.958, 'bayes_intensity_bound': 0.946}
+C 1300 80 {'multiotsu': 0.902, 'gmm': 0.906, 'rf': 0.947, 'bayes_intensity_bound': 0.917}
+C 1300 150 {'multiotsu': 0.836, 'gmm': 0.811, 'rf': 0.938, 'bayes_intensity_bound': 0.839}
+C 1300 250 {'multiotsu': 0.729, 'gmm': 0.702, 'rf': 0.927, 'bayes_intensity_bound': 0.712}
+C 1150 30 {'multiotsu': 0.874, 'gmm': 0.896, 'rf': 0.946, 'bayes_intensity_bound': 0.914}
+C 1150 80 {'multiotsu': 0.838, 'gmm': 0.798, 'rf': 0.937, 'bayes_intensity_bound': 0.865}
+C 1150 150 {'multiotsu': 0.765, 'gmm': 0.718, 'rf': 0.927, 'bayes_intensity_bound': 0.757}
+C 1150 250 {'multiotsu': 0.658, 'gmm': 0.646, 'rf': 0.914, 'bayes_intensity_bound': 0.624}
+C 1000 30 {'multiotsu': 0.778, 'gmm': 0.677, 'rf': 0.926, 'bayes_intensity_bound': 0.839}
+C 1000 80 {'multiotsu': 0.749, 'gmm': 0.667, 'rf': 0.917, 'bayes_intensity_bound': 0.76}
+C 1000 150 {'multiotsu': 0.672, 'gmm': 0.625, 'rf': 0.908, 'bayes_intensity_bound': 0.63}
+C 1000 250 {'multiotsu': 0.573, 'gmm': 0.589, 'rf': 0.895, 'bayes_intensity_bound': 0.481}
+C 900 30 {'multiotsu': 0.712, 'gmm': 0.613, 'rf': 0.906, 'bayes_intensity_bound': 0.743}
+C 900 80 {'multiotsu': 0.683, 'gmm': 0.61, 'rf': 0.899, 'bayes_intensity_bound': 0.651}
+C 900 150 {'multiotsu': 0.594, 'gmm': 0.582, 'rf': 0.889, 'bayes_intensity_bound': 0.51}
+C 900 250 {'multiotsu': 0.508, 'gmm': 0.549, 'rf': 0.877, 'bayes_intensity_bound': 0.299}
+C 800 30 {'multiotsu': 0.066, 'gmm': 0.017, 'rf': 0.888, 'bayes_intensity_bound': 0.638}
+C 800 80 {'multiotsu': 0.212, 'gmm': 0.034, 'rf': 0.881, 'bayes_intensity_bound': 0.471}
+C 800 150 {'multiotsu': 0.337, 'gmm': 0.134, 'rf': 0.869, 'bayes_intensity_bound': 0.111}
+C 800 250 {'multiotsu': 0.373, 'gmm': 0.269, 'rf': 0.854, 'bayes_intensity_bound': 0.028}
+C 650 30 {'multiotsu': 0.499, 'gmm': 0.019, 'rf': 0.885, 'bayes_intensity_bound': 0.571}
+C 650 80 {'multiotsu': 0.475, 'gmm': 0.112, 'rf': 0.873, 'bayes_intensity_bound': 0.016}
+C 650 150 {'multiotsu': 0.446, 'gmm': 0.283, 'rf': 0.856, 'bayes_intensity_bound': 0.0}
+C 650 250 {'multiotsu': 0.41, 'gmm': 0.374, 'rf': 0.832, 'bayes_intensity_bound': 0.0}
+D 1600 1 {'multiotsu': 0.951, 'gmm': 0.953, 'rf': 0.962, 'bayes_intensity_bound': 0.955}
+D 1600 2 {'multiotsu': 0.897, 'gmm': 0.899, 'rf': 0.91, 'bayes_intensity_bound': 0.904}
+D 1600 3 {'multiotsu': 0.879, 'gmm': 0.886, 'rf': 0.906, 'bayes_intensity_bound': 0.89}
+D 1300 1 {'multiotsu': 0.902, 'gmm': 0.906, 'rf': 0.947, 'bayes_intensity_bound': 0.917}
+D 1300 2 {'multiotsu': 0.853, 'gmm': 0.849, 'rf': 0.893, 'bayes_intensity_bound': 0.871}
+D 1300 3 {'multiotsu': 0.84, 'gmm': 0.837, 'rf': 0.88, 'bayes_intensity_bound': 0.846}
+E none {'multiotsu': 0.951, 'gmm': 0.953, 'rf': 0.962, 'bayes_intensity_bound': 0.955}
+E rings_strong {'multiotsu': 0.943, 'gmm': 0.945, 'rf': 0.953, 'bayes_intensity_bound': 0.947}
+E cupping_20pct {'multiotsu': 0.943, 'gmm': 0.943, 'rf': 0.959, 'bayes_intensity_bound': 0.944}
+E gain_shift_test_only {'rf_raw_shifted': 0.81, 'rf_normalized_shifted': 0.962, 'multiotsu': 0.951, 'bayes_intensity_bound': 0.955}
+E blur_60um {'multiotsu': 0.846, 'gmm': 0.857, 'rf': 0.925, 'bayes_intensity_bound': 0.857}
+/home/user/playground/experiments/exp_C_separability.py:183: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string "o-" (-> linestyle='-'). The keyword argument will take precedence.
+  ax.plot(Xs, ys, "o-", color=c, label=k.replace("_", " "), lw=2 if k == "rf" else 1.3,

@@ -1,0 +1,68 @@
+# Statement of Work: DefectFill Report (TEMPLATE)
+
+> **Template only. Needs legal review before use (see `LEGAL_REVIEW_TERMS.md`).** OsteoQuant is not yet incorporated, and a legal entity must exist before this SOW can be signed. All prices are hypotheses [HYP]. Remove this box before sending.
+
+**SOW No.:** [OQ-SOW-YYYY-NNN]  **Under Master Services Agreement / Terms dated:** [date]
+**Customer:** [Legal name, address]  **Provider:** [OsteoQuant legal entity — TBD]
+**Customer study identifier:** [code — no sponsor-confidential names required]
+**Effective date:** [ ]  **Target completion:** [ ] business days after Data Acceptance
+
+## 1. Background
+Customer has run a preclinical bone-defect study and holds reconstructed micro-CT image data. Customer engages Provider to perform image analysis and deliver a DefectFill Report.
+
+## 2. Scope of services
+| Item | Included |
+|---|---|
+| Data intake & integrity check (file checksums, voxel size, orientation, completeness) | Yes |
+| Defect ROI definition per Customer-approved protocol (geometry, size, location) | Yes |
+| Three-class segmentation: new bone / residual graft / host bone | Yes |
+| Human expert review of every segmentation, with corrections logged | Yes |
+| Morphometry per ASBMR nomenclature (Bouxsein et al., JBMR 2010): e.g., TV, BV, BV/TV within defect ROI, residual graft volume fraction, Tb.Th/Tb.Sp/Tb.N where applicable | Yes (parameter list in Annex A) |
+| Audit-trailed PDF report + CSV data tables + segmentation masks | Yes |
+| Statistical comparison between groups | [Optional — Annex B] |
+| GLP-supporting package (validation summary, audit trail export, QA statement) | [Only if GLP option selected; requires a Quality Agreement] |
+
+**Out of scope unless added by change order:** scanning or reconstruction; histology or histomorphometry; additional ROIs, time points or parameters beyond Annex A; re-analysis after Customer protocol changes; regulatory submission writing; any clinical or diagnostic use.
+
+## 3. Customer responsibilities
+- Provide reconstructed scans in an agreed format (DICOM / ISQ / TIFF stack / other), with voxel size, scanner model, energy/filter and reconstruction settings.
+- Provide the study protocol excerpt: defect model, defect dimensions, graft material and its radiodensity if known, group allocation (it may be blinded), and time points.
+- Name a technical contact. Approve the analysis protocol (Annex A) before production analysis starts.
+- Confirm Customer has the right to share the data with Provider. Data must contain no human-subject identifiers.
+
+## 4. Deliverables and acceptance
+| # | Deliverable | Format | Acceptance |
+|---|---|---|---|
+| D1 | Analysis protocol (Annex A) | PDF | Customer approval in writing |
+| D2 | Draft DefectFill Report | PDF + CSV + masks | Customer review within [10] business days |
+| D3 | Final report (one round of comments included) | PDF + CSV + masks + audit log | Deemed accepted [10] business days after delivery unless a written non-conformance is raised |
+
+## 5. Timeline
+Data Acceptance (T0) → D1 at T0 + [5] bd → D2 at T0 + [15–25] bd depending on scan count → D3 within [5] bd of comments.
+
+## 6. Fees [HYP — placeholders]
+| Item | Basis | Amount |
+|---|---|---|
+| Non-GLP study report (≤[40] scans, ≤[2] time points) | Fixed | $[12,000] [HYP] |
+| Additional scans beyond allowance | Per scan | $[___] [HYP] |
+| GLP-supporting option | Fixed uplift | $[___] [HYP] |
+| Statistical analysis (optional) | Fixed | $[___] [HYP] |
+| Change orders | Hourly | $[___]/h [HYP] |
+
+Payment terms: [50% on SOW signature, 50% on D3] / [Net 30]. Prices exclude taxes.
+
+## 7. Assumptions
+Scans are reconstructed, artifact-free and consistent within the study. The graft material is distinguishable from bone by micro-CT contrast, to be confirmed during D1. If it is not, Provider will advise and the scope may change.
+
+## 8. Data handling
+Covered by [DPA/Confidentiality terms]. Retention: [90] days after D3, then deletion with certificate, unless the Customer requests archiving under GLP terms.
+
+## 9. Limitations
+Results are for preclinical research use. Provider does not guarantee any regulatory outcome. Software version [x.y.z] and its validation status will be stated in the report.
+
+**Signatures:** Customer ____________ Provider ____________
+
+### Annex A: Analysis protocol (to be completed jointly)
+Model, ROI geometry, thresholds/segmentation method, class definitions, parameter list, QC criteria, blinding.
+
+### Annex B: Optional statistics

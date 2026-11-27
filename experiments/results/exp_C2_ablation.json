@@ -1,0 +1,78 @@
+{
+ "experiment": "C2",
+ "graft_mgHA": 900,
+ "noise_sigma": 150,
+ "rows": [
+  {
+   "morphology": "compact",
+   "features": "full",
+   "acc": 0.9079848594607683,
+   "dice_graft": 0.8808200590791014,
+   "dice_new": 0.929255082013829
+  },
+  {
+   "morphology": "compact",
+   "features": "no_spatial",
+   "acc": 0.8328644532649209,
+   "dice_graft": 0.8571885236685115,
+   "dice_new": 0.8707579991575924
+  },
+  {
+   "morphology": "compact",
+   "features": "intensity_scales",
+   "acc": 0.6982857584199079,
+   "dice_graft": 0.7204112894130911,
+   "dice_new": 0.7807381569623256
+  },
+  {
+   "morphology": "compact",
+   "features": "raw",
+   "acc": 0.5253843715136765,
+   "dice_graft": 0.48551040578870513,
+   "dice_new": 0.6448103556450986
+  },
+  {
+   "morphology": "compact",
+   "features": "bayes_intensity_bound",
+   "acc": 0.7064304574010163,
+   "dice_graft": 0.515607803165348,
+   "dice_new": 0.7893187592962572
+  },
+  {
+   "morphology": "strut_like",
+   "features": "full",
+   "acc": 0.8852587666376235,
+   "dice_graft": 0.7036942825821068,
+   "dice_new": 0.9309379284903446
+  },
+  {
+   "morphology": "strut_like",
+   "features": "no_spatial",
+   "acc": 0.8015247923013776,
+   "dice_graft": 0.6463953047653406,
+   "dice_new": 0.8773105939726166
+  },
+  {
+   "morphology": "strut_like",
+   "features": "intensity_scales",
+   "acc": 0.676754421203889,
+   "dice_graft": 0.5342081497524128,
+   "dice_new": 0.8032961541584669
+  },
+  {
+   "morphology": "strut_like",
+   "features": "raw",
+   "acc": 0.5055912950567211,
+   "dice_graft": 0.2461257166575327,
+   "dice_new": 0.6749506716240403
+  },
+  {
+   "morphology": "strut_like",
+   "features": "bayes_intensity_bound",
+   "acc": 0.8498038496318451,
+   "dice_graft": 0.0015938564080272405,
+   "dice_new": 0.9188432950004497
+  }
+ ],
+ "saved": "2026-11-27T07:12:28Z"
+}

@@ -1,0 +1,37 @@
+label_id,specimen_id,specimen_type,line1,line2,line3,barcode_text,copies,tier
+OQP1-C01,C01,host core (blinded),OQ-P1 C01,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C01,3,A+B
+OQP1-C02,C02,host core (blinded),OQ-P1 C02,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C02,3,A+B
+OQP1-C03,C03,host core (blinded),OQ-P1 C03,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C03,3,A+B
+OQP1-C04,C04,host core (blinded),OQ-P1 C04,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C04,3,A+B
+OQP1-C05,C05,host core (blinded),OQ-P1 C05,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C05,3,A+B
+OQP1-C06,C06,host core (blinded),OQ-P1 C06,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C06,3,A+B
+OQP1-C07,C07,host core (blinded),OQ-P1 C07,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C07,3,A+B
+OQP1-C08,C08,host core (blinded),OQ-P1 C08,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C08,3,A+B
+OQP1-C09,C09,host core (blinded),OQ-P1 C09,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C09,3,B
+OQP1-C10,C10,host core (blinded),OQ-P1 C10,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C10,3,B
+OQP1-C11,C11,host core (blinded),OQ-P1 C11,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C11,3,B
+OQP1-C12,C12,host core (blinded),OQ-P1 C12,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C12,3,B
+OQP1-C13,C13,host core (blinded),OQ-P1 C13,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C13,3,B
+OQP1-C14,C14,host core (blinded),OQ-P1 C14,Bovine core | 4 defects,Date: ____ Init: __,OQP1|C14,3,B
+OQP1-L01,L01,layered core (blinded),OQ-P1 L01,Bovine core | layered,Date: ____ Init: __,OQP1|L01,3,A+B
+OQP1-L02,L02,layered core (blinded),OQ-P1 L02,Bovine core | layered,Date: ____ Init: __,OQP1|L02,3,B
+OQP1-F01,F01,foam control,OQ-P1 F01,Sawbones 1522-440,Date: ____ Init: __,OQP1|F01,2,A+B
+OQP1-F02,F02,foam control,OQ-P1 F02,Sawbones 1522-440,Date: ____ Init: __,OQP1|F02,2,B
+OQP1-R01,R01,pure-material reference (coded),OQ-P1 R01,15 mL ref tube,Date: ____ Init: __,OQP1|R01,2,A+B
+OQP1-R02,R02,pure-material reference (coded),OQ-P1 R02,15 mL ref tube,Date: ____ Init: __,OQP1|R02,2,A+B
+OQP1-R03,R03,pure-material reference (coded),OQ-P1 R03,15 mL ref tube,Date: ____ Init: __,OQP1|R03,2,A+B
+OQP1-R04,R04,pure-material reference (coded),OQ-P1 R04,15 mL ref tube,Date: ____ Init: __,OQP1|R04,2,A+B
+OQP1-R05,R05,pure-material reference (coded),OQ-P1 R05,15 mL ref tube,Date: ____ Init: __,OQP1|R05,2,A+B
+OQP1-R06,R06,pure-material reference (coded),OQ-P1 R06,15 mL ref tube,Date: ____ Init: __,OQP1|R06,2,A+B
+OQP1-Q01,Q01,calibration phantom,OQ-P1 Q01,HA phantom,Date: ____ Init: __,OQP1|Q01,1,A+B
+OQP1-BOV-01,BOV-01,donor bone (whole/slab),OQ-P1 BOV-01,Food-source bovine femur | BIO,Date: ____ Init: __,OQP1|BOV-01,2,A+B
+OQP1-BOV-02,BOV-02,donor bone (whole/slab),OQ-P1 BOV-02,Food-source bovine femur | BIO,Date: ____ Init: __,OQP1|BOV-02,2,A+B
+OQP1-BOV-03,BOV-03,donor bone (whole/slab),OQ-P1 BOV-03,Food-source bovine femur | BIO,Date: ____ Init: __,OQP1|BOV-03,2,B
+OQP1-LOT-HA,LOT-HA,graft lot container,OQ-P1 LOT-HA,Lot#: ______ Opened: ____,Date: ____ Init: __,OQP1|LOT-HA,1,A+B
+OQP1-LOT-TCP,LOT-TCP,graft lot container,OQ-P1 LOT-TCP,Lot#: ______ Opened: ____,Date: ____ Init: __,OQP1|LOT-TCP,1,A+B
+OQP1-LOT-BCP,LOT-BCP,graft lot container,OQ-P1 LOT-BCP,Lot#: ______ Opened: ____,Date: ____ Init: __,OQP1|LOT-BCP,1,A+B
+OQP1-LOT-BG,LOT-BG,graft lot container,OQ-P1 LOT-BG,Lot#: ______ Opened: ____,Date: ____ Init: __,OQP1|LOT-BG,1,A+B
+OQP1-LOT-CS,LOT-CS,graft lot container,OQ-P1 LOT-CS,Lot#: ______ Opened: ____,Date: ____ Init: __,OQP1|LOT-CS,1,A+B
+OQP1-LOT-BC,LOT-BC,graft lot container,OQ-P1 LOT-BC,Lot#: ______ Opened: ____,Date: ____ Init: __,OQP1|LOT-BC,1,A+B
+OQP1-DRV-1,DRV-1,data drive,OQ-P1 DATA DRIVE 1,Founder-owned | SHA-256 verified,Date: ____ Init: __,OQP1|DRV-1,1,A+B
+OQP1-DRV-2,DRV-2,data drive,OQ-P1 DATA DRIVE 2,Founder-owned | SHA-256 verified,Date: ____ Init: __,OQP1|DRV-2,1,A+B

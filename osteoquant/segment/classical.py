@@ -224,16 +224,23 @@ def voxel_features(x: np.ndarray, spacing=(1, 1, 1), roi: np.ndarray | None = No
 class RFSegmenter:
     """Random-forest voxel classifier (sparse training on labelled voxels)."""
 
-    def __init__(self, n_estimators=60, max_depth=18, seed=0, scales_um=(0, 40, 80, 160)):
+    def __init__(self, n_estimators=60, max_depth=18, seed=0, scales_um=(0, 40, 80, 160), feature_set="full"):
         from sklearn.ensemble import RandomForestClassifier
         self.clf = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, n_jobs=-1,
                                           random_state=seed, class_weight="balanced_subsample")
         self.scales_um = scales_um
         self.seed = seed
+        self.feature_set = feature_set  # full | no_spatial | intensity_scales | raw
         self.feature_names = None
 
     def _feats(self, x, spacing, roi):
-        f, names = voxel_features(x, spacing, roi, self.scales_um)
+        if self.feature_set == "raw":
+            self.feature_names = ["raw"]
+            return x.astype(np.float32)[None]
+        f, names = voxel_features(x, spacing, roi, self.scales_um, include_spatial=self.feature_set == "full")
+        if self.feature_set == "intensity_scales":
+            keep = [i for i, n in enumerate(names) if n.startswith("gauss_")]
+            f, names = f[keep], [names[i] for i in keep]
         self.feature_names = names
         return f
 

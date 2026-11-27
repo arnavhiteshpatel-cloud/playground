@@ -1,0 +1,531 @@
+"""OsteoQuant web API + static viewer (FastAPI).
+
+Run locally:  ``osteoquant serve`` (or ``python -m osteoquant.cli serve``) → http://127.0.0.1:8765
+Local deployment only by default (binds to 127.0.0.1). No data leaves the machine.
+
+Auth: ``Authorization: Bearer <token>`` (token from POST /api/auth/login). All object access is
+checked against the caller's organisation (tenant isolation) and role permissions.
+"""
+from __future__ import annotations
+
+import io
+import json
+import os
+import re
+import shutil
+import uuid
+from pathlib import Path
+
+import numpy as np
+from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, UploadFile
+from fastapi.responses import FileResponse, JSONResponse, Response
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field
+
+from .. import __version__
+from ..study.db import Store
+from ..study.jobs import JobRunner
+
+WEB = Path(__file__).resolve().parents[2] / "web" / "static"
+MAX_UPLOAD = int(os.environ.get("OQ_MAX_UPLOAD_BYTES", str(8 * 1024 ** 3)))
+
+
+# ----------------------------------------------------------------------------- job handlers
+def _store_path(store: Store, org_id, scan_id) -> Path:
+    p = store.data_dir / f"org{int(org_id)}" / "scans" / f"scan{int(scan_id)}.zarr"
+    p.parent.mkdir(parents=True, exist_ok=True)
+    return p
+
+
+def _load_scan(store, user, scan_id):
+    from ..io import read_volume
+    sc = store.scan(user, scan_id)
+    vol, _ = read_volume(sc["store_path"])
+    vol.meta.setdefault("ingest", {}).update({"metadata_found": {"spacing_um": sc["spacing_um"]}, "metadata_assumed":
+                                             (sc["meta"] or {}).get("ingest", {}).get("metadata_assumed", {})})
+    return sc, vol
+
+
+def job_qc(store, user, params, ctx):
+    from ..qc import run_qc
+    sc, vol = _load_scan(store, user, params["scan_id"])
+    ctx.progress(0.3, "running QC")
+    qc = run_qc(vol)
+    store.set_scan_qc(user, params["scan_id"], qc)
+    return {"verdict": qc["verdict"], "n_warn": qc["n_warn"], "n_fail": qc["n_fail"]}
+
+
+def job_analyze(store, user, params, ctx):
+    from ..pipeline import analyze, public, labels_hash
+    from ..io import write_labels_zarr
+    scan_id = params["scan_id"]
+    sc, vol = _load_scan(store, user, scan_id)
+    roi_dict = params.get("roi")
+    if roi_dict is None and params.get("use_saved_roi", True):
+        r = store.latest_roi(user, scan_id)
+        if r:
+            roi_dict = r["definition"]
+    res = analyze(vol, params.get("config", {}), roi_dict, progress=lambda f, m: ctx.progress(f, m))
+    if res.get("status") == "needs_manual_roi":
+        return {"status": "needs_manual_roi", "error": res.get("roi_error")}
+    if roi_dict is None:
+        rid, _ = store.save_roi(user, scan_id, res["roi"], reason="automatic detection")
+    else:
+        rid = store.latest_roi(user, scan_id)["id"] if store.latest_roi(user, scan_id) else None
+    seg = res["segmentation"]
+    sid, v = store.save_segmentation(user, scan_id, "automatic", f"seg_v", res["labels_sha256"], method=seg["method"],
+                                     model_name=seg.get("model_name"), model_sha256=seg.get("model_sha256"), roi_id=rid)
+    key = f"seg_v{v}"
+    store.exec("UPDATE segmentations SET labels_key=? WHERE id=?", (key, sid))
+    write_labels_zarr(sc["store_path"], key, res["_labels"])
+    write_labels_zarr(sc["store_path"], "roi_current", res["_roi_mask"].astype(np.uint8))
+    if "_entropy" in res:
+        write_labels_zarr(sc["store_path"], f"unc_v{v}", np.clip(res["_entropy"] * 255, 0, 255).astype(np.uint8))
+    store.save_measurement(user, scan_id, sid, rid, public(res), __version__)
+    store.exec("UPDATE scans SET status='analyzed' WHERE id=?", (scan_id,))
+    return {"segmentation_id": sid, "version": v, "status": res["status"], "timings": res["timings"]}
+
+
+def job_report(store, user, params, ctx):
+    from .bundle import bundle_from_store
+    from ..report import build_pdf
+    sid = params["study_id"]
+    bundle = bundle_from_store(store, user, sid, ctx)
+    out = store.data_dir / f"org{user['org_id']}" / "reports"
+    out.mkdir(parents=True, exist_ok=True)
+    rid = store.exec("INSERT INTO reports(org_id,study_id,status,created_by,created) VALUES (?,?,?,?,datetime('now'))",
+                     (user["org_id"], sid, "building", user["id"]))
+    pdf, csvp = out / f"report{rid}.pdf", out / f"report{rid}.csv"
+    r = build_pdf(bundle, pdf, csvp)
+    store.exec("UPDATE reports SET pdf_path=?, csv_path=?, sha256=?, status='ready' WHERE id=?",
+               (str(pdf), str(csvp), r["pdf_sha256"], rid))
+    store.audit.record("report.generate", user["id"], user["org_id"], "report", rid, {"study": sid, "sha256": r["pdf_sha256"]})
+    return {"report_id": rid, "sha256": r["pdf_sha256"]}
+
+
+HANDLERS = {"qc": job_qc, "analyze": job_analyze, "report": job_report}
+
+
+# ----------------------------------------------------------------------------- app factory
+class LoginIn(BaseModel):
+    username: str = Field(min_length=1, max_length=64)
+    password: str = Field(min_length=1, max_length=256)
+
+
+class NameIn(BaseModel):
+    name: str = Field(min_length=1, max_length=200)
+    description: str = Field(default="", max_length=2000)
+
+
+class StudyIn(BaseModel):
+    project_id: int
+    name: str = Field(min_length=1, max_length=200)
+    species: str = ""
+    defect_model: str = ""
+    graft_materials: str = ""
+    blinded: bool = False
+
+
+class SpecimenIn(BaseModel):
+    animal_id: str = Field(min_length=1, max_length=64, pattern=r"^[A-Za-z0-9_.\-]+$")
+    group_id: int | None = None
+    sex: str | None = None
+
+
+class TimepointIn(BaseModel):
+    label: str = Field(min_length=1, max_length=64)
+    days: float | None = None
+
+
+class UserIn(BaseModel):
+    username: str = Field(min_length=3, max_length=64, pattern=r"^[A-Za-z0-9_.\-@]+$")
+    password: str
+    role: str
+    full_name: str = ""
+
+
+class EditOp(BaseModel):
+    op: str = Field(pattern=r"^(brush|fill_component)$")
+    axis: int = Field(ge=0, le=2)
+    index: int = Field(ge=0)
+    cy: float
+    cx: float
+    r: float = Field(default=2.0, ge=0.5, le=64)
+    label: int = Field(ge=0, le=255)
+    only_from: int | None = None
+
+
+class EditsIn(BaseModel):
+    base_version: int
+    ops: list[EditOp] = Field(min_length=1, max_length=5000)
+    reason: str = Field(default="", max_length=500)
+
+
+class ReviewIn(BaseModel):
+    object_type: str = Field(pattern=r"^(segmentation|report|roi|scan)$")
+    object_id: int
+    decision: str = Field(pattern=r"^(approved|rejected|needs_changes)$")
+    meaning: str = Field(min_length=5, max_length=300)
+    comment: str = Field(default="", max_length=2000)
+    password: str  # re-authentication at signing
+
+
+class ROIIn(BaseModel):
+    definition: dict
+    reason: str = Field(min_length=3, max_length=500)
+
+
+class AnalyzeIn(BaseModel):
+    config: dict = {}
+    use_saved_roi: bool = True
+
+
+def create_app(db_path: str | None = None, data_dir: str | None = None, workers: int = 1) -> FastAPI:
+    db_path = db_path or os.environ.get("OQ_DB", str(Path.cwd() / "runtime" / "osteoquant.db"))
+    Path(db_path).parent.mkdir(parents=True, exist_ok=True)
+    store = Store(db_path, data_dir)
+    runner = JobRunner(store, HANDLERS, workers=workers)
+    app = FastAPI(title="OsteoQuant (research prototype)", version=__version__)
+    app.state.store, app.state.runner = store, runner
+
+    def current_user(authorization: str | None = Header(default=None)):
+        tok = authorization.split(" ", 1)[1] if authorization and authorization.lower().startswith("bearer ") else None
+        u = store.user_for_token(tok)
+        if not u:
+            raise HTTPException(401, "Not authenticated")
+        return u
+
+    @app.exception_handler(PermissionError)
+    async def perm(_, exc):
+        return JSONResponse({"detail": str(exc)}, status_code=403)
+
+    @app.exception_handler(KeyError)
+    async def nf(_, exc):
+        return JSONResponse({"detail": str(exc)}, status_code=404)
+
+    @app.exception_handler(ValueError)
+    async def bad(_, exc):
+        return JSONResponse({"detail": str(exc)}, status_code=400)
+
+    # ---------------------------------------------------------------- auth
+    @app.post("/api/auth/login")
+    def login(b: LoginIn):
+        tok = store.login(b.username, b.password)
+        if not tok:
+            raise HTTPException(401, "Invalid credentials or locked account")
+        return {"token": tok}
+
+    @app.post("/api/auth/logout")
+    def logout(authorization: str | None = Header(default=None), u=Depends(current_user)):
+        store.logout(authorization.split(" ", 1)[1])
+        store.audit.record("auth.logout", u["id"], u["org_id"])
+        return {"ok": True}
+
+    @app.get("/api/me")
+    def me(u=Depends(current_user)):
+        from ..study.db import ROLES
+        return {**u, "permissions": sorted(ROLES[u["role"]]), "version": __version__}
+
+    @app.post("/api/users")
+    def new_user(b: UserIn, u=Depends(current_user)):
+        uid = store.create_user(u["org_id"], b.username, b.password, b.role, b.full_name, actor=u)
+        return {"id": uid}
+
+    @app.get("/api/users")
+    def users(u=Depends(current_user)):
+        store.require(u, "manage_users")
+        return store.q("SELECT id,username,full_name,role,active,created FROM users WHERE org_id=?", (u["org_id"],))
+
+    # ---------------------------------------------------------------- projects / studies
+    @app.post("/api/projects")
+    def new_project(b: NameIn, u=Depends(current_user)):
+        return {"id": store.create_project(u, b.name, b.description)}
+
+    @app.get("/api/projects")
+    def projects(u=Depends(current_user)):
+        store.require(u, "read")
+        return store.q("SELECT * FROM projects WHERE org_id=?", (u["org_id"],))
+
+    @app.post("/api/studies")
+    def new_study(b: StudyIn, u=Depends(current_user)):
+        return {"id": store.create_study(u, b.project_id, b.name, b.species, b.defect_model, b.graft_materials, b.blinded)}
+
+    @app.get("/api/studies")
+    def studies(u=Depends(current_user)):
+        return store.list_studies(u)
+
+    @app.get("/api/studies/{sid}")
+    def study(sid: int, u=Depends(current_user)):
+        return {"study": store.study(u, sid), "groups": store.groups(u, sid), "specimens": store.specimens(u, sid),
+                "timepoints": store.q("SELECT * FROM timepoints WHERE study_id=?", (sid,)), "scans": store.scans(u, sid)}
+
+    @app.post("/api/studies/{sid}/groups")
+    def new_group(sid: int, b: NameIn, u=Depends(current_user)):
+        return {"id": store.add_group(u, sid, b.name, b.description)}
+
+    @app.post("/api/studies/{sid}/specimens")
+    def new_specimen(sid: int, b: SpecimenIn, u=Depends(current_user)):
+        return {"id": store.add_specimen(u, sid, b.animal_id, b.group_id, b.sex)}
+
+    @app.post("/api/studies/{sid}/timepoints")
+    def new_tp(sid: int, b: TimepointIn, u=Depends(current_user)):
+        return {"id": store.add_timepoint(u, sid, b.label, b.days)}
+
+    @app.post("/api/studies/{sid}/unblind")
+    def unblind(sid: int, reason: str = Form(...), u=Depends(current_user)):
+        store.unblind(u, sid, reason)
+        return {"ok": True}
+
+    @app.get("/api/studies/{sid}/results")
+    def results(sid: int, u=Depends(current_user)):
+        rows = store.latest_measurements(u, sid)
+        out = []
+        for r in rows:
+            cv = r["metrics"].get("metrics", {}).get("class_volumes", {})
+            out.append({"scan_id": r["scan_id"], "specimen_id": r["specimen_id"], "timepoint_id": r["timepoint_id"],
+                        "segmentation_id": r["segmentation_id"], **cv})
+        return out
+
+    @app.get("/api/studies/{sid}/export")
+    def export(sid: int, u=Depends(current_user)):
+        return JSONResponse(json.loads(json.dumps(store.export_study(u, sid), default=str)))
+
+    # ---------------------------------------------------------------- scans
+    @app.post("/api/studies/{sid}/scans")
+    async def upload(sid: int, file: UploadFile = File(...), specimen_id: int | None = Form(None),
+                     timepoint_id: int | None = Form(None), spacing_um: float | None = Form(None),
+                     acquisition: str = Form("{}"), u=Depends(current_user)):
+        from ..io import read_volume, write_zarr, sha256_file
+        from ..io.safe_archive import safe_extract
+        st = store.study(u, sid)
+        store.require(u, "write", st["org_id"])
+        name = re.sub(r"[^A-Za-z0-9_.\-]", "_", Path(file.filename or "upload").name)[:120] or "upload"
+        tmp = store.data_dir / "uploads" / uuid.uuid4().hex
+        tmp.mkdir(parents=True)
+        try:
+            dest = tmp / name
+            size = 0
+            with open(dest, "wb") as f:
+                while True:
+                    b = await file.read(1 << 22)
+                    if not b:
+                        break
+                    size += len(b)
+                    if size > MAX_UPLOAD:
+                        raise HTTPException(413, "Upload exceeds size limit")
+                    f.write(b)
+            fsha = sha256_file(dest)
+            src = dest
+            if name.lower().endswith((".zip", ".tar", ".tgz", ".tar.gz")):
+                ex = tmp / "extracted"
+                safe_extract(dest, ex)
+                subdirs = {Path(p).parent for p in ex.rglob("*") if p.is_file()}
+                src = max(subdirs, key=lambda d: len(list(d.iterdir())))
+            try:
+                acq = json.loads(acquisition or "{}")
+            except json.JSONDecodeError:
+                raise HTTPException(400, "acquisition must be JSON")
+            vol, rep = read_volume(src, spacing_um=spacing_um)
+            if rep.errors:
+                raise HTTPException(422, f"Ingest errors: {rep.errors[:3]}")
+            scan_id = store.register_scan(u, sid, specimen_id, timepoint_id, "", name, rep.format, fsha,
+                                          vol.content_hash(), list(vol.shape), list(vol.spacing),
+                                          {"ingest": rep.to_dict()}, acq)
+            p = _store_path(store, st["org_id"], scan_id)
+            write_zarr(vol, p)
+            store.exec("UPDATE scans SET store_path=? WHERE id=?", (str(p), scan_id))
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+        jid = runner.submit(u, "qc", {"scan_id": scan_id})
+        return {"scan_id": scan_id, "qc_job": jid, "warnings": rep.warnings}
+
+    @app.get("/api/scans/{scan_id}")
+    def scan_info(scan_id: int, u=Depends(current_user)):
+        import zarr
+        sc = store.scan(u, scan_id)
+        g = zarr.open_group(sc["store_path"], mode="r")
+        a = g["image"]
+        s = np.asarray(a[:: max(1, a.shape[0] // 16), ::4, ::4]).astype(np.float32)
+        layers = sorted(k for k in g["labels"].keys()) if "labels" in g else []
+        return {**{k: sc[k] for k in ("id", "study_id", "specimen_id", "timepoint_id", "source_name", "format", "shape",
+                                       "spacing_um", "status", "file_sha256", "qc")},
+                "window": {"p1": float(np.percentile(s, 1)), "p99": float(np.percentile(s, 99.5)),
+                           "min": float(s.min()), "max": float(s.max())},
+                "layers": layers, "segmentations": store.segmentations(u, scan_id),
+                "roi": store.latest_roi(u, scan_id), "roi_history": store.roi_history(u, scan_id)}
+
+    def _slice(arr, axis, index):
+        n = arr.shape[axis]
+        if not 0 <= index < n:
+            raise HTTPException(400, "slice index out of range")
+        sl = [slice(None)] * 3
+        sl[axis] = index
+        return np.asarray(arr[tuple(sl)])
+
+    @app.get("/api/scans/{scan_id}/slice")
+    def get_slice(scan_id: int, axis: int = 0, index: int = 0, layer: str = "image", lo: float | None = None,
+                  hi: float | None = None, u=Depends(current_user)):
+        import zarr
+        from PIL import Image as PImage
+        if axis not in (0, 1, 2) or not re.fullmatch(r"image|labels/[A-Za-z0-9_]+", layer):
+            raise HTTPException(400, "bad parameters")
+        sc = store.scan(u, scan_id)
+        g = zarr.open_group(sc["store_path"], mode="r")
+        if layer not in g:
+            raise HTTPException(404, "layer not found")
+        s = _slice(g[layer], axis, index).astype(np.float32)
+        if layer == "image":
+            lo = s.min() if lo is None else lo
+            hi = s.max() if hi is None else hi
+            s = np.clip((s - lo) / max(hi - lo, 1e-6) * 255, 0, 255)
+        buf = io.BytesIO()
+        PImage.fromarray(s.astype(np.uint8)).save(buf, "PNG")
+        return Response(buf.getvalue(), media_type="image/png", headers={"Cache-Control": "no-store"})
+
+    @app.get("/api/scans/{scan_id}/mesh")
+    def mesh(scan_id: int, layer: str, label: int, step: int = 2, u=Depends(current_user)):
+        import zarr
+        from skimage.measure import marching_cubes
+        if not re.fullmatch(r"labels/[A-Za-z0-9_]+", layer) or not 1 <= step <= 8:
+            raise HTTPException(400, "bad parameters")
+        sc = store.scan(u, scan_id)
+        g = zarr.open_group(sc["store_path"], mode="r")
+        m = (np.asarray(g[layer][::step, ::step, ::step]) == label).astype(np.float32)
+        if m.sum() < 10:
+            return {"vertices": [], "faces": []}
+        sp = [s * step / 1000 for s in sc["spacing_um"]]
+        v, f, _, _ = marching_cubes(np.pad(m, 1), 0.5, spacing=sp)
+        return {"vertices": np.round(v, 3).ravel().tolist(), "faces": f.ravel().tolist(), "units": "mm"}
+
+    @app.post("/api/scans/{scan_id}/analyze")
+    def analyze_scan(scan_id: int, b: AnalyzeIn, u=Depends(current_user)):
+        store.scan(u, scan_id)
+        return {"job_id": runner.submit(u, "analyze", {"scan_id": scan_id, "config": b.config,
+                                                       "use_saved_roi": b.use_saved_roi})}
+
+    @app.put("/api/scans/{scan_id}/roi")
+    def put_roi(scan_id: int, b: ROIIn, u=Depends(current_user)):
+        from ..roi import ROI
+        roi = ROI.from_dict(b.definition)
+        if roi.kind == "mask":
+            raise HTTPException(400, "mask ROIs must be uploaded as label volumes")
+        sc = store.scan(u, scan_id)
+        roi.to_mask(tuple(sc["shape"]), tuple(sc["spacing_um"]))  # validates parameters
+        rid, v = store.save_roi(u, scan_id, roi.to_dict(), b.reason)
+        return {"roi_id": rid, "version": v, "definition_sha256": roi.definition_hash()}
+
+    @app.post("/api/scans/{scan_id}/segmentations/edits")
+    def edit_seg(scan_id: int, b: EditsIn, u=Depends(current_user)):
+        """Apply brush / component edits to a segmentation version → new 'corrected' version."""
+        import zarr
+        from ..io import write_labels_zarr
+        from ..pipeline import labels_hash
+        from ..morphometry import defect_report_metrics
+        from ..volume import Volume
+        sc = store.scan(u, scan_id)
+        store.require(u, "write", sc["org_id"])
+        segs = {s["version"]: s for s in store.segmentations(u, scan_id)}
+        if b.base_version not in segs:
+            raise HTTPException(404, "base version not found")
+        base = segs[b.base_version]
+        g = zarr.open_group(sc["store_path"], mode="r")
+        lab = np.asarray(g[f"labels/{base['labels_key']}"][:]).copy()
+        before = np.bincount(lab.ravel(), minlength=256)
+        for op in b.ops:
+            if op.label not in (0, 1, 2, 3, 255):
+                raise HTTPException(400, "invalid label")
+            if op.index >= lab.shape[op.axis]:
+                raise HTTPException(400, "slice index out of range")
+            sl = [slice(None)] * 3
+            sl[op.axis] = op.index
+            plane = lab[tuple(sl)]
+            if op.op == "brush":
+                yy, xx = np.ogrid[: plane.shape[0], : plane.shape[1]]
+                m = (yy - op.cy) ** 2 + (xx - op.cx) ** 2 <= op.r ** 2
+            else:
+                from scipy import ndimage as ndi
+                y0, x0 = int(round(op.cy)), int(round(op.cx))
+                if not (0 <= y0 < plane.shape[0] and 0 <= x0 < plane.shape[1]):
+                    raise HTTPException(400, "seed outside slice")
+                cc, _ = ndi.label(plane == plane[y0, x0])
+                m = cc == cc[y0, x0]
+            if op.only_from is not None:
+                m &= plane == op.only_from
+            plane[m] = op.label
+            lab[tuple(sl)] = plane
+        after = np.bincount(lab.ravel(), minlength=256)
+        changed = {str(c): int(after[c] - before[c]) for c in (0, 1, 2, 3, 255) if after[c] != before[c]}
+        edits = {"base_version": b.base_version, "n_ops": len(b.ops), "voxel_count_change": changed, "reason": b.reason,
+                 "ops": [o.model_dump() for o in b.ops[:200]]}
+        sid, v = store.save_segmentation(u, scan_id, "corrected", "", labels_hash(lab), method=base["method"],
+                                         model_name=base["model_name"], model_sha256=base["model_sha256"],
+                                         roi_id=base["roi_id"], parent_id=base["id"], edits=edits)
+        key = f"seg_v{v}"
+        store.exec("UPDATE segmentations SET labels_key=? WHERE id=?", (key, sid))
+        write_labels_zarr(sc["store_path"], key, lab)
+        roi = np.asarray(g["labels/roi_current"][:]).astype(bool) if "labels/roi_current" in g else np.ones(lab.shape, bool)
+        vol = Volume(np.asarray(g["image"][:]), tuple(sc["spacing_um"]))
+        met = defect_report_metrics(lab, roi, vol, thickness=False)
+        store.save_measurement(u, scan_id, sid, base["roi_id"], {"metrics": met, "corrected_from": b.base_version}, __version__)
+        return {"segmentation_id": sid, "version": v, "voxel_count_change": changed,
+                "class_volumes": met["class_volumes"]}
+
+    # ---------------------------------------------------------------- review / reports / jobs / audit
+    @app.post("/api/reviews")
+    def review(b: ReviewIn, u=Depends(current_user)):
+        full = store.q1("SELECT pw_hash FROM users WHERE id=?", (u["id"],))
+        from ..study.db import check_password
+        if not check_password(b.password, full["pw_hash"]):
+            store.audit.record("review.reauth_failed", u["id"], u["org_id"], b.object_type, b.object_id)
+            raise HTTPException(401, "Re-authentication failed")
+        return {"id": store.review(u, b.object_type, b.object_id, b.decision, b.meaning, b.comment)}
+
+    @app.post("/api/studies/{sid}/report")
+    def make_report(sid: int, u=Depends(current_user)):
+        store.study(u, sid)
+        return {"job_id": runner.submit(u, "report", {"study_id": sid})}
+
+    @app.get("/api/reports/{rid}/{kind}")
+    def get_report(rid: int, kind: str, u=Depends(current_user)):
+        r = store.q1("SELECT * FROM reports WHERE id=?", (rid,))
+        if not r:
+            raise HTTPException(404, "report not found")
+        store.require(u, "read", r["org_id"])
+        if kind not in ("pdf", "csv") or r["status"] != "ready":
+            raise HTTPException(400, "not available")
+        store.audit.record("report.download", u["id"], u["org_id"], "report", rid, {"kind": kind})
+        p = r["pdf_path"] if kind == "pdf" else r["csv_path"]
+        return FileResponse(p, media_type="application/pdf" if kind == "pdf" else "text/csv",
+                            filename=f"defectfill_report_{rid}.{kind}")
+
+    @app.get("/api/jobs")
+    def jobs(u=Depends(current_user)):
+        return runner.list(u)
+
+    @app.get("/api/jobs/{jid}")
+    def job(jid: int, u=Depends(current_user)):
+        return runner.get(u, jid)
+
+    @app.post("/api/jobs/{jid}/cancel")
+    def cancel(jid: int, u=Depends(current_user)):
+        runner.cancel(u, jid)
+        return {"ok": True}
+
+    @app.get("/api/audit")
+    def audit(object_type: str | None = None, object_id: str | None = None, u=Depends(current_user)):
+        if not (store.can(u, "review") or store.can(u, "manage_users")):
+            raise HTTPException(403, "audit trail requires reviewer or admin role")
+        return store.audit.events(org_id=u["org_id"], object_type=object_type, object_id=object_id)
+
+    @app.get("/api/audit/verify")
+    def audit_verify(u=Depends(current_user)):
+        store.require(u, "read")
+        return store.audit.verify_chain()
+
+    @app.get("/api/health")
+    def health():
+        return {"ok": True, "version": __version__, "status": "research prototype — not validated"}
+
+    if WEB.exists():
+        app.mount("/", StaticFiles(directory=str(WEB), html=True), name="web")
+    return app

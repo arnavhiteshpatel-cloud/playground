@@ -4,7 +4,6 @@ import sqlite3
 import time
 import zipfile
 
-import numpy as np
 import pytest
 from fastapi.testclient import TestClient
 
@@ -91,6 +90,7 @@ def test_backup_restores(store, tmp_path):
     U = _users(store)
     store.create_project(U["adminA"], "P")
     b = store.backup(tmp_path / "bk.db")
+    assert len(b["sha256"]) == 64
     s2 = Store(tmp_path / "bk.db", tmp_path / "d2")
     assert s2.q1("SELECT count(*) n FROM projects")["n"] == 1
     assert s2.audit.verify_chain()["ok"]

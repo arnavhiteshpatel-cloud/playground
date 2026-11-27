@@ -51,6 +51,7 @@ class SliceView(QWidget):
         self.scale = 1.0          # screen px per µm
         self.offset = QPointF(0, 0)
         self._fitted = False
+        self._user_view = False
         self._img = self._ovl = None
         self._img_buf = self._ovl_buf = None
         self._drag = None
@@ -116,6 +117,7 @@ class SliceView(QWidget):
     # ------------------------------------------------------------------ data -> images
     def _on_scan(self):
         self._fitted = False
+        self._user_view = False
         self._index = -1
         self._refresh_image()
 
@@ -158,10 +160,9 @@ class SliceView(QWidget):
 
     # ------------------------------------------------------------------ painting
     def resizeEvent(self, e):
-        if not self._fitted or e.oldSize().width() <= 0:
-            self.fit()
+        if not self._user_view or e.oldSize().width() <= 0:
+            self.fit()          # follow the layout until the user zooms or pans
         else:
-            # keep the image centred relative to the previous size
             dx = (e.size().width() - e.oldSize().width()) / 2
             dy = (e.size().height() - e.oldSize().height()) / 2
             self.offset += QPointF(dx, dy)
@@ -334,6 +335,7 @@ class SliceView(QWidget):
             kind, p0, v0 = self._drag
             if kind == "pan":
                 self.offset = v0 + (pos - p0)
+                self._user_view = True
             elif kind == "wl":
                 lo, hi = v0
                 w, lvl = hi - lo, (hi + lo) / 2
@@ -374,6 +376,7 @@ class SliceView(QWidget):
             f = 1.15 if d > 0 else 1 / 1.15
             self.offset = pos + (self.offset - pos) * f
             self.scale *= f
+            self._user_view = True
             self.update()
         elif d:
             st.set_index(self.axis, self.index + (1 if d > 0 else -1))
@@ -390,6 +393,7 @@ class SliceView(QWidget):
         elif k == Qt.Key_PageDown:
             st.set_index(self.axis, self.index - 10)
         elif k == Qt.Key_F:
+            self._user_view = False
             self.fit()
         else:
             super().keyPressEvent(e)

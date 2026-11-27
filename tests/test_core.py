@@ -6,7 +6,7 @@ from osteoquant.volume import Volume
 from osteoquant import io as oio
 from osteoquant.morphometry import (trabecular_morphometry, local_thickness, euler_connectivity,
                                     volume_mm3, surface_area_mm2, class_volumes, bridging)
-from osteoquant.morphometry.analytic import plates, sphere, torus_count_phantom, hollow_cylinder
+from osteoquant.morphometry.analytic import plates, sphere, torus_count_phantom
 from osteoquant.stats import icc, bland_altman, adjust_pvalues, hedges_g, describe
 from osteoquant.segment.metrics import binary_metrics, multiclass_metrics
 from osteoquant.roi import cylinder_roi, cylinder_from_landmarks, ROI

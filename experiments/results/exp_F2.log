@@ -1,0 +1,17 @@
+40 0 auto 0.6474372413793104 False | propagated 0.998 QC True 0.984
+40 1 auto 0.8225328682131066 False | propagated 0.993 QC True 0.978
+40 2 auto 0.844180225281602 False | propagated 0.996 QC True 0.975
+40 3 auto 0.6426874638300217 False | propagated 0.993 QC True 0.982
+80 0 auto 0.8752443575617558 False | propagated 0.997 QC True 0.979
+80 1 auto 0.8640644053556936 False | propagated 0.998 QC True 0.985
+80 2 auto 0.8860047275631379 False | propagated 0.996 QC True 0.979
+80 3 auto 0.896874936544358 False | propagated 0.996 QC True 0.975
+120 0 auto 0.8481931841837796 False | propagated 0.995 QC True 0.969
+120 1 auto 0.8791700321872298 False | propagated 0.998 QC True 0.975
+120 2 auto 0.9105362338139221 False | propagated 0.994 QC True 0.97
+120 3 auto 0.8887637910134982 False | propagated 0.998 QC True 0.97
+250 0 auto 0.9040039933553186 False | propagated 0.994 QC True 0.891
+250 1 auto 0.8933873894622315 False | propagated 0.994 QC True 0.905
+250 2 auto 0.8637692251325099 False | propagated 0.994 QC True 0.901
+250 3 auto 0.864066137313052 False | propagated 0.993 QC True 0.903
+{'n': 16, 'auto_fail_rate': 0.0, 'auto_dice_when_found': 0.845682263261908, 'propagated_dice_mean': 0.9954276242081961, 'propagated_dice_min': 0.9926618086107692, 'propagated_qc_pass_rate': 1.0, 'success_rate_dice_ge_0_9_and_qc': 1.0}

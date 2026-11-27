@@ -65,7 +65,13 @@
    "seed": 0
   },
   "resaved_safe_format": "2026-11-27 (metadata JSON-sanitised; weights unchanged)",
-  "previous_sha256": "85d5bb93e8a015e674e71e1e113625736395bb04c6c1f8a3ee870cd3b1c12d1b"
+  "previous_sha256": "85d5bb93e8a015e674e71e1e113625736395bb04c6c1f8a3ee870cd3b1c12d1b",
+  "onnx_sha256": "d39776d33220ecf4c3369a2d7d9842cf8e81b4d516c54f04c9e2d6cf0f4df177",
+  "onnx_patch": [
+   48,
+   48,
+   48
+  ]
  },
  "adapt_k1_r0": {
   "sha256": "dc80bdbc4a2bfa08f1c90e00748fae089de50d39c462990598f35cf3dc039f0c",

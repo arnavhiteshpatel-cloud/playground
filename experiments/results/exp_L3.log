@@ -1,0 +1,14 @@
+0 0.0 900 {'naive_footprint': 0.791, 'tracked_footprint': 0.765, 'multiotsu': 0.314, 'intensity_oracle': 0.304} QC 0.894 True | identity QC 0.326 False | untracked 0.45 adv not_supported
+0 0.0 901 {'naive_footprint': 0.814, 'tracked_footprint': 0.807, 'multiotsu': 0.327, 'intensity_oracle': 0.316} QC 0.913 True | identity QC 0.517 False | untracked 0.41 adv not_supported
+0 0.0 902 {'naive_footprint': 0.799, 'tracked_footprint': 0.771, 'multiotsu': 0.322, 'intensity_oracle': 0.309} QC 0.92 True | identity QC 0.546 False | untracked 0.44 adv not_supported
+0 0.3 900 {'naive_footprint': 0.618, 'tracked_footprint': 0.615, 'multiotsu': 0.293, 'intensity_oracle': 0.283} QC 0.907 True | identity QC 0.494 False | untracked 0.6 adv not_supported
+0 0.3 901 {'naive_footprint': 0.588, 'tracked_footprint': 0.59, 'multiotsu': 0.307, 'intensity_oracle': 0.293} QC 0.901 True | identity QC 0.423 False | untracked 0.57 adv not_supported
+0 0.3 902 {'naive_footprint': 0.629, 'tracked_footprint': 0.624, 'multiotsu': 0.286, 'intensity_oracle': 0.276} QC 0.909 True | identity QC 0.444 False | untracked 0.59 adv not_supported
+50 0.0 900 {'naive_footprint': 0.533, 'tracked_footprint': 0.512, 'multiotsu': 0.318, 'intensity_oracle': 0.31} QC 0.899 True | identity QC 0.426 False | untracked 0.24 adv not_supported
+50 0.0 901 {'naive_footprint': 0.572, 'tracked_footprint': 0.535, 'multiotsu': 0.327, 'intensity_oracle': 0.313} QC 0.907 True | identity QC 0.447 False | untracked 0.18 adv supported_with_conditions
+50 0.0 902 {'naive_footprint': 0.5, 'tracked_footprint': 0.482, 'multiotsu': 0.316, 'intensity_oracle': 0.306} QC 0.904 True | identity QC 0.478 False | untracked 0.26 adv not_supported
+50 0.3 900 {'naive_footprint': 0.417, 'tracked_footprint': 0.479, 'multiotsu': 0.3, 'intensity_oracle': 0.293} QC 0.899 True | identity QC 0.457 False | untracked 0.34 adv not_supported
+50 0.3 901 {'naive_footprint': 0.42, 'tracked_footprint': 0.418, 'multiotsu': 0.309, 'intensity_oracle': 0.299} QC 0.908 True | identity QC 0.386 False | untracked 0.35 adv not_supported
+50 0.3 902 {'naive_footprint': 0.408, 'tracked_footprint': 0.433, 'multiotsu': 0.288, 'intensity_oracle': 0.276} QC 0.912 True | identity QC 0.406 False | untracked 0.42 adv not_supported
+100 0.0 900 {'naive_footprint': 0.353, 'tracked_footprint': 0.413, 'multiotsu': 0.318, 'intensity_oracle': 0.31} QC 0.901 True | identity QC 0.469 False | untracked 0.2 adv supported_with_conditions
+100 0.0 901 {'naive_footprint': 0.395, 'tracked_footprint': 0.384, 'multiotsu': 0.323, 'intensity_oracle': 0.31} QC 0.898 True | identity QC 0.332 False | untracked 0.14 adv supported_with_conditions

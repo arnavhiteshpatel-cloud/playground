@@ -12,8 +12,11 @@ dependencies = [
 ]
 [project.optional-dependencies]
 dev = ["pytest>=8", "httpx"]
+desktop = ["PySide6>=6.7", "vtk>=9.3", "cryptography>=42", "pytest-qt>=4.4"]
 [project.scripts]
 osteoquant = "osteoquant.cli:main"
+[project.gui-scripts]
+osteoquant-desktop = "osteoquant.desktop.app:main"
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
@@ -21,3 +24,63 @@ build-backend = "setuptools.build_meta"
 include = ["osteoquant*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+  "slow: long-running test (deselect with -m 'not slow')",
+]
+filterwarnings = [
+  "ignore:Setting the shape on a NumPy array has been deprecated:DeprecationWarning",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["osteoquant"]
+omit = [
+  "osteoquant/desktop/*",      # GUI built and tested separately (tests/desktop)
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_also = [
+  "if __name__ == .__main__.:",
+  "raise NotImplementedError",
+  "pragma: no cover",
+]
+
+[tool.ruff]
+line-length = 130
+target-version = "py310"
+extend-exclude = ["experiments", "investor", "publications", "business", "grants", "outreach", "founder"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B"]
+ignore = [
+  "E501",   # long scientific expressions; enforced by review, not by lint
+  "E702",   # compact one-liners used in a few places
+  "E731",   # small local lambdas (curve models)
+  "E741",   # 'l'/'I' used as mathematical symbols
+  "E402",   # deliberate late imports in scripts
+  "B008",   # FastAPI Depends()/File()/Form() defaults
+  "B905",   # zip(strict=) not available on py3.9 code paths; arrays are length-checked
+  "B023",   # closures over loop variables are evaluated immediately
+  "B007",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Unused imports in modules owned by other workstreams; tracked in docs/qa/DEFECTS_FOUND.md (QA-L01).
+"osteoquant/desktop/**" = ["F401"]
+"osteoquant/ml/train.py" = ["F401"]
+"osteoquant/phantom/materials.py" = ["F401"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+check_untyped_defs = false
+no_implicit_optional = true
+exclude = ["^experiments/", "^scripts/", "^tests/"]
+
+[[tool.mypy.overrides]]
+module = ["osteoquant.desktop.*"]
+ignore_errors = true

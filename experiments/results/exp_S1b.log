@@ -1,0 +1,90 @@
+A test_000_condyle_beta_tcp not_supported 0.499
+A test_001_calvarial_beta_tcp not_supported -0.021
+A test_002_segmental_beta_tcp not_supported -0.439
+A test_003_condyle_bcp supported 0.067
+A test_004_calvarial_bcp supported -0.0
+A test_005_segmental_bcp supported -0.262
+A test_006_condyle_ha supported -0.04
+A test_007_calvarial_ha supported -0.112
+A test_008_segmental_ha supported 0.093
+A test_009_condyle_calcium_sulfate not_supported 1.17
+A test_010_calvarial_calcium_sulfate not_supported -0.57
+A test_011_segmental_calcium_sulfate not_supported -0.708
+A test_012_condyle_beta_tcp not_supported 1.341
+A test_013_calvarial_beta_tcp not_supported -0.308
+A test_014_segmental_beta_tcp not_supported -0.482
+A test_015_condyle_bcp supported 0.1
+A ood_mat_000_condyle_bioglass_45s5 not_supported 0.785
+A ood_mat_001_calvarial_bioglass_45s5 not_supported -0.585
+A ood_mat_002_segmental_bioglass_45s5 not_supported -0.484
+A ood_mat_003_condyle_xenograft_dbbm not_supported -0.229
+A ood_mat_004_calvarial_xenograft_dbbm not_supported -0.373
+A ood_mat_005_segmental_xenograft_dbbm not_supported -0.313
+A ood_mat_006_condyle_bioglass_45s5 not_supported 1.188
+A ood_mat_007_calvarial_bioglass_45s5 not_supported 0.099
+A ood_mat_008_segmental_bioglass_45s5 not_supported -0.587
+A ood_mat_009_condyle_xenograft_dbbm not_supported 0.08
+A ood_mat_010_calvarial_xenograft_dbbm not_supported -0.415
+A ood_mat_011_segmental_xenograft_dbbm not_supported -0.422
+A ood_mat_012_condyle_bioglass_45s5 not_supported -0.238
+A ood_mat_013_calvarial_bioglass_45s5 not_supported -0.58
+A ood_mat_014_segmental_bioglass_45s5 not_supported -0.489
+A ood_mat_015_condyle_xenograft_dbbm not_supported -0.233
+A ood_mat_016_calvarial_xenograft_dbbm not_supported -0.177
+A ood_mat_017_segmental_xenograft_dbbm not_supported -0.425
+A ood_mat_018_condyle_bioglass_45s5 not_supported 1.174
+A ood_mat_019_calvarial_bioglass_45s5 not_supported -0.442
+A ood_mat_020_segmental_bioglass_45s5 not_supported -0.043
+A ood_mat_021_condyle_xenograft_dbbm not_supported -0.219
+A ood_mat_022_calvarial_xenograft_dbbm not_supported -0.298
+A ood_mat_023_segmental_xenograft_dbbm not_supported -0.221
+A ood_mat_024_condyle_bioglass_45s5 not_supported -0.212
+A ood_mat_025_calvarial_bioglass_45s5 not_supported 0.689
+A ood_mat_026_segmental_bioglass_45s5 not_supported -0.432
+A ood_mat_027_condyle_xenograft_dbbm not_supported 0.182
+A ood_mat_028_calvarial_xenograft_dbbm not_supported -0.099
+A ood_mat_029_segmental_xenograft_dbbm not_supported -0.274
+A ood_mat_030_condyle_bioglass_45s5 not_supported 0.424
+A ood_mat_031_calvarial_bioglass_45s5 not_supported 0.749
+A ood_mat_032_segmental_bioglass_45s5 not_supported -0.305
+A ood_mat_033_condyle_xenograft_dbbm not_supported 0.128
+A ood_mat_034_calvarial_xenograft_dbbm not_supported -0.235
+A ood_mat_035_segmental_xenograft_dbbm not_supported -0.351
+A ood_mat_036_condyle_bioglass_45s5 not_supported 1.025
+A ood_mat_037_calvarial_bioglass_45s5 not_supported -0.308
+A ood_mat_038_segmental_bioglass_45s5 not_supported -0.103
+A ood_mat_039_condyle_xenograft_dbbm not_supported 0.346
+B 2200 30 supported 0.141 adv_oracle 0.944 true_oracle 0.979 t_adv 1362 t_true 1582
+B 2200 80 supported 0.075 adv_oracle 0.943 true_oracle 0.973 t_adv 1473 t_true 1583
+B 2200 150 supported 0.068 adv_oracle 0.933 true_oracle 0.96 t_adv 1492 t_true 1585
+B 2200 250 supported 0.066 adv_oracle 0.916 true_oracle 0.93 t_adv 1531 t_true 1586
+B 1600 30 supported 0.066 adv_oracle 0.903 true_oracle 0.969 t_adv 1249 t_true 1313
+B 1600 80 supported 0.053 adv_oracle 0.891 true_oracle 0.957 t_adv 1270 t_true 1314
+B 1600 150 supported 0.029 adv_oracle 0.864 true_oracle 0.921 t_adv 1312 t_true 1326
+B 1600 250 not_supported 0.043 adv_oracle 0.826 true_oracle 0.837 t_adv 1335 t_true 1344
+B 1300 30 not_supported 0.013 adv_oracle 0.845 true_oracle 0.95 t_adv 1186 t_true 1187
+B 1300 80 not_supported 0.015 adv_oracle 0.822 true_oracle 0.922 t_adv 1189 t_true 1189
+B 1300 150 not_supported -0.004 adv_oracle 0.775 true_oracle 0.845 t_adv 1210 t_true 1202
+B 1300 250 not_supported 0.032 adv_oracle 0.731 true_oracle 0.731 t_adv 1225 t_true 1224
+B 1150 30 not_supported -0.03 adv_oracle 0.796 true_oracle 0.922 t_adv 1145 t_true 1128
+B 1150 80 not_supported -0.014 adv_oracle 0.756 true_oracle 0.873 t_adv 1145 t_true 1129
+B 1150 150 not_supported -0.002 adv_oracle 0.706 true_oracle 0.771 t_adv 1149 t_true 1122
+B 1150 250 not_supported 0.271 adv_oracle 0.684 true_oracle 0.652 t_adv 1096 t_true 1153
+B 1000 30 not_supported -0.066 adv_oracle 0.7 true_oracle 0.854 t_adv 1091 t_true 1071
+B 1000 80 not_supported 0.189 adv_oracle 0.678 true_oracle 0.773 t_adv 1045 t_true 1060
+B 1000 150 not_supported 0.463 adv_oracle 0.664 true_oracle 0.661 t_adv 994 t_true 1072
+B 1000 250 not_supported 0.945 adv_oracle 0.655 true_oracle 0.58 t_adv 924 t_true 1059
+B 900 30 not_supported 0.301 adv_oracle 0.674 true_oracle 0.752 t_adv 997 t_true 1026
+B 900 80 not_supported 0.73 adv_oracle 0.653 true_oracle 0.675 t_adv 932 t_true 1016
+B 900 150 not_supported 1.345 adv_oracle 0.65 true_oracle 0.593 t_adv 803 t_true 978
+B 900 250 not_supported 2.067 adv_oracle 0.648 true_oracle 0.539 t_adv 178 t_true 936
+B 800 30 not_supported 1.84 adv_oracle 0.697 true_oracle 0.654 t_adv 1086 t_true 943
+B 800 80 not_supported 1.853 adv_oracle 0.664 true_oracle 0.59 t_adv 1144 t_true 927
+B 800 150 not_supported 1.796 adv_oracle 0.651 true_oracle 0.536 t_adv 1223 t_true 890
+B 800 250 not_supported 2.049 adv_oracle 0.648 true_oracle 0.508 t_adv 1823 t_true 788
+B 650 30 not_supported 1.369 adv_oracle 0.768 true_oracle 0.61 t_adv 946 t_true 932
+B 650 80 not_supported 1.322 adv_oracle 0.721 true_oracle 0.532 t_adv 971 t_true 990
+B 650 150 not_supported 1.231 adv_oracle 0.683 true_oracle 0.501 t_adv 1021 t_true 1103
+B 650 250 not_supported 1.254 adv_oracle 0.663 true_oracle 0.492 t_adv 1085 t_true 1721
+{'method': 'advisor_threshold', 'n': 56, 'n_fail': 41, 'n_refused': 49, 'failures_refused': 40, 'sensitivity_refuse_given_fail': 0.975609756097561, 'refused_but_ok': 9, 'supported_and_ok': 6, 'supported_but_failed': 1, 'abs_err_supported_median': 0.09268614100593009, 'abs_err_refused_median': 0.37272323411816966}
+{'method': 'advisor_threshold_B', 'n': 96, 'n_fail': 46, 'n_refused': 75, 'failures_refused': 46, 'sensitivity_refuse_given_fail': 1.0, 'refused_but_ok': 29, 'supported_and_ok': 21, 'supported_but_failed': 0, 'abs_err_supported_median': 0.06618541649768828, 'abs_err_refused_median': 0.46096185245658305}

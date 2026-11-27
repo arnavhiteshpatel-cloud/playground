@@ -70,6 +70,7 @@ def test_S04_report_markup_escaped(tmp_path):
                              "metrics": {"class_volumes": {"TV_mm3": 1.0}}}],
               "endpoints": [("class_volumes.TV_mm3", "TV", "mm3")], "methods_text": "", "limitations": [], "reproducibility": {}}
     r = build_pdf(bundle, tmp_path / "r.pdf")
+    assert r["pdf_sha256"]
     assert (tmp_path / "r.pdf").read_bytes()[:4] == b"%PDF"
 
 

@@ -142,6 +142,7 @@ class MainWindow(QMainWindow):
         self.project: Project | None = None
         self.blinded_view = False
         self.current_scan_id = None
+        self._dialogs = []
         self.setWindowTitle(APP_TITLE)
         self.resize(1480, 920)
         self.setDockOptions(QMainWindow.AnimatedDocks | QMainWindow.AllowTabbedDocks | QMainWindow.AllowNestedDocks)
@@ -386,7 +387,8 @@ class MainWindow(QMainWindow):
             rss = psutil.Process().memory_info().rss
             avail = psutil.virtual_memory().available
             cache = self.state.source.cache.bytes if self.state.source else 0
-            self.s_mem.setText(f"Memory {rss / 2**20:,.0f} MiB  ·  slice cache {cache / 2**20:,.0f} MiB  ·  "
+            cache_txt = f"{cache / 2**20:,.1f} MiB" if cache >= 2**20 else f"{cache / 1024:,.0f} KiB"
+            self.s_mem.setText(f"Memory {rss / 2**20:,.0f} MiB  ·  slice cache {cache_txt}  ·  "
                                f"free {avail / 2**30:,.1f} GiB")
         except Exception:  # noqa: BLE001
             self.s_mem.setText("")
@@ -397,12 +399,15 @@ class MainWindow(QMainWindow):
         self.s_lic.setToolTip(st.summary())
 
     def _set_project_ui(self, on: bool):
+        self._hidden_viewer_docks = []
         self.stack.setCurrentIndex(1 if on else 0)
+        self.tabs.setCurrentWidget(self.workspace)
         for d in (self.d_project, self.d_display, self.d_seg, self.d_review, self.d_oblique, self.d_voxel,
                   self.d_jobs, self.d_qc):
             d.setVisible(on)
         for a in (self.a_close, self.a_import, self.a_new_study, self.a_add_group, self.a_roi, self.a_analyze,
-                  self.a_report, self.a_save_rev, self.a_shot, self.a_timing, self.a_timing_export):
+                  self.a_report, self.a_save_rev, self.a_shot, self.a_timing, self.a_timing_export,
+                  *self.tool_actions.values()):
             a.setEnabled(on)
         self.d_oblique.hide()
         if on:
@@ -425,7 +430,7 @@ class MainWindow(QMainWindow):
 
     # ================================================================== projects
     def new_project(self):
-        dlg = NewProjectDialog(self)
+        dlg = self._own(NewProjectDialog(self))
         while dlg.exec():
             v = dlg.values()
             try:
@@ -460,7 +465,7 @@ class MainWindow(QMainWindow):
                 p.close()
                 return False
         else:
-            dlg = LoginDialog(p.name, self.settings.last_user(folder), self)
+            dlg = self._own(LoginDialog(p.name, self.settings.last_user(folder), self))
             while True:
                 if not dlg.exec():
                     p.close()
@@ -530,7 +535,7 @@ class MainWindow(QMainWindow):
     def new_study(self):
         if not self.project:
             return None
-        dlg = NewStudyDialog(self)
+        dlg = self._own(NewStudyDialog(self))
         if dlg.exec():
             try:
                 sid = self.project.create_study(**dlg.values())
@@ -561,7 +566,9 @@ class MainWindow(QMainWindow):
         if not self.project.store.list_studies(self.project.user):
             if self.new_study() is None:
                 return None
+        self._purge_dialogs()
         wiz = ImportWizard(self.project, self.jobs, study_id or self.tree.current_study_id(), self, paths)
+        wiz.setAttribute(Qt.WA_DeleteOnClose)
         wiz.finished.connect(lambda *_: (self.refresh_tree(), self.results.refresh()))
         wiz.open()
         return wiz
@@ -629,7 +636,7 @@ class MainWindow(QMainWindow):
         if not self.state.loaded or self.current_scan_id is None:
             QMessageBox.information(self, "Define ROI", "Open a scan and place the crosshair at the defect centre first.")
             return
-        dlg = RoiDialog(self.state.cursor, self.state.spacing, self)
+        dlg = self._own(RoiDialog(self.state.cursor, self.state.spacing, self))
         if dlg.exec():
             try:
                 rid = S.save_cylinder_roi(self.project, self.current_scan_id, self.state.cursor, dlg.radius.value(),
@@ -643,7 +650,7 @@ class MainWindow(QMainWindow):
         if st.editor is None or not st.editor.modified or self.current_scan_id is None:
             return None
         if reason is None:
-            dlg = SaveRevisionDialog(st.editor.change_summary(), st.segmentation["version"], self)
+            dlg = self._own(SaveRevisionDialog(st.editor.change_summary(), st.segmentation["version"], self))
             if not dlg.exec():
                 return None
             reason = dlg.reason.toPlainText().strip()
@@ -681,7 +688,7 @@ class MainWindow(QMainWindow):
         if config is None:
             sid = self.tree.current_study_id()
             dm = self.project.store.study(self.project.user, sid).get("defect_model") if sid else "condyle"
-            dlg = AnalysisDialog(len(ids), dm or "condyle", self)
+            dlg = self._own(AnalysisDialog(len(ids), dm or "condyle", self))
             if not dlg.exec():
                 return []
             config, use_saved_roi = dlg.config(), dlg.saved_roi.isChecked()
@@ -728,7 +735,7 @@ class MainWindow(QMainWindow):
             return None
         desc = f"{object_type} {object_id}"
         if password is None:
-            dlg = SignDialog(self.project.user, desc, decision, self)
+            dlg = self._own(SignDialog(self.project.user, desc, decision, self))
             while dlg.exec():
                 try:
                     rid = S.sign_review(self.project, dlg.pw.text(), object_type, object_id, decision,
@@ -763,7 +770,29 @@ class MainWindow(QMainWindow):
             u = self.project.user
             self.project.store.audit.record("ui.blinded_mode", u["id"], u["org_id"], details={"on": self.blinded_view})
 
+    def _own(self, dlg):
+        """Track a modal dialog so it is destroyed once closed (closed-but-alive dialogs would be
+        re-polished on every theme change)."""
+        self._purge_dialogs()
+        self._dialogs.append(dlg)
+        return dlg
+
+    def _purge_dialogs(self):
+        from PySide6.QtCore import QCoreApplication, QEvent
+        keep = []
+        for d in getattr(self, "_dialogs", []):
+            try:
+                if d.isVisible():
+                    keep.append(d)
+                else:
+                    d.deleteLater()
+            except RuntimeError:      # already deleted
+                pass
+        self._dialogs = keep
+        QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
+
     def set_theme(self, name):
+        self._purge_dialogs()
         theme.apply_theme(QApplication.instance(), name)
         self.settings.theme = name
         self.workspace.view3d._apply_background()
@@ -818,7 +847,7 @@ class MainWindow(QMainWindow):
         return out
 
     def show_licence(self):
-        dlg = LicenceDialog(self.licence, self)
+        dlg = self._own(LicenceDialog(self.licence, self))
         if dlg.exec() == 2 and dlg.new_file:
             st = install_licence(dlg.new_file)
             if st.state == "valid":
@@ -830,7 +859,7 @@ class MainWindow(QMainWindow):
             self.reports.set_project(self.project, self.tree.current_study_id(), self.licence.watermark)
 
     def show_about(self):
-        AboutDialog(self.licence, self).exec()
+        self._own(AboutDialog(self.licence, self)).exec()
 
     def _tree_action(self, key, node):
         if key == "new_study":
@@ -860,6 +889,16 @@ class MainWindow(QMainWindow):
 
     def _tab_changed(self, i):
         w = self.tabs.widget(i)
+        viewer_docks = [self.d_display, self.d_seg, self.d_review, self.d_oblique, self.d_voxel]
+        if self.project is not None:
+            if w is self.workspace:
+                for d in getattr(self, "_hidden_viewer_docks", []):
+                    d.show()
+                self._hidden_viewer_docks = []
+            elif not getattr(self, "_hidden_viewer_docks", []):
+                self._hidden_viewer_docks = [d for d in viewer_docks if d.toggleViewAction().isChecked()]
+                for d in self._hidden_viewer_docks:
+                    d.hide()
         if w is self.results:
             self.results.refresh()
         elif w is self.audit:

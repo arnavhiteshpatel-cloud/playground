@@ -178,6 +178,8 @@ class AuditView(QWidget):
         self.table.resizeColumnsToContents()
         self.table.horizontalHeader().setStretchLastSection(True)
         self._apply_filter()
+        if self._events:
+            self.table.selectRow(0)
 
     def _apply_filter(self):
         q = self.filter.text().strip().lower()

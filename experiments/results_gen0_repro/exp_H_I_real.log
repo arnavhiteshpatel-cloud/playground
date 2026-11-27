@@ -1,0 +1,23 @@
+train 10 test 5 [(75, 113, 58), (149, 128, 63), (575, 256, 113), (81, 256, 131), (374, 256, 118)]
+{'method': 'otsu_in_band', 'case': '228420_Dachshund.tif', 'dice': 0.24093226511289148, 'hd95_vox': 5.830951894845301, 'vol_err': 6.301088270858525}
+{'method': 'gmm2', 'case': '228420_Dachshund.tif', 'dice': 0.24012775842044135, 'hd95_vox': 5.830951894845301, 'vol_err': 6.3288996372430475}
+{'method': 'random_forest_10train', 'case': '228420_Dachshund.tif', 'dice': 0.5558099599313108, 'hd95_vox': 5.0, 'vol_err': -0.31003627569528414}
+{'method': 'otsu_in_band', 'case': '232558_Beagle.tif', 'dice': 0.22415024578799211, 'hd95_vox': 5.916079783099616, 'vol_err': 6.922586691658856}
+{'method': 'gmm2', 'case': '232558_Beagle.tif', 'dice': 0.2227278420239636, 'hd95_vox': 6.0, 'vol_err': 6.979568884723524}
+{'method': 'random_forest_10train', 'case': '232558_Beagle.tif', 'dice': 0.6408334392072164, 'hd95_vox': 5.830951894845301, 'vol_err': -0.5246485473289597}
+{'method': 'otsu_in_band', 'case': '238046_WH.tif', 'dice': 0.8495217071376012, 'hd95_vox': 2.0, 'vol_err': -0.2360755869440733}
+{'method': 'gmm2', 'case': '238046_WH.tif', 'dice': 0.7780676138921271, 'hd95_vox': 2.449489742783178, 'vol_err': -0.34626837182668446}
+{'method': 'random_forest_10train', 'case': '238046_WH.tif', 'dice': 0.744516388688313, 'hd95_vox': 2.23606797749979, 'vol_err': -0.38749761404848254}
+{'method': 'otsu_in_band', 'case': '239179_Yorkie.tif', 'dice': 0.878727236341805, 'hd95_vox': 1.4142135623730951, 'vol_err': -0.15370404581562905}
+{'method': 'gmm2', 'case': '239179_Yorkie.tif', 'dice': 0.8402383261743106, 'hd95_vox': 1.4142135623730951, 'vol_err': -0.22230432908430323}
+{'method': 'random_forest_10train', 'case': '239179_Yorkie.tif', 'dice': 0.9322215095146461, 'hd95_vox': 1.0, 'vol_err': 0.01607241825235544}
+{'method': 'otsu_in_band', 'case': '244195_Lab.tif', 'dice': 0.34531867745146017, 'hd95_vox': 7.0, 'vol_err': 3.791751592356688}
+{'method': 'gmm2', 'case': '244195_Lab.tif', 'dice': 0.9521001513622603, 'hd95_vox': 1.0, 'vol_err': 0.019872611464968153}
+{'method': 'random_forest_10train', 'case': '244195_Lab.tif', 'dice': 0.9159863049776139, 'hd95_vox': 1.0, 'vol_err': 0.17662420382165606}
+{'method': 'unet_trained_on_10_real', 'case': '228420_Dachshund.tif', 'dice': 0.873352165725047, 'hd95_vox': 2.23606797749979, 'vol_err': 0.05465538089480049}
+{'method': 'unet_trained_on_10_real', 'case': '232558_Beagle.tif', 'dice': 0.8307277200222205, 'hd95_vox': 2.23606797749979, 'vol_err': 0.3619493908153702}
+{'method': 'unet_trained_on_10_real', 'case': '238046_WH.tif', 'dice': 0.7006981070676433, 'hd95_vox': 2.23606797749979, 'vol_err': -0.4456098492078641}
+{'method': 'unet_trained_on_10_real', 'case': '239179_Yorkie.tif', 'dice': 0.8340333946610199, 'hd95_vox': 1.4142135623730951, 'vol_err': -0.2260607180245089}
+{'method': 'unet_trained_on_10_real', 'case': '244195_Lab.tif', 'dice': 0.8931804071496259, 'hd95_vox': 1.0, 'vol_err': -0.05076433121019108}
+{'method': 'synthetic_unet_zero_shot', 'case': '228420_Dachshund.tif', 'dice': 0.2552360887346635, 'hd95_vox': 5.385164807134504, 'vol_err': 5.805562273276904}
+{'method': 'synthetic_unet_zero_shot', 'case': '232558_Beagle.tif', 'dice': 0.23650547424743149, 'hd95_vox': 5.477225575051661, 'vol_err': 6.337582005623243}

@@ -513,10 +513,8 @@ class JobsPanel(QWidget):
             host.setToolTip(f"{job.progress:.0%}")
         msg = job.error or job.message
         self.table.setItem(r, 4, ro_item(msg, tip=job.traceback or msg))
-        b = self.table.cellWidget(r, 5)
-        if b:
-            b.setEnabled(job.active)
-            b.setVisible(job.active)
+        if not job.active and self.table.cellWidget(r, 5) is not None:
+            self.table.removeCellWidget(r, 5)
 
     def _details(self, row, _col):
         for jid, r in self._rows.items():

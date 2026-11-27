@@ -1,0 +1,139 @@
+name: desktop-build
+
+# Builds the OsteoQuant Desktop one-folder application on Windows, macOS (Apple silicon) and
+# Linux, runs the desktop tests and the packaged --selftest, and uploads the archives as
+# workflow artifacts. It never publishes a release.
+#
+# Code signing / notarisation steps run only when the corresponding repository secrets exist
+# (none are configured yet; see docs/desktop/PACKAGING.md). Unsigned artifacts are for
+# internal testing only.
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["desktop-v*"]
+    paths:
+      - "osteoquant/**"
+      - "packaging/**"
+      - "tests/desktop/**"
+      - ".github/workflows/desktop-release.yml"
+  pull_request:
+    paths:
+      - "osteoquant/desktop/**"
+      - "osteoquant/licensing/**"
+      - "packaging/**"
+      - "tests/desktop/**"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.label }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            label: windows-x64
+          - os: macos-14
+            label: macos-arm64
+          - os: ubuntu-22.04
+            label: linux-x64
+    env:
+      QT_QPA_PLATFORM: offscreen
+      OQ_BUNDLE_TORCH: "0"
+      PYTHONUTF8: "1"
+      HAS_WIN_SIGNING: ${{ secrets.WINDOWS_CERT_PFX_BASE64 != '' }}
+      HAS_MAC_SIGNING: ${{ secrets.MACOS_CERT_P12_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: System libraries (Linux, headless Qt + EGL for VTK)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libegl1 libgl1 libopengl0 libglu1-mesa \
+            libxkbcommon0 libxkbcommon-x11-0 libfontconfig1 libdbus-1-3 libxcb-cursor0 xvfb
+
+      - name: Install (CPU-only PyTorch wheel on Linux keeps the runner small)
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            pip install torch --index-url https://download.pytorch.org/whl/cpu
+          fi
+          pip install -e ".[dev,desktop]" pyinstaller pypdfium2 onnxruntime
+
+      - name: Desktop tests
+        run: python -m pytest tests/desktop -q
+
+      - name: Build one-folder app and run packaged self-test
+        run: python packaging/build.py
+
+      # ---------------------------------------------------------------- signing (needs secrets)
+      - name: Sign Windows executables (Authenticode)
+        if: runner.os == 'Windows' && env.HAS_WIN_SIGNING == 'true'
+        shell: pwsh
+        env:
+          CERT_B64: ${{ secrets.WINDOWS_CERT_PFX_BASE64 }}
+          CERT_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD }}
+        run: |
+          $pfx = "$env:RUNNER_TEMP\cert.pfx"
+          [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:CERT_B64))
+          $signtool = Get-ChildItem "C:\Program Files (x86)\Windows Kits\10\bin\*\x64\signtool.exe" | Select-Object -Last 1
+          foreach ($exe in Get-ChildItem packaging\dist\OsteoQuant\*.exe) {
+            & $signtool.FullName sign /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 /f $pfx /p $env:CERT_PASSWORD $exe.FullName
+          }
+          Remove-Item $pfx
+
+      - name: Sign and notarise macOS app
+        if: runner.os == 'macOS' && env.HAS_MAC_SIGNING == 'true'
+        env:
+          CERT_B64: ${{ secrets.MACOS_CERT_P12_BASE64 }}
+          CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+          IDENTITY: ${{ secrets.MACOS_SIGNING_IDENTITY }}
+          NOTARY_APPLE_ID: ${{ secrets.MACOS_NOTARY_APPLE_ID }}
+          NOTARY_TEAM_ID: ${{ secrets.MACOS_NOTARY_TEAM_ID }}
+          NOTARY_PASSWORD: ${{ secrets.MACOS_NOTARY_APP_PASSWORD }}
+        run: |
+          KC=$RUNNER_TEMP/build.keychain
+          echo "$CERT_B64" | base64 --decode > $RUNNER_TEMP/cert.p12
+          security create-keychain -p ci "$KC"
+          security import $RUNNER_TEMP/cert.p12 -k "$KC" -P "$CERT_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple: -s -k ci "$KC"
+          security list-keychains -s "$KC"
+          codesign --deep --force --options runtime --timestamp \
+            --entitlements packaging/macos/entitlements.plist --sign "$IDENTITY" packaging/dist/OsteoQuant.app
+          ditto -c -k --keepParent packaging/dist/OsteoQuant.app $RUNNER_TEMP/notarise.zip
+          xcrun notarytool submit $RUNNER_TEMP/notarise.zip --apple-id "$NOTARY_APPLE_ID" \
+            --team-id "$NOTARY_TEAM_ID" --password "$NOTARY_PASSWORD" --wait
+          xcrun stapler staple packaging/dist/OsteoQuant.app
+          rm -f packaging/dist/OsteoQuant-desktop-macos-*.zip
+          ditto -c -k --keepParent packaging/dist/OsteoQuant.app packaging/dist/OsteoQuant-desktop-macos-arm64-signed.zip
+
+      - name: Upload application archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: OsteoQuant-desktop-${{ matrix.label }}
+          path: |
+            packaging/dist/OsteoQuant-desktop-*
+            packaging/dist/build-info.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload self-test output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selftest-${{ matrix.label }}
+          path: packaging/selftest-output/
+          if-no-files-found: ignore
+          retention-days: 14

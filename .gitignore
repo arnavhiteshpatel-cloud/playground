@@ -14,3 +14,8 @@ experiments/results/**/*.npz
 experiments/results/**/*.pt
 models/*.pt
 !models/README.md
+
+# generated artefacts
+.coverage
+models/*.onnx
+experiments/results/*_.log

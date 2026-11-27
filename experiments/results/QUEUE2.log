@@ -1,0 +1,9 @@
+START exp_L4_registration_qc.py 21:43
+END exp_L4_registration_qc.py  rc=0 21:44
+START exp_S1b_advisor_threshold.py 21:44
+END exp_S1b_advisor_threshold.py  rc=0 21:45
+START exp_S1c_control_reference.py 21:45
+END exp_S1c_control_reference.py  rc=0 21:46
+START exp_S1_advisor.py 21:46
+END exp_S1_advisor.py  rc=0 21:51
+START exp_L3_displacement.py 21:51

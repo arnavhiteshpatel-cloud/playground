@@ -1,0 +1,125 @@
+name: ci
+
+# Lint, type check, tests (3 OS x 2 Python versions), coverage gates and dependency audit.
+# Read-only: no publishing, no secrets.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHONUTF8: "1"
+  QT_QPA_PLATFORM: offscreen
+  MPLBACKEND: Agg
+  HYPOTHESIS_PROFILE: ci
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install "ruff==0.16.*" "mypy>=1.10"
+      - name: ruff on QA-owned and reviewed modules (blocking)
+        run: >-
+          ruff check tests osteoquant/io osteoquant/audit osteoquant/stats osteoquant/study osteoquant/qc
+          osteoquant/report osteoquant/roi osteoquant/morphometry osteoquant/segment osteoquant/api
+          osteoquant/uncertainty osteoquant/volume.py osteoquant/pipeline.py osteoquant/cli.py
+      - name: ruff on the whole package (non-blocking until other workstreams are clean)
+        continue-on-error: true
+        run: ruff check osteoquant
+      - name: mypy (non-blocking while the backlog is burned down)
+        continue-on-error: true
+        run: |
+          python -m pip install numpy types-PyYAML
+          mypy osteoquant
+
+  test:
+    name: test (${{ matrix.os }}, py${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: System GL libraries for Qt (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libegl1 libgl1 libxkbcommon0
+      - name: Install PyTorch (CPU wheels)
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = "macOS" ]; then
+            python -m pip install "torch>=2.6"
+          else
+            python -m pip install "torch>=2.6" --index-url https://download.pytorch.org/whl/cpu
+          fi
+      - name: Install package and test tools
+        run: python -m pip install -e ".[dev]" pytest-cov hypothesis joblib
+      - name: Tests (fast set)
+        if: ${{ !(matrix.os == 'ubuntu-latest' && matrix.python == '3.13') }}
+        run: python -m pytest -q --ignore=tests/desktop -m "not slow" -p no:cacheprovider
+      - name: Tests (full set, with coverage)
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.python == '3.13' }}
+        run: |
+          python -m pip install onnx onnxruntime
+          python -m pytest -q --ignore=tests/desktop -p no:cacheprovider --cov --cov-report=term --cov-report=xml
+      - name: Coverage gates
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.python == '3.13' }}
+        run: |
+          python -m coverage report --fail-under=85
+          python -m coverage report --fail-under=95 --include="osteoquant/morphometry/*,osteoquant/stats/*,osteoquant/segment/metrics.py,osteoquant/io/readers.py,osteoquant/io/writers.py,osteoquant/io/safe_archive.py,osteoquant/audit/*"
+      - name: Desktop tests (non-blocking here; gated by desktop-release.yml)
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.python == '3.13' }}
+        continue-on-error: true
+        run: |
+          python -m pip install -e ".[desktop]"
+          python -m pytest -q tests/desktop -p no:cacheprovider
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() && matrix.os == 'ubuntu-latest' && matrix.python == '3.13' }}
+        with:
+          name: coverage-xml
+          path: coverage.xml
+          if-no-files-found: ignore
+
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install pip-audit bandit
+      - name: pip-audit (declared runtime dependencies)
+        run: |
+          python - <<'EOF'
+          import tomllib
+          deps = tomllib.load(open("pyproject.toml", "rb"))["project"]["dependencies"]
+          open("requirements-audit.txt", "w").write("\n".join(deps) + "\n")
+          EOF
+          pip-audit -r requirements-audit.txt
+      - name: bandit (medium+ severity, report only)
+        continue-on-error: true
+        run: bandit -q -r osteoquant -x osteoquant/desktop --severity-level medium

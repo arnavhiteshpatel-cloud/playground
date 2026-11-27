@@ -22,7 +22,7 @@ def _wait_jobs(app, w):
 
 
 def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
-    from PySide6.QtCore import QSettings
+    from PySide6.QtCore import QSettings, Qt
     from PySide6.QtWidgets import QApplication
     from ..licensing import evaluation_status
     from . import theme
@@ -79,7 +79,7 @@ def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
     w.workspace.views[0]._hover = (50.0, 30.0)
     _settle(app)
     save(w, "03_segmentation_editing.png")
-    dlg = SaveRevisionDialog(st.editor.change_summary(), st.segmentation["version"], w)
+    dlg = w._own(SaveRevisionDialog(st.editor.change_summary(), st.segmentation["version"], w))
     dlg.reason.setPlainText("Graft particle misclassified as new bone at the defect margin")
     dlg.show()
     _settle(app)
@@ -97,6 +97,7 @@ def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
     write_phantom(extra / "R20_week8.nii.gz", seed=41, shape=(48, 72, 72), stage=0.8)
     write_phantom(extra / "R21_week8_raw.npy", seed=42, shape=(48, 72, 72), stage=0.8, fmt="npy")
     wiz = ImportWizard(w.project, w.jobs, sid, w, [str(extra)])
+    wiz.setAttribute(Qt.WA_DeleteOnClose)
     wiz.show()
     wiz.next()
     _settle(app)
@@ -141,12 +142,12 @@ def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
     save(w, "10_review_blinded.png")
     w.set_blinded(False)
 
-    ab = AboutDialog(lic, w)
+    ab = w._own(AboutDialog(lic, w))
     ab.show()
     _settle(app)
     save(ab, "11_about.png")
     ab.close()
-    ld = LicenceDialog(lic, w)
+    ld = w._own(LicenceDialog(lic, w))
     ld.show()
     _settle(app)
     save(ld, "12_licence.png")

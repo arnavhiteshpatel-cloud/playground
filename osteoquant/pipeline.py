@@ -180,6 +180,13 @@ def analyze(vol: Volume, cfg: dict | None = None, roi_dict: dict | None = None, 
         progress(0.9, "measurement support")
         from .advisor.integration import support_for_scan, apply_support
         t = time.time()
+        if info.get("model_name") and c.get("material"):
+            # a learned model may support graft endpoints only with qualifying (non-synthetic) validation evidence
+            from .ml.validation_records import validated_for
+            ok, why = validated_for(info["model_name"], info.get("model_sha256", ""), str(c["material"]),
+                                    float(np.mean(vol.spacing)))
+            c = dict(c, validated_texture_model=ok)
+            info["validation_record"] = why
         out["measurement_support"] = support_for_scan(vol.data, roi_mask, vol.spacing, c)
         out["reported_metrics"], out["suppressed_metrics"] = apply_support(out["metrics"], out["measurement_support"])
         out["timings"]["support_s"] = round(time.time() - t, 2)

@@ -10,7 +10,7 @@ three-class truth: none exists yet). A target met on SYN data is evidence of *me
 | B2 | Synthetic-pretrained model after ≤3 real labelled scans | REAL-2C dog | ≥0.95 × full-real model | Few-shot is the product's onboarding path | 0.781 (0.95×) | — | — |
 | B3 | Synthetic zero-shot on real | REAL-2C dog | ≥0.70 | Gen-0 0.379 means sim→real gap is the dominant risk; 0.70 = usable as pre-label for editing | 0.379 | — | — |
 | B4 | Graft volume relative error, specimen level, in supported regimes | SYN | |bias| ≤5%, 95% LoA within ±15% | Product reports volumes, not Dice (ADR-G2-05) | not measured | — | — |
-| B5 | Separability advisor: unsupported cases correctly refused | SYN (overlap regime + held-out materials) | ≥95% of cases whose true graft-volume error >25% are flagged not-supported or low-confidence | Abstention preferred to wrong numbers | not built | — | — |
+| B5 | Separability advisor: unsupported cases correctly refused | SYN (overlap regime + held-out materials) | ≥95% of cases whose true graft-volume error >20% are refused, with P(fail | supported) upper 95% bound ≤ 0.10 | Abstention preferred to wrong numbers | not built | — | — |
 | B6 | Failure detection AUROC (predict specimen Dice <0.8 or volume error >20%) | SYN ID+OOD | ≥0.85 | Gen-0 OOD AUROC 0.66 (weak) | 0.66 (OOD) | — | — |
 | B7 | Conformal 90% interval coverage for graft volume | SYN held-out | 0.87–0.93 | Valid marginal coverage at nominal level | not measured | — | — |
 | B8 | Longitudinal graft Dice with granule displacement ≤200 µm + fragmentation | SYN v2 | ≥0.80; registration failures flagged with sensitivity ≥0.95 | Gen-0 tested only shrink-in-place | 0.915 (best case) | — | — |

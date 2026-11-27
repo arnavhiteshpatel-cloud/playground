@@ -50,3 +50,13 @@ mixed models with animal as random effect. Voxel counts are never treated as rep
 Each endpoint carries a status (`supported`, `supported_with_conditions`, `not_supported`) from the measurement
 support advisor (`docs/science/MEASUREMENT_SUPPORT.md`). Unsupported endpoints appear in reports as
 "not measured" with the reason; their raw values remain in the audit record only.
+
+## Accuracy thresholds glossary (one meaning per number)
+| Threshold | Where used | Meaning |
+|---|---|---|
+| ±10% graft-volume ratio, Dice ≥ 0.85 | advisor decision rule (MEASUREMENT_SUPPORT §3) | an *a-priori* identifiability requirement computed from class models — not a measured error |
+| > 20% relative graft-volume error (or graft Dice < 0.8) | experiments S1/S1b/S1c/L3/U1 | definition of a *failed measurement* in simulation |
+| \|bias\| ≤ 5%, 95% LoA within ±15% | physical validation acceptance (PREREGISTRATION §5, validation stage B) | what "supported" must achieve against physical truth |
+| ICC(2,1) ≥ 0.95 point and ≥ 0.80 lower bound (n < 20) | held-out morphometry (PREREGISTRATION §2, amended) | agreement with reference software |
+| p95 absolute relative error ≤ 15% | model validation records (`ml/validation_records.py`) | evidence threshold for a learned model to support a material |
+| 25% (Gen-0 scorecard draft) | superseded | replaced by the 20% failure definition |

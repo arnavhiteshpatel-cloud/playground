@@ -29,7 +29,7 @@ Version 1.0, 2026-11-27. This file consolidates what OsteoQuant can rely on when
 
 | Model | What the verified sources say | Source |
 |---|---|---|
-| General definition | A CSD is the smallest defect that will not heal during the animal's lifetime. Rodent and rabbit calvaria come first in the proposed testing hierarchy, then dog and monkey mandibles | [schmitz1986] |
+| General definition | A CSD is the smallest defect that will not heal during the animal's lifetime. Rodent and rabbit calvaria come first in the proposed testing hierarchy, then dog and monkey mandibles. Further reviews cover the CSD concept and rodent calvarial critical vs sub-critical defects | [schmitz1986; hollinger1990; gomes2011] |
 | Practical criterion | No mineralised area ≥ 30% after 52 weeks means complete bony regeneration will never occur | [li2015] |
 | FDA criterion (dental) | The smallest intraosseous wound that will not heal spontaneously, i.e. that reaches no more than 30% fill with regenerated tissue over roughly six months. It must be validated with an empty (sham) defect | [fda2025dental] |
 | Rat calvaria | Protocol paper; tissue is usually collected 4–12 weeks after surgery | [spicer2012] |

@@ -13,6 +13,7 @@ password policy; every action is attributed to the signed-in user in the audit t
 from __future__ import annotations
 
 import json
+import secrets
 import time
 from pathlib import Path
 
@@ -26,11 +27,34 @@ DESKTOP_SCHEMA = """
 CREATE TABLE IF NOT EXISTS desktop_import_log (
   id INTEGER PRIMARY KEY, study_id INTEGER, source TEXT NOT NULL, status TEXT NOT NULL,
   reason TEXT, scan_id INTEGER, user_id INTEGER, details TEXT, created TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS desktop_settings (key TEXT PRIMARY KEY, value TEXT);
+CREATE TABLE IF NOT EXISTS desktop_blind_codes (
+  object_type TEXT NOT NULL, object_id INTEGER NOT NULL, study_id INTEGER, code TEXT NOT NULL,
+  created TEXT NOT NULL, PRIMARY KEY (object_type, object_id), UNIQUE (study_id, object_type, code));
+CREATE TABLE IF NOT EXISTS desktop_review_meta (review_id INTEGER PRIMARY KEY, signature_role TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS desktop_report_meta (report_id INTEGER PRIMARY KEY, blinded INTEGER NOT NULL DEFAULT 0,
+  bundle_path TEXT, signed_pdf TEXT, signed_sha256 TEXT);
 """
+
+# Roles offered in the desktop user administration (Store role id -> label shown to people).
+ROLE_LABELS = {"analyst": "Analyst", "reviewer": "Reviewer", "study_director": "Study director", "admin": "Administrator",
+               "viewer": "Viewer (read only)"}
+# What each permission lets a person do, for disabled-action tooltips.
+PERMISSION_TEXT = {"write": "import scans, run analyses, edit labels and define ROIs",
+                   "run": "run analyses", "review": "sign reviews and approvals",
+                   "manage_users": "manage user accounts", "unblind": "unblind studies", "export": "export data"}
+# Blinded codes: unambiguous characters (no 0/O, 1/I/L), random per object, unique within a study.
+_CODE_ALPHABET = "23456789ABCDEFGHJKMNPQRSTUVWXYZ"
+_CODE_PREFIX = {"scan": "S", "animal": "A"}
 
 
 class ProjectError(RuntimeError):
     pass
+
+
+def _roles() -> dict:
+    from ..study.db import ROLES
+    return ROLES
 
 
 def is_project_folder(folder) -> bool:
@@ -122,6 +146,127 @@ class Project:
     def can(self, perm: str) -> bool:
         return bool(self.user) and self.store.can(self.user, perm)
 
+    def why_not(self, perm: str) -> str:
+        """Tooltip text for an action the signed-in role cannot perform ('' when it can)."""
+        if self.can(perm):
+            return ""
+        role = ROLE_LABELS.get((self.user or {}).get("role", ""), (self.user or {}).get("role", "?"))
+        allowed = sorted(ROLE_LABELS[r] for r, perms in _roles().items() if perm in perms and r in ROLE_LABELS)
+        return (f"Your role ({role}) cannot {PERMISSION_TEXT.get(perm, perm)}. "
+                f"Requires: {', '.join(allowed)}.")
+
+    # ------------------------------------------------------------------ settings (project-wide, audited)
+    def setting(self, key: str, default=None):
+        r = self.store.q1("SELECT value FROM desktop_settings WHERE key=?", (key,))
+        return r["value"] if r else default
+
+    def set_setting(self, key: str, value, audit_action: str | None = None):
+        self.store.exec("INSERT OR REPLACE INTO desktop_settings(key, value) VALUES (?, ?)", (key, str(value)))
+        if audit_action:
+            u = self.require_user()
+            self.store.audit.record(audit_action, u["id"], u["org_id"], details={"key": key, "value": str(value)})
+
+    IDLE_LOCK_DEFAULT_MIN = 15
+
+    @property
+    def idle_lock_minutes(self) -> int:
+        try:
+            return max(0, int(float(self.setting("idle_lock_minutes", self.IDLE_LOCK_DEFAULT_MIN))))
+        except (TypeError, ValueError):
+            return self.IDLE_LOCK_DEFAULT_MIN
+
+    def set_idle_lock_minutes(self, minutes: int):
+        u = self.require_user()
+        self.store.require(u, "manage_users")
+        self.set_setting("idle_lock_minutes", int(minutes), "settings.idle_lock")
+
+    # ------------------------------------------------------------------ user administration (admin only)
+    def users(self) -> list[dict]:
+        u = self.require_user()
+        self.store.require(u, "manage_users")
+        rows = self.store.q("SELECT id, username, full_name, role, active, failed_logins, locked_until, created FROM users "
+                            "WHERE org_id=? ORDER BY id", (u["org_id"],))
+        for r in rows:
+            r["locked"] = (r.get("locked_until") or 0) > time.time()
+        return rows
+
+    def add_user(self, username: str, full_name: str, role: str, password: str) -> int:
+        u = self.require_user()
+        if not username.strip():
+            raise ValueError("A user name is required")
+        if self.store.q1("SELECT id FROM users WHERE username=?", (username.strip(),)):
+            raise ValueError(f"The user name '{username.strip()}' is already taken")
+        return self.store.create_user(u["org_id"], username.strip(), password, role, full_name.strip(), actor=u)
+
+    def set_user_active(self, user_id: int, active: bool):
+        u = self.require_user()
+        if int(user_id) == int(u["id"]) and not active:
+            raise ValueError("You cannot deactivate your own account while signed in")
+        self.store.set_user_active(u, user_id, active)
+
+    def reset_password(self, user_id: int, new_password: str):
+        self.store.reset_password(self.require_user(), user_id, new_password)
+
+    # ------------------------------------------------------------------ blinding
+    def blind_code(self, kind: str, object_id, study_id=None) -> str:
+        """Random, non-sequential code for a scan or animal, stored in the project (stable across
+        sessions, unique within the study). Database IDs are never shown in blinded mode."""
+        if object_id is None:
+            return "unassigned"
+        r = self.store.q1("SELECT code FROM desktop_blind_codes WHERE object_type=? AND object_id=?", (kind, int(object_id)))
+        if r:
+            return r["code"]
+        from ..study.db import now
+        for _ in range(50):
+            code = f"{_CODE_PREFIX.get(kind, 'X')}-" + "".join(secrets.choice(_CODE_ALPHABET) for _ in range(4))
+            try:
+                with self.store.lock:
+                    self.store.conn.execute("INSERT INTO desktop_blind_codes(object_type, object_id, study_id, code, created)"
+                                            " VALUES (?,?,?,?,?)", (kind, int(object_id), study_id, code, now()))
+                return code
+            except Exception:  # noqa: BLE001 - code collision within the study: draw again
+                r = self.store.q1("SELECT code FROM desktop_blind_codes WHERE object_type=? AND object_id=?",
+                                  (kind, int(object_id)))
+                if r:
+                    return r["code"]
+        raise ProjectError("Could not allocate a blinded code")
+
+    def scan_code(self, scan_id, study_id=None) -> str:
+        if study_id is None and scan_id is not None:
+            r = self.store.q1("SELECT study_id FROM scans WHERE id=?", (scan_id,))
+            study_id = r["study_id"] if r else None
+        return "Scan " + self.blind_code("scan", scan_id, study_id)
+
+    def animal_code(self, specimen_id, study_id=None) -> str:
+        if specimen_id is None:
+            return "No animal assigned"
+        if study_id is None:
+            r = self.store.q1("SELECT study_id FROM specimens WHERE id=?", (specimen_id,))
+            study_id = r["study_id"] if r else None
+        return "Animal " + self.blind_code("animal", specimen_id, study_id)
+
+    def identifying_strings(self) -> list[str]:
+        """Strings that identify animals or allocation (file names and stems, paths, animal IDs, group
+        names), longest first. Used to mask free text (audit details) in blinded mode."""
+        out: set[str] = set()
+        for r in self.store.q("SELECT source_name, store_path FROM scans"):
+            for v in (r["source_name"], r["store_path"]):
+                if v:
+                    out.add(str(v))
+                    stem = str(v)
+                    for suf in (".nii.gz", ".zarr", ".nii", ".npy", ".tif", ".tiff", ".nrrd", ".txm", ".mha", ".mhd"):
+                        if stem.lower().endswith(suf):
+                            stem = stem[: -len(suf)]
+                    out.add(stem)
+        for r in self.store.q("SELECT source FROM desktop_import_log"):
+            out.add(str(r["source"]))
+            out.add(Path(str(r["source"])).name)
+        for r in self.store.q("SELECT animal_id FROM specimens"):
+            out.add(str(r["animal_id"]))
+        for r in self.store.q("SELECT name FROM groups_"):
+            out.add(str(r["name"]))
+        return sorted((s for s in out if len(s) >= 2), key=len, reverse=True)
+
     # ------------------------------------------------------------------ convenience
     def default_store_project(self) -> int:
         u = self.require_user()
@@ -180,7 +325,8 @@ class Project:
 
             def scan_node(s):
                 q = qc.get(s["id"]) or {}
-                return {"kind": "scan", "id": s["id"], "name": s["source_name"] if not blinded_view else f"Scan {s['id']:04d}",
+                return {"kind": "scan", "id": s["id"], "name": s["source_name"] if not blinded_view else self.scan_code(s["id"], sid),
+                        "blinded": blinded_view,
                         "status": s["status"], "qc_verdict": q.get("verdict"), "shape": s["shape"],
                         "spacing_um": s["spacing_um"], "timepoint_id": s["timepoint_id"], "specimen_id": s["specimen_id"]}
 
@@ -203,19 +349,25 @@ class Project:
             for sp in specs:
                 ss = [s for s in scans if s["specimen_id"] == sp["id"]]
                 node = {"kind": "animal", "id": sp["id"],
-                        "name": (f"Animal {sp['id']:03d}" if blinded_view else sp["animal_id"]),
+                        "name": (self.animal_code(sp["id"], sid) if blinded_view else sp["animal_id"]),
                         "children": tp_nodes(ss)}
                 (group_nodes.get(sp["group_id"]) or ungrouped)["children"].append(node)
             orphan = [s for s in scans if s["specimen_id"] is None]
             if orphan:
                 ungrouped["children"].append({"kind": "animal", "id": None, "name": "No animal assigned",
                                               "children": tp_nodes(orphan)})
-            children = list(group_nodes.values()) + ([ungrouped] if ungrouped["children"] else [])
+            if blinded_view:     # sort by code so the tree order does not reveal import or allocation order
+                for gn in list(group_nodes.values()) + [ungrouped]:
+                    gn["children"].sort(key=lambda n: n["name"])
+            gnodes = sorted(group_nodes.values(), key=lambda n: n["name"]) if blinded_view else list(group_nodes.values())
+            children = gnodes + ([ungrouped] if ungrouped["children"] else [])
             rejected = [r for r in self.import_log(sid) if r["status"] == "rejected"]
             if rejected:
                 children.append({"kind": "rejected_folder", "id": sid, "name": f"Rejected imports ({len(rejected)})",
-                                 "children": [{"kind": "rejected", "id": r["id"], "name": Path(r["source"]).name,
-                                               "reason": r["reason"], "status": "rejected"} for r in rejected]})
+                                 "children": [{"kind": "rejected", "id": r["id"],
+                                               "name": f"Rejected import {i + 1}" if blinded_view else Path(r["source"]).name,
+                                               "reason": "(hidden in blinded review mode)" if blinded_view else r["reason"],
+                                               "status": "rejected"} for i, r in enumerate(rejected)]})
             out.append({"kind": "study", "id": sid, "name": st["name"], "blinded": bool(st["blinded"]),
                         "groups_hidden": hidden, "children": children})
         return out

@@ -459,6 +459,55 @@ def model_dir() -> Path:
     return Path(osteoquant.__file__).resolve().parents[1] / "models"
 
 
+def model_registry() -> dict:
+    """The locked-model registry (``models/registry.json``) or {} (no runtime imports)."""
+    p = model_dir() / "registry.json"
+    try:
+        return json.loads(p.read_text()) if p.exists() else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def provenance_words(prov) -> str:
+    """Model training provenance as words (never a Python list repr or a licence tag)."""
+    items = prov if isinstance(prov, (list, tuple)) else ([prov] if prov else [])
+    words = {"synthetic": "synthetic phantoms", "real": "real micro-CT scans", "public": "public micro-CT data",
+             "customer": "customer micro-CT data"}
+    out = [words.get(str(i).lower(), str(i).replace("_", " ")) for i in items if str(i).strip()]
+    return ("trained on " + " and ".join(out)) if out else "training data not recorded"
+
+
+def is_synthetic_trained(prov) -> bool:
+    items = prov if isinstance(prov, (list, tuple)) else ([prov] if prov else [])
+    low = [str(i).lower() for i in items]
+    return bool(low) and all("synthetic" in i for i in low)
+
+
+SYNTHETIC_CHIP = "SYNTHETIC-TRAINED — research only"
+
+
+def segmentation_method_info(seg: dict | None, result: dict | None = None) -> dict:
+    """Readable segmentation method and whether it used a model trained only on synthetic data.
+
+    Consistent with the PDF report banner ("SYNTHETIC-TRAINED MODEL"): the chip is shown wherever
+    the model is chosen or its results are shown."""
+    seg = seg or {}
+    method = str(seg.get("method") or ((result or {}).get("segmentation") or {}).get("method") or "")
+    model = seg.get("model_name") or ((result or {}).get("segmentation") or {}).get("model_name")
+    prov = ((result or {}).get("segmentation") or {}).get("model_provenance")
+    if model and prov is None:
+        prov = (model_registry().get(str(model).split(":")[-1]) or {}).get("provenance")
+    if model or method.startswith("onnx:") or method.startswith("unet"):
+        name = str(model or method).split(":")[-1]
+        synth = is_synthetic_trained(prov)
+        text = f"U-Net {name}" + (f" ({SYNTHETIC_CHIP})" if synth else "")
+        return {"text": text, "short": f"U-Net {name}", "synthetic": synth, "provenance": provenance_words(prov)}
+    if method in ("multiotsu", ""):
+        return {"text": "Multi-Otsu (classical)" if method else "-", "short": "Multi-Otsu" if method else "-",
+                "synthetic": False, "provenance": "classical thresholding (no trained model)"}
+    return {"text": method, "short": method, "synthetic": False, "provenance": ""}
+
+
 def available_models() -> list[dict]:
     """Locked segmentation models usable from the desktop: ONNX exports listed in the model
     registry with a hash, whose runtime can be imported. Returns [] when none are installed."""
@@ -476,7 +525,8 @@ def available_models() -> list[dict]:
     for name, r in json.loads(reg_p.read_text()).items():
         if r.get("onnx_sha256") and (d / f"{name}.onnx").exists():
             out.append({"id": f"onnx:{name}", "name": name, "licence_tag": r.get("licence_tag", ""),
-                        "provenance": r.get("provenance", "")})
+                        "provenance": r.get("provenance", ""), "provenance_text": provenance_words(r.get("provenance")),
+                        "synthetic": is_synthetic_trained(r.get("provenance"))})
     return out
 
 
@@ -586,16 +636,156 @@ def save_label_revision(project, scan_id: int, base_segmentation_id: int, labels
 
 
 # ============================================================================ review / sign-off
+SIGNATURE_ROLES = {"analyst": "Analyst", "reviewer": "Scientific reviewer",
+                   "study_director": "Study director / sponsor representative"}
+# which signature roles a user role may sign as (the store's role is recorded with the signature)
+ROLE_SIGNATURES = {"reviewer": ["reviewer"], "study_director": ["study_director", "reviewer"],
+                   "admin": ["reviewer", "study_director"]}
+
+
+def signature_roles_for(user: dict) -> list[str]:
+    return ROLE_SIGNATURES.get((user or {}).get("role"), [])
+
+
+def unreviewed_segmentations(project, study_id) -> list[int]:
+    """Scan ids whose latest (reported) segmentation has no current approval."""
+    store, user = project.store, project.require_user()
+    out = []
+    for m in store.latest_measurements(user, study_id):
+        seg = store.q1("SELECT id, labels_sha256 FROM segmentations WHERE id=?", (m["segmentation_id"],))
+        revs = store.reviews(user, "segmentation", seg["id"]) if seg else []
+        last = revs[-1] if revs else None
+        if not last or last["decision"] != "approved" or last.get("object_sha256") not in (None, seg["labels_sha256"]):
+            out.append(m["scan_id"])
+    return out
+
+
 def sign_review(project, password: str, object_type: str, object_id: int, decision: str, meaning: str,
-                comment: str = "") -> int:
-    """Electronic sign-off with re-authentication (same rules as the web API)."""
+                comment: str = "", signature_role: str | None = None) -> int:
+    """Electronic sign-off with re-authentication (same rules as the web API).
+
+    ``signature_role`` (Scientific reviewer / Study director) is recorded with the signature and used
+    for the report's signature rows. Approving a report is refused while any reported segmentation
+    of the study is not approved; "needs changes" and "rejected" are always possible."""
     if not meaning or len(meaning.strip()) < 5:
         raise ValueError("State the meaning of the signature (at least 5 characters)")
     user = project.require_user()
     project.store.require(user, "review")
+    allowed = signature_roles_for(user)
+    if signature_role is None:
+        signature_role = allowed[0] if allowed else "reviewer"
+    if signature_role not in allowed:
+        raise PermissionError(f"Your role cannot sign as {SIGNATURE_ROLES.get(signature_role, signature_role)}")
+    if object_type == "report" and decision == "approved":
+        r = project.store.q1("SELECT study_id, created_by FROM reports WHERE id=?", (object_id,))
+        if r and r["created_by"] == user["id"]:
+            project.store.audit.record("review.self_approval_denied", user["id"], user["org_id"], "report", object_id)
+            from ..study.db import SELF_APPROVAL_MESSAGES
+            raise PermissionError(SELF_APPROVAL_MESSAGES["report"])
+        pending = unreviewed_segmentations(project, r["study_id"]) if r else []
+        if pending:
+            raise PermissionError(f"{len(pending)} reported segmentation(s) of this study are not approved yet. "
+                                  "Approve the segmentations first (Review panel), or choose 'Request changes'.")
     if not project.reauthenticate(password, object_type, object_id):
-        raise PermissionError("Re-authentication failed: password incorrect")
-    return project.store.review(user, object_type, object_id, decision, meaning.strip(), comment)
+        raise PermissionError("Re-authentication failed: password incorrect (5 failed attempts lock the account "
+                              "for 15 minutes)")
+    rid = project.store.review(user, object_type, object_id, decision, meaning.strip(), comment)
+    project.store.exec("INSERT OR REPLACE INTO desktop_review_meta(review_id, signature_role) VALUES (?,?)",
+                       (rid, signature_role))
+    project.store.audit.record("review.signature_role", user["id"], user["org_id"], object_type, object_id,
+                               {"review_id": rid, "signature_role": SIGNATURE_ROLES.get(signature_role, signature_role)})
+    if object_type == "report":
+        try:
+            render_signed_report(project, object_id)
+        except Exception as e:  # noqa: BLE001 - the signature is recorded; the signed copy can be re-rendered
+            project.store.audit.record("report.signed_copy_failed", user["id"], user["org_id"], "report", object_id,
+                                       {"error": f"{type(e).__name__}: {e}"})
+    return rid
+
+
+def signature_role_of(project, review_id) -> str | None:
+    r = project.store.q1("SELECT signature_role FROM desktop_review_meta WHERE review_id=?", (review_id,))
+    return r["signature_role"] if r else None
+
+
+# ============================================================================ ROI review
+def roi_mask_key(group, seg: dict | None) -> str | None:
+    """Zarr key of the analysis ROI mask used by ``seg`` (per-version, else the current one)."""
+    if seg is not None and f"labels/roi_v{seg['version']}" in group:
+        return f"labels/roi_v{seg['version']}"
+    return "labels/roi_current" if "labels/roi_current" in group else None
+
+
+def roi_state(project, roi_id) -> dict:
+    """ROI definition, whether automatic detection asked for review, and its acceptance state."""
+    store, user = project.store, project.require_user()
+    if roi_id is None:
+        return {"roi": None, "requires_review": False, "accepted": False, "review": None, "status": "no ROI"}
+    r = store.q1("SELECT r.*, s.org_id FROM rois r JOIN scans s ON r.scan_id=s.id WHERE r.id=?", (roi_id,))
+    if not r or int(r["org_id"]) != int(user["org_id"]):
+        return {"roi": None, "requires_review": False, "accepted": False, "review": None, "status": "no ROI"}
+    d = json.loads(r["definition"] or "{}")
+    req = bool((d.get("diagnostics") or {}).get("requires_review"))
+    revs = store.reviews(user, "roi", roi_id)
+    last = revs[-1] if revs else None
+    accepted = bool(last and last["decision"] == "approved" and last.get("object_sha256") in (None, r["def_sha256"]))
+    manual = "manual" in str(r["method"] or "")
+    if accepted:
+        status = "accepted"
+    elif last and last["decision"] != "approved":
+        status = last["decision"]
+    elif req:
+        status = "awaiting acceptance"
+    else:
+        status = "not required" if manual else "not reviewed"
+    return {"roi": r, "definition": d, "requires_review": req, "accepted": accepted, "review": last,
+            "manual": manual, "status": status}
+
+
+def measurement_support_for(project, metrics: dict, roi_id=None) -> dict:
+    """Desktop support status of a stored measurement, honouring an accepted ROI."""
+    from .support import measurement_support
+    accepted = bool(roi_id is not None and roi_state(project, roi_id)["accepted"])
+    return measurement_support(metrics, roi_accepted=accepted)
+
+
+# ============================================================================ revision details
+def version_detail(project, segmentation_id: int) -> dict:
+    """What changed in a segmentation version: parent, editor, reason, voxel and volume change per
+    class, and every endpoint before -> after (not supported endpoints never show a number)."""
+    from .support import ENDPOINTS, endpoint_value
+    store, user = project.store, project.require_user()
+    seg = store.q1("SELECT * FROM segmentations WHERE id=?", (segmentation_id,))
+    if not seg:
+        raise KeyError("segmentation not found")
+    sc = store.scan(user, seg["scan_id"])
+    edits = json.loads(seg["edits"] or "{}")
+    parent = store.q1("SELECT * FROM segmentations WHERE id=?", (seg["parent_id"],)) if seg["parent_id"] else None
+    author = store.q1("SELECT username, full_name, role FROM users WHERE id=?", (seg["created_by"],)) or {}
+    vox_mm3 = float(np.prod(sc["spacing_um"])) / 1e9
+    change = edits.get("voxel_count_change") or {}
+    classes = [{"class": k.replace("_", " "), "voxels": int(v), "mm3": int(v) * vox_mm3} for k, v in change.items()]
+
+    def meas(sid):
+        m = store.q1("SELECT metrics, roi_id FROM measurements WHERE segmentation_id=? ORDER BY id DESC LIMIT 1", (sid,))
+        return (json.loads(m["metrics"]), m["roi_id"]) if m else (None, None)
+
+    after, roi_a = meas(seg["id"])
+    before, roi_b = meas(parent["id"]) if parent else (None, None)
+    sup_a = measurement_support_for(project, after, roi_a) if after else None
+    sup_b = measurement_support_for(project, before, roi_b) if before else None
+    eps = []
+    for key, label, unit, _path, _scale in ENDPOINTS:
+        va, sa, ra = endpoint_value(after, sup_a, key) if after else (None, "not analysed", ["no measurement"])
+        vb, sb, rb = endpoint_value(before, sup_b, key) if before else (None, "not analysed", ["no parent version"])
+        eps.append({"key": key, "label": label, "unit": unit, "before": vb, "before_status": sb, "after": va,
+                    "after_status": sa, "reasons": ra})
+    return {"segmentation": seg, "version": seg["version"], "kind": seg["kind"],
+            "parent_version": parent["version"] if parent else None, "parent_id": parent["id"] if parent else None,
+            "author": author.get("full_name") or author.get("username") or str(seg["created_by"]),
+            "author_role": author.get("role"), "created": seg["created"], "reason": edits.get("reason") or "",
+            "operations": edits.get("operations") or {}, "classes": classes, "endpoints": eps,
+            "method": segmentation_method_info(seg, after)}
 
 
 # ============================================================================ reports

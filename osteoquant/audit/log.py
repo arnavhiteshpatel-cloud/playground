@@ -53,6 +53,10 @@ class AuditLog:
     def record(self, action: str, user_id=None, org_id=None, object_type=None, object_id=None,
                details: dict | None = None) -> dict:
         details_s = canonical(details or {})
+        # canonicalise to the types SQLite will return (TEXT affinity) so hashes verify identically
+        user_id = None if user_id is None else str(user_id)
+        org_id = None if org_id is None else str(org_id)
+        object_id = None if object_id is None else str(object_id)
         ts = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime()) + f".{int(time.time() * 1e6) % 1000000:06d}Z"
         cur = self.conn.execute("SELECT row_hash FROM audit_log ORDER BY seq DESC LIMIT 1")
         r = cur.fetchone()
@@ -60,7 +64,7 @@ class AuditLog:
         h = _row_hash(prev, ts, user_id, org_id, action, object_type, object_id, details_s)
         self.conn.execute("INSERT INTO audit_log(ts,user_id,org_id,action,object_type,object_id,details,prev_hash,row_hash)"
                           " VALUES (?,?,?,?,?,?,?,?,?)",
-                          (ts, user_id, org_id, action, object_type, str(object_id) if object_id is not None else None,
+                          (ts, user_id, org_id, action, object_type, object_id,
                            details_s, prev, h))
         self.conn.commit()
         return {"ts": ts, "row_hash": h}

@@ -13,6 +13,10 @@ Key conventions (verified numerically in Experiment G / tests/test_morphometry.p
   → sphere painting per quantised radius. Requires isotropic voxels (resample first).
   Discretisation: thickness = 2·d_EDT (BoneJ convention); bias 0 voxels for even and +1
   voxel for odd voxel thicknesses; residual error vs analytic phantoms is in Experiment G.
+* Border convention for thickness (reported with every result): "edge" (default) replicates the
+  region boundary outward so that structures cut by a cropped VOI are not artificially thinned;
+  "background" treats the border as the end of every structure. On 8 public trabecular cubes,
+  "background" under-read Scanco IPL Tb.Th by ~18%; "edge" reduced the gap (Experiment G).
 * Tb.N = 1 / (Tb.Th + Tb.Sp)  (approximation; direct 3D Tb.N via mid-axis spacing not implemented).
 * Conn.D = β1 / TV with β1 = β0 + β2 − χ (Euler–Poincaré, 26-connected foreground,
   Odgaard & Gundersen 1993). No edge correction: the ROI is treated as an isolated object,
@@ -48,7 +52,8 @@ def surface_area_mm2(mask, spacing) -> float:
     return float(mesh_surface_area(verts, faces)) * 1e-6
 
 
-def local_thickness(mask: np.ndarray, voxel_um: float, radius_step: float = 0.25) -> np.ndarray:
+def local_thickness(mask: np.ndarray, voxel_um: float, radius_step: float = 0.25, border: str = "background",
+                    border_pad: int = 24) -> np.ndarray:
     """Direct 3D local thickness map (µm) for a binary structure (isotropic voxels).
 
     Convention (as in BoneJ Thickness): sphere centres are distance-ridge voxels; the sphere
@@ -59,6 +64,13 @@ def local_thickness(mask: np.ndarray, voxel_um: float, radius_step: float = 0.25
     """
     if not mask.any():
         return np.zeros(mask.shape, np.float32)
+    if border == "edge":
+        # structures are assumed to continue beyond the analysed region (cropped VOI): replicate
+        # the boundary slice outward, compute, crop back. Closer to Scanco IPL on cropped cubes
+        # (Experiment G); 'background' treats the region border as the end of every structure.
+        k = int(border_pad)
+        th = local_thickness(np.pad(mask, k, mode="edge"), voxel_um, radius_step, "background")
+        return th[k:-k, k:-k, k:-k]
     m = np.pad(mask, 1)
     d = ndi.distance_transform_edt(m).astype(np.float32)
     ridge = (d >= ndi.maximum_filter(d, size=3) - 1e-6) & m
@@ -83,10 +95,10 @@ def local_thickness(mask: np.ndarray, voxel_um: float, radius_step: float = 0.25
     return th * voxel_um
 
 
-def thickness_stats(mask, voxel_um) -> dict:
+def thickness_stats(mask, voxel_um, border="edge") -> dict:
     if not mask.any():
         return {"mean_um": float("nan"), "sd_um": float("nan"), "max_um": float("nan")}
-    t = local_thickness(mask, voxel_um)[mask]
+    t = local_thickness(mask, voxel_um, border=border)[mask]
     return {"mean_um": float(t.mean()), "sd_um": float(t.std()), "max_um": float(t.max())}
 
 
@@ -106,7 +118,7 @@ def euler_connectivity(mask) -> dict:
 
 # ----------------------------------------------------------------------------- trabecular set
 def trabecular_morphometry(bone: np.ndarray, tv_mask: np.ndarray, voxel_um: float,
-                           compute_thickness=True, compute_conn=True) -> dict:
+                           compute_thickness=True, compute_conn=True, border: str = "edge") -> dict:
     """Standard trabecular parameters for ``bone`` inside the tissue-volume mask ``tv_mask``."""
     sp = (voxel_um,) * 3
     b = bone & tv_mask
@@ -118,8 +130,9 @@ def trabecular_morphometry(bone: np.ndarray, tv_mask: np.ndarray, voxel_um: floa
     out["BS_BV_per_mm"] = bs / bv if bv else float("nan")
     out["BS_TV_per_mm"] = bs / tv if tv else float("nan")
     if compute_thickness:
-        th = thickness_stats(b, voxel_um)
-        spc = thickness_stats(tv_mask & ~b, voxel_um)
+        th = thickness_stats(b, voxel_um, border)
+        spc = thickness_stats(tv_mask & ~b, voxel_um, border)
+        out["thickness_border_convention"] = border
         out["Tb_Th_um"], out["Tb_Th_sd_um"] = th["mean_um"], th["sd_um"]
         out["Tb_Sp_um"], out["Tb_Sp_sd_um"] = spc["mean_um"], spc["sd_um"]
         s = out["Tb_Th_um"] + out["Tb_Sp_um"]
@@ -131,8 +144,8 @@ def trabecular_morphometry(bone: np.ndarray, tv_mask: np.ndarray, voxel_um: floa
     return out
 
 
-def cortical_thickness(cortex: np.ndarray, voxel_um: float) -> dict:
-    t = thickness_stats(cortex, voxel_um)
+def cortical_thickness(cortex: np.ndarray, voxel_um: float, border="edge") -> dict:
+    t = thickness_stats(cortex, voxel_um, border)
     return {"Ct_Th_um": t["mean_um"], "Ct_Th_sd_um": t["sd_um"]}
 
 

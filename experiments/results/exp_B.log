@@ -1,0 +1,20 @@
+/home/user/playground/osteoquant/ml/train.py:168: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  rec = {"iter": it + 1, "loss": float(loss), "sec": round(time.time() - t0, 1)}
+unet_ctx_s0 {"iter": 100, "loss": 1.7279947996139526, "sec": 29.4}
+unet_ctx_s0 {"iter": 200, "loss": 0.6212424039840698, "sec": 59.2}
+unet_ctx_s0 {"iter": 300, "loss": 0.5025752782821655, "sec": 88.5}
+unet_ctx_s0 {"iter": 400, "loss": 0.7528913617134094, "sec": 120.5}
+unet_ctx_s0 {"iter": 500, "loss": 0.3424617052078247, "sec": 151.2, "val_mean_dice": 0.8455372795707492}
+unet_ctx_s0 {"iter": 600, "loss": 0.7384083867073059, "sec": 183.1}
+unet_ctx_s0 {"iter": 700, "loss": 0.4853702187538147, "sec": 211.5}
+unet_ctx_s0 {"iter": 800, "loss": 0.6430085897445679, "sec": 240.5}
+unet_ctx_s0 {"iter": 900, "loss": 0.5476030111312866, "sec": 269.0}
+unet_ctx_s0 {"iter": 1000, "loss": 0.40964874625205994, "sec": 301.5, "val_mean_dice": 0.8736852531221576}
+unet_ctx_s0 {"iter": 1100, "loss": 0.3218464255332947, "sec": 343.8}
+unet_ctx_s0 {"iter": 1200, "loss": 0.4696643054485321, "sec": 464.5}
+unet_ctx_s0 {"iter": 1300, "loss": 0.29941171407699585, "sec": 580.4}
+unet_ctx_s0 {"iter": 1400, "loss": 0.2750994563102722, "sec": 666.9}
+unet_ctx_s0 {"iter": 1500, "loss": 0.3964528441429138, "sec": 695.8, "val_mean_dice": 0.8880448387495887}
+unet_ctx_s0 {"dice_new_roi": 0.861, "dice_graft_roi": 0.918, "hd95_new_um": 66.861, "hd95_graft_um": 47.071, "dice_host_all": 0.96, "dice_new_all": 0.813, "dice_graft_all": 0.917, "ece_roi": 0.008, "infer_s": 0.672, "new_frac_pred": 0.242, "new_frac_true": 0.265, "graft_frac_pred": 0.103, "graft_frac_true": 0.11}
+unet_noctx_s0 {"iter": 100, "loss": 1.5421366691589355, "sec": 31.4}

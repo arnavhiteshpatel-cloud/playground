@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OsteoQuant Workbench</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="proto-banner">Research prototype — not validated, not for GLP or clinical use. Synthetic-trained models are labelled as such.</div>
+
+<section id="login-view" class="center-card">
+  <h1>OsteoQuant</h1>
+  <p class="muted">Preclinical bone-defect imaging analysis</p>
+  <form id="login-form">
+    <label>Username <input id="login-user" autocomplete="username" required></label>
+    <label>Password <input id="login-pass" type="password" autocomplete="current-password" required></label>
+    <button type="submit">Sign in</button>
+    <p id="login-err" class="err"></p>
+  </form>
+</section>
+
+<div id="app" hidden>
+  <header>
+    <span class="brand">OsteoQuant</span>
+    <nav>
+      <button data-nav="studies">Studies</button>
+      <button data-nav="jobs">Jobs</button>
+      <button data-nav="audit">Audit trail</button>
+    </nav>
+    <span id="whoami" class="muted"></span>
+    <button id="logout" class="ghost">Sign out</button>
+  </header>
+
+  <main>
+    <!-- Studies -->
+    <section id="studies-view" class="page">
+      <div class="cols">
+        <div class="panel narrow">
+          <h2>Studies</h2>
+          <ul id="study-list" class="list"></ul>
+          <details><summary>New project / study</summary>
+            <form id="new-project"><input name="name" placeholder="Project name" required><button>Create project</button></form>
+            <form id="new-study">
+              <select name="project_id" id="project-select"></select>
+              <input name="name" placeholder="Study name" required>
+              <input name="species" placeholder="Species (e.g. rabbit)">
+              <input name="defect_model" placeholder="Defect model (condyle / calvarial / segmental)">
+              <input name="graft_materials" placeholder="Graft material(s)">
+              <label class="inline"><input type="checkbox" name="blinded"> Blinded analysis</label>
+              <button>Create study</button>
+            </form>
+          </details>
+        </div>
+        <div class="panel wide" id="study-detail"><p class="muted">Select a study.</p></div>
+      </div>
+    </section>
+
+    <!-- Viewer -->
+    <section id="viewer-view" class="page" hidden>
+      <div class="viewer-top">
+        <button id="back-to-study" class="ghost">← Study</button>
+        <strong id="scan-title"></strong>
+        <span id="scan-meta" class="muted"></span>
+      </div>
+      <div class="viewer-grid">
+        <div class="views" id="views">
+          <div class="view" data-axis="0"><canvas></canvas><span class="vlabel">Axial</span><span class="vpos"></span></div>
+          <div class="view" data-axis="1"><canvas></canvas><span class="vlabel">Coronal</span><span class="vpos"></span></div>
+          <div class="view" data-axis="2"><canvas></canvas><span class="vlabel">Sagittal</span><span class="vpos"></span></div>
+          <div class="view" id="view3d"><canvas id="c3d"></canvas><span class="vlabel">3D surface</span>
+            <div class="v3d-ctrl"><select id="mesh-label"><option value="1">new bone</option><option value="2">graft</option><option value="3">host bone</option></select>
+              <button id="mesh-btn">Render</button><a id="mesh-export" href="#" download="surface.obj">Export OBJ</a></div></div>
+        </div>
+        <aside class="tools">
+          <h3>Display</h3>
+          <label>Window <input type="range" id="wl-lo" min="0" max="1000" value="0"><input type="range" id="wl-hi" min="0" max="1000" value="1000"></label>
+          <div class="row"><button data-preset="auto" class="small">Auto</button><button data-preset="bone" class="small">Bone</button><button data-preset="full" class="small">Full</button></div>
+          <label>Segmentation <select id="seg-select"></select></label>
+          <label>Compare with <select id="cmp-select"><option value="">—</option></select></label>
+          <label>Label opacity <input type="range" id="opacity" min="0" max="100" value="45"></label>
+          <div class="row">
+            <label class="inline"><input type="checkbox" id="show-seg" checked> labels</label>
+            <label class="inline"><input type="checkbox" id="show-unc"> uncertainty</label>
+            <label class="inline"><input type="checkbox" id="show-roi" checked> ROI</label>
+          </div>
+          <div class="legend">
+            <span><i style="background:#e69f00"></i>new bone</span><span><i style="background:#56b4e9"></i>graft</span>
+            <span><i style="background:#cc79a7"></i>host bone</span><span><i style="background:#f0e442"></i>uncertain</span>
+          </div>
+          <h3>Tools</h3>
+          <div class="row toolbar">
+            <button data-tool="nav" class="small active">Navigate</button>
+            <button data-tool="brush" class="small">Brush</button>
+            <button data-tool="fill" class="small">Fill region</button>
+            <button data-tool="measure" class="small">Measure</button>
+          </div>
+          <label>Paint label <select id="paint-label">
+            <option value="1">1 new bone</option><option value="2">2 residual graft</option><option value="3">3 host bone</option>
+            <option value="0">0 background</option><option value="255">255 uncertain</option></select></label>
+          <label>Only overwrite <select id="paint-from"><option value="">any</option><option value="255">uncertain</option><option value="1">new bone</option><option value="2">graft</option><option value="0">background</option></select></label>
+          <label>Brush radius (voxels) <input type="number" id="brush-r" value="3" min="1" max="30"></label>
+          <div class="row"><button id="undo" class="small">Undo</button><span id="pending" class="muted">0 pending edits</span></div>
+          <label>Reason for correction <input id="edit-reason" placeholder="e.g. graft rim mislabelled as new bone"></label>
+          <button id="save-edits">Save as new version</button>
+          <p id="measure-out" class="muted"></p>
+          <h3>Analysis</h3>
+          <div id="scan-metrics" class="metrics"></div>
+          <h3>Review &amp; sign-off</h3>
+          <select id="rev-decision"><option value="approved">approve</option><option value="needs_changes">needs changes</option><option value="rejected">reject</option></select>
+          <input id="rev-meaning" value="I reviewed this segmentation and approve it for reporting">
+          <input id="rev-pass" type="password" placeholder="Re-enter password to sign">
+          <button id="rev-submit">Sign</button>
+          <h3>History</h3>
+          <div id="history" class="history"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="jobs-view" class="page" hidden><div class="panel"><h2>Background jobs</h2><table id="jobs-table"></table></div></section>
+    <section id="audit-view" class="page" hidden>
+      <div class="panel"><h2>Audit trail</h2><button id="verify-chain">Verify hash chain</button> <span id="chain-status"></span>
+        <table id="audit-table"></table></div>
+    </section>
+  </main>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

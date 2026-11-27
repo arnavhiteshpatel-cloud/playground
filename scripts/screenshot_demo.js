@@ -1,0 +1,34 @@
+const { chromium } = require('playwright');
+(async () => {
+  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1500, height: 950 }, deviceScaleFactor: 1 });
+  const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
+  const out = '/home/user/playground/investor/screenshots/';
+  await p.goto('http://127.0.0.1:8765/');
+  await p.screenshot({ path: out + '01_login.png' });
+  await p.fill('#login-user', 'demo_analyst'); await p.fill('#login-pass', 'Demo-Password-2026'); await p.click('#login-form button');
+  await p.waitForSelector('#study-list li[data-id]'); await p.click('#study-list li[data-id]');
+  await p.waitForSelector('[data-open]'); await p.waitForTimeout(800);
+  await p.screenshot({ path: out + '02_study.png', fullPage: true });
+  await p.click('[data-open]'); await p.waitForTimeout(3500);
+  await p.screenshot({ path: out + '03_viewer.png' });
+  await p.click('#show-unc'); await p.waitForTimeout(1500);
+  // brush edit on axial view
+  await p.click('[data-tool="brush"]'); await p.selectOption('#paint-label', '2');
+  const c = await p.locator('.view[data-axis="0"] canvas').boundingBox();
+  await p.mouse.move(c.x + c.width * 0.5, c.y + c.height * 0.5); await p.mouse.down(); await p.mouse.move(c.x + c.width * 0.56, c.y + c.height * 0.52, { steps: 6 }); await p.mouse.up();
+  await p.fill('#edit-reason', 'demo: relabel granule rim'); 
+  p.once('dialog', d => d.accept());
+  await p.click('#save-edits'); await p.waitForTimeout(3000); console.log('after save visible pages', await p.evaluate(() => [...document.querySelectorAll('.page')].map(x => x.id + ':' + x.hidden).join(' ')), await p.evaluate(()=>document.getElementById('app').hidden)); console.log('ERR so far', JSON.stringify(errs));
+  await p.click('[data-tool="measure"]');
+  await p.mouse.click(c.x + c.width * 0.3, c.y + c.height * 0.5); await p.mouse.click(c.x + c.width * 0.7, c.y + c.height * 0.5);
+  await p.selectOption('#mesh-label', '2'); await p.click('#mesh-btn'); await p.waitForTimeout(4000);
+  await p.screenshot({ path: out + '04_viewer_edit_measure_3d.png' });
+  await p.selectOption('#cmp-select', { index: 2 }); await p.waitForTimeout(1500);
+  await p.screenshot({ path: out + '05_version_difference.png' });
+  console.log('measure:', await p.textContent('#measure-out'));
+  console.log('history:', (await p.textContent('#history')).slice(0, 300));
+  await p.click('[data-nav="audit"]'); await p.waitForTimeout(800); await p.click('#verify-chain').catch(()=>{}); await p.waitForTimeout(800);
+  await p.screenshot({ path: out + '06_audit.png' });
+  console.log('ERRORS', JSON.stringify(errs));
+  await b.close();
+})();

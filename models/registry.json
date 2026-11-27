@@ -1,0 +1,34 @@
+{
+ "unet_ctx_s0": {
+  "sha256": "b5830607ba15b8d2e80000dfa761a7397f7844b4e4982f7857c28c4826607e06",
+  "created": "2026-11-27T07:24:48Z",
+  "provenance": [
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 48,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 1500,
+   "lr": 0.003,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 100,
+   "val_every": 500,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": true,
+   "seed": 0
+  }
+ }
+}

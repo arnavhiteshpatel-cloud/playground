@@ -10,7 +10,8 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-RESULTS = ROOT / "experiments" / "results"
+import os  # noqa: E402
+RESULTS = Path(os.environ["OQ_RESULTS"]) if os.environ.get("OQ_RESULTS") else ROOT / "experiments" / "results"
 FIG = RESULTS / "figures"
 SYNTH = ROOT / "data" / "processed" / "synth"
 RESULTS.mkdir(parents=True, exist_ok=True)

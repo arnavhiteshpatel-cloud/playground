@@ -54,7 +54,7 @@ parallel-beam projection with Poisson counting and FBP.
 (45S5 glass, deproteinised bovine bone mineral). Splits by specimen; distinct seed ranges per split.
 2.4 **Methods compared.** Global SOP threshold (fixed from training data), Otsu + within-ROI Otsu ("CTAn-style"),
 adaptive, multi-Otsu, GMM-3, k-means-3, intensity+morphology (solidity filter), RF (60 trees; Gaussian, gradient, LoG,
-local SD at 0–160 µm, Hessian eigenvalues, distance to ROI boundary; 15k voxels/class from 6 specimens), 3D U-Net
+local SD at 0–160 µm, Hessian eigenvalues, distance to ROI boundary; up to 8,000 voxels per class per specimen from 12 training specimens, 3 per material), 3D U-Net
 (0.79 M parameters, 4 levels, instance norm, Dice + boundary-weighted CE, 1,500 iterations of 48³ patches, CPU),
 day-0 propagation (Section 2.6). All single-timepoint methods received the true ROI so ROI error does not confound.
 2.5 **Separability benchmark.** Graft modelled as mineral of HA-equivalent density X ∈ {2200…650} mgHA/cm³ (new

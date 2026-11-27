@@ -32,7 +32,7 @@ from vtkmodules.vtkRenderingCore import (vtkActor, vtkColorTransferFunction, vtk
 from vtkmodules.vtkRenderingVolumeOpenGL2 import vtkSmartVolumeMapper
 
 from . import theme
-from .viewer_state import CLASS_NAMES, EDIT_LABELS, ViewerState
+from .viewer_state import CLASS_NAMES, EDIT_LABELS, ROI_COLOR, ViewerState
 
 SURFACE_VOXELS = int(os.environ.get("OQ_3D_SURFACE_VOXELS", str(200 ** 3)))
 VOLUME_VOXELS = int(os.environ.get("OQ_3D_VOLUME_VOXELS", str(128 ** 3)))
@@ -97,6 +97,26 @@ def extract_surfaces(labels: np.ndarray, spacing_um, classes=EDIT_LABELS, smooth
         nm.Update()
         out[c] = nm.GetOutput()
     return {"surfaces": out, "step": step}
+
+
+def roi_surface(roi: np.ndarray, spacing_um, max_voxels: int = 96 ** 3):
+    """Surface of the ROI mask (strided to ``max_voxels``) for the 3D wireframe, or None."""
+    step = 1
+    while np.prod([int(np.ceil(n / step)) for n in roi.shape]) > max_voxels:
+        step += 1
+    m = np.pad(np.ascontiguousarray(roi[::step, ::step, ::step]).astype(np.uint8), 1)
+    if not m.any():
+        return None
+    sp_mm = [s * step / 1000.0 for s in spacing_um]
+    img = to_vtk_image(m, sp_mm)
+    img.SetOrigin(-sp_mm[2], -sp_mm[1], -sp_mm[0])
+    fe = vtkDiscreteFlyingEdges3D()
+    fe.SetInputData(img)
+    fe.SetValue(0, 1)
+    fe.ComputeScalarsOff()
+    fe.Update()
+    poly = fe.GetOutput()
+    return poly if poly.GetNumberOfPoints() else None
 
 
 class _SurfaceSignals(QObject):
@@ -174,6 +194,7 @@ class View3D(QWidget):
         self.surface_actors: dict[int, vtkActor] = {}
         self.volume: vtkVolume | None = None
         self.outline: vtkActor | None = None
+        self.roi_actor: vtkActor | None = None
         self._token = 0
         self._stale = False
         self.pool = QThreadPool(self)
@@ -258,8 +279,39 @@ class View3D(QWidget):
         if self.outline is not None:
             self.renderer.RemoveActor(self.outline)
             self.outline = None
+        if self.roi_actor is not None:
+            self.renderer.RemoveActor(self.roi_actor)
+            self.roi_actor = None
+
+    def _build_roi(self):
+        st = self.state
+        if st.roi is None:
+            return
+        try:
+            poly = roi_surface(st.roi, st.spacing)
+        except Exception:  # noqa: BLE001 - the ROI wireframe is an aid; never block the scan
+            poly = None
+        if poly is None:
+            return
+        m = vtkPolyDataMapper()
+        m.SetInputData(poly)
+        m.ScalarVisibilityOff()
+        a = vtkActor()
+        a.SetMapper(m)
+        pr = a.GetProperty()
+        pr.SetRepresentationToWireframe()
+        pr.SetColor(*(c / 255 for c in ROI_COLOR))
+        pr.SetOpacity(0.35)
+        pr.LightingOff()
+        a.SetVisibility(bool(st.show_roi))
+        self.roi_actor = a
+        self.renderer.AddActor(a)
 
     def _on_scan(self):
+        cam = None
+        if self.state.view_preserved:          # same scan reloaded (after a save): keep the camera
+            c = self.renderer.GetActiveCamera()
+            cam = (c.GetPosition(), c.GetFocalPoint(), c.GetViewUp(), c.GetParallelScale())
         self.clear()
         st = self.state
         if not st.loaded:
@@ -279,7 +331,15 @@ class View3D(QWidget):
         self.outline.SetMapper(m)
         self.outline.GetProperty().SetColor(0.55, 0.6, 0.66)
         self.renderer.AddActor(self.outline)
-        self.reset_camera()
+        self._build_roi()
+        if cam is None:
+            self.reset_camera()
+        else:
+            c = self.renderer.GetActiveCamera()
+            c.SetPosition(*cam[0])
+            c.SetFocalPoint(*cam[1])
+            c.SetViewUp(*cam[2])
+            self.renderer.ResetCameraClippingRange()
         self._apply_mode()
         if st.editor is not None:
             self.rebuild_surfaces()
@@ -332,6 +392,8 @@ class View3D(QWidget):
 
     def _apply_overlay(self):
         st = self.state
+        if self.roi_actor is not None:
+            self.roi_actor.SetVisibility(bool(st.show_roi))
         for c, a in self.surface_actors.items():
             o = st.overlay[c]
             r, g, b = o["color"]

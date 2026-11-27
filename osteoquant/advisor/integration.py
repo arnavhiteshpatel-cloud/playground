@@ -44,16 +44,29 @@ def _assess_scan(image: np.ndarray, roi_mask: np.ndarray, spacing, cfg: dict):
               validated_texture_model=bool(cfg.get("validated_texture_model", False)),
               new_bone_rel_range=cfg.get("new_bone_rel_range"),
               energy_keV=float(cfg.get("effective_energy_keV", 40.0)))   # from acquisition metadata (IMG-10)
-    rel = to_relative(image[roi_mask], est["soft"], est["host"]) if roi_mask is not None and roi_mask.any() else None
     prior = float(cfg.get("graft_prior", 0.5))
     a = assess_support(material, graft_prior=prior, **kw)
-    if "graft_prior" not in cfg and rel is not None and a.intensity.get("threshold") is not None:
-        mineral = rel > MINERAL_REL_THRESHOLD
-        if mineral.any():
-            t = a.intensity["threshold"]
-            g = (rel > t) if a.intensity.get("graft_brighter", True) else (rel < t)
-            prior = float(np.clip((g & mineral).sum() / mineral.sum(), 0.005, 0.95))
-            a = assess_support(material, graft_prior=prior, **kw)
+    if roi_mask is not None and roi_mask.any():
+        from scipy import ndimage as ndi
+        rel_img = to_relative(image, est["soft"], est["host"])
+        roi = roi_mask
+        t_min = (a.intensity.get("mineral_rule") or {}).get("threshold") or MINERAL_REL_THRESHOLD
+        mineral = (rel_img > t_min) & roi
+        t = a.intensity.get("threshold")
+        g = np.zeros_like(mineral)
+        if t is not None:
+            g = ((rel_img > t) if a.intensity.get("graft_brighter", True) else (rel_img < t)) & mineral
+        if "graft_prior" not in cfg and t is not None and mineral.any():
+            prior = float(np.clip(g.sum() / mineral.sum(), 0.005, 0.95))
+        # partial-volume halo and new-bone share measured from the scan (advisor ≥1.2.0)
+        # surface shell of mineral structures (any phase), estimated with a conservative core threshold so that
+        # the halo itself is not counted as structure; the share of non-core ROI voxels in that shell
+        core = (rel_img > 0.5) & roi
+        shell = ndi.binary_dilation(core, iterations=1) & ~core & roi
+        halo_frac = float(shell.sum() / max(1, (roi & ~core).sum()))
+        nb_share = float(((mineral & ~g).sum()) / max(1, (roi & ~g).sum()))
+        kw.update(soft_halo_fraction=float(np.clip(halo_frac, 0.0, 0.6)), new_bone_share=float(np.clip(nb_share, 0.02, 0.95)))
+        a = assess_support(material, graft_prior=prior, **kw)
     return a, est, prior, material
 
 
@@ -129,14 +142,16 @@ def advisor_threshold_segmentation(image: np.ndarray, roi_mask: np.ndarray, spac
 
     Graft/new-bone threshold: the best single threshold of the advisor's class model at the scan's estimated
     graft share (relative units), mapped to grey values with the soft-tissue and host-bone levels measured
-    outside the defect. Mineral/soft threshold: relative 0.30 (half-way to the least mature new bone), which,
-    unlike a global Otsu threshold, is not pulled upward by dense grafts (review STAT-05). Returns
+    outside the defect. Mineral/soft threshold: the advisor's new-bone-vs-soft-tissue rule (≥1.2.0), which models
+    partial-volume halos of dense phases (falls back to relative 0.30); unlike a global Otsu threshold it is not
+    pulled upward by dense grafts (review STAT-05). Returns
     (labels, info). Labels are produced even when the endpoint is unsupported; reporting suppression is
     applied separately (apply_support).
     """
     from ..segment import classical as C
     a, est, prior, material = _assess_scan(image, roi_mask, spacing, cfg)
-    t_min = est["soft"] + MINERAL_REL_THRESHOLD * (est["host"] - est["soft"])
+    t_min_rel = (a.intensity.get("mineral_rule") or {}).get("threshold") or MINERAL_REL_THRESHOLD
+    t_min = est["soft"] + t_min_rel * (est["host"] - est["soft"])
     mineral = image > t_min
     t_rel = a.intensity.get("threshold")
     info = {"method": "advisor_threshold", "scan_levels": est, "t_mineral": float(t_min),

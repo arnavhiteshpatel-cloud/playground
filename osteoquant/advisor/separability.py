@@ -47,11 +47,13 @@ MIN_STRUCT_VOXELS = 3.0         # thickness endpoints need structures ≥3 voxel
 HOST_REL_MATURE = 1.0
 MIN_REFERENCE_SAMPLES = 500     # measured reference distributions need at least this many voxels
 MIN_GRAFT_FRACTION = 0.05       # below this share of mineral, relative graft-volume error is unbounded
-ADVISOR_VERSION = "1.1.0"
+ADVISOR_VERSION = "1.2.0"
 # Changelog: 1.0.x (pre-review, used by S1/S1b runs before cycle-1 review) → 1.1.0: decision uses the single-
 # threshold rule actually applied (union oracle kept as upper bound); support must hold at the estimated graft
 # share and at half of it (review IMG-01); metals refused (IMG-02); measured samples need ≥500 voxels and cannot
 # bypass the bone-derived rule (IMG-03); day-0 support requires computed QC/tracking fields (IMG-04).
+# 1.2.0: new-bone vs soft-tissue decision with partial-volume halos of dense phases gates new-bone and mineral
+# endpoints and sets the mineral threshold (S1b re-run finding; review STAT-05).
 
 # Assumed new-bone maturity range in relative units. Early/mid healing: woven 650–1000 mgHA/cm³ vs
 # mature host ≈1075 → (0.60, 0.93) (SCIENTIFIC_EVIDENCE row 4, assumption anchored to a published callus
@@ -292,7 +294,7 @@ def _thickness_endpoint(ep: dict, voxel_um: float) -> None:
         ["depends on new-bone segmentation support", "border convention stated in report"])
 
 
-def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples_rel=None,
+def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_rel=None,
                    new_samples_rel=None, day0: dict | None = None, calibrated: bool = False,
                    no_graft: bool = False, validated_texture_model: bool = False,
                    graft_prior: float = 0.5, energy_keV: float = 40.0, seed: int = 0,
@@ -507,3 +509,82 @@ def scan_relative_units(image: np.ndarray, host_mask: np.ndarray | None = None,
 
 def to_relative(x, soft: float, host: float):
     return (np.asarray(x, np.float32) - soft) / max(host - soft, 1e-6)
+
+
+def mineral_rule(material, *, noise_rel: float, voxel_um: float, graft_samples_rel=None, new_samples_rel=None,
+                 new_bone_rel_range=None, soft_halo_fraction: float = 0.10, new_bone_share: float = 0.3,
+                 energy_keV: float = 40.0, seed: int = 0) -> dict:
+    """New bone vs soft tissue (the mineral boundary), advisor ≥1.2.0.
+
+    S1b (advisor 1.1.0 re-run) found new-bone volume +22…60% and total mineral +15…23% on graft-supported
+    specimens: soft-tissue voxels next to dense graft or host bone are partial-volume mixtures that look like
+    immature new bone. The best single mineral threshold and its new-bone volume ratio are computed with soft
+    tissue mixing towards its dense neighbours (fraction ``soft_halo_fraction``, measured from the scan by the
+    integration layer) at the expected new-bone share of non-graft ROI voxels.
+    """
+    prof = material_profile(material, energy_keV) if isinstance(material, (str, dict, MaterialProfile)) else None
+    nb_range = tuple(new_bone_rel_range) if new_bone_rel_range else NEW_BONE_REL_RANGE
+    g_level = prof.rel_mean if (prof is not None and not prof.radiolucent) else 0.0
+    if graft_samples_rel is not None and np.size(graft_samples_rel) >= MIN_REFERENCE_SAMPLES:
+        g_level = float(np.median(graft_samples_rel))
+    rng = np.random.default_rng(seed + 1)
+    n_soft = 60_000
+    soft = rng.normal(0.0, 0.03, n_soft)
+    halo = rng.random(n_soft) < soft_halo_fraction
+    # neighbours of soft-tissue surface voxels: mostly new-bone trabeculae, also host bone and graft
+    nb_mid = float(np.mean(nb_range))
+    levels = np.array([nb_mid, HOST_REL_MATURE, max(g_level, nb_mid)])
+    nbr = levels[rng.choice(3, int(halo.sum()), p=[0.6, 0.2, 0.2])]
+    soft[halo] = rng.uniform(0.0, 0.5, int(halo.sum())) * nbr       # minority (<50%) mineral phase in the voxel
+    soft = soft + rng.normal(0, noise_rel, n_soft)
+    if new_samples_rel is not None and np.size(new_samples_rel) >= MIN_REFERENCE_SAMPLES:
+        nb_vals = rng.choice(np.asarray(new_samples_rel, float), 40_000)
+    else:
+        nbm = ClassModel("uniform", *nb_range, surface_fraction=surface_fraction(150.0, voxel_um))
+        nb_vals = nbm.draw(40_000, rng, neighbors=((0.0, 1.0),)) + rng.normal(0, noise_rel, 40_000)
+    share = float(np.clip(new_bone_share, 0.02, 0.95))
+    k_soft = int(len(nb_vals) * (1 - share) / share)
+    soft_s = rng.choice(soft, max(1000, k_soft))
+    mb = dice_oracle_samples(nb_vals, soft_s)
+    out = {"threshold": mb.get("threshold"), "dice_new_vs_soft": mb.get("dice_graft_threshold_rule"),
+           "new_volume_ratio": mb.get("graft_volume_ratio_threshold_rule"),
+           "soft_halo_fraction": soft_halo_fraction, "new_bone_share": share}
+    out["passes_policy"] = bool((out["dice_new_vs_soft"] or 0) >= ORACLE_DICE_MIN
+                                and abs((out["new_volume_ratio"] or 0) - 1) <= ORACLE_VOLUME_TOL)
+    return out
+
+
+def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples_rel=None,
+                   new_samples_rel=None, day0: dict | None = None, calibrated: bool = False,
+                   no_graft: bool = False, validated_texture_model: bool = False,
+                   graft_prior: float = 0.5, energy_keV: float = 40.0, seed: int = 0,
+                   new_bone_rel_range: tuple | None = None, soft_halo_fraction: float = 0.10,
+                   new_bone_share: float = 0.3) -> SupportAssessment:
+    """Decide which endpoints can be reported (see module docstring and docs/science/MEASUREMENT_SUPPORT.md).
+
+    noise_rel          scan noise σ divided by (host − soft) grey contrast.
+    graft_samples_rel  optional measured graft intensities (day-0 or material-only scan), relative units.
+    new_samples_rel    optional measured new-bone intensities (empty-defect controls) — preferred input.
+    day0               {"registered", "qc_pass", "untracked_fraction", "max_displacement_um", "tolerance_um"}.
+    soft_halo_fraction share of non-mineral ROI voxels adjacent to dense phases (measured by the integration).
+    new_bone_share     expected new-bone share of non-graft ROI voxels (measured by the integration).
+    """
+    a = _assess_core(material, noise_rel=noise_rel, voxel_um=voxel_um, graft_samples_rel=graft_samples_rel,
+                     new_samples_rel=new_samples_rel, day0=day0, calibrated=calibrated, no_graft=no_graft,
+                     validated_texture_model=validated_texture_model, graft_prior=graft_prior,
+                     energy_keV=energy_keV, seed=seed, new_bone_rel_range=new_bone_rel_range)
+    mr = mineral_rule(None if no_graft else material, noise_rel=noise_rel, voxel_um=voxel_um,
+                      graft_samples_rel=graft_samples_rel, new_samples_rel=new_samples_rel,
+                      new_bone_rel_range=new_bone_rel_range, soft_halo_fraction=soft_halo_fraction,
+                      new_bone_share=new_bone_share, energy_keV=energy_keV, seed=seed)
+    a.intensity["mineral_rule"] = mr
+    a.policy["soft_halo_fraction"] = soft_halo_fraction
+    if not mr["passes_policy"]:
+        why = (f"new bone vs soft tissue not reliably separable (threshold-rule Dice {mr['dice_new_vs_soft'] or 0:.2f}, "
+               f"new-bone volume ratio {mr['new_volume_ratio'] or 0:.2f}): partial-volume halos of dense phases "
+               "and immature new bone overlap at this noise level")
+        for e in MINERAL_ENDPOINTS + ("new_bone_volume", "new_bone_fraction_of_defect"):
+            if e in a.endpoints and a.endpoints[e].status != NOT_SUPPORTED:
+                a.endpoints[e] = EndpointSupport(e, NOT_SUPPORTED, None, why)
+        _thickness_endpoint(a.endpoints, voxel_um)
+    return a

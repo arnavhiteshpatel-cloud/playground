@@ -66,6 +66,13 @@ class JobRunner:
 
     def _run(self, jid, user, kind, params):
         ctx = JobContext(self.store, jid)
+        fresh = self.store.q1("SELECT id,org_id,username,role,active FROM users WHERE id=?", (user["id"],))
+        if not fresh or not fresh["active"] or not self.store.can(fresh, "run"):   # review S-17: no stale privileges
+            self.store.exec("UPDATE jobs SET status='failed', message='submitting user no longer authorised', finished=? WHERE id=?",
+                            (now(), jid))
+            self.store.audit.record("job.denied_stale_privilege", user["id"], user["org_id"], "job", jid)
+            return
+        user = fresh
         self.store.exec("UPDATE jobs SET status='running', started=? WHERE id=?", (now(), jid))
         try:
             ctx.check()

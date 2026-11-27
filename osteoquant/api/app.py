@@ -368,6 +368,7 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
         a = g["image"]
         s = np.asarray(a[:: max(1, a.shape[0] // 16), ::4, ::4]).astype(np.float32)
         layers = sorted(k for k in g["labels"].keys()) if "labels" in g else []
+        store.audit.record("scan.view", u["id"], u["org_id"], "scan", scan_id)   # review S-12: record data access
         return {**{k: sc[k] for k in ("id", "study_id", "specimen_id", "timepoint_id", "source_name", "format", "shape",
                                        "spacing_um", "status", "file_sha256", "qc")},
                 "window": {"p1": float(np.percentile(s, 1)), "p99": float(np.percentile(s, 99.5)),

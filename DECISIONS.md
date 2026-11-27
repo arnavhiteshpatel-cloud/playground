@@ -10,3 +10,14 @@ Format: ID — date — decision — rationale — alternatives considered.
 - **D-006** — 2026-11-27 — Licence-aware data loader: datasets tagged `commercial_use ∈ {allowed, research_only, unclear}`; training scripts refuse to write `commercial` model artifacts from anything but `allowed`. — Keep research-only models separate from potentially commercial ones.
 - **D-007** — 2026-11-27 — Statistics at the specimen (animal) level only; voxel-level numbers are used solely for segmentation-agreement metrics, never as biological n. — Prevents pseudoreplication.
 - **D-008** — 2026-11-27 — Audit log is an append-only SQLite table with a SHA-256 hash chain (each row hashes the previous row's hash + canonical JSON of the event); verification detects edits/deletions. — Part 11-style technical control; does not by itself constitute compliance.
+- **D-009** — Thickness border convention default `edge` (array-border replication), reported with every result. — Background convention under-read Scanco IPL by 18%. — Caveat: chosen post hoc on the comparison set (review Q-10).
+- **D-010** — Classical thresholds computed on "robust values" (drop reconstruction padding and extreme outliers). — Real TXM reconstructions contain 25% zero padding; naive Otsu labelled all tissue as mineral.
+- **D-011** — QC flags metal/hardware via saturation or a distinct super-dense class; ROI detectors suppress it. — Real 161-day ovine scan contains saturated hardware.
+- **D-012** — Registration uses explicit optimiser scales and voxel-unit pyramid smoothing; longitudinal metric masked to host anatomy. — SimpleITK defaults failed on sub-mm micro-CT FOVs (RESEARCH_LOG #12).
+- **D-013** — Phantom generator keeps periodic textures as legacy default (dataset v1 reproducibility); `periodic_texture=False` for registration and all new work.
+- **D-014** — Segmentation reviews require re-authentication, are bound to the object's SHA-256, block self-approval; the latest decision governs.
+- **D-015** — Uploads: ZIP only, no detached-header formats; models loaded by registered name with pre-load hash verification and weights-only deserialisation. — Independent review S-01/S-02.
+- **D-016** — Report statistics aggregate repeated scans per animal per timepoint before group statistics. — Review Q-05.
+- **D-017** — Real dog-forelimb evaluation restricted to a band around labelled bones; unlabelled anatomy is ignored in training. — Whole-volume task was ill-posed (unlabelled vertebrae/ribs).
+- **D-018** — Commercial positioning: lead with a separability-and-study-design service + audited report for small orthobiologic firms and CROs; treat venture scale as conditional on expansion modules. — Bottom-up graft-report pool ≈$0.9–4.3M/yr.
+- **D-019** — Temperature scaling is implemented but not used by default: on this model it worsened ECE (raw TTA probabilities were already calibrated; Exp K rerun).

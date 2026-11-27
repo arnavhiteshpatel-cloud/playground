@@ -17,12 +17,12 @@ that did not modify code. Regression tests: `tests/test_security_fixes.py`, `tes
 | S-09 lockout DoS / timing | medium | **Mitigated**: 15-minute temporary lock; equal-cost hash for unknown users. Residual: no CAPTCHA/IP throttling | study/db.login; test_S09 |
 | S-10 audit chain concurrency | medium | **Fixed**: store-wide lock + `BEGIN IMMEDIATE` around read-last/insert | audit/log; test_S10 |
 | S-11 undetectable tail truncation | medium | **Mitigated**: `verify_chain(anchor)`; operating manual requires weekly external anchor export. Residual: unkeyed chain (consider HMAC with offline key) | test_S11 |
-| S-12 unaudited reads | low | **Open** (slice/scan reads not audited; downloads are) | REMAINING_WORK #11 |
+| S-12 unaudited reads | low | **Partially fixed**: scan views and report downloads audited; individual slice requests not (volume) | app.scan_info |
 | S-13 incomplete deletion | medium | **Partially fixed**: reports, report files, report reviews, configs deleted; figures directory and job records remain | study/db.delete_study_data |
 | S-14 backups omit image data | low | **Open/documented**: manual says back up `runtime/data/` with the DB | founder/OPERATING_MANUAL §5 |
 | S-15 unbounded compute | low–med | **Partially**: mesh step bounded 1–8, edits ≤5000 ops; no per-user rate limit | open |
 | S-16 error detail leakage | low | **Open** (job error messages shown to same-org users) | open |
-| S-17 stale privileges in jobs | low | **Open** (jobs run with submit-time user record) | open |
+| S-17 stale privileges in jobs | low | **Fixed**: user re-validated (active + run permission) at job start | study/jobs.py |
 | S-18 hard-coded demo password | low | **Fixed**: random unless `OQ_DEMO_PASSWORD` set | scripts/demo_seed.py |
 | S-19 CSV formula injection | low | **Fixed**: cells beginning with = + - @ are prefixed | report/defectfill._csv_safe |
 | S-20 session details | low/info | **Open** (no idle timeout/rotation; 8 h tokens) | open |

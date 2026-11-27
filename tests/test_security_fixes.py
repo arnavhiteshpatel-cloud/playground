@@ -121,3 +121,26 @@ def test_S11_anchor_detects_truncation(tmp_path):
     st.conn.execute("DELETE FROM audit_log WHERE seq=?", (anchor["seq"],))
     assert st.audit.verify_chain()["ok"]            # tail truncation invisible without anchor...
     assert not st.audit.verify_chain(anchor)["ok"]  # ...detected with an external anchor
+
+
+def test_S06_unblinded_report_download_denied(tmp_path):
+    from fastapi.testclient import TestClient
+    from osteoquant.api.app import create_app
+    app = create_app(str(tmp_path / "a.db"), str(tmp_path / "d"))
+    st = app.state.store
+    o = st.create_org("L")
+    st.create_user(o, "adm", PW, "admin"); st.create_user(o, "ana", PW, "analyst")
+    pdf = tmp_path / "r.pdf"; pdf.write_bytes(b"%PDF-1.4 test")
+    rid = st.exec("INSERT INTO reports(org_id,study_id,pdf_path,csv_path,status,created,unblinded) VALUES (?,?,?,?,?,datetime('now'),1)",
+                  (o, 1, str(pdf), str(pdf), "ready"))
+    c = TestClient(app)
+    tok = lambda u: {"Authorization": "Bearer " + c.post("/api/auth/login", json={"username": u, "password": PW}).json()["token"]}
+    assert c.get(f"/api/reports/{rid}/pdf", headers=tok("ana")).status_code == 403
+    assert c.get(f"/api/reports/{rid}/pdf", headers=tok("adm")).status_code == 200
+
+
+def test_Q13_mesh_vertices_xyz():
+    import inspect
+    from osteoquant.api import app as appmod
+    src = inspect.getsource(appmod.create_app)
+    assert "v = v[:, ::-1]" in src and '"order": "xyz"' in src

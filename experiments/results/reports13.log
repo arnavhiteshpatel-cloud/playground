@@ -1,0 +1,5 @@
+R1 test_000_condyle_beta_tcp {'dice_new': 0.9219508271442743, 'dice_graft': 0.9044943820224719}
+R1 test_001_calvarial_beta_tcp {'dice_new': 0.8931939516000128, 'dice_graft': 0.7833720630002582}
+R1 test_002_segmental_beta_tcp {'dice_new': 0.8533812088569719, 'dice_graft': 0.955146195846303}
+R1 test_003_condyle_bcp {'dice_new': 0.9064872834500552, 'dice_graft': 0.9686148695773469}
+R1 test_004_calvarial_bcp {'dice_new': 0.922499349514924, 'dice_graft': 0.9541525070053062}

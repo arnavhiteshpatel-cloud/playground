@@ -113,3 +113,7 @@ Consequences to raise with a registered patent attorney (not legal advice):
 
 Founder actions: (1) decide repository visibility now; (2) include the disclosure dates above in the OTM/attorney
 conversation; (3) note that the repository also contains copies of public datasets' derived results but no raw data.
+
+**Founder decision (2026-11-27):** keep the repository public and push all work, including Generation-2 material.
+Generation-2 inventions are therefore publicly disclosed from their push date; the US one-year grace-period note above
+applies to them from that date as well.

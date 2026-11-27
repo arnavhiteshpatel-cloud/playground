@@ -1,0 +1,65 @@
+# Final coverage (pytest --cov --cov-branch, desktop omitted), 2026-11-27T22:48Z
+# 1 failed, 466 passed, 1 skipped, 1 xfailed, 117 warnings in 143.46s (0:02:23)
+osteoquant/study/db.py:505: KeyError
+Name                                  Stmts   Miss Branch BrPart  Cover   Missing
+---------------------------------------------------------------------------------
+osteoquant/__init__.py                    5      0      0      0   100%
+osteoquant/advisor/__init__.py            2      0      0      0   100%
+osteoquant/advisor/characterize.py       85     20     22      8    74%   62, 66-67, 74, 89, 94-95, 103, 105, 107->109, 110, 126-135
+osteoquant/advisor/integration.py        97     16     34      3    84%   50->77, 74->76, 121->123, 158-176
+osteoquant/advisor/separability.py      373     19    126     13    93%   89, 114, 120->126, 128->139, 144-147, 175, 178->184, 264, 280-281, 414-415, 497, 500, 511, 553, 555-557
+osteoquant/api/app.py                   467      7     76      7    97%   84->88, 90, 104, 304, 333-334, 367, 385, 594->596
+osteoquant/api/bundle.py                 52      4      8      2    90%   28-29, 44->46, 64-65, 93->95
+osteoquant/audit/__init__.py              1      0      0      0   100%
+osteoquant/audit/log.py                  86      0     24      1    99%   79->81
+osteoquant/cli.py                        73      5     28      3    90%   52-56, 62->exit, 89->exit
+osteoquant/histology/__init__.py          1      0      0      0   100%
+osteoquant/histology/core.py            166     21     20      4    84%   45-46, 60->62, 63, 91->94, 155-158, 163-177
+osteoquant/io/__init__.py                 3      0      0      0   100%
+osteoquant/io/readers.py                677      5    278      8    99%   167, 275-276, 329->358, 339->343, 354->358, 457->455, 466->471, 482->488, 596->588, 800-801
+osteoquant/io/safe_archive.py           116      3     54      3    96%   101, 103, 136
+osteoquant/io/transforms.py              66      0     14      0   100%
+osteoquant/io/writers.py                115      0     26      0   100%
+osteoquant/knowledge/__init__.py         78     75     52      0     2%   7-26, 30, 36-113
+osteoquant/licensing/__init__.py          1      0      0      0   100%
+osteoquant/licensing/core.py            174     17     52      8    87%   90, 100, 115-116, 134->136, 152, 197-198, 200, 202, 204, 232-238, 251
+osteoquant/licensing/keys.py              5      0      0      0   100%
+osteoquant/longitudinal/__init__.py       1      0      0      0   100%
+osteoquant/longitudinal/core.py         208     25     54     15    84%   31->33, 35, 46->48, 64-77, 168->170, 172->177, 174->177, 185->208, 195, 199, 203, 238, 242-244, 250-252, 269
+osteoquant/ml/__init__.py                 0      0      0      0   100%
+osteoquant/ml/core.py                    43      0      8      0   100%
+osteoquant/ml/runtime.py                 97     26     18      4    72%   43->45, 56->62, 76-78, 92->94, 105-131
+osteoquant/ml/synth_dr.py                90      9     16      4    86%   93->95, 97->99, 100->106, 118-120, 126-131
+osteoquant/ml/train.py                  238     12     72     11    93%   39->44, 49->56, 54-55, 59-60, 74, 113, 128-129, 146->124, 177, 250->254, 282, 323-324
+osteoquant/ml/unet.py                    84     17     20      5    77%   58, 79->81, 88-89, 97-106, 111->113, 115-118
+osteoquant/ml/validation_records.py      74      3     22      4    93%   41, 46, 66->71, 85
+osteoquant/morphometry/__init__.py        1      0      0      0   100%
+osteoquant/morphometry/analytic.py       34      0      2      0   100%
+osteoquant/morphometry/core.py          175      2     34      2    98%   53-54, 191->194, 218->216
+osteoquant/phantom/__init__.py            3      0      0      0   100%
+osteoquant/phantom/ctsim.py              79      0     14      4    96%   82->89, 100->102, 103->106, 107->109
+osteoquant/phantom/generator.py         318     54     68     18    78%   96-98, 116, 122-124, 152-180, 185, 199->226, 229->260, 234-236, 247->251, 251->255, 261->265, 266-276, 291->293, 304->318, 344, 375, 394, 397->405, 404, 406-407
+osteoquant/phantom/imaging.py            77     19     18      5    73%   46-49, 54-58, 60-67, 69, 74
+osteoquant/phantom/materials.py          79      9     22      3    84%   52, 113, 123, 180-186
+osteoquant/phantom/structures.py        124     12     32      7    87%   50-55, 58->62, 80, 131, 142, 148-149, 163-164
+osteoquant/pipeline.py                  143     23     40      6    84%   13-42, 46, 50, 57, 76-79, 104, 116, 155->157, 184-188, 198
+osteoquant/qc/__init__.py                 1      0      0      0   100%
+osteoquant/qc/engine.py                 209      0     28      1    99%   214->218
+osteoquant/report/__init__.py             2      0      0      0   100%
+osteoquant/report/defectfill.py         306     22    140     13    91%   101, 108->105, 111->115, 168, 202->204, 218-219, 235-236, 262->265, 278-279, 290-299, 360-364, 395, 430
+osteoquant/report/figures.py             73      1     20      5    94%   26, 37->40, 47->49, 73->67, 76->67
+osteoquant/roi/__init__.py                1      0      0      0   100%
+osteoquant/roi/engine.py                220      4     46      7    96%   159, 183->174, 238, 250->253, 266->262, 269, 278
+osteoquant/segment/__init__.py            1      0      0      0   100%
+osteoquant/segment/classical.py         206     10     40      7    93%   49, 145-146, 194, 233->237, 254-255, 258-259, 270, 273
+osteoquant/segment/metrics.py            76      0     18      0   100%
+osteoquant/stats/__init__.py              1      0      0      0   100%
+osteoquant/stats/core.py                197      2     48      0    99%   73-74
+osteoquant/study/__init__.py              1      0      0      0   100%
+osteoquant/study/db.py                  358     10    102      5    96%   192-200, 375->382, 506-508, 509->514, 544->546
+osteoquant/study/jobs.py                 90      6     20      2    91%   49, 62-65, 121
+osteoquant/uncertainty/__init__.py        1      1      0      0     0%   1
+osteoquant/uncertainty/core.py           90     10     16      0    91%   14-21, 26, 34, 44, 79, 101, 112
+osteoquant/volume.py                     60      2      6      0    97%   48, 52
+---------------------------------------------------------------------------------
+TOTAL                                  6404    471   1738    188    91%

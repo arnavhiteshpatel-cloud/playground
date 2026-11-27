@@ -123,7 +123,7 @@ def characterise_material(image: np.ndarray, material_mask: np.ndarray, soft_mas
 def characterise_from_day0(day0_image: np.ndarray, roi_mask: np.ndarray, voxel_um: float, material_id: str,
                            acquisition: dict | None = None, bone_derived: bool | None = None) -> MaterialCharacterisation:
     """Day-0 scan: graft = mineral inside the ROI (no new bone yet); host = mineral outside; soft = non-mineral outside."""
-    from ..segment.classical import threshold_otsu, robust_values
+    from ..segment.classical import robust_values
     keep_out = ~ndi.binary_dilation(roi_mask, iterations=3)
     v = robust_values(day0_image[keep_out])
     from skimage.filters import threshold_otsu as _otsu

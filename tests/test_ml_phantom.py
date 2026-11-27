@@ -138,11 +138,10 @@ def test_normalisation_and_augmentation_helpers():
     assert w.max() == pytest.approx(1.001, abs=1e-3) and w[2, 2, 2] == w.max()
 
 
-@pytest.mark.xfail(strict=True, reason="QA-022 (assigned to lead): ml.train.update_registry uses fcntl, "
-                                       "which does not exist on Windows; saving any model fails there")
 def test_update_registry_works_without_fcntl(model_dir, monkeypatch):
     from osteoquant.ml.train import update_registry
-    monkeypatch.setitem(sys.modules, "fcntl", None)       # what a Windows interpreter looks like
+    monkeypatch.setitem(sys.modules, "fcntl", None)       # what a Windows interpreter looks like (QA-022 fixed)
+    monkeypatch.setitem(sys.modules, "msvcrt", None)      # and a platform with neither: mkdir lock fallback
     update_registry("m", {"sha256": "0" * 64})
     assert json.loads((model_dir / "registry.json").read_text())["m"]["sha256"] == "0" * 64
 

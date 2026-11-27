@@ -4,13 +4,13 @@ from __future__ import annotations
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QColor, QIcon, QPixmap
 from PySide6.QtWidgets import (QAbstractItemView, QButtonGroup, QCheckBox, QColorDialog, QComboBox, QDoubleSpinBox,
-                               QFormLayout, QGridLayout, QHBoxLayout, QHeaderView, QLabel, QMessageBox,
-                               QProgressBar, QPushButton, QRadioButton, QSlider, QTableWidget, QTableWidgetItem,
-                               QToolButton, QVBoxLayout, QWidget)
+                               QFormLayout, QFrame, QGridLayout, QHBoxLayout, QHeaderView, QLabel, QMessageBox,
+                               QProgressBar, QPushButton, QRadioButton, QScrollArea, QSlider, QTableWidget,
+                               QTableWidgetItem, QToolButton, QVBoxLayout, QWidget)
 
 from . import theme
 from .jobs import JobManager
-from .viewer_state import CLASS_NAMES, EDIT_LABELS, ViewerState
+from .viewer_state import CLASS_NAMES, EDIT_LABELS, PALETTES, ViewerState
 
 
 def section(text: str) -> QLabel:
@@ -140,15 +140,67 @@ class DisplayPanel(QWidget):
             self._rows[c] = (vis, col, op)
         grid.setColumnStretch(2, 1)
         lay.addLayout(grid)
+        pr = QFormLayout()
+        self.palette = QComboBox()
+        for name in PALETTES:
+            self.palette.addItem(name, name)
+        self.palette.setToolTip("Label colours. The colour-blind-safe preset uses blue / orange / white / black.")
+        self.palette.currentIndexChanged.connect(lambda i: self._set_palette(self.palette.itemData(i)))
+        pr.addRow("Palette", self.palette)
+        lay.addLayout(pr)
+        self.outline = QCheckBox("Outline only (judge edges)")
+        self.outline.setToolTip("Draw label boundaries instead of filled areas")
+        self.outline.toggled.connect(state.set_outline_mode)
+        lay.addWidget(self.outline)
+
+        lay.addWidget(section("Analysis ROI"))
+        self.show_roi = QCheckBox("Show ROI outline (yellow)")
+        self.show_roi.setChecked(True)
+        self.show_roi.setToolTip("Outline of the analysis volume (VOI) on every slice and as a wireframe in 3D (R)")
+        self.show_roi.toggled.connect(state.set_show_roi)
+        lay.addWidget(self.show_roi)
+        self.roi_info = muted("")
+        lay.addWidget(self.roi_info)
+
+        lay.addWidget(section("Measurement"))
+        mr = QHBoxLayout()
+        self.measure_btn = QPushButton("Distance (M)")
+        self.measure_btn.setCheckable(True)
+        self.measure_btn.setToolTip("Measure tool: drag in a slice view to measure a distance (M). Esc clears.")
+        self.measure_btn.clicked.connect(lambda on: state.set_tool("measure" if on else "navigate"))
+        self.clear_meas = QPushButton("Clear")
+        self.clear_meas.clicked.connect(state.clear_measurements)
+        mr.addWidget(self.measure_btn)
+        mr.addWidget(self.clear_meas)
+        mr.addStretch(1)
+        lay.addLayout(mr)
         lay.addStretch(1)
         state.scan_changed.connect(self._on_scan)
         state.window_changed.connect(self._on_window)
+        state.tool_changed.connect(lambda: self.measure_btn.setChecked(state.tool == "measure"))
+        state.overlay_changed.connect(lambda: self.show_roi.setChecked(state.show_roi) if self.show_roi.isChecked() != state.show_roi else None)
         self.setEnabled(False)
+
+    def _set_palette(self, name):
+        if name:
+            self.state.set_palette(name)
+            for c, (_vis, col, _op) in self._rows.items():
+                col.setIcon(swatch(self.state.overlay[c]["color"], 14))
 
     def _on_scan(self):
         st = self.state
         self.setEnabled(st.loaded)
         self.preset.clear()
+        if not st.loaded:          # clear stale values of a closed scan (UX-33)
+            for sb in (self.lo, self.hi):
+                sb.blockSignals(True)
+                sb.setValue(0)
+                sb.blockSignals(False)
+            self.seg_combo.clear()
+            self.roi_info.setText("")
+        else:
+            self.roi_info.setText("ROI of this segmentation version is drawn on every slice." if st.roi is not None
+                                  else "No ROI stored for this segmentation version.")
         if st.loaded:
             for name, (lo, hi) in st.presets().items():
                 self.preset.addItem(name, (lo, hi))
@@ -197,12 +249,29 @@ class SegmentationPanel(QWidget):
                  ("brush", "Brush", "Paint the active class (B)"),
                  ("erase", "Eraser", "Erase to background (E)"),
                  ("grow", "Region grow", "Grow from a seed within an intensity tolerance (G)"),
-                 ("fill", "Fill holes", "Fill enclosed holes of the active class on the slice (F)")]
+                 ("fill", "Fill holes", "Fill enclosed holes of the active class on the slice (H)")]
 
     def __init__(self, state: ViewerState, parent=None):
         super().__init__(parent)
         self.state = state
-        lay = QVBoxLayout(self)
+        outer = QVBoxLayout(self)
+        outer.setContentsMargins(0, 0, 0, 0)
+        outer.setSpacing(0)
+        self.badge = QLabel("")
+        self.badge.setWordWrap(True)
+        self.badge.hide()
+        outer.addWidget(self.badge)
+        self.body = QWidget()
+        sa = QScrollArea()
+        sa.setWidgetResizable(True)
+        sa.setFrameShape(QFrame.NoFrame)
+        sa.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        sa.setWidget(self.body)
+        outer.addWidget(sa, 1)
+        self.footer = QWidget()
+        self.footer.setObjectName("segFooter")
+        outer.addWidget(self.footer)
+        lay = QVBoxLayout(self.body)
         lay.setContentsMargins(10, 8, 10, 10)
         lay.setSpacing(6)
         lay.addWidget(section("Tool"))
@@ -277,6 +346,11 @@ class SegmentationPanel(QWidget):
             self.interp_btns.append(b)
         lay.addLayout(ib)
 
+        lay.addStretch(1)
+        # History and Save are pinned below the scroll area so they are always visible (UX-15)
+        lay = QVBoxLayout(self.footer)
+        lay.setContentsMargins(10, 6, 10, 10)
+        lay.setSpacing(6)
         lay.addWidget(section("History"))
         hb = QHBoxLayout()
         self.undo_btn = QPushButton("Undo")
@@ -292,7 +366,6 @@ class SegmentationPanel(QWidget):
         self.save_btn.setProperty("role", "primary")
         self.save_btn.clicked.connect(self.save_requested)
         lay.addWidget(self.save_btn)
-        lay.addStretch(1)
         state.history.indexChanged.connect(lambda *_: self._refresh())
         state.scan_changed.connect(self._on_scan)
         state.tool_changed.connect(self._on_tool)
@@ -301,7 +374,13 @@ class SegmentationPanel(QWidget):
 
     def _on_scan(self):
         st = self.state
-        self.setEnabled(st.can_edit)
+        self.body.setEnabled(st.can_edit)
+        self.footer.setEnabled(st.can_edit)
+        if st.read_only_reason:
+            set_banner(self.badge, "READ ONLY - " + st.read_only_reason, "warn")
+            self.badge.show()
+        else:
+            self.badge.hide()
         if st.loaded:
             self.radius.blockSignals(True)
             self.radius.setValue(st.brush_radius_um)
@@ -315,6 +394,13 @@ class SegmentationPanel(QWidget):
         b = self.tool_buttons.get(self.state.tool)
         if b and not b.isChecked():
             b.setChecked(True)
+        elif b is None:
+            self.tool_group.setExclusive(False)
+            for x in self.tool_buttons.values():
+                x.setChecked(False)
+            self.tool_group.setExclusive(True)
+        if (self.state.read_only_reason != "") != self.badge.isVisible():
+            self._on_scan()
 
     def _interpolate(self, axis):
         try:
@@ -330,6 +416,11 @@ class SegmentationPanel(QWidget):
         self.redo_btn.setEnabled(h.canRedo())
         self.undo_btn.setToolTip(h.undoText())
         self.redo_btn.setToolTip(h.redoText())
+        if st.read_only_reason and st.editor is not None:
+            self.summary.setText("Read only: editing is disabled for your role.")
+            self.save_btn.setEnabled(False)
+            self.save_btn.setToolTip(st.read_only_reason)
+            return
         if st.editor is None:
             self.summary.setText("Open a scan with a segmentation to edit labels.")
             self.save_btn.setEnabled(False)
@@ -511,8 +602,9 @@ class JobsPanel(QWidget):
         if host:
             host.bar.setValue(int(job.progress * 1000))
             host.setToolTip(f"{job.progress:.0%}")
-        msg = job.error or job.message
-        self.table.setItem(r, 4, ro_item(msg, tip=job.traceback or msg))
+        from .messages import friendly
+        msg = friendly(job.error) if job.error else job.message
+        self.table.setItem(r, 4, ro_item(msg, tip=(job.error + "\n\n" + job.traceback) if job.error else msg))
         if not job.active and self.table.cellWidget(r, 5) is not None:
             self.table.removeCellWidget(r, 5)
 
@@ -521,6 +613,17 @@ class JobsPanel(QWidget):
             if r == row:
                 j = self.jobs.jobs[jid]
                 if j.error:
-                    box = QMessageBox(QMessageBox.Warning, "Job failed", f"{j.title}\n\n{j.error}", parent=self)
-                    box.setDetailedText(j.traceback)
+                    from .messages import friendly
+                    box = QMessageBox(QMessageBox.Warning, "Job failed", f"{j.title}\n\n{friendly(j.error)}", parent=self)
+                    box.setDetailedText(f"{j.error}\n\n{j.traceback}")
                     box.exec()
+
+    def clear_finished(self):
+        """Forget finished jobs (on project close / user change, UX-33)."""
+        for jid in [j for j, _ in self._rows.items() if not self.jobs.jobs[j].active]:
+            del self._rows[jid]
+        self.table.setRowCount(0)
+        rows = dict(self._rows)
+        self._rows = {}
+        for jid in rows:
+            self._add(self.jobs.jobs[jid])

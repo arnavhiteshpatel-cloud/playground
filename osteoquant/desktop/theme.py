@@ -19,7 +19,7 @@ TOKENS = {
         "text": "#1d232a", "text_muted": "#5b6570", "text_disabled": "#9aa2ab",
         "accent": "#2c6a9a", "accent_hover": "#245a84", "accent_text": "#ffffff", "accent_soft": "#d7e5f1",
         "selection": "#cfe0ef", "selection_text": "#10202e",
-        "ok": "#2f7d4f", "warn": "#a86b12", "bad": "#b2392f", "info": "#2c6a9a",
+        "ok": "#2f7d4f", "warn": "#9a5f0c", "bad": "#b2392f", "info": "#2c6a9a", "on_bad": "#ffffff",
         "viewport_bg": "#0d0f12", "viewport_text": "#d8dde3", "viewport_muted": "#8b949e",
         "header_bg": "#e6e9ed",
     },
@@ -29,7 +29,7 @@ TOKENS = {
         "text": "#e2e6ea", "text_muted": "#9aa3ad", "text_disabled": "#5f6873",
         "accent": "#5a9bd0", "accent_hover": "#6dabdd", "accent_text": "#0f1a24", "accent_soft": "#2b3e50",
         "selection": "#2f4a63", "selection_text": "#f0f4f8",
-        "ok": "#5fb383", "warn": "#d9a345", "bad": "#e0685c", "info": "#5a9bd0",
+        "ok": "#5fb383", "warn": "#d9a345", "bad": "#ec7f73", "info": "#5a9bd0", "on_bad": "#1b1e22",
         "viewport_bg": "#0b0d10", "viewport_text": "#d8dde3", "viewport_muted": "#8b949e",
         "header_bg": "#2a2f35",
     },
@@ -57,6 +57,24 @@ def qcolor(name: str, theme: str | None = None) -> QColor:
 
 def status_color(status: str | None) -> QColor:
     return qcolor(STATUS_TOKEN.get(str(status or ""), "text_muted"))
+
+
+# Non-hue cue for each support status (UX-29: never rely on colour alone)
+STATUS_PREFIX = {"supported": "", "flagged": "\u26a0 ", "not supported": "\u2716 "}
+
+
+def _lum(hexcol: str) -> float:
+    c = QColor(hexcol)
+    out = []
+    for v in (c.redF(), c.greenF(), c.blueF()):
+        out.append(v / 12.92 if v <= 0.03928 else ((v + 0.055) / 1.055) ** 2.4)
+    return 0.2126 * out[0] + 0.7152 * out[1] + 0.0722 * out[2]
+
+
+def contrast_ratio(fg: str, bg: str) -> float:
+    """WCAG 2 contrast ratio of two colours."""
+    a, b = sorted((_lum(fg), _lum(bg)), reverse=True)
+    return (a + 0.05) / (b + 0.05)
 
 
 def indicator_images(t: dict, name: str) -> dict[str, str]:
@@ -136,7 +154,6 @@ QAbstractSpinBox::down-arrow {{ image: url({ic['down']}); width: 9px; height: 9p
 QAbstractSpinBox::up-button:hover, QAbstractSpinBox::down-button:hover {{ background: {t['selection']}; }}
 """
     return extra + f"""
-* {{ outline: 0; }}
 QWidget {{ color: {t['text']}; background: {t['bg']}; selection-background-color: {t['selection']};
           selection-color: {t['selection_text']}; }}
 QMainWindow::separator {{ background: {t['border']}; width: 1px; height: 1px; }}
@@ -206,6 +223,18 @@ QPushButton[role="primary"] {{ background: {t['accent']}; color: {t['accent_text
 QPushButton[role="primary"]:hover {{ background: {t['accent_hover']}; }}
 QPushButton[role="primary"]:disabled {{ background: {t['border']}; border-color: {t['border']}; color: {t['text_disabled']}; }}
 QPushButton[role="danger"] {{ color: {t['bad']}; }}
+QPushButton:focus {{ border: 2px solid {t['accent']}; padding: 4px 13px; }}
+QPushButton[role="primary"]:focus {{ border: 2px solid {t['text']}; }}
+QToolButton:focus {{ border: 2px solid {t['accent']}; }}
+QCheckBox:focus, QRadioButton:focus {{ background: {t['accent_soft']}; border-radius: 2px; }}
+QTreeView:focus, QTableView:focus, QListView:focus, QTreeWidget:focus, QTableWidget:focus, QListWidget:focus,
+QTextEdit:focus, QPlainTextEdit:focus {{ border: 1px solid {t['accent']}; }}
+QSlider:focus {{ background: {t['accent_soft']}; }}
+QTabBar::tab:focus {{ color: {t['text']}; text-decoration: underline; }}
+QLabel[role="chip-bad"] {{ background: {t['bad']}; color: {t['on_bad']}; font-weight: 700; padding: 3px 8px;
+                           border-radius: 3px; }}
+QLabel[role="chip-warn"] {{ background: {t['surface']}; color: {t['warn']}; border: 1px solid {t['warn']};
+                            font-weight: 600; padding: 2px 7px; border-radius: 3px; }}
 
 QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox, QDateEdit {{ background: {t['surface']}; border: 1px solid {t['border_strong']};
     border-radius: 3px; padding: 3px 6px; min-height: 18px; }}

@@ -14,16 +14,64 @@ from .editing import LabelEditor
 from .undo import EditHistory
 from .volume_source import VolumeSource
 
-TOOLS = ("navigate", "brush", "erase", "grow", "fill")
+TOOLS = ("navigate", "brush", "erase", "grow", "fill", "measure")
+EDIT_TOOLS = ("brush", "erase", "grow", "fill")
 EDIT_LABELS = (1, 2, 3, 255)
 CLASS_NAMES = {0: "Background", 1: "New bone", 2: "Residual graft", 3: "Host bone", 255: "Uncertain"}
 
+# Label palettes. "Okabe-Ito" is the package default (osteoquant.LABEL_COLORS). The colour-blind-safe
+# high-contrast preset uses blue / orange / white / black so that no pair depends on red-green hue
+# (host bone no longer turns grey under deuteranopia/protanopia, review UX-29).
+PALETTES = {
+    "Okabe-Ito (default)": {c: tuple(LABEL_COLORS[c][:3]) for c in EDIT_LABELS},
+    "Colour-blind safe, high contrast (blue / orange / white / black)": {
+        1: (230, 159, 0), 2: (0, 114, 178), 3: (245, 245, 245), 255: (0, 0, 0)},
+}
+ROI_COLOR = (240, 228, 66)          # Okabe-Ito yellow: ROI outline in slice views and 3D wireframe
+CHANGE_COLOR = (255, 0, 255)        # changed voxels when comparing with the parent version
+
 
 def window_presets(stats: dict) -> dict[str, tuple[float, float]]:
-    """Window presets for uncalibrated grey values are defined on the scan's own histogram."""
+    """Window presets for uncalibrated grey values, defined on the scan's own histogram.
+
+    Bone: median to maximum (mineralised tissue); Graft: upper part of the mineral range, for
+    graft particles that are denser than bone; Soft tissue: low intensities up to just above the
+    median. The same rules give the same window for every scan of a study."""
     p1, p50, p99, mn, mx = stats["p1"], stats["p50"], stats["p99"], stats["min"], stats["max"]
-    return {"Auto (1-99.5 %)": (p1, p99), "Full range": (mn, mx), "Mineralised (median-max)": (p50, mx),
-            "Soft tissue (1 % - median)": (p1, p50 + 0.25 * (p99 - p50))}
+    return {"Auto (1-99.5 %)": (p1, p99), "Bone": (p50, mx), "Graft (dense mineral)": (p50 + 0.4 * (p99 - p50), mx),
+            "Soft tissue": (p1, p50 + 0.25 * (p99 - p50)), "Full range": (mn, mx)}
+
+
+def outline_mask(lab2d: np.ndarray) -> np.ndarray:
+    """True where a pixel differs from one of its 4-neighbours (label boundaries)."""
+    e = np.zeros(lab2d.shape, bool)
+    d0 = lab2d[1:, :] != lab2d[:-1, :]
+    d1 = lab2d[:, 1:] != lab2d[:, :-1]
+    e[1:, :] |= d0
+    e[:-1, :] |= d0
+    e[:, 1:] |= d1
+    e[:, :-1] |= d1
+    return e
+
+
+def mask_edges(m: np.ndarray) -> np.ndarray:
+    """Voxel-edge segments of a 2D boolean mask's boundary, as (row0, col0, row1, col1) in continuous
+    voxel coordinates (voxel i spans [i-0.5, i+0.5]). Used to draw the ROI outline."""
+    m = np.pad(np.asarray(m, bool), 1)
+    out = []
+    v = np.argwhere(m[:, 1:] != m[:, :-1])          # boundary between col c and c+1 (padded coords)
+    if len(v):
+        r, c = v[:, 0] - 1, v[:, 1] - 1
+        out.append(np.stack([r - 0.5, c + 0.5, r + 0.5, c + 0.5], 1))
+    h = np.argwhere(m[1:, :] != m[:-1, :])
+    if len(h):
+        r, c = h[:, 0] - 1, h[:, 1] - 1
+        out.append(np.stack([r + 0.5, c - 0.5, r + 0.5, c + 0.5], 1))
+    return np.concatenate(out) if out else np.zeros((0, 4))
+
+
+def format_length(um: float) -> str:
+    return f"{um / 1000:.3f} mm" if um >= 1000 else f"{um:.1f} µm"
 
 
 class ViewerState(QObject):
@@ -57,34 +105,113 @@ class ViewerState(QObject):
         self.grow_3d = False
         self.grow_radius_vox = 48
         self.key_slices: dict[int, list[int]] = {0: [], 1: [], 2: []}
+        self.read_only_reason = ""          # non-empty: the signed-in role cannot edit (tools disabled)
+        self.roi: np.ndarray | None = None  # analysis ROI mask (bool) of the open segmentation version
+        self.show_roi = True
+        self.compare_mask: np.ndarray | None = None    # voxels changed vs the parent version
+        self.compare_info = ""
+        self.outline_mode = False
+        self.palette = next(iter(PALETTES))
+        self.measurements: list[dict] = []
+        self.view_preserved = False         # True while a reload of the same scan keeps cursor/window/zoom
         self._lut = None
         self._rebuild_lut()
 
     # ------------------------------------------------------------------ scan
     def load(self, source: VolumeSource, labels: np.ndarray | None = None, scan: dict | None = None,
-             segmentation: dict | None = None):
+             segmentation: dict | None = None, roi: np.ndarray | None = None, keep_view: bool = False):
+        same = bool(keep_view and self.source is not None and self.scan and scan
+                    and self.scan.get("id") == scan.get("id") and tuple(self.source.shape) == tuple(source.shape))
         self.source = source
         self.scan, self.segmentation = scan, segmentation
         self.editor = LabelEditor(labels, source.spacing) if labels is not None else None
+        self.roi = roi if (roi is not None and tuple(roi.shape) == tuple(source.shape)) else None
+        self.compare_mask = None
+        self.compare_info = ""
         self.history.clear()
         self.history.setClean()
         self.key_slices = {0: [], 1: [], 2: []}
-        self.cursor = [n // 2 for n in source.shape]
         st = source.stats()
-        self.window = (st["p1"], st["p99"])
+        if not same:
+            self.cursor = [n // 2 for n in source.shape]
+            self.window = (st["p1"], st["p99"])
+            self.measurements = []
         if self.brush_radius_um <= 0:
             self.brush_radius_um = 3 * min(source.spacing)
         self.grow_tolerance = max(1e-3, 0.08 * (st["p99"] - st["p1"]))
-        self.scan_changed.emit()
-        self.window_changed.emit(*self.window)
-        self.cursor_changed.emit(*self.cursor)
+        self.view_preserved = same
+        try:
+            self.scan_changed.emit()
+            self.window_changed.emit(*self.window)
+            self.cursor_changed.emit(*self.cursor)
+        finally:
+            self.view_preserved = False
 
     def unload(self):
         self.source = None
         self.editor = None
+        self.roi = None
+        self.compare_mask = None
+        self.measurements = []
         self.scan = self.segmentation = None
         self.history.clear()
         self.scan_changed.emit()
+
+    # ------------------------------------------------------------------ ROI / comparison / measurements
+    def set_show_roi(self, on: bool):
+        self.show_roi = bool(on)
+        self.overlay_changed.emit()
+
+    def roi_slice(self, axis, index) -> np.ndarray | None:
+        if self.roi is None:
+            return None
+        sl = [slice(None)] * 3
+        sl[axis] = int(np.clip(index, 0, self.shape[axis] - 1))
+        return self.roi[tuple(sl)]
+
+    def set_compare(self, parent_labels: np.ndarray | None, info: str = ""):
+        """Highlight voxels that differ from ``parent_labels`` (None switches the comparison off)."""
+        if parent_labels is None or self.editor is None or parent_labels.shape != self.editor.labels.shape:
+            self.compare_mask, self.compare_info = None, ""
+        else:
+            self.compare_mask = parent_labels != self.editor.labels
+            self.compare_info = info
+        self.overlay_changed.emit()
+
+    def compare_slice(self, axis, index) -> np.ndarray | None:
+        if self.compare_mask is None:
+            return None
+        sl = [slice(None)] * 3
+        sl[axis] = int(np.clip(index, 0, self.shape[axis] - 1))
+        return self.compare_mask[tuple(sl)]
+
+    def add_measurement(self, axis, index, p0, p1) -> dict:
+        a, b = LabelEditor.plane_axes(axis)
+        sp = self.spacing
+        length = float(np.hypot((p1[0] - p0[0]) * sp[a], (p1[1] - p0[1]) * sp[b]))
+        m = {"axis": int(axis), "index": int(index), "p0": tuple(map(float, p0)), "p1": tuple(map(float, p1)),
+             "length_um": length}
+        self.measurements.append(m)
+        self.message.emit(f"Distance {format_length(length)}")
+        self.overlay_changed.emit()
+        return m
+
+    def clear_measurements(self):
+        self.measurements = []
+        self.overlay_changed.emit()
+
+    def set_palette(self, name: str):
+        if name not in PALETTES:
+            raise ValueError(name)
+        self.palette = name
+        for c, rgb in PALETTES[name].items():
+            self.overlay[c]["color"] = tuple(rgb)
+        self._rebuild_lut()
+        self.overlay_changed.emit()
+
+    def set_outline_mode(self, on: bool):
+        self.outline_mode = bool(on)
+        self.overlay_changed.emit()
 
     @property
     def loaded(self) -> bool:
@@ -145,7 +272,12 @@ class ViewerState(QObject):
         self._lut = lut
 
     def overlay_rgba(self, lab2d: np.ndarray) -> np.ndarray:
-        return self._lut[lab2d]
+        rgba = self._lut[lab2d]
+        if self.outline_mode:
+            rgba = rgba.copy()
+            edge = outline_mask(lab2d)
+            rgba[..., 3] = np.where(edge & (lab2d != 0), 255, 0).astype(np.uint8) * (rgba[..., 3] > 0)
+        return rgba
 
     def readout(self, z, y, x) -> dict:
         if not self.source:
@@ -162,6 +294,9 @@ class ViewerState(QObject):
     def set_tool(self, tool: str):
         if tool not in TOOLS:
             raise ValueError(tool)
+        if tool in EDIT_TOOLS and self.read_only_reason:
+            self.message.emit(self.read_only_reason)
+            tool = "navigate"
         self.tool = tool
         self.tool_changed.emit()
 
@@ -180,7 +315,13 @@ class ViewerState(QObject):
 
     @property
     def can_edit(self) -> bool:
-        return self.editor is not None
+        return self.editor is not None and not self.read_only_reason
+
+    def set_read_only(self, reason: str):
+        self.read_only_reason = reason or ""
+        if self.read_only_reason and self.tool in EDIT_TOOLS:
+            self.tool = "navigate"
+        self.tool_changed.emit()
 
     def _paint_params(self, erase: bool):
         if erase:

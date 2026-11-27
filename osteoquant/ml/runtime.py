@@ -53,16 +53,17 @@ class OnnxSegmenter:
         suffix = ".int8.onnx" if quantized else ".onnx"
         path = MODEL_DIR / f"{name}{suffix}"
         R = _registry()
+        data = path.read_bytes()                  # verify and load the SAME bytes (no re-open by path; QA-023)
         if verify:
             key = "onnx_int8_sha256" if quantized else "onnx_sha256"
             want = R.get(name, {}).get(key)
-            got = hashlib.sha256(path.read_bytes()).hexdigest()
+            got = hashlib.sha256(data).hexdigest()
             if not want or want != got:
                 raise RuntimeError(f"ONNX model {path.name} hash does not match the registry")
         so = ort.SessionOptions()
         so.intra_op_num_threads = threads
         so.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
-        self.sess = ort.InferenceSession(str(path), so, providers=["CPUExecutionProvider"])
+        self.sess = ort.InferenceSession(data, so, providers=["CPUExecutionProvider"])
         self.reg = dict(R.get(name, {}))          # registry entry used for this session (identity, provenance)
         self.patch = tuple(R.get(name, {}).get("onnx_patch", (48, 48, 48)))
         self.cfg = R.get(name, {}).get("cfg", {})

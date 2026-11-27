@@ -12,9 +12,9 @@ Related files:
 
 | | Baseline | Final |
 |---|---|---|
-| Tests (non-desktop) | 61 | __TESTS__ (of which __OWNED__ new QA tests, plus 30 added by other workstreams) |
-| Suite runtime (4 CPU, shared host) | ~25 s | __RUNTIME__ (one test marked `slow`) |
-| Line+branch coverage, whole package excl. desktop | 62 % (4 752 statements) | __TOTAL__ (__STMTS__ statements; the package grew by ~1 300 statements during the campaign) |
+| Tests (non-desktop) | 61 | 414 (469 including `tests/desktop`) (of which 318 new QA tests, plus 35 added by other workstreams during the campaign) |
+| Suite runtime (4 CPU, shared host) | ~25 s | 2 min 28 s for the whole suite including desktop, single process, on a host at load ≈ 12 (one test marked `slow`) |
+| Line+branch coverage, whole package excl. desktop | 62 % (4 752 statements) | **91 %** (6 404 statements; the package grew by ~1 650 statements during the campaign) |
 | Defects found | — | 25 (21 fixed with regression tests, 4 assigned to lead) + 6 documented ambiguities |
 | Security findings (Gen-2) | — | 20 (1 critical-conditional, 4 medium, 13 low, 2 info); all critical/medium fixed |
 
@@ -24,13 +24,51 @@ Critical scientific and I/O modules (target ≥ 95 %):
 
 | Module | Baseline | Final |
 |---|---|---|
-__CRITICAL_TABLE__
+| `morphometry/core.py` | 87% | 98% |
+| `morphometry/analytic.py` | 72% | 100% |
+| `stats/core.py` | 56% | 99% |
+| `segment/metrics.py` | 73% | 100% |
+| `uncertainty/core.py` | 23% | 91% | (100 % in isolation, see notes)
+| `io/readers.py` | 55% | 99% |
+| `io/writers.py` | 82% | 100% |
+| `io/safe_archive.py` | 36% | 96% |
+| `audit/log.py` | 85% | 99% |
 
 Other modules:
 
 | Module | Baseline | Final |
 |---|---|---|
-__OTHER_TABLE__
+| `advisor/characterize.py` | new | 74% |
+| `advisor/integration.py` | new | 84% |
+| `advisor/separability.py` | new | 93% |
+| `api/app.py` | 80% | 97% |
+| `api/bundle.py` | 87% | 90% |
+| `cli.py` | 0% | 90% |
+| `histology/core.py` | 0% | 84% |
+| `io/transforms.py` | 42% | 100% |
+| `licensing/core.py` | new | 87% |
+| `licensing/keys.py` | new | 100% |
+| `longitudinal/core.py` | 0% | 84% |
+| `ml/core.py` | new | 100% |
+| `ml/runtime.py` | new | 72% |
+| `ml/synth_dr.py` | new | 86% |
+| `ml/train.py` | 65% | 93% |
+| `ml/unet.py` | 83% | 77% |
+| `ml/validation_records.py` | new | 93% |
+| `phantom/ctsim.py` | 0% | 96% |
+| `phantom/generator.py` | 76% | 78% |
+| `phantom/imaging.py` | 52% | 73% |
+| `phantom/materials.py` | 69% | 84% |
+| `phantom/structures.py` | 84% | 87% |
+| `pipeline.py` | 66% | 84% |
+| `qc/engine.py` | 94% | 99% |
+| `report/defectfill.py` | 77% | 91% |
+| `report/figures.py` | 54% | 94% |
+| `roi/engine.py` | 54% | 96% |
+| `segment/classical.py` | 24% | 93% |
+| `study/db.py` | 79% | 96% |
+| `study/jobs.py` | 81% | 91% |
+| `volume.py` | 97% | 97% |
 
 **Notes on the coverage numbers:**
 - The 3 uncovered lines left in `io/safe_archive.py` are defensive checks that cannot be reached
@@ -87,6 +125,9 @@ The suite runs `--ignore=tests/desktop` in the main CI matrix. Hypothesis profil
 `mutmut` copies and instruments the whole tree for each run, which is impractical next to concurrent
 workstreams. A lightweight AST mutation runner (`tests/tools/mutate.py`) was used instead.
 
+The runner defaults to 1 worker and supports `--sample N --seed S`. At the lead's request, the final stats
+run used a 120-mutant sample on 1 niced worker, so the shared host's experiment queue was not starved.
+
 **How it works:**
 - It copies the package to a scratch directory and never touches the working tree.
 - Operators: arithmetic, comparison, boolean, unary, numeric constant and True/False swaps.
@@ -94,9 +135,11 @@ workstreams. A lightweight AST mutation runner (`tests/tools/mutate.py`) was use
   pitfall in the first version of the runner.
 - Nodes are identified by their full source span, so nested expressions are distinct.
 
-| Module | Mutants | Killed | Score (first run) | Score (after new tests) | Remaining survivors |
+| Module | Mutants run | Killed (final) | Score (first run) | Score (after new tests) | Remaining survivors |
 |---|---|---|---|---|---|
-__MUTATION_TABLE__
+| `segment/metrics.py` | 92 (all) | 87 | 0.75 (first valid run, 88 mutants) | **0.946** | 5: two guard-truthiness and one and/or equivalent; 2 killed afterwards by `test_overlap_closed_forms_for_count_patterns` (not re-run) |
+| `morphometry/core.py` | 162 (all) | 132 | 0.694 | **0.815** | 30, reviewed: padding/ridge tolerances, bounding-box margins, connectivity-structure constants that scipy clamps, `>`/`>=` on non-empty slices — implementation tolerances not observable on analytic phantoms |
+| `stats/core.py` | 120 sampled of 526 (seed 1, 1 worker) | 113 | 0.833 | **0.942** | 7, all equivalent (BH running-min initial value, `n>1` vs `n>=1` where ddof=1 already yields NaN, Koo–Li band boundary at exact equality, curve-fit start values) |
 
 Equivalent or immaterial survivors were reviewed and not chased:
 - the guard in `if (2*tp+fp+fn)` (truthiness unchanged);

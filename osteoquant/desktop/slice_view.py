@@ -7,20 +7,21 @@ neighbour scaling and physical aspect ratio. Interaction:
   right drag       window (horizontal) / level (vertical)
   middle drag      pan  (also Shift + left drag)
   wheel            change slice; Ctrl + wheel zooms about the pointer
-  Up/Down, PgUp/PgDn  change slice;  F  fit to window
+  measure tool     left drag draws a distance line (length in µm/mm); Esc clears the lines
+  Up/Down, PgUp/PgDn, Home/End  change slice;  F  fit to window
 """
 from __future__ import annotations
 
 import math
 
 import numpy as np
-from PySide6.QtCore import QPointF, QRectF, Qt, Signal
+from PySide6.QtCore import QLineF, QPointF, QRectF, Qt, Signal
 from PySide6.QtGui import QColor, QFont, QImage, QPainter, QPen
 from PySide6.QtWidgets import QSizePolicy, QWidget
 
 from . import theme
 from .editing import LabelEditor
-from .viewer_state import ViewerState
+from .viewer_state import CHANGE_COLOR, ROI_COLOR, ViewerState, format_length, mask_edges
 from .volume_source import AXIS_NAMES
 
 AXIS_COLORS = {0: QColor(214, 94, 84), 1: QColor(98, 170, 110), 2: QColor(92, 145, 210)}
@@ -52,8 +53,9 @@ class SliceView(QWidget):
         self.offset = QPointF(0, 0)
         self._fitted = False
         self._user_view = False
-        self._img = self._ovl = None
-        self._img_buf = self._ovl_buf = None
+        self._img = self._ovl = self._cmp = None
+        self._img_buf = self._ovl_buf = self._cmp_buf = None
+        self._roi_edges = None
         self._drag = None
         self._stroke: list[tuple[float, float]] = []
         self._hover: tuple[float, float] | None = None
@@ -116,8 +118,9 @@ class SliceView(QWidget):
 
     # ------------------------------------------------------------------ data -> images
     def _on_scan(self):
-        self._fitted = False
-        self._user_view = False
+        if not self.state.view_preserved:      # reloading the same scan (e.g. after a save) keeps zoom/pan
+            self._fitted = False
+            self._user_view = False
         self._index = -1
         self._refresh_image()
 
@@ -156,6 +159,17 @@ class SliceView(QWidget):
             self._ovl_buf = rgba
             h, w = lab.shape
             self._ovl = QImage(rgba.data, w, h, 4 * w, QImage.Format_RGBA8888)
+        roi = st.roi_slice(self.axis, self.index) if st.loaded else None
+        self._roi_edges = mask_edges(roi) if roi is not None and roi.any() else None
+        cmp = st.compare_slice(self.axis, self.index) if st.loaded else None
+        if cmp is None or not cmp.any():
+            self._cmp = None
+        else:
+            buf = np.zeros(cmp.shape + (4,), np.uint8)
+            buf[cmp] = (*CHANGE_COLOR, 230)
+            self._cmp_buf = np.ascontiguousarray(buf)
+            h, w = cmp.shape
+            self._cmp = QImage(self._cmp_buf.data, w, h, 4 * w, QImage.Format_RGBA8888)
         self.update()
 
     # ------------------------------------------------------------------ painting
@@ -186,12 +200,17 @@ class SliceView(QWidget):
         p.drawImage(r, self._img)
         if self._ovl is not None and st.show_overlay:
             p.drawImage(r, self._ovl)
+        if self._cmp is not None:
+            p.drawImage(r, self._cmp)
+        self._draw_roi(p)
         p.setRenderHint(QPainter.Antialiasing, True)
         self._draw_crosshair(p)
+        self._draw_measurements(p)
         self._draw_stroke(p)
         self._draw_brush_cursor(p)
         p.setRenderHint(QPainter.Antialiasing, False)
         self._draw_text(p)
+        self._draw_legend(p)
         self._draw_scale_bar(p)
         self._frame(p, col)
         p.end()
@@ -199,6 +218,78 @@ class SliceView(QWidget):
     def _frame(self, p, col):
         p.setPen(QPen(col, 2))
         p.drawLine(0, 1, self.width(), 1)
+        if self.hasFocus():          # visible keyboard focus (accessibility)
+            p.setPen(QPen(theme.qcolor("accent", "dark"), 2))
+            p.setBrush(Qt.NoBrush)
+            p.drawRect(QRectF(1, 1, self.width() - 2, self.height() - 2))
+
+    def _draw_roi(self, p):
+        st = self.state
+        if self._roi_edges is None or not st.show_roi or not len(self._roi_edges):
+            return
+        sp = st.spacing
+        sy, sx = sp[self.a] * self.scale, sp[self.b] * self.scale
+        ox, oy = self.offset.x(), self.offset.y()
+        e = self._roi_edges
+        lines = [QLineF(ox + (c0 + 0.5) * sx, oy + (r0 + 0.5) * sy, ox + (c1 + 0.5) * sx, oy + (r1 + 0.5) * sy)
+                 for r0, c0, r1, c1 in e.tolist()]
+        p.setPen(QPen(QColor(0, 0, 0, 200), 3.5))
+        p.drawLines(lines)
+        p.setPen(QPen(QColor(*ROI_COLOR), 1.8))
+        p.drawLines(lines)
+
+    def _draw_measurements(self, p):
+        st = self.state
+        items = [m for m in st.measurements if m["axis"] == self.axis and m["index"] == self.index]
+        if self._drag and self._drag[0] == "measure" and self._drag[2] is not None:
+            p0, p1 = self._drag[1], self._drag[2]
+            items = items + [{"p0": p0, "p1": p1, "length_um": self._length(p0, p1)}]
+        if not items:
+            return
+        f = QFont(self.font())
+        f.setPointSizeF(8.5)
+        p.setFont(f)
+        for m in items:
+            a, b = self.to_screen(*m["p0"]), self.to_screen(*m["p1"])
+            p.setPen(QPen(QColor(0, 0, 0, 200), 3))
+            p.drawLine(a, b)
+            p.setPen(QPen(QColor(255, 255, 255), 1.5))
+            p.drawLine(a, b)
+            for q in (a, b):
+                p.drawEllipse(q, 2.5, 2.5)
+            txt = format_length(m["length_um"])
+            mid = (a + b) / 2
+            rect = QRectF(mid.x() + 6, mid.y() - 18, 9 + 7 * len(txt), 16)
+            shade = QColor(0, 0, 0, 170)
+            p.fillRect(rect, shade)
+            p.drawText(rect, Qt.AlignCenter, txt)
+
+    def _length(self, p0, p1) -> float:
+        sp = self.state.spacing
+        return float(math.hypot((p1[0] - p0[0]) * sp[self.a], (p1[1] - p0[1]) * sp[self.b]))
+
+    def _draw_legend(self, p):
+        st = self.state
+        items = []
+        if self._roi_edges is not None and st.show_roi:
+            items.append((QColor(*ROI_COLOR), "ROI (analysis volume)"))
+        if self._cmp is not None:
+            items.append((QColor(*CHANGE_COLOR), st.compare_info or "changed vs parent"))
+        if not items:
+            return
+        f = QFont(self.font())
+        f.setPointSizeF(8.0)
+        p.setFont(f)
+        y = self.height() - 44 - 16 * (len(items) - 1)
+        shade = QColor(theme.tok("viewport_bg"))
+        shade.setAlpha(170)
+        for col, txt in items:
+            p.fillRect(QRectF(4, y - 1, 30 + 6.5 * len(txt), 15), shade)
+            p.setPen(QPen(col, 2))
+            p.drawLine(QPointF(9, y + 7), QPointF(24, y + 7))
+            p.setPen(theme.qcolor("viewport_text"))
+            p.drawText(QRectF(28, y - 1, 6.5 * len(txt) + 8, 15), Qt.AlignLeft | Qt.AlignVCenter, txt)
+            y += 16
 
     def _draw_crosshair(self, p):
         st = self.state
@@ -319,6 +410,9 @@ class SliceView(QWidget):
                     st.region_grow(*v, axis=self.axis)
             elif tool == "fill":
                 st.fill_holes(self.axis, self.index)
+            elif st.tool == "measure":
+                p0 = self.to_plane(e.position())
+                self._drag = ("measure", p0, None)
             else:
                 self._drag = ("nav", None, None)
                 self._set_crosshair(e.position())
@@ -345,6 +439,8 @@ class SliceView(QWidget):
                 st.set_window(lvl - w / 2, lvl + w / 2)
             elif kind == "paint":
                 self._stroke.append(self._hover)
+            elif kind == "measure":
+                self._drag = ("measure", p0, self.to_plane(pos))
             elif kind == "nav":
                 self._set_crosshair(pos)
         self.update()
@@ -354,8 +450,20 @@ class SliceView(QWidget):
             pts = self._stroke
             self._stroke = []
             self.state.paint_stroke(self.axis, self.index, pts, erase=self.state.tool == "erase")
+        elif self._drag and self._drag[0] == "measure" and self._drag[2] is not None:
+            p0, p1 = self._drag[1], self._drag[2]
+            if self._length(p0, p1) > 0:
+                self.state.add_measurement(self.axis, self.index, p0, p1)
         self._drag = None
         self.update()
+
+    def focusInEvent(self, e):
+        self.update()
+        super().focusInEvent(e)
+
+    def focusOutEvent(self, e):
+        self.update()
+        super().focusOutEvent(e)
 
     def mouseDoubleClickEvent(self, e):
         if e.button() == Qt.LeftButton and self.state.tool == "navigate":
@@ -392,6 +500,12 @@ class SliceView(QWidget):
             st.set_index(self.axis, self.index + 10)
         elif k == Qt.Key_PageDown:
             st.set_index(self.axis, self.index - 10)
+        elif k == Qt.Key_Home:
+            st.set_index(self.axis, 0)
+        elif k == Qt.Key_End:
+            st.set_index(self.axis, st.shape[self.axis] - 1)
+        elif k == Qt.Key_Escape and st.measurements:
+            st.clear_measurements()
         elif k == Qt.Key_F:
             self._user_view = False
             self.fit()

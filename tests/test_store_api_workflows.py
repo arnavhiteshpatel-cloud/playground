@@ -63,7 +63,8 @@ def test_reviews_on_reports_and_unknown_objects(store):
         store.review(U["revA"], "segmentation", 999, "approved", "x")
     with pytest.raises(ValueError):
         store.review(U["revA"], "scan", 1, "maybe", "x")
-    store.review(U["revA"], "roi", 1, "approved", "roi looks right")
+    with pytest.raises(KeyError):                       # ROI reviews are bound to an existing ROI
+        store.review(U["revA"], "roi", 999, "approved", "roi looks right")
     revs = store.reviews(U["revA"], "report", rid)
     assert len(revs) == 1 and revs[0]["object_sha256"] == "ab" * 32
 

@@ -426,6 +426,8 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
         if not any(r.get("role") == role for r in revs):
             rows.append([role, "", "", "", ""])
     flow.append(table(rows, [38 * mm, 35 * mm, 60 * mm, 20 * mm, 27 * mm]))
+    if bundle.get("signature_note"):     # signed copy: rows filled from the recorded approvals
+        flow.append(Paragraph(esc(str(bundle["signature_note"])), SM))
     flow.append(Paragraph("Blank fields indicate the report has not been signed. Electronic signatures in OsteoQuant are "
                           "recorded in the hash-chained audit trail; this prototype has not been validated as a "
                           "Part 11 electronic-signature system.", SM))

@@ -6,7 +6,7 @@ requires-python = ">=3.10"
 dependencies = [
   "numpy>=1.26", "scipy>=1.11", "scikit-image>=0.22", "scikit-learn>=1.4", "pandas>=2.0",
   "SimpleITK>=2.3", "tifffile>=2024.1", "pydicom>=2.4", "nibabel>=5.2", "pynrrd>=1.0",
-  "zarr>=3.0", "olefile>=0.47", "imagecodecs", "matplotlib>=3.8", "statsmodels>=0.14",
+  "zarr>=3.0", "numcodecs>=0.17.1", "olefile>=0.47", "imagecodecs", "matplotlib>=3.8", "statsmodels>=0.14",
   "fastapi>=0.110", "uvicorn>=0.29", "python-multipart", "reportlab>=4.0", "openpyxl>=3.1",
   "pyyaml", "psutil", "onnxruntime>=1.17",
 ]
@@ -14,7 +14,7 @@ dependencies = [
 dev = ["pytest>=8", "httpx", "hypothesis", "pytest-cov"]
 # PyTorch is needed only to TRAIN models or run the PyTorch inference path ("unet:"); analysis with exported
 # models uses ONNX Runtime ("onnx:"), so the desktop bundle can omit PyTorch.
-train = ["torch>=2.2", "onnx>=1.15"]
+train = ["torch>=2.6", "onnx>=1.15"]
 desktop = ["PySide6>=6.7", "vtk>=9.3", "cryptography>=42", "pytest-qt>=4.4"]
 [project.scripts]
 osteoquant = "osteoquant.cli:main"

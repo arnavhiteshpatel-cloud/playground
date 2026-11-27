@@ -4,8 +4,8 @@ from __future__ import annotations
 from pathlib import Path
 
 from PySide6.QtCore import QPointF, Qt, Signal
-from PySide6.QtWidgets import (QComboBox, QFileDialog, QHBoxLayout, QLabel, QListWidget, QListWidgetItem,
-                               QMessageBox, QPushButton, QSplitter, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QCheckBox, QComboBox, QFileDialog, QHBoxLayout, QLabel, QListWidget, QListWidgetItem,
+                               QMessageBox, QPushButton, QSplitter, QStackedWidget, QVBoxLayout, QWidget)
 
 from .panels import muted, section
 
@@ -115,7 +115,7 @@ class ReportsView(QWidget):
         self.study = QComboBox()
         self.study.currentIndexChanged.connect(self.refresh)
         ll.addWidget(self.study)
-        self.gen = QPushButton("Generate DefectFill report")
+        self.gen = QPushButton("Generate defect-fill report")
         self.gen.setProperty("role", "primary")
         self.gen.clicked.connect(lambda: self.study.currentData() is not None
                                  and self.generate_requested.emit(self.study.currentData()))
@@ -128,19 +128,42 @@ class ReportsView(QWidget):
         ll.addWidget(self.list, 1)
         self.info = muted("")
         ll.addWidget(self.info)
-        row = QHBoxLayout()
+        self.show_signed = QCheckBox("Preview the signed copy (signature rows filled)")
+        self.show_signed.toggled.connect(lambda *_: self._selected(self.list.currentItem(), None))
+        ll.addWidget(self.show_signed)
         self.export = QPushButton("Export...")
         self.export.clicked.connect(self._export)
-        self.approve = QPushButton("Approve...")
-        self.approve.clicked.connect(lambda: self._sign("approved"))
-        row.addWidget(self.export)
-        row.addWidget(self.approve)
+        ll.addWidget(self.export)
+        ll.addWidget(section("Sign-off"))
+        row = QHBoxLayout()
+        self.sign_btns = {}
+        for dec, text in (("approved", "Approve..."), ("needs_changes", "Request changes..."), ("rejected", "Reject...")):
+            b = QPushButton(text)
+            if dec == "approved":
+                b.setProperty("role", "primary")
+            b.clicked.connect(lambda _=False, d=dec: self._sign(d))
+            row.addWidget(b)
+            self.sign_btns[dec] = b
+        self.approve = self.sign_btns["approved"]
         ll.addLayout(row)
+        self.sign_note = muted("")
+        ll.addWidget(self.sign_note)
         split.addWidget(left)
         self.preview = PdfPreview()
-        split.addWidget(self.preview)
+        self.hidden_note = muted("")
+        self.hidden_note.setAlignment(Qt.AlignCenter)
+        self.right = QStackedWidget()
+        self.right.addWidget(self.preview)
+        self.right.addWidget(self.hidden_note)
+        split.addWidget(self.right)
         split.setSizes([280, 900])
         lay.addWidget(split)
+
+    blinded = False
+
+    def set_blinded(self, on: bool):
+        self.blinded = bool(on)
+        self.refresh((self.current_report() or {}).get("id"))
 
     def set_project(self, project, study_id=None, watermark=None):
         self.project = project
@@ -165,8 +188,9 @@ class ReportsView(QWidget):
             return
         for r in list_reports(self.project, sid):
             revs = self.project.store.reviews(self.project.user, "report", r["id"])
-            sig = f"  ·  {revs[-1]['decision']} by {revs[-1]['username']}" if revs else ""
-            it = QListWidgetItem(f"Report {r['id']}  ·  {r['created']}  ·  {r['status']}{sig}")
+            sig = f"  ·  {revs[-1]['decision'].replace('_', ' ')} by {revs[-1]['username']}" if revs else ""
+            tag = "  ·  blinded" if r.get("blinded") else ""
+            it = QListWidgetItem(f"Report {r['id']}  ·  {r['created']}  ·  {r['status']}{tag}{sig}")
             it.setData(Qt.UserRole, r)
             self.list.addItem(it)
             if select_id == r["id"]:
@@ -175,17 +199,62 @@ class ReportsView(QWidget):
             self.list.setCurrentRow(0)
         if not self.list.count():
             self.preview.load(None)
+            self.right.setCurrentWidget(self.preview)
             self.info.setText("No report yet. Analyse the study's scans, then generate a report.")
-        can_review = bool(self.project and self.project.can("review"))
-        self.approve.setEnabled(can_review and self.list.count() > 0)
-        self.approve.setToolTip("" if can_review else "Requires the reviewer or administrator role")
+        from .services import study_has_analysis
+        has = study_has_analysis(self.project, sid)
+        self.gen.setEnabled(has)
+        self.gen.setToolTip("" if has else "No analysed scans in this study yet: run the analysis first")
+        self.update_sign_buttons()
+
+    def update_sign_buttons(self):
+        """Enable sign-off only where it can succeed; the tooltip says why not (UX-07/08/10)."""
+        from .services import unreviewed_segmentations
+        p = self.project
+        r = self.current_report()
+        why = p.why_not("review") if p else "No project"
+        for b in self.sign_btns.values():
+            b.setEnabled(not why and r is not None and r.get("status") == "ready")
+            b.setToolTip(why or ("" if r else "Select a report"))
+        note = why or "Signing requires your password. The signed copy fills the PDF signature rows."
+        if not why and r is not None:
+            if r.get("created_by") == p.user["id"]:
+                self.approve.setEnabled(False)
+                self.approve.setToolTip("You generated this report. Separation of duties: another reviewer or the "
+                                        "study director must approve it.")
+                note = self.approve.toolTip()
+            else:
+                pend = unreviewed_segmentations(p, r_study(p, r["id"]))
+                if pend:
+                    self.approve.setEnabled(False)
+                    self.approve.setToolTip(f"{len(pend)} reported segmentation(s) are not approved yet. Approve them "
+                                            "in the Review panel first, or request changes.")
+                    note = self.approve.toolTip()
+        self.sign_note.setText(note)
 
     def _selected(self, cur, _prev):
         if cur is None:
             return
         r = cur.data(Qt.UserRole)
-        n = self.preview.load(r["pdf_path"] if r["status"] == "ready" else None)
-        self.info.setText(f"SHA-256 {r['sha256'][:16]}...  ·  {n} pages" if r.get("sha256") else r["status"])
+        if self.blinded and not r.get("blinded"):
+            # an unblinded report shows file names, animal IDs and groups: hidden in blinded review mode (UX-09)
+            self.preview.load(None)
+            self.hidden_note.setText("Blinded review mode: this report was generated without blinding and shows "
+                                     "identities, so its preview is hidden.\n\nGenerate a report while blinded review "
+                                     "mode is on to get a blinded report (random codes instead of animal IDs and "
+                                     "file names).")
+            self.right.setCurrentWidget(self.hidden_note)
+            self.info.setText(f"Report {r['id']} (not blinded): preview hidden")
+            self.update_sign_buttons()
+            return
+        self.right.setCurrentWidget(self.preview)
+        signed = r.get("signed_pdf") if self.show_signed.isChecked() else None
+        path = signed if signed and Path(signed).exists() else (r["pdf_path"] if r["status"] == "ready" else None)
+        n = self.preview.load(path)
+        kind = "signed copy" if path and path == signed else "original"
+        self.info.setText(f"SHA-256 {r['sha256'][:16]}...  ·  {n} pages  ·  {kind}"
+                          + ("  ·  blinded" if r.get("blinded") else "") if r.get("sha256") else r["status"])
+        self.update_sign_buttons()
 
     def current_report(self):
         it = self.list.currentItem()
@@ -199,13 +268,23 @@ class ReportsView(QWidget):
         if not d:
             return
         from .services import export_report
+        if self.blinded and not r.get("blinded"):
+            QMessageBox.information(self, "Export", "This report is not blinded. Turn off blinded review mode to "
+                                                    "export it.")
+            return
         try:
             files = export_report(self.project, r["id"], d)
             QMessageBox.information(self, "Report exported", "\n".join(files))
-        except PermissionError as e:
-            QMessageBox.warning(self, "Export not permitted", str(e))
+        except (PermissionError, OSError) as e:
+            from .messages import show_error
+            show_error(self, "Export not permitted", e)
 
     def _sign(self, decision):
         r = self.current_report()
         if r:
             self.sign_requested.emit(r["id"], decision)
+
+
+def r_study(project, report_id):
+    r = project.store.q1("SELECT study_id FROM reports WHERE id=?", (report_id,))
+    return r["study_id"] if r else None

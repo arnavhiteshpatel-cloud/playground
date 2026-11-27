@@ -206,12 +206,11 @@ def save_model(model, cfg, name, train_cases, hist, seconds, parent: dict | None
 def update_registry(name: str, entry: dict | None = None, merge: dict | None = None) -> None:
     """Locked, atomic read-modify-write of models/registry.json (review ARC-03: concurrent writers lost
     entries). ``entry`` replaces the model's record; ``merge`` updates fields of an existing record."""
-    import fcntl
     import tempfile
     reg = MODEL_DIR / "registry.json"
     lock = MODEL_DIR / ".registry.lock"
-    with open(lock, "a") as lf:
-        fcntl.flock(lf, fcntl.LOCK_EX)
+    with open(lock, "a+") as lf:
+        _lock_file(lf)
         try:
             R = json.loads(reg.read_text()) if reg.exists() else {}
             if entry is not None:
@@ -225,7 +224,54 @@ def update_registry(name: str, entry: dict | None = None, merge: dict | None = N
                 os.fsync(f.fileno())
             os.replace(tmp, reg)
         finally:
-            fcntl.flock(lf, fcntl.LOCK_UN)
+            _unlock_file(lf)
+
+
+def _lock_file(f) -> None:
+    """Exclusive advisory lock, portable: fcntl (POSIX), msvcrt (Windows), else an atomic mkdir lock (QA-022)."""
+    try:
+        import fcntl
+        fcntl.flock(f, fcntl.LOCK_EX)
+        return
+    except ImportError:
+        pass
+    try:
+        import msvcrt
+        f.seek(0)
+        while True:
+            try:
+                msvcrt.locking(f.fileno(), msvcrt.LK_LOCK, 1)
+                return
+            except OSError:
+                time.sleep(0.05)
+    except ImportError:
+        d = Path(f.name + ".d")
+        t0 = time.time()
+        while True:
+            try:
+                d.mkdir()
+                return
+            except FileExistsError:
+                if time.time() - t0 > 60:            # stale lock from a crashed writer
+                    d.rmdir()
+                time.sleep(0.05)
+
+
+def _unlock_file(f) -> None:
+    try:
+        import fcntl
+        fcntl.flock(f, fcntl.LOCK_UN)
+        return
+    except ImportError:
+        pass
+    try:
+        import msvcrt
+        f.seek(0)
+        msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
+    except ImportError:
+        d = Path(f.name + ".d")
+        if d.exists():
+            d.rmdir()
 
 
 def _plain(o):

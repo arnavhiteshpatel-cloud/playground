@@ -789,9 +789,118 @@ def version_detail(project, segmentation_id: int) -> dict:
 
 
 # ============================================================================ reports
-def generate_report(project, study_id: int, watermark: str | None = None, ctx=None) -> dict:
+def _set_path(d: dict, path: str, value):
+    cur = d
+    parts = path.split(".")
+    for k in parts[:-1]:
+        nxt = cur.get(k)
+        if not isinstance(nxt, dict):
+            return
+        cur = nxt
+    if parts[-1] in cur:
+        cur[parts[-1]] = value
+
+
+def _enforce_support(project, bundle: dict, meas_rows: list[dict]):
+    """Apply the desktop support rule to the report bundle: an endpoint that is *not supported*
+    (desktop rule: uncertain fraction, missing thickness, no-graft, advisor) is reported without a
+    number, with its reason, exactly as in the Results table."""
+    from .support import ENDPOINTS, NOT_SUPPORTED
+    by_path = {path: (key, label) for key, label, _u, path, _s in ENDPOINTS}
+    for spec, m in zip(bundle["specimens"], meas_rows):
+        sup = measurement_support_for(project, m["metrics"], m["roi_id"])
+        sup_paths = {d.get("metric") for d in spec.get("suppressed_metrics") or []}
+        for path, (key, label) in by_path.items():
+            e = sup["endpoints"][key]
+            if e["status"] != NOT_SUPPORTED:
+                continue
+            _set_path(spec["metrics"], path, None)
+            if key == "mineralized_fraction":
+                _set_path(spec["metrics"], "class_volumes.mineral_volume_mm3", None)
+            if path not in sup_paths:
+                reason = "; ".join(e["reasons"]) or "not supported"
+                spec.setdefault("suppressed_metrics", []).append({"metric": path, "reason": reason})
+                spec.setdefault("measurement_support", {})[label] = {"status": "not_supported", "reason": reason,
+                                                                      "conditions": []}
+
+
+def _blind_bundle(project, bundle: dict, meas_rows: list[dict]):
+    """Replace identity (animal IDs, file names, group allocation, acquisition metadata, database
+    IDs) with the study's blinded codes. Figures are re-rendered with the blinded code as title."""
+    from .blinding import Masker
+    masker = Masker(project)
+    store, user = project.store, project.require_user()
+    bundle["study"]["blinded"] = True
+    bundle["title"] = bundle["title"] + " (blinded)"
+    for spec, m in zip(bundle["specimens"], meas_rows):
+        sc = store.scan(user, m["scan_id"])
+        scode = project.scan_code(sc["id"], sc["study_id"])
+        acode = project.animal_code(sc["specimen_id"], sc["study_id"]) if sc["specimen_id"] else scode
+        spec["specimen_id"] = acode
+        spec["animal_id"] = acode
+        spec["group"] = MASK_GROUP
+        spec["scan"] = {**spec.get("scan", {}), "source": scode, "acquisition": {}}
+        spec.pop("truth", None)
+        if spec.get("figure"):
+            try:
+                import zarr
+                from ..report.figures import specimen_panel
+                seg = store.q1("SELECT labels_key, version FROM segmentations WHERE id=?", (m["segmentation_id"],))
+                g = zarr.open_group(sc["store_path"], mode="r")
+                rk = roi_mask_key(g, seg)
+                roi = np.asarray(g[rk][:]).astype(bool) if rk else None
+                fig = Path(spec["figure"]).with_name(f"blinded_{uuid.uuid4().hex[:12]}.png")
+                specimen_panel(np.asarray(g["image"][:]), np.asarray(g[f"labels/{seg['labels_key']}"][:]), roi,
+                               sc["spacing_um"], str(fig), title=scode)
+                spec["figure"] = str(fig)
+            except Exception:  # noqa: BLE001 - never ship an unblinded figure
+                spec["figure"] = None
+    ex = []
+    for e in bundle.get("audit_excerpt") or []:
+        me = masker.event(e)
+        if me.get("object_type") in ("scan", "specimen", "group"):
+            me["object_id"] = me["object_label"]
+        ex.append(me)
+    bundle["audit_excerpt"] = ex
+
+
+MASK_GROUP = "(blinded)"
+
+
+def _report_signature_rows(project, report_id: int, bundle: dict) -> list[dict]:
+    """Signature rows of a report: the author (Analyst), segmentation approvals (Scientific reviewer)
+    and every recorded decision on the report itself, with the signer's chosen signature role."""
+    store, user = project.store, project.require_user()
+    rep = store.q1("SELECT created_by, created FROM reports WHERE id=?", (report_id,))
+    rows = []
+    if rep:
+        a = store.q1("SELECT username, full_name, role FROM users WHERE id=?", (rep["created_by"],)) or {}
+        rows.append({"role": "Analyst", "name": a.get("full_name") or a.get("username", ""),
+                     "meaning": "Prepared the analysis and generated this report (author)", "decision": "authored",
+                     "time": rep["created"]})
+    rows += [r for r in bundle.get("segmentation_reviewers", bundle.get("reviewers", [])) if r.get("role") != "Analyst"][:6]
+    for rv in store.reviews(user, "report", report_id):
+        sr = signature_role_of(project, rv["id"])
+        if sr is None:
+            ru = store.q1("SELECT role FROM users WHERE id=?", (rv["reviewer_id"],)) or {}
+            sr = "study_director" if ru.get("role") == "study_director" else "reviewer"
+        rows.append({"role": SIGNATURE_ROLES.get(sr, sr), "name": rv["full_name"] or rv["username"],
+                     "meaning": rv["meaning"], "decision": rv["decision"], "time": rv["created"]})
+    return rows
+
+
+def _bundle_path(project, report_id: int) -> Path:
+    u = project.require_user()
+    return project.store.data_dir / f"org{u['org_id']}" / "reports" / f"report{report_id}_bundle.json"
+
+
+def generate_report(project, study_id: int, watermark: str | None = None, ctx=None, blinded: bool = False) -> dict:
     """Build the DefectFill PDF + CSV for a study (as the web API's report job, plus an optional
-    watermark for evaluation/test licences)."""
+    watermark for evaluation/test licences).
+
+    Desktop rules applied to the bundle before rendering: not-supported endpoints carry no number
+    (with the reason), signature rows are filled from recorded approvals, and ``blinded`` reports
+    replace identity with the study's blinded codes."""
     from ..api.bundle import bundle_from_store
     from ..report import build_pdf
     ctx = ctx or NullContext()
@@ -801,11 +910,18 @@ def generate_report(project, study_id: int, watermark: str | None = None, ctx=No
     bundle = bundle_from_store(store, user, study_id, ctx)
     if not bundle["specimens"]:
         raise ValueError("This study has no analysed scans yet; run the analysis first")
+    meas_rows = store.latest_measurements(user, study_id)
+    _enforce_support(project, bundle, meas_rows)
+    if blinded:
+        _blind_bundle(project, bundle, meas_rows)
+    bundle["segmentation_reviewers"] = list(bundle.get("reviewers", []))
     out = store.data_dir / f"org{user['org_id']}" / "reports"
     out.mkdir(parents=True, exist_ok=True)
-    unblinded = int(bool(st["blinded"]) and store.can(user, "unblind"))
+    unblinded = int(bool(st["blinded"]) and store.can(user, "unblind") and not blinded)
     rid = store.exec("INSERT INTO reports(org_id,study_id,status,created_by,created,unblinded) VALUES (?,?,?,?,datetime('now'),?)",
                      (user["org_id"], study_id, "building", user["id"], unblinded))
+    bundle["reviewers"] = _report_signature_rows(project, rid, bundle)
+    bundle["_watermark"] = watermark
     pdf, csvp = out / f"report{rid}.pdf", out / f"report{rid}.csv"
     ctx.progress(0.85, "rendering PDF")
     try:
@@ -813,19 +929,59 @@ def generate_report(project, study_id: int, watermark: str | None = None, ctx=No
     except Exception:
         store.exec("UPDATE reports SET status='failed' WHERE id=?", (rid,))
         raise
+    bp = _bundle_path(project, rid)
+    bp.write_text(json.dumps(bundle, default=str), encoding="utf-8")
     store.exec("UPDATE reports SET pdf_path=?, csv_path=?, sha256=?, status='ready' WHERE id=?",
                (str(pdf), str(csvp), r["pdf_sha256"], rid))
+    store.exec("INSERT OR REPLACE INTO desktop_report_meta(report_id, blinded, bundle_path) VALUES (?,?,?)",
+               (rid, int(bool(blinded)), str(bp)))
     store.audit.record("report.generate", user["id"], user["org_id"], "report", rid,
-                       {"study": study_id, "sha256": r["pdf_sha256"], "watermark": watermark or ""})
+                       {"study": study_id, "sha256": r["pdf_sha256"], "watermark": watermark or "",
+                        "blinded": bool(blinded)})
     ctx.progress(1.0, "done")
-    return {"report_id": rid, "pdf": str(pdf), "csv": str(csvp), "sha256": r["pdf_sha256"]}
+    return {"report_id": rid, "pdf": str(pdf), "csv": str(csvp), "sha256": r["pdf_sha256"], "blinded": bool(blinded)}
+
+
+def report_meta(project, report_id: int) -> dict:
+    r = project.store.q1("SELECT * FROM desktop_report_meta WHERE report_id=?", (report_id,))
+    return r or {"report_id": report_id, "blinded": 0, "bundle_path": None, "signed_pdf": None, "signed_sha256": None}
+
+
+def render_signed_report(project, report_id: int) -> dict | None:
+    """Render the signed copy of a report: the same stored content with the signature rows filled
+    from the recorded approvals (name, signature role, time, meaning) and a note naming the
+    original PDF's SHA-256. The original PDF is never modified (its hash is what was signed)."""
+    from ..report import build_pdf
+    store, user = project.store, project.require_user()
+    rep = store.q1("SELECT * FROM reports WHERE id=?", (report_id,))
+    meta = report_meta(project, report_id)
+    if not rep or not meta.get("bundle_path") or not Path(meta["bundle_path"]).exists():
+        return None
+    bundle = json.loads(Path(meta["bundle_path"]).read_text(encoding="utf-8"))
+    bundle["reviewers"] = _report_signature_rows(project, report_id, bundle)
+    bundle["signature_note"] = (f"Signed copy of report {report_id}. Signatures apply to the original report PDF "
+                                f"(SHA-256 {rep['sha256']}); each is recorded with its meaning in the hash-chained "
+                                "audit trail.")
+    out = Path(rep["pdf_path"]).with_name(f"report{report_id}_signed.pdf")
+    r = build_pdf(bundle, out, None, watermark=bundle.get("_watermark"))
+    store.exec("UPDATE desktop_report_meta SET signed_pdf=?, signed_sha256=? WHERE report_id=?",
+               (str(out), r["pdf_sha256"], report_id))
+    store.audit.record("report.signed_copy", user["id"], user["org_id"], "report", report_id,
+                       {"sha256": r["pdf_sha256"], "original_sha256": rep["sha256"]})
+    return {"pdf": str(out), "sha256": r["pdf_sha256"]}
+
+
+def study_has_analysis(project, study_id) -> bool:
+    return bool(project.store.latest_measurements(project.require_user(), study_id))
 
 
 def list_reports(project, study_id) -> list[dict]:
     user = project.require_user()
     project.store.study(user, study_id)
-    return project.store.q("SELECT id, status, created, sha256, pdf_path, csv_path, unblinded FROM reports "
-                           "WHERE study_id=? AND org_id=? ORDER BY id DESC", (study_id, user["org_id"]))
+    return project.store.q("SELECT r.id, r.status, r.created, r.created_by, r.sha256, r.pdf_path, r.csv_path, r.unblinded, "
+                           "COALESCE(m.blinded, 0) AS blinded, m.signed_pdf FROM reports r "
+                           "LEFT JOIN desktop_report_meta m ON m.report_id=r.id "
+                           "WHERE r.study_id=? AND r.org_id=? ORDER BY r.id DESC", (study_id, user["org_id"]))
 
 
 def export_report(project, report_id: int, dest_dir, kinds=("pdf", "csv")) -> list[str]:
@@ -844,5 +1000,75 @@ def export_report(project, report_id: int, dest_dir, kinds=("pdf", "csv")) -> li
             d = Path(dest_dir) / f"defectfill_report_{report_id}.{k}"
             shutil.copyfile(src, d)
             out.append(str(d))
+    signed = report_meta(project, report_id).get("signed_pdf")
+    if "pdf" in kinds and signed and Path(signed).exists():
+        d = Path(dest_dir) / f"defectfill_report_{report_id}_signed.pdf"
+        shutil.copyfile(signed, d)
+        out.append(str(d))
     store.audit.record("report.export", user["id"], user["org_id"], "report", report_id, {"files": out})
+    return out
+
+
+# ============================================================================ audit export
+def export_audit(project, path, blinded: bool = False) -> dict:
+    """Export the audit trail (CSV or JSON by file extension) with the chain-verification result.
+
+    Requires the reviewer, study director or administrator role (as viewing the audit trail).
+    In blinded mode identifying details are masked. The export itself is an audit event."""
+    import csv
+    store, user = project.store, project.require_user()
+    if not (store.can(user, "review") or store.can(user, "manage_users")):
+        store.audit.record("authz.denied", user["id"], user["org_id"], details={"perm": "audit.export"})
+        raise PermissionError("Exporting the audit trail requires the reviewer, study director or administrator role")
+    ver = store.audit.verify_chain()
+    events = store.audit.events(org_id=None, limit=10_000_000)     # a project is one organisation: whole chain
+    events = sorted(events, key=lambda e: int(e["seq"]))
+    users = {str(u["id"]): u["username"] for u in store.q("SELECT id, username FROM users")}
+    if blinded:
+        from .blinding import Masker
+        mk = Masker(project)
+        events = [mk.event(e) for e in events]
+    path = Path(path)
+    from ..study.db import now
+    head = {"exported_by": user["username"], "exported_utc": now(), "blinded": bool(blinded),
+            "chain_verification": {"ok": bool(ver.get("ok")), "events_verified": ver.get("n"),
+                                   "head_hash": ver.get("head"), "first_bad_seq": ver.get("first_bad_seq"),
+                                   "reason": ver.get("reason")},
+            "n_events_exported": len(events)}
+    if path.suffix.lower() == ".json":
+        path.write_text(json.dumps({**head, "events": [{**e, "username": users.get(str(e.get("user_id")), "")}
+                                                       for e in events]}, indent=1, default=str), encoding="utf-8")
+    else:
+        with open(path, "w", newline="", encoding="utf-8") as f:
+            f.write(f"# OsteoQuant audit trail export; chain verification: "
+                    f"{'OK' if ver.get('ok') else 'BROKEN at event ' + str(ver.get('first_bad_seq'))}; "
+                    f"events verified: {ver.get('n')}; head hash: {ver.get('head') or '-'}; "
+                    f"exported by {user['username']} at {head['exported_utc']}"
+                    + ("; blinded" if blinded else "") + "\n")
+            w = csv.writer(f)
+            w.writerow(["seq", "ts_utc", "user_id", "username", "action", "object_type", "object_id", "details", "row_hash"])
+            for e in events:
+                w.writerow([e["seq"], e["ts"], e.get("user_id") or "", users.get(str(e.get("user_id")), ""), e["action"],
+                            e.get("object_type") or "", e.get("object_label") or e.get("object_id") or "",
+                            json.dumps(e.get("details") or {}, sort_keys=True, default=str), e["row_hash"]])
+    store.audit.record("audit.export", user["id"], user["org_id"],
+                       details={"path": str(path), "events": len(events), "chain_ok": bool(ver.get("ok")),
+                                "blinded": bool(blinded)})
+    return {"path": str(path), "events": len(events), "verification": head["chain_verification"]}
+
+
+# ============================================================================ label loading (worker thread)
+def load_scan_layers(store_path: str, seg: dict | None, parent_key: str | None = None) -> dict:
+    """Load the label volume, the analysis ROI mask and (optionally) the parent version's labels.
+    Runs on a worker thread; returns plain arrays."""
+    import zarr
+    g = zarr.open_group(str(store_path), mode="r")
+    out = {"labels": None, "roi": None, "parent": None}
+    if seg and seg.get("labels_key") and f"labels/{seg['labels_key']}" in g:
+        out["labels"] = np.ascontiguousarray(np.asarray(g[f"labels/{seg['labels_key']}"][:]), dtype=np.uint8)
+        rk = roi_mask_key(g, seg)
+        if rk:
+            out["roi"] = np.asarray(g[rk][:]).astype(bool)
+    if parent_key and f"labels/{parent_key}" in g:
+        out["parent"] = np.ascontiguousarray(np.asarray(g[f"labels/{parent_key}"][:]), dtype=np.uint8)
     return out

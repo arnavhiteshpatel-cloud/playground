@@ -25,11 +25,11 @@ def _scene(seed=0, shape=(40, 48, 48)):
 def test_registration_qc_passes_aligned_and_flags_shift():
     img, _, roi = _scene()
     noisy = img + np.random.default_rng(1).normal(0, 8, img.shape).astype(np.float32)
-    ok = registration_qc(img, noisy, exclude=roi)
-    assert ok["pass"] and ok["host_dice"] > 0.95
+    ok = registration_qc(img, noisy, exclude=roi, spacing_um=SP)
+    assert ok["pass"] and ok["residual_shift_um_max"] < 20
     shifted, _ = apply_rigid(noisy, SP, (0, 0, 0), (0, 200, 200))
-    bad = registration_qc(img, shifted, exclude=roi)
-    assert bad["host_dice"] < ok["host_dice"]
+    bad = registration_qc(img, shifted, exclude=roi, spacing_um=SP)
+    assert bad["residual_shift_um_max"] == pytest.approx(np.hypot(200, 200), rel=0.15)
     assert not bad["pass"]
 
 

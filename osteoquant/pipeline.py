@@ -101,6 +101,9 @@ def segment(vol: Volume, roi_mask: np.ndarray, cfg: dict, progress=lambda f, m: 
         info.update({"model_name": name, "runtime": "onnxruntime", "onnx_sha256": reg.get("onnx_sha256"),
                      "model_sha256": reg.get("sha256"), "model_provenance": reg.get("provenance"),
                      "licence_tag": reg.get("licence_tag")})
+        if int(reg.get("cfg", {}).get("n_classes", 4)) != 4:
+            raise ValueError(f"Model {name} is not a 3-class tissue model (n_classes != 4); it cannot produce "
+                             "new-bone/graft/host labels")
         progress(0.4, "inference (ONNX Runtime)")
         p = seg.predict_proba(Case("scan", vol.data, None, roi_mask, vol.spacing))
         return p.argmax(0).astype(np.uint8), p, info
@@ -110,6 +113,8 @@ def segment(vol: Volume, roi_mask: np.ndarray, cfg: dict, progress=lambda f, m: 
         model, ck = load_model(name)   # name-only, registry-hash verified before safe deserialisation
         info.update({"model_name": name, "model_sha256": ck["sha256"], "model_provenance": ck["provenance"],
                      "licence_tag": ck["licence_tag"]})
+        if int(model.hparams.get("n_classes", 4)) != 4:
+            raise ValueError(f"Model {name} is not a 3-class tissue model (n_classes != 4)")
         if cfg.get("expected_model_sha256") and cfg["expected_model_sha256"] != ck["sha256"]:
             raise RuntimeError("Model hash mismatch: locked model version changed")
         case = Case("scan", vol.data, None, roi_mask, vol.spacing)

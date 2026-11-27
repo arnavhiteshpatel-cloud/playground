@@ -147,7 +147,9 @@ def _fmt(v, nd=3):
     return str(v)
 
 
-def build_pdf(bundle, pdf_path, csv_path=None) -> dict:
+def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> dict:
+    """Render the report. ``watermark`` (optional) is drawn diagonally on every page, e.g. for
+    reports produced by an unlicensed evaluation copy."""
     from reportlab.lib import colors
     from reportlab.lib.pagesizes import A4
     from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -340,6 +342,23 @@ def build_pdf(bundle, pdf_path, csv_path=None) -> dict:
             rows.append([str(e.get("specimen_id")), str(e.get("stage")), str(e.get("reason")), str(e.get("action"))])
         flow.append(table(rows, [25 * mm, 25 * mm, 75 * mm, 55 * mm]))
 
+    # ----------------------------------------------------------- measurement support (abstentions)
+    sup_rows = []
+    for s_ in bundle["specimens"]:
+        seen = set()
+        for sm in s_.get("suppressed_metrics", []) or []:
+            if sm.get("endpoint") in seen:
+                continue
+            seen.add(sm.get("endpoint"))
+            sup_rows.append([str(s_.get("specimen_id")), str(sm.get("endpoint", "")).replace("_", " "),
+                             Paragraph(esc(str(sm.get("reason", ""))), SM)])
+    if sup_rows:
+        flow.append(Paragraph("Endpoints not measured (measurement-support advisor)", H2))
+        flow.append(Paragraph("These endpoints are shown as '—' above because the graft and new bone cannot be "
+                              "reliably separated for this material, scan and study design. Total mineral volume is "
+                              "reported instead where supported. Raw values are retained in the audit record only.", SM))
+        flow.append(table([["Specimen", "Endpoint", "Reason"]] + sup_rows, [25 * mm, 45 * mm, 110 * mm]))
+
     # ----------------------------------------------------------- 8 limitations
     flow.append(Paragraph("8. Scientific limitations and exceptions", H2))
     for l in bundle.get("limitations", []):
@@ -366,6 +385,14 @@ def build_pdf(bundle, pdf_path, csv_path=None) -> dict:
 
     def on_page(c, d):
         c.saveState()
+        if watermark:
+            c.saveState()
+            c.setFillColor(colors.Color(0.55, 0.1, 0.1, alpha=0.16))
+            c.setFont("Helvetica-Bold", 30)
+            c.translate(105 * mm, 148 * mm)
+            c.rotate(45)
+            c.drawCentredString(0, 0, watermark[:60])
+            c.restoreState()
         c.setFont("Helvetica", 7)
         c.setFillColor(colors.HexColor("#666666"))
         c.drawString(15 * mm, 10 * mm, f"OsteoQuant DefectFill · {bundle['title'][:70]} · {bundle['data_class'].upper()} · "

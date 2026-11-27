@@ -21,7 +21,7 @@ import re
 
 import numpy as np
 
-from .train import MODEL_DIR, MODEL_NAME_RE, Case, _gauss_window, build_input, load_model
+from .train import MODEL_DIR, MODEL_NAME_RE, Case, _gauss_window, build_input, load_model, update_registry
 
 
 def _registry() -> dict:
@@ -39,11 +39,8 @@ def export_onnx(name: str, patch=(48, 48, 48), opset: int = 17) -> dict:
     torch.onnx.export(model, dummy, str(out), input_names=["x"], output_names=["logits"], opset_version=opset,
                       dynamic_axes={"x": {0: "batch"}, "logits": {0: "batch"}}, dynamo=False)
     sha = hashlib.sha256(out.read_bytes()).hexdigest()
-    R = _registry()
-    if name in R:
-        R[name]["onnx_sha256"] = sha
-        R[name]["onnx_patch"] = list(patch)
-        (MODEL_DIR / "registry.json").write_text(json.dumps(R, indent=1, default=str))
+    if name in _registry():
+        update_registry(name, merge={"onnx_sha256": sha, "onnx_patch": list(patch)})
     return {"path": str(out), "sha256": sha, "patch": list(patch)}
 
 
@@ -127,6 +124,5 @@ def quantize_int8_static(name: str, calib_cases: list[Case], n_patches: int = 32
     quantize_static(str(src), str(dst), Reader(), quant_format=QuantFormat.QDQ,
                     activation_type=QuantType.QUInt8, weight_type=QuantType.QInt8)
     sha = hashlib.sha256(dst.read_bytes()).hexdigest()
-    R[name]["onnx_int8_sha256"] = sha
-    (MODEL_DIR / "registry.json").write_text(json.dumps(R, indent=1, default=str))
+    update_registry(name, merge={"onnx_int8_sha256": sha})
     return {"path": str(dst), "sha256": sha}

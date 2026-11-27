@@ -9,7 +9,7 @@ noise σ=150 (as L2). Later scan receives a random rigid motion (≤5°, ≤200 
 
 Methods (graft vs new bone in the true defect ROI):
   naive_footprint   Gen-0 method: later mineral ∩ day-0 graft footprint
-  tracked_footprint per-granule template matching (±search 2D+150 µm) then footprint
+  tracked_footprint per-granule template matching (fixed ±500 µm search) then footprint
   multiotsu         single-timepoint intensity
   intensity_oracle  Dice-optimal intensity-only upper bound (uses truth)
 Also: registration QC (host-mineral Dice/NCC), tracking summary, and the advisor's day-0 decision computed
@@ -38,6 +38,7 @@ from osteoquant.segment import classical as C
 
 SP = (40.0,) * 3
 SHAPE = (56, 72, 72)
+SEARCH_UM = 500.0   # tracking search radius, fixed a priori (review STAT-06)
 BASE = dict(model="condyle", shape=SHAPE, voxel_um=40, defect_diameter_um=2000, graft_material="ha",
             graft_diam_um=(120, 250), graft_roughness=0.6, graft_fill=0.3, periodic_texture=False)
 
@@ -70,24 +71,30 @@ def main():
                 excl = p0.roi_mask
                 tx, _ = register(I0, moved, SP, "rigid", mask=~ndi.binary_dilation(excl, iterations=3))
                 back = resample(moved, SHAPE, SP, tx)
-                qc = registration_qc(I0, back, exclude=excl)
+                qc = registration_qc(I0, back, exclude=excl, spacing_um=SP)
                 # deliberate failure: skip registration (identity)
                 import SimpleITK as sitk
                 bad = resample(moved, SHAPE, SP, sitk.Euler3DTransform())
-                qc_bad = registration_qc(I0, bad, exclude=excl)
+                qc_bad = registration_qc(I0, bad, exclude=excl, spacing_um=SP)
                 g0 = C.clean_binary(C.threshold_otsu(I0)[0] & p0.roi_mask, 8)
                 later_min = C.threshold_otsu(back)[0] & (back != 0)
                 naive = day0_propagation(later_min, g0, roi)
-                tr = track_granules(I0, back, g0, SP, search_um=2 * D + 150)
+                tr = track_granules(I0, back, g0, SP, search_um=SEARCH_UM)   # fixed; independent of true motion
                 tracked = day0_propagation(later_min, tr["footprint"], roi)
                 mo = C.seg_multiotsu(I1, roi, True)[0]
                 orc = dice_oracle_volume(I1, y, roi)
-                day0 = {"registered": True, "qc_pass": qc["pass"], "max_displacement_um": 0.0,
-                        "untracked_fraction": tr["summary"]["untracked_volume_fraction"]}
-                adv = assess_support(MaterialProfile("ha900", 900 / 1075, 0.04, 185, "strut"), noise_rel=150 / 950,
-                                     voxel_um=40, day0=day0)
+                prof = MaterialProfile("ha900", 900 / 1075, 0.04, 185, "strut")
+                # advisor inputs are COMPUTED (no ground truth): naive footprint → motion estimate from tracking
+                # must be within tolerance; tracked footprint → motion compensated, untracked share must be small
+                day0_naive = {"registered": True, "qc_pass": qc["pass"],
+                              "max_displacement_um": tr["summary"]["p90_shift_um"], "untracked_fraction": 0.0}
+                day0_tracked = {"registered": True, "qc_pass": qc["pass"], "max_displacement_um": 0.0,
+                                "untracked_fraction": tr["summary"]["untracked_volume_fraction"]}
+                adv = assess_support(prof, noise_rel=150 / 950, voxel_um=40, day0=day0_tracked)
+                adv_naive = assess_support(prof, noise_rel=150 / 950, voxel_um=40, day0=day0_naive)
                 base = {"D_um": D, "F": F, "seed": sd, "qc": qc, "qc_identity": qc_bad,
                         "tracking": tr["summary"], "advisor_status": adv.status("residual_graft_volume"),
+                        "advisor_status_naive": adv_naive.status("residual_graft_volume"),
                         "true_motion": p1.truth.get("graft_motion")}
                 for meth, pred in (("naive_footprint", naive), ("tracked_footprint", tracked), ("multiotsu", mo)):
                     rows.append({**base, "method": meth, **scores(pred, y, roi)})
@@ -104,11 +111,21 @@ def main():
                 rr = [r for r in rows if r["D_um"] == D and r["F"] == F and r["method"] == m]
                 summ.append({"D_um": D, "F": F, "method": m, "dice_graft": float(np.mean([r["dice_graft"] for r in rr])),
                              "abs_vol_err": float(np.mean([abs(r["graft_vol_err"]) for r in rr])), "n": len(rr)})
+    def refusal(method, key):
+        rr = [r for r in rows if r["method"] == method]
+        fail = [abs(r["graft_vol_err"]) > 0.2 or r["dice_graft"] < 0.8 for r in rr]
+        ref = [r[key] != "supported_with_conditions" and r[key] != "supported" for r in rr]
+        return {"n": len(rr), "n_fail": int(sum(fail)), "failures_refused": int(sum(f and g for f, g in zip(fail, ref))),
+                "supported_but_failed": int(sum(f and not g for f, g in zip(fail, ref))),
+                "refused_but_ok": int(sum(g and not f for f, g in zip(fail, ref)))}
+    advisor_eval = {"naive_footprint": refusal("naive_footprint", "advisor_status_naive"),
+                    "tracked_footprint": refusal("tracked_footprint", "advisor_status")}
     qc_sens = float(np.mean([not r["qc_identity"]["pass"] for r in rows if r["method"] == "naive_footprint"]))
     qc_spec = float(np.mean([r["qc"]["pass"] for r in rows if r["method"] == "naive_footprint"]))
     save_result("exp_L3_displacement", {"experiment": "L3", "summary": summ, "rows": rows,
                                         "registration_failure_detection": {"flagged_identity_fraction": qc_sens,
                                                                            "passed_correct_fraction": qc_spec},
+                                        "advisor_evaluation": advisor_eval, "advisor_version": adv.advisor_version,
                                         "seconds": time.time() - t0})
     for s in summ:
         print(s)

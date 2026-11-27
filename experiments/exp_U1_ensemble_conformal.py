@@ -147,28 +147,48 @@ def main():
     scores = {k: [r[k] for r in ev] for k in ("score_entropy_single", "score_mutual_info", "score_vol_cv", "score_oracle")}
     ranks = {k: np.argsort(np.argsort(v)) for k, v in scores.items()}
     scores["combined_rank"] = list(np.mean([ranks["score_mutual_info"], ranks["score_vol_cv"], ranks["score_oracle"]], 0))
-    R["failure_detection"] = {"n": len(ev), "n_fail": int(np.sum(fail)), "definition": f"|vol err|>{FAIL_VOL} or graft Dice<{FAIL_DICE}",
-                              "auroc": {k: {"failure": auroc(v, fail), "failure_ci95": boot_auroc(v, fail),
-                                            "ood": auroc(v, is_ood)} for k, v in scores.items()}}
+    # Stratified by split (review ML-11/STAT-07): pooled AUROC partly re-measures OOD membership.
+    strata = {"pooled": [True] * len(ev), "id_only": [not o for o in is_ood], "ood_only": list(is_ood)}
+    R["failure_detection"] = {"n": len(ev), "n_fail": int(np.sum(fail)),
+                              "n_fail_by_stratum": {k: int(np.sum(np.array(fail)[np.array(m)])) for k, m in strata.items()},
+                              "definition": f"|vol err|>{FAIL_VOL} or graft Dice<{FAIL_DICE}",
+                              "auroc": {k: {st: {"failure": auroc(np.array(v)[np.array(m)], np.array(fail)[np.array(m)]),
+                                                 "ci95": boot_auroc(np.array(v)[np.array(m)], np.array(fail)[np.array(m)])}
+                                            for st, m in strata.items()} | {"ood_membership": auroc(v, is_ood)}
+                                        for k, v in scores.items()},
+                              "note": "materials cluster within splits; bootstrap resamples scans, not materials"}
     # Q5 conformal
     cal = [r for r in rows if r["split"] == "cal"]
     nc = sorted(abs(r["V_ens"] - r["graft_true_vox"]) / (r["V_sd"] + 0.02 * r["V_ens"] + 1.0) for r in cal)
     alpha = 0.1
     k = int(np.ceil((len(nc) + 1) * (1 - alpha))) - 1
     q = nc[min(k, len(nc) - 1)]
-    def cover(rr):
+    from scipy.stats import beta as _beta
+
+    def _q(cal_rows):
+        sc = sorted(abs(r["V_ens"] - r["graft_true_vox"]) / (r["V_sd"] + 0.02 * r["V_ens"] + 1.0) for r in cal_rows)
+        kk = int(np.ceil((len(sc) + 1) * (1 - alpha))) - 1
+        return sc[min(kk, len(sc) - 1)] if sc else float("nan")
+
+    def cover(rr, qq=None):
+        qq = q if qq is None else qq
         if not rr:
             return None
-        hits = [abs(r["V_ens"] - r["graft_true_vox"]) <= q * (r["V_sd"] + 0.02 * r["V_ens"] + 1.0) for r in rr]
-        widths = [2 * q * (r["V_sd"] + 0.02 * r["V_ens"] + 1.0) / max(r["V_ens"], 1.0) for r in rr]
-        return {"n": len(rr), "coverage": float(np.mean(hits)), "median_rel_width": float(np.median(widths))}
-    thr = np.percentile(scores["combined_rank"], 100)  # placeholder (no gating)
+        hits = [abs(r["V_ens"] - r["graft_true_vox"]) <= qq * (r["V_sd"] + 0.02 * r["V_ens"] + 1.0) for r in rr]
+        widths = [2 * qq * (r["V_sd"] + 0.02 * r["V_ens"] + 1.0) / max(r["V_ens"], 1.0) for r in rr]
+        k_, n_ = int(np.sum(hits)), len(hits)
+        lo = float(_beta.ppf(0.025, k_, n_ - k_ + 1)) if k_ > 0 else 0.0           # Clopper–Pearson 95%
+        hi = float(_beta.ppf(0.975, k_ + 1, n_ - k_)) if k_ < n_ else 1.0
+        return {"n": n_, "coverage": k_ / n_, "coverage_ci95": [lo, hi], "q": float(qq),
+                "median_rel_width": float(np.median(widths))}
     test, ood = [r for r in rows if r["split"] == "test"], [r for r in rows if r["split"] == "ood_mat"]
     # gate: abstain where the combined failure score is in the top tercile of the CAL distribution
     cal_mi = np.array([r["score_mutual_info"] for r in cal]); cal_cv = np.array([r["score_vol_cv"] for r in cal])
     gate = lambda r: r["score_mutual_info"] <= np.percentile(cal_mi, 90) and r["score_vol_cv"] <= np.percentile(cal_cv, 90)
+    q_g = _q([r for r in cal if gate(r)])     # recalibrated on the gated calibration subset (review ML-12)
     R["conformal"] = {"alpha": alpha, "q": float(q), "n_cal": len(cal), "test_id": cover(test), "ood": cover(ood),
-                      "test_id_gated": cover([r for r in test if gate(r)]), "ood_gated": cover([r for r in ood if gate(r)]),
+                      "q_gated": float(q_g), "n_cal_gated": int(sum(gate(r) for r in cal)),
+                      "test_id_gated": cover([r for r in test if gate(r)], q_g), "ood_gated": cover([r for r in ood if gate(r)], q_g),
                       "gate": "keep scans with MI and volume-CV ≤ 90th percentile of calibration scans",
                       "ood_retained_fraction": float(np.mean([gate(r) for r in ood])),
                       "test_retained_fraction": float(np.mean([gate(r) for r in test]))}

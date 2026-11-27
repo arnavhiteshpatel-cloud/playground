@@ -39,7 +39,7 @@ for sd in (910, 911, 912):
         perturb.append(("rot", r, (r, r / 2, 0), (0, 0, 0)))
     for kind, mag, rot, tr in perturb:
         moved = I1 if kind == "none" else apply_rigid(I1, SP, rot, tr)[0]
-        qc = registration_qc(I0, moved, exclude=p0.roi_mask)
+        qc = registration_qc(I0, moved, exclude=p0.roi_mask, spacing_um=SP)
         d = gd(moved)
         rows.append({"seed": sd, "kind": kind, "magnitude": mag, "graft_dice": d, "graft_dice_drop": base_d - d,
                      "harmful": bool(base_d - d > 0.10), **{k: qc[k] for k in ("host_dice", "host_ncc", "pass")}})

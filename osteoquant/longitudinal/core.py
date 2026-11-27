@@ -150,27 +150,67 @@ def class_volume_change(labs, roi, spacing_um, times) -> list[dict]:
 
 # ----------------------------------------------------------------------------- v2: QC and granule tracking
 def registration_qc(fixed: np.ndarray, moved_back: np.ndarray, exclude: np.ndarray | None = None,
-                    min_host_dice: float = 0.85, min_ncc: float = 0.6) -> dict:
-    """Registration quality from anatomy that should not change: host mineral outside the defect.
+                    spacing_um=(1.0, 1.0, 1.0), tolerance_um: float | None = None, shell_vox: int = 12,
+                    min_host_dice: float = 0.85, min_ncc: float = 0.6, n_blocks: int = 4) -> dict:
+    """Registration quality from anatomy that should not change (host bone around the defect).
 
-    Host bone remodels slowly relative to defect healing, so after a correct registration the host
-    mineral masks of both timepoints overlap closely. Returns Dice of host mineral masks, normalised
-    cross-correlation of intensities in the host region, and a pass flag (policy thresholds above;
-    synthetic host bone does not remodel, real host bone does — thresholds must be revisited on real data).
+    Primary criterion (Gen-2 revision after review IMG-07): the *residual displacement* between the two
+    registered scans, estimated by masked normalised cross-correlation (integer voxels) in ``n_blocks`` blocks of the
+    peri-defect shell. The maximum block displacement captures residual translation and the local effect of
+    residual rotation, in µm, and is compared with ``tolerance_um`` (default: 2 voxels). Correlation over whole
+    blocks is far less noise-sensitive than thresholded mask overlap. Host-mineral Dice and NCC are reported as
+    secondary diagnostics (they were the Gen-2.0 criteria and failed perfect alignment at high noise).
     """
     from scipy import ndimage as ndi
+    from skimage.registration import phase_cross_correlation
     from ..segment.classical import threshold_otsu
-    keep = np.ones(fixed.shape, bool) if exclude is None else ~ndi.binary_dilation(exclude, iterations=3)
-    valid = keep & (moved_back != 0)
-    a = threshold_otsu(fixed)[0] & valid
-    b = threshold_otsu(moved_back)[0] & valid
-    inter = int((a & b).sum())
-    dice = 2 * inter / max(1, int(a.sum() + b.sum()))
-    host_region = ndi.binary_dilation(a | b, iterations=2) & valid
-    x, y = fixed[host_region].astype(np.float64), moved_back[host_region].astype(np.float64)
+    sp = np.asarray(spacing_um, float)
+    if tolerance_um is None:
+        tolerance_um = float(2 * sp.mean())
+    valid = (moved_back != 0)
+    region = valid.copy()
+    if exclude is not None:
+        region &= ~ndi.binary_dilation(exclude, iterations=3)
+        if shell_vox:
+            region &= ndi.binary_dilation(exclude, iterations=3 + shell_vox)
+    # secondary diagnostics
+    a = threshold_otsu(fixed)[0] & region
+    b = threshold_otsu(moved_back)[0] & region
+    dice = 2 * int((a & b).sum()) / max(1, int(a.sum() + b.sum()))
+    hr = ndi.binary_dilation(a | b, iterations=2) & region
+    x, y = fixed[hr].astype(np.float64), moved_back[hr].astype(np.float64)
     ncc = float(np.corrcoef(x, y)[0, 1]) if x.size > 10 else float("nan")
-    return {"host_dice": float(dice), "host_ncc": ncc, "pass": bool(dice >= min_host_dice and ncc >= min_ncc),
-            "policy": {"min_host_dice": min_host_dice, "min_ncc": min_ncc}}
+    # primary: block-wise residual displacement
+    shifts = []
+    if region.any():
+        zz, yy, xx = np.nonzero(region)
+        lo = np.array([zz.min(), yy.min(), xx.min()])
+        hi = np.array([zz.max(), yy.max(), xx.max()]) + 1
+        ax = int(np.argmax(hi - lo))
+        edges = np.linspace(lo[ax], hi[ax], n_blocks + 1).astype(int)
+        for i in range(n_blocks):
+            l2, h2 = lo.copy(), hi.copy()
+            l2[ax], h2[ax] = edges[i], edges[i + 1]
+            if np.any(h2 - l2 < 8):
+                continue
+            sl = tuple(slice(int(a_), int(b_)) for a_, b_ in zip(l2, h2))
+            m = region[sl]
+            if m.mean() < 0.05:
+                continue
+            f = fixed[sl].astype(np.float32)
+            g = moved_back[sl].astype(np.float32)
+            if f[m].std() == 0 or g[m].std() == 0:
+                continue
+            # masked normalised cross-correlation (Padfield 2012): the changing defect is excluded without
+            # imposing an artificial mask edge that would pin the peak at zero shift
+            sh = phase_cross_correlation(f, g, reference_mask=m, moving_mask=m)[0]
+            shifts.append(float(np.linalg.norm(np.asarray(sh) * sp)))
+    max_shift = float(max(shifts)) if shifts else float("nan")
+    ok = bool(shifts) and max_shift <= tolerance_um
+    return {"residual_shift_um_max": max_shift, "residual_shift_um_blocks": shifts, "tolerance_um": tolerance_um,
+            "host_dice": float(dice), "host_ncc": ncc, "pass": ok,
+            "policy": {"criterion": "max block residual displacement ≤ tolerance", "tolerance_um": tolerance_um,
+                       "secondary_min_host_dice": min_host_dice, "secondary_min_ncc": min_ncc}}
 
 
 def track_granules(day0_img: np.ndarray, later_img: np.ndarray, day0_graft: np.ndarray, spacing_um,
@@ -247,5 +287,5 @@ def propagate_roi(reference_img: np.ndarray, reference_roi: np.ndarray, current_
     roi = resample(reference_roi.astype(np.uint8), current_img.shape, spacing_um, tx, labels=True) > 0
     moved_ref = resample(reference_img, current_img.shape, spacing_um, tx)
     excl = ndi.binary_dilation(roi, iterations=exclude_margin_vox)
-    qc = registration_qc(current_img, moved_ref, exclude=excl)
+    qc = registration_qc(current_img, moved_ref, exclude=excl, spacing_um=spacing_um)
     return {"roi": roi, "qc": qc, "metric": metric, "transform": tx}

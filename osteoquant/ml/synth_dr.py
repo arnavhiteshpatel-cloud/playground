@@ -38,6 +38,8 @@ class DRConfig:
     noise_corr_sigma: tuple = (0.6, 2.0)
     bias_amp: tuple = (0.0, 0.15)
     gamma: tuple = (0.75, 1.35)
+    background_gap: tuple = (0.0, 0.9)       # how much darker than soft tissue the volume's 1st percentile is
+    top_scale: tuple = (0.9, 1.3)            # 99.8th percentile relative to the brightest phase
     target: str = "mineral"                  # "mineral" | "classes"
 
 
@@ -49,12 +51,14 @@ def _smooth_field(shape, sigma, rng):
 class DRSampler:
     """Callable ``sampler(rng) -> (x[1,Z,Y,X] float32, y[Z,Y,X] int64)`` for ``train_model(sample_fn=...)``."""
 
-    name = "dr_v1"
+    name = "dr_v2"
 
-    def __init__(self, fraction_volumes: list[np.ndarray], cfg: DRConfig | None = None):
+    def __init__(self, fraction_volumes: list[np.ndarray], cfg: DRConfig | None = None, manifest: list | None = None):
         # fraction_volumes: list of (4, Z, Y, X) uint8 (0..255) class-fraction arrays
+        # manifest: provenance records of the source volumes (recorded in the model card; review ARC-02)
         self.fr = fraction_volumes
         self.cfg = cfg or DRConfig()
+        self.manifest = manifest
 
     def __call__(self, rng: np.random.Generator):
         c = self.cfg
@@ -92,7 +96,12 @@ class DRSampler:
         ba = rng.uniform(*c.bias_amp)
         if ba > 0:
             img *= 1.0 + ba * _smooth_field(img.shape, 12.0, rng)
-        lo, hi = np.percentile(img, [1, 99.8])
+        # Emulate WHOLE-VOLUME percentile normalisation used at inference (ml.train.normalize_image), not
+        # per-patch normalisation (review ML-03): the volume's 1st percentile is usually darker than soft tissue
+        # (air/holder/background) and its 99.8th percentile is near the densest mineral in the field of view, so
+        # soft tissue lands anywhere in ≈[0, 0.75] after normalisation.
+        lo = soft - rng.uniform(*c.background_gap)
+        hi = max(host, graft if f[2].max() > 0.5 else host) * rng.uniform(*c.top_scale)
         x = (img - lo) / max(hi - lo, 1e-6)
         g = rng.uniform(*c.gamma)
         x = np.sign(x) * np.abs(x) ** g

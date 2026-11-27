@@ -32,7 +32,6 @@ def bundle_from_store(store, user, sid, ctx=None) -> dict:
     import zarr
     from ..report.figures import specimen_panel
     st = store.study(user, sid)
-    groups = {g["id"]: g["name"] for g in store.groups(user, sid)}
     specs = {s["id"]: s for s in store.specimens(user, sid)}
     tps = {t["id"]: t["label"] for t in store.q("SELECT * FROM timepoints WHERE study_id=?", (sid,))}
     out_specs = []
@@ -74,7 +73,13 @@ def bundle_from_store(store, user, sid, ctx=None) -> dict:
             "qc": sc.get("qc") or {}, "roi": roi_def,
             "segmentation": {"method": seg["method"], "model_name": seg["model_name"], "model_sha256": seg["model_sha256"],
                              "model_provenance": res.get("segmentation", {}).get("model_provenance")},
-            "corrections": corr, "metrics": res.get("metrics", {}), "uncertainty": res.get("uncertainty", {}),
+            # Reports use the measurement-support view: endpoints the advisor refused are None (shown as "not
+            # measured") and listed with their reason (cycle-1 review STAT-01). Raw values stay in the audit record.
+            "corrections": corr, "metrics": res.get("reported_metrics", res.get("metrics", {})),
+            "suppressed_metrics": res.get("suppressed_metrics", []),
+            "measurement_support": {k: {"status": v.get("status"), "reason": v.get("reason")}
+                                    for k, v in (res.get("measurement_support") or {}).get("endpoints", {}).items()},
+            "uncertainty": res.get("uncertainty", {}),
             "plausibility": res.get("plausibility", []), "figure": fig,
             "reviews": revs})
     data_class = st.get("data_class") or "customer"

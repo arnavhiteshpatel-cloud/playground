@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import platform
 import random
 import time
@@ -24,7 +25,8 @@ import torch.nn.functional as F
 
 from .unet import UNet3D, combined_loss, n_params
 
-MODEL_DIR = Path(__file__).resolve().parents[2] / "models"
+import os as _os
+MODEL_DIR = Path(_os.environ["OQ_MODEL_DIR"]) if _os.environ.get("OQ_MODEL_DIR") else Path(__file__).resolve().parents[2] / "models"
 
 
 @dataclass
@@ -139,9 +141,17 @@ def train_model(train_cases: list[Case], val_cases: list[Case], cfg: dict, name:
     in_ch = 1 + int(cfg.get("roi_channel", False)) + int(cfg.get("roi_distance_channel", False))
     model = UNet3D(in_ch=in_ch, n_classes=cfg.get("n_classes", 4), base=cfg.get("base", 12),
                    levels=cfg.get("levels", 4), p_drop=cfg.get("dropout", 0.0))
+    parent = None
     if init_from:
         ck = torch.load(init_from, map_location="cpu", weights_only=True)
         model.load_state_dict(ck["state_dict"])
+        # provenance/licence of the parent model is inherited (review ARC-01): a fine-tuned model is never
+        # more permissively licensed than its parent
+        parent = {"name": ck.get("name"), "provenance": list(ck.get("provenance", [])),
+                  "licence_tag": ck.get("licence_tag", "unknown"),
+                  "sha256": hashlib.sha256(Path(init_from).read_bytes()).hexdigest()}
+        if cfg.get("require_commercial_eligible") and parent["licence_tag"] != "commercial_eligible":
+            raise PermissionError(f"Commercial-release training refused: parent model licence {parent['licence_tag']}")
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.get("lr", 3e-3), weight_decay=1e-4)
     iters = cfg.get("iters", 1000)
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, max_lr=cfg.get("lr", 3e-3), total_steps=iters,
@@ -181,7 +191,9 @@ def train_model(train_cases: list[Case], val_cases: list[Case], cfg: dict, name:
                 model.train()
             hist.append(rec)
             log(json.dumps(rec))
-    return save_model(model, cfg, name, train_cases, hist, time.time() - t0)
+    sampler_manifest = getattr(sample_fn, "manifest", None) if sample_fn is not None else None
+    return save_model(model, cfg, name, train_cases, hist, time.time() - t0, parent=parent,
+                      sampler_manifest=sampler_manifest)
 
 
 def evaluate_quick(model, cases, cfg) -> float:
@@ -196,16 +208,23 @@ def evaluate_quick(model, cases, cfg) -> float:
     return float(np.mean(ds))
 
 
-def save_model(model, cfg, name, train_cases, hist, seconds) -> dict:
+def save_model(model, cfg, name, train_cases, hist, seconds, parent: dict | None = None,
+               sampler_manifest: list | None = None) -> dict:
     MODEL_DIR.mkdir(exist_ok=True)
-    prov = sorted({c.provenance for c in train_cases} | set(cfg.get("extra_provenance", [])))
+    prov = sorted({c.provenance for c in train_cases} | set(cfg.get("extra_provenance", []))
+                  | set((parent or {}).get("provenance", [])))
     lic = sorted({c.commercial_use for c in train_cases} | ({"allowed"} if cfg.get("extra_provenance") == ["synthetic"] else set()))
+    if cfg.get("extra_provenance") and sampler_manifest is None:
+        lic = sorted(set(lic) | {"undocumented_sampler_source"})       # review ARC-02: sampler data must be listed
     tag = "commercial_eligible" if lic == ["allowed"] else "research_only"
+    if parent and parent.get("licence_tag") != "commercial_eligible":
+        tag = "research_only"
     manifest = [{"case_id": c.case_id, "provenance": c.provenance, "commercial_use": c.commercial_use,
                  "image_sha256": hashlib.sha256(np.ascontiguousarray(c.image).tobytes()).hexdigest()[:16]}
                 for c in train_cases]
     ck = {"state_dict": model.state_dict(), "hparams": _plain(model.hparams), "cfg": _plain(cfg), "name": name,
           "provenance": prov, "licence_tag": tag, "train_manifest": _plain(manifest), "history": _plain(hist),
+          "parent_model": _plain(parent), "sampler_manifest": _plain(sampler_manifest),
           "created": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
           "env": {"torch": str(torch.__version__), "python": platform.python_version(), "numpy": str(np.__version__)},
           "n_params": n_params(model), "train_seconds": round(seconds, 1)}
@@ -218,12 +237,35 @@ def save_model(model, cfg, name, train_cases, hist, seconds) -> dict:
     card["warning"] = ("SYNTHETIC-TRAINED — research prototype, not for study decisions"
                        if prov == ["synthetic"] else "Research prototype — not validated")
     (MODEL_DIR / f"{name}.card.json").write_text(json.dumps(card, indent=1, default=str))
-    reg = MODEL_DIR / "registry.json"
-    R = json.loads(reg.read_text()) if reg.exists() else {}
-    R[name] = {"sha256": sha, "created": ck["created"], "provenance": prov, "licence_tag": tag,
-               "n_train": len(train_cases), "cfg": cfg}
-    reg.write_text(json.dumps(R, indent=1, default=str))
+    update_registry(name, {"sha256": sha, "created": ck["created"], "provenance": prov, "licence_tag": tag,
+                           "n_train": len(train_cases), "cfg": _plain(cfg),
+                           "parent": (parent or {}).get("name")})
     return card
+
+
+def update_registry(name: str, entry: dict | None = None, merge: dict | None = None) -> None:
+    """Locked, atomic read-modify-write of models/registry.json (review ARC-03: concurrent writers lost
+    entries). ``entry`` replaces the model's record; ``merge`` updates fields of an existing record."""
+    import fcntl
+    import tempfile
+    reg = MODEL_DIR / "registry.json"
+    lock = MODEL_DIR / ".registry.lock"
+    with open(lock, "a") as lf:
+        fcntl.flock(lf, fcntl.LOCK_EX)
+        try:
+            R = json.loads(reg.read_text()) if reg.exists() else {}
+            if entry is not None:
+                R[name] = entry
+            if merge is not None:
+                R.setdefault(name, {}).update(merge)
+            fd, tmp = tempfile.mkstemp(dir=MODEL_DIR, prefix=".registry.", suffix=".tmp")
+            with os.fdopen(fd, "w") as f:
+                f.write(json.dumps(R, indent=1, default=str))
+                f.flush()
+                os.fsync(f.fileno())
+            os.replace(tmp, reg)
+        finally:
+            fcntl.flock(lf, fcntl.LOCK_UN)
 
 
 def _plain(o):

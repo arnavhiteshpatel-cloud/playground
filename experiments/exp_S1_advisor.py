@@ -30,6 +30,8 @@ import numpy as np
 from common import load_split, save_result
 from exp_C_separability import make_structures, mu_with_graft
 from osteoquant.advisor import assess_support, scan_relative_units, MaterialProfile, NOT_SUPPORTED
+from osteoquant.advisor.integration import support_for_scan
+from osteoquant.advisor.separability import ADVISOR_VERSION
 from osteoquant.phantom import ImagingConfig, render_fast
 from osteoquant.segment import classical as C
 
@@ -40,6 +42,16 @@ def graft_err(pred_lab, true_lab, roi):
     vt = int(((true_lab == 2) & roi).sum())
     vp = int(((pred_lab == 2) & roi).sum())
     return (vp / vt - 1.0) if vt else float("nan"), vt
+
+
+def endpoint_errs(pred_lab, true_lab, roi):
+    """Relative volume errors for graft, new bone and total mineral (new bone + graft) in the ROI."""
+    out = {}
+    for name, cls in (("graft", (2,)), ("new", (1,)), ("mineral", (1, 2))):
+        t = int(np.isin(true_lab, cls)[roi].sum())
+        pr = int(np.isin(pred_lab, cls)[roi].sum())
+        out[f"err_{name}"] = (pr / t - 1.0) if t else float("nan")
+    return out
 
 
 def summarize(rows, method):
@@ -54,25 +66,43 @@ def summarize(rows, method):
            "supported_but_failed": int((~refused & fail).sum()),
            "abs_err_supported_median": float(np.median([abs(x["err"]) for x, f in zip(r, refused) if not f])) if (~refused).any() else None,
            "abs_err_refused_median": float(np.median([abs(x["err"]) for x, f in zip(r, refused) if f])) if refused.any() else None}
+    # P(failure | supported) with a Clopper–Pearson 95% upper bound (review STAT-03: refusing everything would
+    # trivially satisfy the sensitivity criterion, so the precision of "supported" must be reported too)
+    from scipy.stats import beta as _beta
+    n_sup = int((~refused).sum())
+    k_f = int((~refused & fail).sum())
+    out["p_fail_given_supported"] = (k_f / n_sup) if n_sup else None
+    out["p_fail_given_supported_upper95"] = float(_beta.ppf(0.975, k_f + 1, n_sup - k_f)) if n_sup else None
+    out["coverage_supported_fraction"] = float((~refused).mean()) if len(r) else None
+    for ep in ("new", "mineral"):
+        v = [abs(x.get(f"err_{ep}", np.nan)) for x, f in zip(r, refused) if not f]
+        v = [x for x in v if np.isfinite(x)]
+        out[f"abs_err_{ep}_supported_median"] = float(np.median(v)) if v else None
+        out[f"abs_err_{ep}_supported_max"] = float(np.max(v)) if v else None
     return out
 
 
 def part_a(rows):
-    from osteoquant.ml.train import load_model, predict_proba
-    model, ck = load_model("unet_noctx_s0")
+    from osteoquant.ml.runtime import OnnxSegmenter
+    from osteoquant.ml.train import load_model
+    _, ck = load_model("unet_noctx_s0")
+    onnx = OnnxSegmenter("unet_noctx_s0")       # bit-equivalent to PyTorch inference (max prob diff 5e-6), faster
     cases = load_split("test") + load_split("ood_mat")
     for c in cases:
         mat = c.meta["spec"]["material"]
         est = scan_relative_units(c.image, exclude_mask=c.roi)
-        a = assess_support(mat, noise_rel=est["noise_rel"], voxel_um=c.spacing[0])
-        st = a.status("residual_graft_volume")
+        sup = support_for_scan(c.image, c.roi, c.spacing, {"material": mat})
+        st = sup["endpoints"]["residual_graft_volume"]["status"]
+        a = type("A", (), {"intensity": sup["intensity"]})
         lab_mo, _ = C.seg_multiotsu(c.image, c.roi, True)
         e_mo, vt = graft_err(lab_mo, c.labels, c.roi)
-        p = predict_proba(model, c, ck["cfg"], tta=False)
-        e_un, _ = graft_err(p.argmax(0), c.labels, c.roi)
+        p = onnx.predict_proba(c, ck["cfg"])
+        lab_un = p.argmax(0)
+        e_un, _ = graft_err(lab_un, c.labels, c.roi)
         true_noise_rel = c.meta["spec"]["imaging"]["noise_sigma"] / max(est["host"] - est["soft"], 1e-6)
-        for meth, e in (("multiotsu", e_mo), ("unet_synth", e_un)):
+        for meth, e, lab_ in (("multiotsu", e_mo, lab_mo), ("unet_synth", e_un, lab_un)):
             rows.append({"part": "A", "case": c.case_id, "material": mat, "method": meth, "err": e, "status": st,
+                         **endpoint_errs(lab_, c.labels, c.roi),
                          "oracle_dice": a.intensity.get("dice_graft"), "noise_rel_est": est["noise_rel"],
                          "noise_rel_true_approx": true_noise_rel, "graft_vox": vt})
         print("A", c.case_id, st, round(e_mo, 3), round(e_un, 3), round(est["noise_rel"], 3), flush=True)
@@ -88,11 +118,13 @@ def part_b(rows):
                 img = render_fast(mu_with_graft(ph, X), 40, ImagingConfig(seed=10 + i, psf_sigma_um=20, noise_sigma=s)).data
                 est = scan_relative_units(img, exclude_mask=ph.roi_mask)
                 prof = MaterialProfile(id=f"char_{X}", rel_mean=X / host, rel_sd=0.04 * X / host, struct_um=450)
-                a = assess_support(prof, noise_rel=est["noise_rel"], voxel_um=40)
+                sup = support_for_scan(img, ph.roi_mask, (40.0,) * 3, {"material": prof})
+                a = type("A", (), {"intensity": sup["intensity"]})
                 lab, _ = C.seg_multiotsu(img, ph.roi_mask, X > 1000)
                 e, vt = graft_err(lab, ph.labels, ph.roi_mask)
                 rows.append({"part": "B", "case": f"X{X}_s{s}_{i}", "graft_mgHA": X, "noise": s, "method": "multiotsu_B",
-                             "err": e, "status": a.status("residual_graft_volume"),
+                             **endpoint_errs(lab, ph.labels, ph.roi_mask),
+                             "err": e, "status": sup["endpoints"]["residual_graft_volume"]["status"],
                              "oracle_dice": a.intensity.get("dice_graft"), "noise_rel_est": est["noise_rel"], "graft_vox": vt})
             print("B", X, s, rows[-1]["status"], round(np.mean([r["err"] for r in rows[-3:]]), 3), flush=True)
 
@@ -107,7 +139,7 @@ def main():
         print(s)
     save_result("exp_S1_advisor", {
         "experiment": "S1", "failure_threshold_rel_volume_error": FAIL, "summary": summ, "rows": rows,
-        "seconds": time.time() - t0,
+        "seconds": time.time() - t0, "advisor_version": ADVISOR_VERSION,
         "limitation": "advisor material physics shares the simulator's attenuation model (partial self-consistency); "
                       "synthetic data only"})
 

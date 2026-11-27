@@ -13,7 +13,8 @@ import numpy as np
 
 from common import load_split, save_result, RESULTS
 from exp_C_separability import make_structures, mu_with_graft
-from exp_S1_advisor import graft_err, summarize
+from exp_S1_advisor import graft_err, summarize, endpoint_errs
+from osteoquant.advisor.separability import ADVISOR_VERSION
 from osteoquant.advisor import MaterialProfile, dice_oracle_volume
 from osteoquant.advisor.integration import advisor_threshold_segmentation, support_for_scan
 from osteoquant.phantom import ImagingConfig, render_fast
@@ -29,6 +30,7 @@ def main():
         e, vt = graft_err(lab, c.labels, c.roi)
         tor = dice_oracle_volume(c.image, c.labels, c.roi)
         rows.append({"part": "A", "case": c.case_id, "material": cfg["material"], "method": "advisor_threshold",
+                     **endpoint_errs(lab, c.labels, c.roi),
                      "err": e, "advisor_oracle_dice": sup["intensity"].get("dice_graft"),
                      "true_oracle_dice": tor["dice_graft"], "status": sup["endpoints"]["residual_graft_volume"]["status"], "graft_vox": vt})
         print("A", c.case_id, rows[-1]["status"], round(e, 3), flush=True)
@@ -45,6 +47,7 @@ def main():
                 e, vt = graft_err(lab, ph.labels, ph.roi_mask)
                 tor = dice_oracle_volume(img, ph.labels, ph.roi_mask)
                 rows.append({"part": "B", "case": f"X{X}_s{s}_{i}", "graft_mgHA": X, "noise": s,
+                             **endpoint_errs(lab, ph.labels, ph.roi_mask),
                              "method": "advisor_threshold_B", "err": e,
                              "advisor_oracle_dice": sup["intensity"].get("dice_graft"),
                              "true_oracle_dice": tor["dice_graft"], "true_oracle_threshold": tor.get("threshold"),
@@ -57,7 +60,8 @@ def main():
     for s_ in summ:
         print(s_)
     save_result("exp_S1b_advisor_threshold", {"experiment": "S1b", "summary": summ, "rows": rows,
-                                              "seconds": time.time() - t0})
+                                              "seconds": time.time() - t0,
+                                              "advisor_version": ADVISOR_VERSION})
 
 
 if __name__ == "__main__":

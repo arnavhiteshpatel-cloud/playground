@@ -71,12 +71,16 @@ def test_day0_conditions_and_displacement_limit():
     a = assess_support(prof, noise_rel=0.1, voxel_um=20)
     assert a.status("residual_graft_volume") == NOT_SUPPORTED
     a = assess_support(prof, noise_rel=0.1, voxel_um=20, day0={"registered": True, "qc_pass": True})
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED          # incomplete day-0 assessment (IMG-04)
+    assert "incomplete" in a.endpoints["residual_graft_volume"].reason
+    full = {"registered": True, "qc_pass": True, "untracked_fraction": 0.0, "max_displacement_um": 50.0}
+    a = assess_support(prof, noise_rel=0.1, voxel_um=20, day0=full)
     assert a.status("residual_graft_volume") == CONDITIONAL
     assert any("day-0" in c for c in a.endpoints["residual_graft_volume"].conditions)
     a = assess_support(prof, noise_rel=0.1, voxel_um=20,
-                       day0={"registered": True, "qc_pass": True, "max_displacement_um": 500, "tolerance_um": 200})
+                       day0={**full, "max_displacement_um": 500, "tolerance_um": 200})
     assert a.status("residual_graft_volume") == NOT_SUPPORTED
-    a = assess_support(prof, noise_rel=0.1, voxel_um=20, day0={"registered": True, "qc_pass": False})
+    a = assess_support(prof, noise_rel=0.1, voxel_um=20, day0={**full, "qc_pass": False})
     assert a.status("residual_graft_volume") == NOT_SUPPORTED
 
 
@@ -141,3 +145,39 @@ def test_pipeline_reports_support():
                          "material": "ha"})
     assert out2["measurement_support"]["endpoints"]["residual_graft_volume"]["status"] == SUPPORTED
     assert out2["reported_metrics"]["class_volumes"]["residual_graft_volume_mm3"] is not None
+
+
+def test_metals_refused():
+    for m in ("titanium", "magnesium"):
+        assert assess_support(m, noise_rel=0.02, voxel_um=20).status("residual_graft_volume") == NOT_SUPPORTED
+
+
+def test_small_reference_samples_ignored_and_bone_rule_not_bypassed():
+    rng = np.random.default_rng(0)
+    a = assess_support("mystery", noise_rel=0.05, voxel_um=20, graft_samples_rel=rng.normal(2.5, 0.05, 3))
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED
+    a = assess_support("autograft", noise_rel=0.01, voxel_um=20, graft_samples_rel=rng.normal(3.0, 0.01, 5000),
+                       new_samples_rel=rng.normal(0.5, 0.01, 5000))
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED
+
+
+def test_scarce_graft_refuses_graft_volume_only():
+    a = assess_support("ha", noise_rel=0.03, voxel_um=20, graft_prior=0.02)
+    assert a.status("residual_graft_volume") == NOT_SUPPORTED
+    assert "scarce" in a.endpoints["residual_graft_volume"].reason
+    assert a.status("new_bone_volume") == SUPPORTED
+
+
+def test_support_requires_robustness_to_low_graft_share():
+    # a borderline material can pass at 50% graft share but fail at 10%: the advisor must check both
+    prof = MaterialProfile("borderline", rel_mean=1.35, rel_sd=0.08, struct_um=500)
+    hi = assess_support(prof, noise_rel=0.05, voxel_um=20, graft_prior=0.5)
+    lo = assess_support(prof, noise_rel=0.05, voxel_um=20, graft_prior=0.1)
+    order = [SUPPORTED, CONDITIONAL, NOT_SUPPORTED]
+    assert order.index(lo.status("residual_graft_volume")) >= order.index(hi.status("residual_graft_volume"))
+    assert set(lo.intensity["by_prior"]) == {"0.100", "0.050"}
+
+
+def test_assessment_records_version():
+    from osteoquant.advisor.separability import ADVISOR_VERSION
+    assert assess_support("ha", noise_rel=0.05, voxel_um=20).to_dict()["advisor_version"] == ADVISOR_VERSION

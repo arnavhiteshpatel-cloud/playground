@@ -1,6 +1,6 @@
 # Measurement Support (Identifiability) Policy
 
-Implementation: `osteoquant/advisor/` (version 1.0.0). Validation: Experiment S1 (`experiments/exp_S1_advisor.py`).
+Implementation: `osteoquant/advisor/` (version **1.1.0**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
 
 ## Why
 Graft and new bone are both mineral. For many materials their X-ray attenuation overlaps (Experiments C, C2; the
@@ -18,20 +18,27 @@ by which mechanism, and under which conditions — and abstains otherwise.
 | Grey-scale reference | soft-tissue and host-bone levels outside the defect (relative units r = (x − soft)/(host − soft)) | HA calibration phantom |
 | Day-0 registration | registration result + QC | — |
 
-## Decision rules (pre-registered before Experiment S1)
+## Decision rules (advisor 1.1.0; see PREREGISTRATION deviations log for history)
 1. **Mineral endpoints** (total mineral volume, mineralised fraction): supported when noise < 0.35 of the bone–soft
    contrast.
 2. **Radiolucent grafts** (collagen, PLGA/PCL, DBM: mean < 0.15 of host): graft endpoints not supported (invisible);
    new-bone endpoints supported with the condition that the graft has no mineral phase.
-3. **Intensity mechanism**: the Dice-optimal intensity-only oracle (an upper bound for any threshold method) must
-   give graft Dice ≥ 0.85, and the best near-optimal rule a graft-volume ratio within ±10%.
+3. **Intensity mechanism**: the best *single-threshold* rule (the rule actually applied) must give graft Dice ≥ 0.85
+   and a graft-volume ratio within ±10%, both at the graft share estimated from the scan and at half of it (volume
+   error grows as residual graft becomes scarce). The Dice-optimal bin-union oracle is reported as the upper bound.
+   Below 5% graft share of mineral, graft-volume endpoints are refused ("trace residual graft").
 4. **Bone-derived grafts** (allograft, DBBM/xenograft, autograft): never supported by intensity alone — they remodel
    towards bone intensity.
-5. **Day-0 mechanism**: if intensity fails but a registered day-0 scan passes registration QC and graft
-   displacement is within tolerance (default 200 µm), graft endpoints are *supported with conditions*.
+5. **Day-0 mechanism**: if intensity fails but a registered day-0 scan passes registration QC (residual
+   displacement ≤ 2 voxels) and granule motion is within tolerance (default 200 µm) or tracked with ≤20% untracked
+   graft volume, graft endpoints are *supported with conditions*. All four day-0 fields must be computed by the
+   software; missing fields mean "not supported". For resorbable materials the condition states that bone formed
+   inside the original footprint is counted as graft.
 6. **Texture/morphology models**: only with material-specific validation evidence recorded in the model card
    (none exists yet).
-7. **Unknown materials**: not supported until characterised (unsupported-material workflow below).
+7. **Unknown materials**: not supported until characterised (unsupported-material workflow below). Measured
+   reference samples need ≥500 voxels.
+7a. **Metals** (titanium, magnesium): never supported — streak/beam-hardening artefacts are not modelled.
 8. **Density**: only with HA calibration.
 
 ## Unsupported-material workflow

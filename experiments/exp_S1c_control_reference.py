@@ -13,7 +13,8 @@ import numpy as np
 
 from common import save_result
 from exp_C_separability import make_structures, mu_with_graft
-from exp_S1_advisor import graft_err, summarize
+from exp_S1_advisor import graft_err, summarize, endpoint_errs
+from osteoquant.advisor.separability import ADVISOR_VERSION
 from osteoquant.advisor import MaterialProfile, scan_relative_units, to_relative
 from osteoquant.advisor.integration import advisor_threshold_segmentation, support_for_scan
 from osteoquant.phantom import PhantomConfig, generate_phantom, ImagingConfig, render_fast
@@ -37,6 +38,7 @@ for X in (2200, 1600, 1300, 1150, 1000, 900, 800, 650):
                 lab, info = advisor_threshold_segmentation(img, ph.roi_mask, (40.0,) * 3, cfg)
                 e, vt = graft_err(lab, ph.labels, ph.roi_mask)
                 rows.append({"graft_mgHA": X, "noise": s, "specimen": i, "method": tag, "err": e,
+                             **endpoint_errs(lab, ph.labels, ph.roi_mask),
                              "status": sup["endpoints"]["residual_graft_volume"]["status"],
                              "oracle": sup["intensity"].get("dice_graft")})
         print(X, s, [(r["method"][:4], r["status"][:4], round(r["err"], 3)) for r in rows[-2:]], flush=True)
@@ -44,4 +46,5 @@ summ = [summarize(rows, m) for m in ("assumed_range", "control_reference")]
 for x in summ:
     print(x)
 save_result("exp_S1c_control_reference", {"experiment": "S1c", "summary": summ, "rows": rows,
-                                          "note": "control phantom = different animal (seed 777), same stage/imaging"})
+                                          "note": "control phantom = different animal (seed 777), same stage/imaging",
+                                          "advisor_version": ADVISOR_VERSION})

@@ -45,6 +45,13 @@ ORACLE_VOLUME_TOL = 0.10        # |predicted/true − 1| of the oracle rule
 RADIOLUCENT_REL = 0.15          # material mean below this (relative units) is invisible to micro-CT
 MIN_STRUCT_VOXELS = 3.0         # thickness endpoints need structures ≥3 voxels thick
 HOST_REL_MATURE = 1.0
+MIN_REFERENCE_SAMPLES = 500     # measured reference distributions need at least this many voxels
+MIN_GRAFT_FRACTION = 0.05       # below this share of mineral, relative graft-volume error is unbounded
+ADVISOR_VERSION = "1.1.0"
+# Changelog: 1.0.x (pre-review, used by S1/S1b runs before cycle-1 review) → 1.1.0: decision uses the single-
+# threshold rule actually applied (union oracle kept as upper bound); support must hold at the estimated graft
+# share and at half of it (review IMG-01); metals refused (IMG-02); measured samples need ≥500 voxels and cannot
+# bypass the bone-derived rule (IMG-03); day-0 support requires computed QC/tracking fields (IMG-04).
 
 # Assumed new-bone maturity range in relative units. Early/mid healing: woven 650–1000 mgHA/cm³ vs
 # mature host ≈1075 → (0.60, 0.93) (SCIENTIFIC_EVIDENCE row 4, assumption anchored to a published callus
@@ -86,7 +93,7 @@ def dice_oracle_hist(g: np.ndarray, n: np.ndarray, dice_slack: float = 0.02) -> 
             "new_volume_ratio": float(pred_new / N)}
 
 
-def dice_oracle_samples(graft_vals, new_vals, bins: int = 256) -> dict:
+def dice_oracle_samples(graft_vals, new_vals, bins: int = 256, dice_slack: float = 0.02) -> dict:
     v = np.concatenate([np.ravel(graft_vals), np.ravel(new_vals)])
     lo, hi = np.percentile(v, [0.1, 99.9])
     if hi <= lo:
@@ -97,12 +104,24 @@ def dice_oracle_samples(graft_vals, new_vals, bins: int = 256) -> dict:
     r = dice_oracle_hist(g, n)
     sel = r.pop("_selected_bins", None)
     if sel is not None and sel.any():
-        # single decision threshold implied by the selected bins (graft side = brighter or darker class)
-        brighter = float(np.mean(graft_vals)) >= float(np.mean(new_vals))
         idx = np.flatnonzero(sel)
-        r["graft_brighter"] = brighter
-        r["threshold"] = float(edges[idx.min()]) if brighter else float(edges[idx.max() + 1])
         r["selection_contiguous"] = bool(idx.max() - idx.min() + 1 == idx.size)
+    # Best SINGLE threshold (what an intensity method can actually apply). The bin-union oracle may select
+    # non-contiguous bins (e.g. partial-volume graft voxels below the new-bone range), so its extreme selected
+    # bin is not a usable threshold (Experiment S1c defect). Scan contiguous cuts on the graft side.
+    brighter = float(np.median(graft_vals)) >= float(np.median(new_vals))
+    G = g.sum()
+    if G > 0:
+        gc = np.cumsum(g[::-1])[::-1] if brighter else np.cumsum(g)       # graft voxels selected by cut k
+        pc = np.cumsum((g + n)[::-1])[::-1] if brighter else np.cumsum(g + n)
+        dice_t = 2 * gc / (pc + G)
+        kb = int(np.argmax(dice_t))
+        near = np.flatnonzero(dice_t >= dice_t[kb] - dice_slack)
+        k = int(near[np.argmin(np.abs(pc[near] / G - 1))])
+        r["graft_brighter"] = brighter
+        r["threshold"] = float(edges[k]) if brighter else float(edges[k + 1])
+        r["dice_graft_threshold_rule"] = float(dice_t[k])
+        r["graft_volume_ratio_threshold_rule"] = float(pc[k] / G)
     return r
 
 
@@ -207,6 +226,10 @@ def _profiles_from_physics(energy_keV: float = 40.0, host_mgHA: float = 1075.0) 
             bone_derived=k in ("allograft", "xenograft_dbbm", "dbm"),
             evidence="PHYSICS+ASSUMPTION",
             source=f"NIST XCOM mixture at {energy_keV} keV; porosity and granule size ASSUMPTION (phantom/materials.py)")
+    out["autograft"] = MaterialProfile("autograft", 1.0, 0.06, 800, "trabecular_like", radiolucent=False,
+                                       bone_derived=True, evidence="ASSUMPTION", source="autologous bone ≈ host bone")
+    for k in ("magnesium", "titanium"):
+        out[k].morphology = "metal"
     for k, (rel, sd, s, mo) in {"collagen_sponge": (0.02, 0.02, 100, "membrane"),
                                "plga": (0.05, 0.02, 300, "solid"), "pcl": (0.05, 0.02, 300, "strut")}.items():
         out[k] = MaterialProfile(k, rel, sd, s, mo, radiolucent=True, evidence="ASSUMPTION",
@@ -247,7 +270,7 @@ class SupportAssessment:
     intensity: dict
     inputs: dict
     policy: dict
-    advisor_version: str = "1.0.0"
+    advisor_version: str = ADVISOR_VERSION
 
     def to_dict(self) -> dict:
         d = asdict(self)
@@ -326,6 +349,27 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
                                         "residual graft is not visible on micro-CT; use histology")
         return SupportAssessment(inputs["material"], ep, intensity, inputs, policy)
 
+    # --- metals: streak/beam-hardening artefacts are not modelled → never supported (review IMG-02)
+    if prof is not None and prof.morphology == "metal":
+        for e in GRAFT_ENDPOINTS:
+            ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
+                                    f"{prof.id} is metallic: streak and beam-hardening artefacts are not modelled; use a "
+                                    "metal-artefact-reduction protocol and material-specific validation")
+        return SupportAssessment(inputs["material"], ep, intensity, inputs, policy)
+
+    # --- measured reference samples must be large enough (review IMG-03)
+    notes = []
+    if graft_samples_rel is not None and np.size(graft_samples_rel) < MIN_REFERENCE_SAMPLES:
+        notes.append(f"graft reference ignored: {np.size(graft_samples_rel)} < {MIN_REFERENCE_SAMPLES} voxels")
+        graft_samples_rel = None
+    if new_samples_rel is not None and np.size(new_samples_rel) < MIN_REFERENCE_SAMPLES:
+        notes.append(f"new-bone reference ignored: {np.size(new_samples_rel)} < {MIN_REFERENCE_SAMPLES} voxels")
+        new_samples_rel = None
+    if prof is None and graft_samples_rel is None:
+        for e in GRAFT_ENDPOINTS:
+            ep[e] = EndpointSupport(e, NOT_SUPPORTED, None, "; ".join(notes) or "no material model")
+        return SupportAssessment(inputs["material"], ep, intensity, inputs, policy)
+
     # --- intensity mechanism
     if graft_samples_rel is not None:
         gm = ClassModel("samples", samples=np.asarray(graft_samples_rel, float))
@@ -336,48 +380,76 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
         nm = ClassModel("samples", samples=np.asarray(new_samples_rel, float))
     else:
         nm = ClassModel("uniform", *nb_range, surface_fraction=surface_fraction(150.0, voxel_um))
-    intensity = intensity_separability(gm, nm, noise_rel, graft_prior=graft_prior, seed=seed)
-    vol_err = abs(intensity["graft_volume_ratio"] - 1)
-    intensity_ok = intensity["dice_graft"] >= ORACLE_DICE_MIN and vol_err <= ORACLE_VOLUME_TOL
+    # Support must hold at the graft share expected in THIS scan and at half of it: the volume error of a
+    # threshold rule grows as residual graft becomes scarce (review IMG-01).
+    priors = sorted({float(np.clip(graft_prior, 0.01, 0.95)), float(np.clip(graft_prior / 2, 0.01, 0.95))})
+    evals = {pr: intensity_separability(gm, nm, noise_rel, graft_prior=pr, seed=seed) for pr in priors}
+    intensity = dict(evals[max(priors)])
+    intensity["by_prior"] = {f"{pr:.3f}": {k: v for k, v in r.items() if k in (
+        "dice_graft", "dice_graft_threshold_rule", "graft_volume_ratio_threshold_rule", "threshold")}
+        for pr, r in evals.items()}
+    intensity["notes"] = notes
+
+    def _passes(r):
+        d = r.get("dice_graft_threshold_rule", r["dice_graft"])
+        v = r.get("graft_volume_ratio_threshold_rule", r["graft_volume_ratio"])
+        return d >= ORACLE_DICE_MIN and abs(v - 1) <= ORACLE_VOLUME_TOL
+    intensity_ok = all(_passes(r) for r in evals.values())
+    scarce = graft_prior < MIN_GRAFT_FRACTION
     bone_like = prof is not None and prof.bone_derived
     if bone_like:
-        # bone-derived grafts remodel and converge to bone intensity; an apparent separation at one
-        # timepoint is not accepted as identifiability (SCIENTIFIC_EVIDENCE row 5)
+        # bone-derived grafts remodel and converge to bone intensity; an apparent separation at one timepoint —
+        # including one computed from measured samples — is not accepted as identifiability (row 5; IMG-03)
         intensity_ok = False
         intensity["bone_derived_rule"] = True
     intensity["passes_policy"] = bool(intensity_ok)
 
-    day0_ok = bool(day0 and day0.get("registered") and day0.get("qc_pass"))
+    required = ("registered", "qc_pass", "untracked_fraction", "max_displacement_um")
+    day0_complete = bool(day0) and all(k in day0 and day0[k] is not None for k in required)
+    day0_ok = day0_complete and bool(day0.get("registered") and day0.get("qc_pass"))
+    resorbable = prof is not None and prof.id in ("calcium_sulfate", "beta_tcp", "bioglass_45s5", "s53p4", "dbm")
     for e in GRAFT_ENDPOINTS:
-        if intensity_ok:
+        rule = intensity.get("dice_graft_threshold_rule", intensity["dice_graft"])
+        if intensity_ok and not (scarce and e.startswith(("residual_graft", "graft_fraction"))):
             ep[e] = EndpointSupport(e, SUPPORTED, "intensity",
-                                    f"intensity oracle graft Dice {intensity['dice_graft']:.2f}, "
-                                    f"volume ratio {intensity['graft_volume_ratio']:.2f}")
+                                    f"threshold-rule graft Dice {rule:.2f} at graft share {priors[-1]:.2f} and "
+                                    f"{priors[0]:.2f}; volume ratio within ±{ORACLE_VOLUME_TOL:.0%}")
+        elif intensity_ok and scarce:
+            ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
+                                    f"residual graft is scarce (≈{graft_prior:.0%} of mineral): relative graft-volume "
+                                    "error is unbounded; report as 'trace residual graft'")
+        elif day0 and not day0_complete:
+            ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
+                                    "day-0 assessment incomplete: registration QC and granule tracking must be computed "
+                                    f"({', '.join(k for k in required if day0.get(k) is None)} missing)")
         elif day0_ok:
             conds = ["graft footprint propagated from a registered day-0 scan",
-                     f"assumes graft displacement ≤ {day0.get('tolerance_um', 200)} µm after implantation",
+                     f"granule motion ≤ {day0.get('tolerance_um', 200)} µm or tracked",
                      "registration quality checks passed"]
-            if day0.get("untracked_fraction", 0.0) > day0.get("max_untracked_fraction", 0.2):
+            if resorbable:
+                conds.append("bone formed inside the original graft footprint (creeping substitution) is counted as "
+                             "graft: residual graft is over-estimated for resorbable materials")
+            if day0["untracked_fraction"] > day0.get("max_untracked_fraction", 0.2):
                 ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
                                         f"{day0['untracked_fraction']:.0%} of the day-0 graft could not be tracked "
                                         "(fragmentation, overgrowth or heavy resorption)")
-            elif day0.get("max_displacement_um") is not None and day0["max_displacement_um"] > day0.get("tolerance_um", 200):
+            elif day0["max_displacement_um"] > day0.get("tolerance_um", 200):
                 ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
                                         f"graft displacement {day0['max_displacement_um']:.0f} µm exceeds tolerance")
             else:
                 ep[e] = EndpointSupport(e, CONDITIONAL, "day0_registration",
-                                        f"intensity alone insufficient (oracle Dice {intensity['dice_graft']:.2f}); "
+                                        f"intensity alone insufficient (threshold-rule Dice {rule:.2f}); "
                                         "day-0 footprint used", conds)
         elif validated_texture_model and not bone_like:
             ep[e] = EndpointSupport(e, CONDITIONAL, "validated_texture_model",
                                     "material-specific model with recorded validation evidence",
                                     ["model validated for this material, scanner class and voxel size"])
         else:
-            why = (f"intensity-only separation insufficient (oracle graft Dice {intensity['dice_graft']:.2f} "
-                   f"< {ORACLE_DICE_MIN} or volume ratio {intensity['graft_volume_ratio']:.2f} outside "
-                   f"±{ORACLE_VOLUME_TOL:.0%})")
+            why = (f"intensity-only separation insufficient (threshold-rule graft Dice {rule:.2f}; requirement "
+                   f"≥{ORACLE_DICE_MIN} and volume within ±{ORACLE_VOLUME_TOL:.0%} at graft share "
+                   f"{priors[-1]:.2f} and {priors[0]:.2f})")
             if bone_like:
-                why += "; graft is bone-derived, so texture cues are not expected to separate it"
+                why = "graft is bone-derived and remodels towards bone intensity, so neither intensity nor texture separates it"
             why += ". Report total mineral; add a day-0 scan or histology to separate graft from new bone"
             ep[e] = EndpointSupport(e, NOT_SUPPORTED, None, why)
 

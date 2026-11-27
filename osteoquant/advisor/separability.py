@@ -439,10 +439,10 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
         # including one computed from measured samples — is not accepted as identifiability (row 5; IMG-03)
         intensity_ok = False
         intensity["bone_derived_rule"] = True
-    if intensity_ok and prof is not None and prof.uncertain and graft_samples_rel is None:
+    if prof is not None and prof.uncertain and graft_samples_rel is None:
         intensity_ok = False
         intensity["uncertain_profile_rule"] = prof.source
-    if intensity_ok and prof is not None and prof.id in RESORBABLE_EARLY_ONLY and \
+    if prof is not None and prof.id in RESORBABLE_EARLY_ONLY and \
             (healing_weeks is None or healing_weeks > EARLY_WEEKS_MAX):
         intensity_ok = False
         intensity["resorbable_timepoint_rule"] = (
@@ -494,11 +494,14 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
             why = (f"intensity-only separation insufficient (threshold-rule graft Dice {rule:.2f}; requirement "
                    f"≥{ORACLE_DICE_MIN} and volume within ±{ORACLE_VOLUME_TOL:.0%} at graft share "
                    f"{priors[-1]:.2f} and {priors[0]:.2f})")
-            if intensity.get("uncertain_profile_rule"):
-                why = ("material appearance is uncertain (" + intensity["uncertain_profile_rule"].split(" | ")[-1] +
-                       "); measure it with a material-only or day-0 scan")
+            extra = []
             if intensity.get("resorbable_timepoint_rule"):
-                why = intensity["resorbable_timepoint_rule"]
+                extra.append(intensity["resorbable_timepoint_rule"])
+            if intensity.get("uncertain_profile_rule"):
+                extra.append("material appearance is uncertain (" + intensity["uncertain_profile_rule"].split(" | ")[-1]
+                             + "); measure it with a material-only or day-0 scan")
+            if extra:
+                why = "; ".join(extra)
             if bone_like:
                 why = "graft is bone-derived and remodels towards bone intensity, so neither intensity nor texture separates it"
             why += ". Report total mineral; add a day-0 scan or histology to separate graft from new bone"

@@ -3,18 +3,22 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PySide6.QtCore import QSize, Qt, QTimer
+import concurrent.futures
+
+from PySide6.QtCore import QEventLoop, QSize, Qt, QTimer
 from PySide6.QtGui import QAction, QActionGroup, QKeySequence
 from PySide6.QtWidgets import (QApplication, QDockWidget, QFileDialog, QFrame, QGridLayout, QHBoxLayout, QInputDialog,
                                QLabel, QListWidget, QListWidgetItem, QMainWindow, QMessageBox, QProgressBar, QScrollArea,
-                               QPushButton, QStackedWidget, QTabWidget, QVBoxLayout, QWidget)
+                               QPushButton, QSlider, QStackedWidget, QTabWidget, QVBoxLayout, QWidget)
 
 from .. import __version__
 from ..licensing import LicenceStatus, current_status, install_licence
 from . import services as S
 from . import theme
-from .dialogs import (AboutDialog, AnalysisDialog, LicenceDialog, LoginDialog, NewProjectDialog, NewStudyDialog,
-                      RoiDialog, SaveRevisionDialog, SignDialog)
+from .dialogs import (AboutDialog, AnalysisDialog, IdleLockDialog, LicenceDialog, LoginDialog, NewProjectDialog,
+                      NewStudyDialog, RoiDialog, SaveRevisionDialog, ShortcutsDialog, SignDialog, UserAdminDialog)
+from .lock import IdleWatcher, LockPage
+from .messages import friendly, show_error
 from .import_wizard import ImportWizard
 from .jobs import JobManager
 from .oblique import ObliqueView
@@ -92,6 +96,41 @@ class StartPage(QWidget):
         self.lic.setText(f"Version {__version__}  ·  {self.win.licence.summary()}")
 
 
+class SliceCell(QWidget):
+    """A slice view with a slice slider below it (UX-16)."""
+
+    def __init__(self, view: SliceView, parent=None):
+        super().__init__(parent)
+        self.view = view
+        lay = QVBoxLayout(self)
+        lay.setContentsMargins(0, 0, 0, 0)
+        lay.setSpacing(0)
+        lay.addWidget(view, 1)
+        self.slider = QSlider(Qt.Horizontal)
+        self.slider.setFocusPolicy(Qt.StrongFocus)
+        self.slider.setToolTip(f"Slice ({['axial', 'coronal', 'sagittal'][view.axis]}); also mouse wheel, Up/Down, "
+                               "Page Up/Down, Home/End")
+        self.slider.setAccessibleName(f"{['Axial', 'Coronal', 'Sagittal'][view.axis]} slice")
+        self.slider.valueChanged.connect(lambda v: view.state.set_index(view.axis, v))
+        lay.addWidget(self.slider)
+        view.state.scan_changed.connect(self._range)
+        view.state.cursor_changed.connect(self._value)
+        self._range()
+
+    def _range(self):
+        st = self.view.state
+        self.slider.blockSignals(True)
+        self.slider.setRange(0, max(0, st.shape[self.view.axis] - 1) if st.loaded else 0)
+        self.slider.setEnabled(st.loaded)
+        self.slider.setValue(st.cursor[self.view.axis] if st.loaded else 0)
+        self.slider.blockSignals(False)
+
+    def _value(self, *_):
+        self.slider.blockSignals(True)
+        self.slider.setValue(self.view.state.cursor[self.view.axis])
+        self.slider.blockSignals(False)
+
+
 class ViewerWorkspace(QWidget):
     """Three linked slice views and the 3D panel in a 2 x 2 grid; double-click maximises."""
 
@@ -101,16 +140,28 @@ class ViewerWorkspace(QWidget):
         lay = QVBoxLayout(self)
         lay.setContentsMargins(0, 0, 0, 0)
         lay.setSpacing(0)
+        top = QHBoxLayout()
+        top.setContentsMargins(0, 0, 0, 0)
+        top.setSpacing(0)
         self.infobar = QLabel("No scan open. Double-click a scan in the project tree.")
         self.infobar.setProperty("role", "banner-info")
-        lay.addWidget(self.infobar)
+        self.infobar.setWordWrap(True)
+        top.addWidget(self.infobar, 1)
+        self.chip = QLabel(S.SYNTHETIC_CHIP)
+        self.chip.setProperty("role", "chip-bad")
+        self.chip.setToolTip("The segmentation shown was produced by a model trained on synthetic phantoms only; "
+                             "it is not validated on real tissue. The PDF report carries the same banner.")
+        self.chip.hide()
+        top.addWidget(self.chip, 0, Qt.AlignVCenter)
+        lay.addLayout(top)
         self.grid_host = QWidget()
         self.grid = QGridLayout(self.grid_host)
         self.grid.setContentsMargins(2, 2, 2, 2)
         self.grid.setSpacing(2)
         self.views = [SliceView(state, a) for a in range(3)]
+        self.slice_cells = [SliceCell(v) for v in self.views]
         self.view3d = View3D(state)
-        self.cells = [self.views[0], self.view3d, self.views[1], self.views[2]]
+        self.cells = [self.slice_cells[0], self.view3d, self.slice_cells[1], self.slice_cells[2]]
         for i, w in enumerate(self.cells):
             self.grid.addWidget(w, i // 2, i % 2)
         for v in self.views:
@@ -119,7 +170,7 @@ class ViewerWorkspace(QWidget):
         self._max = None
 
     def toggle_max(self, axis):
-        target = self.views[axis]
+        target = self.slice_cells[axis]
         if self._max is target:
             for w in self.cells:
                 w.show()
@@ -129,9 +180,10 @@ class ViewerWorkspace(QWidget):
                 w.setVisible(w is target)
             self._max = target
 
-    def set_info(self, text, kind="info"):
+    def set_info(self, text, kind="info", synthetic=False):
         from .panels import set_banner
         set_banner(self.infobar, text, kind)
+        self.chip.setVisible(bool(synthetic))
 
 
 class MainWindow(QMainWindow):
@@ -143,6 +195,10 @@ class MainWindow(QMainWindow):
         self.blinded_view = False
         self.current_scan_id = None
         self._dialogs = []
+        self._loading = False
+        self._locked = False
+        self._closing = []          # projects whose store closes once their jobs have stopped
+        self._loader = concurrent.futures.ThreadPoolExecutor(max_workers=1, thread_name_prefix="oq-load")
         self.setWindowTitle(APP_TITLE)
         self.resize(1480, 920)
         self.setDockOptions(QMainWindow.AnimatedDocks | QMainWindow.AllowTabbedDocks | QMainWindow.AllowNestedDocks)
@@ -168,9 +224,16 @@ class MainWindow(QMainWindow):
         self.tabs.addTab(self.reports, "Reports")
         self.tabs.addTab(self.audit, "Audit trail")
         self.tabs.currentChanged.connect(self._tab_changed)
+        self.lock_page = LockPage()
+        self.lock_page.unlock_requested.connect(self.unlock_session)
+        self.lock_page.close_requested.connect(self._close_from_lock)
         self.stack.addWidget(self.start)
         self.stack.addWidget(self.tabs)
+        self.stack.addWidget(self.lock_page)
         self.setCentralWidget(self.stack)
+        self.idle = IdleWatcher(self)
+        QApplication.instance().installEventFilter(self.idle)
+        self.idle.idle.connect(self.lock_session)
 
         # ---------------- docks
         self.tree = ProjectTree()
@@ -185,6 +248,7 @@ class MainWindow(QMainWindow):
         bi.clicked.connect(lambda: self.import_scans())
         ba = QPushButton("Analyse...")
         ba.clicked.connect(lambda: self.analyze_selected())
+        self.btn_import, self.btn_analyse = bi, ba
         tb.addWidget(bi)
         tb.addWidget(ba)
         tl.addLayout(tb)
@@ -198,11 +262,13 @@ class MainWindow(QMainWindow):
         self.review = ReviewPanel()
         self.review.sign_requested.connect(self.sign)
         self.review.blinded_toggled.connect(self.set_blinded)
+        self.review.roi_edit_requested.connect(self.define_roi)
+        self.review.compare_toggled.connect(self.set_compare)
         self.oblique = ObliqueView(self.state)
         self.d_display = self._dock("Display", self.display, Qt.RightDockWidgetArea, scroll=True)
         self.d_voxel = self._dock("Voxel", self.voxel, Qt.RightDockWidgetArea, scroll=True)
         self.splitDockWidget(self.d_display, self.d_voxel, Qt.Vertical)
-        self.d_seg = self._dock("Segmentation", self.segpanel, Qt.RightDockWidgetArea, scroll=True)
+        self.d_seg = self._dock("Segmentation", self.segpanel, Qt.RightDockWidgetArea)
         self.d_review = self._dock("Review", self.review, Qt.RightDockWidgetArea)
         self.d_oblique = self._dock("Oblique", self.oblique, Qt.RightDockWidgetArea)
         self.tabifyDockWidget(self.d_display, self.d_seg)
@@ -286,14 +352,27 @@ class MainWindow(QMainWindow):
         e.addSeparator()
         self.tool_group = QActionGroup(self)
         self.tool_actions = {}
-        for key, text, sc in (("navigate", "Navigate", "N"), ("brush", "Brush", "B"), ("erase", "Eraser", "E"),
-                              ("grow", "Region grow", "G"), ("fill", "Fill holes", "H")):
-            a = self._act(text, lambda _=False, k=key: self.state.set_tool(k), sc, checkable=True)
+        for key, text, sc, tip in (("navigate", "Navigate", "N", "Move the crosshair (N)"),
+                                   ("brush", "Brush", "B", "Paint the active class (B)"),
+                                   ("erase", "Eraser", "E", "Erase to background (E)"),
+                                   ("grow", "Region grow", "G", "Grow from a seed within a tolerance (G)"),
+                                   ("fill", "Fill holes", "H", "Fill enclosed holes of the active class (H)"),
+                                   ("measure", "Distance", "M", "Measure a distance: drag in a slice view (M)")):
+            a = self._act(text, lambda _=False, k=key: self.state.set_tool(k), sc, checkable=True, tip=tip)
+            # tool keys act only while the viewer has focus: they never steal type-ahead in the tree (UX-27)
+            a.setShortcutContext(Qt.WidgetWithChildrenShortcut)
+            self.workspace.addAction(a)
             self.tool_group.addAction(a)
             e.addAction(a)
             self.tool_actions[key] = a
         self.tool_actions["navigate"].setChecked(True)
         self.state.tool_changed.connect(lambda: self.tool_actions[self.state.tool].setChecked(True))
+        self.a_roi_toggle = self._act("Show ROI outline", lambda on: self.display.show_roi.setChecked(on), "R",
+                                      checkable=True, tip="Show the analysis ROI outline on the slices and in 3D (R)")
+        self.a_roi_toggle.setChecked(True)
+        self.a_roi_toggle.setShortcutContext(Qt.WidgetWithChildrenShortcut)
+        self.workspace.addAction(self.a_roi_toggle)
+        self.state.overlay_changed.connect(lambda: self.a_roi_toggle.setChecked(self.state.show_roi))
         e.addSeparator()
         self.a_save_rev = self._act("Save label revision...", self.save_revision, "Ctrl+S")
         e.addAction(self.a_save_rev)
@@ -307,10 +386,21 @@ class MainWindow(QMainWindow):
         self.a_report = self._act("Generate report for current study", lambda: self.generate_report(self.tree.current_study_id()))
         for a in (self.a_new_study, self.a_add_group, None, self.a_roi, self.a_analyze, self.a_cancel, None, self.a_report):
             st.addSeparator() if a is None else st.addAction(a)
+        st.setToolTipsVisible(True)
+        e.setToolTipsVisible(True)
+
+        pm = mb.addMenu("&Project")
+        self.a_users = self._act("Users...", self.manage_users, tip="Add users, set roles, deactivate, reset passwords")
+        self.a_idle = self._act("Idle lock...", self.configure_idle_lock, tip="Minutes without input before the window locks")
+        self.a_lock = self._act("Lock now", self.lock_session, "Ctrl+L")
+        for a in (self.a_users, self.a_idle, None, self.a_lock):
+            pm.addSeparator() if a is None else pm.addAction(a)
+        pm.setToolTipsVisible(True)
 
         v = mb.addMenu("&View")
         self.a_blind = self._act("Blinded review mode", lambda on: self.set_blinded(on), checkable=True)
         v.addAction(self.a_blind)
+        v.addAction(self.a_roi_toggle)
         tm = v.addMenu("Theme")
         tg = QActionGroup(self)
         for name in ("light", "dark"):
@@ -331,19 +421,25 @@ class MainWindow(QMainWindow):
         self.a_timing_export = self._act("Export workflow timing CSV...", lambda: self.export_timing())
         tools.addAction(self.a_timing)
         tools.addAction(self.a_timing_export)
+        self.a_audit_export = self._act("Export audit trail (CSV/JSON)...", lambda: self.audit.export(),
+                                        tip="Exports every audit event with the chain-verification result")
+        tools.addAction(self.a_audit_export)
+        tools.setToolTipsVisible(True)
 
         h = mb.addMenu("&Help")
+        h.addAction(self._act("Keyboard shortcuts", lambda: self._own(ShortcutsDialog(self)).exec(), "F1"))
         h.addAction(self._act("Licence...", self.show_licence))
         h.addAction(self._act("About OsteoQuant Desktop", self.show_about))
 
         tb = self.addToolBar("Main")
+        self.toolbar = tb
         tb.setObjectName("toolbar_main")
         tb.setMovable(False)
         tb.setIconSize(QSize(16, 16))
         tb.setToolButtonStyle(Qt.ToolButtonTextOnly)
         for a in (self.a_open, self.a_import, None, self.a_analyze, self.a_save_rev, None):
             tb.addSeparator() if a is None else tb.addAction(a)
-        for k in ("navigate", "brush", "erase", "grow", "fill"):
+        for k in ("navigate", "brush", "erase", "grow", "fill", "measure"):
             tb.addAction(self.tool_actions[k])
         tb.addSeparator()
         h = self.state.history
@@ -406,15 +502,47 @@ class MainWindow(QMainWindow):
                   self.d_jobs, self.d_qc):
             d.setVisible(on)
         for a in (self.a_close, self.a_import, self.a_new_study, self.a_add_group, self.a_roi, self.a_analyze,
-                  self.a_report, self.a_save_rev, self.a_shot, self.a_timing, self.a_timing_export,
-                  *self.tool_actions.values()):
+                  self.a_report, self.a_save_rev, self.a_shot, self.a_timing, self.a_timing_export, self.a_users,
+                  self.a_idle, self.a_lock, self.a_audit_export, *self.tool_actions.values()):
             a.setEnabled(on)
         self.d_oblique.hide()
         if on:
             self.d_display.raise_()
             self.d_qc.raise_()
             QTimer.singleShot(0, self._size_docks)
+            self.apply_role_gating()
         self._update_title()
+
+    # Actions that need a permission the signed-in role may lack, with their normal tooltips.
+    def _gated(self):
+        return {"write": [(self.a_import, "Import scans"), (self.a_new_study, "New study"),
+                          (self.a_add_group, "Add group"), (self.a_roi, "Define a manual ROI at the crosshair"),
+                          (self.a_analyze, "Analyse selected scans"), (self.a_save_rev, "Save label revision"),
+                          (self.tool_actions["brush"], "Paint the active class (B)"),
+                          (self.tool_actions["erase"], "Erase to background (E)"),
+                          (self.tool_actions["grow"], "Grow from a seed within a tolerance (G)"),
+                          (self.tool_actions["fill"], "Fill enclosed holes of the active class (H)"),
+                          (self.btn_import, "Import scans into the selected study"),
+                          (self.btn_analyse, "Analyse the selected scans")],
+                "manage_users": [(self.a_users, "Add users, set roles, deactivate, reset passwords"),
+                                 (self.a_idle, "Minutes without input before the window locks")]}
+
+    def apply_role_gating(self):
+        """Disable what the signed-in role cannot do, with a tooltip that says why (UX-10)."""
+        p = self.project
+        if not p or not p.user:
+            return
+        for perm, items in self._gated().items():
+            why = p.why_not(perm)
+            for w, tip in items:
+                w.setEnabled(not why)
+                w.setToolTip(why or tip)
+                if isinstance(w, QAction):
+                    w.setStatusTip(why or tip)
+        allowed_audit = p.can("review") or p.can("manage_users")
+        self.a_audit_export.setEnabled(allowed_audit)
+        self.a_audit_export.setToolTip("" if allowed_audit else "Requires the reviewer, study director or administrator role")
+        self.state.set_read_only(p.why_not("write"))
 
     def _update_title(self):
         t = APP_TITLE
@@ -488,35 +616,58 @@ class MainWindow(QMainWindow):
         self._set_project_ui(True)
         self.refresh_tree()
         sid = self.tree.current_study_id()
+        self.results.watermark = self.licence.watermark
         self.results.set_project(p, sid)
         self.reports.set_project(p, sid, self.licence.watermark)
         self.audit.set_project(p)
         self.review.set_scan(p, None)
+        self.idle.set_timeout_minutes(p.idle_lock_minutes)
         self.workspace.set_info(f"Project {p.name} opened. Double-click a scan in the project tree to view it.")
         self.statusBar().showMessage(f"Signed in as {p.user['username']}", 5000)
 
-    def close_project(self) -> bool:
+    CLOSE_WAIT_MS = 3000
+
+    def close_project(self, ask: bool = True) -> bool:
         if self.project is None:
             return True
-        if not self._confirm_discard_edits():
+        if self._loading:
+            return False
+        if not self._locked and not self._confirm_discard_edits():
             return False
         if self.jobs.active_jobs():
-            if QMessageBox.question(self, "Jobs running", "Background jobs are running. Cancel them and close?") \
+            if ask and QMessageBox.question(self, "Jobs running", "Background jobs are running. Cancel them and close?") \
                     != QMessageBox.Yes:
                 return False
+            # cancel, then wait at most 3 s; a library stage that is still running finishes in the
+            # background and the project's database is closed once the pool is idle (UX-26)
             self.jobs.cancel_all()
-            self.jobs.wait(30000)
+            self.jobs.wait(self.CLOSE_WAIT_MS)
         self.state.unload()
         self.current_scan_id = None
         self.activity.set_recorder(None)
         self.timing = None
-        self.project.close()
+        p = self.project
         self.project = None
+        if self.jobs.active_jobs():
+            self._closing.append(p)
+            QTimer.singleShot(500, self._finish_deferred_close)
+            self.statusBar().showMessage("Waiting for a cancelled job to stop; the project closes when it has.", 8000)
+        else:
+            p.close()
         self.jobs.set_project(None)
+        self.jobs_panel.clear_finished()
         self.tree.clear()
+        self._unlock_ui()
         self._set_project_ui(False)
         self.start.refresh()
         return True
+
+    def _finish_deferred_close(self):
+        if self.jobs.active_jobs():
+            QTimer.singleShot(500, self._finish_deferred_close)
+            return
+        while self._closing:
+            self._closing.pop().close()
 
     def _fill_recent(self):
         m = self.recent_menu
@@ -586,8 +737,23 @@ class MainWindow(QMainWindow):
             return False
         return r == QMessageBox.Discard
 
-    def open_scan(self, scan_id, segmentation_id=None):
-        if not self.project or scan_id is None:
+    def _run_in_thread(self, fn):
+        """Run ``fn`` on the loader thread while the GUI keeps repainting and processing jobs and
+        timers (user input is held back until the result is in, so nothing re-enters)."""
+        fut = self._loader.submit(fn)
+        if not fut.done():
+            loop = QEventLoop()
+            t = QTimer()
+            t.setInterval(10)
+            t.timeout.connect(lambda: fut.done() and loop.quit())
+            t.start()
+            if not fut.done():
+                loop.exec(QEventLoop.ExcludeUserInputEvents)
+            t.stop()
+        return fut.result()
+
+    def open_scan(self, scan_id, segmentation_id=None, keep_view=False):
+        if not self.project or scan_id is None or self._loading:
             return False
         if self.current_scan_id is not None and not self._confirm_discard_edits():
             return False
@@ -601,23 +767,63 @@ class MainWindow(QMainWindow):
         seg = None
         if segs:
             seg = next((s for s in segs if s["id"] == segmentation_id), segs[-1])
-        labels = src.load_labels(seg["labels_key"]) if seg and seg.get("labels_key") in src.label_layers() else None
+        # label volumes (1-8 GB for large scans) are read on a worker thread, not the GUI thread (UX-25)
+        self._loading = True
+        self.statusBar().showMessage("Loading labels and ROI...")
+        QApplication.setOverrideCursor(Qt.BusyCursor)
+        try:
+            layers = self._run_in_thread(lambda: S.load_scan_layers(sc["store_path"], seg))
+        except Exception as e:  # noqa: BLE001
+            show_error(self, "Scan not opened", e)
+            return False
+        finally:
+            QApplication.restoreOverrideCursor()
+            self._loading = False
+        same = keep_view and scan_id == self.current_scan_id
         self.current_scan_id = scan_id
-        self.state.load(src, labels, sc, seg)
+        self.state.load(src, layers["labels"], sc, seg, roi=layers["roi"], keep_view=same)
         self.display.set_segmentations(segs, seg["id"] if seg else None)
+        self.display._on_scan()
         self.qc.show_qc(sc.get("qc"), self._scan_label(sc))
         self.review.set_scan(p, scan_id)
+        if seg:
+            self.review.refresh(seg["id"])
         self.tree.select_scan(scan_id)
         self.tabs.setCurrentWidget(self.workspace)
         self._update_viewer_info()
+        self.statusBar().clearMessage()
         p.store.audit.record("scan.view", p.user["id"], p.user["org_id"], "scan", scan_id, {"client": "desktop"})
         if self.timing:
             self.timing.scan_opened(scan_id, sc["study_id"])
         self._update_title()
         return True
 
+    def set_compare(self, on: bool):
+        """Highlight voxels changed between the selected version and its parent (UX-06)."""
+        st = self.state
+        if not on:
+            st.set_compare(None)
+            return
+        sel = self.review.selected_segmentation()
+        if not sel or not sel.get("parent_id") or self.current_scan_id is None:
+            return
+        if not st.segmentation or st.segmentation["id"] != sel["id"]:
+            if not self.open_scan(self.current_scan_id, sel["id"], keep_view=True):
+                return
+            self.review.compare.blockSignals(True)
+            self.review.compare.setChecked(True)
+            self.review.compare.blockSignals(False)
+        parent = self.project.store.q1("SELECT version, labels_key FROM segmentations WHERE id=?", (sel["parent_id"],))
+        sc = st.scan
+        layers = self._run_in_thread(lambda: S.load_scan_layers(sc["store_path"], None, parent["labels_key"]))
+        st.set_compare(layers["parent"], f"changed vs v{parent['version']}")
+        n = int(st.compare_mask.sum()) if st.compare_mask is not None else 0
+        self.statusBar().showMessage(f"{n:,} voxels differ from v{parent['version']} (magenta)", 8000)
+
     def _scan_label(self, sc) -> str:
-        return f"Scan {sc['id']:04d}" if self.blinded_view else f"Scan {sc['id']} - {sc['source_name']}"
+        if self.blinded_view and self.project:
+            return self.project.scan_code(sc["id"], sc.get("study_id"))
+        return f"Scan {sc['id']} - {sc['source_name']}"
 
     def _update_viewer_info(self):
         st = self.state
@@ -627,12 +833,25 @@ class MainWindow(QMainWindow):
         sc, seg = st.scan, st.segmentation
         sh = " x ".join(map(str, st.shape))
         sp = ", ".join(f"{s:g}" for s in st.spacing)
-        segtxt = (f"segmentation v{seg['version']} ({seg['kind']}, {seg.get('method') or '-'})" if seg
+        meth = S.segmentation_method_info(seg) if seg else {"short": "", "synthetic": False}
+        segtxt = (f"segmentation v{seg['version']} ({seg['kind']}, {meth['short']})" if seg
                   else "no segmentation yet - run the analysis to create one, then edit it")
+        roitxt = ""
+        if seg and self.project:
+            rs = S.roi_state(self.project, seg.get("roi_id"))
+            if rs["roi"] is not None:
+                roitxt = f"   ·   ROI {rs['status']}"
+        ro = "   ·   READ ONLY" if st.read_only_reason and seg else ""
         kind = "info" if seg else "warn"
-        self.workspace.set_info(f"{self._scan_label(sc)}   ·   {sh} voxels   ·   {sp} µm   ·   {segtxt}", kind)
+        if seg and "awaiting" in roitxt:
+            kind = "warn"
+        self.workspace.set_info(f"{self._scan_label(sc)}   ·   {sh} voxels   ·   {sp} µm   ·   {segtxt}{roitxt}{ro}",
+                                kind, synthetic=meth["synthetic"])
 
     def define_roi(self):
+        if self.project and not self.project.can("write"):
+            QMessageBox.information(self, "Define ROI", self.project.why_not("write"))
+            return
         if not self.state.loaded or self.current_scan_id is None:
             QMessageBox.information(self, "Define ROI", "Open a scan and place the crosshair at the defect centre first.")
             return
@@ -642,8 +861,11 @@ class MainWindow(QMainWindow):
                 rid = S.save_cylinder_roi(self.project, self.current_scan_id, self.state.cursor, dlg.radius.value(),
                                           (dlg.depth0.value(), dlg.depth1.value()), reason=dlg.reason.text().strip())
                 self.statusBar().showMessage(f"ROI {rid} saved. Run the analysis to use it.", 8000)
+                if QMessageBox.question(self, "ROI saved", "The new ROI is used by the next analysis of this scan. "
+                                        "Re-analyse the scan now?") == QMessageBox.Yes:
+                    self.analyze_selected([self.current_scan_id])
             except (PermissionError, ValueError) as e:
-                QMessageBox.warning(self, "ROI not saved", str(e))
+                show_error(self, "ROI not saved", e)
 
     def save_revision(self, reason: str | None = None, wait: bool = False):
         st = self.state
@@ -663,11 +885,12 @@ class MainWindow(QMainWindow):
             if job.status == "done":
                 st.history.clear()
                 st.editor.base_counts = dict(st.editor.counts)
-                self.open_scan(scan_id, job.result["segmentation_id"])
+                # same scan: keep crosshair, window/level and zoom (UX-19)
+                self.open_scan(scan_id, job.result["segmentation_id"], keep_view=True)
                 self.statusBar().showMessage(f"Saved segmentation v{job.result['version']}", 8000)
                 self.results.refresh()
             elif job.status == "failed":
-                QMessageBox.critical(self, "Revision not saved", job.error)
+                show_error(self, "Revision not saved", job.error, QMessageBox.Critical)
 
         job = self.jobs.submit("save_labels", f"Save label revision (scan {scan_id})",
                                lambda ctx: S.save_label_revision(project, scan_id, base, labels, reason, ops, ctx),
@@ -711,12 +934,15 @@ class MainWindow(QMainWindow):
         if scan_id == self.current_scan_id and job.status == "done":
             ed = self.state.editor
             if ed is None or not ed.modified:
-                self.open_scan(scan_id)
+                self.open_scan(scan_id, keep_view=True)
 
     def generate_report(self, study_id):
         if not self.project or study_id is None:
             return None
-        project, wm = self.project, self.licence.watermark
+        project, wm, blinded = self.project, self.licence.watermark, self.blinded_view
+        if not S.study_has_analysis(project, study_id):
+            QMessageBox.information(self, "Report", friendly("ValueError: This study has no analysed scans yet"))
+            return None
 
         def done(job):
             if job.status == "done":
@@ -724,36 +950,57 @@ class MainWindow(QMainWindow):
                 self.reports.set_project(project, study_id, wm)
                 self.reports.refresh(job.result["report_id"])
             elif job.status == "failed":
-                QMessageBox.warning(self, "Report not generated", job.error)
-        job = self.jobs.submit("report", f"DefectFill report (study {study_id})",
-                               lambda ctx: S.generate_report(project, study_id, wm, ctx), on_done=done)
+                show_error(self, "Report not generated", job.error)
+        job = self.jobs.submit("report", f"Defect-fill report (study {study_id})" + (", blinded" if blinded else ""),
+                               lambda ctx: S.generate_report(project, study_id, wm, ctx, blinded=blinded), on_done=done)
         self.d_jobs.raise_()
         return job
 
-    def sign(self, object_type, object_id, decision, password=None, meaning=None):
+    def _object_desc(self, object_type, object_id) -> str:
+        p = self.project
+        if object_type == "segmentation":
+            seg = p.store.q1("SELECT scan_id, version FROM segmentations WHERE id=?", (object_id,))
+            if seg:
+                sc = p.store.scan(p.user, seg["scan_id"])
+                return f"segmentation v{seg['version']} of {self._scan_label(sc)}"
+        if object_type == "roi":
+            r = p.store.q1("SELECT scan_id, version FROM rois WHERE id=?", (object_id,))
+            if r:
+                sc = p.store.scan(p.user, r["scan_id"])
+                return f"analysis ROI v{r['version']} of {self._scan_label(sc)}"
+        if object_type == "report":
+            return f"report {object_id}"
+        return f"{object_type} {object_id}"
+
+    def sign(self, object_type, object_id, decision, password=None, meaning=None, signature_role=None):
         if not self.project:
             return None
-        desc = f"{object_type} {object_id}"
+        desc = self._object_desc(object_type, object_id)
+        roles = S.signature_roles_for(self.project.user) if object_type == "report" else []
         if password is None:
-            dlg = self._own(SignDialog(self.project.user, desc, decision, self))
+            dlg = self._own(SignDialog(self.project.user, desc, decision, self, object_type, roles))
             while dlg.exec():
                 try:
                     rid = S.sign_review(self.project, dlg.pw.text(), object_type, object_id, decision,
-                                        dlg.meaning.currentText(), dlg.comment.text())
+                                        dlg.meaning.currentText(), dlg.comment.text(),
+                                        dlg.role.currentData() if dlg.role.count() else None)
                     break
                 except (PermissionError, ValueError, KeyError) as e:
-                    dlg.show_error(str(e))
+                    dlg.show_error(friendly(e))
                     dlg.pw.clear()
             else:
                 return None
         else:
-            rid = S.sign_review(self.project, password, object_type, object_id, decision, meaning or "approved", "")
+            rid = S.sign_review(self.project, password, object_type, object_id, decision, meaning or "approved", "",
+                                signature_role)
         if self.timing:
             self.timing.signoff(object_type, object_id, decision)
         self.review.refresh()
-        self.reports.refresh()
+        self.reports.refresh(object_id if object_type == "report" else None)
         self.audit.refresh()
-        self.statusBar().showMessage(f"Signature recorded ({decision}).", 6000)
+        self.results.refresh()
+        self._update_viewer_info()
+        self.statusBar().showMessage(f"Signature recorded ({decision.replace('_', ' ')}).", 6000)
         return rid
 
     # ================================================================== misc
@@ -765,7 +1012,12 @@ class MainWindow(QMainWindow):
             w.blockSignals(False)
         self.refresh_tree()
         self.results.set_blinded(self.blinded_view)
+        self.review.set_blinded(self.blinded_view)
+        self.audit.set_blinded(self.blinded_view)
+        self.reports.set_blinded(self.blinded_view)
         self._update_viewer_info()
+        if self.state.scan:
+            self.qc.show_qc(self.state.scan.get("qc"), self._scan_label(self.state.scan))
         if self.project:
             u = self.project.user
             self.project.store.audit.record("ui.blinded_mode", u["id"], u["org_id"], details={"on": self.blinded_view})
@@ -869,6 +1121,9 @@ class MainWindow(QMainWindow):
         elif key == "add_group":
             self.add_group(node.get("id"))
         elif key == "analyze":
+            if self.project and not self.project.can("write"):
+                QMessageBox.information(self, "Analyse", self.project.why_not("write"))
+                return
             self.analyze_selected()
         elif key == "report":
             self.generate_report(node.get("id"))
@@ -933,9 +1188,95 @@ class MainWindow(QMainWindow):
         self.resizeDocks([self.d_jobs], [250], Qt.Vertical)
         self.resizeDocks([self.d_display, self.d_voxel], [560, 200], Qt.Vertical)
 
+    # ================================================================== users, idle lock
+    def manage_users(self):
+        if not self.project or not self.project.can("manage_users"):
+            return None
+        dlg = self._own(UserAdminDialog(self.project, self))
+        dlg.exec()
+        self.review.refresh()
+        return dlg
+
+    def configure_idle_lock(self, minutes=None):
+        if not self.project or not self.project.can("manage_users"):
+            return
+        if minutes is None:
+            dlg = self._own(IdleLockDialog(self.project.idle_lock_minutes, self))
+            if not dlg.exec():
+                return
+            minutes = dlg.minutes.value()
+        self.project.set_idle_lock_minutes(int(minutes))
+        self.idle.set_timeout_minutes(self.project.idle_lock_minutes)
+        self.statusBar().showMessage(f"Idle lock: {minutes} min" if minutes else "Idle lock off", 6000)
+
+    def lock_session(self):
+        """Hide the project and require the signed-in user's password (idle lock, Ctrl+L)."""
+        if self.project is None or self._locked:
+            return
+        self._locked = True
+        self.idle.paused = True
+        self._lock_restore = {"index": self.stack.currentIndex(),
+                              "docks": [d for d in self.findChildren(QDockWidget) if d.isVisible()]}
+        for d in self._lock_restore["docks"]:
+            d.hide()
+        for a in self.menuBar().actions():
+            a.setEnabled(False)
+        self.toolbar.setEnabled(False)
+        u = self.project.user
+        self.lock_page.prepare(u, self.project.name, self.project.idle_lock_minutes)
+        self.stack.setCurrentWidget(self.lock_page)
+        self.project.store.audit.record("session.lock", u["id"], u["org_id"], details={
+            "idle_minutes": self.project.idle_lock_minutes})
+
+    def unlock_session(self, password: str) -> bool:
+        if not self._locked or self.project is None:
+            return False
+        p = self.project
+        if not p.store.reauthenticate(p.user, password):      # lockout policy applies
+            u = p.store.q1("SELECT locked_until FROM users WHERE id=?", (p.user["id"],)) or {}
+            import time as _t
+            locked = (u.get("locked_until") or 0) > _t.time()
+            self.lock_page.show_error("Account temporarily locked after repeated wrong passwords. Try again later "
+                                      "or close the project." if locked else "Wrong password.")
+            p.store.audit.record("session.unlock_failed", p.user["id"], p.user["org_id"], details={"locked": locked})
+            return False
+        p.store.audit.record("session.unlock", p.user["id"], p.user["org_id"])
+        self._unlock_ui()
+        return True
+
+    def _unlock_ui(self):
+        if not self._locked:
+            return
+        self._locked = False
+        self.idle.paused = False
+        self.idle.last_input = self.idle.clock()
+        for a in self.menuBar().actions():
+            a.setEnabled(True)
+        self.toolbar.setEnabled(True)
+        rs = getattr(self, "_lock_restore", {})
+        self.stack.setCurrentIndex(rs.get("index", 1))
+        if self.project is not None:
+            for d in rs.get("docks", []):
+                d.show()
+
+    def _close_from_lock(self):
+        # unsaved edits cannot be confirmed without unlocking: they are discarded (the lock page says so)
+        if self.state.editor is not None and self.state.editor.modified:
+            if QMessageBox.question(self, "Close project", "Unsaved label edits will be discarded. Close the project?") \
+                    != QMessageBox.Yes:
+                return
+            self.state.history.clear()
+            self.state.editor.base_counts = dict(self.state.editor.counts)
+        self.close_project()
+
     def closeEvent(self, e):
+        if self._loading:
+            e.ignore()
+            QTimer.singleShot(200, self.close)
+            return
         if not self.close_project():
             e.ignore()
             return
         self.workspace.view3d.shutdown()
+        self._loader.shutdown(wait=False)
         e.accept()

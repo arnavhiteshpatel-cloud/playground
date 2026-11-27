@@ -59,6 +59,7 @@ class Job:
     finished: float | None = None
     cancel_event: threading.Event = field(default_factory=threading.Event)
     db_id: int | None = None
+    project: object = None          # the project the job belongs to (its records go there, even after a switch)
 
     @property
     def active(self) -> bool:
@@ -96,6 +97,8 @@ class _Runnable(QRunnable):
             final = FAILED
             job.error = f"{type(e).__name__}: {e}"
             job.traceback = traceback.format_exc(limit=8)
+            from .messages import friendly
+            job.message = friendly(job.error)
         m._finish(job, final)
 
 
@@ -122,7 +125,7 @@ class JobManager(QObject):
 
     # ------------------------------------------------------------------ API
     def submit(self, kind: str, title: str, fn, on_done=None) -> Job:
-        job = Job(next(self._ids), kind, title)
+        job = Job(next(self._ids), kind, title, project=self.project)
         if on_done is not None:
             job._on_done = on_done  # type: ignore[attr-defined]
         self.jobs[job.id] = job
@@ -167,7 +170,7 @@ class JobManager(QObject):
         self.job_finished.emit(job)
 
     def _db_insert(self, job: Job):
-        p = self.project
+        p = job.project
         if p is None or not p.user:
             return
         try:
@@ -180,7 +183,7 @@ class JobManager(QObject):
             job.db_id = None
 
     def _db_update(self, job: Job, status: str | None = None):
-        p = self.project
+        p = job.project
         status = status or job.status
         if p is None or job.db_id is None:
             return
@@ -196,7 +199,7 @@ class JobManager(QObject):
             pass
 
     def _audit(self, action, job, details=None):
-        p = self.project
+        p = job.project
         if p is None or not p.user or job.db_id is None:
             return
         try:

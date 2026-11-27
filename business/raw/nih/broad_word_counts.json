@@ -1,0 +1,21 @@
+{
+ "note": "operator=and means all words present anywhere in title/terms/abstract (broad, over-inclusive); counts are project-year records",
+ "counts": {
+  "FY2025 and:bone regeneration": 627,
+  "FY2025 and:bone defect": 1465,
+  "FY2025 and:fracture healing": 145,
+  "FY2025 and:micro-computed tomography bone": 334,
+  "FY2025 and:microCT bone": 133,
+  "FY2025 and:bone graft": 336,
+  "FY2025 and:spinal fusion": 107,
+  "FY2025 and:alveolar bone regeneration": 49,
+  "FY2026 and:bone regeneration": 564,
+  "FY2026 and:bone defect": 1244,
+  "FY2026 and:fracture healing": 141,
+  "FY2026 and:micro-computed tomography bone": 334,
+  "FY2026 and:microCT bone": 140,
+  "FY2026 and:bone graft": 295,
+  "FY2026 and:spinal fusion": 90,
+  "FY2026 and:alveolar bone regeneration": 47
+ }
+}

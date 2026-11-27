@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-11-16",
+    "results": {
+      "skip": 0,
+      "limit": 1,
+      "total": 1
+    }
+  },
+  "results": [
+    {
+      "third_party_flag": "N",
+      "life_sustain_support_flag": "N",
+      "gmp_exempt_flag": "N",
+      "summary_malfunction_reporting": "Eligible",
+      "product_code": "NPZ",
+      "openfda": {
+        "pma_number": [
+          "P040013",
+          "P050053",
+          "P990033"
+        ],
+        "registration_number": [
+          "1423662",
+          "3018094310",
+          "3003120897",
+          "3007884119",
+          "1030489",
+          "3008816891",
+          "3011175224"
+        ],
+        "fei_number": [
+          "1000477302",
+          "3018094310",
+          "3003120897",
+          "3007884119",
+          "3008816891",
+          "3000215273",
+          "3011175224"
+        ]
+      },
+      "review_panel": "DE",
+      "medical_specialty": "DE",
+      "device_name": "Bone Grafting Material, Dental, With Biologic Component",
+      "review_code": "",
+      "unclassified_reason": "",
+      "medical_specialty_description": "Dental",
+      "device_class": "3",
+      "definition": "Dental bone grafting material with growth factors is a combination product which consists of a bone grafting material which contains biologic or drug components, such as proteins, that are intended to stimulate and/or inhibit the growth of certain tissues of the oral and maxillofacial region.",
+      "regulation_number": "872.3930",
+      "implant_flag": "Y",
+      "submission_type_id": "2"
+    }
+  ]
+}

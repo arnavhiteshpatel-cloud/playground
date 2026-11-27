@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-11-16",
+    "results": {
+      "skip": 0,
+      "limit": 1,
+      "total": 1
+    }
+  },
+  "results": [
+    {
+      "third_party_flag": "N",
+      "life_sustain_support_flag": "N",
+      "gmp_exempt_flag": "N",
+      "summary_malfunction_reporting": "Eligible",
+      "product_code": "PJN",
+      "openfda": {
+        "k_number": [
+          "K212414",
+          "K190523"
+        ],
+        "registration_number": [
+          "3010407203",
+          "1064858",
+          "3006130229",
+          "3014680740",
+          "3015259858"
+        ],
+        "fei_number": [
+          "3010407203",
+          "3006130229",
+          "3014680740",
+          "3008397795",
+          "3015259858"
+        ]
+      },
+      "review_panel": "NE",
+      "medical_specialty": "NE",
+      "device_name": "Filler, Bone Void, Non-Alterable Compound For Cranioplasty",
+      "review_code": "",
+      "unclassified_reason": "",
+      "medical_specialty_description": "Neurology",
+      "device_class": "2",
+      "definition": "A nonalterable cranial bone void filler is a device that is created from patient-specific computerized tomography (CT) imaging data and intended to fill bony voids, defects, and contour irregularities in non-load bearing regions of the cranial skeleton, and are not intrinsic to the stability of the bony structure. The materials used (e.g., metals, polyether ether ketone (PEEK), etc.) in the construction of the nonalterable cranial bone void fillers are not resorbable and cannot be altered or reshaped at the time of surgery or after implantation without changing the chemical behavior of the material.",
+      "regulation_number": "882.5330",
+      "implant_flag": "Y",
+      "submission_type_id": "1"
+    }
+  ]
+}

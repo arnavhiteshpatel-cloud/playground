@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-11-16",
+    "results": {
+      "skip": 0,
+      "limit": 1,
+      "total": 1
+    }
+  },
+  "results": [
+    {
+      "third_party_flag": "N",
+      "life_sustain_support_flag": "N",
+      "gmp_exempt_flag": "N",
+      "summary_malfunction_reporting": "Ineligible",
+      "product_code": "QRR",
+      "openfda": {
+        "k_number": [
+          "K234008",
+          "DEN210044"
+        ],
+        "registration_number": [
+          "3010413864",
+          "3004681519",
+          "2245304",
+          "3005304945",
+          "1319660"
+        ],
+        "fei_number": [
+          "3010413864",
+          "2245304",
+          "3005304945",
+          "1000136478",
+          "3003870583"
+        ]
+      },
+      "review_panel": "OR",
+      "medical_specialty": "OR",
+      "device_name": "Filler, Bone Void, Calcium Compound Containing Single Approved Aminoglycoside",
+      "review_code": "",
+      "unclassified_reason": "",
+      "medical_specialty_description": "Orthopedic",
+      "device_class": "2",
+      "definition": "A resorbable calcium salt bone void filler containing a single approved aminoglycoside antibacterial is a resorbable implant intended to fill bony defects of the extremities where there is an increased risk of infection. It is intended to resorb over time and be replaced by new bone. The product is intended for reduction of recurrence of chronic osteomyelitis of long bones. It is not intended to treat infection.",
+      "regulation_number": "888.3046",
+      "implant_flag": "Y",
+      "submission_type_id": "1"
+    }
+  ]
+}

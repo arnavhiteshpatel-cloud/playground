@@ -1,0 +1,55 @@
+core_project,activity,org,title,award,categories
+I01RX003911,I01,VA SALT LAKE CITY HEALTHCARE SYSTEM,Fluoridated scaffolds for the treatment of critical-size bone defects,,defect|fracture
+R01AR083763,R01,NORTHEAST OHIO MEDICAL UNIVERSITY,Delivery of GPNMB Therapeutics for Bone Regeneration,394202,defect|fracture|spine
+R21DE034938,R21,GEORGIA INSTITUTE OF TECHNOLOGY,Controlled delivery of mitochondria for craniofacial bone healing,447009,defect|fracture
+K08AR084594,K08,UNIVERSITY OF CALIFORNIA AT DAVIS,Systemic and local immunomodulation of fracture healing in polytrauma,169344,fracture
+F32AR084876,F32,UNIVERSITY OF COLORADO,Granular hydrogels for the controlled delivery of immunomodulatory and angiogenic extracellular vesicles to enhance bone tissue regeneration,75052,defect|fracture
+F30AR081102,F30,VIRGINIA COMMONWEALTH UNIVERSITY,Extracellular Matrix Vesicles and Intercellular Communication of Osteoblast-lineage Cells,46138,defect|fracture
+R01DE031711,R01,UNIVERSITY OF CALIFORNIA LOS ANGELES,Hydrogel delivery of DBM and exosome mimetics for bone repair,370500,defect
+R01AR081656,R01,YALE UNIVERSITY,Rescuing impaired fracture healing by molecular targeting,485368,fracture
+R21EB034457,R21,UNIVERSITY OF PITTSBURGH AT PITTSBURGH,Investigating the effect of mechanical compliance of metamaterial interbody cages on spinal fusion progress in vivo,227973,fracture|spine
+R01AR080895,R01,UNIVERSITY OF PENNSYLVANIA,Treatment and Mechanisms of Diabetic Fracture Healing,491434,fracture
+K25AR078383,K25,UNIVERSITY OF DELAWARE,Modifying fragility fracture healing using a gradient-based mechanotransduction fixation approach,80413,fracture
+K01AR077679,K01,RUSH UNIVERSITY MEDICAL CENTER,Role of periostin expressing cells in intramembranous bone regeneration,119529,fracture
+K99DE033689,K99,UNIVERSITY OF OREGON,Bone-like organoids to understand factors controlling local bone immune response and regeneration,222048,defect|fracture
+R01AR082148,R01,UNIVERSITY OF NEBRASKA MEDICAL CENTER,Effective local delivery of bone anabolic agent to accelerate the healing of delayed fracture union,427763,defect|fracture
+I01BX005854,I01,VETERANS AFFAIRS MED CTR SAN FRANCISCO,BCCMA:Foundational Research to Act Upon and Resist Conditions unfavorable to bone (FRACTURECURB):Role of abaloparatide for fracture healing,,fracture
+K99DE032773,K99,STANFORD UNIVERSITY,Regulating Skeletal Stem Cell and Neutrophil Dynamics for Improved Cleft Palate Bone Regeneration by Newly Designed Surrogate Bone Morphogenetic Protein-2,129420,defect
+F31DE030697,F31,UNIVERSITY OF MICHIGAN AT ANN ARBOR,Biomimetic Apoptotic Particles for Macrophage-driven Oral Bone Regeneration,26996,dental
+R21DE033019,R21,UNIVERSITY OF IOWA,Novel Injectable Biomaterials for Periodontitis,194375,dental
+F30DE033620,F30,UNIVERSITY OF ALABAMA AT BIRMINGHAM,Role of Runx2 in Postnatal Dentin Synthesis and Alveolar Osteogenesis,55338,dental
+R01DE035200,R01,"PENNSYLVANIA STATE UNIVERSITY, THE",Leveraging Microsurgery and Bioprinting for Rapidly Oriented Vascularized Tissue Engineering,685594,defect
+R01DE030129,R01,UNIVERSITY OF MASSACHUSETTS LOWELL,Scaffolds with high oxygen content for mineralization,396104,defect
+R01AG073671,R01,BOSTON UNIVERSITY (CHARLES RIVER CAMPUS),Tailoring of cellular mechanical microenvironments to rescue age-related impairments in bone regeneration,605631,
+R01HD116825,R01,ARIZONA STATE UNIVERSITY-TEMPE CAMPUS,Understanding the Role of Mechanical Load in Endogenous and Induced Mammalian Digit Regeneration,485782,fracture
+R21AR085218,R21,UNIVERSITY OF PITTSBURGH AT PITTSBURGH,Wireless Metamaterial Interbody Cage for Real-Time Assessment of Lumbar Spinal Fusion In Vivo,158555,spine
+R01DE030074,R01,TUFTS UNIVERSITY BOSTON,A Long Noncoding RNA Amerliorates Periodontitis via Distinct Epigenetic Pathways,690504,dental
+R01DE034025,R01,DARTMOUTH COLLEGE,Mineral Scaffold-Modulated Senescence in Irradiated Bone,533675,defect|dental
+R01DE021103,R01,UNIVERSITY OF CONNECTICUT SCH OF MED/DNT,Modulated release of anti-senescence drugs to stimulate aged bone repair,504446,defect
+R43DE035036,R43,"RYTEK MEDICAL, INC.",Impedance-based bone health characterization for predictive osseointegration and patient-specific treatment,296171,dental
+R01DE033635,R01,EMORY UNIVERSITY,"Intersection of Periodontitis with HIV-Antiretroviral Therapy-Induced Immune Reconstitution Bone Loss, on Alveolar Bone and Tooth Loss, in People Living with HIV",561172,dental
+R03DE034797,R03,"RYTEK MEDICAL, INC.",Evaluating CT/Xray imaging-correlated impedance-based metrics for predictive surgical osseointegration and injury prevention,220000,dental
+IK6BX007117,IK6,VETERANS HEALTH ADMINISTRATION,BLRD Research Career Scientist Award Application,,fracture
+R01DE032343,R01,UNIVERSITY OF PENNSYLVANIA,Translational Multimodal Strategy for Peri-Implant Disease Prevention,530719,dental
+R01AR069297,R01,UNIVERSITY OF OREGON,Regenerative Rehabilitation of Complex Musculoskeletal Injuries,598349,defect|fracture
+K08DE034069,K08,NOVA SOUTHEASTERN UNIVERSITY,Piezo1- Mediated Type H Vessel Formation in Periodontitis,101356,dental
+F30DE029986,F30,"UNIVERSITY OF CALIFORNIA, SAN FRANCISCO",microRNA regulation of osteocyte metabolism in bone remodeling,55338,fracture
+R01AR085016,R01,MAYO CLINIC ROCHESTER,"A novel, clinically expedient, AAV-based gene therapy for bone healing",454050,defect
+R01AR080150,R01,OREGON HEALTH & SCIENCE UNIVERSITY,Regenerative engineering for complex extremity trauma,455481,
+K08DE033142,K08,OHIO STATE UNIVERSITY,Nanotransfection-based Cell Reprogramming to Drive Bone Revascularization in a Novel Mouse Model of Autogenous Cranioplasty,163620,defect|dental
+R01DE026736,R01,UNIVERSITY OF TEXAS DALLAS,Multifunctional Ionic Liquid Application for Treatment of Peri-implant Diseases,370500,dental
+R01DE032690,R01,UNIVERSITY OF PITTSBURGH AT PITTSBURGH,Uncovering mechanisms of complex tissue assembly using dental organoids,452589,dental
+R00HD105203,R00,UNIVERSITY OF WASHINGTON,Mechanisms of Skeletal Morphogenesis During Digit Tip Regeneration,248999,fracture
+R03DE034020,R03,UNIVERSITY OF MARYLAND BALTIMORE,ENPP1 Roles and ATP Metabolism in Cementogenesis,155500,dental
+R01DE030480,R01,UNIVERSITY OF CHICAGO,Multi-Tissue Craniofacial Engineering using 3D-BMP9-Notch-Synergized Graphene Citrate Composite Scaffolds,465663,defect
+F30DE035004,F30,INDIANA UNIVERSITY INDIANAPOLIS,Kalirin and Osteocyte Dysfunction: Implications Across Skeletal Sites and Experimental Periodontitis,55338,dental
+R01DE031439,R01,"PENNSYLVANIA STATE UNIVERSITY, THE",Cartilage and bone of the lower jaw in development and disease,766887,
+R44AR085500,R44,"PEER TECHNOLOGIES, PLLC",Smart Cavity Creator Drill for Lumbar Interbody Fusion: Direct to Phase II,830712,defect|spine
+R01DE030416,R01,UNIVERSITY OF TEXAS HLTH SCI CTR HOUSTON,Pharmacological rescue of tooth eruption disorders,472254,dental
+R01DE032334,R01,OHIO STATE UNIVERSITY,Identifying Novel Mechanisms for Dentoalveolar Mineralization Defects in X-linked Hypophosphatemia,478475,dental
+F30DE033606,F30,UNIVERSITY OF PITTSBURGH AT PITTSBURGH,Local Delivery of CCL2 to Reverse Peri-implant Bone Loss in Murine Peri-implantitis,55338,dental
+R01AR077962,R01,UNIVERSITY OF CONNECTICUT SCH OF MED/DNT,MicroRNA regulation of osteoblast physiology and glucocorticoid signaling,417774,
+F31HL165859,F31,UNIVERSITY OF ILLINOIS AT CHICAGO,REGULATION OF BONE MARROW MESENCHYMAL STEM CELLS BY VCAM1,30727,
+R01AR082652,R01,TEXAS ENGINEERING EXPERIMENT STATION,"Synthetic Cartilage-Capped, Regenerative Osteochondral Plugs to Heal Osteochondral Defects",132316,
+R00DE032747,R00,UNIVERSITY OF MINNESOTA,T cell response in Aggregatibacter actinomycetemcomitans-associated periodontal disease,248627,dental
+R01AR078230,R01,UNIV OF MASSACHUSETTS MED SCH WORCESTER,Novel approaches to promote healing of bone loss in inflammatory arthritis,511095,

@@ -1,0 +1,23 @@
+[project]
+name = "osteoquant"
+version = "0.1.0"
+description = "Preclinical bone-defect imaging analysis (research prototype; not validated)"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26", "scipy>=1.11", "scikit-image>=0.22", "scikit-learn>=1.4", "pandas>=2.0",
+  "SimpleITK>=2.3", "tifffile>=2024.1", "pydicom>=2.4", "nibabel>=5.2", "pynrrd>=1.0",
+  "zarr>=3.0", "olefile>=0.47", "imagecodecs", "matplotlib>=3.8", "statsmodels>=0.14",
+  "fastapi>=0.110", "uvicorn>=0.29", "python-multipart", "reportlab>=4.0", "openpyxl>=3.1",
+  "pyyaml", "psutil", "torch>=2.2",
+]
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx"]
+[project.scripts]
+osteoquant = "osteoquant.cli:main"
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[tool.setuptools.packages.find]
+include = ["osteoquant*"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]

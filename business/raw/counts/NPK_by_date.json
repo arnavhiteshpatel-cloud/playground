@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-11-16"
+  },
+  "results": [
+    {
+      "time": "19860519",
+      "count": 1
+    },
+    {
+      "time": "19930513",
+      "count": 1
+    },
+    {
+      "time": "19931130",
+      "count": 1
+    },
+    {
+      "time": "19940610",
+      "count": 1
+    },
+    {
+      "time": "19940815",
+      "count": 1
+    },
+    {
+      "time": "19960321",
+      "count": 1
+    },
+    {
+      "time": "19960415",
+      "count": 1
+    },
+    {
+      "time": "19960520",
+      "count": 1
+    },
+    {
+      "time": "19970210",
+      "count": 1
+    },
+    {
+      "time": "19970430",
+      "count": 1
+    },
+    {
+      "time": "19970611",
+      "count": 1
+    },
+    {
+      "time": "19970826",
+      "count": 1
+    },
+    {
+      "time": "19980303",
+      "count": 1
+    },
+    {
+      "time": "19980908",
+      "count": 1
+    },
+    {
+      "time": "19990409",
+      "count": 1
+    },
+    {
+      "time": "20040331",
+      "count": 1
+    },
+    {
+      "time": "20050615",
+      "count": 1
+    },
+    {
+      "time": "20090522",
+      "count": 1
+    },
+    {
+      "time": "20100319",
+      "count": 1
+    },
+    {
+      "time": "20101216",
+      "count": 1
+    },
+    {
+      "time": "20110107",
+      "count": 1
+    },
+    {
+      "time": "20131029",
+      "count": 1
+    },
+    {
+      "time": "20150413",
+      "count": 1
+    },
+    {
+      "time": "20151119",
+      "count": 1
+    },
+    {
+      "time": "20160908",
+      "count": 1
+    },
+    {
+      "time": "20171019",
+      "count": 1
+    },
+    {
+      "time": "20210123",
+      "count": 1
+    },
+    {
+      "time": "20220818",
+      "count": 1
+    },
+    {
+      "time": "20230224",
+      "count": 1
+    },
+    {
+      "time": "20230511",
+      "count": 1
+    },
+    {
+      "time": "20231208",
+      "count": 1
+    }
+  ]
+}

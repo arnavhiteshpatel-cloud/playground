@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+data/raw/
+data/processed/
+data/work/
+*.txm
+*.zarr/
+runtime/
+node_modules/
+.venv/
+experiments/results/**/*.npy
+experiments/results/**/*.npz
+experiments/results/**/*.pt
+models/*.pt
+!models/README.md

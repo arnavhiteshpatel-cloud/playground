@@ -1,0 +1,178 @@
+{
+  "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-11-16"
+  },
+  "results": [
+    {
+      "time": "20040115",
+      "count": 1
+    },
+    {
+      "time": "20050804",
+      "count": 1
+    },
+    {
+      "time": "20091210",
+      "count": 1
+    },
+    {
+      "time": "20100318",
+      "count": 1
+    },
+    {
+      "time": "20100818",
+      "count": 1
+    },
+    {
+      "time": "20110929",
+      "count": 1
+    },
+    {
+      "time": "20111227",
+      "count": 1
+    },
+    {
+      "time": "20111228",
+      "count": 1
+    },
+    {
+      "time": "20120524",
+      "count": 1
+    },
+    {
+      "time": "20120813",
+      "count": 1
+    },
+    {
+      "time": "20130116",
+      "count": 1
+    },
+    {
+      "time": "20130215",
+      "count": 1
+    },
+    {
+      "time": "20140522",
+      "count": 1
+    },
+    {
+      "time": "20140716",
+      "count": 1
+    },
+    {
+      "time": "20150605",
+      "count": 1
+    },
+    {
+      "time": "20150731",
+      "count": 1
+    },
+    {
+      "time": "20151106",
+      "count": 1
+    },
+    {
+      "time": "20151210",
+      "count": 1
+    },
+    {
+      "time": "20160803",
+      "count": 1
+    },
+    {
+      "time": "20170209",
+      "count": 1
+    },
+    {
+      "time": "20170516",
+      "count": 1
+    },
+    {
+      "time": "20170707",
+      "count": 1
+    },
+    {
+      "time": "20170718",
+      "count": 1
+    },
+    {
+      "time": "20171030",
+      "count": 1
+    },
+    {
+      "time": "20180720",
+      "count": 1
+    },
+    {
+      "time": "20181019",
+      "count": 1
+    },
+    {
+      "time": "20200214",
+      "count": 1
+    },
+    {
+      "time": "20200910",
+      "count": 1
+    },
+    {
+      "time": "20200911",
+      "count": 1
+    },
+    {
+      "time": "20210402",
+      "count": 1
+    },
+    {
+      "time": "20210820",
+      "count": 1
+    },
+    {
+      "time": "20230318",
+      "count": 1
+    },
+    {
+      "time": "20231013",
+      "count": 1
+    },
+    {
+      "time": "20240712",
+      "count": 1
+    },
+    {
+      "time": "20240724",
+      "count": 1
+    },
+    {
+      "time": "20240816",
+      "count": 1
+    },
+    {
+      "time": "20250307",
+      "count": 1
+    },
+    {
+      "time": "20250626",
+      "count": 1
+    },
+    {
+      "time": "20250711",
+      "count": 1
+    },
+    {
+      "time": "20260616",
+      "count": 1
+    },
+    {
+      "time": "20260925",
+      "count": 1
+    },
+    {
+      "time": "20261009",
+      "count": 1
+    }
+  ]
+}

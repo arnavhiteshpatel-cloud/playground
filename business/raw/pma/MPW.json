@@ -1,0 +1,2936 @@
+{
+  "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-11-16",
+    "results": {
+      "skip": 0,
+      "limit": 100,
+      "total": 73
+    }
+  },
+  "results": [
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S036",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2012-12-21",
+      "decision_date": "2013-02-07",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "EXTENSION OF THE EXPIRY OF BATCH REFERENCE MATERIAL.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S050",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2018-08-02",
+      "decision_date": "2018-08-29",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Add a pump to aid in manufacture.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S002",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Real-Time Process",
+      "supplement_reason": "Change Design/Components/Specifications/Material",
+      "expedited_review_flag": "N",
+      "date_received": "2004-08-02",
+      "decision_date": "2004-08-09",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR EXPANSION OF THE UPPER END OF THE STORAGE TEMPERATURE LIMIT FOR THE INFUSE BONE GRAFT COMPONENT OF THE DEVICE FROM 25 DEGREES C TO 30 DEGREES C.  THE DEVICE IS INDICATED FOR TREATING ACUTE, OPEN TIBIAL SHAFT FRACTURES THAT HAVE BEEN STABILIZED WITH IM NAIL FIXATION AFTER APPROPRIATE WOUND MANAGEMENT.  INFUSE BONE GRAFT MUST BE APPLIED WITHIN 14 DAYS AFTER THE INITIAL FRACTURE.  PROSPECTIVE PATIENTS SHOULD BE SKELETALLY MATURE.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S004",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Real-Time Process",
+      "supplement_reason": "Change Design/Components/Specifications/Material",
+      "expedited_review_flag": "N",
+      "date_received": "2005-01-26",
+      "decision_date": "2005-04-20",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR TWO CHANGES TO THE PROCESSING OF THE RHBMP-2 COMPONENT OF THE DEVICE - THE USE OF A NEW WORKING CELL BANK AND THE  USE OF A LONGER HOLD-TIME (<=120 HOURS AT 2-8 DEGREES C COMPARED TO THE CURRENT 24 HOURS) FOR THE MATREX CELLUFINE SULFATE COLUMN.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S053",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2019-06-28",
+      "decision_date": "2019-07-24",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Replacement for the tendon slicer at the Collagen Manufacturing Center (CMC) Building.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S024",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Special (Immediate Track)",
+      "supplement_reason": "Labeling Change - Indications/instructions/shelf life/tradename",
+      "expedited_review_flag": "N",
+      "date_received": "2010-02-24",
+      "decision_date": "2010-05-17",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR CHANGES TO THE PATIENT INFORMATION BROCHURE.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S037",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2013-01-14",
+      "decision_date": "2013-02-13",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "ADDITION OF AN ALTERNATIVE WATER SUPPLIER.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S019",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "",
+      "expedited_review_flag": "N",
+      "date_received": "2008-11-21",
+      "decision_date": "2010-01-20",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR AN ADDITIONAL SUPPLIER OF BOVINE ACHILLES TENDON FOR THE MANUFACTURE OF THE ABSORBABLE COLLAGEN SPONGE (ACS) COMPONENT OF THE INFUSE BONE GRAFT.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S048",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2017-05-23",
+      "decision_date": "2017-06-21",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Source manufacturing change to the absorbable collagen sponge component of Infuse Bone Graft.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S011",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2007-04-06",
+      "decision_date": "2007-10-05",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR THE ALTERNATE 2X MANUFACTURING PROCESS OF RHBMP-2.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S001",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Real-Time Process",
+      "supplement_reason": "Labeling Change - Indications/instructions/shelf life/tradename",
+      "expedited_review_flag": "N",
+      "date_received": "2004-05-20",
+      "decision_date": "2004-06-10",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR 1) AN INCREASE IN THE EXPIRATION DATE OF THE 4.2 AND 12 MG VIALED RHBMP-2 COMPONENT OF THE REFERENCED DEVICES FROM 36 TO 48 MONTHS; 2) AN INCREASE IN THE EXPIRATION DATE OF THE COMMERCIAL KIT COMPONENT FROM 24 TO 36 MONTHS; AND 3) THE PROTOCOL TO BE FOLLOWED FOR ALL FUTURE EXPIRATION DATE CHANGES.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S042",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track",
+      "supplement_reason": "Change Design/Components/Specifications/Material",
+      "expedited_review_flag": "N",
+      "date_received": "2014-01-27",
+      "decision_date": "2015-07-15",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR INCREASING THE BIOREACTOR USED TO MANUFACTURE RHBMP-2 FROM 2500 L TO 6000 L AT THE PFIZER ANDOVER FACILITY BUILDING B.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "",
+      "supplement_reason": "",
+      "expedited_review_flag": "N",
+      "date_received": "2000-12-20",
+      "decision_date": "2004-04-30",
+      "docket_number": "04M-0249",
+      "fed_reg_notice_date": "2004-05-26",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR THE INFUSE BONE GRAFT.  THE DEVICE IS INDICATED FOR TREATING ACUTE, OPEN TIBIAL SHAFT FRACTURES THAT HAVE BEEN STABILIZED WITH IM NAIL FIXATION AFTER APPROPRIATE WOUND MANAGEMENT.  INFUSE BONE GRAFT MUST BE APPLIED WITHIN 14 DAYS AFTER THE INITIAL FRACTURE.  PROSPECTIVE PATIENTS SHOULD BE SKELETALLY MATURE.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S073",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2024-10-15",
+      "decision_date": "2024-11-06",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "change for the replacement of the data acquisition (DAQ) system component on the shrink temperature testing instrument in the quality control (QC) analytical lab",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S076",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2026-01-28",
+      "decision_date": "2026-02-24",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Change to upgrade the EO Sterilization Chamber Control System at the contract sterilization site from the Antares Chamber Control System to the Konnexis AccuSOLO Chamber Control System",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S028",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2010-09-30",
+      "decision_date": "2012-08-03",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR CHANGES TO TESTS PERFORMED AS PART OF THE ONGOING DRUG PRODUCT STABILITY PROGRAM FOR RHBMP-2 (DIBOTERMIN ALFA).",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S003",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2004-09-17",
+      "decision_date": "2005-08-22",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR THE ADDITION OF A RAW MATERIAL SUPPLIER.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S066",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2022-01-20",
+      "decision_date": "2022-02-17",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Change in the packaging suppliers machine equipment.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S043",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track No User Fee",
+      "supplement_reason": "Location Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2014-10-27",
+      "decision_date": "2015-04-24",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR A MANUFACTURING SITE LOCATED AT WYETH FARMA, S.A., IN MADRID, SPAIN.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S052",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track",
+      "supplement_reason": "Change Design/Components/Specifications/Material",
+      "expedited_review_flag": "N",
+      "date_received": "2018-10-17",
+      "decision_date": "2019-01-15",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "Approval for an additional 6000 L bioreactor to be located in Building B, Suite C/D at the Andover site.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S015",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track No User Fee",
+      "supplement_reason": "Location Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2007-11-06",
+      "decision_date": "2008-08-15",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR A MANUFACTURING SITE LOCATED AT INTEGRA NEUROSCIENCES PR, INC., ANASCO, PUERTO RICO, AND A STERILIZING SITE AT STERITECH, INC., SALINAS, PUERTO RICO.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S058",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2019-11-04",
+      "decision_date": "2019-12-04",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Modifications to the equipment and flow hoods used in the manufacturing of the collagen component of INFUSE Bone Graft.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S031",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2011-06-16",
+      "decision_date": "2012-10-17",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR CHANGE IN RESIN USAGE LIFETIME.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S009",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track",
+      "supplement_reason": "Labeling Change - Indications/instructions/shelf life/tradename",
+      "expedited_review_flag": "N",
+      "date_received": "2006-10-27",
+      "decision_date": "2007-12-21",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR CHANGES TO THE PACKAGE INSERT AND KIT BOX TEXT BASED ON REPORTS ASSOCIATED WITH SEVERAL TYPES OF AES.  THESE AES WERE THE PRESENCE OF FLUID-FILLED CYSTS OR RADIOGRAPHIC EVIDENCE OF PERI-IMPLANT TRANSIENT BONE RESORPTION.  IT?S BELIEVED THAT OVERPACKING OF THE ACS COMPONENT WITHIN A CONFINED SPACE AND/OR HYPERCONCENTRATING THE RHBMP-2 SOLUTION WERE RESPONSIBLE FOR THE AES.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S039",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Special (Immediate Track)",
+      "supplement_reason": "Labeling Change - Indications/instructions/shelf life/tradename",
+      "expedited_review_flag": "N",
+      "date_received": "2013-03-07",
+      "decision_date": "2013-05-31",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR MODIFICATIONS TO THE PACKAGE INSERT TO REFLECT THE RESULTS OF STUDY 400.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S029",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2011-01-13",
+      "decision_date": "2012-03-15",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "CHANGE TO DRUG TESTING BY ONE OF THE CONTRACT MANUFACTURERS.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S016",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track No User Fee",
+      "supplement_reason": "Labeling Change - Indications/instructions/shelf life/tradename",
+      "expedited_review_flag": "N",
+      "date_received": "2007-11-16",
+      "decision_date": "2008-03-17",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR INCLUSION OF A WARNING RELATED TO LOCALIZED, TRANSIENT BONE RESORPTION IN THE PACKAGE INSERT.  THE INCLUSION OF THIS ADDITIONAL WARNING WAS PROMPTED BY A LABELING MODIFICATION REQUIRED BY THE EU AS A RESULT OF AN ANALYSIS OF REPORTED ADVERSE EVENTS.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S021",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT/LT-CAGE LUMBAR TAPERED FUSION DEVICE",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Special (Immediate Track)",
+      "supplement_reason": "Labeling Change - Indications/instructions/shelf life/tradename",
+      "expedited_review_flag": "N",
+      "date_received": "2009-03-16",
+      "decision_date": "2009-05-13",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR A MODIFICATION TO THE PACKAGE INSERTS.  SPECIFICALLY, ADDING TEXT TO ONE OF THE WARNINGS TO ADDRESS AES AND POTENTIAL SURGICAL INTERVENTIONS ASSOCIATED WITH IMPROPER USE OF THE RHBMP-2/ACS COMPONENTS OF THE PRODUCTS.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S040",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Real-Time Process",
+      "supplement_reason": "Labeling Change - Indications/instructions/shelf life/tradename",
+      "expedited_review_flag": "N",
+      "date_received": "2013-10-25",
+      "decision_date": "2013-12-06",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR EXTENSION OF THE RHBMP-2 DRUG SUBSTANCE EXPIRATION DATE FROM 60 TO 72 MONTHS USING THE APPROVED EXPIRATION DATE MODIFICATION PROTOCOL. THE DEVICE, AS MODIFIED, WILL BE MARKETED UNDER THE TRADE NAME INFUSE®BONE GRAFT AND IS INDICATED FOR THE FOLLOWING: TREATING ACUTE, OPEN TIBIAL SHAFT FRACTURES THAT HAVE BEEN STABILIZED WITH IM NAIL FIXATION AFTER APPROPRIATE WOUND MANAGEMENT. INFUSE BONE GRAFT MUST BE APPLIED WITHIN 14 DAYS AFTER THE INITIAL FRACTURE. PROSPECTIVE PATIENTS SHOULD BE SKELETALLY MATURE.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S062",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track",
+      "supplement_reason": "Change Design/Components/Specifications/Material",
+      "expedited_review_flag": "N",
+      "date_received": "2020-07-29",
+      "decision_date": "2022-02-18",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "Approval for extension of the expiration date from 18 to 24 months for three 1mg drug product lots manufactured at Hospira, Inc. (McPherson, Kansas) and seven 1mg drug product lots manufactured at Wyeth Farma S.A. (Algete, Spain) when stored at 5° and 30°C; addition of a 30 month timepoint to the long-term stability protocol studies performed at 30 ºC ± 2 ºC /75 ± 5% RH and 30 ºC ± 2 ºC /75 ± 5% RH; and discontinuation of testing at the 5°C long-term storage condition (current 5°C lots will continue to the end of the current study).",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S057",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2019-10-31",
+      "decision_date": "2019-11-29",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Modifications to the post-approval stability protocol for the drug component of INFUSE Bone Graft.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S075",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track",
+      "supplement_reason": "Change Design/Components/Specifications/Material",
+      "expedited_review_flag": "N",
+      "date_received": "2025-03-14",
+      "decision_date": "2026-08-26",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "Approval for a change to the potency testing of rhBMP-2 used in the manufacturing of INFUSE Bone Graft.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S055",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Real-Time Process",
+      "supplement_reason": "Change Design/Components/Specifications/Material",
+      "expedited_review_flag": "N",
+      "date_received": "2019-09-18",
+      "decision_date": "2019-12-13",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "Approval for an additional configuration of the vials used for the sterile water for injection used to reconstitute the lyophilized rhBMP-2 component of Infuse Bone Graft.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S056",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2019-09-25",
+      "decision_date": "2019-11-01",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Implementation of new instruments to assess percent solids in a collagen dispersion used in the manufacturing of INFUSE Bone Graft.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S068",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2022-07-21",
+      "decision_date": "2022-08-09",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Replacement of the water purification system used in manufacture of the collagen sponge component.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S067",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2022-05-10",
+      "decision_date": "2022-06-09",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Use of sterile connectors in the filtration and filling equipment lines for the rhBMP-2 drug product at the Hospira McPherson, KS facility.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S063",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2020-07-30",
+      "decision_date": "2020-08-27",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Introduction of vaccine drug substance protein manufacturing at the dibotermin alfa manufacturing site in Pfizers Andover, MA facility.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S020",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Real-Time Process",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2008-12-23",
+      "decision_date": "2009-02-20",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR CHANGES IN THE EXTERIOR CARTONS USED TO SHIP ONE OR MORE UNITS OF INFUSE BONE GRAFT.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S038",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2013-02-26",
+      "decision_date": "2013-03-27",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "ADDITION OF AN ALTERNATE WATER SUPPLIER.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S034",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track",
+      "supplement_reason": "Change Design/Components/Specifications/Material",
+      "expedited_review_flag": "N",
+      "date_received": "2011-12-19",
+      "decision_date": "2013-08-01",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR A NEW NEUTRALIZING ANTIBODY ASSAY.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S027",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2010-09-30",
+      "decision_date": "2011-04-04",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR AN ADDITIONAL SOURCE OF RECOMBINANT INSULIN.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S077",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE® Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2026-02-17",
+      "decision_date": "2026-03-19",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "addition of an alternate testing facility and relocation of relevant laboratories to a new building",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S074",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE® Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2025-03-10",
+      "decision_date": "2025-03-19",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "change of the current ePCD for ethylene oxide sterilization, change to the temperature and relative humidity monitoring, change to the finished good release of the collagen based medical devices",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S049",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2017-11-13",
+      "decision_date": "2017-12-13",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Source manufacturing changes to the absorbable collagen sponge component of Infuse Bone Graft.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S061",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2020-07-10",
+      "decision_date": "2020-12-30",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "Manufacturing process change in the preparation of stopper components used in the manufacture of the product.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S071",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2023-09-08",
+      "decision_date": "2023-10-06",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Replacement of the current stainless-steel AT basket/paddle with a modular polyethylene/stainless steel AT basket to improve ergonomics and reduce wear particles as a result of paddle motion at Integra LifeSciences, Building 105, of the facility in Plainsboro, NJ.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S064",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2021-01-15",
+      "decision_date": "2021-02-05",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Change to the process for printing and inspecting labels.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S010",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2006-12-22",
+      "decision_date": "2007-07-03",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FORA NEW TEST METHOD FOR THE QUANTITATIVE ANALYSIS OF POLYSORBATE-80 EXCIPIENT FOR THE RELEASE OF RHBMP-2.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S033",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Special (Immediate Track)",
+      "supplement_reason": "Labeling Change - Indications/instructions/shelf life/tradename",
+      "expedited_review_flag": "N",
+      "date_received": "2011-10-20",
+      "decision_date": "2012-07-17",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR MODIFICATIONS TO THE LABELING FOR THE IDENTIFIED PRODUCTS.SPECIFICALLY YOU REQUESTED THE FOLLOWING:  1) AN ADDITIONAL WARNING TO ADDRESS CONCERNS RELATED TO THE USE OF POTENTIAL PATIENTS WITH A SUSPECTED MALIGNANCY; 2) AN ADDITIONAL WARNING RELATED TO DEVICE MIGRATION; 3) A MODIFICATION TO THE PRECAUTION RELATED TO ECTOPIC, HETEROTOPIC AND EXUBERANT BONE FORMATION BY REMOVING THE INITIAL QUALIFYING LANGUAGE: AND 4) A MODIFICATION TO THE DESCRIPTION OF THE RECONSTITUTED RECOMBINANT PROTEIN SOLUTION, I.E., \"...COLORLESS TO SLIGHTLY YELLOW...\"",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S070",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2023-07-27",
+      "decision_date": "2023-08-21",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Manufacturing changes including modifications to two ISO 7 Collagen Packaging Cleanrooms and the associated Gowning Room and the replacement of the Honeywell temperature recorders with the Viewpoint Temperature Monitoring system at the Collagen Manufacturing Center (CMC) located at 105 Morgan Lane, Plainsboro, NJ 08536",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S017",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2008-01-14",
+      "decision_date": "2008-12-04",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR A CHANGE IN THE SPECIFIC ACTIVITY SPECIFICATION RANGE OF DIBOTERMIN ALFA DRUG SUBSTANCE AND DRUG PRODUCT.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S054",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2019-08-29",
+      "decision_date": "2020-02-04",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "Approval for introduction of additional cell lines and the use of related raw materials into Pfizers Andover, Massachusetts facility.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S022",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2009-03-25",
+      "decision_date": "2009-10-21",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR A CHANGE TO THE KITTING AND STORAGE LOCATION FOR INFUSE® BONE GRAFT AND IS INDICATED FOR TREATING ACUTE, OPEN TIBIAL SHAFT FRACTURES THAT HAVE BEEN STABILIZED WITH IM NAIL FIXATION AFTER APPROPRIATE WOUND MANAGEMENT, AN ALTERNATIVE TO AUTOGENOUS BONE GRAFT FOR SINUS AUGMENTATIONS, AND FOR LOCALIZED ALVEOLAR RIDGE AUGMENTATIONS FOR DEFECTS ASSOCIATED WITH EXTRACTION SOCKETS, AND FOR SPINAL FUSION PROCEDURES IN SKELETALLY MATURE PATIENTS WITH DEGENERATIVE DISC DISEASE AT ONE LEVEL FROM L4-S1.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S032",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2011-10-04",
+      "decision_date": "2013-08-30",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR NEW REFERENCE STANDARD.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S044",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2016-06-21",
+      "decision_date": "2016-09-16",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "Approval for increasing the size of the bioreactor used to manufacture rhBMP-2 from 6000 L to 12,000 L at the Pfizer Andover, MA Facility.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S069",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2023-07-27",
+      "decision_date": "2023-08-21",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Manufacturing changes including modifications to two ISO 7 Collagen Packaging Cleanrooms and the associated Gowning Room and the replacement of the Honeywell temperature recorders with the Viewpoint Temperature Monitoring system at the Collagen Manufacturing Center (CMC) located at 105 Morgan Lane, Plainsboro, NJ 08536",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S059",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2020-06-11",
+      "decision_date": "2020-07-10",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Optimization of the pre-sterilization phase set points of in-process autoclave cycles and addition of a second Tyvek wrapping for equipment, parts, and components sterilized in the in-process autoclaves.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S023",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2009-09-01",
+      "decision_date": "2010-01-14",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR THE REMOVAL OF ELLMAN¿S ASSAY AND SDS-PAGE SILVER STAIN TESTS FROM THE RHBMP-2 DRUG SUBSTANCE RELEASE SPECIFICATION.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S026",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track No User Fee",
+      "supplement_reason": "Location Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2010-09-01",
+      "decision_date": "2011-01-26",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR A MANUFACTURING SITE LOCATED IN ANÞASCO, PUERTO RICO TO PERFORM POST-ALKALI TREATMENT STEPS FOR THE ABSORBABLE COLLAGEN SPONGE (ACS).",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S060",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2020-07-08",
+      "decision_date": "2021-11-08",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "Approval for the use of a new lyophilizer in the manufacture of dibotermin alfa, a component of Infuse Bone Graft.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S078",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Normal 180 Day Track",
+      "supplement_reason": "Labeling Change - Indications/instructions/shelf life/tradename",
+      "expedited_review_flag": "N",
+      "date_received": "2026-04-29",
+      "decision_date": "2026-07-28",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "Approval to offer an alternatively configured Infuse Bone Graft kit in which the sterile water for injection (sWFI) vials, syringes, and needles have been removed from the kit, as well as minor labeling changes associated with this alternative kit configuration.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S005",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2005-02-04",
+      "decision_date": "2005-04-20",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR A NEW REFERENCE STANDARD FOR THE RHBMP-2 COMPONENT.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S065",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2021-03-09",
+      "decision_date": "2021-04-05",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Modification to the cleaning process used in manufacture of the absorbable collagen sponge component of the INFUSE bone graft product.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S025",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2010-06-03",
+      "decision_date": "2010-12-07",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR A CHANGE IN THE VIRAL FILTER USED IN THE PRODUCTION OF THE DIBOTERMIN ALFA DRUG SUBSTANCE.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S013",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2007-07-31",
+      "decision_date": "2008-01-14",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR THE ADDITION OF A NEW VALIDATED CROSS-LINKING CHAMBER.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S018",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2008-08-29",
+      "decision_date": "2008-11-24",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR ADDITIONAL TREATMENT PROCESSING VESSELS, UPGRADES TO PROCESS EQUIPMENT AND AUTOMATION OF A TEST METHOD.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S035",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2012-08-21",
+      "decision_date": "2012-10-25",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR THE EXTENSION OF THE EXPIRY OF BATCH REFERENCE MATERIAL.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S006",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Real-Time Process",
+      "supplement_reason": "Change Design/Components/Specifications/Material",
+      "expedited_review_flag": "N",
+      "date_received": "2005-02-22",
+      "decision_date": "2005-03-11",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR USE OF NEW SHIPPING CONTAINER.  THE NEW CONTAINER IS LIGHTER THAN THE CURRENT CONTAINER AND USES POLYSTYRENE INSULATION INSTEAD OF POLYURETHANE.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S045",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2017-01-23",
+      "decision_date": "2017-02-16",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Various source manufacturing changes to the absorbable collagen sponge component of Infuse Bone Graft.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S030",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "135 Review Track For 30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2011-02-15",
+      "decision_date": "2012-08-03",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR THE SUBSTITUTION OF A QUALITY CONTROL TEST.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S051",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2018-10-02",
+      "decision_date": "2018-11-09",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Modify the General Inspection Level and Acceptable Quality Level (AQL) of the absorbable collagen sponge (ACS) component of Infuse Bone Graft to align with ISO 14971:2012.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S008",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "INFUSE BONE GRAFT",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "Special (Immediate Track)",
+      "supplement_reason": "Labeling Change - Indications/instructions/shelf life/tradename",
+      "expedited_review_flag": "N",
+      "date_received": "2006-10-12",
+      "decision_date": "2007-03-23",
+      "docket_number": "",
+      "decision_code": "APPR",
+      "ao_statement": "APPROVAL FOR MODIFICATIONS TO THE PACKAGE INSERTS AND PATIENT INFORMATION BROCHURES TO ADDRESS THE RESULTS OF THE REPRODUCTIVE TOXICITY STUDY SUBMITTED IN PMA REPORTS P000058/R23 AND P000054/R6.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    },
+    {
+      "pma_number": "P000054",
+      "supplement_number": "S046",
+      "applicant": "Medtronic Sofamor Danek USA, Inc.",
+      "street_1": "1800 Pyramid Pl.",
+      "street_2": "",
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38132",
+      "zip_ext": "",
+      "generic_name": "Filler, recombinant human bone morphogenetic protein, collagen scaffold, osteoinduction",
+      "trade_name": "Infuse Bone Graft",
+      "product_code": "MPW",
+      "advisory_committee": "OR",
+      "advisory_committee_description": "Orthopedic",
+      "supplement_type": "30-Day Notice",
+      "supplement_reason": "Process Change - Manufacturer/Sterilizer/Packager/Supplier",
+      "expedited_review_flag": "N",
+      "date_received": "2017-02-03",
+      "decision_date": "2017-03-03",
+      "docket_number": "",
+      "decision_code": "OK30",
+      "ao_statement": "Various source manufacturing changes for the rhBMP-2 drug product component of Infuse Bone Graft.",
+      "openfda": {
+        "device_name": "Filler, Recombinant Human Bone Morphogenetic Protein, Collagen Scaffold, Osteoinduction",
+        "medical_specialty_description": "Unknown",
+        "regulation_number": "",
+        "device_class": "3",
+        "registration_number": [
+          "3018094310",
+          "3003120897",
+          "1030489"
+        ],
+        "fei_number": [
+          "3018094310",
+          "3003120897",
+          "1000477302"
+        ]
+      }
+    }
+  ]
+}

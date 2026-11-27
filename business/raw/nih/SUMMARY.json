@@ -1,0 +1,244 @@
+{
+ "2025": {
+  "fy": 2025,
+  "records": 376,
+  "unique_core_projects": 359,
+  "core_projects_mentioning_microCT": 54,
+  "defect_core": 74,
+  "defect_core_microCT": 18,
+  "fracture_core": 108,
+  "fracture_core_microCT": 19,
+  "dental_core": 110,
+  "dental_core_microCT": 19,
+  "spine_core": 33,
+  "spine_core_microCT": 4,
+  "orgs_all": 148,
+  "orgs_microCT": 45,
+  "SBIR_STTR_core": 12,
+  "SBIR_STTR_microCT": 2,
+  "award_total_usd_all_records": 166253540,
+  "top_orgs_microCT": [
+   [
+    "UNIVERSITY OF PITTSBURGH AT PITTSBURGH",
+    4
+   ],
+   [
+    "UNIVERSITY OF PENNSYLVANIA",
+    2
+   ],
+   [
+    "UNIVERSITY OF OREGON",
+    2
+   ],
+   [
+    "PENNSYLVANIA STATE UNIVERSITY, THE",
+    2
+   ],
+   [
+    "UNIVERSITY OF CONNECTICUT SCH OF MED/DNT",
+    2
+   ],
+   [
+    "RYTEK MEDICAL, INC.",
+    2
+   ],
+   [
+    "OHIO STATE UNIVERSITY",
+    2
+   ],
+   [
+    "VA SALT LAKE CITY HEALTHCARE SYSTEM",
+    1
+   ],
+   [
+    "NORTHEAST OHIO MEDICAL UNIVERSITY",
+    1
+   ],
+   [
+    "GEORGIA INSTITUTE OF TECHNOLOGY",
+    1
+   ],
+   [
+    "UNIVERSITY OF CALIFORNIA AT DAVIS",
+    1
+   ],
+   [
+    "UNIVERSITY OF COLORADO",
+    1
+   ],
+   [
+    "VIRGINIA COMMONWEALTH UNIVERSITY",
+    1
+   ],
+   [
+    "UNIVERSITY OF CALIFORNIA LOS ANGELES",
+    1
+   ],
+   [
+    "YALE UNIVERSITY",
+    1
+   ],
+   [
+    "UNIVERSITY OF DELAWARE",
+    1
+   ],
+   [
+    "RUSH UNIVERSITY MEDICAL CENTER",
+    1
+   ],
+   [
+    "UNIVERSITY OF NEBRASKA MEDICAL CENTER",
+    1
+   ],
+   [
+    "VETERANS AFFAIRS MED CTR SAN FRANCISCO",
+    1
+   ],
+   [
+    "STANFORD UNIVERSITY",
+    1
+   ],
+   [
+    "UNIVERSITY OF MICHIGAN AT ANN ARBOR",
+    1
+   ],
+   [
+    "UNIVERSITY OF IOWA",
+    1
+   ],
+   [
+    "UNIVERSITY OF ALABAMA AT BIRMINGHAM",
+    1
+   ],
+   [
+    "UNIVERSITY OF MASSACHUSETTS LOWELL",
+    1
+   ],
+   [
+    "BOSTON UNIVERSITY (CHARLES RIVER CAMPUS)",
+    1
+   ]
+  ]
+ },
+ "2026": {
+  "fy": 2026,
+  "records": 343,
+  "unique_core_projects": 336,
+  "core_projects_mentioning_microCT": 67,
+  "defect_core": 65,
+  "defect_core_microCT": 21,
+  "fracture_core": 101,
+  "fracture_core_microCT": 19,
+  "dental_core": 104,
+  "dental_core_microCT": 26,
+  "spine_core": 30,
+  "spine_core_microCT": 6,
+  "orgs_all": 146,
+  "orgs_microCT": 49,
+  "SBIR_STTR_core": 14,
+  "SBIR_STTR_microCT": 2,
+  "award_total_usd_all_records": 146638727,
+  "top_orgs_microCT": [
+   [
+    "UNIVERSITY OF PITTSBURGH AT PITTSBURGH",
+    5
+   ],
+   [
+    "UNIVERSITY OF PENNSYLVANIA",
+    4
+   ],
+   [
+    "VA LOMA LINDA HEALTHCARE SYSTEM",
+    3
+   ],
+   [
+    "OHIO STATE UNIVERSITY",
+    3
+   ],
+   [
+    "UNIVERSITY OF NEBRASKA MEDICAL CENTER",
+    2
+   ],
+   [
+    "UNIVERSITY OF CALIFORNIA AT DAVIS",
+    2
+   ],
+   [
+    "VIRGINIA COMMONWEALTH UNIVERSITY",
+    2
+   ],
+   [
+    "UNIVERSITY OF ILLINOIS AT CHICAGO",
+    2
+   ],
+   [
+    "UNIVERSITY OF CONNECTICUT SCH OF MED/DNT",
+    2
+   ],
+   [
+    "EMORY UNIVERSITY",
+    2
+   ],
+   [
+    "INDIANA UNIVERSITY INDIANAPOLIS",
+    2
+   ],
+   [
+    "VA SALT LAKE CITY HEALTHCARE SYSTEM",
+    1
+   ],
+   [
+    "NORTHEAST OHIO MEDICAL UNIVERSITY",
+    1
+   ],
+   [
+    "UNIVERSITY OF IOWA",
+    1
+   ],
+   [
+    "UNIVERSITY OF COLORADO",
+    1
+   ],
+   [
+    "UNIVERSITY OF CALIFORNIA LOS ANGELES",
+    1
+   ],
+   [
+    "YALE UNIVERSITY",
+    1
+   ],
+   [
+    "VETERANS AFFAIRS MED CTR SAN FRANCISCO",
+    1
+   ],
+   [
+    "STANFORD UNIVERSITY",
+    1
+   ],
+   [
+    "UNIVERSITY OF MICHIGAN AT ANN ARBOR",
+    1
+   ],
+   [
+    "JOHNS HOPKINS UNIVERSITY",
+    1
+   ],
+   [
+    "UNIVERSITY OF ALABAMA AT BIRMINGHAM",
+    1
+   ],
+   [
+    "PENNSYLVANIA STATE UNIVERSITY, THE",
+    1
+   ],
+   [
+    "BOSTON UNIVERSITY (CHARLES RIVER CAMPUS)",
+    1
+   ],
+   [
+    "ARIZONA STATE UNIVERSITY-TEMPE CAMPUS",
+    1
+   ]
+  ]
+ }
+}

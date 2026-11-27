@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-11-16",
+    "results": {
+      "skip": 0,
+      "limit": 1,
+      "total": 1
+    }
+  },
+  "results": [
+    {
+      "third_party_flag": "N",
+      "life_sustain_support_flag": "N",
+      "gmp_exempt_flag": "N",
+      "summary_malfunction_reporting": "Ineligible",
+      "product_code": "QCG",
+      "openfda": {
+        "registration_number": [
+          "1225112",
+          "1216032"
+        ],
+        "fei_number": [
+          "3000206397",
+          "1216032"
+        ]
+      },
+      "review_panel": "OR",
+      "medical_specialty": "",
+      "device_name": "Filler, Bone Void, Calcium Compound, Lower Extremity Use, Use On Bone Marrow Lesions",
+      "review_code": "",
+      "unclassified_reason": "3",
+      "medical_specialty_description": "Unknown",
+      "device_class": "N",
+      "definition": "Intended to fill bony voids or gaps of the lower extremities (pelvis through foot) that are not intrinsic to the stability of the bony structure.  These defects may be surgically created from traumatic injury to the bone including bone marrow lesions.",
+      "regulation_number": "",
+      "implant_flag": "Y",
+      "submission_type_id": "3"
+    }
+  ]
+}

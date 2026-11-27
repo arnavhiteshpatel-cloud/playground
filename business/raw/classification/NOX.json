@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-11-16",
+    "results": {
+      "skip": 0,
+      "limit": 1,
+      "total": 1
+    }
+  },
+  "results": [
+    {
+      "third_party_flag": "N",
+      "life_sustain_support_flag": "Y",
+      "gmp_exempt_flag": "N",
+      "summary_malfunction_reporting": "Eligible",
+      "product_code": "NOX",
+      "openfda": {
+        "pma_number": [
+          "P240001",
+          "P100006",
+          "P140019"
+        ],
+        "registration_number": [
+          "2245304",
+          "3003897776",
+          "1043534",
+          "3007155473",
+          "2530154",
+          "3010667733"
+        ],
+        "fei_number": [
+          "2245304",
+          "3003897776",
+          "1043534",
+          "3007155473",
+          "3010667733",
+          "1000307073"
+        ]
+      },
+      "review_panel": "OR",
+      "medical_specialty": "",
+      "device_name": "Filler, Bone Void, Synthetic Peptide",
+      "review_code": "",
+      "unclassified_reason": "",
+      "medical_specialty_description": "Unknown",
+      "device_class": "3",
+      "definition": "The device acts as a bone void filler and consists of a filling material and a synthetic peptide.  It is intended to fill traumatic or surgically-created defects that are not intrinsic to the bony structure of the extremities, spine or pelvis.  It will be packed or placed into the defect and will resorb over time to be replaced by bone.",
+      "regulation_number": "",
+      "implant_flag": "Y",
+      "submission_type_id": "2"
+    }
+  ]
+}

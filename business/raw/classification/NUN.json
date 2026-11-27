@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-11-16",
+    "results": {
+      "skip": 0,
+      "limit": 1,
+      "total": 1
+    }
+  },
+  "results": [
+    {
+      "third_party_flag": "N",
+      "life_sustain_support_flag": "N",
+      "gmp_exempt_flag": "N",
+      "summary_malfunction_reporting": "Eligible",
+      "product_code": "NUN",
+      "openfda": {
+        "k_number": [
+          "K082463",
+          "K060332",
+          "K091217",
+          "K103699",
+          "K080418",
+          "K080462",
+          "K113645",
+          "K051188",
+          "K040501",
+          "K043573",
+          "K130235",
+          "K060306",
+          "K070147",
+          "K081950",
+          "K042707"
+        ],
+        "registration_number": [
+          "3003828812",
+          "1000244346",
+          "2249915",
+          "1054811",
+          "2249062",
+          "1319660",
+          "2528981",
+          "1038671",
+          "2024024",
+          "2090010",
+          "3011276344",
+          "1000307092",
+          "1450662",
+          "3018094310",
+          "3008812241",
+          "3004431266",
+          "1030489",
+          "3002719998",
+          "3011936113",
+          "1038806",
+          "2029275",
+          "3010097171",
+          "1066741"
+        ],
+        "fei_number": [
+          "3003828812",
+          "1000244346",
+          "2528981",
+          "1038671",
+          "1000477302",
+          "3001503333",
+          "2024024",
+          "1000136478",
+          "3001236616",
+          "3011276344",
+          "1000307092",
+          "1450662",
+          "3006813973",
+          "1000306431",
+          "3018094310",
+          "3004431266",
+          "3002719998",
+          "3011936113",
+          "1000114185",
+          "1038806",
+          "3002600221",
+          "3010097171",
+          "3003005156"
+        ]
+      },
+      "review_panel": "DE",
+      "medical_specialty": "DE",
+      "device_name": "Bone Grafting Material, Human Source",
+      "review_code": "",
+      "unclassified_reason": "",
+      "medical_specialty_description": "Dental",
+      "device_class": "2",
+      "definition": "INTENDED TO BE PACKED INTO BONY VOIDS OR GAPS TO FILL AND/OR AUGMENT DENTAL INTRAOSSEOUS, ORAL AND CRANIO-/MAXILLOFACIAL DEFECTS.  THESE DEFECTS MAY BE SURGICALLY CREATD OSSEOUS DEFECTS OR OSSEOUS DEFECTS CREATED FROM TRAUMATIC INJRY TO THE BONE, INLCUDING PERIODENTA/INFRABONY DEFECTS; ALVEOLAR RIDGE AUGMENTATION (SINUSOTOMY, OSTEOTOMY, CYSTECTOMY); DENTAL EXTRACTION SITES (RIDGE MAINTENANCE, IMPLANT PREPARATION/PLACEMENT); SINUS LIFTS; CYSTIC DEFECTS; CRANIOFACIAL AUGMENTATION.",
+      "regulation_number": "872.3930",
+      "implant_flag": "Y",
+      "submission_type_id": "1"
+    }
+  ]
+}

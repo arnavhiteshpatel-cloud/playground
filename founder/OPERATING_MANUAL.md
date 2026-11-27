@@ -34,7 +34,7 @@ CPU; switching training to `mps` is a one-line device change in `osteoquant/ml/t
 python scripts/demo_seed.py                 # creates runtime/demo.db with a synthetic study (+ public ovine study if data downloaded)
 OQ_DB=runtime/demo.db osteoquant serve      # → open http://127.0.0.1:8765
 ```
-Users: `demo_admin`, `demo_analyst`, `demo_reviewer`; password `Demo-Password-2026` (change for anything real).
+Users: `demo_admin`, `demo_analyst`, `demo_reviewer`; the seed script prints a random password (or set `OQ_DEMO_PASSWORD` before seeding). Demo accounts only — never reuse for real data.
 Follow `founder/DEMO_SCRIPT.md` for the scripted walkthrough.
 
 ## 4. Real use (one lab, one computer)

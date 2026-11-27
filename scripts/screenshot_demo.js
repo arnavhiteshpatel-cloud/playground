@@ -5,7 +5,7 @@ const { chromium } = require('playwright');
   const out = '/home/user/playground/investor/screenshots/';
   await p.goto('http://127.0.0.1:8765/');
   await p.screenshot({ path: out + '01_login.png' });
-  await p.fill('#login-user', 'demo_analyst'); await p.fill('#login-pass', 'Demo-Password-2026'); await p.click('#login-form button');
+  await p.fill('#login-user', 'demo_analyst'); await p.fill('#login-pass', process.env.OQ_DEMO_PASSWORD || 'Demo-Password-2026'); await p.click('#login-form button');
   await p.waitForSelector('#study-list li[data-id]'); await p.click('#study-list li[data-id]');
   await p.waitForSelector('[data-open]'); await p.waitForTimeout(800);
   await p.screenshot({ path: out + '02_study.png', fullPage: true });

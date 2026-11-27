@@ -72,6 +72,20 @@
    "acc": 0.8498038496318451,
    "dice_graft": 0.0015938564080272405,
    "dice_new": 0.9188432950004497
+  },
+  {
+   "morphology": "compact",
+   "features": "intensity_oracle_dice_optimal",
+   "dice_graft": 0.610225670661274,
+   "dice_new": 0.692959659849523,
+   "acc": null
+  },
+  {
+   "morphology": "strut_like",
+   "features": "intensity_oracle_dice_optimal",
+   "dice_graft": 0.3571090519447599,
+   "dice_new": 0.7697576703794828,
+   "acc": null
   }
  ],
  "saved": "2026-11-27T07:12:28Z"

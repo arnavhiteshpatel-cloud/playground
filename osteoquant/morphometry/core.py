@@ -14,9 +14,12 @@ Key conventions (verified numerically in Experiment G / tests/test_morphometry.p
   Discretisation: thickness = 2·d_EDT (BoneJ convention); bias 0 voxels for even and +1
   voxel for odd voxel thicknesses; residual error vs analytic phantoms is in Experiment G.
 * Border convention for thickness (reported with every result): "edge" (default) replicates the
-  region boundary outward so that structures cut by a cropped VOI are not artificially thinned;
-  "background" treats the border as the end of every structure. On 8 public trabecular cubes,
-  "background" under-read Scanco IPL Tb.Th by ~18%; "edge" reduced the gap (Experiment G).
+  *array* border outward so structures cut by a cropped cube are not artificially thinned;
+  "background" treats the array border as the end of every structure. NOTE: the convention acts
+  on the array border only — inside a cylindrical/irregular ROI, voxels outside the ROI mask are
+  background regardless. The "edge" default was chosen AFTER comparing both conventions against
+  Scanco IPL on the same 8 public cubes (Experiment G); that agreement is therefore not an
+  independent validation and must be re-tested on new reference data (review finding Q-10).
 * Tb.N = 1 / (Tb.Th + Tb.Sp)  (approximation; direct 3D Tb.N via mid-axis spacing not implemented).
 * Conn.D = β1 / TV with β1 = β0 + β2 − χ (Euler–Poincaré, 26-connected foreground,
   Odgaard & Gundersen 1993). No edge correction: the ROI is treated as an isolated object,
@@ -168,6 +171,12 @@ def class_volumes(labels: np.ndarray, roi: np.ndarray, spacing) -> dict:
     out["uncertain_volume_mm3"] = unc
     out["uncertain_fraction"] = unc / tv if tv else float("nan")
     out["mineralized_fraction"] = sum(out[f"{n}_fraction"] for n in LABEL_NAMES.values())
+    # Abstained voxels lower fractions computed over the full TV; also report fractions over the
+    # confidently classified volume so material-dependent abstention does not bias comparisons (Q-06).
+    tvc = tv - unc
+    out["TV_certain_mm3"] = tvc
+    for n in LABEL_NAMES.values():
+        out[f"{n}_fraction_of_certain"] = out[f"{n}_volume_mm3"] / tvc if tvc > 0 else float("nan")
     return out
 
 

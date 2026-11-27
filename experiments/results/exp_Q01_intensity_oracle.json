@@ -1,0 +1,250 @@
+{
+ "experiment": "Q-01 correction",
+ "C": [
+  {
+   "graft_mgHA": 2200,
+   "noise": 30,
+   "oracle_graft": 0.9783714116819567,
+   "rf_graft": 0.9801088851161822,
+   "multiotsu_graft": 0.9757983911700568
+  },
+  {
+   "graft_mgHA": 2200,
+   "noise": 80,
+   "oracle_graft": 0.9720760305352548,
+   "rf_graft": 0.9732996042443398,
+   "multiotsu_graft": 0.9700274503640594
+  },
+  {
+   "graft_mgHA": 2200,
+   "noise": 150,
+   "oracle_graft": 0.9583558490116036,
+   "rf_graft": 0.966283425713148,
+   "multiotsu_graft": 0.9579049647896305
+  },
+  {
+   "graft_mgHA": 2200,
+   "noise": 250,
+   "oracle_graft": 0.9292793453964583,
+   "rf_graft": 0.9580680144558396,
+   "multiotsu_graft": 0.928745099876109
+  },
+  {
+   "graft_mgHA": 1600,
+   "noise": 30,
+   "oracle_graft": 0.9677236672152185,
+   "rf_graft": 0.9710313151703306,
+   "multiotsu_graft": 0.9636329045066573
+  },
+  {
+   "graft_mgHA": 1600,
+   "noise": 80,
+   "oracle_graft": 0.9549023232962063,
+   "rf_graft": 0.9617810378406716,
+   "multiotsu_graft": 0.9514770926629068
+  },
+  {
+   "graft_mgHA": 1600,
+   "noise": 150,
+   "oracle_graft": 0.9193066752783029,
+   "rf_graft": 0.9526758923426181,
+   "multiotsu_graft": 0.9171400139745743
+  },
+  {
+   "graft_mgHA": 1600,
+   "noise": 250,
+   "oracle_graft": 0.836561869712671,
+   "rf_graft": 0.9440097332595512,
+   "multiotsu_graft": 0.8353033338926319
+  },
+  {
+   "graft_mgHA": 1300,
+   "noise": 30,
+   "oracle_graft": 0.9465640128729956,
+   "rf_graft": 0.9581944349148172,
+   "multiotsu_graft": 0.9313604608067099
+  },
+  {
+   "graft_mgHA": 1300,
+   "noise": 80,
+   "oracle_graft": 0.9175393452205919,
+   "rf_graft": 0.9470065964388157,
+   "multiotsu_graft": 0.9017414588834421
+  },
+  {
+   "graft_mgHA": 1300,
+   "noise": 150,
+   "oracle_graft": 0.8422535372380042,
+   "rf_graft": 0.9383609866126363,
+   "multiotsu_graft": 0.8361352500900421
+  },
+  {
+   "graft_mgHA": 1300,
+   "noise": 250,
+   "oracle_graft": 0.7299702787655044,
+   "rf_graft": 0.9265684239599393,
+   "multiotsu_graft": 0.7290210009776116
+  },
+  {
+   "graft_mgHA": 1150,
+   "noise": 30,
+   "oracle_graft": 0.9146626675995654,
+   "rf_graft": 0.9459693068236205,
+   "multiotsu_graft": 0.874103338419581
+  },
+  {
+   "graft_mgHA": 1150,
+   "noise": 80,
+   "oracle_graft": 0.8666927220533043,
+   "rf_graft": 0.9371302143032857,
+   "multiotsu_graft": 0.8379998618189063
+  },
+  {
+   "graft_mgHA": 1150,
+   "noise": 150,
+   "oracle_graft": 0.7678783607150611,
+   "rf_graft": 0.9270319561363549,
+   "multiotsu_graft": 0.7649986735923319
+  },
+  {
+   "graft_mgHA": 1150,
+   "noise": 250,
+   "oracle_graft": 0.661783125578212,
+   "rf_graft": 0.914226294673143,
+   "multiotsu_graft": 0.6577104972927228
+  },
+  {
+   "graft_mgHA": 1000,
+   "noise": 30,
+   "oracle_graft": 0.8412916377746747,
+   "rf_graft": 0.9264101613611664,
+   "multiotsu_graft": 0.7777503967420757
+  },
+  {
+   "graft_mgHA": 1000,
+   "noise": 80,
+   "oracle_graft": 0.7709204407623176,
+   "rf_graft": 0.9173142579196,
+   "multiotsu_graft": 0.7494928649878161
+  },
+  {
+   "graft_mgHA": 1000,
+   "noise": 150,
+   "oracle_graft": 0.6731111600600866,
+   "rf_graft": 0.9083604346172484,
+   "multiotsu_graft": 0.6722398891948725
+  },
+  {
+   "graft_mgHA": 1000,
+   "noise": 250,
+   "oracle_graft": 0.5928436338777713,
+   "rf_graft": 0.8950699907750105,
+   "multiotsu_graft": 0.5726943544424025
+  },
+  {
+   "graft_mgHA": 900,
+   "noise": 30,
+   "oracle_graft": 0.7581870879030158,
+   "rf_graft": 0.9057625948598194,
+   "multiotsu_graft": 0.7122731043410523
+  },
+  {
+   "graft_mgHA": 900,
+   "noise": 80,
+   "oracle_graft": 0.68608917004914,
+   "rf_graft": 0.8991432071632595,
+   "multiotsu_graft": 0.6825605097601538
+  },
+  {
+   "graft_mgHA": 900,
+   "noise": 150,
+   "oracle_graft": 0.6075935103961306,
+   "rf_graft": 0.889381681015137,
+   "multiotsu_graft": 0.5938915046130794
+  },
+  {
+   "graft_mgHA": 900,
+   "noise": 250,
+   "oracle_graft": 0.5512706457009795,
+   "rf_graft": 0.8767893403159103,
+   "multiotsu_graft": 0.5081820518264385
+  },
+  {
+   "graft_mgHA": 800,
+   "noise": 30,
+   "oracle_graft": 0.6759192137174868,
+   "rf_graft": 0.8880194092714344,
+   "multiotsu_graft": 0.06563960082875986
+  },
+  {
+   "graft_mgHA": 800,
+   "noise": 80,
+   "oracle_graft": 0.6064244084468596,
+   "rf_graft": 0.8810691369908997,
+   "multiotsu_graft": 0.2123213797613267
+  },
+  {
+   "graft_mgHA": 800,
+   "noise": 150,
+   "oracle_graft": 0.5512252698370471,
+   "rf_graft": 0.8694199106605915,
+   "multiotsu_graft": 0.3372028931181244
+  },
+  {
+   "graft_mgHA": 800,
+   "noise": 250,
+   "oracle_graft": 0.521131110657497,
+   "rf_graft": 0.8538460731953549,
+   "multiotsu_graft": 0.3734443840129125
+  },
+  {
+   "graft_mgHA": 650,
+   "noise": 30,
+   "oracle_graft": 0.6383701132328188,
+   "rf_graft": 0.8850586611816853,
+   "multiotsu_graft": 0.4992056359099095
+  },
+  {
+   "graft_mgHA": 650,
+   "noise": 80,
+   "oracle_graft": 0.5558093537016595,
+   "rf_graft": 0.8725902009404966,
+   "multiotsu_graft": 0.47452837761481953
+  },
+  {
+   "graft_mgHA": 650,
+   "noise": 150,
+   "oracle_graft": 0.5169932005469414,
+   "rf_graft": 0.8559987144881688,
+   "multiotsu_graft": 0.44633101112575274
+  },
+  {
+   "graft_mgHA": 650,
+   "noise": 250,
+   "oracle_graft": 0.5069123905039749,
+   "rf_graft": 0.8323966619851015,
+   "multiotsu_graft": 0.4097328346710356
+  }
+ ],
+ "C2": [
+  {
+   "morphology": "compact",
+   "features": "intensity_oracle_dice_optimal",
+   "dice_graft": 0.610225670661274,
+   "dice_new": 0.692959659849523,
+   "acc": null
+  },
+  {
+   "morphology": "strut_like",
+   "features": "intensity_oracle_dice_optimal",
+   "dice_graft": 0.3571090519447599,
+   "dice_new": 0.7697576703794828,
+   "acc": null
+  }
+ ],
+ "L2": {
+  "dice_graft": 0.32308958881308714,
+  "dice_new": 0.7578263045124701
+ },
+ "saved": "2026-11-27T08:15:46Z"
+}

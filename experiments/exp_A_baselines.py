@@ -7,7 +7,7 @@ the gap using texture/shape context.
 Data: data/processed/synth/test (16 specimens; beta-TCP, BCP, HA, CaSO4; 3 defect models).
 Baselines: global fixed threshold, Otsu, adaptive local mean, GMM, k-means, CTAn-style
 (two global thresholds, oracle-free: Otsu + Otsu-within-ROI), multi-Otsu, intensity+morphology,
-Random Forest (trained on 6 train specimens, ~20k voxels/class/specimen).
+Random Forest (trained on 12 train specimens, 3 per material; the U-Net used all 48).
 Metrics: mineral Dice (whole volume), per-class Dice/HD95 in the defect ROI (true ROI given to
 all methods so that ROI error does not confound), runtime. Specimen-level summaries with 95% CI.
 """
@@ -25,14 +25,19 @@ from skimage.filters import threshold_otsu, threshold_multiotsu
 
 def run():
     test = load_split("test")
-    train = load_split("train", limit=48)[:6]
+    allt = load_split("train", limit=48)
+    train = []
+    for mat in ("beta_tcp", "bcp", "ha", "calcium_sulfate"):     # balanced: 3 specimens per material (review Q-03)
+        train += [c for c in allt if c.meta["spec"]["material"] == mat][:3]
     sp = test[0].spacing
     # RF trained once
     t0 = time.time()
     rf = C.RFSegmenter(n_estimators=60, seed=0).fit([c.image for c in train], [c.labels for c in train],
                                                      [c.spacing for c in train], [c.roi for c in train],
-                                                     n_per_class=15000)
+                                                     n_per_class=8000)
     rf_train_s = time.time() - t0
+    rf_ns = C.RFSegmenter(n_estimators=60, seed=0, feature_set="no_spatial").fit(
+        [c.image for c in train], [c.labels for c in train], [c.spacing for c in train], [c.roi for c in train], n_per_class=8000)
     # fixed global threshold chosen once on training data (median Otsu) — mimics a lab SOP
     t_fixed = float(np.median([threshold_otsu(c.image[::2, ::2, ::2]) for c in train]))
     t_graft_fixed = float(np.median([threshold_multiotsu(c.image[c.roi & (c.image > t_fixed)], 2)[0]
@@ -63,6 +68,7 @@ def run():
             x, roi, sp, C.threshold_otsu(x)[1], float(threshold_multiotsu(x[roi & (x > C.threshold_otsu(x)[1])], 2)[0]),
             brighter))
         timeit("random_forest", lambda: rf.predict(x, sp, roi)[0])
+        timeit("random_forest_no_spatial", lambda: rf_ns.predict(x, sp, roi)[0])
         for name, (lab, dt) in methods.items():
             r = multiclass_metrics(lab, y, spacing=sp, mask=roi, distances=True)
             mb = binary_metrics(lab > 0, mineral_true, sp, distances=False)

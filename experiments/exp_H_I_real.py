@@ -63,7 +63,7 @@ def add(method, c, pred):
 # ---------------------------------------------------------------- H: classical + RF
 # RF trained on ALL 10 training specimens (same data as the U-Net; review finding Q-03)
 rf = C.RFSegmenter(40, 16, 0, scales_um=(0, 1, 2, 4), feature_set="no_spatial").fit(
-    [c.image for c in train], [c.labels for c in train], [c.spacing] * len(train), [c.roi for c in train], 6000)
+    [c.image for c in train], [c.labels for c in train], [x.spacing for x in train], [x.roi for x in train], 6000)
 for c in test:
     add("otsu", c, C.threshold_otsu(c.image)[0])
     g, order = C.gmm_threshold(c.image, None, k=2)

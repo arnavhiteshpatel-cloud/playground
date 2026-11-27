@@ -24,7 +24,10 @@ from osteoquant.api.app import HANDLERS, _store_path  # noqa: E402
 from osteoquant.io import write_zarr, read_volume  # noqa: E402
 from osteoquant.phantom import PhantomConfig, generate_phantom, render_fast, ImagingConfig  # noqa: E402
 
-DEMO_PW = "Demo-Password-2026"
+import os
+import secrets
+# Demo-only accounts. A random password is generated unless OQ_DEMO_PASSWORD is set (review S-18).
+DEMO_PW = os.environ.get("OQ_DEMO_PASSWORD") or ("Demo-" + secrets.token_urlsafe(9) + "9a")
 
 
 def main():

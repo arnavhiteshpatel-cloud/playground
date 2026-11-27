@@ -342,6 +342,8 @@ def read_dicom_series(path, zrange=None, step=1, do_hash=True, **kw):
     else:
         iop = np.array(getattr(ds0, "ImageOrientationPatient", [1, 0, 0, 0, 1, 0]), dtype=float)
         normal = np.cross(iop[:3], iop[3:])
+        has_ipp = all(getattr(ds, "ImagePositionPatient", None) is not None for _, ds in f_ds)
+
         def pos(ds):
             ipp = getattr(ds, "ImagePositionPatient", None)
             if ipp is not None:
@@ -363,6 +365,12 @@ def read_dicom_series(path, zrange=None, step=1, do_hash=True, **kw):
             if med > 0 and np.std(d[d < 1.5 * med]) > 0.01 * med:
                 rep.warnings.append("Slice spacing varies by >1%")
             sz = med if med > 0 else float(getattr(ds0, "SliceThickness", 1.0))
+            if not has_ipp:   # InstanceNumber differences are not distances (review Q-14)
+                st_ = getattr(ds0, "SpacingBetweenSlices", None) or getattr(ds0, "SliceThickness", None)
+                sz = float(st_) if st_ else 1.0
+                rep.metadata_assumed["slice_spacing"] = "SpacingBetweenSlices/SliceThickness" if st_ else "1 mm (no geometry)"
+                rep.warnings.append("No ImagePositionPatient: slice order from InstanceNumber; z spacing from "
+                                    + ("SpacingBetweenSlices/SliceThickness" if st_ else "ASSUMED 1 mm"))
         else:
             sz = float(getattr(ds0, "SliceThickness", 1.0))
         ps = [float(v) for v in getattr(ds0, "PixelSpacing", [1, 1])]

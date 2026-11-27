@@ -1,0 +1,2 @@
+test_000_condyle_beta_tcp {'global_fixed_sop': 0.347, 'otsu_ctan_style': 0.415, 'adaptive': 0.541, 'multiotsu': 0.41, 'multiotsu_smoothed': 0.408, 'gmm3': 0.23, 'kmeans3': 0.309, 'intensity_morphology': 0.46, 'random_forest': 0.533, 'random_forest_no_spatial': 0.452}
+test_001_calvarial_beta_tcp {'global_fixed_sop': 0.401, 'otsu_ctan_style': 0.383, 'adaptive': 0.441, 'multiotsu': 0.365, 'multiotsu_smoothed': 0.404, 'gmm3': 0.266, 'kmeans3': 0.271, 'intensity_morphology': 0.436, 'random_forest': 0.527, 'random_forest_no_spatial': 0.504}

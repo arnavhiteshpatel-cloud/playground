@@ -2,7 +2,7 @@
 
 Audience: orthobiologic R&D lead, CRO imaging lead, or faculty advisor. Tone: research prototype, honest about status.
 
-**Setup (before the call):** `python scripts/demo_seed.py && OQ_DB=runtime/demo.db osteoquant serve`; open
+**Setup (before the call):** `OQ_DEMO_PASSWORD=<choose> python scripts/demo_seed.py && OQ_DB=runtime/demo.db osteoquant serve`; open
 http://127.0.0.1:8765; have `reports_samples/` PDFs and `experiments/results/figures/` open in another window.
 
 | Time | Show | Say (accurately) |

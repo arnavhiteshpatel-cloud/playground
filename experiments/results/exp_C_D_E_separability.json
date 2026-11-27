@@ -29,7 +29,9 @@
    "rf_dice_new": 0.9845698123017187,
    "bayes_intensity_bound_acc": 0.9853233981903561,
    "bayes_intensity_bound_dice_graft": 0.9782609878734515,
-   "bayes_intensity_bound_dice_new": 0.9890811298808534
+   "bayes_intensity_bound_dice_new": 0.9890811298808534,
+   "intensity_oracle_dice_graft": 0.9783714116819567,
+   "intensity_oracle_dice_new": 0.9891119439271497
   },
   {
    "graft_mgHA": 2200,
@@ -45,7 +47,9 @@
    "rf_dice_new": 0.9789187775238831,
    "bayes_intensity_bound_acc": 0.9808940102228151,
    "bayes_intensity_bound_dice_graft": 0.9717017560672795,
-   "bayes_intensity_bound_dice_new": 0.9857862356120938
+   "bayes_intensity_bound_dice_new": 0.9857862356120938,
+   "intensity_oracle_dice_graft": 0.9720760305352548,
+   "intensity_oracle_dice_new": 0.9859032435251837
   },
   {
    "graft_mgHA": 2200,
@@ -61,7 +65,9 @@
    "rf_dice_new": 0.972113930324098,
    "bayes_intensity_bound_acc": 0.9716371179825102,
    "bayes_intensity_bound_dice_graft": 0.9578173295490361,
-   "bayes_intensity_bound_dice_new": 0.9789400379597311
+   "bayes_intensity_bound_dice_new": 0.9789400379597311,
+   "intensity_oracle_dice_graft": 0.9583558490116036,
+   "intensity_oracle_dice_new": 0.9789928432402992
   },
   {
    "graft_mgHA": 2200,
@@ -77,7 +83,9 @@
    "rf_dice_new": 0.9644300756858692,
    "bayes_intensity_bound_acc": 0.9521890868541713,
    "bayes_intensity_bound_dice_graft": 0.929147683094452,
-   "bayes_intensity_bound_dice_new": 0.964434449507598
+   "bayes_intensity_bound_dice_new": 0.964434449507598,
+   "intensity_oracle_dice_graft": 0.9292793453964583,
+   "intensity_oracle_dice_new": 0.9642045103348931
   },
   {
    "graft_mgHA": 1600,
@@ -93,7 +101,9 @@
    "rf_dice_new": 0.9803379175156643,
    "bayes_intensity_bound_acc": 0.978138957311916,
    "bayes_intensity_bound_dice_graft": 0.9675687588058807,
-   "bayes_intensity_bound_dice_new": 0.9837496047287885
+   "bayes_intensity_bound_dice_new": 0.9837496047287885,
+   "intensity_oracle_dice_graft": 0.9677236672152185,
+   "intensity_oracle_dice_new": 0.9838074095223909
   },
   {
    "graft_mgHA": 1600,
@@ -109,7 +119,9 @@
    "rf_dice_new": 0.9726093655019638,
    "bayes_intensity_bound_acc": 0.9694066465851868,
    "bayes_intensity_bound_dice_graft": 0.9546480422271754,
-   "bayes_intensity_bound_dice_new": 0.9772501357125633
+   "bayes_intensity_bound_dice_new": 0.9772501357125633,
+   "intensity_oracle_dice_graft": 0.9549023232962063,
+   "intensity_oracle_dice_new": 0.9774366187993394
   },
   {
    "graft_mgHA": 1600,
@@ -125,7 +137,9 @@
    "rf_dice_new": 0.9651110089126534,
    "bayes_intensity_bound_acc": 0.9455223280456324,
    "bayes_intensity_bound_dice_graft": 0.9185430166842293,
-   "bayes_intensity_bound_dice_new": 0.9596644926554575
+   "bayes_intensity_bound_dice_new": 0.9596644926554575,
+   "intensity_oracle_dice_graft": 0.9193066752783029,
+   "intensity_oracle_dice_new": 0.9593357884457624
   },
   {
    "graft_mgHA": 1600,
@@ -141,7 +155,9 @@
    "rf_dice_new": 0.9568486433172904,
    "bayes_intensity_bound_acc": 0.8885109690488853,
    "bayes_intensity_bound_dice_graft": 0.8313658025769562,
-   "bayes_intensity_bound_dice_new": 0.9178769468484439
+   "bayes_intensity_bound_dice_new": 0.9178769468484439,
+   "intensity_oracle_dice_graft": 0.836561869712671,
+   "intensity_oracle_dice_new": 0.9143377841257566
   },
   {
    "graft_mgHA": 1300,
@@ -157,7 +173,9 @@
    "rf_dice_new": 0.9731483566990953,
    "bayes_intensity_bound_acc": 0.9638947893886037,
    "bayes_intensity_bound_dice_graft": 0.946370593361867,
-   "bayes_intensity_bound_dice_new": 0.9731778030042567
+   "bayes_intensity_bound_dice_new": 0.9731778030042567,
+   "intensity_oracle_dice_graft": 0.9465640128729956,
+   "intensity_oracle_dice_new": 0.9732128632171012
   },
   {
    "graft_mgHA": 1300,
@@ -173,7 +191,9 @@
    "rf_dice_new": 0.965068419607968,
    "bayes_intensity_bound_acc": 0.9443873820757606,
    "bayes_intensity_bound_dice_graft": 0.9169304808525967,
-   "bayes_intensity_bound_dice_new": 0.9587984659664176
+   "bayes_intensity_bound_dice_new": 0.9587984659664176,
+   "intensity_oracle_dice_graft": 0.9175393452205919,
+   "intensity_oracle_dice_new": 0.9587826564374033
   },
   {
    "graft_mgHA": 1300,
@@ -189,7 +209,9 @@
    "rf_dice_new": 0.9573236376811921,
    "bayes_intensity_bound_acc": 0.8923346782460629,
    "bayes_intensity_bound_dice_graft": 0.8393336405318895,
-   "bayes_intensity_bound_dice_new": 0.920172444757409
+   "bayes_intensity_bound_dice_new": 0.920172444757409,
+   "intensity_oracle_dice_graft": 0.8422535372380042,
+   "intensity_oracle_dice_new": 0.9165818801177972
   },
   {
    "graft_mgHA": 1300,
@@ -205,7 +227,9 @@
    "rf_dice_new": 0.9477057080288621,
    "bayes_intensity_bound_acc": 0.8146790248700814,
    "bayes_intensity_bound_dice_graft": 0.7119210073121303,
-   "bayes_intensity_bound_dice_new": 0.8650516170720142
+   "bayes_intensity_bound_dice_new": 0.8650516170720142,
+   "intensity_oracle_dice_graft": 0.7299702787655044,
+   "intensity_oracle_dice_new": 0.8480570661763598
   },
   {
    "graft_mgHA": 1150,
@@ -221,7 +245,9 @@
    "rf_dice_new": 0.9674404025701406,
    "bayes_intensity_bound_acc": 0.9426194967717878,
    "bayes_intensity_bound_dice_graft": 0.9139719369768619,
-   "bayes_intensity_bound_dice_new": 0.9575583373281873
+   "bayes_intensity_bound_dice_new": 0.9575583373281873,
+   "intensity_oracle_dice_graft": 0.9146626675995654,
+   "intensity_oracle_dice_new": 0.9571701491542915
   },
   {
    "graft_mgHA": 1150,
@@ -237,7 +263,9 @@
    "rf_dice_new": 0.9601689181796731,
    "bayes_intensity_bound_acc": 0.9096275570518856,
    "bayes_intensity_bound_dice_graft": 0.8652719999400323,
-   "bayes_intensity_bound_dice_new": 0.932957870534234
+   "bayes_intensity_bound_dice_new": 0.932957870534234,
+   "intensity_oracle_dice_graft": 0.8666927220533043,
+   "intensity_oracle_dice_new": 0.9310255456049198
   },
   {
    "graft_mgHA": 1150,
@@ -253,7 +281,9 @@
    "rf_dice_new": 0.9515918682930139,
    "bayes_intensity_bound_acc": 0.8400517411743933,
    "bayes_intensity_bound_dice_graft": 0.7567027567862964,
-   "bayes_intensity_bound_dice_new": 0.882499022586482
+   "bayes_intensity_bound_dice_new": 0.882499022586482,
+   "intensity_oracle_dice_graft": 0.7678783607150611,
+   "intensity_oracle_dice_new": 0.8716640584297654
   },
   {
    "graft_mgHA": 1150,
@@ -269,7 +299,9 @@
    "rf_dice_new": 0.9411730448334685,
    "bayes_intensity_bound_acc": 0.7647845250195888,
    "bayes_intensity_bound_dice_graft": 0.6236747148626177,
-   "bayes_intensity_bound_dice_new": 0.8309348619066684
+   "bayes_intensity_bound_dice_new": 0.8309348619066684,
+   "intensity_oracle_dice_graft": 0.661783125578212,
+   "intensity_oracle_dice_new": 0.7854977551227172
   },
   {
    "graft_mgHA": 1000,
@@ -285,7 +317,9 @@
    "rf_dice_new": 0.9575267968732812,
    "bayes_intensity_bound_acc": 0.8898553550923523,
    "bayes_intensity_bound_dice_graft": 0.8394218742119328,
-   "bayes_intensity_bound_dice_new": 0.916978187761503
+   "bayes_intensity_bound_dice_new": 0.916978187761503,
+   "intensity_oracle_dice_graft": 0.8412916377746747,
+   "intensity_oracle_dice_new": 0.9148560063750016
   },
   {
    "graft_mgHA": 1000,
@@ -301,7 +335,9 @@
    "rf_dice_new": 0.9503372588260116,
    "bayes_intensity_bound_acc": 0.8369986390051114,
    "bayes_intensity_bound_dice_graft": 0.7600648399375993,
-   "bayes_intensity_bound_dice_new": 0.8780257467192314
+   "bayes_intensity_bound_dice_new": 0.8780257467192314,
+   "intensity_oracle_dice_graft": 0.7709204407623176,
+   "intensity_oracle_dice_new": 0.8667587229169221
   },
   {
    "graft_mgHA": 1000,
@@ -317,7 +353,9 @@
    "rf_dice_new": 0.9426920188446508,
    "bayes_intensity_bound_acc": 0.7663603211563647,
    "bayes_intensity_bound_dice_graft": 0.6297553327637672,
-   "bayes_intensity_bound_dice_new": 0.8311280829591081
+   "bayes_intensity_bound_dice_new": 0.8311280829591081,
+   "intensity_oracle_dice_graft": 0.6731111600600866,
+   "intensity_oracle_dice_new": 0.7892895334500363
   },
   {
    "graft_mgHA": 1000,
@@ -333,7 +371,9 @@
    "rf_dice_new": 0.9329029925816458,
    "bayes_intensity_bound_acc": 0.7107184473602631,
    "bayes_intensity_bound_dice_graft": 0.4807441690502745,
-   "bayes_intensity_bound_dice_new": 0.8010265420177078
+   "bayes_intensity_bound_dice_new": 0.8010265420177078,
+   "intensity_oracle_dice_graft": 0.5928436338777713,
+   "intensity_oracle_dice_new": 0.6712599449178898
   },
   {
    "graft_mgHA": 900,
@@ -349,7 +389,9 @@
    "rf_dice_new": 0.9477599047619285,
    "bayes_intensity_bound_acc": 0.8199865959745529,
    "bayes_intensity_bound_dice_graft": 0.742951047281351,
-   "bayes_intensity_bound_dice_new": 0.8607079000315796
+   "bayes_intensity_bound_dice_new": 0.8607079000315796,
+   "intensity_oracle_dice_graft": 0.7581870879030158,
+   "intensity_oracle_dice_new": 0.8492311627634659
   },
   {
    "graft_mgHA": 900,
@@ -365,7 +407,9 @@
    "rf_dice_new": 0.9415098727954643,
    "bayes_intensity_bound_acc": 0.7628108331412911,
    "bayes_intensity_bound_dice_graft": 0.6512848159118584,
-   "bayes_intensity_bound_dice_new": 0.8208037153909161
+   "bayes_intensity_bound_dice_new": 0.8208037153909161,
+   "intensity_oracle_dice_graft": 0.68608917004914,
+   "intensity_oracle_dice_new": 0.783058154691093
   },
   {
    "graft_mgHA": 900,
@@ -381,7 +425,9 @@
    "rf_dice_new": 0.9338278244467441,
    "bayes_intensity_bound_acc": 0.7086257779612596,
    "bayes_intensity_bound_dice_graft": 0.5101294843445425,
-   "bayes_intensity_bound_dice_new": 0.7936793583174535
+   "bayes_intensity_bound_dice_new": 0.7936793583174535,
+   "intensity_oracle_dice_graft": 0.6075935103961306,
+   "intensity_oracle_dice_new": 0.6904885953538709
   },
   {
    "graft_mgHA": 900,
@@ -397,7 +443,9 @@
    "rf_dice_new": 0.9247732859468645,
    "bayes_intensity_bound_acc": 0.6778543086610477,
    "bayes_intensity_bound_dice_graft": 0.2989682560045771,
-   "bayes_intensity_bound_dice_new": 0.7906565632822339
+   "bayes_intensity_bound_dice_new": 0.7906565632822339,
+   "intensity_oracle_dice_graft": 0.5512706457009795,
+   "intensity_oracle_dice_new": 0.5560509580641947
   },
   {
    "graft_mgHA": 800,
@@ -413,7 +461,9 @@
    "rf_dice_new": 0.9390870809379894,
    "bayes_intensity_bound_acc": 0.7357154037782768,
    "bayes_intensity_bound_dice_graft": 0.6377223801219598,
-   "bayes_intensity_bound_dice_new": 0.7950964898895619
+   "bayes_intensity_bound_dice_new": 0.7950964898895619,
+   "intensity_oracle_dice_graft": 0.6759192137174868,
+   "intensity_oracle_dice_new": 0.7500320718689931
   },
   {
    "graft_mgHA": 800,
@@ -429,7 +479,9 @@
    "rf_dice_new": 0.93294003127603,
    "bayes_intensity_bound_acc": 0.6800336172480042,
    "bayes_intensity_bound_dice_graft": 0.4713563981085504,
-   "bayes_intensity_bound_dice_new": 0.7727918921513317
+   "bayes_intensity_bound_dice_new": 0.7727918921513317,
+   "intensity_oracle_dice_graft": 0.6064244084468596,
+   "intensity_oracle_dice_new": 0.6480001484573292
   },
   {
    "graft_mgHA": 800,
@@ -445,7 +497,9 @@
    "rf_dice_new": 0.9240833526165954,
    "bayes_intensity_bound_acc": 0.6646649233207601,
    "bayes_intensity_bound_dice_graft": 0.11073637467506303,
-   "bayes_intensity_bound_dice_new": 0.7940606817424111
+   "bayes_intensity_bound_dice_new": 0.7940606817424111,
+   "intensity_oracle_dice_graft": 0.5512252698370471,
+   "intensity_oracle_dice_new": 0.5158079966976015
   },
   {
    "graft_mgHA": 800,
@@ -461,7 +515,9 @@
    "rf_dice_new": 0.913189240638384,
    "bayes_intensity_bound_acc": 0.6637661207208833,
    "bayes_intensity_bound_dice_graft": 0.028309472708063,
-   "bayes_intensity_bound_dice_new": 0.7971882859252882
+   "bayes_intensity_bound_dice_new": 0.7971882859252882,
+   "intensity_oracle_dice_graft": 0.521131110657497,
+   "intensity_oracle_dice_new": 0.3613530849382049
   },
   {
    "graft_mgHA": 650,
@@ -477,7 +533,9 @@
    "rf_dice_new": 0.9355280597001082,
    "bayes_intensity_bound_acc": 0.6980635943994916,
    "bayes_intensity_bound_dice_graft": 0.5706093887892264,
-   "bayes_intensity_bound_dice_new": 0.7692493959308752
+   "bayes_intensity_bound_dice_new": 0.7692493959308752,
+   "intensity_oracle_dice_graft": 0.6383701132328188,
+   "intensity_oracle_dice_new": 0.6909218182777511
   },
   {
    "graft_mgHA": 650,
@@ -493,7 +551,9 @@
    "rf_dice_new": 0.9264725976752636,
    "bayes_intensity_bound_acc": 0.6612823769981684,
    "bayes_intensity_bound_dice_graft": 0.016324604859636705,
-   "bayes_intensity_bound_dice_new": 0.797501286912035
+   "bayes_intensity_bound_dice_new": 0.797501286912035,
+   "intensity_oracle_dice_graft": 0.5558093537016595,
+   "intensity_oracle_dice_new": 0.49442504858392605
   },
   {
    "graft_mgHA": 650,
@@ -509,7 +569,9 @@
    "rf_dice_new": 0.9150090103050773,
    "bayes_intensity_bound_acc": 0.6616139817500252,
    "bayes_intensity_bound_dice_graft": 0.0,
-   "bayes_intensity_bound_dice_new": 0.7980252663882652
+   "bayes_intensity_bound_dice_new": 0.7980252663882652,
+   "intensity_oracle_dice_graft": 0.5169932005469414,
+   "intensity_oracle_dice_new": 0.2575558863279366
   },
   {
    "graft_mgHA": 650,
@@ -525,7 +587,9 @@
    "rf_dice_new": 0.8992549718491482,
    "bayes_intensity_bound_acc": 0.6626652308512443,
    "bayes_intensity_bound_dice_graft": 0.0,
-   "bayes_intensity_bound_dice_new": 0.7980252663882652
+   "bayes_intensity_bound_dice_new": 0.7980252663882652,
+   "intensity_oracle_dice_graft": 0.5069123905039749,
+   "intensity_oracle_dice_new": 0.1051675085462515
   }
  ],
  "D": [
@@ -704,5 +768,6 @@
   }
  ],
  "seconds": 199.3,
- "saved": "2026-11-27T07:07:45Z"
+ "saved": "2026-11-27T07:07:45Z",
+ "intensity_oracle_note": "bayes_intensity_bound_* fields are the accuracy-optimal rule (NOT a Dice bound); use intensity_oracle_dice_* (Q-01)"
 }

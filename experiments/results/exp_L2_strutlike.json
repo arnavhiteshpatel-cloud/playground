@@ -114,6 +114,10 @@
   "rf_single_timepoint": {
    "dice_graft": 0.6627501170957367,
    "dice_new": 0.9314024680786237
+  },
+  "intensity_oracle_dice_optimal": {
+   "dice_graft": 0.32308958881308714,
+   "dice_new": 0.7578263045124701
   }
  },
  "saved": "2026-11-27T07:36:15Z"

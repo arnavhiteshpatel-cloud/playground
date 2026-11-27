@@ -115,6 +115,13 @@ def group_stats(bundle):
     return table, comps
 
 
+def _csv_safe(v):
+    """Neutralise spreadsheet formula injection (review S-19)."""
+    if isinstance(v, str) and v[:1] in ("=", "+", "-", "@", "\t", "\r"):
+        return "'" + v
+    return v
+
+
 def write_csv(bundle, path):
     eps = bundle["endpoints"]
     with open(path, "w", newline="") as f:
@@ -122,10 +129,10 @@ def write_csv(bundle, path):
         w.writerow(["data_class", "review_status", "specimen_id", "group", "timepoint", "scan_sha256", "roi_sha256",
                     "segmentation_method", "model_sha256", "qc_verdict"] + [k for k, _, _ in eps])
         for s in bundle["specimens"]:
-            w.writerow([bundle["data_class"], bundle["review_status"], s["specimen_id"], s.get("group"), s.get("timepoint"),
+            w.writerow([_csv_safe(x) for x in [bundle["data_class"], bundle["review_status"], s["specimen_id"], s.get("group"), s.get("timepoint"),
                         _get(s, "scan.sha256", ""), _get(s, "roi.definition_sha256", ""),
                         _get(s, "segmentation.method", ""), _get(s, "segmentation.model_sha256", ""),
-                        _get(s, "qc.verdict", "")] + [_get(s["metrics"], k) for k, _, _ in eps])
+                        _get(s, "qc.verdict", "")] + [_get(s["metrics"], k) for k, _, _ in eps]])
 
 
 def _fmt(v, nd=3):

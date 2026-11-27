@@ -24,10 +24,16 @@ cfg = ck["cfg"]
 SEC_REVIEW_SLICE, SEC_MANUAL_SLICE = 20.0, 90.0
 
 
-def run(cases, tag):
+def tscale(p, T):
+    q = np.power(np.clip(p, 1e-8, 1), 1.0 / T)
+    return q / q.sum(0, keepdims=True)
+
+
+def run(cases, tag, T=1.0):
     rows, curves = [], []
     for c in cases:
-        p = predict_proba(model, c, cfg, tta=True)
+        p_raw = predict_proba(model, c, cfg, tta=True)
+        p = tscale(p_raw, T)
         pred = p.argmax(0)
         ent = predictive_entropy(p)
         mineral = c.roi & (c.labels > 0)
@@ -42,6 +48,7 @@ def run(cases, tag):
         rows.append({"case": c.case_id, "set": tag, "material": c.meta["spec"]["material"],
                      "dice_graft": r["per_class"]["graft"]["dice"], "dice_new": r["per_class"]["new_bone"]["dice"],
                      "mean_entropy_roi": float(ent[c.roi].mean()), "mean_entropy_mineral": float(ent[mineral].mean()),
+                     "ece_roi_raw": expected_calibration_error(p_raw, c.labels, mask=c.roi)["ece"],
                      "ece_roi": expected_calibration_error(p, c.labels, mask=c.roi)["ece"], "aurc": rc["aurc"],
                      "review_minutes_90cov": n_slices_def * SEC_REVIEW_SLICE / 60,
                      "manual_minutes_full": n_slices_roi * SEC_MANUAL_SLICE / 60})
@@ -65,8 +72,9 @@ if __name__ == "__main__":
         p = predict_proba(model, c, cfg)
         lg.append(np.log(np.clip(p, 1e-8, 1))); ys.append(c.labels.astype(int)); ms.append(c.roi)
     T = temperature_scale(lg, ys, ms)
-    r_id, c_id = run(test, "in_distribution")
-    r_ood, c_ood = run(ood, "ood_material")
+    r_val, _ = run(val, "validation", T)          # threshold source (no test-set tuning; review Q-12)
+    r_id, c_id = run(test, "in_distribution", T)
+    r_ood, c_ood = run(ood, "ood_material", T)
     def agg(curves):
         out = []
         for j in range(len(curves[0])):
@@ -74,10 +82,11 @@ if __name__ == "__main__":
         return out
     fails = [r for r in r_id + r_ood if r["dice_graft"] < 0.8]
     ok = [r for r in r_id + r_ood if r["dice_graft"] >= 0.8]
-    thr = np.quantile([r["mean_entropy_mineral"] for r in r_id], 0.9)  # flag scans above ID 90th percentile
+    thr = float(np.max([r["mean_entropy_mineral"] for r in r_val]))  # flag scans above the max seen on validation (in-distribution)
     sens = float(np.mean([r["mean_entropy_mineral"] > thr for r in fails])) if fails else float("nan")
     spec = float(np.mean([r["mean_entropy_mineral"] <= thr for r in ok])) if ok else float("nan")
-    res = {"experiment": "K/M", "temperature_fit_on_val": T, "rows": r_id + r_ood,
+    res = {"experiment": "K/M", "temperature_fit_on_val": T, "temperature_applied": True,
+           "threshold_source": "validation split (8 specimens)", "rows": r_id + r_ood,
            "risk_coverage_id": agg(c_id), "risk_coverage_ood": agg(c_ood),
            "auroc_entropy_id_vs_ood": auroc([r["mean_entropy_mineral"] for r in r_id], [r["mean_entropy_mineral"] for r in r_ood]),
            "failure_detection": {"definition": "scan graft Dice < 0.8", "n_fail": len(fails), "n_ok": len(ok),

@@ -60,7 +60,7 @@ server, not a desktop application. The commercial numbers (time saving, pricing,
 | FA-24 | Low | Ledgers required by the new mandate do not exist (task, architecture decisions, evidence ledger, model registry, benchmark scorecard, defect, review, risk, release readiness). | repo root | Created in Generation 0 (this commit). (Lead) |
 | FA-25 | Medium | Endpoints not rigorously defined in one place (graft fraction of ROI vs of mineral; certain vs including uncertain voxels). | morphometry/core.py `*_fraction_of_certain` | `docs/science/ENDPOINT_DEFINITIONS.md` with formula, units, denominators, handling of uncertain voxels, supported-when conditions. (Science) |
 | FA-26 | Medium | Dataset licence enforcement is documentary only; the training code does not refuse non-commercial data for commercial weights. | ml/train.py Case.licence field | Enforce licence policy in `train_model` (commercial weights require commercial-compatible data; record in model card). (Science) |
-| FA-27 | Low | Reported days (day-18 confidence 0.55 vs 0.56) differ between documents. | SCIENTIFIC_EVIDENCE R10 vs EXPERIMENT_REGISTRY F | Claims checker (FA-10). |
+| FA-27 | Low | The day-18 ROI confidence was quoted with two different roundings in different documents. | SCIENTIFIC_EVIDENCE R10 vs EXPERIMENT_REGISTRY F | Claims checker (FA-10). |
 
 ## 4. Specific weaknesses named in the mandate — disposition
 

@@ -29,7 +29,7 @@ Detailed citations: docs/science/REFERENCES.md, docs/research/COMPETITOR_INTELLI
 | R7 | Cross-scanner gain/offset shift drops RF graft Dice 0.96→0.81; percentile normalisation restores 0.96 | synthetic | R |
 | R8 | Adaptation to held-out simulated materials: zero-shot graft Dice 0.84 (bioglass 0.79); 1 labelled scan → 0.86–0.89; 3 → 0.91 | synthetic | R |
 | R9 | Real Zeiss TXM ingestion: ovine callus file PixelSize = **24.6 µm** (founder playbook stated 3.72 µm) | **Real public data** | R / correction |
-| R10 | Automatic segmental-gap ROI on the real 18-day ovine scan found the regenerate with confidence 0.55 (flagged for review); the 161-day scan was correctly returned as an exception (consolidated regenerate, saturated hardware) | Real public data | R |
+| R10 | Automatic segmental-gap ROI on the real 18-day ovine scan found the regenerate with confidence 0.56 (flagged for review); the 161-day scan was correctly returned as an exception (consolidated regenerate, saturated hardware) | Real public data | R |
 | R12 | **Real micro-CT (dog forelimb, 5 test specimens):** U-Net trained on 10 real scans Dice 0.826 vs Otsu 0.508 / RF 0.758; synthetic-trained U-Net fails zero-shot (0.379) but reaches 0.787 after fine-tuning on ONE real labelled scan | **Real public data** (Zenodo 24047383) | R |
 | R11 | Classical thresholds on real reconstructions must exclude out-of-FOV padding and metal: without this, new-bone fraction was 1.00; with it 0.21 | Real public data | R (defect found & fixed) |
 

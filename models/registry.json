@@ -222,5 +222,69 @@
    "roi_distance_channel": true,
    "seed": 100
   }
+ },
+ "adapt_k5_r1": {
+  "sha256": "e930c7bdcf6b87c3f57a6398e63a55600c1d5838117b3d4c7786f1f817314ac5",
+  "created": "2026-11-27T07:53:08Z",
+  "provenance": [
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 5,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": true,
+   "seed": 101
+  }
+ },
+ "adapt_k10_r0": {
+  "sha256": "315b9e1b11e2ca65e1b3ac5a7d6b32825b3c40e867d3568b286e0f22ece51763",
+  "created": "2026-11-27T07:55:16Z",
+  "provenance": [
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 10,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": true,
+   "seed": 100
+  }
  }
 }

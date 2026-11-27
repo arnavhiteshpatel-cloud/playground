@@ -1,0 +1,224 @@
+{
+ "Bootstrapped \u2014 Conservative": {
+  "Total revenue": [
+   10800,
+   49200,
+   90600,
+   165000,
+   209400
+  ],
+  "Gross margin %": [
+   0.24,
+   0.42,
+   0.53,
+   0.68,
+   0.71
+  ],
+  "EBITDA": [
+   -35420,
+   -97360,
+   -159820,
+   -146400,
+   -188660
+  ],
+  "Cumulative cash before equity": [
+   -25420,
+   -72780,
+   -232600,
+   -379000,
+   -567660
+  ],
+  "Equity funding requirement (max cumulative deficit)": [
+   567660,
+   null,
+   null,
+   null,
+   null
+  ]
+ },
+ "Bootstrapped \u2014 Base": {
+  "Total revenue": [
+   47800,
+   151400,
+   328900,
+   535920,
+   793980
+  ],
+  "Gross margin %": [
+   0.7,
+   0.76,
+   0.84,
+   0.88,
+   0.91
+  ],
+  "EBITDA": [
+   -28675,
+   -64600,
+   -23488,
+   97920,
+   235060
+  ],
+  "Cumulative cash before equity": [
+   -3675,
+   81725,
+   208238,
+   306158,
+   541218
+  ],
+  "Equity funding requirement (max cumulative deficit)": [
+   3675,
+   null,
+   null,
+   null,
+   null
+  ]
+ },
+ "Bootstrapped \u2014 Optimistic": {
+  "Total revenue": [
+   123000,
+   424000,
+   863100,
+   1447600,
+   2122900
+  ],
+  "Gross margin %": [
+   0.82,
+   0.88,
+   0.91,
+   0.93,
+   0.95
+  ],
+  "EBITDA": [
+   14830,
+   128340,
+   382220,
+   843840,
+   1361300
+  ],
+  "Cumulative cash before equity": [
+   64830,
+   498170,
+   1180390,
+   2024230,
+   3385530
+  ],
+  "Equity funding requirement (max cumulative deficit)": [
+   0,
+   null,
+   null,
+   null,
+   null
+  ]
+ },
+ "Venture \u2014 Conservative": {
+  "Total revenue": [
+   29000,
+   93000,
+   238350,
+   455400,
+   793750
+  ],
+  "Gross margin %": [
+   0.44,
+   0.58,
+   0.74,
+   0.81,
+   0.86
+  ],
+  "EBITDA": [
+   -245250,
+   -672390,
+   -957582,
+   -1061100,
+   -1074280
+  ],
+  "Cumulative cash before equity": [
+   -220250,
+   -587640,
+   -1245222,
+   -2306322,
+   -3380602
+  ],
+  "Equity funding requirement (max cumulative deficit)": [
+   3380602,
+   null,
+   null,
+   null,
+   null
+  ]
+ },
+ "Venture \u2014 Base": {
+  "Total revenue": [
+   88500,
+   348000,
+   897600,
+   1823750,
+   3176600
+  ],
+  "Gross margin %": [
+   0.74,
+   0.83,
+   0.89,
+   0.93,
+   0.95
+  ],
+  "EBITDA": [
+   -278705,
+   -666650,
+   -716575,
+   -288295,
+   519966
+  ],
+  "Cumulative cash before equity": [
+   -228705,
+   -590355,
+   -56930,
+   -345225,
+   174741
+  ],
+  "Equity funding requirement (max cumulative deficit)": [
+   590355,
+   null,
+   null,
+   null,
+   null
+  ]
+ },
+ "Venture \u2014 Optimistic": {
+  "Total revenue": [
+   234000,
+   889350,
+   2415600,
+   4981200,
+   9009600
+  ],
+  "Gross margin %": [
+   0.84,
+   0.9,
+   0.94,
+   0.96,
+   0.97
+  ],
+  "EBITDA": [
+   -238620,
+   -376285,
+   312370,
+   2141600,
+   5349620
+  ],
+  "Cumulative cash before equity": [
+   -138620,
+   -209905,
+   1352465,
+   3494065,
+   8843685
+  ],
+  "Equity funding requirement (max cumulative deficit)": [
+   209905,
+   null,
+   null,
+   null,
+   null
+  ]
+ }
+}

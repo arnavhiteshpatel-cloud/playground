@@ -13,3 +13,5 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 {'arm': 'rf_from_scratch', 'k': 3, 'rep': 1, 'dice_graft': 0.8382814593288566, 'dice_new': 0.7508829655726792, 'graft_bioglass_45s5': 0.801201677535721, 'graft_xenograft_dbbm': 0.8859554644914596}
 {'arm': 'unet_finetune', 'k': 5, 'rep': 0, 'dice_graft': 0.8845291600214708, 'dice_new': 0.8422241717925639, 'graft_bioglass_45s5': 0.8400809579284588, 'graft_xenograft_dbbm': 0.9416768484267718}
 {'arm': 'rf_from_scratch', 'k': 5, 'rep': 0, 'dice_graft': 0.8238001011677034, 'dice_new': 0.7172422685786155, 'graft_bioglass_45s5': 0.7770865505280063, 'graft_xenograft_dbbm': 0.8838603805616}
+{'arm': 'unet_finetune', 'k': 5, 'rep': 1, 'dice_graft': 0.915482005169556, 'dice_new': 0.8515168385416035, 'graft_bioglass_45s5': 0.8969350506009707, 'graft_xenograft_dbbm': 0.93932808961488}
+{'arm': 'rf_from_scratch', 'k': 5, 'rep': 1, 'dice_graft': 0.8733889471636549, 'dice_new': 0.764408710050577, 'graft_bioglass_45s5': 0.8417976968305653, 'graft_xenograft_dbbm': 0.9140062690204843}

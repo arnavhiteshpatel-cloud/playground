@@ -1,0 +1,118 @@
+{
+ "hparams": {
+  "in_ch": 2,
+  "n_classes": 4,
+  "base": 12,
+  "levels": 4,
+  "p_drop": 0.0,
+  "max_ch": 96
+ },
+ "cfg": {
+  "patch": [
+   48,
+   48,
+   48
+  ],
+  "batch": 2,
+  "iters": 300,
+  "lr": 0.001,
+  "base": 12,
+  "levels": 4,
+  "threads": 4,
+  "log_every": 300,
+  "val_every": 1000000000,
+  "loss": {
+   "dice": 1.0,
+   "ce": 1.0,
+   "boundary_w": 1.0
+  },
+  "eval_in_roi": false,
+  "roi_distance_channel": true,
+  "seed": 100
+ },
+ "name": "adapt_k10_r0",
+ "provenance": [
+  "synthetic"
+ ],
+ "licence_tag": "commercial_eligible",
+ "train_manifest": [
+  {
+   "case_id": "ood_mat_023_segmental_xenograft_dbbm",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "ff0ec25a536fec7d"
+  },
+  {
+   "case_id": "ood_mat_010_calvarial_xenograft_dbbm",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "5b2003d15fd6a963"
+  },
+  {
+   "case_id": "ood_mat_002_segmental_bioglass_45s5",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "5c6e8de2b4e1fabd"
+  },
+  {
+   "case_id": "ood_mat_001_calvarial_bioglass_45s5",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "b56eae7424b1bc29"
+  },
+  {
+   "case_id": "ood_mat_015_condyle_xenograft_dbbm",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "2a7bea39910451df"
+  },
+  {
+   "case_id": "ood_mat_020_segmental_bioglass_45s5",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "885509d08a679ba2"
+  },
+  {
+   "case_id": "ood_mat_006_condyle_bioglass_45s5",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "63a726afaf2f9391"
+  },
+  {
+   "case_id": "ood_mat_011_segmental_xenograft_dbbm",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "8543d4878173ad1e"
+  },
+  {
+   "case_id": "ood_mat_012_condyle_bioglass_45s5",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "7a5c0c88972fe5a8"
+  },
+  {
+   "case_id": "ood_mat_000_condyle_bioglass_45s5",
+   "provenance": "synthetic",
+   "commercial_use": "allowed",
+   "image_sha256": "62820a7d150135c3"
+  }
+ ],
+ "history": [
+  {
+   "iter": 300,
+   "loss": 0.3670986294746399,
+   "sec": 97.5
+  }
+ ],
+ "created": "2026-11-27T07:55:16Z",
+ "env": {
+  "torch": "2.15.0+cpu",
+  "python": "3.13.18",
+  "numpy": "2.5.3"
+ },
+ "n_params": 788944,
+ "train_seconds": 97.5,
+ "sha256": "315b9e1b11e2ca65e1b3ac5a7d6b32825b3c40e867d3568b286e0f22ece51763",
+ "path": "models/adapt_k10_r0.pt",
+ "warning": "SYNTHETIC-TRAINED \u2014 research prototype, not for study decisions"
+}

@@ -1,0 +1,25 @@
+pypdf             6.17.0  CVE-2026-115585     6.21.2
+pypdf             6.17.0  CVE-2026-115580     6.21.2
+pypdf             6.17.0  CVE-2026-119208     6.21.3
+pypdf             6.17.0  CVE-2026-119206     6.21.3
+pypdf             6.17.0  CVE-2026-119209     6.21.3
+pypdf             6.17.0  CVE-2026-119207     6.21.3
+pypdf             6.17.0  CVE-2026-119203     6.21.4
+pypdf             6.17.0  CVE-2026-119205     6.21.4
+pypdf             6.17.0  CVE-2026-119204     6.21.4
+setuptools        78.1.0  PYSEC-2025-49       78.1.1
+setuptools        78.1.0  PYSEC-2025-49       78.1.1
+setuptools        78.1.0  PYSEC-2026-3447     83.0.0
+setuptools        78.1.0  PYSEC-2026-3447     83.0.0
+setuptools        78.1.0  GHSA-xmj3-9gf7-h52w 84.1.0
+soupsieve         2.9.2   CVE-2026-126192     2.10.0
+soupsieve         2.9.2   CVE-2026-126190     4.0.0
+soupsieve         2.9.2   CVE-2026-126193     3.0.2
+soupsieve         2.9.2   CVE-2026-126191     3.0.2
+wheel             0.42.0  CVE-2026-24049      0.46.2
+
+Name       Skip Reason
+---------- -----------------------------------------------------------------------------------
+pillow     Dependency not found on PyPI and could not be audited: pillow (13.0.0.post1)
+python-apt Dependency not found on PyPI and could not be audited: python-apt (2.7.7+ubuntu5.3)
+torch      Dependency not found on PyPI and could not be audited: torch (2.15.0+cpu)

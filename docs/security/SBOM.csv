@@ -1,0 +1,33 @@
+component,version,license,type,use
+numpy,2.5.3,BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0,python,runtime
+scipy,1.18.1,BSD License,python,runtime
+scikit-image,0.26.0,BSD License,python,runtime
+scikit-learn,1.9.1,BSD-3-Clause,python,runtime
+pandas,3.0.5,BSD License,python,runtime
+SimpleITK,2.5.8,Apache-2.0,python,runtime
+tifffile,2026.11.26,BSD-3-Clause,python,runtime
+pydicom,3.0.2,MIT License,python,runtime
+nibabel,5.5.0,MIT,python,runtime
+pynrrd,1.1.4,MIT License,python,runtime
+zarr,3.4.2,MIT,python,runtime
+olefile,0.47,BSD,python,runtime
+imagecodecs,2026.11.11,BSD-3-Clause,python,runtime
+matplotlib,3.11.2,Python Software Foundation License,python,runtime
+statsmodels,0.15.0,BSD-3-Clause,python,runtime
+fastapi,0.165.0,MIT,python,runtime
+uvicorn,0.54.0,BSD-3-Clause,python,runtime
+python-multipart,0.0.32,Apache-2.0,python,runtime
+reportlab,5.0.1,BSD License,python,runtime
+openpyxl,3.1.5,MIT,python,runtime
+PyYAML,6.0.3,MIT,python,runtime
+psutil,7.2.2,BSD-3-Clause,python,runtime
+torch,2.15.0+cpu,see package,python,runtime
+pillow,13.0.0.post1,MIT-CMU,python,runtime
+pytest,9.1.1,MIT,python,test
+httpx,0.29.0,BSD-3-Clause,python,test
+python-pptx,1.0.2,MIT,python,runtime
+starlette,1.7.0,BSD-3-Clause,python,runtime
+pydantic,2.13.5,MIT,python,runtime
+numcodecs,0.17.1,MIT,python,runtime
+three.js,0.160.0,MIT,javascript (vendored web/static/vendor),runtime (3D view)
+NIST XCOM attenuation tables,retrieved 2026-11-27,US Government work (public domain in the US),data,phantom physics

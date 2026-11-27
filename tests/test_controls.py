@@ -66,3 +66,20 @@ def test_audit_timestamps_utc_monotonic(tmp_path):
         st.audit.record("x", details={"i": i})
     ts = [e["ts"] for e in reversed(st.audit.events())]
     assert all(t.endswith("Z") for t in ts) and ts == sorted(ts)
+
+
+def test_trained_model_roundtrips_through_safe_loading(tmp_path, monkeypatch):
+    """save_model output must load with weights_only=True after registry hash verification."""
+    import osteoquant.ml.train as T
+    monkeypatch.setattr(T, "MODEL_DIR", tmp_path)
+    rng = np.random.default_rng(0)
+    img = rng.normal(size=(16, 16, 16)).astype(np.float32)
+    lab = (img > 0.5).astype(np.uint8)
+    case = T.Case("c", img, lab, np.ones_like(lab, bool), (10, 10, 10))
+    cfg = dict(patch=(16, 16, 16), batch=1, iters=2, base=4, levels=2, threads=1, n_classes=2, log_every=1, val_every=10 ** 9)
+    T.train_model([case], [], cfg, "tiny", log=lambda s: None)
+    m, ck = T.load_model("tiny")
+    assert ck["sha256"] and ck["licence_tag"] == "commercial_eligible"
+    (tmp_path / "tiny.pt").write_bytes((tmp_path / "tiny.pt").read_bytes() + b"x")   # tamper
+    with pytest.raises(RuntimeError, match="hash"):
+        T.load_model("tiny")

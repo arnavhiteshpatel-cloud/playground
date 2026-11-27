@@ -338,5 +338,37 @@
   },
   "resaved_safe_format": "2026-11-27 (metadata JSON-sanitised; weights unchanged)",
   "previous_sha256": "94baf102de97c731a2d540a33be74b705b086f887179db9e029201414ce0535a"
+ },
+ "unet_dog_bone_real": {
+  "sha256": "2f73f5a2371d0a12ca535c37e95798c3a35d722114fbf098287920e8b6df7803",
+  "created": "2026-11-27T09:15:27Z",
+  "provenance": [
+   "public-real"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 10,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 800,
+   "lr": 0.003,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "n_classes": 2,
+   "log_every": 200,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0
+   },
+   "seed": 0,
+   "fg_prob": 0.6
+  },
+  "previous_sha256": "3f6af60a4ca1a41bb753fe1b3f35b4fe6af4fbd9143e03267277f2f25e69e2c6"
  }
 }

@@ -197,7 +197,7 @@ def save_model(model, cfg, name, train_cases, hist, seconds) -> dict:
     ck = {"state_dict": model.state_dict(), "hparams": _plain(model.hparams), "cfg": _plain(cfg), "name": name,
           "provenance": prov, "licence_tag": tag, "train_manifest": _plain(manifest), "history": _plain(hist),
           "created": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-          "env": {"torch": torch.__version__, "python": platform.python_version(), "numpy": np.__version__},
+          "env": {"torch": str(torch.__version__), "python": platform.python_version(), "numpy": str(np.__version__)},
           "n_params": n_params(model), "train_seconds": round(seconds, 1)}
     p = MODEL_DIR / f"{name}.pt"
     torch.save(ck, p)

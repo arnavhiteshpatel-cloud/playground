@@ -79,7 +79,8 @@ for c in test:
 # ---------------------------------------------------------------- H: real-trained U-Net
 cfg = dict(patch=(48, 48, 48), batch=2, iters=800, lr=3e-3, base=12, levels=4, threads=4, n_classes=2, log_every=200,
            val_every=10 ** 9, loss={"dice": 1.0, "ce": 1.0}, seed=0, fg_prob=0.6)
-train_model(train, [], cfg, "unet_dog_bone_real", log=lambda s: print("dog", s, flush=True))
+if not (MODEL_DIR / "unet_dog_bone_real.pt").exists():
+    train_model(train, [], cfg, "unet_dog_bone_real", log=lambda s: print("dog", s, flush=True))
 m, ck = load_model("unet_dog_bone_real")
 for c in test:
     add("unet_trained_on_10_real", c, predict_proba(m, c, ck["cfg"]).argmax(0) > 0)

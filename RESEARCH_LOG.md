@@ -16,3 +16,9 @@
 14. **Real-data robustness**: thresholds included zero padding (new-bone fraction 1.0) → robust value selection; 161-day scan has saturated hardware → metal QC check + report exception path.
 15. **Downloads blocked**: EBI FTP (TLS through proxy) and Dryad (token). Substitutes: NuInsSeg (Zenodo), SPROUT dog forelimb (Zenodo).
 16. **Viewer** exercised in headless Chromium: login, study, viewer, brush edit → new version, measurement, 3D surface, audit.
+17. **Independent adversarial review** (security + science) found 2 critical security issues (detached-header file read; unsafe model deserialisation), cross-tenant and blinding leaks, and a mislabelled "Bayes bound". All critical/high fixed with regression tests; claims corrected (intensity-only oracle 0.52–0.77, not 0.30–0.65).
+18. **Experiment A rerun** with balanced RF training (12 specimens, 4 materials): graft Dice 0.888 (was 0.882); conclusions unchanged.
+19. **Experiment H redefined**: SPROUT dog scans contain the thorax with only forelimb bones labelled → whole-volume bone segmentation was ill-posed; evaluation restricted to a band around labelled bones with ignore labels.
+20. **Experiment K rerun**: temperature scaling worsened ECE (0.008→0.011); entropy is a weak OOD detector (AUROC 0.66) but a sensitive failure flag (4/4).
+21. **Experiment O on real data** found three more defects: out-of-core Otsu included zero padding (threshold 0), DICOM reader OOM (two float copies), and a script variable collision. Fixed: DICOM 829 slices now 5 s / 4.45 GB.
+22. **Report 1** silently dropped a specimen whose ROI failed → generator now lists it under Exceptions (principle: every specimen appears).

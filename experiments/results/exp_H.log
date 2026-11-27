@@ -14,9 +14,5 @@ train 10 test 5 [(75, 113, 58), (149, 128, 63), (575, 256, 113), (81, 256, 131),
 {'method': 'otsu_in_band', 'case': '244195_Lab.tif', 'dice': 0.34531867745146017, 'hd95_vox': 7.0, 'vol_err': 3.791751592356688}
 {'method': 'gmm2', 'case': '244195_Lab.tif', 'dice': 0.9521001513622603, 'hd95_vox': 1.0, 'vol_err': 0.019872611464968153}
 {'method': 'random_forest_10train', 'case': '244195_Lab.tif', 'dice': 0.9159863049776139, 'hd95_vox': 1.0, 'vol_err': 0.17662420382165606}
-/home/user/playground/osteoquant/ml/train.py:168: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
-Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
-  rec = {"iter": it + 1, "loss": float(loss), "sec": round(time.time() - t0, 1)}
-dog {"iter": 200, "loss": 0.4754056930541992, "sec": 993.9}
-dog {"iter": 400, "loss": 0.25387948751449585, "sec": 1975.8}
-dog {"iter": 600, "loss": 0.2061581164598465, "sec": 2495.2}
+{'method': 'unet_trained_on_10_real', 'case': '228420_Dachshund.tif', 'dice': 0.873352165725047, 'hd95_vox': 2.23606797749979, 'vol_err': 0.05465538089480049}
+{'method': 'unet_trained_on_10_real', 'case': '232558_Beagle.tif', 'dice': 0.8307277200222205, 'hd95_vox': 2.23606797749979, 'vol_err': 0.3619493908153702}

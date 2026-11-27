@@ -1,0 +1,132 @@
+{
+ "hparams": {
+  "in_ch": 1,
+  "n_classes": 2,
+  "base": 12,
+  "levels": 4,
+  "p_drop": 0.0,
+  "max_ch": 96
+ },
+ "cfg": {
+  "patch": [
+   48,
+   48,
+   48
+  ],
+  "batch": 2,
+  "iters": 800,
+  "lr": 0.003,
+  "base": 12,
+  "levels": 4,
+  "threads": 4,
+  "n_classes": 2,
+  "log_every": 200,
+  "val_every": 1000000000,
+  "loss": {
+   "dice": 1.0,
+   "ce": 1.0
+  },
+  "seed": 0,
+  "fg_prob": 0.6
+ },
+ "name": "unet_dog_bone_real",
+ "provenance": [
+  "public-real"
+ ],
+ "licence_tag": "commercial_eligible",
+ "train_manifest": [
+  {
+   "case_id": "241035_FB.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "3171181e415f2f32"
+  },
+  {
+   "case_id": "247854_WHWT.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "76fd7b8a776f0d9f"
+  },
+  {
+   "case_id": "248812_WHWT.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "6c6c3aadc597af22"
+  },
+  {
+   "case_id": "250482_WHWT.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "b62bf42358ea0e40"
+  },
+  {
+   "case_id": "250882_BordeCollie.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "f78f2f27f73a2153"
+  },
+  {
+   "case_id": "251908_GD.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "a35e0b0eab470649"
+  },
+  {
+   "case_id": "254861_Beagle.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "f660ff2d69f6af76"
+  },
+  {
+   "case_id": "257593_Dachshund.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "bf3a6146693b7b87"
+  },
+  {
+   "case_id": "258467_Dachshund.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "5ee7b99fb2af1f9f"
+  },
+  {
+   "case_id": "259056_WHWT.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "ecba1c7fe98fc81e"
+  }
+ ],
+ "history": [
+  {
+   "iter": 200,
+   "loss": 0.4754056930541992,
+   "sec": 993.9
+  },
+  {
+   "iter": 400,
+   "loss": 0.25387948751449585,
+   "sec": 1975.8
+  },
+  {
+   "iter": 600,
+   "loss": 0.2061581164598465,
+   "sec": 2495.2
+  },
+  {
+   "iter": 800,
+   "loss": 0.32681190967559814,
+   "sec": 2590.6
+  }
+ ],
+ "created": "2026-11-27T09:15:27Z",
+ "env": {
+  "torch": "2.15.0+cpu",
+  "python": "3.13.18",
+  "numpy": "2.5.3"
+ },
+ "n_params": 788594,
+ "train_seconds": 2590.6,
+ "sha256": "3f6af60a4ca1a41bb753fe1b3f35b4fe6af4fbd9143e03267277f2f25e69e2c6",
+ "path": "models/unet_dog_bone_real.pt",
+ "warning": "Research prototype \u2014 not validated"
+}

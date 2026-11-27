@@ -21,6 +21,7 @@ import torch.nn.functional as F
 
 from common import ROOT, save_result, RESULTS
 from real_dog import split, score, bone_prob
+from onnx_eval import predict as onnx_predict
 from osteoquant.ml.train import (Case, MODEL_DIR, build_input, predict_proba, sample_patch, save_model,
                                  seed_everything, train_model, load_model)
 from osteoquant.ml.unet import UNet3D
@@ -107,9 +108,9 @@ def main():
                        loss={"dice": 1.0, "ce": 1.0, "boundary_w": 1.0, "boundary_ignore_aware": True})
             if not (MODEL_DIR / f"{name}.pt").exists():
                 train_model(sub, [], cfg, name, log=lambda s_: None, init_from=str(MODEL_DIR / f"{PRE}.pt"))
-            m, ck = load_model(name)
+            ck = load_model(name)[1]
             for c in test:
-                p = bone_prob(predict_proba(m, c, ck["cfg"], tta=False))
+                p = bone_prob(onnx_predict(name, c, ck["cfg"]))
                 rows.append({"method": f"fewshot_ssl_k{k}", "seed": seed, "case": c.case_id, **score(p > 0.5, c)})
             print("ssl k", k, "seed", seed, round(np.mean([r["dice"] for r in rows[-len(test):]]), 3), flush=True)
     summ = {}

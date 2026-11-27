@@ -15,6 +15,11 @@ def model_dir(tmp_path, monkeypatch):
     d.mkdir()
     monkeypatch.setattr(T, "MODEL_DIR", d)
     try:
+        import osteoquant.ml.core as MC
+        monkeypatch.setattr(MC, "MODEL_DIR", d)
+    except ImportError:  # pragma: no cover
+        pass
+    try:
         import osteoquant.ml.runtime as R
         monkeypatch.setattr(R, "MODEL_DIR", d)
     except ImportError:  # pragma: no cover
@@ -253,3 +258,12 @@ def test_pipeline_rf_requires_trusted_local_flag(tmp_path):
         segment(v, roi, {"segmentation": f"rf:{p}"})
     out, prob, info = segment(v, roi, {"segmentation": f"rf:{p}", "_trusted_local": True})
     assert prob.shape == (4,) + v.shape and (out == lab).mean() > 0.9
+
+
+def test_case_default_licence_is_unclear_and_blocks_commercial_training(model_dir):
+    from osteoquant.ml.train import Case, train_model
+    c = _case(7)
+    unclear = Case("u", c.image, c.labels, c.roi, c.spacing)
+    assert unclear.commercial_use == "unclear"
+    with pytest.raises(PermissionError):
+        train_model([unclear], [], {**TINY, "require_commercial_eligible": True}, "u", log=lambda s: None)

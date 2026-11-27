@@ -168,6 +168,7 @@ def main():
     LOG["notes"]["import_outcomes"] = [(c.path.name, c.outcome.status if c.outcome else None,
                                         c.outcome.reason if c.outcome else None) for c in wiz.model.candidates]
     wiz.accept()
+    wiz.deleteLater()
     w.refresh_tree()
     settle()
     shot(w, "ux10_tree_with_rejected.png")
@@ -223,6 +224,32 @@ def main():
     w.results.view.horizontalScrollBar().setValue(w.results.view.horizontalScrollBar().maximum())
     settle()
     shot(w, "ux14_results_scrolled.png")
+
+    # tooltip of a 'not measured' cell (R03, new bone volume): the only place the reason is shown
+    from PySide6.QtWidgets import QToolTip
+    v = w.results.view
+    v.horizontalScrollBar().setValue(0)
+    settle()
+    prox = w.results.proxy
+    for r in range(prox.rowCount()):
+        if prox.index(r, 0).data() == "R03_week8.nii.gz":
+            idx = prox.index(r, 7)
+            tip = idx.data(Qt.ToolTipRole)
+            LOG["notes"]["tooltip_R03_new_bone_volume"] = tip
+            rect = v.visualRect(idx)
+            QToolTip.showText(v.viewport().mapToGlobal(rect.center()), tip, v.viewport())
+            settle(10)
+            for tw in app.topLevelWidgets():
+                if tw.isVisible() and tw.metaObject().className() == "QTipLabel":
+                    tw.grab().save(str(OUT / "ux45_tooltip_not_measured_reason.png"))
+            QToolTip.hideText()
+    # U-Net (synthetic-trained) scan in the viewer
+    w.tabs.setCurrentWidget(w.workspace)
+    w.open_scan(scans["R05_week8.nii.gz"])
+    settle()
+    LOG["notes"]["infobar_unet_scan"] = w.workspace.infobar.text()
+    LOG["notes"]["seg_combo_unet_scan"] = [w.display.seg_combo.itemText(i) for i in range(w.display.seg_combo.count())]
+    shot(w, "ux46_viewer_unet_scan.png")
 
     # ------------------------------------------------------------------ viewer + editing
     w.tabs.setCurrentWidget(w.workspace)
@@ -434,6 +461,9 @@ def main():
     settle()
     shot(wiz2, "ux39_import_metadata_dark.png")
     wiz2.reject()
+    wiz2.deleteLater()
+    from PySide6.QtCore import QCoreApplication, QEvent
+    QCoreApplication.sendPostedEvents(None, QEvent.DeferredDelete)
     ad = AnalysisDialog(3, "condyle", w)
     ad.show()
     shot(ad, "ux40_analysis_dialog_dark.png")

@@ -27,7 +27,8 @@ import numpy as np
 
 from common import load_split, save_result
 from osteoquant.advisor.integration import support_for_scan
-from osteoquant.ml.train import train_model, load_model, predict_proba, MODEL_DIR
+from osteoquant.ml.train import train_model, load_model, MODEL_DIR
+from onnx_eval import predict as onnx_predict
 from osteoquant.uncertainty import predictive_entropy
 
 SEEDS = [0, 1, 2, 3, 4]
@@ -109,7 +110,7 @@ def boot_auroc(score, label, n=2000, seed=0):
 def run_split(name, models):
     rows = []
     for c in load_split(name):
-        probs = [predict_proba(m, c, ck["cfg"], tta=False) for m, ck in models]
+        probs = [onnx_predict(m, c, ck["cfg"]) for m, ck in models]
         r = per_scan(c, probs)
         r["split"] = name
         rows.append(r)
@@ -123,7 +124,7 @@ def main():
     if "train" in sys.argv:
         ensure_models()
         return
-    models = [load_model(model_name(s)) for s in SEEDS]
+    models = [(model_name(s), load_model(model_name(s))[1]) for s in SEEDS]     # names; ONNX inference
     rows = run_split("val", models) + run_split("cal", models) + run_split("test", models) + run_split("ood_mat", models)
     R = {"experiment": "U1", "rows": rows}
     # Q1/Q2 seeds

@@ -176,7 +176,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("target")
     ap.add_argument("tests", nargs="+")
-    ap.add_argument("--jobs", type=int, default=4)
+    ap.add_argument("--jobs", type=int, default=1, help="parallel workers (keep 1 on shared machines)")
+    ap.add_argument("--sample", type=int, default=0, help="test a random sample of N mutants (0 = all)")
+    ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--timeout", type=int, default=120)
     ap.add_argument("--out", default=None)
     ap.add_argument("--lines", default=None, help="restrict to line range a-b")
@@ -189,6 +191,10 @@ def main():
     if a.lines:
         lo, hi = map(int, a.lines.split("-"))
         pts = [p for p in pts if lo <= p[0] <= hi]
+    n_all = len(pts)
+    if a.sample and a.sample < len(pts):
+        import random
+        pts = sorted(random.Random(a.seed).sample(pts, a.sample))
     work = Path(tempfile.mkdtemp(prefix="oq-mut-", dir=os.environ.get("OQ_MUT_TMP")))
     base = work / "base"
     base.mkdir()
@@ -222,7 +228,7 @@ def main():
     killed = [r for r in applied if r["status"] != "survived"]
     surv = [r for r in applied if r["status"] == "survived"]
     desc = {(p[0], p[1], p[2], p[4], p[5]): p[3] for p in pts}
-    summary = {"target": rel, "tests": a.tests, "mutants": len(applied), "killed": len(killed),
+    summary = {"target": rel, "tests": a.tests, "mutation_points": n_all, "mutants": len(applied), "killed": len(killed),
                "survived": len(surv), "score": round(len(killed) / max(1, len(applied)), 3),
                "minutes": round((time.time() - t0) / 60, 1),
                "survivors": [{"line": r["point"][0], "op": desc[(r["point"][0], r["point"][1], r["point"][2], r["point"][4], r["point"][5])],

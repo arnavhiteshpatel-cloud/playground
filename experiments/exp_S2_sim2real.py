@@ -30,7 +30,8 @@ from scipy import ndimage as ndi
 from common import ROOT, save_result
 from real_dog import split, score, bone_prob
 from osteoquant.ml.synth_dr import DRSampler, DRConfig, describe_sampler
-from osteoquant.ml.train import Case, train_model, load_model, predict_proba, MODEL_DIR
+from osteoquant.ml.train import Case, train_model, load_model, MODEL_DIR
+from onnx_eval import predict as onnx_predict
 
 STAGES = sys.argv[1:] or ["a", "b", "c"]
 OUT = {"experiment": "S2v2", "rows": []}
@@ -38,10 +39,11 @@ train, test = split()
 
 
 def dice_cases(model, cfg, cases, zoom=1.0):
+    """``model`` is the registered model NAME; inference runs through ONNX Runtime (onnx_eval)."""
     out = []
     for c in cases:
         cc = c if zoom == 1.0 else Case(c.case_id, ndi.zoom(c.image, zoom, order=1), None, None, c.spacing)
-        p = bone_prob(predict_proba(model, cc, cfg, tta=False))
+        p = bone_prob(onnx_predict(model, cc, cfg))
         if zoom != 1.0:
             p = ndi.zoom(p, np.array(c.image.shape) / np.array(p.shape), order=1)[: c.image.shape[0], : c.image.shape[1], : c.image.shape[2]]
         out.append({"case": c.case_id, "zoom": zoom, **score(p > 0.5, c)})
@@ -70,7 +72,7 @@ t0 = time.time()
 STATE = MODEL_DIR.parent / "experiments" / "results" / "exp_S2_state.json"
 state = json.loads(STATE.read_text()) if STATE.exists() else {}
 if "a" in STAGES:
-    m, ck = load_model("unet_noctx_s0")
+    m, ck = "unet_noctx_s0", load_model("unet_noctx_s0")[1]
     z, res = pick_zoom(m, ck["cfg"], "gen0_synth_zeroshot")
     state["gen0_zoom"] = z
     OUT["gen0_train_zoom_curve"] = res
@@ -90,7 +92,7 @@ if "b" in STAGES:
                extra_provenance=["synthetic"], loss={"dice": 1.0, "ce": 1.0, "boundary_w": 1.0, "boundary_ignore_aware": True})
     if not (MODEL_DIR / f"{name}.pt").exists():
         train_model([], [], cfg, name, log=lambda s_: print(name, s_, flush=True), sample_fn=sampler)
-    m, ck = load_model(name)
+    m, ck = name, load_model(name)[1]
     z, res = pick_zoom(m, ck["cfg"], "dr_zeroshot")
     state["dr_zoom"] = z
     OUT["dr_train_zoom_curve"] = res
@@ -127,7 +129,7 @@ if "c" in STAGES:
                     init_path = None
                 if not (MODEL_DIR / f"{name}.pt").exists():
                     train_model(cases, [], cfg, name, log=lambda s_: None, init_from=init_path)
-                m, ck = load_model(name)
+                m, ck = name, load_model(name)[1]
                 for split_name, cs in (("test", test), ("unused_train", unused)):
                     for r in dice_cases(m, ck["cfg"], cs):
                         OUT["rows"].append({"method": f"fewshot_{arm}_k{k}", "split": split_name, "seed": seed,

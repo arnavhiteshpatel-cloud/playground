@@ -1,5 +1,11 @@
 {
-  "messages": [],
+  "messages": [
+    {
+      "kind": "warning",
+      "title": "Report not generated",
+      "text": "ValueError: This study has no analysed scans yet; run the analysis first"
+    }
+  ],
   "notes": {
     "weak_password_error": "ProjectError: Password must be \u226510 characters with an upper-case letter and a digit",
     "import_candidates": [
@@ -15,7 +21,7 @@
       [
         "R07_corrupt.nii.gz",
         false,
-        "CorruptInput: Could not read nifti input R07_corrupt.nii.gz: ImageFileError: File /tmp/oq_ux_h114ykpq/incoming/R07_corrupt.nii.gz is not a gzip file",
+        "CorruptInput: Could not read nifti input R07_corrupt.nii.gz: ImageFileError: File /tmp/oq_ux_klf8bqb8/incoming/R07_corrupt.nii.gz is not a gzip file",
         null,
         null
       ],
@@ -42,7 +48,7 @@
       [
         "R07_corrupt.nii.gz",
         "rejected",
-        "Unreadable: CorruptInput: Could not read nifti input R07_corrupt.nii.gz: ImageFileError: File /tmp/oq_ux_h114ykpq/incoming/R07_corrupt.nii.gz is not a gzip file"
+        "Unreadable: CorruptInput: Could not read nifti input R07_corrupt.nii.gz: ImageFileError: File /tmp/oq_ux_klf8bqb8/incoming/R07_corrupt.nii.gz is not a gzip file"
       ],
       [
         "R08_tiffstack",
@@ -117,7 +123,7 @@
         "beta-TCP + U-Net"
       ]
     ],
-    "ui_event_loop_max_ms_during_analysis": 480.0,
+    "ui_event_loop_max_ms_during_analysis": 303.5,
     "jobs": [
       [
         "Import 3 scan(s)",
@@ -494,6 +500,11 @@
         }
       }
     ],
+    "tooltip_R03_new_bone_volume": "New bone volume: not supported\nautomatic ROI requires review; advisor: intensity-only separation insufficient (threshold-rule graft Dice 0.87; requirement \u22650.85 and volume within \u00b110% at graft share 0.01 and 0.01). Report total mineral; add a day-0 scan or histology to separate graft from new bone; intensity-only separation insufficient (threshold-rule graft Dice 0.87; requirement \u22650.85 and volume within \u00b110% at graft share 0.01 and 0.01). Report total mineral; add a day-0 scan or histology to separate graft from new bone",
+    "infobar_unet_scan": "Scan 5 - R05_week8.nii.gz   \u00b7   48 x 72 x 72 voxels   \u00b7   40, 40, 40 \u00b5m   \u00b7   segmentation v1 (automatic, onnx:unet_noctx_s0)",
+    "seg_combo_unet_scan": [
+      "v1  automatic  onnx:unet_noctx_s0"
+    ],
     "window_presets": [
       "Auto (1-99.5 %)",
       "Full range",
@@ -522,7 +533,7 @@
     "report": {
       "id": 1,
       "status": "ready",
-      "pdf_path": "/tmp/oq_ux_h114ykpq/ux_project/data/org1/reports/report1.pdf",
+      "pdf_path": "/tmp/oq_ux_klf8bqb8/ux_project/data/org1/reports/report1.pdf",
       "unblinded": 0
     },
     "report_self_approve": "PermissionError: Separation of duties: you cannot approve a segmentation you created",
@@ -540,6 +551,15 @@
     ],
     "audit_leak_count": 2,
     "cancel_job": [
+      "cancelled",
+      "cancelled by user"
+    ],
+    "reviewer_analyse_job": [
+      "Analyse scan 3",
+      "cancelled",
+      ""
+    ],
+    "cancel_job_analyst": [
       "cancelled",
       "cancelled by user"
     ]

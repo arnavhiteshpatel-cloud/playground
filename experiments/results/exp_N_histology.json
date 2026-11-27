@@ -1,0 +1,792 @@
+{
+ "experiment": "N",
+ "N1": [
+  {
+   "phantom": 0,
+   "z": 16,
+   "macenko": false,
+   "bone_true": 0.11424242424242424,
+   "bone_meas": 0.11221590909090909,
+   "graft_true": 0.21606060606060606,
+   "graft_meas": 0.17183712121212122
+  },
+  {
+   "phantom": 0,
+   "z": 16,
+   "macenko": true,
+   "bone_true": 0.11424242424242424,
+   "bone_meas": 0.013693181818181818,
+   "graft_true": 0.21606060606060606,
+   "graft_meas": 0.09649621212121212
+  },
+  {
+   "phantom": 0,
+   "z": 24,
+   "macenko": false,
+   "bone_true": 0.16090909090909092,
+   "bone_meas": 0.16079545454545455,
+   "graft_true": 0.1412121212121212,
+   "graft_meas": 0.11240530303030304
+  },
+  {
+   "phantom": 0,
+   "z": 24,
+   "macenko": true,
+   "bone_true": 0.16090909090909092,
+   "bone_meas": 0.000946969696969697,
+   "graft_true": 0.1412121212121212,
+   "graft_meas": 0.03321969696969697
+  },
+  {
+   "phantom": 0,
+   "z": 32,
+   "macenko": false,
+   "bone_true": 0.2175757575757576,
+   "bone_meas": 0.1987121212121212,
+   "graft_true": 0.21818181818181817,
+   "graft_meas": 0.17604166666666668
+  },
+  {
+   "phantom": 0,
+   "z": 32,
+   "macenko": true,
+   "bone_true": 0.2175757575757576,
+   "bone_meas": 0.02172348484848485,
+   "graft_true": 0.21818181818181817,
+   "graft_meas": 0.051666666666666666
+  },
+  {
+   "phantom": 1,
+   "z": 16,
+   "macenko": false,
+   "bone_true": 0.22,
+   "bone_meas": 0.2163257575757576,
+   "graft_true": 0.15818181818181817,
+   "graft_meas": 0.12178030303030303
+  },
+  {
+   "phantom": 1,
+   "z": 16,
+   "macenko": true,
+   "bone_true": 0.22,
+   "bone_meas": 0.003352272727272727,
+   "graft_true": 0.15818181818181817,
+   "graft_meas": 0.040738636363636366
+  },
+  {
+   "phantom": 1,
+   "z": 24,
+   "macenko": false,
+   "bone_true": 0.23303030303030303,
+   "bone_meas": 0.23505681818181817,
+   "graft_true": 0.08424242424242424,
+   "graft_meas": 0.06422348484848485
+  },
+  {
+   "phantom": 1,
+   "z": 24,
+   "macenko": true,
+   "bone_true": 0.23303030303030303,
+   "bone_meas": 0.025795454545454545,
+   "graft_true": 0.08424242424242424,
+   "graft_meas": 0.021950757575757575
+  },
+  {
+   "phantom": 1,
+   "z": 32,
+   "macenko": false,
+   "bone_true": 0.2993939393939394,
+   "bone_meas": 0.29147727272727275,
+   "graft_true": 0.13787878787878788,
+   "graft_meas": 0.10920454545454546
+  },
+  {
+   "phantom": 1,
+   "z": 32,
+   "macenko": true,
+   "bone_true": 0.2993939393939394,
+   "bone_meas": 0.0915530303030303,
+   "graft_true": 0.13787878787878788,
+   "graft_meas": 0.0007386363636363636
+  },
+  {
+   "phantom": 2,
+   "z": 16,
+   "macenko": false,
+   "bone_true": 0.41818181818181815,
+   "bone_meas": 0.4103030303030303,
+   "graft_true": 0.1003030303030303,
+   "graft_meas": 0.07820075757575758
+  },
+  {
+   "phantom": 2,
+   "z": 16,
+   "macenko": true,
+   "bone_true": 0.41818181818181815,
+   "bone_meas": 0.05693181818181818,
+   "graft_true": 0.1003030303030303,
+   "graft_meas": 0.006496212121212121
+  },
+  {
+   "phantom": 2,
+   "z": 24,
+   "macenko": false,
+   "bone_true": 0.356969696969697,
+   "bone_meas": 0.36206439393939394,
+   "graft_true": 0.1006060606060606,
+   "graft_meas": 0.08145833333333333
+  },
+  {
+   "phantom": 2,
+   "z": 24,
+   "macenko": true,
+   "bone_true": 0.356969696969697,
+   "bone_meas": 0.08511363636363636,
+   "graft_true": 0.1006060606060606,
+   "graft_meas": 0.004450757575757576
+  },
+  {
+   "phantom": 2,
+   "z": 32,
+   "macenko": false,
+   "bone_true": 0.47484848484848485,
+   "bone_meas": 0.4715719696969697,
+   "graft_true": 0.09878787878787879,
+   "graft_meas": 0.07486742424242425
+  },
+  {
+   "phantom": 2,
+   "z": 32,
+   "macenko": true,
+   "bone_true": 0.47484848484848485,
+   "bone_meas": 0.08196969696969697,
+   "graft_true": 0.09878787878787879,
+   "graft_meas": 0.0
+  },
+  {
+   "phantom": 3,
+   "z": 16,
+   "macenko": false,
+   "bone_true": 0.39181818181818184,
+   "bone_meas": 0.3793939393939394,
+   "graft_true": 0.10696969696969696,
+   "graft_meas": 0.08496212121212121
+  },
+  {
+   "phantom": 3,
+   "z": 16,
+   "macenko": true,
+   "bone_true": 0.39181818181818184,
+   "bone_meas": 0.08706439393939394,
+   "graft_true": 0.10696969696969696,
+   "graft_meas": 0.0
+  },
+  {
+   "phantom": 3,
+   "z": 24,
+   "macenko": false,
+   "bone_true": 0.43636363636363634,
+   "bone_meas": 0.076875,
+   "graft_true": 0.02181818181818182,
+   "graft_meas": 0.0
+  },
+  {
+   "phantom": 3,
+   "z": 24,
+   "macenko": true,
+   "bone_true": 0.43636363636363634,
+   "bone_meas": 0.09268939393939393,
+   "graft_true": 0.02181818181818182,
+   "graft_meas": 0.0
+  },
+  {
+   "phantom": 3,
+   "z": 32,
+   "macenko": false,
+   "bone_true": 0.4890909090909091,
+   "bone_meas": 0.0971969696969697,
+   "graft_true": 0.06424242424242424,
+   "graft_meas": 0.0
+  },
+  {
+   "phantom": 3,
+   "z": 32,
+   "macenko": true,
+   "bone_true": 0.4890909090909091,
+   "bone_meas": 0.09409090909090909,
+   "graft_true": 0.06424242424242424,
+   "graft_meas": 0.0
+  }
+ ],
+ "N2": [
+  {
+   "phantom": 0,
+   "tilt_deg": 2.7814014702693006,
+   "shrink": 0.9215059971308094,
+   "rot_deg": 4.715556701479851,
+   "dice_before": 0.3087330873308733,
+   "dice_after": 0.8461757179414273
+  },
+  {
+   "phantom": 1,
+   "tilt_deg": 3.450675635500475,
+   "shrink": 0.9197996820791188,
+   "rot_deg": -2.189164138491247,
+   "dice_before": 0.40091231626964013,
+   "dice_after": 0.8620037807183365
+  },
+  {
+   "phantom": 2,
+   "tilt_deg": 2.9239522985943314,
+   "shrink": 0.8658394670175953,
+   "rot_deg": -9.040742003265418,
+   "dice_before": 0.32750778070385445,
+   "dice_after": 0.8737985791893021
+  },
+  {
+   "phantom": 3,
+   "tilt_deg": 5.131716783998906,
+   "shrink": 0.8660053220005207,
+   "rot_deg": 8.71443421734407,
+   "dice_before": 0.37298091042584436,
+   "dice_after": 0.8451122240771657
+  }
+ ],
+ "N3": {
+  "dataset": "NuInsSeg, Zenodo 10.5281/zenodo.10518968, CC-BY-4.0",
+  "n_images": 60,
+  "rows": [
+   {
+    "image": "human bladder/tissue images/human_bladder_10.png",
+    "organ": "human bladder",
+    "pixel_dice": 0.8012727634307792,
+    "object_f1_iou50": 0.84,
+    "n_true": 24,
+    "n_pred": 26
+   },
+   {
+    "image": "human brain/tissue images/human_brain_4.png",
+    "organ": "human brain",
+    "pixel_dice": 0.2931055055723934,
+    "object_f1_iou50": 0.1568627450980392,
+    "n_true": 9,
+    "n_pred": 42
+   },
+   {
+    "image": "human cardia/tissue images/human_cardia_12.png",
+    "organ": "human cardia",
+    "pixel_dice": 0.8443682004733882,
+    "object_f1_iou50": 0.3728813559322034,
+    "n_true": 61,
+    "n_pred": 57
+   },
+   {
+    "image": "human cerebellum/tissue images/human_cerebellum_1.png",
+    "organ": "human cerebellum",
+    "pixel_dice": 0.8766296555633357,
+    "object_f1_iou50": 0.684931506849315,
+    "n_true": 43,
+    "n_pred": 30
+   },
+   {
+    "image": "human cerebellum/tissue images/human_cerebellum_7.png",
+    "organ": "human cerebellum",
+    "pixel_dice": 0.834765145598572,
+    "object_f1_iou50": 0.6,
+    "n_true": 5,
+    "n_pred": 5
+   },
+   {
+    "image": "human epiglottis/tissue images/human_epiglottis_4.png",
+    "organ": "human epiglottis",
+    "pixel_dice": 0.671958396058574,
+    "object_f1_iou50": 0.22857142857142856,
+    "n_true": 12,
+    "n_pred": 23
+   },
+   {
+    "image": "human kidney/tissue images/human_kidney_04.png",
+    "organ": "human kidney",
+    "pixel_dice": 0.8382885807022721,
+    "object_f1_iou50": 0.4508670520231214,
+    "n_true": 86,
+    "n_pred": 87
+   },
+   {
+    "image": "human liver/tissue images/human_liver_02.png",
+    "organ": "human liver",
+    "pixel_dice": 0.7531235666452619,
+    "object_f1_iou50": 0.3333333333333333,
+    "n_true": 46,
+    "n_pred": 80
+   },
+   {
+    "image": "human liver/tissue images/human_liver_11.png",
+    "organ": "human liver",
+    "pixel_dice": 0.7563511353029785,
+    "object_f1_iou50": 0.24390243902439024,
+    "n_true": 34,
+    "n_pred": 89
+   },
+   {
+    "image": "human liver/tissue images/human_liver_20.png",
+    "organ": "human liver",
+    "pixel_dice": 0.564773374562617,
+    "object_f1_iou50": 0.1437908496732026,
+    "n_true": 34,
+    "n_pred": 119
+   },
+   {
+    "image": "human liver/tissue images/human_liver_29.png",
+    "organ": "human liver",
+    "pixel_dice": 0.3015244119110227,
+    "object_f1_iou50": 0.16,
+    "n_true": 14,
+    "n_pred": 111
+   },
+   {
+    "image": "human liver/tissue images/human_liver_38.png",
+    "organ": "human liver",
+    "pixel_dice": 0.722821718683198,
+    "object_f1_iou50": 0.38620689655172413,
+    "n_true": 65,
+    "n_pred": 80
+   },
+   {
+    "image": "human melanoma/tissue images/human_melanoma_05.png",
+    "organ": "human melanoma",
+    "pixel_dice": 0.6888328274665931,
+    "object_f1_iou50": 0.45901639344262296,
+    "n_true": 57,
+    "n_pred": 65
+   },
+   {
+    "image": "human muscle/tissue images/human_muscle_10.png",
+    "organ": "human muscle",
+    "pixel_dice": 0.19419048227947916,
+    "object_f1_iou50": 0.037037037037037035,
+    "n_true": 6,
+    "n_pred": 48
+   },
+   {
+    "image": "human oesophagus/tissue images/human_oesophagus_02.png",
+    "organ": "human oesophagus",
+    "pixel_dice": 0.7297044366305958,
+    "object_f1_iou50": 0.3333333333333333,
+    "n_true": 59,
+    "n_pred": 61
+   },
+   {
+    "image": "human oesophagus/tissue images/human_oesophagus_11.png",
+    "organ": "human oesophagus",
+    "pixel_dice": 0.8021554662109432,
+    "object_f1_iou50": 0.4,
+    "n_true": 56,
+    "n_pred": 79
+   },
+   {
+    "image": "human oesophagus/tissue images/human_oesophagus_21.png",
+    "organ": "human oesophagus",
+    "pixel_dice": 0.8063199346876051,
+    "object_f1_iou50": 0.3883495145631068,
+    "n_true": 54,
+    "n_pred": 49
+   },
+   {
+    "image": "human oesophagus/tissue images/human_oesophagus_30.png",
+    "organ": "human oesophagus",
+    "pixel_dice": 0.7895396657952269,
+    "object_f1_iou50": 0.2222222222222222,
+    "n_true": 35,
+    "n_pred": 55
+   },
+   {
+    "image": "human oesophagus/tissue images/human_oesophagus_48.png",
+    "organ": "human oesophagus",
+    "pixel_dice": 0.8844868658768607,
+    "object_f1_iou50": 0.6382978723404256,
+    "n_true": 17,
+    "n_pred": 30
+   },
+   {
+    "image": "human pancreas/tissue images/human_pancreas_09.png",
+    "organ": "human pancreas",
+    "pixel_dice": 0.7686586707170167,
+    "object_f1_iou50": 0.44274809160305345,
+    "n_true": 67,
+    "n_pred": 64
+   },
+   {
+    "image": "human pancreas/tissue images/human_pancreas_18.png",
+    "organ": "human pancreas",
+    "pixel_dice": 0.7841459088984748,
+    "object_f1_iou50": 0.46551724137931033,
+    "n_true": 63,
+    "n_pred": 53
+   },
+   {
+    "image": "human pancreas/tissue images/human_pancreas_27.png",
+    "organ": "human pancreas",
+    "pixel_dice": 0.8138798487114082,
+    "object_f1_iou50": 0.5384615384615384,
+    "n_true": 47,
+    "n_pred": 57
+   },
+   {
+    "image": "human pancreas/tissue images/human_pancreas_36.png",
+    "organ": "human pancreas",
+    "pixel_dice": 0.667435583405667,
+    "object_f1_iou50": 0.4594594594594595,
+    "n_true": 31,
+    "n_pred": 43
+   },
+   {
+    "image": "human peritoneum/tissue images/human_peritoneum_1.png",
+    "organ": "human peritoneum",
+    "pixel_dice": 0.4982772270603584,
+    "object_f1_iou50": 0.22916666666666666,
+    "n_true": 35,
+    "n_pred": 61
+   },
+   {
+    "image": "human placenta/tissue images/human_placenta_07.png",
+    "organ": "human placenta",
+    "pixel_dice": 0.8154362776126769,
+    "object_f1_iou50": 0.4675324675324675,
+    "n_true": 30,
+    "n_pred": 47
+   },
+   {
+    "image": "human placenta/tissue images/human_placenta_16.png",
+    "organ": "human placenta",
+    "pixel_dice": 0.8647574677993971,
+    "object_f1_iou50": 0.6086956521739131,
+    "n_true": 32,
+    "n_pred": 37
+   },
+   {
+    "image": "human placenta/tissue images/human_placenta_25.png",
+    "organ": "human placenta",
+    "pixel_dice": 0.8888417479847264,
+    "object_f1_iou50": 0.4430379746835443,
+    "n_true": 88,
+    "n_pred": 70
+   },
+   {
+    "image": "human placenta/tissue images/human_placenta_34.png",
+    "organ": "human placenta",
+    "pixel_dice": 0.8500890399870488,
+    "object_f1_iou50": 1.0,
+    "n_true": 5,
+    "n_pred": 5
+   },
+   {
+    "image": "human pylorus/tissue images/human_pylorus_11.png",
+    "organ": "human pylorus",
+    "pixel_dice": 0.7995283347985654,
+    "object_f1_iou50": 0.45569620253164556,
+    "n_true": 69,
+    "n_pred": 89
+   },
+   {
+    "image": "human pylorus/tissue images/human_pylorus_9.png",
+    "organ": "human pylorus",
+    "pixel_dice": 0.83204904055775,
+    "object_f1_iou50": 0.8450704225352113,
+    "n_true": 36,
+    "n_pred": 35
+   },
+   {
+    "image": "human salivory gland/tissue images/human_salivory_06.png",
+    "organ": "human salivory gland",
+    "pixel_dice": 0.6691374038728806,
+    "object_f1_iou50": 0.3424657534246575,
+    "n_true": 48,
+    "n_pred": 98
+   },
+   {
+    "image": "human salivory gland/tissue images/human_salivory_15.png",
+    "organ": "human salivory gland",
+    "pixel_dice": 0.7146151667588234,
+    "object_f1_iou50": 0.20155038759689922,
+    "n_true": 43,
+    "n_pred": 86
+   },
+   {
+    "image": "human salivory gland/tissue images/human_salivory_24.png",
+    "organ": "human salivory gland",
+    "pixel_dice": 0.7845542343363304,
+    "object_f1_iou50": 0.40268456375838924,
+    "n_true": 58,
+    "n_pred": 91
+   },
+   {
+    "image": "human salivory gland/tissue images/human_salivory_33.png",
+    "organ": "human salivory gland",
+    "pixel_dice": 0.7826191288094065,
+    "object_f1_iou50": 0.35106382978723405,
+    "n_true": 89,
+    "n_pred": 99
+   },
+   {
+    "image": "human salivory gland/tissue images/human_salivory_42.png",
+    "organ": "human salivory gland",
+    "pixel_dice": 0.8137261614063914,
+    "object_f1_iou50": 0.5625,
+    "n_true": 75,
+    "n_pred": 85
+   },
+   {
+    "image": "human spleen/tissue images/human_spleen_07.png",
+    "organ": "human spleen",
+    "pixel_dice": 0.6855248988079765,
+    "object_f1_iou50": 0.38333333333333336,
+    "n_true": 40,
+    "n_pred": 80
+   },
+   {
+    "image": "human spleen/tissue images/human_spleen_25.png",
+    "organ": "human spleen",
+    "pixel_dice": 0.7723836797705339,
+    "object_f1_iou50": 0.5443786982248521,
+    "n_true": 190,
+    "n_pred": 148
+   },
+   {
+    "image": "human spleen/tissue images/human_spleen_34.png",
+    "organ": "human spleen",
+    "pixel_dice": 0.8043589963175474,
+    "object_f1_iou50": 0.5098039215686274,
+    "n_true": 203,
+    "n_pred": 154
+   },
+   {
+    "image": "human testis/tissue images/human_testis_6.png",
+    "organ": "human testis",
+    "pixel_dice": 0.6607645707991728,
+    "object_f1_iou50": 0.21052631578947367,
+    "n_true": 24,
+    "n_pred": 90
+   },
+   {
+    "image": "human tongue/tissue images/human_tongue_06.png",
+    "organ": "human tongue",
+    "pixel_dice": 0.8598527961150315,
+    "object_f1_iou50": 0.8095238095238095,
+    "n_true": 21,
+    "n_pred": 21
+   },
+   {
+    "image": "human tongue/tissue images/human_tongue_15.png",
+    "organ": "human tongue",
+    "pixel_dice": 0.7546363841468,
+    "object_f1_iou50": 0.44274809160305345,
+    "n_true": 51,
+    "n_pred": 80
+   },
+   {
+    "image": "human tongue/tissue images/human_tongue_24.png",
+    "organ": "human tongue",
+    "pixel_dice": 0.8288936357353772,
+    "object_f1_iou50": 0.5454545454545454,
+    "n_true": 33,
+    "n_pred": 33
+   },
+   {
+    "image": "human tonsile/tissue images/human_tonsile_10.png",
+    "organ": "human tonsile",
+    "pixel_dice": 0.3888336872051794,
+    "object_f1_iou50": 0.12121212121212122,
+    "n_true": 32,
+    "n_pred": 166
+   },
+   {
+    "image": "human tonsile/tissue images/human_tonsile_8.png",
+    "organ": "human tonsile",
+    "pixel_dice": 0.5954887014079158,
+    "object_f1_iou50": 0.3466666666666667,
+    "n_true": 70,
+    "n_pred": 155
+   },
+   {
+    "image": "human umbilical cord/tissue images/human_umbilical_cord_09.png",
+    "organ": "human umbilical cord",
+    "pixel_dice": 0.051043942704539935,
+    "object_f1_iou50": 0.0,
+    "n_true": 8,
+    "n_pred": 132
+   },
+   {
+    "image": "mouse fat (white and brown)_subscapula/tissue images/mouse_subscapula_06.png",
+    "organ": "mouse fat (white and brown)_subscapula",
+    "pixel_dice": 0.05998345135881537,
+    "object_f1_iou50": 0.004728132387706856,
+    "n_true": 7,
+    "n_pred": 416
+   },
+   {
+    "image": "mouse fat (white and brown)_subscapula/tissue images/mouse_subscapula_15.png",
+    "organ": "mouse fat (white and brown)_subscapula",
+    "pixel_dice": 0.030903969435990417,
+    "object_f1_iou50": 0.004784688995215311,
+    "n_true": 4,
+    "n_pred": 414
+   },
+   {
+    "image": "mouse fat (white and brown)_subscapula/tissue images/mouse_subscapula_24.png",
+    "organ": "mouse fat (white and brown)_subscapula",
+    "pixel_dice": 0.011171884091702548,
+    "object_f1_iou50": 0.0,
+    "n_true": 3,
+    "n_pred": 38
+   },
+   {
+    "image": "mouse fat (white and brown)_subscapula/tissue images/mouse_subscapula_42.png",
+    "organ": "mouse fat (white and brown)_subscapula",
+    "pixel_dice": 0.46936980260148486,
+    "object_f1_iou50": 0.14285714285714285,
+    "n_true": 41,
+    "n_pred": 197
+   },
+   {
+    "image": "mouse heart/tissue images/mouse_heart_03.png",
+    "organ": "mouse heart",
+    "pixel_dice": 0.1991992452656527,
+    "object_f1_iou50": 0.01809954751131222,
+    "n_true": 29,
+    "n_pred": 192
+   },
+   {
+    "image": "mouse heart/tissue images/mouse_heart_12.png",
+    "organ": "mouse heart",
+    "pixel_dice": 0.18165875799463585,
+    "object_f1_iou50": 0.015503875968992248,
+    "n_true": 18,
+    "n_pred": 111
+   },
+   {
+    "image": "mouse heart/tissue images/mouse_heart_21.png",
+    "organ": "mouse heart",
+    "pixel_dice": 0.6155174443703152,
+    "object_f1_iou50": 0.2,
+    "n_true": 49,
+    "n_pred": 61
+   },
+   {
+    "image": "mouse kidney/tissue images/mouse_kidney_02.png",
+    "organ": "mouse kidney",
+    "pixel_dice": 0.6780845025700054,
+    "object_f1_iou50": 0.4276729559748428,
+    "n_true": 42,
+    "n_pred": 117
+   },
+   {
+    "image": "mouse kidney/tissue images/mouse_kidney_11.png",
+    "organ": "mouse kidney",
+    "pixel_dice": 0.3931396847427382,
+    "object_f1_iou50": 0.12560386473429952,
+    "n_true": 29,
+    "n_pred": 178
+   },
+   {
+    "image": "mouse kidney/tissue images/mouse_kidney_29.png",
+    "organ": "mouse kidney",
+    "pixel_dice": 0.6661092308713252,
+    "object_f1_iou50": 0.18309859154929578,
+    "n_true": 41,
+    "n_pred": 101
+   },
+   {
+    "image": "mouse kidney/tissue images/mouse_kidney_38.png",
+    "organ": "mouse kidney",
+    "pixel_dice": 0.5829298694482713,
+    "object_f1_iou50": 0.16783216783216784,
+    "n_true": 31,
+    "n_pred": 112
+   },
+   {
+    "image": "mouse liver/tissue images/mouse_liver_07.png",
+    "organ": "mouse liver",
+    "pixel_dice": 0.6016866550832733,
+    "object_f1_iou50": 0.17341040462427745,
+    "n_true": 20,
+    "n_pred": 153
+   },
+   {
+    "image": "mouse liver/tissue images/mouse_liver_16.png",
+    "organ": "mouse liver",
+    "pixel_dice": 0.5226594253984003,
+    "object_f1_iou50": 0.1111111111111111,
+    "n_true": 22,
+    "n_pred": 212
+   },
+   {
+    "image": "mouse liver/tissue images/mouse_liver_25.png",
+    "organ": "mouse liver",
+    "pixel_dice": 0.6124670633497037,
+    "object_f1_iou50": 0.15819209039548024,
+    "n_true": 22,
+    "n_pred": 155
+   },
+   {
+    "image": "mouse liver/tissue images/mouse_liver_34.png",
+    "organ": "mouse liver",
+    "pixel_dice": 0.6158777958569104,
+    "object_f1_iou50": 0.10588235294117647,
+    "n_true": 13,
+    "n_pred": 157
+   }
+  ],
+  "mean_pixel_dice": 0.6357417241936321,
+  "mean_object_f1": 0.3441279776974833
+ },
+ "N1_summary": {
+  "raw": {
+   "bone": {
+    "icc": 0.34728529114738055,
+    "mae": 0.06788983585858586,
+    "bias": -0.06670296717171718
+   },
+   "graft": {
+    "icc": 0.8444729849172468,
+    "mae": 0.03112531565656565,
+    "bias": -0.03112531565656565
+   }
+  },
+  "macenko": {
+   "bone": {
+    "icc": 0.09755907231284973,
+    "mae": 0.263125,
+    "bias": -0.263125
+   },
+   "graft": {
+    "icc": 0.20082770442367712,
+    "mae": 0.09939393939393938,
+    "bias": -0.09939393939393938
+   }
+  }
+ },
+ "N3_tuning": {
+  "grid": {
+   "(1.0, 3, 12)": 0.15405756770954587,
+   "(1.0, 3, 40)": 0.20092439680781324,
+   "(1.0, 6, 12)": 0.2070265452756303,
+   "(1.0, 6, 40)": 0.24354793436782315,
+   "(1.0, 9, 12)": 0.25463510256289623,
+   "(1.0, 9, 40)": 0.2910039373784984,
+   "(2.0, 3, 12)": 0.23584486629479748,
+   "(2.0, 3, 40)": 0.2599833509124931,
+   "(2.0, 6, 12)": 0.27401136618933936,
+   "(2.0, 6, 40)": 0.29478189572623237,
+   "(2.0, 9, 12)": 0.3212957793868741,
+   "(2.0, 9, 40)": 0.3387688427011709
+  },
+  "best": [
+   2.0,
+   9,
+   40
+  ],
+  "n_tune_images": 10
+ },
+ "saved": "2026-11-27T07:51:35Z"
+}

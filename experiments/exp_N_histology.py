@@ -88,17 +88,41 @@ if zp.exists() and zipfile.is_zipfile(zp):
     names = z.namelist()
     imgs = sorted(n for n in names if "/tissue images/" in n and n.lower().endswith((".png", ".tif", ".jpg")))
     rows = []
-    for n in imgs[:: max(1, len(imgs) // 60)][:60]:
+    sel = imgs[:: max(1, len(imgs) // 70)][:70]
+    tune, evals = sel[::7], [x for i, x in enumerate(sel) if i % 7 != 0]   # tuning subset disjoint from evaluation
+    def load_pair(n):
         stem = Path(n).stem
-        cand = [m for m in names if "/label masks" in m and Path(m).stem == stem]
+        cand = [m for m in names if "/label masks modify/" in m and Path(m).stem == stem]
         if not cand:
-            continue
+            return None
         rgb = np.array(Image.open(_io.BytesIO(z.read(n))).convert("RGB"))
         gt = np.array(Image.open(_io.BytesIO(z.read(cand[0]))))
-        if gt.ndim == 3:
-            gt = gt[..., 0]
+        return rgb, (gt[..., 0] if gt.ndim == 3 else gt)
+    def f1(lab, gt):
+        tp = 0
+        gids = [g for g in np.unique(gt) if g > 0]
+        for g in gids:
+            gm = gt == g
+            ov = lab[gm]; ov = ov[ov > 0]
+            if ov.size == 0:
+                continue
+            k = np.bincount(ov).argmax(); pm = lab == k
+            tp += (gm & pm).sum() / (gm | pm).sum() >= 0.5
+        return 2 * tp / max(1, len(gids) + len(np.unique(lab)) - 1)
+    grid = [(s_, md, ma) for s_ in (1.0, 2.0) for md in (3, 6, 9) for ma in (12, 40)]
+    tune_pairs = [p for p in (load_pair(n) for n in tune) if p]
+    scores = {g: np.mean([f1(nuclei(deconvolve(r, HE)[..., 0], min_area_px=g[2], smooth=g[0], min_distance=g[1])[0], t)
+                          for r, t in tune_pairs]) for g in grid}
+    best = max(scores, key=scores.get)
+    out["N3_tuning"] = {"grid": {str(k): float(v) for k, v in scores.items()}, "best": list(best), "n_tune_images": len(tune_pairs)}
+    print("N3 tuning best", best, round(scores[best], 3), flush=True)
+    for n in evals:
+        pr = load_pair(n)
+        if pr is None:
+            continue
+        rgb, gt = pr
         h = deconvolve(rgb, HE)[..., 0]
-        lab, info = nuclei(h)
+        lab, info = nuclei(h, min_area_px=best[2], smooth=best[0], min_distance=best[1])
         p, t = lab > 0, gt > 0
         dice = 2 * (p & t).sum() / max(1, p.sum() + t.sum())
         # object-level F1 at IoU>=0.5
@@ -116,7 +140,7 @@ if zp.exists() and zipfile.is_zipfile(zp):
             tp += iou >= 0.5
         npred = len(np.unique(lab)) - 1
         f1 = 2 * tp / max(1, len(gids) + npred)
-        organ = n.split("/")[1] if "/" in n else ""
+        organ = n.split("/")[0]
         rows.append({"image": n, "organ": organ, "pixel_dice": float(dice), "object_f1_iou50": float(f1),
                      "n_true": len(gids), "n_pred": int(npred)})
     out["N3"] = {"dataset": "NuInsSeg, Zenodo 10.5281/zenodo.10518968, CC-BY-4.0", "n_images": len(rows), "rows": rows,

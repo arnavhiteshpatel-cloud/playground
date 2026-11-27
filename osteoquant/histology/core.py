@@ -82,7 +82,7 @@ def macenko_normalize(rgb, target_vectors=None, target_maxc=(1.9705, 1.0308)):
     return np.clip(out.T.reshape(rgb.shape), 0, 255).astype(np.uint8)
 
 
-def tissue_mask(rgb, min_size=500):
+def tissue_mask(rgb, min_size=500, fill=True):
     from skimage.filters import threshold_otsu
     od = rgb_to_od(rgb).sum(-1)
     t = threshold_otsu(od[:: max(1, od.shape[0] // 512), :: max(1, od.shape[1] // 512)])
@@ -91,7 +91,7 @@ def tissue_mask(rgb, min_size=500):
     if n:
         sizes = ndi.sum(m, lab, range(1, n + 1))
         m = np.isin(lab, np.flatnonzero(sizes >= min_size) + 1)
-    return ndi.binary_fill_holes(m)
+    return ndi.binary_fill_holes(m) if fill else m
 
 
 def quantify_he(rgb, roi=None, graft_rule="void", pixel_um=1.0):
@@ -113,7 +113,8 @@ def quantify_he(rgb, roi=None, graft_rule="void", pixel_um=1.0):
     fibrous = roi & ~bone & ~cellular & (es > 0.6 * th_e) & (nuclear_density < 0.05)
     od = rgb_to_od(rgb).sum(-1)
     if graft_rule == "void":
-        graft = ndi.binary_fill_holes(tm) & ~tm & (od < 0.15)
+        raw = tissue_mask(rgb, fill=False)          # unfilled: voids inside tissue remain False
+        graft = tm & ~raw & (od < 0.15)
         graft &= ndi.binary_dilation(roi, iterations=3)
     else:
         graft = roi & (hs > 1.5 * th_h) & (nuclear_density < 0.05)
@@ -130,15 +131,15 @@ def quantify_he(rgb, roi=None, graft_rule="void", pixel_um=1.0):
     return out, masks
 
 
-def nuclei(h_channel, min_area_px=12, pixel_um=1.0):
+def nuclei(h_channel, min_area_px=12, pixel_um=1.0, smooth=1.0, min_distance=3):
     from skimage.filters import threshold_otsu
     from skimage.segmentation import watershed
     from skimage.feature import peak_local_max
-    hs = ndi.gaussian_filter(h_channel, 1.0)
+    hs = ndi.gaussian_filter(h_channel, smooth)
     m = hs > threshold_otsu(hs)
     m = ndi.binary_opening(m, iterations=1)
-    d = ndi.distance_transform_edt(m)
-    pk = peak_local_max(d, min_distance=3, labels=m.astype(int), exclude_border=False)
+    d = ndi.gaussian_filter(ndi.distance_transform_edt(m), 1.0)
+    pk = peak_local_max(d, min_distance=min_distance, labels=m.astype(int), exclude_border=False)
     mk = np.zeros(m.shape, np.int32)
     mk[tuple(pk.T)] = np.arange(1, len(pk) + 1)
     lab = watershed(-d, mk, mask=m)

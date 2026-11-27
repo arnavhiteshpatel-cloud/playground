@@ -190,5 +190,37 @@
    "roi_distance_channel": true,
    "seed": 101
   }
+ },
+ "adapt_k5_r0": {
+  "sha256": "6c09abfcd40874c4d8d1412078186c95fa21b684cac08cfe1acc8d5e9e47883a",
+  "created": "2026-11-27T07:50:24Z",
+  "provenance": [
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 5,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": true,
+   "seed": 100
+  }
  }
 }

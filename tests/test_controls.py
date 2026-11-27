@@ -75,11 +75,18 @@ def test_trained_model_roundtrips_through_safe_loading(tmp_path, monkeypatch):
     rng = np.random.default_rng(0)
     img = rng.normal(size=(16, 16, 16)).astype(np.float32)
     lab = (img > 0.5).astype(np.uint8)
-    case = T.Case("c", img, lab, np.ones_like(lab, bool), (10, 10, 10))
+    case = T.Case("c", img, lab, np.ones_like(lab, bool), (10, 10, 10), "synthetic", "allowed")
     cfg = dict(patch=(16, 16, 16), batch=1, iters=2, base=4, levels=2, threads=1, n_classes=2, log_every=1, val_every=10 ** 9)
     T.train_model([case], [], cfg, "tiny", log=lambda s: None)
     m, ck = T.load_model("tiny")
     assert ck["sha256"] and ck["licence_tag"] == "commercial_eligible"
+    # a case without an explicit licence is never commercial-eligible (safe default)
+    T.train_model([T.Case("d", img, lab, np.ones_like(lab, bool), (10, 10, 10))], [], cfg, "tiny2", log=lambda s: None)
+    assert T.load_model("tiny2")[1]["licence_tag"] == "research_only"
+    # fine-tuning inherits the parent's (research-only) licence even on allowed data (review ARC-01)
+    T.train_model([case], [], cfg, "tiny3", log=lambda s: None, init_from=str(tmp_path / "tiny2.pt"))
+    ck3 = T.load_model("tiny3")[1]
+    assert ck3["licence_tag"] == "research_only" and ck3["parent_model"]["name"] == "tiny2"
     (tmp_path / "tiny.pt").write_bytes((tmp_path / "tiny.pt").read_bytes() + b"x")   # tamper
     with pytest.raises(RuntimeError, match="hash"):
         T.load_model("tiny")

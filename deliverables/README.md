@@ -1,5 +1,10 @@
 # Deliverables Index (directive §42)
 
+> **Superseded (2026-11-27):** the PDF report, workbook and decks listed below were built in Generation 1 and contain
+> outdated pricing, financial outputs (incl. a GLP study offer) and pre-advisor results. They are rebuilt in the
+> Generation-2 final-deliverables phase; until then use `FORENSIC_AUDIT.md`, `EXPERIMENT_REGISTRY.md`,
+> `business/REVENUE_MODEL.md` and `investor/FUNDING_STRATEGY.md` as the current sources.
+
 | # | Deliverable | Location |
 |---|---|---|
 | 1 | Technical & commercial report (PDF, cited) | `deliverables/OsteoQuant_Technical_and_Commercial_Report.pdf` (built by `scripts/build_final_report.py`) |

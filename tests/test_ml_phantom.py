@@ -30,7 +30,7 @@ def _case(seed=0, shape=(16, 16, 16)):
     lab[6:10, 6:10, 6:10] = 2
     img = (lab.astype(np.float32) * 800 + rng.normal(100, 20, shape)).astype(np.float32)
     roi = lab > 0
-    return Case(f"c{seed}", img, lab, roi, (40.0, 40.0, 40.0))
+    return Case(f"c{seed}", img, lab, roi, (40.0, 40.0, 40.0), "synthetic", "allowed")
 
 
 TINY = {"iters": 2, "patch": (16, 16, 16), "batch": 1, "base": 4, "levels": 2, "n_classes": 4, "threads": 1,

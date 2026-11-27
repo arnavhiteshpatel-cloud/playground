@@ -17,6 +17,7 @@ try:
 except ImportError:  # pragma: no cover
     pass
 
+
 @pytest.fixture
 def rng():
     return np.random.default_rng(12345)

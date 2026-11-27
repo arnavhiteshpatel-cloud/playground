@@ -1,7 +1,10 @@
 # Review Registry
 
-Twelve review perspectives, each run by a reviewer that did not write the code under review (independent agent
-with only the repository and a perspective brief), at least three review → remediation cycles. Findings are
+Twelve review perspectives, at least three review → remediation cycles. **Disclosure:** reviews in this registry are
+performed by *automated reviewer agents* (AI models given only the repository and a perspective brief, separate from
+the agent that wrote the code). They are useful for finding defects but are **not** reviews by qualified human experts
+and must not be described as such to customers, investors or grant reviewers. Human expert review (imaging scientist,
+bone biologist, biostatistician, regulatory/quality professional, counsel) remains an open founder action. Findings are
 recorded with IDs and closed only with evidence (commit, test, or document change).
 
 | # | Perspective | Cycle 1 | Cycle 2 | Cycle 3 |

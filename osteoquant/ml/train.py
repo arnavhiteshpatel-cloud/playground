@@ -36,8 +36,9 @@ class Case:
     labels: np.ndarray | None  # uint8, 255 = ignore
     roi: np.ndarray | None
     spacing: tuple = (40.0, 40.0, 40.0)
-    provenance: str = "synthetic"
-    commercial_use: str = "allowed"
+    # Safe defaults (cycle-1 review IP): a case is NOT commercial-eligible unless its licence is stated explicitly
+    provenance: str = "unspecified"
+    commercial_use: str = "unclear"
     meta: dict = field(default_factory=dict)
 
 

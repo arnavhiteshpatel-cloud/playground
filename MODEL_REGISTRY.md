@@ -18,5 +18,5 @@ records the SHA-256 that `osteoquant.ml.train.load_model` verifies before loadin
 | `unet_ctx_s0` | 3-class + background | synthetic | commercial_eligible | 48 | 1500 | 0 | research | `78a6927964eb` |
 | `unet_dog_bone_real` | 2-class | public-real | commercial_eligible | 10 | 800 | 0 | research | `2f73f5a2371d` |
 | `unet_noctx_s0` | 3-class + background | synthetic | commercial_eligible | 48 | 1500 | 0 | research | `28f0e4f9b95c` |
-| `unet_synth_ft_dog_k1` | 3-class + background | public-real | commercial_eligible | 1 | 300 | 7 | research | `b94cba52073c` |
-| `unet_synth_ft_dog_k3` | 3-class + background | public-real | commercial_eligible | 3 | 300 | 7 | research | `651add372dbf` |
+| `unet_synth_ft_dog_k1` | 3-class + background | public-real, synthetic | commercial_eligible | 1 | 300 | 7 | research | `2cf92340c66f` |
+| `unet_synth_ft_dog_k3` | 3-class + background | public-real, synthetic | commercial_eligible | 3 | 300 | 7 | research | `651add372dbf` |

@@ -381,7 +381,8 @@
   "sha256": "2cf92340c66f2d6b2a231c2201fa0ec6d32fbd097dfd016b8a773c09783a24c5",
   "created": "2026-11-27T23:12:13Z",
   "provenance": [
-   "public-real"
+   "public-real",
+   "synthetic"
   ],
   "licence_tag": "commercial_eligible",
   "n_train": 1,
@@ -407,13 +408,16 @@
    "eval_in_roi": false,
    "roi_distance_channel": false,
    "seed": 7
-  }
+  },
+  "parent": "unet_noctx_s0",
+  "provenance_note": "parent recorded retrospectively (cycle-2 review ARC-01): fine-tuned from unet_noctx_s0 (synthetic, commercial_eligible) on CC-BY-4.0 SPROUT data; checkpoint predates parent recording"
  },
  "unet_synth_ft_dog_k3": {
   "sha256": "651add372dbfef2ecdf8cfd20d85277f5b0428c2857d399b40d7cdbcb686d0c4",
   "created": "2026-11-27T09:26:59Z",
   "provenance": [
-   "public-real"
+   "public-real",
+   "synthetic"
   ],
   "licence_tag": "commercial_eligible",
   "n_train": 3,
@@ -439,6 +443,8 @@
    "eval_in_roi": false,
    "roi_distance_channel": false,
    "seed": 7
-  }
+  },
+  "parent": "unet_noctx_s0",
+  "provenance_note": "parent recorded retrospectively (cycle-2 review ARC-01): fine-tuned from unet_noctx_s0 (synthetic, commercial_eligible) on CC-BY-4.0 SPROUT data; checkpoint predates parent recording"
  }
 }

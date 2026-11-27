@@ -221,19 +221,28 @@ def test_characterise_rejects_tiny_mask():
         characterise_material(img, m, ~m, ~m, 40.0, "x")
 
 
+def _test_signer():
+    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+    k = Ed25519PrivateKey.generate()
+    pub = k.public_key().public_bytes_raw().hex()
+    return k, {"unit-test": (pub, True)}
+
+
 def test_validation_records_synthetic_never_qualifies(tmp_path, monkeypatch):
     import osteoquant.ml.validation_records as vr
     monkeypatch.setattr(vr, "MODEL_DIR", tmp_path)
+    key, keys = _test_signer()
     base = dict(model_name="m", model_sha256="abc", material="beta_tcp", n_specimens=20, voxel_um_range=(10, 40),
                 scanner_class="desktop", graft_volume_abs_rel_error_p95=0.08, reference_method="gravimetric",
                 evidence_location="validation/x")
-    vr.add_record(vr.ValidationRecord(data_class="synthetic", **base))
-    assert not vr.validated_for("m", "abc", "beta_tcp", 20)[0]
-    vr.add_record(vr.ValidationRecord(data_class="physical_phantom", **base))
-    assert vr.validated_for("m", "abc", "beta_tcp", 20)[0]
-    assert not vr.validated_for("m", "abc", "beta_tcp", 80)[0]          # outside voxel range
-    assert not vr.validated_for("m", "OTHER", "beta_tcp", 20)[0]        # different model version
-    assert not vr.validated_for("m", "abc", "ha", 20)[0]                # different material
+    vr.add_record(vr.ValidationRecord(data_class="synthetic", **base), key, "unit-test", keys=keys)
+    assert not vr.validated_for("m", "abc", "beta_tcp", 20, keys=keys)[0]
+    vr.add_record(vr.ValidationRecord(data_class="physical_phantom", **base), key, "unit-test", keys=keys)
+    assert vr.validated_for("m", "abc", "beta_tcp", 20, keys=keys)[0]
+    assert not vr.validated_for("m", "abc", "beta_tcp", 80, keys=keys)[0]          # outside voxel range
+    assert not vr.validated_for("m", "OTHER", "beta_tcp", 20, keys=keys)[0]        # different model version
+    assert not vr.validated_for("m", "abc", "ha", 20, keys=keys)[0]                # different material
+    assert not vr.validated_for("m", "abc", "beta_tcp", 20, keys={})[0]            # untrusted signer
 
 
 def test_dbm_new_bone_not_supported():
@@ -273,15 +282,16 @@ def test_validation_records_tamper_detected(tmp_path, monkeypatch):
     import json
     import osteoquant.ml.validation_records as vr
     monkeypatch.setattr(vr, "MODEL_DIR", tmp_path)
+    key, keys = _test_signer()
     base = dict(model_name="m", model_sha256="abc", material="ha", n_specimens=20, voxel_um_range=(10, 40),
                 scanner_class="desktop", graft_volume_abs_rel_error_p95=0.08, reference_method="gravimetric",
                 evidence_location="x", data_class="synthetic")
-    vr.add_record(vr.ValidationRecord(**base))
-    R = json.loads((tmp_path / "validation_records.json").read_text())
-    R["m"][0]["data_class"] = "in_vivo"                    # hand edit to grant support
-    (tmp_path / "validation_records.json").write_text(json.dumps(R))
-    ok, why = vr.validated_for("m", "abc", "ha", 20)
-    assert not ok and "lock" in why
+    vr.add_record(vr.ValidationRecord(**base), key, "unit-test", keys=keys)
+    env = json.loads((tmp_path / "validation_records.json").read_text())
+    env["payload"] = env["payload"].replace("synthetic", "in_vivo")       # local edit to grant support
+    (tmp_path / "validation_records.json").write_text(json.dumps(env))
+    ok, why = vr.validated_for("m", "abc", "ha", 20, keys=keys)
+    assert not ok and "signature" in why
 
 
 def test_scan_profile_mismatch_refuses():

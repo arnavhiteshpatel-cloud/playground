@@ -51,46 +51,62 @@ def _path():
     return MODEL_DIR / "validation_records.json"
 
 
-def _lock_path():
-    return MODEL_DIR / "validation_records.sha256"
+FORMAT = "oq-validation-records-1"
 
 
-def load_records(verify: bool = True) -> dict:
-    """Load records; the file's SHA-256 must match the lock written by ``add_record`` (a hand-edited file — e.g. an
-    added record granting support — is rejected; quality review gap 'validation records unprotected')."""
-    import hashlib
+def _sign(records: dict, private_key, key_id: str) -> dict:
+    import base64
+    from ..licensing.core import canonical_payload
+    text = canonical_payload(records)
+    return {"format": FORMAT, "key_id": key_id, "payload": text,
+            "signature": base64.b64encode(private_key.sign(text.encode("utf-8"))).decode()}
+
+
+def load_records(keys: dict | None = None) -> dict:
+    """Load validation records. They are vendor evidence and must carry a valid Ed25519 signature from a key the
+    application trusts (the licensing keys; test keys only when test licences are explicitly allowed). A record file
+    edited or created locally — including by an administrator — is rejected (cycle-2 review: forgeable records)."""
+    import base64
+    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+    from ..licensing.core import trusted_keys
     p = _path()
     if not p.exists():
         return {}
-    data = p.read_bytes()
-    if verify:
-        lock = _lock_path()
-        if not lock.exists() or lock.read_text().strip() != hashlib.sha256(data).hexdigest():
-            raise RuntimeError("validation_records.json does not match its lock: records were modified outside "
-                               "osteoquant.ml.validation_records.add_record")
-    return json.loads(data)
+    env = json.loads(p.read_text())
+    if not isinstance(env, dict) or env.get("format") != FORMAT:
+        raise RuntimeError("validation_records.json is not a signed record file")
+    keys = trusted_keys() if keys is None else keys
+    if env.get("key_id") not in keys:
+        raise RuntimeError(f"validation records signed with an untrusted key ({env.get('key_id')})")
+    pub_hex, _is_test = keys[env["key_id"]]
+    try:
+        Ed25519PublicKey.from_public_bytes(bytes.fromhex(pub_hex)).verify(
+            base64.b64decode(env["signature"]), env["payload"].encode("utf-8"))
+    except Exception as e:
+        raise RuntimeError("validation records signature is invalid: records were modified") from e
+    return json.loads(env["payload"])
 
 
-def add_record(rec: ValidationRecord, audit=None, user_id=None, org_id=None) -> None:
-    """Append a record and update the lock. If an audit log is supplied the addition is recorded in it."""
-    import hashlib
-    R = load_records()
+def add_record(rec: ValidationRecord, private_key, key_id: str, audit=None, user_id=None, org_id=None,
+               keys: dict | None = None) -> None:
+    """Vendor tooling: append a record and re-sign the file with the vendor key."""
+    R = load_records(keys) if _path().exists() else {}
     d = asdict(rec)
     d["date"] = d["date"] or time.strftime("%Y-%m-%d")
     R.setdefault(rec.model_name, []).append(d)
-    data = json.dumps(R, indent=1).encode()
-    _path().write_bytes(data)
-    _lock_path().write_text(hashlib.sha256(data).hexdigest())
+    env = _sign(R, private_key, key_id)
+    _path().write_text(json.dumps(env, indent=1))
     if audit is not None:
         audit.record("model.validation_record_added", user_id, org_id, "model", rec.model_name,
-                     {"material": rec.material, "data_class": rec.data_class, "sha256": hashlib.sha256(data).hexdigest()})
+                     {"material": rec.material, "data_class": rec.data_class, "key_id": key_id})
 
 
-def validated_for(model_name: str, model_sha256: str, material: str, voxel_um: float) -> tuple[bool, str]:
+def validated_for(model_name: str, model_sha256: str, material: str, voxel_um: float,
+                  keys: dict | None = None) -> tuple[bool, str]:
     """True only if a record for this exact model version (SHA-256) and material qualifies at this voxel size."""
     reasons = []
     try:
-        records = load_records()
+        records = load_records(keys)
     except RuntimeError as e:
         return False, str(e)
     for d in records.get(model_name, []):

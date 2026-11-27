@@ -30,7 +30,7 @@ server, not a desktop application. The commercial numbers (time saving, pricing,
 | G morphometry vs Scanco IPL (8 real cubes) | Tb.Th ICC 0.983, Tb.Sp 0.948 | Tb.Th 0.983, Tb.Sp 0.948 (identical to 16 digits) | **reproduced exactly** (153 s) |
 | P reproducibility | all bit-identical | all checks pass | **reproduced** (89 s) |
 | C separability (32 conditions) | RF/multi-Otsu graft Dice per condition | max absolute difference 0.0036 Dice across 64 values | **reproduced within 0.004** (335 s); not bit-identical — RF voxel sampling/threading; note the script still emits the superseded `bayes_*` fields, the corrected oracle comes from `recompute_intensity_oracle.py` |
-| H/I real dog | U-Net 0.826; synthetic zero-shot 0.379 | see §7 | running (CPU-bound retraining) |
+| H/I real dog | U-Net 0.826; synthetic zero-shot 0.379 | 29 per-specimen rows (Otsu, GMM, RF, retrained real U-Net ×5, synthetic zero-shot ×5, fine-tuned k=1 ×4) identical to the original to 4 decimals (max difference 0.0); stopped before the last k=1 specimen and k=3 to free CPU | **reproduced exactly** (deterministic retraining, ~3 CPU-h under contention) |
 | Test suite | 61 pass | **61 pass (24 s)** | reproduced |
 
 ## 3. Findings and remediation register
@@ -98,4 +98,7 @@ oracle after review; morphometry exact on analytic objects.
 8. FA-06/11/12 commercial evidence; FA-07/08 real data expansion.
 
 ## 7. Reproduction details
-(Appended when the reproduction runs finish.)
+Original results are unchanged in `experiments/results/`; reproduction outputs and logs are in
+`experiments/results_gen0_repro/`. The H/I reproduction retrained the real-data U-Net and the k=1 fine-tune into the shared
+`models/` directory before the registry was made concurrency-safe (ARC-03); because training is deterministic the
+retrained weights reproduce the original results exactly (table above). Future reproductions use `OQ_MODEL_DIR`.

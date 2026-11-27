@@ -239,7 +239,7 @@ def test_ux07_08_report_signoff_roles_gates_and_signed_rows(qtbot, team):
                   signature_role="study_director")
     meta = S.report_meta(project, rep["report_id"])
     text = _pdf_text(meta["signed_pdf"])
-    assert "Dora Director" in text and "Study director" in text and "approve the report release" in text
+    assert "Dora Director" in text and "Customer approver" in text and "approve the report release" in text
     assert "Rita Reviewer" in text and "Signed copy of report" in text and rep["sha256"] in text.replace("\n", "")
     assert "Analyst" in text
     assert "Dora Director" not in _pdf_text(rep["pdf"])                 # the signed original is never modified

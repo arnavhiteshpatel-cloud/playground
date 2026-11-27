@@ -4,7 +4,7 @@ Input is a *bundle* dict (built from the study store or from experiment outputs)
 
   bundle = {
     "title", "study": {name, species, defect_model, graft_materials, blinded, glp_flag, sponsor},
-    "data_class": "synthetic" | "public" | "customer",
+    "data_class": "synthetic" | "public" | "research" | "customer",
     "review_status": "unreviewed_automated" | "reviewed",
     "specimens": [ {specimen_id, group, timepoint, scan:{source, sha256, shape, spacing_um, scanner,
                     acquisition}, qc:{verdict, checks}, roi:{...definition, definition_sha256, method,
@@ -20,6 +20,10 @@ Input is a *bundle* dict (built from the study store or from experiment outputs)
 Statistics are computed per group at the specimen level (never voxels); comparisons vs the
 reference group use Welch t + Mann–Whitney with Holm adjustment and Hedges g with 95% CI;
 n<5 per group triggers an explicit caution. No significance language is generated in prose.
+
+Group confidence intervals respect the physical range of each endpoint: volumes cannot be negative and fractions lie
+in [0, 1]. The t-interval is computed as usual; any bound outside the range is clipped to it and marked "†" in the
+PDF (``ci95_clipped`` in the statistics). Intervals are not shown for n < 3 (review CRO-11, C2-BIZ-06).
 """
 from __future__ import annotations
 
@@ -41,8 +45,14 @@ BANNERS = {
                   "Not biological evidence. Not for study decisions."),
     "public": ("PUBLIC RESEARCH DATA — reanalysis of a publicly released dataset. "
                "Automated results; no expert ground truth available."),
+    "research": ("RESEARCH DATA — the user's own research data. Automated results from a research prototype."),
     "customer": "CUSTOMER DATA — confidential.",
 }
+BANNER_COLOURS = {"synthetic": "#8B1E1E", "public": "#7A5B00", "research": "#2E5E3E", "customer": "#1F4E79"}
+RUO_FOOTER = "Research use only · not a medical device · not validated for GLP or 21 CFR Part 11"
+UNASSIGNED = "unassigned"
+MIN_N_CI = 3
+CLIP_MARK = "†"
 STATUS_BANNERS = {
     "unreviewed_automated": "UNREVIEWED AUTOMATED RESULT — research prototype output, not reviewed by a qualified analyst.",
     "reviewed": "REVIEWED — see sign-off section for reviewer identity and meaning of signature.",
@@ -81,16 +91,61 @@ def _per_animal(specimens, eps):
     return out
 
 
+def endpoint_bounds(key: str, unit: str | None) -> tuple[float, float]:
+    """Physical range of an endpoint: fractions in [0, 1], volumes and other quantities >= 0."""
+    u = (unit or "").strip().lower()
+    if u == "fraction" or key.endswith(("_fraction", "fraction")) or key.endswith("coverage"):
+        return 0.0, 1.0
+    return 0.0, float("inf")
+
+
+def bounded_describe(values, key: str, unit: str | None) -> dict:
+    """``describe`` with a confidence interval that respects the endpoint's physical range.
+
+    The t-interval for the mean is clipped to the range (a negative lower limit for a volume is reported as 0 and
+    flagged ``ci95_clipped``); for n < 3 the interval is withheld (``ci_withheld``) because a 2-point t-interval
+    (t = 12.7) carries no usable information."""
+    d = describe(values)
+    if "ci95_low" not in d:
+        return d
+    if d["n"] < MIN_N_CI:
+        d["ci_withheld"] = True
+        d.pop("ci95_low"), d.pop("ci95_high")
+        return d
+    lo, hi = endpoint_bounds(key, unit)
+    clipped = []
+    if d["ci95_low"] < lo:
+        d["ci95_low_unclipped"], d["ci95_low"] = d["ci95_low"], lo
+        clipped.append("low")
+    if d["ci95_high"] > hi:
+        d["ci95_high_unclipped"], d["ci95_high"] = d["ci95_high"], hi
+        clipped.append("high")
+    if clipped:
+        d["ci95_clipped"] = clipped
+    return d
+
+
+def _is_unassigned(g) -> bool:
+    return g is None or str(g).strip() in ("", "None", "—", "-", UNASSIGNED)
+
+
+def unassigned_specimens(bundle) -> list[str]:
+    """Specimens without a group: listed separately and excluded from group statistics."""
+    return [str(s["specimen_id"]) for s in bundle["specimens"] if _is_unassigned(s.get("group"))]
+
+
 def group_stats(bundle):
     eps = bundle["endpoints"]
     groups = {}
     for s in _per_animal(bundle["specimens"], eps):
+        if _is_unassigned(s.get("group")):
+            continue
         groups.setdefault((s.get("group", "—"), s.get("timepoint", "—")), []).append(s)
     table = []
     for (g, tp), ss in sorted(groups.items(), key=lambda x: (str(x[0][1]), str(x[0][0]))):
         row = {"group": g, "timepoint": tp, "n": len(ss)}
         for key, label, unit in eps:
-            row[key] = describe([_get(s["metrics"], key) for s in ss])
+            row[key] = bounded_describe([_get(s["metrics"], key) for s in ss], key, unit)
         table.append(row)
     comps = []
     ref = bundle.get("reference_group")
@@ -144,6 +199,9 @@ def _fmt_support(v, status):
 def write_csv(bundle, path):
     eps = bundle["endpoints"]
     with open(path, "w", newline="") as f:
+        f.write(f"# OsteoQuant DefectFill per-specimen export · data class: {bundle['data_class']} · "
+                f"{bundle['review_status']} · {RUO_FOOTER}\n")
+        f.write("# Units: " + "; ".join(f"{k} [{u}]" for k, _, u in eps) + "\n")
         w = csv.writer(f)
         w.writerow(["data_class", "review_status", "specimen_id", "group", "timepoint", "scan_sha256", "roi_sha256",
                     "segmentation_method", "model_sha256", "qc_verdict"] + [k for k, _, _ in eps]
@@ -154,6 +212,11 @@ def write_csv(bundle, path):
                         _get(s, "segmentation.method", ""), _get(s, "segmentation.model_sha256", ""),
                         _get(s, "qc.verdict", "")] + [_get(s["metrics"], k) for k, _, _ in eps]
                         + [_support(s, k) or "not_assessed" for k, _, _ in eps]])
+
+
+def _txt(v) -> str:
+    """Text cell: missing values as an em dash, never the string 'None'."""
+    return "—" if v is None or (isinstance(v, float) and not np.isfinite(v)) or str(v).strip() in ("", "None") else str(v)
 
 
 def _fmt(v, nd=3):
@@ -209,9 +272,8 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     flow = []
     flow.append(Paragraph("OsteoQuant · DefectFill Report", ParagraphStyle("k", parent=SM, textColor=ACC)))
     flow.append(Paragraph(esc(bundle["title"]), H1))
-    flow.append(banner(BANNERS[bundle["data_class"]], colors.HexColor("#8B1E1E" if bundle["data_class"] == "synthetic"
-                                                                         else "#7A5B00" if bundle["data_class"] == "public"
-                                                                         else "#1F4E79")))
+    dclass = bundle["data_class"] if bundle["data_class"] in BANNERS else "research"
+    flow.append(banner(BANNERS[dclass], colors.HexColor(BANNER_COLOURS[dclass])))
     flow.append(Spacer(1, 3))
     flow.append(banner(STATUS_BANNERS[bundle["review_status"]], colors.HexColor("#444444")))
     if any("synthetic" in str(_get(s, "segmentation.model_provenance", "")) for s in bundle["specimens"]):
@@ -226,10 +288,11 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     # ----------------------------------------------------------- 1 overview
     flow.append(Paragraph("1. Study overview", H2))
     ov = [["Field", "Value"], ["Study", st.get("name", "")], ["Species / model", f"{st.get('species','')} · {st.get('defect_model','')}"],
-          ["Graft material(s)", st.get("graft_materials", "")], ["Groups", ", ".join(sorted({str(s.get('group')) for s in bundle['specimens']}))],
+          ["Graft material(s)", st.get("graft_materials", "")], ["Groups", ", ".join(sorted({str(s.get('group')) if not _is_unassigned(s.get('group')) else UNASSIGNED
+                                     for s in bundle['specimens']}))],
           ["Timepoints", ", ".join(sorted({str(s.get('timepoint')) for s in bundle['specimens']}))],
           ["Specimens", str(len(bundle["specimens"]))], ["Blinded analysis", "yes" if st.get("blinded") else "no"],
-          ["Data class", bundle["data_class"]], ["Generated", gen_time], ["Software", f"OsteoQuant {__version__}"]]
+          ["Data class", dclass], ["Generated", gen_time], ["Software", f"OsteoQuant {__version__}"]]
     flow.append(table(ov, [45 * mm, 135 * mm]))
     if bundle.get("summary_text"):
         flow.append(Spacer(1, 4))
@@ -245,20 +308,39 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     # ----------------------------------------------------------- 3 group results
     gt, comps = group_stats(bundle)
     flow.append(Paragraph("3. Group summaries (animal-level: repeated scans of an animal are averaged; mean ± SD [95% CI])", H2))
-    hdr = ["Group", "Timepoint", "n"] + [l for _, l, _ in eps[:5]]
-    rows = [hdr]
-    for r in gt:
-        cells = [str(r["group"]), str(r["timepoint"]), str(r["n"])]
-        for k, _, _ in eps[:5]:
-            d = r[k]
-            if d.get("n", 0) >= 2:
-                cells.append(f"{_fmt(d['mean'])} ± {_fmt(d['sd'])}\n[{_fmt(d['ci95_low'])}, {_fmt(d['ci95_high'])}]")
-            elif d.get("n", 0) == 1:
-                cells.append(_fmt(d["mean"]))
-            else:
-                cells.append("—")
-        rows.append(cells)
-    flow.append(table(rows))
+    any_clipped = False
+    for i0 in range(0, len(eps), 4):          # all endpoints, four per table (review CRO-02)
+        chunk = eps[i0:i0 + 4]
+        rows = [["Group", "Timepoint", "n"] + [f"{l} ({u})" for _, l, u in chunk]]
+        for r in gt:
+            cells = [str(r["group"]), str(r["timepoint"]), str(r["n"])]
+            for k, _, _ in chunk:
+                d = r[k]
+                if d.get("n", 0) >= 2 and "ci95_low" in d:
+                    clip = d.get("ci95_clipped", [])
+                    any_clipped = any_clipped or bool(clip)
+                    lo = _fmt(d["ci95_low"]) + (CLIP_MARK if "low" in clip else "")
+                    hi = _fmt(d["ci95_high"]) + (CLIP_MARK if "high" in clip else "")
+                    cells.append(f"{_fmt(d['mean'])} ± {_fmt(d['sd'])}\n[{lo}, {hi}]")
+                elif d.get("n", 0) >= 2:
+                    cells.append(f"{_fmt(d['mean'])} ± {_fmt(d['sd'])}\n[CI not shown, n<{MIN_N_CI}]")
+                elif d.get("n", 0) == 1:
+                    cells.append(_fmt(d["mean"]))
+                else:
+                    cells.append("—")
+            rows.append(cells)
+        flow.append(table(rows))
+        flow.append(Spacer(1, 3))
+    if any_clipped:
+        flow.append(Paragraph(f"{CLIP_MARK} The t-interval extended beyond the physical range of the endpoint "
+                              "(volumes ≥ 0, fractions 0–1) and is clipped to it. A clipped interval signals a small or "
+                              "highly variable group; it is not a more precise estimate.", SM))
+    if not gt:
+        flow.append(Paragraph("No group statistics: no specimen is assigned to a group.", SM))
+    unassigned = unassigned_specimens(bundle)
+    if unassigned:
+        flow.append(Paragraph(esc(f"Specimens without a group are excluded from group statistics and listed in "
+                                  f"section 4: {', '.join(unassigned)}."), SM))
     if any(r["n"] < 5 for r in gt):
         flow.append(Paragraph("<b>Caution:</b> one or more groups have n &lt; 5 specimens; confidence intervals are wide "
                               "and hypothesis tests have low power.", SM))
@@ -281,11 +363,15 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     # ----------------------------------------------------------- 4 per specimen
     flow.append(PageBreak())
     flow.append(Paragraph("4. Per-specimen results", H2))
-    rows = [["Specimen", "Group", "TP", "QC"] + [l for _, l, _ in eps[:6]]]
-    for s in bundle["specimens"]:
-        rows.append([str(s["specimen_id"]), str(s.get("group")), str(s.get("timepoint")), _get(s, "qc.verdict", "—")] +
-                    [_fmt_support(_get(s["metrics"], k), _support(s, k)) for k, _, _ in eps[:6]])
-    flow.append(table(rows))
+    for i0 in range(0, len(eps), 5):          # all endpoints, five per table (review CRO-02)
+        chunk = eps[i0:i0 + 5]
+        rows = [["Specimen", "Group", "TP", "QC"] + [f"{l} ({u})" for _, l, u in chunk]]
+        for s in bundle["specimens"]:
+            g = UNASSIGNED if _is_unassigned(s.get("group")) else str(s.get("group"))
+            rows.append([str(s["specimen_id"]), g, str(s.get("timepoint")), _get(s, "qc.verdict", "—")] +
+                        [_fmt_support(_get(s["metrics"], k), _support(s, k)) for k, _, _ in chunk])
+        flow.append(table(rows))
+        flow.append(Spacer(1, 3))
     if any("truth" in s for s in bundle["specimens"]):
         flow.append(Spacer(1, 4))
         flow.append(Paragraph("Ground truth (synthetic phantoms only): measured vs known-by-construction values.", SM))
@@ -333,8 +419,8 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     for s in bundle["specimens"]:
         pf = [p["check"] for p in s.get("plausibility", []) if not p.get("ok", True)]
         rows.append([str(s["specimen_id"]), _get(s, "segmentation.method", ""),
-                     f"{_get(s,'segmentation.model_name','—')}\n{str(_get(s,'segmentation.model_sha256',''))[:16]}",
-                     str(_get(s, "segmentation.model_provenance", "—")), _fmt(_get(s, "uncertainty.abstained_frac_roi")),
+                     f"{_txt(_get(s,'segmentation.model_name', None))}\n{_txt(_get(s,'segmentation.model_sha256', None))[:16]}",
+                     _txt(_get(s, "segmentation.model_provenance", None)), _fmt(_get(s, "uncertainty.abstained_frac_roi")),
                      "; ".join(pf) or "none"])
     flow.append(table(rows, [22 * mm, 28 * mm, 40 * mm, 25 * mm, 20 * mm, 45 * mm]))
 
@@ -397,14 +483,19 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     for s_ in bundle["specimens"]:
         ap = s_.get("analysis_parameters") or {}
         if ap:
+            th = ap.get("thresholds") if isinstance(ap.get("thresholds"), dict) else {}
+            hw = ap.get("healing_weeks")
             par_rows.append([str(s_.get("specimen_id")), str(ap.get("method", "")),
-                             _fmt(ap.get("t_mineral")), _fmt(ap.get("t_graft")),
+                             _fmt(ap.get("t_mineral", th.get("t_mineral"))), _fmt(ap.get("t_graft", th.get("t_graft"))),
                              _fmt(ap.get("estimated_graft_share")),
+                             (f"{hw:g}" if isinstance(hw, (int, float)) else "unknown")
+                             + (f" ({ap['healing_weeks_source']})" if ap.get("healing_weeks_source") else ""),
                              str(s_.get("advisor_version") or ap.get("advisor_version") or "—")])
     if par_rows:
-        flow.append(Paragraph("Analysis parameters (grey-value thresholds are in the scan's units)", SM))
-        flow.append(table([["Specimen", "Method", "Mineral thr.", "Graft thr.", "Graft share", "Advisor"]] + par_rows,
-                          [25 * mm, 35 * mm, 25 * mm, 25 * mm, 25 * mm, 25 * mm]))
+        flow.append(Paragraph("Analysis parameters (grey-value thresholds are in the scan's units; weeks = time since "
+                              "implantation given to the measurement-support advisor)", SM))
+        flow.append(table([["Specimen", "Method", "Mineral thr.", "Graft thr.", "Graft share", "Weeks", "Advisor"]]
+                          + par_rows, [22 * mm, 26 * mm, 20 * mm, 20 * mm, 18 * mm, 56 * mm, 18 * mm]))
 
     # ----------------------------------------------------------- 8 limitations
     flow.append(Paragraph("8. Scientific limitations and exceptions", H2))
@@ -422,7 +513,7 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     rows = [["Role", "Name", "Meaning of signature", "Decision", "Date/time (UTC)"]]
     for r in revs:
         rows.append([r.get("role", ""), r.get("name", ""), r.get("meaning", ""), r.get("decision", ""), r.get("time", "")])
-    for role in ("Analyst", "Scientific reviewer", "Study director / sponsor representative"):
+    for role in ("Analyst", "Scientific reviewer", "Customer approver"):
         if not any(r.get("role") == role for r in revs):
             rows.append([role, "", "", "", ""])
     flow.append(table(rows, [38 * mm, 35 * mm, 60 * mm, 20 * mm, 27 * mm]))
@@ -444,8 +535,9 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
             c.restoreState()
         c.setFont("Helvetica", 7)
         c.setFillColor(colors.HexColor("#666666"))
-        c.drawString(15 * mm, 10 * mm, f"OsteoQuant DefectFill · {bundle['title'][:70]} · {bundle['data_class'].upper()} · "
+        c.drawString(15 * mm, 10 * mm, f"OsteoQuant DefectFill · {bundle['title'][:60]} · {dclass.upper()} DATA · "
                                        f"{bundle['review_status']}")
+        c.drawString(15 * mm, 6.5 * mm, RUO_FOOTER)
         c.drawRightString(195 * mm, 10 * mm, f"page {d.page}")
         c.restoreState()
 

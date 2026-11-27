@@ -699,8 +699,10 @@ def save_label_revision(project, scan_id: int, base_segmentation_id: int, labels
 
 
 # ============================================================================ review / sign-off
+# The report is a non-GLP vendor report: the approving signature is the customer's, not a GLP study director's
+# (review CRO-13, C2-BIZ-06). The internal role id "study_director" is kept for existing projects.
 SIGNATURE_ROLES = {"analyst": "Analyst", "reviewer": "Scientific reviewer",
-                   "study_director": "Study director / sponsor representative"}
+                   "study_director": "Customer approver"}
 # which signature roles a user role may sign as (the store's role is recorded with the signature)
 ROLE_SIGNATURES = {"reviewer": ["reviewer"], "study_director": ["study_director", "reviewer"],
                    "admin": ["reviewer", "study_director"]}

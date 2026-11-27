@@ -1,4 +1,5 @@
 import numpy as np
+from scipy import ndimage as ndi
 import pytest
 
 from osteoquant.advisor import (CONDITIONAL, NOT_SUPPORTED, SUPPORTED, MaterialProfile, assess_support,
@@ -188,3 +189,33 @@ def test_no_graft_and_radiolucent_keep_architecture_endpoint():
     assert a.status("new_bone_thickness") == CONDITIONAL
     b = assess_support("collagen_sponge", noise_rel=0.05, voxel_um=20)
     assert b.status("new_bone_thickness") == CONDITIONAL
+
+
+def test_characterise_material_and_use_in_advisor():
+    from osteoquant.advisor.characterize import characterise_material
+    rng = np.random.default_rng(3)
+    img = rng.normal(100, 10, (40, 40, 40)).astype(np.float32)
+    zz, yy, xx = np.indices(img.shape)
+    host = xx < 8
+    img[host] += 900                                   # host bone → relative 1
+    mat = np.zeros(img.shape, bool)
+    for c in ((20, 15, 20), (20, 28, 28), (10, 22, 30)):
+        mat |= ((zz - c[0]) ** 2 + (yy - c[1]) ** 2 + (xx - c[2]) ** 2) <= 25
+    img[mat] = 100 + 2.0 * 900 + rng.normal(0, 10, mat.sum())   # material at relative ≈2.0
+    soft = ~host & ~ndi.binary_dilation(mat, iterations=2)
+    ch = characterise_material(img, mat, soft, ndi.binary_erosion(host), 40.0, "new_ceramic")
+    assert ch.rel_mean == pytest.approx(2.0, abs=0.05)
+    assert ch.thickness_um_median > 3 * 40
+    ok, _ = ch.compatible_with(42.0)
+    assert ok
+    assert not ch.compatible_with(80.0)[0]
+    a = assess_support("new_ceramic", noise_rel=0.02, voxel_um=40, graft_samples_rel=ch.samples_rel)
+    assert a.status("residual_graft_volume") == SUPPORTED
+
+
+def test_characterise_rejects_tiny_mask():
+    from osteoquant.advisor.characterize import characterise_material
+    img = np.zeros((10, 10, 10), np.float32)
+    m = np.zeros(img.shape, bool); m[5, 5, 5] = True
+    with pytest.raises(ValueError):
+        characterise_material(img, m, ~m, ~m, 40.0, "x")

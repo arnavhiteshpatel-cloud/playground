@@ -9,6 +9,8 @@ import tempfile
 import time
 from pathlib import Path
 
+import numpy as np
+
 
 def _settle(app, n=8):
     for _ in range(n):
@@ -84,7 +86,8 @@ def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
     w.workspace.views[0]._hover = (50.0, 30.0)
     _settle(app)
     save(w, "03_segmentation_editing.png")
-    dlg = w._own(SaveRevisionDialog(st.editor.change_summary(), st.segmentation["version"], w))
+    dlg = w._own(SaveRevisionDialog(st.editor.change_summary(), st.segmentation["version"], w,
+                                    float(np.prod(st.spacing)) / 1e9))
     dlg.reason.setPlainText("Graft particle misclassified as new bone at the defect margin")
     dlg.show()
     _settle(app)
@@ -131,6 +134,7 @@ def capture_all(out_dir, themes=("light", "dark")) -> list[str]:
         S.sign_review(rev, REVIEWER_PASSWORD, "segmentation", segs[-1]["id"], "approved",
                       "Reviewed the segmentation and approve it for reporting")
     w.review.refresh()
+    w._update_viewer_info()
     w.d_review.raise_()
     _settle(app)
     save(w, "17_review_roi_accepted.png")

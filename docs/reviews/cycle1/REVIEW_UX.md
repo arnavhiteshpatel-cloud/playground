@@ -118,3 +118,53 @@ Line numbers refer to the files as they were during this review.
    - UX-20: per-group material;
    - UX-27: focus ring and shortcuts.
 4. Robustness: UX-25 (heavy work on the UI thread), UX-26 (cancel and close) and UX-10 (role-gated actions).
+
+## Response (desktop engineering, cycle 2)
+
+Tests: `tests/desktop/test_review_fixes.py` (one or more per High finding), `test_admin_lock_audit.py` (quality-review gaps), `test_viewer_ux.py` (Medium/Low). Screenshots re-captured with `python -m osteoquant.desktop --screenshots docs/screenshots/desktop` (`01`–`23`).
+
+| ID | Status | Evidence |
+|---|---|---|
+| UX-01 | fixed | ROI mask of the displayed version (`labels/roi_v{n}`, else `roi_current`) loaded with the labels and drawn as a yellow voxel-edge outline with a key in every slice view; yellow wireframe in 3D; toggle in Display panel, *View* menu and key R. `slice_view.py::_draw_roi`, `view3d.py::roi_surface`. `test_ux01_roi_drawn_in_slice_views_and_3d`; `02_viewer_light.png`. |
+| UX-02 | fixed | Review panel *Analysis ROI* section with **Accept ROI...** (electronic signature, `Store.review(object_type="roi")` records the definition SHA-256; creator cannot accept) and **Edit ROI...**. An accepted ROI clears the flag; ROI state is its own Results column. `test_ux02_*`; `16_sign_accept_roi_dialog.png`, `17_review_roi_accepted.png`. |
+| UX-03 | fixed | `support.endpoint_value` is the single rule: *not supported* never yields a number. Used by Results, CSV export (empty value + reasons columns), Review detail and the report bundle (`services._enforce_support`: value removed, reason added). `test_ux03_*`. |
+| UX-04 | fixed | QC *review*/*unsuitable* flag every endpoint with the named checks; QC is a separate column. `test_ux04_qc_review_is_never_green`. |
+| UX-05 | fixed | "SYNTHETIC-TRAINED — research only" in the model list and as a chip in the Analysis dialog, viewer info bar, Results *Method* column and Review panel; provenance shown as words, no licence tag. `services.segmentation_method_info`. `test_ux05_*`; `21_analysis_dialog.png`. |
+| UX-06 | fixed | Detail pane for the selected version: parent, editor, time, reason, operations, Δ voxels and Δ mm³ per class, every endpoint parent → this version; *Highlight changes vs parent* draws changed voxels in magenta. `services.version_detail`, `ViewerState.set_compare`. `test_ux06_*`; `15_review_what_changed.png`. |
+| UX-07 | fixed | Reports tab: Approve / Request changes / Reject with signature role (Scientific reviewer / Study director). Approval blocked while a reported segmentation is unapproved or the report predates the approvals. Each signature renders a signed copy whose signature rows are filled from the recorded approvals (role, name, meaning, decision, time) and which names the original PDF's SHA-256. `test_ux07_08_*`; `18_report_signoff.png`. |
+| UX-08 | fixed | `study/db.py` message now names the object (`SELF_APPROVAL_MESSAGES`; report: "you cannot approve a report you generated ..."); Approve disabled with that tooltip for the report author and for a segmentation's author. `test_ux07_08_*`. |
+| UX-09 | fixed | Random per-study codes (`desktop_blind_codes`: `Scan S-7K3Q`, `Animal A-P7BK`), tree sorted by code; masking of file names, paths, animal IDs, acquisition metadata and scan IDs in the audit view/export (`blinding.Masker`); blinded reports (codes, re-rendered figures, masked audit excerpt); preview of non-blinded reports hidden in blinded mode; info bar, QC banner, tooltips, rejected imports masked. `test_ux09_*`; `10_review_blinded.png`, `19_audit_blinded.png`. |
+| UX-10 | fixed | `MainWindow.apply_role_gating`: write actions (import, analyse, ROI, edit tools, save) disabled with "Your role (X) cannot ... Requires: ..."; read-only badge in the Segmentation panel; sign buttons disabled for roles without `review`. `test_ux10_*`; `23_reviewer_read_only.png`. |
+| UX-11 | partial | Detail pane under the Results table (reasons per endpoint, de-duplicated across the "advisor:" prefix), "reasons" columns in CSV. Advisor wording itself is unchanged (advisor code is out of scope). |
+| UX-12 | deferred | Distinct n/s, n/c, — tokens across UI/CSV/PDF need a report change outside this scope. UI distinguishes *not analysed* (Support column) from *not measured* (with reason). |
+| UX-13 | partial | Added QC, ROI, Method and Review columns. Material column and filtering deferred. |
+| UX-14 | deferred | Unit convention of the PDF/CSV report is outside the desktop scope; desktop headers state the unit (%). |
+| UX-15 | fixed | History, unsaved-change summary and *Save as new revision* pinned below the scroll area of the Segmentation panel. `03_segmentation_editing.png`. |
+| UX-16 | partial | Slice slider under each view, Home/End, distance tool (M), outline-only overlay. Angle/area/profile tools, linked zoom, cine, brush/class keys and uncertainty map display deferred. `test_slice_slider_and_keys`, `test_presets_measurement_palette_outline`. |
+| UX-17 | partial | Presets Bone, Graft (dense mineral), Soft tissue, Auto, Full range (same histogram rule for every scan). Study-level saved windows and preset keys deferred. |
+| UX-18 | partial | Edit ROI reachable from the Review panel; after saving the user is offered to re-analyse. Preview/handles and oblique axis deferred. |
+| UX-19 | fixed | Reloading the same scan (after save or analysis) keeps crosshair, window/level, zoom/pan and 3D camera. `test_view_state_kept_across_save`. |
+| UX-20 | deferred | Per-group material and batch summary. |
+| UX-21 | fixed | *Graft is brighter* enabled and ticked only for radiopaque materials. |
+| UX-22 | fixed | Spacing fields start empty (z/y/x, optional isotropic); *Apply and confirm* enabled only after typing. `test_spacing_is_never_prefilled`. |
+| UX-23 | partial | `messages.friendly`: plain sentences in Jobs, import results, sign dialog and message boxes (technical text under Details); *Generate report* disabled without analysed scans. Listing skipped non-volume files deferred. `test_friendly_error_messages`. |
+| UX-24 | partial | Results CSV starts with the evaluation notice in evaluation mode. Screenshot stamp and tab banner deferred. |
+| UX-25 | partial | Labels, ROI mask and parent labels load on a worker thread (`services.load_scan_layers`). Labels are still held fully in memory for editing; the save copy is on the GUI thread. |
+| UX-26 | partial | Close cancels jobs and waits ≤3 s; the store closes when the pool is idle; job records follow their own project. Cancellation granularity inside the library is unchanged. `test_close_with_running_job_returns_within_3s`. |
+| UX-27 | fixed | Global `outline: 0` removed; accent focus border on buttons, views, slice views; tooltip H fixed; tool keys scoped to the viewer (`WidgetWithChildrenShortcut`); *Help > Keyboard shortcuts* (F1). `test_accessibility_*`, `test_not_measured_rendering_and_shortcut_scope`. |
+| UX-28 | fixed | *not measured* in `text_muted` italic (≥5.2:1); light `warn` #9a5f0c, dark `bad` #ec7f73; all status colours ≥4.5:1 on both row colours (tested). |
+| UX-29 | fixed | Colour-blind-safe palette (blue / orange / white / black), outline mode, ⚠/✖ prefixes for flagged/not supported. Crosshair line colours unchanged. |
+| UX-30 | fixed | Sign dialog: wrapped label, readable object ("Approve segmentation v2 of Scan 1 - ..."), object-specific meanings. |
+| UX-31 | partial | QC panel shown only on the Viewer tab. Dock state persistence deferred. |
+| UX-32 | deferred | Middle elision / tooltips for all truncated fields. |
+| UX-33 | fixed | Display panel cleared on unload; Jobs list cleared per project. |
+| UX-34 | partial | Δ mm³ in the Save revision dialog and Review detail. Resuming the interrupted action after save deferred. |
+| UX-35 | fixed | Fingerprint selectable, with *Copy*. |
+| UX-36 | deferred | Report footer/CI wording (report/statistics scope). |
+| UX-37 | deferred | Import metadata table polish. |
+| UX-38 | deferred | Dialog lifetime is managed by `MainWindow._own`; no per-window style sheets yet. |
+| UX-39 | fixed | Results sorted ascending by scan. |
+| UX-40 | fixed | "Generate defect-fill report", "Run defect-fill analysis". |
+| Dossier §11 D-2 | fixed | *Project > Users* (admin): add user with role (analyst / reviewer / study director / admin), deactivate/reactivate, reset password; all through the Store API and audited. `test_user_admin_add_deactivate_reset_audited`; `20_users.png`. |
+| Dossier §11 D-8 | fixed (idle lock) | Idle lock (default 15 min, admin-configurable, audited); unlock re-checks the password through `Store.reauthenticate` (lockout applies); *Lock now* Ctrl+L. Second-instance detection deferred. `test_idle_lock_*`; `22_idle_lock.png`. |
+| Dossier §11 D-4 | partial | Audit export to CSV/JSON with chain-verification result (`services.export_audit`), audited, masked in blinded mode. Anchor/backup/archive export deferred. `test_audit_export_*`. |

@@ -152,7 +152,7 @@ class NewStudyDialog(_Dialog):
 
 class AnalysisDialog(_Dialog):
     def __init__(self, n_scans: int, defect_model: str = "condyle", parent=None):
-        super().__init__("Run DefectFill analysis", parent, 480)
+        super().__init__("Run defect-fill analysis", parent, 480)
         self.lay.addWidget(muted(f"{n_scans} scan(s) selected. Each scan runs as a background job; you can keep "
                                  "working and cancel from the Jobs panel."))
         f = QFormLayout()
@@ -260,17 +260,19 @@ class RoiDialog(_Dialog):
 
 
 class SaveRevisionDialog(_Dialog):
-    def __init__(self, summary: dict, base_version: int, parent=None):
+    def __init__(self, summary: dict, base_version: int, parent=None, voxel_mm3: float | None = None):
         super().__init__("Save label revision", parent, 480)
         self.lay.addWidget(muted(f"The edited labels are stored as a new segmentation version derived from v{base_version}. "
                                  "Endpoints are recomputed with the same ROI. The audit trail records your identity, "
                                  "the reason and the voxel changes below."))
-        t = make_table(["Class", "Voxel change"])
+        t = make_table(["Class", "Voxel change"] + (["Volume change (mm³)"] if voxel_mm3 else []))
         for k, v in summary.items():
             r = t.rowCount()
             t.insertRow(r)
             t.setItem(r, 0, ro_item(k.replace("_", " ")))
             t.setItem(r, 1, ro_item(f"{v:+,}", Qt.AlignRight | Qt.AlignVCenter))
+            if voxel_mm3:
+                t.setItem(r, 2, ro_item(f"{v * voxel_mm3:+.4f}", Qt.AlignRight | Qt.AlignVCenter))
         t.setMaximumHeight(140)
         self.lay.addWidget(t)
         self.reason = QPlainTextEdit()

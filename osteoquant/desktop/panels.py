@@ -16,6 +16,7 @@ from .viewer_state import CLASS_NAMES, EDIT_LABELS, PALETTES, ViewerState
 def section(text: str) -> QLabel:
     lb = QLabel(text)
     lb.setProperty("role", "section")
+    lb.setWordWrap(True)            # never forces a dock wider than it is (no clipped content)
     return lb
 
 
@@ -399,7 +400,7 @@ class SegmentationPanel(QWidget):
             for x in self.tool_buttons.values():
                 x.setChecked(False)
             self.tool_group.setExclusive(True)
-        if (self.state.read_only_reason != "") != self.badge.isVisible():
+        if (self.state.read_only_reason != "") == self.badge.isHidden():
             self._on_scan()
 
     def _interpolate(self, axis):

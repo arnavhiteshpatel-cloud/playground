@@ -684,7 +684,7 @@ class MainWindow(QMainWindow):
 
     # ================================================================== studies / import
     def new_study(self):
-        if not self.project:
+        if not self.project or self._denied("write", "New study"):
             return None
         dlg = self._own(NewStudyDialog(self))
         if dlg.exec():
@@ -701,7 +701,7 @@ class MainWindow(QMainWindow):
 
     def add_group(self, study_id=None):
         sid = study_id or self.tree.current_study_id()
-        if not self.project or sid is None:
+        if not self.project or sid is None or self._denied("write", "Add group"):
             return
         name, ok = QInputDialog.getText(self, "Add group", "Group name (e.g. treatment arm):")
         if ok and name.strip():
@@ -711,8 +711,15 @@ class MainWindow(QMainWindow):
                 QMessageBox.warning(self, "Not permitted", str(e))
             self.refresh_tree()
 
+    def _denied(self, perm: str, title: str) -> bool:
+        """Explain (instead of failing later) when the signed-in role lacks ``perm``."""
+        if self.project and not self.project.can(perm):
+            QMessageBox.information(self, title, self.project.why_not(perm))
+            return True
+        return False
+
     def import_scans(self, study_id=None, paths=()):
-        if not self.project:
+        if not self.project or self._denied("write", "Import scans"):
             return None
         if not self.project.store.list_studies(self.project.user):
             if self.new_study() is None:
@@ -872,7 +879,9 @@ class MainWindow(QMainWindow):
         if st.editor is None or not st.editor.modified or self.current_scan_id is None:
             return None
         if reason is None:
-            dlg = self._own(SaveRevisionDialog(st.editor.change_summary(), st.segmentation["version"], self))
+            import numpy as _np
+            dlg = self._own(SaveRevisionDialog(st.editor.change_summary(), st.segmentation["version"], self,
+                                               float(_np.prod(st.spacing)) / 1e9))
             if not dlg.exec():
                 return None
             reason = dlg.reason.toPlainText().strip()
@@ -902,7 +911,7 @@ class MainWindow(QMainWindow):
 
     # ================================================================== analysis / reports / review
     def analyze_selected(self, scan_ids=None, config=None, use_saved_roi=None):
-        if not self.project:
+        if not self.project or self._denied("write", "Analyse"):
             return []
         ids = scan_ids or self.tree.selected_scan_ids() or ([self.current_scan_id] if self.current_scan_id else [])
         if not ids:
@@ -1121,9 +1130,6 @@ class MainWindow(QMainWindow):
         elif key == "add_group":
             self.add_group(node.get("id"))
         elif key == "analyze":
-            if self.project and not self.project.can("write"):
-                QMessageBox.information(self, "Analyse", self.project.why_not("write"))
-                return
             self.analyze_selected()
         elif key == "report":
             self.generate_report(node.get("id"))

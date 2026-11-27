@@ -1,7 +1,6 @@
 """Quality-review desktop gaps: user administration, idle lock, audit export (dossier §11 D-2, D-4, D-8)."""
 import csv
 import json
-import time
 
 import pytest
 

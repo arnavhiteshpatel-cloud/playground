@@ -378,8 +378,8 @@
   "previous_sha256": "3f6af60a4ca1a41bb753fe1b3f35b4fe6af4fbd9143e03267277f2f25e69e2c6"
  },
  "unet_synth_ft_dog_k1": {
-  "sha256": "b94cba52073c400a9194c52cb82ee042fee95f985e9091b0a0d83bbe0d109b43",
-  "created": "2026-11-27T09:24:02Z",
+  "sha256": "2cf92340c66f2d6b2a231c2201fa0ec6d32fbd097dfd016b8a773c09783a24c5",
+  "created": "2026-11-27T23:12:13Z",
   "provenance": [
    "public-real"
   ],

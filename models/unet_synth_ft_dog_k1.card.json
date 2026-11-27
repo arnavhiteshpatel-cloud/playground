@@ -47,18 +47,18 @@
   {
    "iter": 300,
    "loss": 1.0594658851623535,
-   "sec": 84.4
+   "sec": 2595.5
   }
  ],
- "created": "2026-11-27T09:24:02Z",
+ "created": "2026-11-27T23:12:13Z",
  "env": {
   "torch": "2.15.0+cpu",
   "python": "3.13.18",
   "numpy": "2.5.3"
  },
  "n_params": 788620,
- "train_seconds": 84.4,
- "sha256": "b94cba52073c400a9194c52cb82ee042fee95f985e9091b0a0d83bbe0d109b43",
+ "train_seconds": 2595.5,
+ "sha256": "2cf92340c66f2d6b2a231c2201fa0ec6d32fbd097dfd016b8a773c09783a24c5",
  "path": "models/unet_synth_ft_dog_k1.pt",
  "warning": "Research prototype \u2014 not validated"
 }

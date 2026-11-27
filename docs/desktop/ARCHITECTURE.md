@@ -12,7 +12,10 @@ project folder can be opened by either front end.
 | `app.py`, `__main__.py` | entry | argument parsing, `--selftest`, `--screenshots`, theme, exception hook |
 | `project.py` | model | project folder (marker + SQLite `Store` + data dir), sign-in, re-authentication, study tree, import log |
 | `services.py` | service | every call into the library: probe/import/QC, analysis, manual ROI, label revisions, review sign-off, reports, model discovery |
-| `support.py` | service | `measurement_support(result) -> dict`: per-endpoint *supported / flagged / not supported* |
+| `support.py` | service | `measurement_support(result, roi_accepted) -> dict`: per-endpoint *supported / flagged / not supported*; `endpoint_value` (the single "no number when not supported" rule used by every view and export) |
+| `blinding.py` | service | `Masker`: masks file names, animal IDs, acquisition metadata and scan IDs in free text (audit details, report bundles) |
+| `messages.py` | service | `friendly(error)`: plain-language error sentences; technical text kept under *Details* |
+| `lock.py` | widgets | `IdleWatcher` (application event filter) and the lock page |
 | `editing.py` | model | `LabelEditor` operations and `SparseDiff` (compressed sparse undo records) |
 | `undo.py` | Qt model | `QUndoStack` integration (`LabelEditCommand`, `EditHistory`) |
 | `volume_source.py` | model | slice-lazy image access (`ZarrSource`, `ArraySource`) with a byte-bounded LRU cache |
@@ -26,8 +29,8 @@ project folder can be opened by either front end.
 | `import_wizard.py` | model + widgets | `ImportModel` (all rules) and the four-page `ImportWizard` |
 | `results_view.py` | model + widget | per-scan endpoint table (`build_rows`, `ResultsModel`), CSV export |
 | `reports_view.py` | widget | report generation, QtPdf page-by-page preview, export, sign-off |
-| `review_audit.py` | widgets | review/sign-off panel with blinded mode; audit-trail viewer with chain verification |
-| `dialogs.py` | widgets | new project, sign-in, study, analysis settings, ROI, revision reason, signature, licence, About |
+| `review_audit.py` | widgets | review panel (ROI acceptance, versions, what-changed detail, compare overlay, sign-off) with blinded mode; audit-trail viewer with masking, export and chain verification |
+| `dialogs.py` | widgets | new project, sign-in, study, analysis settings, ROI, revision reason, signature (with signature role), users, idle lock, keyboard shortcuts, licence, About |
 | `main_window.py` | widget | assembles everything: start page, tabs (Viewer, Results, Reports, Audit trail), docks, menus, status bar |
 | `selftest.py`, `screenshots.py`, `demo.py` | tooling | headless end-to-end check; documentation screenshots; synthetic phantom data |
 
@@ -53,9 +56,18 @@ those classes and render their state.
 | users, RBAC, studies, reviews | `osteoquant.study.db.Store` |
 | audit trail | `osteoquant.audit.AuditLog` (hash chain, `verify_chain`) |
 
-One library change was made for the desktop, and it is additive: `report.build_pdf` gained an
-optional `watermark` argument. Nothing else in `study/`, `report/` or `audit/` changed; the
-desktop's own tables (`desktop_import_log`, `desktop_settings`, `desktop_timing_events`) are
+Library changes made for the desktop, all additive:
+
+* `report.build_pdf` gained an optional `watermark` argument and prints an optional
+  `bundle["signature_note"]` under the sign-off table (signed copies).
+* `study.db`: a `study_director` role (same permissions as `reviewer`; recorded so report
+  signatures can be attributed), `Store.reset_password` (policy-checked, clears the lockout, ends
+  sessions, audited), `Store.review` accepts `object_type="roi"` (records the ROI definition hash;
+  the ROI's creator cannot accept it), and self-approval messages that name the object type
+  (`SELF_APPROVAL_MESSAGES`).
+
+The desktop post-processes the report bundle (`services._enforce_support`, `_blind_bundle`,
+`_report_signature_rows`) instead of changing `api/bundle.py`. The desktop's own tables are
 created by desktop code with `CREATE TABLE IF NOT EXISTS`.
 
 ## Data flow
@@ -80,6 +92,12 @@ created by desktop code with `CREATE TABLE IF NOT EXISTS`.
 ## Threading model
 
 * The GUI thread owns all widgets, VTK render windows and the `ViewerState`.
+* Opening a scan reads the label volume, the ROI mask and (for *compare with parent*) the parent
+  labels on a single loader thread (`services.load_scan_layers`); the GUI thread keeps repainting
+  and processing jobs and timers, with user input held back until the layers are in.
+* Each job remembers the project it was submitted for; its terminal record goes to that project
+  even after a switch. Closing cancels all jobs and waits at most 3 s; if a library stage is
+  still running, the project's store is closed when the pool becomes idle.
 * Long operations (import + QC, analysis, label-revision save with endpoint recomputation,
   reports) run as `JobManager` jobs on a `QThreadPool` (2 threads). A job is a plain function
   `fn(ctx)`; `ctx.progress(frac, msg)` publishes progress through a Qt signal (queued to the GUI
@@ -185,3 +203,25 @@ active seconds) plus a raw `*_events.csv`. Enabling/disabling and exports are au
 `desktop_import_log` (id, study_id, source, status, reason, scan_id, user_id, details,
 created): every import attempt including rejected and user-excluded sources, shown under
 *Rejected imports* in the project tree.
+
+```sql
+CREATE TABLE desktop_blind_codes (object_type TEXT, object_id INTEGER, study_id INTEGER, code TEXT,
+  created TEXT, PRIMARY KEY (object_type, object_id), UNIQUE (study_id, object_type, code));
+  -- random codes ('S-7K3Q', 'A-P7BK') for scans and animals in blinded review mode
+CREATE TABLE desktop_review_meta (review_id INTEGER PRIMARY KEY, signature_role TEXT);
+  -- 'reviewer' | 'study_director' chosen when signing (also in the audit trail: review.signature_role)
+CREATE TABLE desktop_report_meta (report_id INTEGER PRIMARY KEY, blinded INTEGER, bundle_path TEXT,
+  signed_pdf TEXT, signed_sha256 TEXT);
+  -- stored bundle JSON (to render the signed copy), blinded flag, signed copy and its hash
+```
+
+`desktop_settings` also holds `idle_lock_minutes` (default 15; changed by administrators,
+audited as `settings.idle_lock`).
+
+## Sign-off model
+
+| Object | Signed by | Recorded |
+|---|---|---|
+| ROI (`roi`) | reviewer / study director / admin, not its creator | `review.approved` with the ROI definition SHA-256; clears the "automatic ROI not yet accepted" flag |
+| Segmentation | reviewer / study director / admin, not its author | `review.*` with the labels SHA-256 |
+| Report | reviewer or study director (signature role chosen), not its author; *approve* only when every reported segmentation is approved and the report was generated after that | `review.*` + `review.signature_role`; a signed copy (`report{N}_signed.pdf`) is rendered from the stored bundle with the signature rows filled; the original PDF is unchanged |

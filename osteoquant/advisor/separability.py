@@ -47,7 +47,8 @@ MIN_STRUCT_VOXELS = 3.0         # thickness endpoints need structures ≥3 voxel
 HOST_REL_MATURE = 1.0
 MIN_REFERENCE_SAMPLES = 500     # measured reference distributions need at least this many voxels
 MIN_GRAFT_FRACTION = 0.05       # below this share of mineral, relative graft-volume error is unbounded
-ADVISOR_VERSION = "1.3.0"
+ADVISOR_VERSION = "1.3.1"
+PROFILE_SCAN_MISMATCH_TOL = 0.15   # observed bright-mode vs profile graft level (relative)
 # Resorbable materials whose granules become microporous/fragmented and enter the bone intensity range as they
 # resorb (knowledge base: beta-TCP almost fully resorbed by 8 weeks in minipig; CaSO4 and glasses similar or faster).
 RESORBABLE_EARLY_ONLY = {"beta_tcp", "calcium_sulfate", "bioglass_45s5", "s53p4", "polymer_ceramic_composite"}
@@ -61,6 +62,8 @@ EARLY_WEEKS_MAX = 4.0
 # 1.2.1: DBM (radiolucent but bone-derived) new-bone endpoints not supported (review BIO-02).
 # 1.3.0: knowledge-base material profiles (verified references); KB/physics disagreement >25% requires a measured
 # material reference; resorbable materials are intensity-supported only at known timepoints ≤4 weeks.
+# 1.3.1: scan-vs-profile consistency check — if the scan's observed graft-like bright mode deviates >15% from the
+# profile level, support requires a measured reference (S1b 1.3.0: BCP profile 1.73 vs scan 1.43 → −42…−49% errors).
 
 # Assumed new-bone maturity range in relative units. Early/mid healing: woven 650–1000 mgHA/cm³ vs
 # mature host ≈1075 → (0.60, 0.93) (SCIENTIFIC_EVIDENCE row 4, assumption anchored to a published callus
@@ -315,7 +318,8 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
                    new_samples_rel=None, day0: dict | None = None, calibrated: bool = False,
                    no_graft: bool = False, validated_texture_model: bool = False,
                    graft_prior: float = 0.5, energy_keV: float = 40.0, seed: int = 0,
-                   new_bone_rel_range: tuple | None = None, healing_weeks: float | None = None) -> SupportAssessment:
+                   new_bone_rel_range: tuple | None = None, healing_weeks: float | None = None,
+                   observed_graft_level: float | None = None) -> SupportAssessment:
     """Decide which endpoints can be reported.
 
     noise_rel          scan noise σ divided by (host − soft) grey contrast.
@@ -442,6 +446,15 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
     if prof is not None and prof.uncertain and graft_samples_rel is None:
         intensity_ok = False
         intensity["uncertain_profile_rule"] = prof.source
+    if (prof is not None and graft_samples_rel is None and observed_graft_level is not None
+            and prof.rel_mean > HOST_REL_MATURE):
+        mism = abs(observed_graft_level - prof.rel_mean) / prof.rel_mean
+        intensity["profile_scan_mismatch"] = float(mism)
+        if mism > PROFILE_SCAN_MISMATCH_TOL:
+            intensity_ok = False
+            intensity["uncertain_profile_rule"] = (f"the scan's graft-like intensities (median {observed_graft_level:.2f} "
+                                                   f"of host) differ from the material profile ({prof.rel_mean:.2f}) by "
+                                                   f"{mism:.0%}: profile mismatch for this scanner/protocol")
     if prof is not None and prof.id in RESORBABLE_EARLY_ONLY and \
             (healing_weeks is None or healing_weeks > EARLY_WEEKS_MAX):
         intensity_ok = False
@@ -599,7 +612,8 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
                    no_graft: bool = False, validated_texture_model: bool = False,
                    graft_prior: float = 0.5, energy_keV: float = 40.0, seed: int = 0,
                    new_bone_rel_range: tuple | None = None, soft_halo_fraction: float = 0.10,
-                   new_bone_share: float = 0.3, healing_weeks: float | None = None) -> SupportAssessment:
+                   new_bone_share: float = 0.3, healing_weeks: float | None = None,
+                   observed_graft_level: float | None = None) -> SupportAssessment:
     """Decide which endpoints can be reported (see module docstring and docs/science/MEASUREMENT_SUPPORT.md).
 
     noise_rel          scan noise σ divided by (host − soft) grey contrast.
@@ -614,7 +628,7 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
                      new_samples_rel=new_samples_rel, day0=day0, calibrated=calibrated, no_graft=no_graft,
                      validated_texture_model=validated_texture_model, graft_prior=graft_prior,
                      energy_keV=energy_keV, seed=seed, new_bone_rel_range=new_bone_rel_range,
-                     healing_weeks=healing_weeks)
+                     healing_weeks=healing_weeks, observed_graft_level=observed_graft_level)
     mr = mineral_rule(None if no_graft else material, noise_rel=noise_rel, voxel_um=voxel_um,
                       graft_samples_rel=graft_samples_rel, new_samples_rel=new_samples_rel,
                       new_bone_rel_range=new_bone_rel_range, soft_halo_fraction=soft_halo_fraction,

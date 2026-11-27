@@ -282,3 +282,11 @@ def test_validation_records_tamper_detected(tmp_path, monkeypatch):
     (tmp_path / "validation_records.json").write_text(json.dumps(R))
     ok, why = vr.validated_for("m", "abc", "ha", 20)
     assert not ok and "lock" in why
+
+
+def test_scan_profile_mismatch_refuses():
+    ok = assess_support("ha", noise_rel=0.03, voxel_um=20, observed_graft_level=2.0)
+    assert "uncertain_profile_rule" not in ok.intensity
+    bad = assess_support("ha", noise_rel=0.03, voxel_um=20, observed_graft_level=1.5)
+    assert bad.status("residual_graft_volume") == NOT_SUPPORTED
+    assert "profile mismatch" in bad.endpoints["residual_graft_volume"].reason

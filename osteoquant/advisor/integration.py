@@ -67,6 +67,12 @@ def _assess_scan(image: np.ndarray, roi_mask: np.ndarray, spacing, cfg: dict):
         halo_frac = float(shell.sum() / max(1, (roi & ~core).sum()))
         nb_share = float(((mineral & ~g).sum()) / max(1, (roi & ~g).sum()))
         kw.update(soft_halo_fraction=float(np.clip(halo_frac, 0.0, 0.6)), new_bone_share=float(np.clip(nb_share, 0.02, 0.95)))
+        # scan-vs-profile consistency (advisor 1.3.1): interior voxels brighter than mature bone are graft-like;
+        # their median is compared with the profile's graft level
+        interior = ndi.binary_erosion(roi, iterations=1)
+        bright = rel_img[interior & (rel_img > 1.1)]
+        if bright.size >= 200:
+            kw["observed_graft_level"] = float(np.median(bright))
         a = assess_support(material, graft_prior=prior, **kw)
     return a, est, prior, material
 

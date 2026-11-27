@@ -321,3 +321,63 @@ def test_pseudoreplication_exact_boundary_and_mixed_model_minimum():
     rows = [{"y": float(i + t), "grp": "AB"[i % 2], "week": t, "animal": i} for i in range(4) for t in (0, 1, 2)]
     r = mixed_model_longitudinal(pd.DataFrame(rows), "y", "grp", "week", "animal")
     assert "error" not in r and r["n_subjects"] == 4            # exactly 4 subjects is allowed
+
+
+# ----------------------------------------------------------------------------- mutation-testing follow-ups
+def _sf_icc21_ci(Y, alpha=0.05):
+    """Independent transcription of Shrout & Fleiss (1979) eq. for the ICC(2,1) CI (via two-way ANOVA)."""
+    n, k = Y.shape
+    gm = Y.mean()
+    BMS = k * np.sum((Y.mean(axis=1) - gm) ** 2) / (n - 1)
+    JMS = n * np.sum((Y.mean(axis=0) - gm) ** 2) / (k - 1)
+    EMS = (np.sum((Y - gm) ** 2) - (n - 1) * BMS - (k - 1) * JMS) / ((n - 1) * (k - 1))
+    r = (BMS - EMS) / (BMS + (k - 1) * EMS + k * (JMS - EMS) / n)
+    Fj = JMS / EMS
+    num = (k - 1) * (n - 1) * (k * r * Fj + n * (1 + (k - 1) * r) - k * r) ** 2
+    den = (n - 1) * k ** 2 * r ** 2 * Fj ** 2 + (n * (1 + (k - 1) * r) - k * r) ** 2
+    v = num / den
+    Fl = st.f.isf(alpha / 2, n - 1, v)
+    Fu = st.f.isf(alpha / 2, v, n - 1)
+    lo = n * (BMS - Fl * EMS) / (Fl * (k * JMS + (k * n - k - n) * EMS) + n * BMS)
+    hi = n * (Fu * BMS - EMS) / (k * JMS + (k * n - k - n) * EMS + n * Fu * BMS)
+    return r, lo, hi
+
+
+@pytest.mark.parametrize("seed", [0, 1, 2])
+def test_icc21_and_2k_ci_match_independent_transcription(seed):
+    rng = np.random.default_rng(seed)
+    Y = rng.normal(0, 1, (15, 1)) + rng.normal(0, 0.5, (15, 3)) + np.array([0.0, 0.3, -0.2])
+    for data in (SF, Y):
+        r, lo, hi = _sf_icc21_ci(data)
+        a = icc(data, "2,1")
+        assert (a["icc"], a["ci95_low"], a["ci95_high"]) == pytest.approx((r, lo, hi), rel=1e-9)
+        k = data.shape[1]
+        b = icc(data, "2,k")
+        assert b["ci95_low"] == pytest.approx(k * lo / (1 + (k - 1) * lo), rel=1e-9)
+        assert b["ci95_high"] == pytest.approx(k * hi / (1 + (k - 1) * hi), rel=1e-9)
+
+
+def test_small_sample_edges():
+    assert np.isfinite(icc(SF[:2], "2,1")["icc"])                        # n = 2 is allowed
+    lo, hi = bootstrap_ci([1.0, 3.0], n_boot=200)                        # n = 2 is allowed
+    assert 1.0 <= lo <= hi <= 3.0
+    assert math.isnan(hedges_g([1.0, 1.0], [2.0, 2.0])["g"])            # zero pooled SD, different means
+    r = describe([2.0, 4.0, 9.0])
+    t = st.t.ppf(0.975, 2)
+    assert r["ci95_low"] == pytest.approx(5.0 - t * r["sd"] / math.sqrt(3))
+
+
+def test_bland_altman_all_limit_cis_and_ccc_non_shift():
+    a = np.array([1.0, 2.0, 4.0, 7.0, 11.0])
+    b = np.array([1.4, 2.1, 4.9, 6.6, 12.0])
+    r = bland_altman(a, b)
+    d = b - a
+    bias, sd, n = d.mean(), d.std(ddof=1), 5
+    t = st.t.ppf(0.975, n - 1)
+    se = sd * math.sqrt(3 / n)
+    assert r["loa_low_ci95"] == pytest.approx([bias - 1.96 * sd - t * se, bias - 1.96 * sd + t * se])
+    assert r["loa_high_ci95"] == pytest.approx([bias + 1.96 * sd - t * se, bias + 1.96 * sd + t * se])
+    sxy = np.cov(a, b, ddof=1)[0, 1]
+    assert lins_ccc(a, b) == pytest.approx(2 * sxy / (a.var(ddof=1) + b.var(ddof=1) + (a.mean() - b.mean()) ** 2))
+    s = agreement_summary(a, b)
+    assert s["rmse"] == pytest.approx(math.sqrt(np.mean(d ** 2))) and s["mae"] == pytest.approx(np.abs(d).mean())

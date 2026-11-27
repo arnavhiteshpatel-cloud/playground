@@ -1,6 +1,6 @@
 # Measurement Support (Identifiability) Policy
 
-Implementation: `osteoquant/advisor/` (version **1.3.0**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
+Implementation: `osteoquant/advisor/` (version **1.3.1**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
 
 ## Why
 Graft and new bone are both mineral. For many materials their X-ray attenuation overlaps (Experiments C, C2; the
@@ -42,6 +42,9 @@ by which mechanism, and under which conditions — and abstains otherwise.
 7b. **Material profiles** come from the knowledge base (`osteoquant/knowledge/materials.json`, verified references);
     where the knowledge base and the NIST physics model disagree by >25%, intensity support requires a measured
     material reference (material-only or day-0 scan).
+7b'. **Scan-vs-profile consistency** (1.3.1): if the defect's graft-like intensities (voxels brighter than mature
+    bone) have a median more than 15% away from the profile's graft level, the profile does not describe this
+    scanner/protocol and intensity support requires a measured reference.
 7c. **Resorbable materials** (β-TCP, calcium sulfate, bioactive glasses, polymer–ceramic composites) are intensity-
     supported only at a known timepoint ≤4 weeks after implantation: resorbing granules become microporous and enter
     the bone intensity range.

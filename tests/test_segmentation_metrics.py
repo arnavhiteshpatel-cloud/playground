@@ -182,3 +182,25 @@ def test_ece_per_bin_signs_do_not_cancel_and_bin_edges():
     assert [b["bin"] for b in r["bins"]] == pytest.approx([0.4, 0.9])
     d = expected_calibration_error(prob, truth)               # default 15 bins
     assert d["bins"][0]["bin"] == pytest.approx(6 / 15)
+
+
+@pytest.mark.parametrize("axis", [0, 1, 2])
+def test_default_spacing_every_axis(axis):
+    a = cube((16, 16, 16), 4, 9)
+    b = np.roll(a, 2, axis=axis)
+    assert binary_metrics(a, b)["hd95_um"] == pytest.approx(2.0)
+    r = multiclass_metrics(b.astype(np.uint8), a.astype(np.uint8), classes=(1,))
+    assert r["per_class"]["new_bone"]["hd95_um"] == pytest.approx(2.0)
+
+
+@pytest.mark.parametrize("swap", [False, True])
+def test_hd95_asymmetric_sets_match_oracle(swap):
+    a = cube((20, 20, 20), 2, 18)                 # large object
+    b = np.zeros_like(a)
+    b[4:7, 4:7, 4:7] = True                        # small object in one corner
+    if swap:
+        a, b = b, a
+    d1, d2 = _brute_surface_distances(a, b, (1.0, 1.0, 1.0))
+    r = binary_metrics(a, b)
+    assert r["hd95_um"] == pytest.approx(max(np.percentile(d1, 95), np.percentile(d2, 95)))
+    assert r["hd95_um"] != pytest.approx(max(np.percentile(d1, 96), np.percentile(d2, 96)))

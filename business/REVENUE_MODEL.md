@@ -51,7 +51,7 @@ The product is an **offline desktop application**. Scans stay on the analyst's o
 |---|---|---|---|---|
 | Data intake, checksums, format and calibration QC | 2 | 4 | 8 | [AE] |
 | Defect ROI placement and review (20–40 scans) | 5 | 8 | 10 | [AE] automatic ROI with manual check, ~15 min per scan |
-| Material-specific adaptation (label 1–3 scans, fine-tune) | 6 | 10 | 16 | [AE] experiment R8: 1–3 labelled scans lift held-out graft Dice from 0.84 to 0.86–0.91 (synthetic) | **Requires the customer's written opt-in** for training on their scans (default: no training on customer data — `templates/DPA_ISSUES_CHECKLIST.md`); the adapted weights are kept per customer and are not used for other customers or the general model.
+| Material-specific adaptation (label 1–3 scans, fine-tune) | 6 | 10 | 16 | [AE] experiment R8: 1–3 labelled scans lift held-out graft Dice from 0.84 to 0.86–0.91 (synthetic). **Requires the customer's written opt-in** for training on their scans (default: no training on customer data — `templates/DPA_ISSUES_CHECKLIST.md`); the adapted weights are kept per customer and are not used for other customers or the general model. |
 | Segmentation review and correction | 5 | 15 | 20 | [AE] spot-review of flagged and uncertain regions at 15–30 min per scan |
 | Morphometry, group statistics | 4 | 6 | 8 | [AE] |
 | Report assembly and QA read | 6 | 9 | 12 | [AE] |

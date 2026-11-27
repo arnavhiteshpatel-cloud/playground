@@ -223,3 +223,101 @@ def test_sample_size_formulas():
     # Walter, Eliasziw & Donner (1998): rho0 .6 vs rho1 .8, k=2 -> 39 subjects
     assert sample_size_icc(0.6, 0.8, k=2) == 39
     assert sample_size_icc(0.6, 0.8, k=3) < 39
+
+
+# ----------------------------------------------------------------------------- defaults and boundaries
+def test_defaults_and_interpretation_thresholds():
+    assert icc(SF)["form"] == "2,1"                                   # default form
+    assert adjust_pvalues([0.01, 0.04]) == pytest.approx([0.02, 0.04])  # default Holm
+    # Koo & Li bands: <0.5 poor, <0.75 moderate, <0.9 good, else excellent
+    def interp_for(target):
+        rng = np.random.default_rng(0)
+        t = rng.normal(0, 1, 400)
+        e = math.sqrt(1 / target - 1)
+        Y = np.c_[t + rng.normal(0, e, 400), t + rng.normal(0, e, 400)]
+        return icc(Y, "3,1")
+    for target, label in ((0.3, "poor"), (0.62, "moderate"), (0.83, "good"), (0.97, "excellent")):
+        r = interp_for(target)
+        assert r["interpretation_koo_li"] == label, (target, r["icc"])
+
+
+def test_describe_quartiles_and_cv():
+    r = describe([1.0, 2.0, 3.0, 4.0, 10.0])
+    assert r["q1"] == 2.0 and r["q3"] == 4.0 and r["median"] == 3.0 and r["min"] == 1.0 and r["max"] == 10.0
+    assert r["cv"] == pytest.approx(r["sd"] / 4.0) and r["se"] == pytest.approx(r["sd"] / math.sqrt(5))
+    one = describe([7.0])
+    assert one == {"n": 1, "mean": 7.0, "median": 7.0, "min": 7.0, "max": 7.0}
+
+
+def test_bootstrap_alpha_and_function():
+    x = np.arange(100.0)
+    lo, hi = bootstrap_ci(x, n_boot=2000, alpha=0.5)
+    lo95, hi95 = bootstrap_ci(x, n_boot=2000)
+    assert lo95 < lo < hi < hi95
+    mlo, mhi = bootstrap_ci(x, fn=np.max, n_boot=200)
+    assert mhi == 99.0
+
+
+def test_compare_groups_caution_threshold_and_paired_values():
+    a = [1.0, 2.0, 3.0, 4.0, 5.0]
+    b = [1.5, 2.1, 3.9, 4.2, 5.6]
+    r = compare_two_groups(a, b)
+    assert "caution" not in r and r["n_a"] == 5            # n = 5 is not < 5
+    p = compare_two_groups(a, b, paired=True)
+    t = st.ttest_rel(a, b)
+    assert p["t_test"]["p"] == pytest.approx(t.pvalue) and p["wilcoxon"]["p"] == pytest.approx(st.wilcoxon(a, b).pvalue)
+    assert compare_two_groups(a[:4], b[:4])["caution"]
+
+
+def test_hedges_g_se_formula():
+    a, b = [2.0, 3, 4, 5, 9], [1.0, 2, 3, 4]
+    r = hedges_g(a, b)
+    na, nb = 5, 4
+    se = math.sqrt((na + nb) / (na * nb) + r["g"] ** 2 / (2 * (na + nb)))
+    assert r["ci95_high"] - r["g"] == pytest.approx(1.96 * se)
+    sp = math.sqrt(((na - 1) * np.var(a, ddof=1) + (nb - 1) * np.var(b, ddof=1)) / (na + nb - 2))
+    assert r["d"] == pytest.approx((np.mean(a) - np.mean(b)) / sp)
+
+
+def test_icc_one_way_and_consistency_formulas_from_mean_squares():
+    Y = SF
+    n, k = Y.shape
+    gm = Y.mean()
+    msr = k * ((Y.mean(1) - gm) ** 2).sum() / (n - 1)
+    msc = n * ((Y.mean(0) - gm) ** 2).sum() / (k - 1)
+    sse = ((Y - gm) ** 2).sum() - (n - 1) * msr - (k - 1) * msc
+    mse = sse / ((n - 1) * (k - 1))
+    msw = ((k - 1) * msc + sse) / (n * (k - 1))
+    assert icc(Y, "1,1")["icc"] == pytest.approx((msr - msw) / (msr + (k - 1) * msw))
+    assert icc(Y, "3,1")["icc"] == pytest.approx((msr - mse) / (msr + (k - 1) * mse))
+    assert icc(Y, "3,k")["icc"] == pytest.approx((msr - mse) / msr)
+    assert icc(Y, "2,k")["icc"] == pytest.approx((msr - mse) / (msr + (msc - mse) / n))
+    assert icc(Y, "2,1")["icc"] == pytest.approx((msr - mse) / (msr + (k - 1) * mse + k * (msc - mse) / n))
+
+
+def test_agreement_small_n_and_relative_error_zero_truth():
+    r = agreement_summary([0.0, 2.0, 4.0], [1.0, 2.0, 5.0])
+    assert r["mean_rel_error"] == pytest.approx(np.mean([0.0, 0.25]))       # zero truth excluded
+    assert r["rmse"] == pytest.approx(math.sqrt(2 / 3))
+    assert not math.isnan(r["pearson_r"]) and not math.isnan(r["ccc"])
+    two = agreement_summary([1.0, 2.0], [1.5, 2.5])
+    assert math.isnan(two["pearson_r"]) and math.isnan(two["spearman_rho"])
+    tr = retest([1.0, 2.0, 3.0], [1.5, 2.5, 3.5])
+    assert tr["CV_within"] == pytest.approx(tr["Sw"] / 2.25)
+
+
+def test_sample_size_monotonicity_and_alpha_power():
+    base = sample_size_two_groups(1.0, 1.0)
+    assert sample_size_two_groups(1.0, 1.0, power=0.9) > base
+    assert sample_size_two_groups(1.0, 1.0, alpha=0.01) > base
+    assert sample_size_two_groups(1.0, 2.0) > base
+    assert sample_size_icc(0.6, 0.8, power=0.9) > sample_size_icc(0.6, 0.8)
+    assert sample_size_icc(0.6, 0.8, alpha=0.01) > sample_size_icc(0.6, 0.8)
+
+
+def test_pseudoreplication_exact_boundary_and_mixed_model_minimum():
+    df = pd.DataFrame({"a": [1, 2, 3, 4], "g": ["x"] * 4})
+    assert not check_pseudoreplication(df, "a", ["g"])["pseudoreplication_risk"]
+    rows = [{"y": float(i + t), "grp": "AB"[i % 2], "week": t, "animal": i} for i in range(4) for t in (0, 1, 2)]
+    r = mixed_model_longitudinal(pd.DataFrame(rows), "y", "grp", "week", "animal")
+    assert "error" not in r and r["n_subjects"] == 4            # exactly 4 subjects is allowed

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product · OsteoQuant</title>
+<meta name="description" content="OsteoQuant Desktop: an offline workstation for importing, checking, segmenting, correcting, reviewing and reporting preclinical micro-CT scans of bone defects.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="notice" role="note">
+  <div class="wrap">
+    <span class="notice-tag">Status</span>
+    <span><strong>Research product</strong> &mdash; not validated on real graft materials; not a medical device; no GLP/Part&nbsp;11 compliance claimed. <a href="validation.html">What has been shown so far</a></span>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/mark-128.png" alt="" width="30" height="30"><span>OsteoQuant</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="product.html" aria-current="page">Product</a></li>
+        <li><a href="science.html">Science</a></li>
+        <li><a href="validation.html">Validation status</a></li>
+        <li><a href="services.html">Services &amp; pricing</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="page-head">
+<div class="wrap">
+<p class="kicker">Product</p>
+<h1>A desktop workstation for defect-fill micro-CT</h1>
+<p class="lede">OsteoQuant Desktop (version 0.1.0) is a Qt (PySide6) and VTK application that calls the analysis library in the same process. No server, browser or network connection is involved. A project is a folder on your computer holding the study database, imported scans, label revisions, reports and the audit trail.</p>
+<ul class="toc">
+<li><a href="#workstation">Workstation</a></li>
+<li><a href="#support">Measurement support</a></li>
+<li><a href="#audit">Audit and review</a></li>
+<li><a href="#reports">Reports</a></li>
+<li><a href="#platforms">Platforms and formats</a></li>
+<li><a href="#limits">Current limitations</a></li>
+</ul>
+</div>
+</section>
+<section class="section" id="workstation">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Workstation</p>
+<h2>Import, check, view and correct</h2>
+</div>
+<div class="grid c2">
+<article class="card">
+<h3>Import with provenance</h3>
+<p>A four-step wizard reads Zeiss TXM/TXRM, DICOM series, NIfTI, NRRD, Zarr, TIFF (multi-page or slice folders), PNG/BMP slice folders, MetaImage and NumPy files. Each scan is copied into the project with a SHA-256 hash; duplicates are detected.</p>
+<p>Voxel spacing drives every physical measurement, so the wizard shows where it came from: <em>file metadata</em>, <em>assumed by reader</em> or <em>missing</em>. You cannot continue until every scan has explicit, confirmed spacing. Files that are not imported are listed with the reason.</p>
+</article>
+<article class="card">
+<h3>Quality control, split honestly</h3>
+<p><strong>Deterministic checks</strong> are facts about the file: voxel spacing, isotropy, missing slices, ingest errors, non-finite or saturated voxels. <strong>Heuristic checks</strong> are scores with developer-chosen thresholds, such as bone/soft-tissue contrast, ring and cupping indices, and anatomy truncated by the field of view. They flag scans for attention and are not established standards.</p>
+<p>Each scan carries a verdict: suitable, review or unsuitable.</p>
+</article>
+<article class="card">
+<h3>Viewer</h3>
+<p>Axial, coronal and sagittal slices with a linked crosshair, scale bars in µm or mm, window/level presets taken from each scan’s own histogram (grey values are uncalibrated unless an HA calibration is recorded), an oblique plane, and a VTK 3D panel with label surfaces and volume rendering. Light and dark themes.</p>
+</article>
+<article class="card">
+<h3>Segmentation editing</h3>
+<p>Brush and eraser (2D disk or 3D sphere, radius in µm), region growing, hole filling and shape interpolation between edited slices. “Protect other classes” is on by default. Undo and redo are exact and keep the last 500 operations.</p>
+<p>Saving creates a new <em>corrected</em> revision with your reason; the original is never overwritten, endpoints are recomputed with the same ROI, and per-class voxel changes go into the audit trail.</p>
+</article>
+</div>
+<div class="grid c2 mt32">
+<figure class="shot">
+<div class="frame"><img alt="Viewer with the brush tool active and the segmentation panel showing class, brush radius in micrometres, region-grow tolerance and slice interpolation." height="1000" loading="lazy" src="assets/img/03_segmentation_editing.png" width="1600"/></div>
+<figcaption><b>Editing.</b> Brush on the new-bone class with “protect other classes”; region grow and slice interpolation in the same panel. Synthetic demo data.</figcaption>
+</figure>
+<figure class="shot">
+<div class="frame"><img alt="Import wizard final page listing two imported scans flagged for review, with deterministic and heuristic quality-control checks in separate tables." height="620" loading="lazy" src="assets/img/06_import_qc_results.png" width="940"/></div>
+<figcaption><b>Import and QC.</b> Two scans imported and flagged for review; deterministic and heuristic checks are listed separately.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section class="section alt" id="support">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="kicker">Measurement support</p>
+<h2>“Not measured” is a result</h2>
+<p>When you run an analysis you choose the graft material (or <em>Unspecified</em>, or <em>No graft</em> for empty-defect controls). The measurement-support advisor then decides, per endpoint, whether it is supported for that material and that scan, and by which mechanism.</p>
+<p>The <strong>Support</strong> column in the Results tab summarises each scan: <span class="st st-ok">supported</span> <span class="st st-cond">flagged</span> <span class="st st-no">not supported</span>. An endpoint the advisor does not support is shown as <em>not measured</em>; hovering shows the reason, for example that graft and new bone cannot be separated for this material.</p>
+<p>The desktop also flags results independently of the material: more than 10% uncertain voxels flags every endpoint and more than 25% withdraws support; Tb.Th below 2.5 voxels is flagged as partial-volume dominated; an automatically detected ROI requires review.</p>
+<p class="small"><a href="science.html#support">The advisor’s decision rules</a> · <a href="../docs/user/MATERIALS_AND_SUPPORT.md">What can be measured, per material</a></p>
+</div>
+<figure class="shot">
+<div class="frame"><img alt="Results tab in the dark theme with the Support column and endpoints shown as not measured." height="1000" loading="lazy" src="assets/img/14_results_dark.png" width="1600"/></div>
+<figcaption><b>Results tab, dark theme.</b> Per-scan endpoints with units; unsupported endpoints read “not measured”. <b>Export CSV</b> writes the table including per-endpoint support. Synthetic demo data.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section class="section" id="audit">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Audit and review</p>
+<h2>Every step attributed, every change kept</h2>
+<p>The audit trail is a technical control that records what happened and detects alteration. It does not by itself make a system compliant with 21 CFR Part 11 or GLP, and no such compliance is claimed.</p>
+</div>
+<div class="split even">
+<div>
+<h3>Audit trail</h3>
+<ul>
+<li>Append-only: database triggers reject updates and deletes of audit rows.</li>
+<li>Each row stores the hash of the previous row; <strong>Verify chain</strong> recomputes every SHA-256 hash and reports either an intact chain or the first altered event.</li>
+<li>Every action is recorded under the signed-in user, with time (UTC), action, object and details.</li>
+<li>Truncation of the newest events is detectable only against an externally recorded head hash (an <em>anchor</em>); keep one outside the project.</li>
+</ul>
+<h3 class="mt32">Users, roles and sign-off</h3>
+<ul>
+<li>Roles: administrator, analyst, reviewer, viewer. Passwords of at least 10 characters with an upper-case letter and a digit; five failed attempts lock the account for 15 minutes.</li>
+<li>Approve, <em>Needs changes</em> or Reject require the meaning of the signature and password re-entry. The signature, its meaning and the hash of the signed labels are written to the trail.</li>
+<li>An author cannot approve their own segmentation.</li>
+<li><strong>Blinded review mode</strong> hides group names, animal IDs and file names everywhere in the application, for every role.</li>
+</ul>
+</div>
+<div>
+<figure class="shot">
+<div class="frame"><img alt="Audit trail tab showing a verified chain of 61 events with sequence numbers, UTC times, user, action, object and row hash." height="1000" loading="lazy" src="assets/img/09_audit_trail.png" width="1600"/></div>
+<figcaption><b>Audit trail.</b> “Chain verified: 61 events, every hash recomputed and linked.”</figcaption>
+</figure>
+<figure class="shot mt24">
+<div class="frame"><img alt="Viewer in blinded review mode: groups appear as coded identifiers and the review panel offers Approve, Needs changes and Reject." height="1000" loading="lazy" src="assets/img/10_review_blinded.png" width="1600"/></div>
+<figcaption><b>Blinded review.</b> Groups and animals appear as codes; signing requires your password.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section class="section alt" id="reports">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="kicker">Reports</p>
+<h2>DefectFill reports, with their exceptions</h2>
+<p>For a study, <strong>Generate DefectFill report</strong> builds a PDF and a CSV in the background: per-specimen results, representative orthogonal slices with the label overlay and ROI outline, QC verdicts and the hashes needed to trace each number back to its inputs.</p>
+<p>Reports use the <em>reported</em> view of the metrics: endpoints the advisor does not support are printed as not measured and listed with their reasons; raw values stay in the audit record only. Reports can be previewed page by page, exported and signed by a reviewer.</p>
+<div class="callout warn">
+<p>Without a licence the application runs in evaluation mode with every function available, and reports carry the watermark <strong>“EVALUATION COPY – NOT FOR STUDY DECISIONS”</strong>. When a model trained on synthetic data was used for segmentation, the report carries a <strong>SYNTHETIC-TRAINED MODEL</strong> banner.</p>
+</div>
+</div>
+<figure class="shot">
+<div class="frame"><img alt="Reports tab showing page 2 of a DefectFill PDF with a per-specimen results table in which new-bone and residual-graft columns contain dashes, and an evaluation watermark." height="1000" loading="lazy" src="assets/img/08_report_preview.png" width="1600"/></div>
+<figcaption><b>Report preview.</b> New-bone and residual-graft columns are blank for this synthetic β-TCP study because the advisor did not support them; total mineralised fraction is reported. Note the evaluation watermark.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section class="section" id="platforms">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Platforms and formats</p>
+<h2>Where it runs today</h2>
+<p>Builds are PyInstaller one-folder packages. Nothing in a build needs a network connection at run time. Every installation can check itself with <code>osteoquant-desktop-console --selftest</code>, which runs import, QC, analysis, rendering, editing with undo, revision save, report and audit-chain verification, and prints PASS or FAIL per step.</p>
+</div>
+<div class="table-wrap">
+<table class="data min-640 stack">
+<thead><tr><th>Platform</th><th>How it is built</th><th>Tested here</th><th>Signed</th></tr></thead>
+<tbody>
+<tr><th>Linux x86_64</th><td data-label="How it is built">Built locally and in CI (Ubuntu 22.04)</td><td data-label="Tested here"><span class="st st-ok">Yes</span> packaged self-test passed (8 of 8 steps)</td><td data-label="Signed">No (archive only)</td></tr>
+<tr><th>Windows x64</th><td data-label="How it is built">CI build matrix only</td><td data-label="Tested here"><span class="st st-no">No</span> untested</td><td data-label="Signed">No — pending publisher credentials</td></tr>
+<tr><th>macOS 14, Apple silicon</th><td data-label="How it is built">CI build matrix only</td><td data-label="Tested here"><span class="st st-no">No</span> untested</td><td data-label="Signed">No — signing and notarisation pending</td></tr>
+</tbody>
+</table>
+</div>
+<p class="small muted mt24">Unsigned builds trigger SmartScreen (Windows) and Gatekeeper (macOS) warnings and are for internal testing only. Source: <a href="../docs/desktop/PACKAGING.md">docs/desktop/PACKAGING.md</a>. Installation steps: <a href="../docs/user/INSTALLATION.md">docs/user/INSTALLATION.md</a>.</p>
+</div>
+</section>
+<section class="section alt" id="limits">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Current limitations</p>
+<h2>What the application does not do yet</h2>
+</div>
+<div class="grid c2">
+<ul class="checklist no card">
+<li>The day-0 (longitudinal) graft-footprint method exists in the analysis library but has no desktop workflow yet.</li>
+<li>Material characterisation (measuring a new material’s intensity profile) is a library function, not a desktop feature.</li>
+<li>Locked U-Net models are not offered in the default bundle: the ONNX runtime path still imports PyTorch. Classical multi-Otsu is the default segmentation.</li>
+<li>The histology module is experimental and is not part of the desktop application or of reports.</li>
+</ul>
+<ul class="checklist no card">
+<li>CPU-only inference. A Generation-1 measurement gave about 49,000 voxels per second for the U-Net on 4 CPU cores (about 34 minutes per 100 million voxels).</li>
+<li>Multi-gigabyte volumes: slab import and lazy display are unit-tested with small data and lowered thresholds, not with real multi-GB scans.</li>
+<li>High-DPI displays, GPU drivers and multi-monitor set-ups have been exercised only through virtual displays.</li>
+<li>The segmental-defect ROI detector can fail once healing bridges the gap; the scan is then marked <em>needs ROI</em> and you draw one.</li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><img src="assets/img/mark-128.png" alt="" width="28" height="28"><span>OsteoQuant</span></div>
+        <p class="foot-statement">Research product &mdash; not validated on real graft materials; not a medical device; no GLP/Part&nbsp;11 compliance claimed.</p>
+        <p class="mb0">Offline micro-CT analysis for preclinical bone-graft studies.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="product.html">Workstation</a></li>
+          <li><a href="science.html">Science &amp; evidence</a></li>
+          <li><a href="validation.html">Validation status</a></li>
+          <li><a href="../docs/user/QUICK_START.md">Documentation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Working with us</h4>
+        <ul>
+          <li><a href="services.html">Services &amp; pricing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Notices</h4>
+        <ul>
+          <li><a href="security.html">Security &amp; data protection</a></li>
+          <li><a href="legal.html">Legal &amp; notices</a></li>
+          <li><a href="legal.html#attribution">Data attribution</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 OsteoQuant. Application screenshots show synthetic phantom data.</span>
+      <span>This site sets no cookies and loads nothing from other servers.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

@@ -44,7 +44,7 @@ class Finder(ast.NodeVisitor):
     visit_AsyncFunctionDef = visit_FunctionDef
 
     def add(self, node, kind, desc):
-        self.points.append((node.lineno, node.col_offset, kind, desc))
+        self.points.append((node.lineno, node.col_offset, kind, desc, node.end_lineno, node.end_col_offset))
 
     def visit_BinOp(self, node):
         if type(node.op) in BIN_SWAP:
@@ -60,7 +60,8 @@ class Finder(ast.NodeVisitor):
         for i, op in enumerate(node.ops):
             if type(op) in CMP_SWAP:
                 self.points.append((node.lineno, node.col_offset, f"cmp{i}",
-                                    f"{type(op).__name__}->{CMP_SWAP[type(op)].__name__}"))
+                                    f"{type(op).__name__}->{CMP_SWAP[type(op)].__name__}",
+                                    node.end_lineno, node.end_col_offset))
         self.generic_visit(node)
 
     def visit_BoolOp(self, node):
@@ -86,9 +87,13 @@ class Apply(ast.NodeTransformer):
         self.t = target
         self.done = False
 
+    def _span(self, node):
+        return (getattr(node, "lineno", None), getattr(node, "col_offset", None),
+                getattr(node, "end_lineno", None), getattr(node, "end_col_offset", None))
+
     def _hit(self, node, kind):
-        return (not self.done and getattr(node, "lineno", None) == self.t[0]
-                and getattr(node, "col_offset", None) == self.t[1] and kind == self.t[2])
+        return (not self.done and self._span(node) == (self.t[0], self.t[1], self.t[4], self.t[5])
+                and kind == self.t[2])
 
     def visit_BinOp(self, node):
         self.generic_visit(node)
@@ -106,7 +111,7 @@ class Apply(ast.NodeTransformer):
 
     def visit_Compare(self, node):
         self.generic_visit(node)
-        if (not self.done and node.lineno == self.t[0] and node.col_offset == self.t[1]
+        if (not self.done and self._span(node) == (self.t[0], self.t[1], self.t[4], self.t[5])
                 and self.t[2].startswith("cmp")):
             i = int(self.t[2][3:])
             node.ops[i] = CMP_SWAP[type(node.ops[i])]()
@@ -216,11 +221,11 @@ def main():
     applied = [r for r in res if r["status"] != "not-applied"]
     killed = [r for r in applied if r["status"] != "survived"]
     surv = [r for r in applied if r["status"] == "survived"]
-    desc = {(p[0], p[1], p[2]): p[3] for p in pts}
+    desc = {(p[0], p[1], p[2], p[4], p[5]): p[3] for p in pts}
     summary = {"target": rel, "tests": a.tests, "mutants": len(applied), "killed": len(killed),
                "survived": len(surv), "score": round(len(killed) / max(1, len(applied)), 3),
                "minutes": round((time.time() - t0) / 60, 1),
-               "survivors": [{"line": r["point"][0], "op": desc[tuple(r["point"][:3])],
+               "survivors": [{"line": r["point"][0], "op": desc[(r["point"][0], r["point"][1], r["point"][2], r["point"][4], r["point"][5])],
                               "code": lines[r["point"][0] - 1].strip()[:110]} for r in surv]}
     print(json.dumps({k: v for k, v in summary.items() if k != "survivors"}))
     for s_ in summary["survivors"]:

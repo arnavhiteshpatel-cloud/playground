@@ -339,3 +339,26 @@ dl.facts dd { margin: 0; }
   .notice, .site-nav, .nav-toggle, .site-footer { display: none; }
   body { background: #fff; }
 }
+
+ol.card { padding-left: 46px; }
+ol.card li::marker { font-weight: 600; color: var(--ink-3); }
+
+.form-demo .grid { gap: 0 20px; }
+.form-demo .ribbon { line-height: 1.35; }
+
+/* data tables reflow into stacked records on phones */
+@media (max-width: 640px) {
+  table.data.stack { min-width: 0; }
+  table.data.stack thead { display: none; }
+  table.data.stack, table.data.stack tbody, table.data.stack tr,
+  table.data.stack tbody th, table.data.stack td { display: block; width: 100%; }
+  table.data.stack tr { padding: 12px 0 10px; border-bottom: 1px solid var(--rule); }
+  table.data.stack tbody tr:last-child { border-bottom: 0; }
+  table.data.stack tbody th, table.data.stack td { border: 0; padding: 3px 14px; }
+  table.data.stack tbody th { font-size: 15px; padding-bottom: 6px; }
+  table.data.stack td[data-label]::before {
+    content: attr(data-label); display: block; font-size: 10.5px; font-weight: 650; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-3); margin-bottom: 1px;
+  }
+  table.data.stack td.num { white-space: normal; }
+}

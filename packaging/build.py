@@ -138,7 +138,8 @@ def write_notices():
 
 def check_licences() -> dict:
     r = subprocess.run([sys.executable, str(PKG / "check_bundle_licences.py"), str(app_dir()),
-                        "--report", str(DIST / "licence-check.json")], capture_output=True, text=True)
+                        "--report", str(DIST / "licence-check.json")]
+                       + (["--ldd"] if sys.platform.startswith("linux") else []), capture_output=True, text=True)
     (DIST / "licence-check.txt").write_text(r.stdout)
     print(r.stdout, flush=True)
     return {"exit_code": r.returncode}

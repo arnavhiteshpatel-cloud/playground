@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About · OsteoQuant</title>
+<meta name="description" content="What OsteoQuant is, its stage of development and how its evidence is kept honest.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="notice" role="note">
+  <div class="wrap">
+    <span class="notice-tag">Status</span>
+    <span><strong>Research product</strong> &mdash; not validated on real graft materials; not a medical device; no GLP/Part&nbsp;11 compliance claimed. <a href="validation.html">What has been shown so far</a></span>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/mark-128.png" alt="" width="30" height="30"><span>OsteoQuant</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="science.html">Science</a></li>
+        <li><a href="validation.html">Validation status</a></li>
+        <li><a href="services.html">Services &amp; pricing</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="about.html" aria-current="page">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="page-head">
+<div class="wrap">
+<p class="kicker">About</p>
+<h1>An early-stage research product</h1>
+<p class="lede">OsteoQuant builds analysis software for preclinical bone-graft studies. Its central idea is that a measurement tool should state which endpoints the data can support, and refuse the rest, rather than return a plausible number for everything.</p>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="kicker">Stage</p>
+<h2>Where things stand</h2>
+</div>
+<dl class="facts card mb0">
+<dt>Software</dt><dd>Working research prototype: desktop application, analysis library, test suite. Version 0.1.0.</dd>
+<dt>Evidence</dt><dd>Computational experiments on synthetic phantoms and public real datasets. No real graft-material validation.</dd>
+<dt>Company</dt><dd>Pre-revenue and not yet incorporated. No customers, pilots or letters of intent.</dd>
+<dt>Regulatory</dt><dd>Research software for animal studies. Not a medical device. No GLP or Part 11 compliance claimed.</dd>
+<dt>Founder</dt><dd>[name — to be completed by founder]</dd>
+</dl>
+</div>
+</div>
+</section>
+<section class="section alt">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">How we work</p>
+<h2>Evidence rules we hold ourselves to</h2>
+</div>
+<div class="grid c2">
+<article class="card">
+<h3>Every claim has a class and a source</h3>
+<p>Statements in our materials map to an evidence ledger that classifies each as a verified source, published finding, real-data result, synthetic result, vendor claim, assumption, hypothesis or unknown. Synthetic results may only be stated as “in simulation”. A claims checker compares numbers in the documents with the result files.</p>
+<p class="src-list"><a href="../EVIDENCE_LEDGER.md"><code>EVIDENCE_LEDGER.md</code></a> · <a href="../SCIENTIFIC_EVIDENCE.md"><code>SCIENTIFIC_EVIDENCE.md</code></a></p>
+</article>
+<article class="card">
+<h3>Criteria before data</h3>
+<p>Analysis conventions and acceptance criteria are registered before held-out data are analysed. Deviations are logged, including one where we could not verify that a policy had been fixed before an experiment, and withdrew that claim.</p>
+<p class="src-list"><a href="../docs/science/PREREGISTRATION.md"><code>docs/science/PREREGISTRATION.md</code></a></p>
+</article>
+<article class="card">
+<h3>Adversarial review cycles</h3>
+<p>Imaging, statistics, machine learning, architecture, biology, quality and security reviews are written down with severity, evidence and a response for each finding. Results that went against us stay in the record.</p>
+<p class="src-list"><a href="../docs/reviews/cycle1/RESPONSE.md"><code>docs/reviews/cycle1/</code></a> · <a href="../FORENSIC_AUDIT.md"><code>FORENSIC_AUDIT.md</code></a></p>
+</article>
+<article class="card">
+<h3>Negative results we report</h3>
+<ul>
+<li>An explicit ROI-context input did not improve the network.</li>
+<li>Synthetic-only models fail on real scans.</li>
+<li>Our best morphometry agreement used a convention chosen after seeing the data.</li>
+<li>The day-0 method degrades quickly with granule motion.</li>
+<li>Analyst time saving has not been measured.</li>
+</ul>
+</article>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
+<div class="split even">
+<div>
+<p class="kicker">Context</p>
+<h2>What already exists</h2>
+<p>Established micro-CT packages and service providers already offer deep-learning segmentation, standard bone morphometry, reporting and, in some cases, audit and compliance tooling. We do not claim otherwise. Our focus is narrower: per-material separability assessment, abstention when graft and new bone cannot be told apart, a day-0 protocol for difficult materials, and audit-ready study reports for teams without dedicated imaging staff.</p>
+<p class="src-list">Our capability comparison, with an evidence tag and source for each cell: <a href="../docs/research/COMPETITOR_MATRIX.md"><code>docs/research/COMPETITOR_MATRIX.md</code></a>. Absence of a feature there means “not found in the sources reviewed”.</p>
+</div>
+<div>
+<p class="kicker">Acknowledgements</p>
+<h2>Public data we built on</h2>
+<p>Real-data experiments used openly licensed datasets published on Zenodo by their authors: dog forelimb micro-CT, ovine distraction callus scans, Scanco IPL trabecular references, a mouse knee DICOM series and the NuInsSeg nuclei set. We are grateful to their creators. Attribution and licences: <a href="legal.html#attribution">Legal &amp; notices</a>.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><img src="assets/img/mark-128.png" alt="" width="28" height="28"><span>OsteoQuant</span></div>
+        <p class="foot-statement">Research product &mdash; not validated on real graft materials; not a medical device; no GLP/Part&nbsp;11 compliance claimed.</p>
+        <p class="mb0">Offline micro-CT analysis for preclinical bone-graft studies.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="product.html">Workstation</a></li>
+          <li><a href="science.html">Science &amp; evidence</a></li>
+          <li><a href="validation.html">Validation status</a></li>
+          <li><a href="../docs/user/QUICK_START.md">Documentation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Working with us</h4>
+        <ul>
+          <li><a href="services.html">Services &amp; pricing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Notices</h4>
+        <ul>
+          <li><a href="security.html">Security &amp; data protection</a></li>
+          <li><a href="legal.html">Legal &amp; notices</a></li>
+          <li><a href="legal.html#attribution">Data attribution</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 OsteoQuant. Application screenshots show synthetic phantom data.</span>
+      <span>This site sets no cookies and loads nothing from other servers.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

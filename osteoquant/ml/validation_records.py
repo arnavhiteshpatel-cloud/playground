@@ -13,7 +13,7 @@ import json
 import time
 from dataclasses import asdict, dataclass
 
-from .train import MODEL_DIR
+from .core import MODEL_DIR
 
 QUALIFYING_DATA_CLASSES = ("physical_phantom", "ex_vivo", "in_vivo")   # synthetic never qualifies
 MAX_P95_ABS_REL_ERROR = 0.15                                           # graft-volume error bound to qualify

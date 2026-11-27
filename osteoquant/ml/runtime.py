@@ -21,7 +21,7 @@ import re
 
 import numpy as np
 
-from .train import MODEL_DIR, MODEL_NAME_RE, Case, _gauss_window, build_input, load_model, update_registry
+from .core import MODEL_DIR, MODEL_NAME_RE, Case, _gauss_window, build_input
 
 
 def _registry() -> dict:
@@ -31,6 +31,7 @@ def _registry() -> dict:
 
 def export_onnx(name: str, patch=(48, 48, 48), opset: int = 17) -> dict:
     import torch
+    from .train import load_model, update_registry
     model, ck = load_model(name)
     model.eval()
     in_ch = model.hparams.get("in_ch", 1)
@@ -62,6 +63,7 @@ class OnnxSegmenter:
         so.intra_op_num_threads = threads
         so.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
         self.sess = ort.InferenceSession(str(path), so, providers=["CPUExecutionProvider"])
+        self.reg = dict(R.get(name, {}))          # registry entry used for this session (identity, provenance)
         self.patch = tuple(R.get(name, {}).get("onnx_patch", (48, 48, 48)))
         self.cfg = R.get(name, {}).get("cfg", {})
         self.name = name
@@ -101,6 +103,7 @@ class OnnxSegmenter:
 def quantize_int8_static(name: str, calib_cases: list[Case], n_patches: int = 32, seed: int = 0) -> dict:
     """Static int8 (QDQ) quantisation calibrated on patches from ``calib_cases`` (training data only)."""
     from onnxruntime.quantization import CalibrationDataReader, QuantFormat, QuantType, quantize_static
+    from .train import update_registry
     R = _registry()
     cfg = R[name]["cfg"]
     patch = tuple(R[name].get("onnx_patch", (48, 48, 48)))

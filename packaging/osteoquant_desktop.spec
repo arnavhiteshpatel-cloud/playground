@@ -34,6 +34,9 @@ _DROP_QT_PLUGINS = {"platformthemes", "platforminputcontexts", "egldeviceintegra
                     "imageformats", "tls", "networkinformation", "networkaccess", "virtualkeyboard", "qmltooling"}
 for _entry in _qt_info.QT_MODULES_INFO:
     _entry.plugins = [p for p in _entry.plugins if p not in _DROP_QT_PLUGINS]
+from PyInstaller.utils.hooks import qt as _qt_hooks  # noqa: E402
+
+_qt_hooks.pyside6_library_info._load_module_info()     # the info object was built at import time
 
 # Qt 6 modules that are not available under the LGPL (see packaging/check_bundle_licences.py)
 GPL_ONLY_QT = ("VirtualKeyboard", "Qt6Charts", "DataVisualization", "Qt6Graphs", "Quick3D", "NetworkAuth",

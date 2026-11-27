@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Validation status · OsteoQuant</title>
+<meta name="description" content="The six-stage validation programme (A to F), release gates, benchmark targets and what has not yet been shown.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="notice" role="note">
+  <div class="wrap">
+    <span class="notice-tag">Status</span>
+    <span><strong>Research product</strong> &mdash; not validated on real graft materials; not a medical device; no GLP/Part&nbsp;11 compliance claimed. <a href="validation.html">What has been shown so far</a></span>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/mark-128.png" alt="" width="30" height="30"><span>OsteoQuant</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="science.html">Science</a></li>
+        <li><a href="validation.html" aria-current="page">Validation status</a></li>
+        <li><a href="services.html">Services &amp; pricing</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="page-head">
+<div class="wrap">
+<p class="kicker">Validation status</p>
+<h1>Only the computational stage has run</h1>
+<p class="lede">Validation is planned in six stages, from simulation to independent multi-site studies. Stage A (computational) has run on synthetic phantoms and public real data, with open items. No physical, animal or partner stage has started. Nothing on this site should be read as validation on real graft materials.</p>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
+<div class="statement">
+<p>Research product — not validated on real graft materials; not a medical device; no GLP/Part 11 compliance claimed.</p>
+<small>OsteoQuant never conducts animal work itself. Every physical stage needs facility access, ownership clearances and, for animal data, a partner’s approved study. Acceptance criteria are pre-registered and frozen before each stage’s data are seen.</small>
+</div>
+</div>
+</section>
+<section class="section alt" id="stages">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Programme</p>
+<h2>Stages A to F</h2>
+<p>Source: <a href="../validation/VALIDATION_PROGRAM.md"><code>validation/VALIDATION_PROGRAM.md</code></a>; acceptance criteria in <a href="../docs/science/PREREGISTRATION.md"><code>docs/science/PREREGISTRATION.md</code></a>.</p>
+</div>
+<ol class="stages">
+<li>
+<span class="stage-letter">A</span>
+<div>
+<h3>Computational</h3>
+<p><strong>Question.</strong> Are the algorithms correct, and where can separation work in principle?</p>
+<p><strong>Truth.</strong> Exact synthetic labels; Scanco IPL reference maps; manual bone labels on public scans.</p>
+<p><strong>Exit criteria.</strong> Morphometry exact on analytic objects; advisor refuses ≥95% of failing measurements; ROI propagation, tracking and registration QC behave.</p>
+<p><strong>Open items.</strong> The advisor results (S1–S1c) predate the current advisor version and need re-running; in S1c and L3 the advisor supported measurements that failed; ensemble/conformal (U1) and synthetic-to-real (S2) experiments have not completed.</p>
+</div>
+<div class="stage-status"><span class="st st-cond">Run, items open</span><div aria-hidden="true" class="progress"><i class="on"></i><i class="on"></i><i class="part"></i></div></div>
+</li>
+<li>
+<span class="stage-letter">B</span>
+<div>
+<h3>Ex vivo physical phantom</h3>
+<p><strong>Question.</strong> Can real commercial grafts be separated from bone tissue on a real scanner, and are volumes accurate?</p>
+<p><strong>Design.</strong> Bovine bone cores with weighed graft fills, 10/20/40 µm voxels, scan–rescan, HA calibration. Truth: gravimetric mass and material density.</p>
+<p><strong>Exit criteria.</strong> Where the advisor says <em>supported</em>: graft-volume bias ≤5%, 95% limits of agreement within ±15%; advisor decisions match observed separability.</p>
+</div>
+<div class="stage-status"><span class="st st-todo">Protocol drafted</span><div aria-hidden="true" class="progress"><i class="part"></i><i></i><i></i></div><p>Not approved; not started</p></div>
+</li>
+<li>
+<span class="stage-letter">C</span>
+<div>
+<h3>Material characterisation</h3>
+<p><strong>Question.</strong> Can the advisor be driven by measured material intensity instead of assumptions?</p>
+<p><strong>Design.</strong> Scan each material alone on the same protocol; measure intensity and granule-size distributions.</p>
+<p><strong>Exit criteria.</strong> Measured profiles replace assumed ones; decisions stable across repeat scans.</p>
+</div>
+<div class="stage-status"><span class="st st-todo">Not started</span><div aria-hidden="true" class="progress"><i></i><i></i><i></i></div><p>Can run in the same scanner session as B</p></div>
+</li>
+<li>
+<span class="stage-letter">D</span>
+<div>
+<h3>Retrospective partner data</h3>
+<p><strong>Question.</strong> Does the software agree with expert analysts on real in vivo scans, and how much time does it save?</p>
+<p><strong>Design.</strong> De-identified scans from a partner study; at least two blinded analysts; timed manual versus software-assisted review.</p>
+<p><strong>Exit criteria.</strong> ICC(2,1) against consensus at least the analyst–analyst ICC; measured hands-on time reduction, with no assumed constants.</p>
+</div>
+<div class="stage-status"><span class="st st-todo">Needs a partner</span><div aria-hidden="true" class="progress"><i></i><i></i><i></i></div><p>Needs a data-use agreement</p></div>
+</li>
+<li>
+<span class="stage-letter">E</span>
+<div>
+<h3>Prospective pilot with histology</h3>
+<p><strong>Question.</strong> In a real graft study, are residual-graft and new-bone measurements right?</p>
+<p><strong>Design.</strong> A partner’s planned study adds a day-0 scan and end-point histology on matched planes, read blinded by the partner’s pathologist.</p>
+<p><strong>Exit criteria.</strong> Pre-registered agreement criteria met for at least one material class; refusals concordant with histology-defined overlap.</p>
+</div>
+<div class="stage-status"><span class="st st-todo">Needs a partner study</span><div aria-hidden="true" class="progress"><i></i><i></i><i></i></div></div>
+</li>
+<li>
+<span class="stage-letter">F</span>
+<div>
+<h3>Independent, multi-site</h3>
+<p><strong>Question.</strong> Does it transfer across scanners and sites, and can another laboratory reproduce it?</p>
+<p><strong>Design.</strong> At least two sites and two scanner vendors under one SOP; an independent analyst runs the software.</p>
+</div>
+<div class="stage-status"><span class="st st-todo">Future</span><div aria-hidden="true" class="progress"><i></i><i></i><i></i></div></div>
+</li>
+</ol>
+<p class="small muted mt24">What each stage cannot show: B and C contain no biological new bone (bone chips are surrogates); D lacks ground truth unless histology exists; E is limited to the materials and species studied.</p>
+</div>
+</section>
+<section class="section" id="gates">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Release gates</p>
+<h2>None is met</h2>
+</div>
+<div class="grid c3">
+<article class="card">
+<span class="num">Gate 1</span>
+<h3>Engineering preview</h3>
+<p>Installable on all three operating systems, core workflows working, test coverage ≥90%, no open critical or high security issues, every output labelled with its support status and evidence level.</p>
+<p><span class="st st-no">Not met</span></p>
+</article>
+<article class="card">
+<span class="num">Gate 2</span>
+<h3>Pilot-ready research tool</h3>
+<p>Gate 1, plus real-data validation for at least one task with specimen-level confidence intervals, the support logic validated against known-unsupported materials, three review cycles closed and counsel-reviewed pilot templates.</p>
+<p><span class="st st-no">Not met</span></p>
+</article>
+<article class="card">
+<span class="num">Gate 3</span>
+<h3>Validated for a defined context of use</h3>
+<p>Physical-phantom and histology-correlated data on real materials, independent analysts, pre-registered criteria and the customer’s own QA acceptance. Never self-declared.</p>
+<p><span class="st st-todo">Not claimed</span></p>
+</article>
+</div>
+<p class="src-list mt24">Source: <a href="../RELEASE_READINESS.md"><code>RELEASE_READINESS.md</code></a></p>
+</div>
+</section>
+<section class="section alt" id="shown">
+<div class="wrap">
+<div class="split even">
+<div>
+<p class="kicker">Shown so far</p>
+<h2>What the evidence supports</h2>
+<ul class="checklist yes">
+<li>Morphometry is exact on analytic objects. <span class="dc dc-syn">Analytic</span></li>
+<li>Trabecular thickness agrees with Scanco IPL on 8 public cubes, with a convention chosen post hoc. <span class="dc dc-real">Real public</span></li>
+<li>Real vendor files (2.1 GB Zeiss TXM, 829-slice DICOM) are read within bounded memory. <span class="dc dc-real">Real public</span></li>
+<li>Intensity-only separation fails once graft density overlaps new bone. <span class="dc dc-syn">Synthetic</span></li>
+<li>In a density × noise sweep the advisor refused every failing measurement (advisor 1.1.0). <span class="dc dc-syn">Synthetic</span></li>
+<li>Results are bit-identical across runs. <span class="dc dc-syn">Synthetic</span></li>
+</ul>
+<p class="small"><a href="science.html#evidence">All results with their sources</a></p>
+</div>
+<div>
+<p class="kicker">Not yet shown</p>
+<h2>What has not been demonstrated</h2>
+<ul class="checklist no">
+<li>Accuracy of residual-graft or new-bone measurements on any real graft material.</li>
+<li>That the advisor’s decisions match real separability (its material profiles are assumptions).</li>
+<li>Volume bias and limits of agreement against physical truth.</li>
+<li>Agreement with expert analysts on in vivo scans, and any analyst time saving.</li>
+<li>Micro-CT versus histology agreement.</li>
+<li>The day-0 method under real granule motion, fragmentation and remodelling.</li>
+<li>Transfer across scanners and sites on real data.</li>
+<li>Windows and macOS builds working on real machines.</li>
+<li>Compliance with GLP or 21 CFR Part 11 (not claimed; a gap analysis exists as a draft).</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="scorecard">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Benchmark scorecard</p>
+<h2>Targets set before measurement</h2>
+<p>Each target names its data class. A target met on synthetic data is evidence of mechanism, not of product accuracy. The current build has not yet been scored against these targets; the last column shows the earlier baseline value where one exists.</p>
+</div>
+<div class="table-wrap">
+<table class="data compact min-760 stack">
+<thead><tr><th>#</th><th>Measure</th><th>Data</th><th>Target</th><th>Baseline</th></tr></thead>
+<tbody>
+<tr><th>B1</th><td data-label="Measure">Bone segmentation Dice, real held-out specimens</td><td data-label="Data"><span class="dc dc-real">Real, 2-class</span></td><td data-label="Target">≥0.85</td><td class="num" data-label="Baseline">0.826</td></tr>
+<tr><th>B2</th><td data-label="Measure">Synthetic-pretrained model after ≤3 real labelled scans</td><td data-label="Data"><span class="dc dc-real">Real, 2-class</span></td><td data-label="Target">≥0.95 × full real model</td><td class="num" data-label="Baseline">0.95×</td></tr>
+<tr><th>B3</th><td data-label="Measure">Synthetic zero-shot on real</td><td data-label="Data"><span class="dc dc-real">Real, 2-class</span></td><td data-label="Target">≥0.70</td><td class="num" data-label="Baseline">0.379</td></tr>
+<tr><th>B4</th><td data-label="Measure">Graft-volume error in supported regimes</td><td data-label="Data"><span class="dc dc-syn">Synthetic</span></td><td data-label="Target">|bias| ≤5%, LoA ±15%</td><td class="muted" data-label="Baseline">not measured</td></tr>
+<tr><th>B5</th><td data-label="Measure">Failing measurements refused by the advisor</td><td data-label="Data"><span class="dc dc-syn">Synthetic</span></td><td data-label="Target">≥95%, P(fail | supported) upper bound ≤0.10</td><td class="muted" data-label="Baseline">not built then</td></tr>
+<tr><th>B6</th><td data-label="Measure">Failure-detection AUROC</td><td data-label="Data"><span class="dc dc-syn">Synthetic</span></td><td data-label="Target">≥0.85</td><td class="num" data-label="Baseline">0.66 (OOD)</td></tr>
+<tr><th>B7</th><td data-label="Measure">Conformal 90% interval coverage for graft volume</td><td data-label="Data"><span class="dc dc-syn">Synthetic</span></td><td data-label="Target">0.87–0.93</td><td class="muted" data-label="Baseline">not measured</td></tr>
+<tr><th>B8</th><td data-label="Measure">Longitudinal graft Dice with displacement ≤200 µm</td><td data-label="Data"><span class="dc dc-syn">Synthetic</span></td><td data-label="Target">≥0.80; failures flagged ≥0.95</td><td class="num" data-label="Baseline">0.915 (no motion)</td></tr>
+<tr><th>B9</th><td data-label="Measure">Tb.Th agreement with Scanco IPL, held-out cubes</td><td data-label="Data"><span class="dc dc-real">Real, reference</span></td><td data-label="Target">ICC(2,1) ≥0.95</td><td class="num" data-label="Baseline">0.983 (post hoc)</td></tr>
+<tr><th>B10</th><td data-label="Measure">Segmental ROI success after bridging</td><td data-label="Data"><span class="dc dc-syn">Synthetic</span></td><td data-label="Target">≥90% or flagged fallback</td><td class="num" data-label="Baseline">50% fail</td></tr>
+<tr><th>B11</th><td data-label="Measure">CPU inference throughput</td><td data-label="Data"><span class="dc dc-syn">Synthetic</span></td><td data-label="Target">≥250k voxels/s</td><td class="num" data-label="Baseline">49k</td></tr>
+<tr><th>B12</th><td data-label="Measure">Bit-identical reproducibility</td><td data-label="Data"><span class="dc dc-syn">Synthetic</span></td><td data-label="Target">100%</td><td class="num" data-label="Baseline">100%</td></tr>
+</tbody>
+</table>
+</div>
+<p class="src-list mt24">Source: <a href="../BENCHMARK_SCORECARD.md"><code>BENCHMARK_SCORECARD.md</code></a>. Experiment L3 already indicates that B8 is not met for the naive day-0 footprint (graft Dice 0.24 at 200 µm displacement).</p>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><img src="assets/img/mark-128.png" alt="" width="28" height="28"><span>OsteoQuant</span></div>
+        <p class="foot-statement">Research product &mdash; not validated on real graft materials; not a medical device; no GLP/Part&nbsp;11 compliance claimed.</p>
+        <p class="mb0">Offline micro-CT analysis for preclinical bone-graft studies.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="product.html">Workstation</a></li>
+          <li><a href="science.html">Science &amp; evidence</a></li>
+          <li><a href="validation.html">Validation status</a></li>
+          <li><a href="../docs/user/QUICK_START.md">Documentation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Working with us</h4>
+        <ul>
+          <li><a href="services.html">Services &amp; pricing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Notices</h4>
+        <ul>
+          <li><a href="security.html">Security &amp; data protection</a></li>
+          <li><a href="legal.html">Legal &amp; notices</a></li>
+          <li><a href="legal.html#attribution">Data attribution</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 OsteoQuant. Application screenshots show synthetic phantom data.</span>
+      <span>This site sets no cookies and loads nothing from other servers.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

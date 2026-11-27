@@ -277,3 +277,101 @@ def test_defect_report_metrics_iso_and_anisotropic():
     r2 = defect_report_metrics(lab, roi, aniso, thickness=False)
     assert "note" in r2["new_bone_architecture"]
     assert r2["class_volumes"]["TV_mm3"] == pytest.approx(2 * r["class_volumes"]["TV_mm3"])
+
+
+# ----------------------------------------------------------------------------- mutation-testing follow-ups
+def test_single_voxel_has_surface_area():
+    one = np.zeros((3, 3, 3), bool)
+    one[1, 1, 1] = True
+    assert surface_area_mm2(one, (1000.0,) * 3) > 0
+
+
+def test_whole_sphere_lies_in_its_maximal_sphere():
+    m = sphere((41, 41, 41), (20, 20, 20), 10)
+    th = local_thickness(m, 1.0, border="background")[m]
+    assert th.mean() > 0.95 * th.max()           # nearly every voxel takes the full diameter
+
+
+def test_cavity_reached_only_through_an_edge_diagonal_is_still_a_cavity():
+    """26-connected foreground pairs with 6-connected background: a cavity that touches the outside
+    only edge-diagonally is enclosed (beta2 = 1)."""
+    c = np.zeros((6, 6, 6), bool)
+    c[1:5, 1:5, 1:5] = True
+    c[2:4, 2:4, 2:4] = False                     # 2x2x2 cavity
+    c[1, 1, 2] = False                           # notch: edge-diagonal to cavity voxel (2,2,2), 6-adjacent to outside
+    e = euler_connectivity(c)
+    assert e["beta2"] == 1 and e["beta0"] == 1
+
+
+def test_trabecular_absolute_volumes_and_conn_density():
+    m, tv = plate_stack(4, 8)
+    r = trabecular_morphometry(m, tv, 10.0, compute_thickness=False)
+    assert r["TV_mm3"] == pytest.approx(40 * 24 * 24 * 1000 * 1e-9)
+    assert r["BV_mm3"] == pytest.approx(16 * 24 * 24 * 1000 * 1e-9)
+    holes = torus_count_phantom((12, 20, 60), 3)
+    tvm = np.ones_like(holes)
+    r = trabecular_morphometry(holes, tvm, 20.0, compute_thickness=False)
+    assert r["conn_beta1"] == 3
+    assert r["Conn_D_per_mm3"] == pytest.approx(3 / r["TV_mm3"])
+
+
+def test_radial_profile_default_shell_and_edges():
+    roi = np.ones((3, 101, 101), bool)
+    roi[:, 0] = roi[:, -1] = roi[:, :, 0] = roi[:, :, -1] = False
+    nb = np.zeros_like(roi)
+    prof = radial_ingrowth_profile(nb, roi, (10.0, 10.0, 10.0))       # default 200 µm shells
+    assert [p["from_um"] for p in prof[:3]] == [0.0, 200.0, 400.0]
+    assert prof[1]["to_um"] == 400.0
+
+
+def test_bridging_default_axis_and_host_touching_only_end_slices():
+    roi = np.zeros((10, 6, 6), bool)
+    roi[1:9] = True
+    host = np.zeros_like(roi)
+    host[0] = True
+    host[9] = True                               # host only in the first and last slice
+    b = bridging(roi.copy(), roi, host=host)     # default axis 0
+    assert b["connected_bridge"] and b["projected_coverage"] == 1.0
+    side = np.zeros((6, 10, 6), bool)
+    side[:, 2:8] = True
+    half = side.copy()
+    half[:, 5:] = False
+    assert bridging(half, side)["min_cross_section_fill"] == pytest.approx(0.5)   # axis 0 slices
+    assert bridging(half, side, axis=1)["min_cross_section_fill"] == 0.0
+
+
+def test_density_stats_default_erosion():
+    d = np.full((7, 7, 7), 5.0, np.float32)
+    d[3, 3, 3] = 50.0
+    m = np.zeros((7, 7, 7), bool)
+    m[2:5, 2:5, 2:5] = True
+    s = density_stats(Volume(d, (10, 10, 10)), m)
+    assert s["eroded_vox"] == 1 and s["n_vox"] == 1 and s["mean"] == 50.0
+    v = Volume(d, (10, 10, 10))
+    v.meta["calibration"] = {"unit": "mgHA/cm3"}
+    assert density_stats(v, m)["calibrated"] is True
+
+
+def test_defect_report_metrics_endpoint_details():
+    lab = np.zeros((12, 12, 12), np.uint8)
+    roi = np.zeros(lab.shape, bool)
+    roi[2:10, 2:10, 2:10] = True
+    lab[2:10, 2:10, 2:6] = 1                       # new bone
+    lab[2:10, 2:10, 6:10] = 2                      # graft
+    lab[0:2] = 3                                   # host outside ROI
+    lab[10:] = 3
+    data = np.where(lab == 3, 300.0, np.where(lab == 2, 200.0, np.where(lab == 1, 100.0, 0.0))).astype(np.float32)
+    vol = Volume(data, (20.0, 20.0, 20.0))
+    r = defect_report_metrics(lab, roi, vol)
+    assert r["class_volumes"]["residual_graft_volume_mm3"] == pytest.approx(256 * 8000e-9)
+    assert r["class_volumes"]["host_bone_volume_mm3"] == 0.0          # host outside the ROI
+    assert r["density"]["host_bone"]["n_vox"] > 0 and r["density"]["host_bone"]["mean"] == 300.0  # host: whole volume
+    assert r["density"]["residual_graft"]["mean"] == 200.0 and r["density"]["new_bone"]["mean"] == 100.0
+    assert r["bridging_all_mineral"]["connected_bridge"] and not r["bridging_new_bone"]["min_cross_section_fill"] == 1
+    assert "Tb_Th_um" in r["new_bone_architecture"]                   # thickness on by default
+    assert r["new_bone_architecture"]["TV_mm3"] == pytest.approx(r["class_volumes"]["TV_mm3"])
+    assert r["radial_ingrowth"][0]["to_um"] == 200.0
+    coarse = defect_report_metrics(lab, roi, Volume(data, (100.0, 100.0, 100.0)), thickness=False)
+    assert coarse["radial_ingrowth"][0]["to_um"] == 400.0             # shell = max(200, 4 voxels)
+    only_nb = np.where(lab == 2, 0, lab).astype(np.uint8)
+    assert "residual_graft" not in defect_report_metrics(only_nb, roi, vol, thickness=False)["density"]

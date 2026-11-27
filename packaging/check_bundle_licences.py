@@ -77,20 +77,54 @@ def scan(root: Path) -> dict:
             "libraries": libs}
 
 
+def ldd_report(root: Path) -> dict:
+    """Linux only: resolve every bundled library with ldd (bundle first on the search path).
+    Returns libraries resolved from the host system (must be present on target machines) and
+    unresolved ones (packaging errors)."""
+    import os
+    import subprocess
+    internal = root / "_internal"
+    env = dict(os.environ, LD_LIBRARY_PATH=str(internal))
+    from_host, missing = {}, {}
+    for f in root.rglob("*"):
+        if not f.is_file() or f.is_symlink() or not LIB_SUFFIX.search(f.name):
+            continue
+        try:
+            out = subprocess.run(["ldd", str(f)], capture_output=True, text=True, env=env, timeout=30).stdout
+        except (OSError, subprocess.TimeoutExpired):
+            continue
+        for line in out.splitlines():
+            line = line.strip()
+            if "=> not found" in line:
+                missing.setdefault(line.split()[0], []).append(f.relative_to(root).as_posix())
+            elif "=>" in line:
+                name, target = line.split("=>")[0].strip(), line.split("=>")[1].split("(")[0].strip()
+                if target and not target.startswith(str(root)):
+                    from_host.setdefault(name, target)
+    return {"from_host": dict(sorted(from_host.items())), "missing": missing}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("root", nargs="?", default=str(Path(__file__).resolve().parent / "dist" / "OsteoQuant"))
     ap.add_argument("--report", help="write the full JSON report here")
+    ap.add_argument("--ldd", action="store_true", help="Linux: also list host libraries resolved via ldd")
     a = ap.parse_args(argv)
     res = scan(Path(a.root))
+    if a.ldd and sys.platform.startswith("linux"):
+        res["ldd"] = ldd_report(Path(a.root))
     if a.report:
         Path(a.report).write_text(json.dumps(res, indent=1))
     n_real = sum(not x["symlink"] for x in res["libraries"])
     print(f"shared libraries: {n_real} files + {res['n_libraries'] - n_real} symlinks ({res['library_bytes'] / 2**20:,.0f} MiB)")
     print("Qt modules: " + ", ".join(res["qt_modules"]))
-    print(f"top-level host libraries: {len(res['host_libraries_top_level'])}")
+    print(f"top-level libraries in _internal (system libs + links to vendored wheel libs): {len(res['host_libraries_top_level'])}")
     for h in res["host_libraries_top_level"]:
         print("   ", h)
+    if "ldd" in res:
+        print("libraries expected from the target system (ldd): " + ", ".join(res["ldd"]["from_host"]))
+        if res["ldd"]["missing"]:
+            print("UNRESOLVED (not in bundle, not on this host): " + ", ".join(res["ldd"]["missing"]))
     if res["violations"]:
         print(f"LICENCE CHECK FAILED ({len(res['violations'])} violations):")
         for v in res["violations"]:

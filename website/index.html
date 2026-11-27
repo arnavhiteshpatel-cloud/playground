@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OsteoQuant</title>
+<meta name="description" content="Offline micro-CT analysis for preclinical bone-graft studies that separates new bone, residual graft and host bone where it can, and refuses to report endpoints it cannot support.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="notice" role="note">
+  <div class="wrap">
+    <span class="notice-tag">Status</span>
+    <span><strong>Research product</strong> &mdash; not validated on real graft materials; not a medical device; no GLP/Part&nbsp;11 compliance claimed. <a href="validation.html">What has been shown so far</a></span>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/mark-128.png" alt="" width="30" height="30"><span>OsteoQuant</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="science.html">Science</a></li>
+        <li><a href="validation.html">Validation status</a></li>
+        <li><a href="services.html">Services &amp; pricing</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="hero">
+<div class="wrap">
+<p class="kicker">Preclinical micro-CT · bone-graft and defect-healing studies</p>
+<h1>Micro-CT analysis that reports what it can support, and says when it cannot.</h1>
+<p class="lede">OsteoQuant is an offline desktop workstation for preclinical bone-defect studies. It separates new bone, residual graft and host bone where the material and the scan allow it, refuses to report endpoints it cannot support, records every correction in a hash-chained audit trail and writes study reports.</p>
+<div class="actions">
+<a class="btn" href="science.html#support">How measurement support works</a>
+<a class="btn secondary" href="validation.html">Validation status</a>
+</div>
+<figure class="shot hero-shot">
+<div class="frame">
+<div aria-hidden="true" class="bar"><i></i><i></i><i></i></div>
+<img alt="OsteoQuant Desktop viewer with axial, coronal and sagittal slices, a 3D surface rendering of a bone block with a cylindrical defect, and a display panel listing the label classes new bone, residual graft, host bone and uncertain." height="1000" src="assets/img/02_viewer_light.png" width="1600"/>
+</div>
+<figcaption><b>OsteoQuant Desktop, viewer.</b> Orthogonal slices, 3D surfaces and the label overlay: <span class="nowrap">new bone (orange)</span>, <span class="nowrap">residual graft (blue)</span>, <span class="nowrap">host bone (pink)</span>, <span class="nowrap">uncertain (yellow)</span>. The demo project is built from synthetic β-TCP condyle phantoms, not animal scans.</figcaption>
+</figure>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">What it does</p>
+<h2>Separate, abstain, record</h2>
+</div>
+<div class="grid c3">
+<article class="card">
+<span class="num">01 · Separate</span>
+<h3>Three classes in the defect</h3>
+<p>Inside the defect region of interest, each mineralised voxel is labelled new bone, residual graft or host bone; voxels the method is unsure about are labelled uncertain. The default method is a classical, material-aware multi-Otsu split; locked models can be added.</p>
+<p class="small muted">Separation accuracy has so far been measured on synthetic phantoms only.</p>
+</article>
+<article class="card">
+<span class="num">02 · Abstain</span>
+<h3>A measurement-support advisor</h3>
+<p>Before any number is reported, the advisor decides for each endpoint, material and scan whether it is <em>supported</em>, <em>supported with conditions</em> or <em>not supported</em>. Unsupported endpoints appear as “not measured”, with the reason.</p>
+<p class="small muted">Advisor version 1.2.1. Its decision rules are policy choices, to be revisited with real data.</p>
+</article>
+<article class="card">
+<span class="num">03 · Record</span>
+<h3>Audit trail and reports</h3>
+<p>Every import, analysis, correction and sign-off goes into an append-only, SHA-256 hash-chained audit trail. Corrections create new revisions with a stated reason; nothing is overwritten. DefectFill reports are written as PDF and CSV.</p>
+<p class="small muted">A technical control. It is not, by itself, Part 11 compliance.</p>
+</article>
+</div>
+</div>
+</section>
+<section class="section alt">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="kicker">Why abstention</p>
+<h2>A threshold always returns a number</h2>
+<p>Graft and new bone are both mineral. For many graft materials their X-ray attenuation overlaps, especially as the graft resorbs and the new bone matures. A threshold workflow still produces a residual-graft volume, and that volume can look plausible while being unidentifiable.</p>
+<p>In simulation, once the graft density falls inside the new-bone range (800–1000 mgHA/cm³), the best possible intensity-only rule reaches a graft Dice of only 0.52–0.77, depending on noise. <span class="dc dc-syn">Synthetic</span></p>
+<p>OsteoQuant therefore computes, before reporting, whether an endpoint is identifiable for the material and scan in front of it, and abstains otherwise. Total mineral volume, which does not need graft and new bone to be told apart, is reported whenever the scan supports it.</p>
+<p class="small"><a href="science.html#separability">Separability and the advisor’s rules</a></p>
+</div>
+<figure class="shot">
+<div class="frame">
+<img alt="Results tab listing seven scans of a beta-TCP study. Defect TV values are shown; new bone volume and new bone BV/TV are shown as 'not measured'; the Support column reads 'flagged'." height="1000" src="assets/img/07_results.png" width="1600"/>
+</div>
+<figcaption><b>Results tab.</b> For β-TCP in this synthetic demo study the advisor does not support graft or new-bone separation, so those endpoints read “not measured”; hovering shows why. Defect volume is reported.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Evidence so far</p>
+<h2>Four results, each with its data class</h2>
+<p>Synthetic results come from computational phantoms with exact ground truth; they show mechanism, not product accuracy. Real results come from public datasets, none of which contains graft-versus-new-bone labels.</p>
+</div>
+<div class="grid c4">
+<article class="card stat">
+<span><span class="dc dc-syn">Synthetic</span></span>
+<div class="value">0.52–0.77</div>
+<p>Graft Dice of the best possible intensity-only rule when graft and new-bone densities overlap (32 simulated density × noise conditions).</p>
+<p class="src">Experiment C, corrected oracle · <a href="../EXPERIMENT_REGISTRY.md">EXPERIMENT_REGISTRY.md</a></p>
+</article>
+<article class="card stat">
+<span><span class="dc dc-syn">Synthetic</span></span>
+<div class="value">54 / 54</div>
+<p>Failing measurements (graft-volume error &gt;20%) refused by the advisor across 96 density × noise conditions; 12 conditions were supported and none of them failed. Advisor 1.1.0.</p>
+<p class="src">Experiment S1 · <a href="../experiments/results/exp_S1_advisor.json">exp_S1_advisor.json</a></p>
+</article>
+<article class="card stat">
+<span><span class="dc dc-real">Real public data</span></span>
+<div class="value">0.983 <small>ICC</small></div>
+<p>Trabecular thickness against Scanco IPL reference values on 8 public cubes (Tb.Th ICC(2,1) 0.983, mean −2.4%). The border convention was chosen after seeing these data, so this is not an independent validation.</p>
+<p class="src">Experiment G · <a href="../experiments/results/exp_G_morphometry.json">exp_G_morphometry.json</a></p>
+</article>
+<article class="card stat">
+<span><span class="dc dc-real">Real public data</span></span>
+<div class="value">0.379 → 0.787</div>
+<p>Bone-versus-background Dice on 5 real dog-forelimb scans: a synthetic-only model fails zero-shot (Dice 0.379); adding one labelled real scan reaches 0.787 (model trained on 10 real scans: 0.826). A two-class task, not graft separation.</p>
+<p class="src">Experiments H/I · <a href="../experiments/results/exp_H_I_real.json">exp_H_I_real.json</a></p>
+</article>
+</div>
+<div class="callout warn mt32">
+<h4>No result yet on real graft materials</h4>
+<p>Every graft-versus-new-bone number on this site is synthetic. Real three-class truth needs the physical phantom programme (validation stages B and C), which has not started. <a href="validation.html">Validation status</a> · <a href="science.html#evidence">All results and their sources</a></p>
+</div>
+</div>
+</section>
+<section class="section alt">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Workflow</p>
+<h2>From scan folder to signed report, on one computer</h2>
+</div>
+<ol class="steps">
+<li><b>Import</b><span>TXM, DICOM, NIfTI, NRRD, Zarr, TIFF and more. Voxel spacing must come from the file or be confirmed by you. SHA-256 provenance.</span></li>
+<li><b>Quality control</b><span>Deterministic checks (facts about the file) kept apart from heuristic checks (developer-chosen thresholds).</span></li>
+<li><b>Analyse</b><span>Defect ROI, segmentation and the measurement-support decision, as background jobs.</span></li>
+<li><b>Correct</b><span>Brush, region grow, fill, interpolate, undo. Saving creates a new revision with your reason.</span></li>
+<li><b>Review</b><span>Password re-entry to sign; authors cannot approve their own work; optional blinded mode.</span></li>
+<li><b>Report</b><span>DefectFill PDF and CSV listing every endpoint that was not measured and why.</span></li>
+</ol>
+<p class="small muted mt24">Step-by-step instructions: <a href="../docs/user/QUICK_START.md">Quick start</a> and the <a href="../docs/desktop/USER_GUIDE.md">desktop user guide</a>.</p>
+</div>
+</section>
+<section class="section">
+<div class="wrap">
+<div class="split even">
+<div>
+<p class="kicker">Scope</p>
+<h2>What OsteoQuant is not</h2>
+<ul class="checklist no">
+<li>Not validated on real graft materials. Separation of graft from new bone has been tested only in simulation.</li>
+<li>Not a medical device, and not intended for clinical use.</li>
+<li>No GLP or 21 CFR Part 11 compliance is claimed, and no GLP study package is offered.</li>
+<li>Not a cloud service: no telemetry, no accounts with us, no uploads.</li>
+<li>Not a measured time saving. Analyst time has not yet been measured; the application can record it, locally and only if you switch it on.</li>
+</ul>
+</div>
+<div>
+<p class="kicker">Who it is designed for</p>
+<h2>Teams that study graft materials</h2>
+<p>Preclinical R&amp;D groups at graft and orthobiologic manufacturers, study directors at contract research organisations, academic bone-repair laboratories and micro-CT core facilities.</p>
+<p>OsteoQuant has no customers yet. We are looking for a small number of retrospective pilots in which the software is compared, blinded, with your own analysis under acceptance criteria written down before the data are seen.</p>
+<div class="actions mb0">
+<a class="btn" href="services.html">Pilots and services</a>
+<a class="btn secondary" href="contact.html">Contact</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><img src="assets/img/mark-128.png" alt="" width="28" height="28"><span>OsteoQuant</span></div>
+        <p class="foot-statement">Research product &mdash; not validated on real graft materials; not a medical device; no GLP/Part&nbsp;11 compliance claimed.</p>
+        <p class="mb0">Offline micro-CT analysis for preclinical bone-graft studies.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="product.html">Workstation</a></li>
+          <li><a href="science.html">Science &amp; evidence</a></li>
+          <li><a href="validation.html">Validation status</a></li>
+          <li><a href="../docs/user/QUICK_START.md">Documentation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Working with us</h4>
+        <ul>
+          <li><a href="services.html">Services &amp; pricing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Notices</h4>
+        <ul>
+          <li><a href="security.html">Security &amp; data protection</a></li>
+          <li><a href="legal.html">Legal &amp; notices</a></li>
+          <li><a href="legal.html#attribution">Data attribution</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 OsteoQuant. Application screenshots show synthetic phantom data.</span>
+      <span>This site sets no cookies and loads nothing from other servers.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

@@ -1,158 +1,237 @@
-# OsteoQuant — User Requirements Specification (URS)
-
-> **Revision pending (2026-11-27, cycle-1 review QA-REG-02).** This draft describes the Generation-1 architecture (FastAPI server + browser workbench). The Generation-2 product is an offline desktop application (PySide6/VTK, in-process analysis library; the API is an optional integration interface). Requirements and protocols must be re-baselined to the desktop product before any qualification activity. Draft only; no compliance is claimed.
-
+# OsteoQuant: User Requirements Specification (URS)
 
 | Field | Value |
 |---|---|
 | Document ID | OQ-QMS-URS-001 |
-| Version | 0.1 (DRAFT) |
+| Version | 0.2 (DRAFT), Generation-2 desktop re-baseline |
 | Date | 2026-11-27 |
+| Supersedes | 0.1 (Generation-1 web architecture) |
 | Owner | Product / Scientific Lead (TBD) |
-| Approvals | Scientific Lead ___ · Engineering Lead ___ · Quality ___ |
+| Approvals | Scientific Lead ___ · Engineering Lead ___ · Quality ___ (none given) |
 
-> **Status: DRAFT — not validated; not a claim of Part 11 compliance or GLP validation.**
+> **Status: DRAFT. Not approved, not validated. This document makes no claim of 21 CFR Part 11 compliance, GLP compliance, computerised-system validation or regulatory acceptance.**
 
 ## 1. Purpose and intended use
-OsteoQuant analyses **preclinical (animal) bone-defect micro-CT** data for **research use only (RUO)**: ingestion with file hashing, QC, defect ROI definition, 3-class segmentation (new bone / residual graft / host bone) with human correction, morphometry, statistics, and PDF/CSV reporting.
+OsteoQuant analyses **preclinical (animal) bone-defect micro-CT** data for **research use only (RUO)**. Functions: import with SHA-256 provenance, quality control, defect ROI definition, 3-class segmentation (new bone / residual graft / host bone) with human correction, morphometry, measurement-support assessment (abstention), review and sign-off, and PDF/CSV reporting.
 
-**Not intended** for diagnosis, treatment or monitoring of disease in humans or individual animals, nor (in its current unvalidated state) for generating records for GLP studies or regulatory submissions.
+**Not intended** for diagnosis, treatment or monitoring of disease in humans or individual animals. In its current unvalidated state it is not intended for generating records for GLP studies or regulatory submissions.
 
-## 2. Conventions
+## 2. System context (Generation 2)
+| Aspect | Generation 2 (this baseline) |
+|---|---|
+| Product | **OsteoQuant Desktop**: offline PySide6 (Qt 6) + VTK application that calls the analysis library in-process (`osteoquant/desktop/`, `docs/desktop/ARCHITECTURE.md`). |
+| Deployment | Installed on an individual workstation. No local server, no browser, no network access at run time. |
+| Records | A **project folder** (marker file, SQLite study store, Zarr scan stores, label revisions, reports, audit trail). Each project has its own user accounts and one organisation. |
+| Identity | Local accounts per project (`osteoquant/study/db.py`): unique user name, scrypt password hash, roles admin / analyst / reviewer / viewer. |
+| Licensing | Offline Ed25519-signed licence file; evaluation mode with watermarked reports when no valid licence is installed. |
+| Optional interfaces | The FastAPI service (`osteoquant/api/`) and the command line remain integration interfaces. They are **not** the product baseline. Requirements that apply only to a hosted, multi-user server are retired here (section 5) and belong in a future hosted-deployment annex. |
+
+Consequences for requirements: the workstation operating system is part of the security boundary. Anyone with OS-level write access to the project folder can modify files outside the application. Several controls therefore become shared between the software (detection) and the user organisation (prevention); this is stated where it applies.
+
+## 3. Conventions
 - **Priority:** M = must, S = should, C = could.
-- **Criticality (data-integrity / scientific impact):** H / M / L — drives verification depth (see VERIFICATION_PLAN.md).
-- **Source:** regulatory/benchmark driver (references are benchmarks; see REGULATORY_RESEARCH.md). P11 = 21 CFR Part 11; GLP = 21 CFR Part 58; O17 = OECD GLP No. 17 (¶); O22 = OECD GLP No. 22; BX = Bouxsein 2010; SCI = scientific need.
-- Each URS item is traced to FS items in FUNCTIONAL_SPEC.md and to tests in traceability_matrix.csv.
+- **Criticality (data-integrity / scientific impact):** H / M / L. Drives verification depth (VERIFICATION_PLAN.md).
+- **Source:** regulatory/benchmark driver. References are benchmarks only (REGULATORY_RESEARCH.md). P11 = 21 CFR Part 11; GLP = 21 CFR Part 58; O17 = OECD GLP No. 17 (¶); O22 = OECD GLP No. 22; BX = Bouxsein 2010; SCI = scientific need; REV = finding of an internal review (ID given).
+- IDs from version 0.1 are kept where the requirement still applies; the wording may be revised for the desktop. New IDs fill unused numbers. Retired IDs are listed in section 5 and are never reused.
+- Each URS item is traced to FS items in FUNCTIONAL_SPEC.md and to tests in `traceability_matrix.csv` (generated by `scripts/build_traceability.py`).
 
-## 3. Requirements
+## 4. Requirements
 
-### 3.1 General / intended use
+### 4.1 General / intended use
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-001 | The system shall display its intended use and RUO status in the UI and in every generated report. | M | M | §201(h) positioning |
-| URS-002 | Every output (report, CSV, export) shall identify the software version (semantic version + build/commit identifier). | M | H | P11 11.10(k); O17 ¶86 |
+| URS-001 | The application shall display its intended use, RUO status and "not validated" status (About dialog / start page) and every generated report shall state them. | M | M | §201(h) positioning |
+| URS-002 | Every output (report, CSV, analysis record) shall identify the software version. | M | H | P11 11.10(k); O17 ¶86 |
 
-### 3.2 Access control and identity
+### 4.2 Access control and identity
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-010 | Each person shall use a unique, individual user account; shared/generic accounts shall not be possible for data-modifying actions. | M | H | P11 11.10(d), 11.100(a); O17 ¶95 |
-| URS-011 | The system shall enforce role-based access with at least the roles admin, analyst, reviewer, viewer, each with a documented permission matrix. | M | H | P11 11.10(g); O17 ¶97 |
-| URS-012 | Data of one organization (tenant) shall be inaccessible to users of another organization through any UI, API or export path. | M | H | P11 11.10(d) |
-| URS-013 | Authentication shall enforce password strength, lockout after repeated failures, and session inactivity timeout. | M | H | P11 11.300 |
+| URS-010 | Each person shall use a unique, individual user account within a project; the application shall not ship default or shared accounts, and an administrator shall be able to create named accounts for every person who works on the project. | M | H | P11 11.10(d), 11.100(a); O17 ¶95 |
+| URS-011 | The application shall enforce role-based access with at least the roles admin, analyst, reviewer and viewer, each with a documented permission matrix, on every function. | M | H | P11 11.10(g); O17 ¶97 |
+| URS-013 | Authentication shall enforce password strength and temporary lockout after repeated failures; an unattended signed-in session shall lock after a configurable idle period. | M | H | P11 11.300 |
 | URS-014 | User accounts shall be deactivated, never deleted, so that historical records remain attributable; user IDs shall never be reused. | M | H | P11 11.100(a); O17 ¶92 |
-| URS-015 | The system shall support segregation of duties: the system administrator role shall not be combinable with analyst/reviewer roles within the same tenant without recorded justification; a report author shall not approve their own report. | M | H | O17 ¶27, ¶98 |
-| URS-016 | Creation, change and deactivation of user accounts and role assignments shall be recorded in the audit trail. | M | H | O17 ¶92 |
+| URS-015 | The application shall support segregation of duties: the author of a segmentation or report shall not approve it; system administration shall be separable from study work. | M | H | O17 ¶27, ¶98 |
+| URS-016 | Creation, role change, activation and deactivation of user accounts shall be recorded in the audit trail. | M | H | O17 ¶92 |
+| URS-017 | The documentation shall specify the operating-system access controls the user organisation must apply to project folders (who may read/write), because the application cannot prevent OS-level file access. | M | H | P11 11.10(d); O17 ¶91 |
 
-### 3.3 Data ingestion and integrity
+### 4.3 Data import and integrity
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-020 | On ingestion the system shall compute and store a SHA-256 hash of every original file. | M | H | P11 11.10(a); O22 |
-| URS-021 | The system shall re-verify file hashes before each analysis run and on demand, and block processing of files whose hash does not match. | M | H | P11 11.10(a) |
-| URS-022 | The system shall capture acquisition/reconstruction metadata (at minimum voxel size per axis and units, scanner model, energy kVp/µA, filter, integration time, reconstruction parameters, calibration/phantom reference if any). | M | H | BX; SCI |
-| URS-023 | The system shall validate voxel spacing (presence, positivity, units, plausibility range, consistency across axes and header sources) and refuse to compute physical-unit outputs when spacing is missing or ambiguous. | M | H | SCI |
-| URS-024 | Original ingested data shall be immutable; no function shall overwrite or modify an original file. | M | H | P11 11.10(e); GLP 58.130(e); O17 ¶83 |
-| URS-025 | Each dataset shall be linked to study, animal/specimen ID, time point and side/site; the system shall detect duplicate files (by hash) and duplicate specimen/time-point assignments. | M | H | SCI |
-| URS-026 | Supported input formats and their parsing rules shall be documented; unsupported or malformed files shall be rejected with a recorded reason. | M | M | O17 ¶70 |
+| URS-020 | On import the application shall compute and store SHA-256 hashes of the source files and of the imported voxel data, and store the imported data in the project unchanged thereafter. | M | H | P11 11.10(a); O22 |
+| URS-021 | The application shall re-verify the integrity of stored scan data before it is used and on demand, and shall refuse to process data whose hash does not match. | M | H | P11 11.10(a) |
+| URS-022 | The application shall capture acquisition/reconstruction metadata (at minimum voxel size per axis and its source; scanner, energy, filter, exposure and reconstruction parameters where the format provides them) and record which values were found and which were assumed. | M | H | BX; SCI |
+| URS-023 | The application shall validate voxel spacing (presence, positivity, plausibility range) and shall not import a scan whose spacing is missing or only assumed until the user enters and confirms explicit values. | M | H | SCI |
+| URS-024 | Source files selected for import shall never be modified by the application. | M | H | P11 11.10(e); GLP 58.130(e); O17 ¶83 |
+| URS-025 | Each scan shall be linked to study, animal/specimen and time point; the application shall reject duplicate data (by hash) and flag a second scan for the same specimen and time point. | M | H | SCI |
+| URS-026 | Supported input formats shall be documented; unreadable, unsupported, duplicate or user-excluded sources shall be rejected with a recorded reason that remains visible in the project. | M | M | O17 ¶70 |
 
-### 3.4 Quality control
+### 4.4 Quality control
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-030 | The system shall run documented automated QC checks (e.g., intensity range/saturation, missing slices, orientation, field-of-view coverage of defect, calibration availability) on each dataset. | M | H | SCI |
-| URS-031 | QC results, thresholds and QC-module version shall be recorded with each dataset. | M | M | O17 ¶86 |
-| URS-032 | A failed QC check shall block downstream analysis unless an authorized user records an override with a reason; overrides shall be visible in reports. | M | H | P11 11.10(f) |
+| URS-030 | The application shall run documented automated QC checks on each imported scan and distinguish deterministic checks (facts about the file) from heuristic checks (scores with developer-chosen thresholds). | M | H | SCI |
+| URS-031 | QC results, thresholds and the QC-module version shall be recorded with each scan. | M | M | O17 ¶86 |
+| URS-032 | A scan with an "unsuitable" QC verdict shall not be analysed unless an authorised user records an override with a reason; overrides shall be visible in reports. | M | H | P11 11.10(f) |
 
-### 3.5 Region of interest
+### 4.5 Region of interest
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-040 | The defect ROI shall be defined by a documented method (shape, dimensions in physical units, anchor landmarks) and stored as a versioned object linked to the dataset. | M | H | BX; SCI |
-| URS-041 | Any ROI creation or modification shall be audit-trailed with user, time, old/new geometry and reason. | M | H | P11 11.10(e) |
-| URS-042 | The user shall be able to visually verify the ROI overlay on the image in all three orthogonal planes before analysis. | M | M | SCI |
+| URS-040 | The defect ROI shall be defined by a documented method in physical units and stored as a versioned, hashed object linked to the scan. | M | H | BX; SCI |
+| URS-041 | Any ROI creation or modification shall be audit-trailed with user, time, version, definition hash and reason. | M | H | P11 11.10(e) |
+| URS-042 | The user shall be able to verify the ROI on the image in three orthogonal planes, and shall confirm it before results are accepted. | M | M | SCI |
 
-### 3.6 Segmentation
+### 4.6 Segmentation and editing
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-050 | The system shall segment the ROI into the classes background, new bone, residual graft and host bone using a fixed, declared label map stored with each model and each result. | M | H | SCI |
-| URS-051 | Each segmentation result shall record the model identifier, version and SHA-256 hash of the model artifact, and the preprocessing configuration. | M | H | O17 ¶86 |
-| URS-052 | Users shall be able to correct segmentations; the original automated prediction shall be retained unchanged alongside each corrected version. | M | H | GLP 58.130(e); O17 ¶83 |
-| URS-053 | Each correction session shall record user, time, affected classes, voxel counts changed per class, and a reason. | M | H | P11 11.10(e) |
-| URS-054 | The system shall verify at model load and at result import that the label map matches the expected schema and reject mismatches. | M | H | SCI |
-| URS-055 | The system should provide a per-dataset segmentation confidence/uncertainty indicator and flag low-confidence results for review. | S | M | SCI |
+| URS-050 | Segmentation shall use a fixed, declared label map (background, new bone, residual graft, host bone, uncertain) stored with each result. | M | H | SCI |
+| URS-051 | Each segmentation result shall record the method, model identifier and model SHA-256 (if a model is used), and the preprocessing configuration. | M | H | O17 ¶86 |
+| URS-052 | Users shall be able to correct segmentations; every earlier version, including the automated prediction, shall be retained unchanged. | M | H | GLP 58.130(e); O17 ¶83 |
+| URS-053 | Each saved correction shall record user, time, base version, per-class voxel changes, tools used and a mandatory reason. | M | H | P11 11.10(e) |
+| URS-054 | The application shall reject label values outside the declared map at editing and saving, and shall verify a model's label map at load. | M | H | SCI |
+| URS-055 | The application shall provide a per-voxel uncertainty (abstention) and a per-scan uncertainty indicator, and shall not report endpoints when uncertainty is high. | S | M | SCI |
+| URS-056 | Editing tools shall act in physical units, shall not change classes the user did not target (when protection is on), and undo/redo shall restore previous states exactly. | M | H | SCI |
 
-### 3.7 Morphometry
+### 4.7 Morphometry
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-060 | The system shall compute documented morphometric outcomes using standard nomenclature and units (e.g., TV, BV, BV/TV; Tb.Th, Tb.N, Tb.Sp where applicable) and defect-specific outcomes (new-bone volume, residual-graft volume, host-bone volume, fraction of defect volume filled), each with an operational definition. | M | H | BX |
-| URS-061 | Each morphometric value shall be stored with its units and the voxel size, ROI version, segmentation version and algorithm version used. | M | H | O17 ¶86 |
+| URS-060 | The application shall compute documented morphometric endpoints with standard nomenclature and units and an operational definition for each (ENDPOINT_DEFINITIONS.md). | M | H | BX |
+| URS-061 | Each stored measurement shall reference the segmentation version, ROI version, configuration and software version used. | M | H | O17 ¶86 |
 | URS-062 | Morphometric algorithms shall be verified against analytic/synthetic phantoms with documented tolerances. | M | H | P11 11.10(a); O17 ¶52 |
-| URS-063 | Mineral density outputs (if offered) shall only be reported when a valid calibration is linked; otherwise they shall be suppressed. | M | H | SCI |
+| URS-063 | Mineral density outputs shall only be reported when a valid calibration is linked. | M | H | SCI |
 
-### 3.8 Statistics and blinding
+### 4.8 Statistics and blinding
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
 | URS-070 | The statistical analysis plan (outcomes, tests, groups, exclusion rules) shall be recorded and locked before unblinding. | M | H | GLP 58.120; ARRIVE |
-| URS-071 | Statistical results shall record method, software library versions, inputs (hash of analysis table) and random seeds. | M | H | O17 ¶86 |
-| URS-072 | All specimens shall appear in analysis outputs; any exclusion shall require a recorded reason and be listed in the report. | M | H | 2016 GLP NPRM 58.180(c) (proposed); ARRIVE |
-| URS-075 | Group/treatment allocation shall be hidden from analysts and reviewers performing ROI/segmentation work until an authorized unblinding event. | M | H | SCI; ARRIVE |
-| URS-076 | Unblinding shall be an explicit, authorized, audit-trailed event per study; post-unblinding edits to ROI/segmentation shall be flagged in reports. | M | H | SCI |
+| URS-071 | Statistical methods shall be verified against published reference values, and statistical results shall record method, library versions, input-table hash and random seeds. | M | H | O17 ¶86 |
+| URS-072 | Every scan of a study shall appear in results (including not analysed or not supported); any exclusion shall require a recorded reason and be listed in the report. | M | H | 2016 GLP NPRM 58.180(c) (proposed); ARRIVE |
+| URS-075 | Group/treatment allocation shall be hidden from users performing ROI/segmentation work until an authorised unblinding event, in every view and output. | M | H | SCI; ARRIVE |
+| URS-076 | Unblinding shall be an explicit, authorised, re-authenticated and audit-trailed event per study; ROI/segmentation edits after unblinding shall be flagged in reports. | M | H | SCI |
 
-### 3.9 Reporting
+### 4.9 Reporting
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-080 | Reports (PDF and CSV) shall include provenance: input file hashes, software version, model hash, configuration snapshot ID, ROI/segmentation versions, users, UTC timestamps, QC status and overrides. | M | H | P11 11.10(b); GLP 58.185 |
-| URS-081 | All records shall be exportable in human-readable and machine-readable form (PDF, CSV, JSON; label maps in an open image format). | M | H | P11 11.10(b); O17 ¶79, ¶113 |
-| URS-082 | Reports shall be regenerable from stored inputs and configuration with identical numeric results (or within documented tolerance). | M | H | O17 ¶86 |
-| URS-083 | CSV exports shall be locale-independent (dot decimal, UTF-8), state units in headers and preserve full numeric precision. | M | M | SCI |
+| URS-080 | Reports (PDF and CSV) shall include provenance: scan hashes, voxel spacing and acquisition parameters, software version, model hash, configuration, ROI/segmentation versions, corrections, measurement support, users and UTC times, QC status and overrides. | M | H | P11 11.10(b); GLP 58.185 |
+| URS-081 | Records shall be exportable in human-readable and machine-readable form (PDF, CSV, JSON; label maps in an open format). | M | H | P11 11.10(b); O17 ¶79, ¶113 |
+| URS-082 | Reports shall be regenerable from stored inputs with identical numeric results (or within documented tolerance). | M | H | O17 ¶86 |
+| URS-083 | CSV exports shall be locale-independent, state units, preserve precision and neutralise spreadsheet formula injection. | M | M | SCI |
 
-### 3.10 Review and electronic sign-off
+### 4.10 Review and electronic sign-off
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-090 | The system shall implement a review workflow (draft → in review → approved / rejected) enforcing permitted state transitions. | M | H | P11 11.10(f) |
-| URS-091 | Sign-off shall display the signer's printed name, date/time (UTC) and meaning (e.g., authored, reviewed, approved) on screen and in the report. | M | H | P11 11.50; O17 ¶102 |
-| URS-092 | Signing shall require re-entry of the user's password (or equivalent re-authentication) at the time of signing. | M | H | P11 11.200; O17 ¶105 |
-| URS-093 | The signature shall be cryptographically linked to the hash of the signed record; any later change shall invalidate the signature and require re-review. | M | H | P11 11.70; O17 ¶106 |
+| URS-090 | The application shall implement a review workflow with defined decisions and permitted state transitions. | M | H | P11 11.10(f) |
+| URS-091 | Sign-off shall show the signer's printed name, UTC date/time and meaning on screen and in the report. | M | H | P11 11.50; O17 ¶102 |
+| URS-092 | Signing shall require re-entry of the signer's password; failed attempts shall be audited and count towards account lockout. | M | H | P11 11.200; O17 ¶105 |
+| URS-093 | A signature shall be bound to the SHA-256 of the signed record; a later change shall be shown as not covered by the signature. | M | H | P11 11.70; O17 ¶106 |
 
-### 3.11 Audit trail
+### 4.11 Audit trail
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-100 | The system shall maintain a secure, computer-generated, time-stamped, append-only audit trail of creation, modification, deletion and signing of all data-relevant records, and of security events. | M | H | P11 11.10(e); O17 ¶80 |
-| URS-101 | Audit entries shall capture user, UTC timestamp, action, object, old and new values (or hashes), and reason for change where applicable. | M | H | GLP 58.130(e); O17 ¶80 |
-| URS-102 | Audit entries shall be hash-chained; the system shall provide a verification function that detects insertion, deletion, reordering or modification of entries. | M | H | P11 11.10(a)/(e) |
-| URS-103 | No user role, including admin, shall be able to disable, edit or delete audit trail entries through the application. | M | H | O17 ¶81 |
-| URS-104 | The audit trail shall be reviewable and exportable in human-readable form, filterable by study, user, object and date. | M | H | P11 11.10(e); O17 ¶82 |
-| URS-105 | Audit trail records shall be retained at least as long as the records they describe. | M | H | P11 11.10(e) |
-| URS-106 | Timestamps shall come from a synchronized server time source, stored in UTC. | M | H | P11 11.10(e) |
+| URS-100 | The application shall maintain a computer-generated, time-stamped, append-only audit trail of creation, modification, deletion and signing of data-relevant records and of security events. | M | H | P11 11.10(e); O17 ¶80 |
+| URS-101 | Audit entries shall capture user, UTC timestamp, action, object, old and new values (or hashes) and reason where applicable. | M | H | GLP 58.130(e); O17 ¶80 |
+| URS-102 | Audit entries shall be hash-chained; a verification function shall detect insertion, deletion, reordering or modification, and an exportable anchor shall make truncation or wholesale rewriting detectable. | M | H | P11 11.10(a)/(e) |
+| URS-103 | No user role, including admin, shall be able to disable, edit or delete audit entries through the application. | M | H | O17 ¶81 |
+| URS-104 | The audit trail shall be reviewable in the application (filterable) and exportable in human-readable form. | M | H | P11 11.10(e); O17 ¶82 |
+| URS-105 | Audit records shall be retained at least as long as the records they describe, including after data deletion. | M | H | P11 11.10(e) |
+| URS-106 | Timestamps shall be recorded in UTC from the workstation clock; the user organisation shall keep workstation clocks synchronised (IQ). | M | H | P11 11.10(e) |
 
-### 3.12 Configuration and version control
+### 4.12 Configuration, models and background jobs
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-110 | Each analysis run shall store an immutable configuration snapshot (all parameters affecting results) with a content hash. | M | H | O17 ¶86 |
-| URS-111 | Model artifacts shall be version-locked and identified by SHA-256; the system shall refuse to run a model whose hash does not match the release manifest. | M | H | O17 ¶95 |
-| URS-112 | Only released (approved) model versions shall be selectable for production analyses; experimental models shall be clearly segregated and labelled. | M | H | O17 ¶95 |
-| URS-113 | Re-running an analysis with identical inputs, configuration, software and model versions shall reproduce results (bitwise or within a documented tolerance). | M | H | SCI |
+| URS-110 | Each analysis run shall store an immutable configuration snapshot with a content hash, linked to its results. | M | H | O17 ¶86 |
+| URS-111 | Model artifacts shall be identified by SHA-256 and verified before use; unsafe serialisation formats shall be refused. | M | H | O17 ¶95 |
+| URS-112 | Only released (approved) model versions shall be selectable for study analyses; experimental models shall be segregated and labelled. | M | H | O17 ¶95 |
+| URS-113 | Re-running an analysis with identical inputs, configuration, software and model versions shall reproduce results (bitwise on CPU or within documented tolerance). | M | H | SCI |
+| URS-114 | Long-running operations shall run in the background without blocking the user interface, be cancellable, record their outcome, and never leave partial records after cancellation or failure. | M | H | SCI; O17 ¶86 |
 
-### 3.13 Data management
+### 4.13 Data management
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-120 | The system shall support scheduled backups of database, original files, derived data, models and audit trail. | M | H | O17 ¶73 |
-| URS-121 | Restore shall be verifiable: restored data shall be checked against stored hashes and the audit-chain verification. | M | H | O17 ¶74 |
-| URS-122 | Retention periods shall be configurable per tenant/study; records shall not be deletable before expiry. | M | H | P11 11.10(c); GLP 58.195 |
-| URS-123 | Deletion after retention expiry shall require authorized approval, shall be audit-trailed, and shall be blocked under legal hold. | M | H | O17 ¶118 |
-| URS-124 | A complete study archive package (originals, derived data, configuration, audit trail, reports, manifest with hashes) shall be exportable in open formats. | M | H | O17 ¶113–114 |
+| URS-120 | The application shall support a complete backup of a project (database, scan stores, label revisions, reports, audit trail) with a hash manifest. | M | H | O17 ¶73 |
+| URS-121 | Restore shall be verifiable against stored hashes and the audit-chain verification. | M | H | O17 ¶74 |
+| URS-122 | Retention periods shall be configurable per project/study; records shall not be deletable before expiry. | M | H | P11 11.10(c); GLP 58.195 |
+| URS-123 | Deletion shall be restricted to authorised users, require a reason, be audit-trailed, and (after retention expiry) require a second approval and respect legal hold. | M | H | O17 ¶118 |
+| URS-124 | A complete study archive package (data, configuration, audit trail, reports, manifest with hashes) shall be exportable in open formats. | M | H | O17 ¶113–114 |
+| URS-125 | The project store shall detect a corrupted or truncated database and refuse to use it, shall keep the audit chain intact across reopening, and shall detect concurrent opening of a project by a second application instance. | M | H | O17 ¶73; SCI |
 
-### 3.14 Security and operations
+### 4.14 Security
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
-| URS-130 | Data in transit shall be encrypted (TLS); data at rest should be encrypted where the deployment supports it. | M | H | O17 ¶91 |
-| URS-131 | Third-party dependencies shall be pinned and monitored for known vulnerabilities. | M | M | O17 ¶95 |
-| URS-132 | Security-relevant events (logins, failed logins, permission changes, exports) shall be logged. | M | M | O17 ¶93 |
+| URS-131 | Third-party dependencies shall be pinned and monitored for known vulnerabilities; bundled components and licences shall be listed. | M | M | O17 ¶95 |
+| URS-132 | Security-relevant events (sign-in, failed sign-in, failed re-authentication, permission denials, user changes, exports) shall be logged in the audit trail. | M | M | O17 ¶93 |
+| URS-133 | Untrusted input files (scans, archives, model files) shall be parsed without code execution, unbounded memory use, path traversal or following of links outside the input. | M | H | SCI; security review G2 |
 
-### 3.15 Documentation
+### 4.15 Documentation
 | ID | Requirement | Pri | Crit | Source |
 |---|---|---|---|---|
 | URS-140 | User documentation shall describe each function, its limitations and the meaning of each output. | M | M | P11 11.10(k) |
-| URS-141 | Each release shall have release notes listing changes, known issues and the verification evidence reference. | M | M | O17 ¶84 |
+| URS-141 | Each release shall have release notes listing changes, known issues and the verification-evidence reference. | M | M | O17 ¶84 |
 
-## 4. Open questions
-1. Supported scanner/vendor formats (DICOM, vendor TIFF stacks, NIfTI) — Scientific Lead.
-2. Numeric tolerance definitions for URS-113 on GPU inference — Engineering.
-3. Defect-specific metric definitions and minimum reporting set — Scientific Lead (to align with BX and ASTM F2721).
+### 4.16 Measurement support and abstention (new)
+| ID | Requirement | Pri | Crit | Source |
+|---|---|---|---|---|
+| URS-150 | Before reporting, the application shall classify each endpoint as *supported*, *supported with conditions* or *not supported* for the material, scan and study design, using a documented, versioned policy (MEASUREMENT_SUPPORT.md), and record the policy version. | M | H | SCI; ADR-G2 |
+| URS-151 | Endpoints that are not supported shall be withheld from results, exports and reports and replaced by "not measured" with the reason; raw values shall remain in the audit record only. The decision shall be carried over when a segmentation is corrected. | M | H | SCI; REV STAT-01 |
+| URS-152 | Conditional endpoints shall carry their conditions in the results view, the CSV and the PDF; the PDF shall state, per specimen and endpoint, status, reason/conditions and advisor version. | M | H | REV QA-REG-01 |
+| URS-153 | When the graft material is unknown or unspecified, endpoints that depend on separating graft from new bone shall be not supported unless measured reference samples of sufficient size are supplied. | M | H | SCI |
+
+### 4.17 Validation records (new)
+| ID | Requirement | Pri | Crit | Source |
+|---|---|---|---|---|
+| URS-160 | A learned segmentation model shall support graft/new-bone endpoints only when a qualifying, material-specific validation record exists for that exact model version (SHA-256), material and voxel-size range; synthetic evidence shall never qualify. The pipeline shall record the record (or the reason none qualified) with the result. | M | H | ADR-G2-04; SCI |
+| URS-161 | Validation records shall be protected against undetected change (integrity hash, audit trail, approval under change control). | M | H | O17 ¶44; SCI |
+
+### 4.18 Material characterisation (new)
+| ID | Requirement | Pri | Crit | Source |
+|---|---|---|---|---|
+| URS-170 | The application shall derive a measured material profile from a material-only scan or a day-0 scan (relative intensity distribution, structure thickness, sample size, scan hash, voxel size, acquisition fields, method version), and refuse characterisations based on too few voxels. | S | H | SCI |
+| URS-171 | A characterisation shall be reused only for compatible acquisition protocols (voxel size, energy, filter, scanner) and shall be attachable to a study in the application with an audit record. | S | H | SCI |
+
+### 4.19 Longitudinal QC (new)
+| ID | Requirement | Pri | Crit | Source |
+|---|---|---|---|---|
+| URS-180 | Registration between time points shall be quality-controlled by an estimate of residual displacement; failed registration shall be flagged and never used silently. The QC shall be available in the application for paired time points. | S | H | SCI; REV IMG-07 |
+| URS-181 | Day-0 graft propagation shall support graft endpoints only when registration QC passed and the computed granule displacement and untracked fraction are within tolerance; missing inputs shall result in "not supported". | M | H | SCI; REV IMG-04 |
+| URS-182 | ROI propagation between time points shall use the registration and report its quality. | S | M | SCI |
+
+### 4.20 Licence verification (new)
+| ID | Requirement | Pri | Crit | Source |
+|---|---|---|---|---|
+| URS-190 | Licence files shall be verified offline by signature; tampered, malformed, expired, wrongly signed or machine-mismatched licences shall be treated as invalid with a stated reason. | M | M | Commercial |
+| URS-191 | Without a valid licence the application shall run in evaluation mode with all functions available, and every report shall carry an evaluation watermark; test licences shall be labelled as such. | M | M | Commercial; RUO positioning |
+| URS-192 | Test signing keys shall be accepted only when explicitly enabled; no private production key shall be distributed; an invalid licence file shall not be installed. | M | M | Security |
+
+### 4.21 Workflow timing (opt-in) (new)
+| ID | Requirement | Pri | Crit | Source |
+|---|---|---|---|---|
+| URS-200 | Workflow timing shall be off by default and enabled only by an explicit per-project user action; enabling, disabling and exporting shall be audited. | M | M | Privacy; O17 ¶93 |
+| URS-201 | Timing data shall be stored only in the project database and never transmitted. | M | M | Privacy |
+| URS-202 | Timing shall record scan open/close, first edit, edits (tool, voxels changed per class), sign-offs and active time excluding idle gaps, with a per-scan CSV export. | S | L | SCI (user studies) |
+
+### 4.22 Offline operation (new)
+| ID | Requirement | Pri | Crit | Source |
+|---|---|---|---|---|
+| URS-210 | All functions (import, QC, analysis, editing, review, reports, licence verification, self-test) shall work without network access. | M | H | Product; data protection |
+| URS-211 | The application shall make no network connections and send no telemetry. | M | H | Product; data protection |
+
+## 5. Retired and changed requirements
+
+### 5.1 Retired (not applicable to the desktop baseline; IDs not reused)
+| ID | Former requirement (v0.1) | Reason | Disposition |
+|---|---|---|---|
+| URS-012 | Data of one organisation (tenant) inaccessible to another through any UI, API or export path. | Multi-tenant hosting only. A desktop project holds one organisation; separation between projects is by folder and OS permissions (URS-017). | Move to a hosted-deployment annex if a hosted service is offered. Store-level organisation isolation remains implemented and tested for the optional API (`test_rbac_and_tenant_isolation`). |
+| URS-130 | Data in transit encrypted (TLS); at rest where supported. | No network transport in the desktop. At-rest encryption is an OS/disk control of the user organisation (IQ-06). | Hosted-deployment annex. |
+
+### 5.2 Revised in this version (ID kept)
+URS-001 (desktop surfaces), URS-010 (per-project accounts, user administration), URS-011 (every function, not every API route), URS-013 (idle lock instead of web session timeout), URS-015 (admin separation reworded), URS-020/021 (project store), URS-023 (explicit spacing confirmation at import), URS-025 (flag second scan), URS-026 (visible rejections), URS-030 (deterministic vs heuristic), URS-032 ("unsuitable" verdict), URS-042 (confirmation before acceptance), URS-050 (uncertain label), URS-052 (all versions), URS-071 (reference verification added), URS-072 (results completeness), URS-076 (re-authentication added), URS-080 (acquisition and measurement support added), URS-083 (formula injection added), URS-092 (lockout added), URS-093 (supersession instead of invalidation), URS-102 (anchor export), URS-104 (in-application viewer), URS-106 (workstation clock), URS-111 (unsafe formats), URS-120 (whole project), URS-123 (dual approval moved here), URS-131 (component licences), URS-132 (event list).
+
+### 5.3 New in this version
+URS-017, URS-056, URS-114, URS-125, URS-133, URS-150–153 (measurement support / abstention), URS-160–161 (validation records), URS-170–171 (material characterisation), URS-180–182 (longitudinal QC), URS-190–192 (licence verification), URS-200–202 (workflow timing, opt-in), URS-210–211 (offline operation).
+
+Counts: 88 active requirements (64 retained or revised from the 66 of v0.1, 24 new), 2 retired.
+
+## 6. Open questions
+1. User administration in the desktop (URS-010, URS-014, URS-016): add an in-application user manager, or document a supported administration tool. Engineering + Quality.
+2. Whether project folders on network shares are a supported configuration (URS-125 concurrent opening; RSK-32). Engineering.
+3. Numeric tolerance definitions for URS-113 with ONNX/GPU inference. Engineering.
+4. Defect-specific metric definitions and minimum reporting set, including acquisition parameters in reports (CRO-06). Scientific Lead.
+5. Whether the hosted/API deployment will be offered; if so, write the hosted-deployment annex (retired URS-012, URS-130). Product.

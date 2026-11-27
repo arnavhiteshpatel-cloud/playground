@@ -93,12 +93,10 @@ def segment(vol: Volume, roi_mask: np.ndarray, cfg: dict, progress=lambda f, m: 
         return lab, full, info
     if method.startswith("onnx:"):
         from .ml.runtime import OnnxSegmenter
-        from .ml.train import Case
+        from .ml.core import Case
         name = method[5:]
         seg = OnnxSegmenter(name, threads=int(cfg.get("threads", 4)))   # registry-hash verified
-        from .ml.train import MODEL_DIR
-        import json as _json
-        reg = _json.loads((MODEL_DIR / "registry.json").read_text()).get(name, {})
+        reg = seg.reg
         info.update({"model_name": name, "runtime": "onnxruntime", "onnx_sha256": reg.get("onnx_sha256"),
                      "model_sha256": reg.get("sha256"), "model_provenance": reg.get("provenance"),
                      "licence_tag": reg.get("licence_tag")})

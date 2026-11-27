@@ -23,57 +23,15 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+from .core import MODEL_DIR, MODEL_NAME_RE, Case, _gauss_window, build_input, normalize_image  # noqa: F401
 from .unet import UNet3D, combined_loss, n_params
 
-import os as _os
-MODEL_DIR = Path(_os.environ["OQ_MODEL_DIR"]) if _os.environ.get("OQ_MODEL_DIR") else Path(__file__).resolve().parents[2] / "models"
-
-
-@dataclass
-class Case:
-    case_id: str
-    image: np.ndarray          # float32 (z,y,x), raw grey
-    labels: np.ndarray | None  # uint8, 255 = ignore
-    roi: np.ndarray | None
-    spacing: tuple = (40.0, 40.0, 40.0)
-    # Safe defaults (cycle-1 review IP): a case is NOT commercial-eligible unless its licence is stated explicitly
-    provenance: str = "unspecified"
-    commercial_use: str = "unclear"
-    meta: dict = field(default_factory=dict)
 
 
 def seed_everything(seed):
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
-
-
-def normalize_image(img: np.ndarray, roi: np.ndarray | None = None, mode="percentile") -> np.ndarray:
-    """Robust per-volume normalisation (cross-scanner harmonisation step)."""
-    x = img.astype(np.float32)
-    s = x[:: max(1, x.shape[0] // 32)]
-    if mode == "percentile":
-        lo, hi = np.percentile(s, [1, 99.8])
-    elif mode == "zscore":
-        m, sd = float(s.mean()), float(s.std()) + 1e-6
-        return (x - m) / sd
-    else:
-        raise ValueError(mode)
-    return (x - lo) / max(hi - lo, 1e-6)
-
-
-def build_input(case: Case, cfg: dict) -> np.ndarray:
-    chans = [normalize_image(case.image, mode=cfg.get("norm", "percentile"))]
-    if cfg.get("roi_channel", False):
-        r = case.roi if case.roi is not None else np.zeros(case.image.shape, bool)
-        chans.append(r.astype(np.float32))
-    if cfg.get("roi_distance_channel", False):
-        from scipy import ndimage as ndi
-        r = case.roi if case.roi is not None else np.zeros(case.image.shape, bool)
-        d_in = ndi.distance_transform_edt(r, sampling=case.spacing)
-        d_out = ndi.distance_transform_edt(~r, sampling=case.spacing)
-        chans.append(np.tanh((d_in - d_out) / 500.0).astype(np.float32))
-    return np.stack(chans).astype(np.float32)
 
 
 # ----------------------------------------------------------------------------- augmentation
@@ -275,7 +233,6 @@ def _plain(o):
     return json.loads(json.dumps(o, default=lambda x: x.item() if hasattr(x, "item") else str(x)))
 
 
-MODEL_NAME_RE = r"^[A-Za-z0-9_\-]{1,64}$"
 
 
 def load_model(name, verify_registry: bool = True) -> tuple[UNet3D, dict]:
@@ -309,12 +266,6 @@ def verify_model_lock(name, expected_sha256) -> bool:
 
 
 # ----------------------------------------------------------------------------- inference
-def _gauss_window(ps, sigma_scale=0.125):
-    g = [np.exp(-0.5 * ((np.arange(p) - (p - 1) / 2) / (p * sigma_scale)) ** 2) for p in ps]
-    w = g[0][:, None, None] * g[1][None, :, None] * g[2][None, None, :]
-    return (w / w.max()).astype(np.float32) + 1e-3
-
-
 @torch.no_grad()
 def predict_proba(model, case: Case, cfg: dict, tta=False, patch=None, overlap=0.5,
                   mc_dropout: int = 0) -> np.ndarray:

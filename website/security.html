@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security and data protection · OsteoQuant</title>
+<meta name="description" content="Local-first by design: scans, results and the audit trail stay in a project folder on your computer; no telemetry and no network connections.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="notice" role="note">
+  <div class="wrap">
+    <span class="notice-tag">Status</span>
+    <span><strong>Research product</strong> &mdash; not validated on real graft materials; not a medical device; no GLP/Part&nbsp;11 compliance claimed. <a href="validation.html">What has been shown so far</a></span>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/mark-128.png" alt="" width="30" height="30"><span>OsteoQuant</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="science.html">Science</a></li>
+        <li><a href="validation.html">Validation status</a></li>
+        <li><a href="services.html">Services &amp; pricing</a></li>
+        <li><a href="security.html" aria-current="page">Security</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="page-head">
+<div class="wrap">
+<p class="kicker">Security &amp; data protection</p>
+<h1>Your scans stay on your computer</h1>
+<p class="lede">OsteoQuant Desktop is local-first. Scans, segmentations, results, reports and the audit trail live in a project folder you choose. The application sends no telemetry, checks for no updates and makes no network connections. Licences are verified offline.</p>
+<ul class="toc">
+<li><a href="#where">Where data lives</a></li>
+<li><a href="#network">Network</a></li>
+<li><a href="#integrity">Integrity</a></li>
+<li><a href="#access">Access control</a></li>
+<li><a href="#reviews">Security reviews</a></li>
+<li><a href="#site">This website</a></li>
+</ul>
+</div>
+</section>
+<section class="section" id="where">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Where data lives</p>
+<h2>Everything is a file you control</h2>
+</div>
+<div class="table-wrap">
+<table class="data min-640 stack">
+<thead><tr><th>What</th><th>Where</th><th>Contents</th></tr></thead>
+<tbody>
+<tr><th>Project folder</th><td data-label="Where">A folder you choose, e.g. on a local or backed-up drive</td><td data-label="Contents"><code>osteoquant-project.json</code> (marker), <code>osteoquant.db</code> (SQLite: users, studies, scans, results, reviews, audit trail) and <code>data/</code> (chunked scan stores, label revisions, reports)</td></tr>
+<tr><th>Application settings</th><td data-label="Where">Per-user settings store of the operating system</td><td data-label="Contents">Recent projects and theme</td></tr>
+<tr><th>Licence and error log</th><td data-label="Where">Linux <code>~/.config/OsteoQuant</code>; Windows <code>%APPDATA%\OsteoQuant</code>; macOS <code>~/Library/Application Support/OsteoQuant</code></td><td data-label="Contents"><code>licence.oqlic</code> if installed; <code>error.log</code> after an unexpected error</td></tr>
+<tr><th>Workflow timing (optional)</th><td data-label="Where">The project database only</td><td data-label="Contents">Off by default. If switched on per project: scan opens, edits, sign-offs and active time, for timed user studies. Never transmitted</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout mt24">
+<p>The application does not encrypt project folders. Use your operating system’s disk encryption, keep projects on access-controlled drives and include them in your backups. Backup and restore steps: <a href="../docs/user/DATA_PROTECTION.md"><code>docs/user/DATA_PROTECTION.md</code></a>.</p>
+</div>
+</div>
+</section>
+<section class="section alt" id="network">
+<div class="wrap">
+<div class="split even">
+<div>
+<p class="kicker">Network</p>
+<h2>What leaves the computer</h2>
+<ul class="checklist no">
+<li>No telemetry, crash reporting or usage analytics.</li>
+<li>No update checks and no licence server: licence files carry an Ed25519 signature checked against a public key built into the application.</li>
+<li>No cloud processing: analysis runs in the same process as the user interface.</li>
+</ul>
+<p>Data leave the computer only when you export them (CSV, PDF, screenshots) or copy the project folder.</p>
+</div>
+<div>
+<p class="kicker">Optional web prototype</p>
+<h2>The local server, if you use it</h2>
+<p>The earlier browser-based prototype (<code>osteoquant serve</code>) is kept as an optional automation interface. It binds to 127.0.0.1 by default and prints a warning if bound to another interface. It is not needed for the desktop application.</p>
+<p class="small muted">The security review below covers its upload handling; open low-severity items relate mainly to it.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="integrity">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Integrity</p>
+<h2>Changes are recorded, alterations are detectable</h2>
+</div>
+<div class="grid c3">
+<article class="card">
+<h3>Hash-chained audit trail</h3>
+<p>Rows are only inserted; database triggers reject updates and deletes. Each row’s SHA-256 hash covers the previous row’s hash. <em>Verify chain</em> finds the first altered event. Record the head hash elsewhere so that truncation is also detectable.</p>
+</article>
+<article class="card">
+<h3>Provenance of inputs</h3>
+<p>Each imported scan is hashed (SHA-256) and duplicates are detected. Chunked scan stores are checked against their recorded hash, so missing or modified chunks are reported instead of silently read as empty.</p>
+</article>
+<article class="card">
+<h3>Revisions, not overwrites</h3>
+<p>Corrections create a new segmentation revision with the user, reason and per-class voxel changes. Signatures record their meaning and the hash of the signed labels.</p>
+</article>
+</div>
+</div>
+</section>
+<section class="section alt" id="access">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="kicker">Access control</p>
+<h2>Per-project users and roles</h2>
+<p>Each project has its own users. The audit trail attributes every action to the signed-in user.</p>
+</div>
+<dl class="facts card mb0">
+<dt>Roles</dt><dd>Administrator, analyst, reviewer, viewer. Authors cannot approve their own segmentations.</dd>
+<dt>Passwords</dt><dd>At least 10 characters with an upper-case letter and a digit; stored as salted scrypt hashes.</dd>
+<dt>Lockout</dt><dd>Five failed sign-in attempts lock the account for 15 minutes. Signatures require password re-entry; failed re-entries are recorded in the audit trail.</dd>
+<dt>Blinding</dt><dd>Blinded review mode hides group names, animal IDs and file names for every role; blinded studies also hide allocation from non-administrators.</dd>
+</dl>
+</div>
+</div>
+</section>
+<section class="section" id="reviews">
+<div class="wrap">
+<div class="section-head">
+<p class="kicker">Security reviews</p>
+<h2>Findings are published with their status</h2>
+<p>The Generation-2 review combined manual code review, benign local proofs of concept, a mutation fuzzer over every file reader, static analysis and a dependency audit. Each fix has a regression test.</p>
+</div>
+<div class="table-wrap">
+<table class="data min-640 stack">
+<thead><tr><th>Severity</th><th>Example finding</th><th>Status</th></tr></thead>
+<tbody>
+<tr><th>Critical (conditional)</th><td data-label="Example finding">Code execution through a pickle codec in an uploaded Zarr store, with certain library versions</td><td data-label="Status"><span class="st st-ok">Fixed</span> codec allow-list</td></tr>
+<tr><th>Medium</th><td data-label="Example finding">Memory exhaustion from header-declared dimensions; password guessing through signature re-authentication; zip bombs made of many small members; unverified Zarr chunks</td><td data-label="Status"><span class="st st-ok">Fixed</span></td></tr>
+<tr><th>Low</th><td data-label="Example finding">Seven further items (symbolic links, OME-TIFF external references, error messages, permission checks and others)</td><td data-label="Status"><span class="st st-ok">Fixed</span></td></tr>
+<tr><th>Low</th><td data-label="Example finding">ONNX loader time-of-check/time-of-use; dependency version floors; registry locking on Windows</td><td data-label="Status"><span class="st st-cond">Assigned</span></td></tr>
+<tr><th>Low</th><td data-label="Example finding">Audit-verify endpoint reveals event count across tenants; synchronous upload parsing; scrypt cost below current OWASP recommendation</td><td data-label="Status"><span class="st st-no">Open</span></td></tr>
+</tbody>
+</table>
+</div>
+<p class="src-list mt24">Full report: <a href="../docs/security/SECURITY_REVIEW_GEN2.md"><code>docs/security/SECURITY_REVIEW_GEN2.md</code></a> (20 findings, review date 27 November 2026). Software bill of materials: <a href="../docs/security/SBOM.csv"><code>docs/security/SBOM.csv</code></a>. Desktop builds are not yet code-signed; verify archives by checksum before running them.</p>
+</div>
+</section>
+<section class="section alt" id="site">
+<div class="wrap">
+<div class="split even">
+<div>
+<p class="kicker">This website</p>
+<h2>No cookies, no trackers</h2>
+<p>These pages set no cookies, run no analytics and load no fonts, scripts or images from other servers. The only script toggles the menu on small screens. The contact form is a placeholder and sends nothing.</p>
+</div>
+<div>
+<p class="kicker">Pilot data</p>
+<h2>Before any scan changes hands</h2>
+<p>Pilots run under a written data-processing agreement. By default your scans are not used to train models; any adaptation to your material needs your written opt-in, and adapted weights are kept for you alone.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><img src="assets/img/mark-128.png" alt="" width="28" height="28"><span>OsteoQuant</span></div>
+        <p class="foot-statement">Research product &mdash; not validated on real graft materials; not a medical device; no GLP/Part&nbsp;11 compliance claimed.</p>
+        <p class="mb0">Offline micro-CT analysis for preclinical bone-graft studies.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="product.html">Workstation</a></li>
+          <li><a href="science.html">Science &amp; evidence</a></li>
+          <li><a href="validation.html">Validation status</a></li>
+          <li><a href="../docs/user/QUICK_START.md">Documentation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Working with us</h4>
+        <ul>
+          <li><a href="services.html">Services &amp; pricing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Notices</h4>
+        <ul>
+          <li><a href="security.html">Security &amp; data protection</a></li>
+          <li><a href="legal.html">Legal &amp; notices</a></li>
+          <li><a href="legal.html#attribution">Data attribution</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 OsteoQuant. Application screenshots show synthetic phantom data.</span>
+      <span>This site sets no cookies and loads nothing from other servers.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

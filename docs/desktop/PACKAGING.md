@@ -7,7 +7,9 @@ Nothing in the build needs a network connection at run time.
 |---|---|
 | `packaging/osteoquant_desktop.spec` | PyInstaller spec (two executables sharing one runtime folder; macOS `.app` bundle) |
 | `packaging/launcher.py` | entry script (`osteoquant.desktop.app.main`) |
-| `packaging/build.py` | build, add third-party licence texts, run the packaged self-test, write `build-info.json`, archive |
+| `packaging/build.py` | build, write licence notices, run the licence check, run the packaged self-test, write `build-info.json`, archive |
+| `packaging/check_bundle_licences.py` | lists every shared library; fails on GPL-only or unreviewed Qt modules and missing notices; `--ldd` lists libraries expected from the target OS |
+| `packaging/licenses/` | LGPL-3.0 and GPL-3.0 texts shipped in every build |
 | `packaging/make_icons.py` | renders `packaging/icons/osteoquant.{png,ico,icns}` and the in-app window icon |
 | `packaging/macos/entitlements.plist` | hardened-runtime exceptions needed by the embedded Python (for signing) |
 | `.github/workflows/desktop-release.yml` | CI matrix: Windows x64, macOS 14 arm64, Ubuntu 22.04 x64; builds, tests, uploads artifacts; never publishes |
@@ -24,8 +26,9 @@ Output folder `packaging/dist/OsteoQuant/`:
 ```
 OsteoQuant                       windowed application (OsteoQuant.exe on Windows)
 osteoquant-desktop-console       same program with a console: --selftest, --version, support
-THIRD_PARTY_LICENSES/            licence texts + INDEX.json of bundled distributions
-_internal/                       Python runtime, Qt, VTK, NumPy/SciPy, ...
+THIRD_PARTY_NOTICES.txt         notices: Qt/PySide6 LGPL statement and relinking instructions, component list
+licenses/                        LGPL-3.0.txt, GPL-3.0.txt, licence files of bundled distributions, INDEX.json
+_internal/                       Python runtime, Qt, VTK, NumPy/SciPy, ... (shared libraries, replaceable)
 ```
 
 On macOS PyInstaller additionally produces `packaging/dist/OsteoQuant.app`.
@@ -50,15 +53,79 @@ all 8 steps pass. Users can run the same check on an installed copy.
 
 ## Results on this machine (Linux x86_64, Python 3.13, PySide6 6.12, VTK 9.7.2)
 
-| Build | Folder size | Archive (`.tar.gz`) | Packaged self-test |
-|---|---|---|---|
-| default (no PyTorch, no SimpleITK, with ONNX Runtime) | SIZE_DEFAULT | ARCHIVE_DEFAULT | PASS (8/8 steps, frozen) |
-| with PyTorch and SimpleITK | SIZE_TORCH | not archived | not run |
+| Build | Folder size | Archive (`.tar.gz`) | Licence check | Packaged self-test |
+|---|---|---|---|---|
+| first build (all default Qt plugins, SimpleITK, server libs) | 1,184 MiB | 388 MiB | not yet written | PASS |
+| before licence fixes (SimpleITK and uvloop excluded) | 909 MiB | 333 MiB | **FAIL**: 8 violations (Qt Virtual Keyboard libs + plugin) | PASS |
+| **current default** (unneeded Qt plugins removed before dependency analysis) | **869 MiB** | **318 MiB** | **PASS** | **PASS** (8/8 steps, frozen) |
+| with PyTorch and SimpleITK (`OQ_BUNDLE_TORCH=1 OQ_BUNDLE_SITK=1`, measured on the first build) | 1.9 GiB | not archived | n/a | not run |
 
-PyTorch alone accounts for TORCH_SIZE of the folder and SimpleITK for SITK_SIZE; neither is used
-by the default desktop workflows (classical segmentation, TXM/DICOM/NIfTI/NRRD/Zarr/TIFF import).
+PyTorch accounts for 680 MiB of the folder and SimpleITK for 260 MiB; neither is used by the
+default desktop workflows (classical segmentation; TXM/DICOM/NIfTI/NRRD/Zarr/TIFF import).
 The self-test was also run from source on a real X server (`xvfb-run`, Qt `xcb` platform) to
 exercise the interactive `QVTKRenderWindowInteractor` 3D backend: PASS.
+
+## Licence compliance of the bundle
+
+Qt and PySide6 are used under the **LGPL-3.0**. Requirements and how the build meets them:
+
+* **Only LGPL Qt modules.** Qt 6 offers some modules only under GPL-3/commercial terms (Virtual
+  Keyboard, Charts, Data Visualization, Graphs, Quick 3D, Network Authorization, HTTP Server,
+  Lottie, Shader Tools, Wayland Compositor, CoAP/MQTT/OPC UA, ...). PyInstaller's PySide6 hook
+  collects every QtGui/QtNetwork plugin type; the `platforminputcontexts` plugins pulled in Qt
+  Virtual Keyboard (and with it Qt Quick/QML). The spec now removes the plugin types the
+  application does not use (`platformthemes`, `platforminputcontexts`, `egldeviceintegrations`,
+  `generic`, `iconengines`, `imageformats`, `tls`, `networkinformation`) *before* dependency
+  analysis, re-adds only the LGPL compose input-context plugin (dead keys) on Linux, and filters
+  any remaining GPL-only Qt file names from the collected binaries and data.
+* **Check in every build.** `packaging/check_bundle_licences.py` fails the build on any GPL-only
+  Qt module, on any Qt module not on the reviewed LGPL allow-list, and on missing notices. The
+  allow-list follows Qt's licensing table; re-check it when upgrading Qt.
+* **Notices shipped.** `THIRD_PARTY_NOTICES.txt` (Qt/PySide6 statement, source locations,
+  relinking instructions, component list with versions and declared licences) and `licenses/`
+  (LGPL-3.0, GPL-3.0 and the licence files of 60+ bundled distributions, `INDEX.json`).
+* **Replaceable libraries (relinking).** The one-folder build keeps Qt and PySide6 as separate
+  shared libraries under `_internal/` (Linux `_internal/PySide6/Qt/lib/libQt6*.so.6`; Windows
+  `_internal\PySide6\Qt6*.dll`; macOS `Contents/Frameworks/...`). A user can replace them with
+  modified ABI-compatible builds of the same version; nothing is statically linked. The About
+  dialog and the notices state that the OsteoQuant licence terms do not restrict modification of
+  the LGPL libraries or reverse engineering for debugging such modifications. A future EULA must
+  keep that carve-out.
+* **No unneeded build-host files.** Only the two application executables are executable files in
+  the folder (no compilers, Qt tools or `libexec` helpers). Dropping the GTK platform theme removed
+  the host GTK/cairo/pango/ATK/ICU stack (183 -> 149 top-level library entries, most of them links
+  to libraries vendored inside the Python wheels). The remaining host libraries are runtime
+  dependencies of Qt's X11/Wayland platform plugins, QtNetwork (GSSAPI) and Python's standard
+  library (OpenSSL, zlib, bz2, lzma, libffi, expat).
+
+Licence-check output of the current build (`packaging/dist/licence-check.txt`; library list
+abridged):
+
+```
+shared libraries: 640 files + 111 symlinks (757 MiB)
+Qt modules: Core, DBus, EglFSDeviceIntegration, Gui, Network, OpenGL, OpenGLWidgets, Pdf, PdfWidgets, Svg,
+            WaylandClient, Widgets, WlShellIntegration, XcbQpa
+libraries expected from the target system (ldd): libEGL.so.1, libGL.so.1, libGLX.so.0, libGLdispatch.so.0,
+            libc.so.6, libdl.so.2, libdrm.so.2, libm.so.6, libpthread.so.0, libresolv.so.2, librt.so.1,
+            libutil.so.1, libwayland-client.so.0, libwayland-cursor.so.0, libwayland-egl.so.1, libxcb.so.1
+LICENCE CHECK PASSED: no GPL-only or unreviewed Qt modules; notices present.
+```
+
+Before the fix the same check reported:
+
+```
+Qt modules: Core, DBus, EglFSDeviceIntegration, EglFsKmsSupport, Gui, Network, OpenGL, OpenGLWidgets, Pdf,
+            PdfWidgets, Qml, QmlMeta, QmlModels, QmlWorkerScript, Quick, Svg, VirtualKeyboard,
+            VirtualKeyboardQml, WaylandClient, Widgets, WlShellIntegration, XcbQpa
+LICENCE CHECK FAILED (8 violations):
+    GPL-only Qt module VirtualKeyboard: _internal/libQt6VirtualKeyboard.so.6 (+ PySide6/Qt/lib copy)
+    GPL-only Qt module VirtualKeyboardQml: _internal/libQt6VirtualKeyboardQml.so.6 (+ PySide6/Qt/lib copy)
+    GPL-only Qt plugin: PySide6/Qt/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.so
+    missing notice file: THIRD_PARTY_NOTICES.txt, licenses/LGPL-3.0.txt, licenses/GPL-3.0.txt
+```
+
+Not verified here: the Windows and macOS bundles (their plugin sets differ, e.g. `styles` on
+Windows, `platforms/darwin` on macOS); the CI build runs the same check on each platform.
 
 ## Models
 

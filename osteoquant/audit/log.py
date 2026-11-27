@@ -59,7 +59,8 @@ class AuditLog:
         user_id = None if user_id is None else str(user_id)
         org_id = None if org_id is None else str(org_id)
         object_id = None if object_id is None else str(object_id)
-        ts = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime()) + f".{int(time.time() * 1e6) % 1000000:06d}Z"
+        t = time.time()   # one clock read: seconds and microseconds must describe the same instant (QA-009)
+        ts = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime(t)) + f".{int(t * 1e6) % 1000000:06d}Z"
         # read-last + insert must be atomic: in-process lock + BEGIN IMMEDIATE (cross-process) (review S-10)
         with self.lock:
             in_tx = self.conn.in_transaction
@@ -106,6 +107,8 @@ class AuditLog:
         return {"seq": r[0], "row_hash": r[1]} if r else {"seq": 0, "row_hash": GENESIS}
 
     def verify_anchor(self, anchor: dict) -> bool:
+        if int(anchor.get("seq", -1)) == 0:   # anchor exported from an empty log (QA-008)
+            return anchor.get("row_hash") == GENESIS
         r = self.conn.execute("SELECT row_hash FROM audit_log WHERE seq=?", (anchor["seq"],)).fetchone()
         return bool(r and r[0] == anchor["row_hash"])
 

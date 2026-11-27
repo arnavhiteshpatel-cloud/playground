@@ -281,9 +281,13 @@ def propagate_roi(reference_img: np.ndarray, reference_roi: np.ndarray, current_
     QC as "manual ROI required".
     """
     from scipy import ndimage as ndi
-    # register reference → current: fixed = current; the fixed-frame mask cannot use the (unknown) current
-    # ROI, so the default central mask is used; healing inside the gap is a small part of the field of view
+    # Two passes (review IMG-13): the fixed-frame (current) ROI is unknown, so pass 1 uses the default central
+    # mask; pass 2 re-registers with the pass-1 ROI (dilated) EXCLUDED, so healing inside the defect does not
+    # drive the rigid fit.
     tx, metric = register(current_img, reference_img, spacing_um, "rigid", mask=None)
+    roi1 = resample(reference_roi.astype(np.uint8), current_img.shape, spacing_um, tx, labels=True) > 0
+    host_mask = ~ndi.binary_dilation(roi1, iterations=exclude_margin_vox)
+    tx, metric = register(current_img, reference_img, spacing_um, "rigid", mask=host_mask)
     roi = resample(reference_roi.astype(np.uint8), current_img.shape, spacing_um, tx, labels=True) > 0
     moved_ref = resample(reference_img, current_img.shape, spacing_um, tx)
     excl = ndi.binary_dilation(roi, iterations=exclude_margin_vox)

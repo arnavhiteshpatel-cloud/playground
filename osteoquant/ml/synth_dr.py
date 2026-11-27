@@ -65,6 +65,9 @@ class DRSampler:
         fr = self.fr[rng.integers(len(self.fr))]
         ps = np.array(c.patch)
         s = float(np.exp(rng.uniform(*np.log(c.scale_range))))
+        # keep the zoom isotropic (review ML-07): if the source crop would exceed the volume in any axis,
+        # increase the scale for all axes instead of clipping one axis
+        s = max(s, float(np.max(ps / np.array(fr.shape[1:]))))
         src = np.maximum(4, np.minimum(np.round(ps / s).astype(int), np.array(fr.shape[1:])))
         o = [int(rng.integers(0, fr.shape[1 + i] - src[i] + 1)) for i in range(3)]
         sl = tuple(slice(o[i], o[i] + src[i]) for i in range(3))
@@ -116,3 +119,14 @@ class DRSampler:
             x = np.rot90(x, k, axes=(1, 2))
             y = np.rot90(y, k, axes=(1, 2))
         return np.ascontiguousarray(x[None].astype(np.float32)), np.ascontiguousarray(y)
+
+
+def describe_sampler(sampler: "DRSampler") -> dict:
+    """Full, hashable description of a sampler for model cards (review ARC-04)."""
+    import hashlib
+    from dataclasses import asdict
+    h = hashlib.sha256()
+    for f in sampler.fr:
+        h.update(np.ascontiguousarray(f).tobytes())
+    return {"name": sampler.name, "config": asdict(sampler.cfg), "n_sources": len(sampler.fr),
+            "sources_sha256": h.hexdigest()}

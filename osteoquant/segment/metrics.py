@@ -19,13 +19,13 @@ def confusion(pred: np.ndarray, truth: np.ndarray, classes, mask=None) -> np.nda
     p = p.ravel()
     t = t.ravel()
     k = len(classes)
-    idx = {c: i for i, c in enumerate(classes)}
-    lut_p = np.full(256, -1, np.int64)
-    lut_t = np.full(256, -1, np.int64)
-    for c, i in idx.items():
-        lut_p[c] = i
-        lut_t[c] = i
-    pi, ti = lut_p[p], lut_t[t]
+    # Explicit per-class mapping (QA-015): a 256-entry LUT crashed on labels > 255 or float maps and
+    # silently mapped negative labels (e.g. -1) onto class 255 through negative indexing.
+    pi = np.full(p.shape, -1, np.int64)
+    ti = np.full(t.shape, -1, np.int64)
+    for i, c in enumerate(classes):
+        pi[p == c] = i
+        ti[t == c] = i
     ok = (pi >= 0) & (ti >= 0)
     return np.bincount(ti[ok] * k + pi[ok], minlength=k * k).reshape(k, k)  # rows truth, cols pred
 

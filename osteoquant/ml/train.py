@@ -226,7 +226,8 @@ def save_model(model, cfg, name, train_cases, hist, seconds, parent: dict | None
           "provenance": prov, "licence_tag": tag, "train_manifest": _plain(manifest), "history": _plain(hist),
           "parent_model": _plain(parent), "sampler_manifest": _plain(sampler_manifest),
           "created": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-          "env": {"torch": str(torch.__version__), "python": platform.python_version(), "numpy": str(np.__version__)},
+          "env": {"torch": str(torch.__version__), "python": platform.python_version(), "numpy": str(np.__version__),
+                  **code_version()},
           "n_params": n_params(model), "train_seconds": round(seconds, 1)}
     p = MODEL_DIR / f"{name}.pt"
     torch.save(ck, p)
@@ -351,3 +352,22 @@ def predict_proba(model, case: Case, cfg: dict, tta=False, patch=None, overlap=0
                 out[(slice(None),) + sl] += acc * w
                 wsum[sl] += w
     return out / wsum[None]
+
+
+def code_version() -> dict:
+    """Git commit (+dirty flag) and a hash of the osteoquant package sources (review ARC-05)."""
+    import subprocess
+    root = Path(__file__).resolve().parents[2]
+    h = hashlib.sha256()
+    for f in sorted((root / "osteoquant").rglob("*.py")):
+        h.update(f.relative_to(root).as_posix().encode())
+        h.update(f.read_bytes())
+    out = {"osteoquant_source_sha256": h.hexdigest()}
+    try:
+        out["git_commit"] = subprocess.run(["git", "-C", str(root), "rev-parse", "HEAD"], capture_output=True,
+                                           text=True, timeout=5).stdout.strip() or None
+        out["git_dirty"] = bool(subprocess.run(["git", "-C", str(root), "status", "--porcelain", "osteoquant"],
+                                               capture_output=True, text=True, timeout=5).stdout.strip())
+    except Exception:
+        out["git_commit"] = None
+    return out

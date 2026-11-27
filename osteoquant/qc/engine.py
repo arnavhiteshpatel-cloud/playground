@@ -42,9 +42,14 @@ def _modes(x):
     from skimage.filters import threshold_otsu
     from ..segment.classical import robust_values
     v = x.ravel()
-    v = robust_values(v[np.isfinite(v)])
-    t = float(threshold_otsu(v))
-    lo, hi = v[v <= t], v[v > t]
+    v = v[np.isfinite(v)]
+    r = robust_values(v)
+    if r.size == 0 or r.min() == r.max():
+        # constant / blank volume (robust_values drops everything): no second mode exists (QA-020)
+        t = float(v.max()) if v.size else 0.0
+        return t, v[v <= t], v[v > t]
+    t = float(threshold_otsu(r))
+    lo, hi = r[r <= t], r[r > t]
     return t, lo, hi
 
 
@@ -177,7 +182,9 @@ def partial_volume_risk(vol: Volume) -> dict:
     d = vol.data
     c = [n // 2 for n in d.shape]
     h = [min(48, n // 2) for n in d.shape]
-    sub = d[c[0] - h[0]:c[0] + h[0], c[1] - h[1]:c[1] + h[1], c[2] - h[2]:c[2] + h[2]].astype(np.float32)
+    h = [max(1, v) for v in h]   # single-slice volumes: keep at least one plane (QA-020)
+    sub = d[max(0, c[0] - h[0]):c[0] + h[0], max(0, c[1] - h[1]):c[1] + h[1],
+            max(0, c[2] - h[2]):c[2] + h[2]].astype(np.float32)
     t, _, _ = _modes(sub)
     m = sub > t
     if m.sum() < 100:
@@ -193,7 +200,6 @@ def high_density_outliers(vol: Volume) -> dict:
     maximum (saturation), or (b) a small (<3% of tissue) top class in 4-class multi-Otsu whose
     mean exceeds 1.5× the next class (a distinct super-dense material)."""
     from skimage.filters import threshold_multiotsu
-    from ..segment.classical import robust_values
     x, _ = _sample(vol)
     d = vol.data
     sat = 0.0
@@ -222,6 +228,13 @@ def histogram(vol: Volume, bins=256) -> dict:
 def run_qc(vol: Volume, extra_metadata: dict | None = None, intended_analysis: str = "defect_fill") -> dict:
     checks = []
     ing = vol.meta.get("ingest", {})
+    n_nonfinite = 0
+    if np.issubdtype(vol.data.dtype, np.floating):
+        bad = ~np.isfinite(vol.data)
+        n_nonfinite = int(bad.sum())
+        if n_nonfinite:   # QA-020: NaN/inf crashed the heuristics; report them and analyse the finite part
+            fill = float(vol.data[~bad].min()) if n_nonfinite < bad.size else 0.0
+            vol = vol.with_data(np.where(bad, fill, vol.data).astype(vol.data.dtype))
     # ---------------- deterministic
     md = metadata_completeness(vol, extra_metadata)
     sp_found = md["present"]["spacing_um"] and "spacing_um" not in md["assumed"]
@@ -236,6 +249,8 @@ def run_qc(vol: Volume, extra_metadata: dict | None = None, intended_analysis: s
     errs = ing.get("errors", [])
     checks.append(_rec("QC-D04", "Ingest errors (corrupt/inconsistent slices)", "fail" if errs else "pass",
                        len(errs), 0, "deterministic", "; ".join(errs[:3])))
+    checks.append(_rec("QC-D10", "Non-finite voxel values (NaN/inf)", "fail" if n_nonfinite else "pass", n_nonfinite, 0,
+                       "deterministic", "NaN/inf voxels invalidate every measurement" if n_nonfinite else ""))
     sat = saturation(vol)
     s_stat = "warn" if sat["frac_at_max"] > 0.001 else "pass"
     checks.append(_rec("QC-D05", "Saturated voxels (at dtype max)", s_stat, sat["frac_at_max"], 0.001, "deterministic",

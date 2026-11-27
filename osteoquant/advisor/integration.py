@@ -42,7 +42,8 @@ def _assess_scan(image: np.ndarray, roi_mask: np.ndarray, spacing, cfg: dict):
               day0=cfg.get("day0"), calibrated=bool(cfg.get("calibrated", False)),
               no_graft=bool(cfg.get("no_graft", False)),
               validated_texture_model=bool(cfg.get("validated_texture_model", False)),
-              new_bone_rel_range=cfg.get("new_bone_rel_range"))
+              new_bone_rel_range=cfg.get("new_bone_rel_range"),
+              energy_keV=float(cfg.get("effective_energy_keV", 40.0)))   # from acquisition metadata (IMG-10)
     rel = to_relative(image[roi_mask], est["soft"], est["host"]) if roi_mask is not None and roi_mask.any() else None
     prior = float(cfg.get("graft_prior", 0.5))
     a = assess_support(material, graft_prior=prior, **kw)
@@ -94,10 +95,12 @@ def _set(d, path, value):
 
 def apply_support(metrics: dict, support: dict) -> dict:
     """Return (reported_metrics, suppressed_list). Unsupported endpoint values become None."""
+    # mineral_volume_mm3 := new bone + residual graft in the ROI (host bone inside the ROI excluded — it is in
+    # mineralized_fraction). Added to the RAW metrics too so raw and reported views share definitions (ARC-07).
+    cv_raw = metrics.get("class_volumes", {})
+    if "new_bone_volume_mm3" in cv_raw and "residual_graft_volume_mm3" in cv_raw:
+        cv_raw["mineral_volume_mm3"] = cv_raw["new_bone_volume_mm3"] + cv_raw["residual_graft_volume_mm3"]
     rep = copy.deepcopy(metrics)
-    cv = rep.get("class_volumes", {})
-    if "new_bone_volume_mm3" in cv and "residual_graft_volume_mm3" in cv:
-        cv["mineral_volume_mm3"] = cv["new_bone_volume_mm3"] + cv["residual_graft_volume_mm3"]
     suppressed = []
     eps = support.get("endpoints", {})
     for ep, paths in ENDPOINT_METRICS.items():

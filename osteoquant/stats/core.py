@@ -136,14 +136,16 @@ def icc(Y, form="2,1") -> dict:
         fl, fu = F / st.f.ppf(1 - a / 2, df1, df2), F * st.f.ppf(1 - a / 2, df2, df1)
         lo, hi = (fl - 1) / (fl + k - 1), (fu - 1) / (fu + k - 1)
     elif form in ("2,1", "2,k"):
+        v1 = (msr - mse) / (msr + (k - 1) * mse + k * (msc - mse) / n)
         if form == "2,1":
-            v = (msr - mse) / (msr + (k - 1) * mse + k * (msc - mse) / n)
+            v = v1
         else:
             v = (msr - mse) / (msr + (msc - mse) / n)
-        # McGraw & Wong CI for absolute agreement
+        # McGraw & Wong / Shrout & Fleiss CI for absolute agreement. The Satterthwaite df uses the
+        # SINGLE-measure ICC(2,1) for both forms; the 2,k bounds are then Spearman-Brown-stepped (QA-013).
         Fj = msc / mse
-        vn = (k - 1) * (n - 1) * (k * v * Fj + n * (1 + (k - 1) * v) - k * v) ** 2
-        vd = (n - 1) * k ** 2 * v ** 2 * Fj ** 2 + (n * (1 + (k - 1) * v) - k * v) ** 2
+        vn = (k - 1) * (n - 1) * (k * v1 * Fj + n * (1 + (k - 1) * v1) - k * v1) ** 2
+        vd = (n - 1) * k ** 2 * v1 ** 2 * Fj ** 2 + (n * (1 + (k - 1) * v1) - k * v1) ** 2
         nu = vn / vd if vd > 0 else n - 1
         Fs = st.f.ppf(1 - a / 2, n - 1, nu)
         Fs2 = st.f.ppf(1 - a / 2, nu, n - 1)
@@ -163,7 +165,10 @@ def icc(Y, form="2,1") -> dict:
             lo, hi = 1 - 1 / fl, 1 - 1 / fu
     else:
         raise ValueError(form)
-    interp = ("poor" if v < 0.5 else "moderate" if v < 0.75 else "good" if v < 0.9 else "excellent")
+    if not np.isfinite(v):   # QA-014: an undefined ICC (e.g. zero variance) must not read as "excellent"
+        interp = "undefined"
+    else:
+        interp = ("poor" if v < 0.5 else "moderate" if v < 0.75 else "good" if v < 0.9 else "excellent")
     return {"icc": float(v), "ci95_low": float(lo), "ci95_high": float(hi), "form": form, "n": n, "k": k,
             "interpretation_koo_li": interp,
             "note": "Koo & Li 2016 interpretation applied to the CI, not just the point estimate"}

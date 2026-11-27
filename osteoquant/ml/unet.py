@@ -89,9 +89,18 @@ def focal_ce(logits, target, gamma=2.0, weight=None, ignore_index=255):
     return (((1 - pt) ** gamma) * ce)[target != ignore_index].mean()
 
 
-def boundary_weight_map(target, n_classes, w=2.0):
-    """Voxels whose 3×3×3 neighbourhood contains another class get weight (1+w)."""
+def boundary_weight_map(target, n_classes, w=2.0, ignore_aware: bool = False):
+    """Voxels whose 3×3×3 neighbourhood contains another class get weight (1+w).
+
+    ``ignore_aware`` (review ML-09): the ignore label 255 is not a class, so a voxel next to ignored voxels is not
+    a boundary. Default False keeps the behaviour that trained the Gen-0 models (needed for consistent seeds)."""
     t = target.float().unsqueeze(1)
+    if ignore_aware:
+        ign = t == 255
+        mx = F.max_pool3d(torch.where(ign, torch.full_like(t, -1.0), t), 3, 1, 1)
+        mn = -F.max_pool3d(-torch.where(ign, torch.full_like(t, 1e4), t), 3, 1, 1)
+        b = (mx != mn) & (mx >= 0) & (mn < 1e4)
+        return 1.0 + w * b.float().squeeze(1)
     mx = F.max_pool3d(t, 3, 1, 1)
     mn = -F.max_pool3d(-t, 3, 1, 1)
     return 1.0 + w * (mx != mn).float().squeeze(1)
@@ -104,7 +113,7 @@ def combined_loss(logits, target, n_classes, cfg):
     gamma = cfg.get("focal_gamma", 0.0)
     if cfg.get("boundary_w", 0.0) > 0:
         ce = F.cross_entropy(logits, target.long(), ignore_index=255, reduction="none")
-        bw = boundary_weight_map(target, n_classes, cfg["boundary_w"])
+        bw = boundary_weight_map(target, n_classes, cfg["boundary_w"], cfg.get("boundary_ignore_aware", False))
         m = target != 255
         loss = loss + cfg.get("ce", 1.0) * (ce * bw)[m].mean()
     else:

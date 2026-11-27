@@ -29,7 +29,7 @@ from scipy import ndimage as ndi
 
 from common import ROOT, save_result
 from real_dog import split, score, bone_prob
-from osteoquant.ml.synth_dr import DRSampler, DRConfig
+from osteoquant.ml.synth_dr import DRSampler, DRConfig, describe_sampler
 from osteoquant.ml.train import Case, train_model, load_model, predict_proba, MODEL_DIR
 
 STAGES = sys.argv[1:] or ["a", "b", "c"]
@@ -86,7 +86,8 @@ if "b" in STAGES:
     sampler = DRSampler(frs, DRConfig(target="mineral"), manifest=manifest)
     name = "unet_dr2_mineral_s0"
     cfg = dict(patch=(48, 48, 48), batch=2, iters=1500, lr=3e-3, base=12, levels=4, threads=4, n_classes=2,
-               log_every=250, seed=0, sampler=sampler.name, extra_provenance=["synthetic"])
+               log_every=250, seed=0, sampler=sampler.name, sampler_description=describe_sampler(sampler),
+               extra_provenance=["synthetic"], loss={"dice": 1.0, "ce": 1.0, "boundary_w": 1.0, "boundary_ignore_aware": True})
     if not (MODEL_DIR / f"{name}.pt").exists():
         train_model([], [], cfg, name, log=lambda s_: print(name, s_, flush=True), sample_fn=sampler)
     m, ck = load_model(name)
@@ -112,7 +113,8 @@ if "c" in STAGES:
                 cases = sub
                 if src:
                     _, ck0 = load_model(src)
-                    cfg = {kk: v for kk, v in ck0["cfg"].items() if kk not in ("sampler", "extra_provenance")}
+                    cfg = {kk: v for kk, v in ck0["cfg"].items() if kk not in ("sampler", "extra_provenance", "sampler_description")}
+                    cfg["loss"] = dict(cfg.get("loss", {}), boundary_ignore_aware=True)   # band edge is not a boundary
                     cfg.update(iters=300, lr=lr, val_every=10 ** 9, log_every=300, seed=seed, batch=2)
                     init_path = str(MODEL_DIR / f"{src}.pt")
                     if cfg.get("n_classes", 4) == 4:     # real bone = mature bone → HOST class (review ML-01)
@@ -120,7 +122,8 @@ if "c" in STAGES:
                                       c.roi, c.spacing, c.provenance, c.commercial_use, c.meta) for c in sub]
                 else:
                     cfg = dict(patch=(48, 48, 48), batch=2, iters=300, lr=lr, base=12, levels=4, threads=4,
-                               n_classes=2, log_every=300, val_every=10 ** 9, seed=seed)
+                               n_classes=2, log_every=300, val_every=10 ** 9, seed=seed,
+                               loss={"dice": 1.0, "ce": 1.0, "boundary_w": 1.0, "boundary_ignore_aware": True})
                     init_path = None
                 if not (MODEL_DIR / f"{name}.pt").exists():
                     train_model(cases, [], cfg, name, log=lambda s_: None, init_from=init_path)

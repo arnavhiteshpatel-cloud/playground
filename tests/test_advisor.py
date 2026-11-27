@@ -181,3 +181,10 @@ def test_support_requires_robustness_to_low_graft_share():
 def test_assessment_records_version():
     from osteoquant.advisor.separability import ADVISOR_VERSION
     assert assess_support("ha", noise_rel=0.05, voxel_um=20).to_dict()["advisor_version"] == ADVISOR_VERSION
+
+
+def test_no_graft_and_radiolucent_keep_architecture_endpoint():
+    a = assess_support(None, noise_rel=0.05, voxel_um=20, no_graft=True)
+    assert a.status("new_bone_thickness") == CONDITIONAL
+    b = assess_support("collagen_sponge", noise_rel=0.05, voxel_um=20)
+    assert b.status("new_bone_thickness") == CONDITIONAL

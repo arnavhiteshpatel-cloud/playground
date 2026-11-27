@@ -109,20 +109,171 @@ class UnsafeInput(ValueError):
     pass
 
 
+class CorruptInput(ValueError):
+    """The input could not be parsed (truncated, malformed or internally inconsistent)."""
+
+
+class VolumeTooLarge(ValueError):
+    """The (selected region of the) volume would exceed the configured in-memory read limit."""
+
+
+def max_read_bytes() -> int:
+    """In-memory read limit in bytes: ``OQ_MAX_READ_BYTES`` if set, else 75 % of physical RAM.
+
+    Header-declared dimensions are checked against this limit BEFORE any allocation, so a tiny
+    file that declares a huge volume fails fast instead of exhausting memory (QA-003)."""
+    env = os.environ.get("OQ_MAX_READ_BYTES")
+    if env:
+        return int(env)
+    try:
+        import psutil
+        return int(psutil.virtual_memory().total * 0.75)
+    except Exception:  # pragma: no cover - psutil is a declared dependency
+        return 32 << 30
+
+
+def _sel_len(n: int, z0, z1, step: int) -> int:
+    return len(range(*slice(z0, z1, step).indices(int(n))))
+
+
+def _check_alloc(shape, dtype, what: str) -> None:
+    n = 1
+    for s in shape:
+        n *= max(int(s), 0)
+    nbytes = n * np.dtype(dtype).itemsize
+    lim = max_read_bytes()
+    if nbytes > lim:
+        raise VolumeTooLarge(f"{what}: region {tuple(int(s) for s in shape)} of {np.dtype(dtype)} needs "
+                             f"{nbytes / 2 ** 30:.2f} GiB, above the read limit of {lim / 2 ** 30:.2f} GiB. "
+                             "Read a sub-range (zrange/step) or raise OQ_MAX_READ_BYTES.")
+
+
+def _selected_shape(shape, zrange, step):
+    z0, z1 = zrange or (0, shape[0])
+    return (_sel_len(shape[0], z0, z1, step),) + tuple(_sel_len(s, 0, s, step) for s in shape[1:])
+
+
+# Zarr codecs/dtypes accepted from untrusted uploads (QA-001: never a pickle/object codec).
+_SAFE_ZARR_CODECS = {
+    "blosc", "zstd", "zlib", "gzip", "bz2", "lzma", "lz4", "delta", "fixedscaleoffset", "quantize",
+    "bitround", "shuffle", "packbits", "bytes", "transpose", "crc32c", "sharding_indexed", "endian",
+}
+_SAFE_ZARR_DTYPES = {"bool", "int8", "int16", "int32", "int64", "uint8", "uint16", "uint32", "uint64",
+                     "float16", "float32", "float64"}
+
+
+def _check_zarr_codec(spec, f: Path):
+    if spec is None:
+        return
+    if isinstance(spec, list):
+        for s in spec:
+            _check_zarr_codec(s, f)
+        return
+    if isinstance(spec, str):
+        name = spec
+    elif isinstance(spec, dict):
+        name = spec.get("id", spec.get("name"))
+        _check_zarr_meta(spec.get("configuration", {}), f)
+    else:
+        raise UnsafeInput(f"Unrecognised Zarr codec specification in {f.name}")
+    base = str(name).lower().removeprefix("numcodecs.")
+    if base not in _SAFE_ZARR_CODECS:
+        raise UnsafeInput(f"Zarr codec {name!r} is not accepted for upload ({f.name})")
+
+
+def _check_zarr_dtype(dt, f: Path):
+    if isinstance(dt, dict):   # v3 extension data types are not accepted
+        raise UnsafeInput(f"Zarr data type {dt!r} is not accepted for upload ({f.name})")
+    try:
+        ok = np.dtype(str(dt)).name in _SAFE_ZARR_DTYPES
+    except TypeError:
+        ok = False
+    if not ok:
+        raise UnsafeInput(f"Zarr data type {dt!r} is not accepted for upload ({f.name})")
+
+
+def _check_zarr_meta(obj, f: Path):
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k in ("compressor", "filters", "codecs", "index_codecs", "object_codec"):
+                _check_zarr_codec(v, f)
+            elif k in ("dtype", "data_type") and not (isinstance(v, list)):
+                _check_zarr_dtype(v, f)
+            elif k in ("dtype", "data_type"):
+                raise UnsafeInput(f"Structured Zarr data types are not accepted for upload ({f.name})")
+            elif k not in ("attributes",):
+                _check_zarr_meta(v, f)
+    elif isinstance(obj, list):
+        for v in obj:
+            _check_zarr_meta(v, f)
+
+
+def _check_ome_references(f: Path):
+    """OME-TIFF may name other files (TiffData/UUID FileName, BinaryOnly MetadataFile) that
+    tifffile then opens; only bare names inside the upload folder are acceptable (QA-002)."""
+    import tifffile
+    import xml.etree.ElementTree as ET
+    with tifffile.TiffFile(f) as tf:
+        xml = tf.ome_metadata if tf.is_ome else None
+    if not xml:
+        return
+    try:
+        root = ET.fromstring(xml)
+    except ET.ParseError as e:
+        raise UnsafeInput(f"Malformed OME-XML in {f.name}: {e}") from e
+    for el in root.iter():
+        for attr in ("FileName", "MetadataFile"):
+            ref = el.attrib.get(attr)
+            if ref is not None and (ref != Path(ref).name or ref in ("", ".", "..") or "\\" in ref
+                                    or ":" in ref):
+                raise UnsafeInput(f"OME-TIFF {f.name} references a file outside the upload: {ref!r}")
+
+
 def check_safe_input(path) -> None:
-    """Reject inputs that can make a reader open OTHER files (detached headers): MetaImage
-    (.mhd ElementDataFile), detached NRRD (.nhdr or 'data file' field). Used for all uploads."""
+    """Reject inputs that can make a reader open OTHER files or run code. Used for all uploads.
+
+    * detached headers: MetaImage (.mhd ElementDataFile), detached NRRD (.nhdr or 'data file');
+    * symbolic links anywhere in an uploaded folder;
+    * OME-TIFF companion-file references outside the upload folder;
+    * Zarr stores whose metadata use codecs/dtypes outside an allow-list (pickle/object codecs
+      execute code during decoding with some zarr/numcodecs versions)."""
     p = Path(path)
-    files = [f for f in p.rglob("*") if f.is_file()] if p.is_dir() else [p]
+    if p.is_symlink():
+        raise UnsafeInput(f"Symbolic links are not accepted for upload: {p.name}")
+    if p.is_dir():
+        entries = list(p.rglob("*"))
+        for e in entries:
+            if e.is_symlink():
+                raise UnsafeInput(f"Symbolic links are not accepted for upload: {e.name}")
+        files = [f for f in entries if f.is_file()]
+    else:
+        files = [p]
     for f in files:
         n = f.name.lower()
         if n.endswith((".mhd", ".nhdr", ".raw", ".mha")):
             raise UnsafeInput(f"Detached-header/raw formats are not accepted for upload: {f.name}")
         if n.endswith(".nrrd"):
             import nrrd
-            hdr = nrrd.read_header(str(f))
+            try:
+                hdr = nrrd.read_header(str(f))
+            except Exception as e:
+                raise CorruptInput(f"Malformed NRRD header in {f.name}: {e}") from e
             if any(k.replace(" ", "").lower() == "datafile" for k in hdr):
                 raise UnsafeInput("NRRD files that reference external data files are not accepted")
+        if n in (".zarray", ".zmetadata", "zarr.json", ".zgroup"):
+            import json
+            try:
+                meta = json.loads(f.read_text())
+            except (ValueError, UnicodeDecodeError) as e:
+                raise CorruptInput(f"Malformed Zarr metadata {f.name}: {e}") from e
+            _check_zarr_meta(meta, f)
+        if n.endswith((".tif", ".tiff")):
+            try:
+                _check_ome_references(f)
+            except UnsafeInput:
+                raise
+            except Exception as e:
+                raise CorruptInput(f"Malformed TIFF {f.name}: {type(e).__name__}: {e}") from e
 
 
 def read_volume(path, spacing_um=None, zrange=None, step: int = 1, do_hash: bool = True,
@@ -137,7 +288,19 @@ def read_volume(path, spacing_um=None, zrange=None, step: int = 1, do_hash: bool
         "ome-tiff": read_tiff, "dicom": read_dicom_series, "nifti": read_nifti,
         "nrrd": read_nrrd, "zarr": read_zarr, "txm": read_txm, "itk": read_itk, "npy": read_npy,
     }[fmt]
-    vol, rep = fn(path, zrange=zrange, step=step, do_hash=do_hash, **kw)
+    if int(step) < 1:
+        raise ValueError(f"step must be a positive integer, got {step}")
+    try:
+        vol, rep = fn(path, zrange=zrange, step=step, do_hash=do_hash, **kw)
+    except (UnsafeInput, CorruptInput, VolumeTooLarge, FileNotFoundError, PermissionError, IsADirectoryError):
+        raise
+    except MemoryError as e:
+        raise VolumeTooLarge(f"Not enough memory to read {Path(path).name} ({fmt}); read a sub-range "
+                             "(zrange/step)") from e
+    except Exception as e:   # parser-specific errors (zlib.error, NRRDError, ...) -> one clear type (QA-004)
+        raise CorruptInput(f"Could not read {fmt} input {Path(path).name}: {type(e).__name__}: {e}") from e
+    if 0 in vol.shape:
+        raise CorruptInput(f"Selected region of {Path(path).name} is empty (shape {vol.shape}); check zrange")
     if spacing_um is not None:
         sp = tuple(float(s) for s in (spacing_um if np.iterable(spacing_um) else [spacing_um] * 3))
         if "spacing_um" in rep.metadata_found and not np.allclose(rep.metadata_found["spacing_um"], sp):
@@ -205,6 +368,12 @@ def read_tiff(path, zrange=None, step=1, do_hash=True, **kw):
         rep.metadata_found.update(found)
         rep.warnings += warns
         series = tf.series[0]
+        sshape = tuple(int(d) for d in series.shape if int(d) != 1)
+        sshape = (1,) + sshape if len(sshape) == 2 else sshape
+        if len(sshape) == 3:
+            # memory-mapped (uncompressed) series: only the selection is copied; else the whole series is decoded
+            _check_alloc(_selected_shape(sshape, zrange, step) if series.dataoffset is not None else sshape,
+                         series.dtype, f"TIFF {p.name}")
         arr = series.asarray(out="memmap") if series.dataoffset is not None else series.asarray()
     arr = np.asarray(arr)
     arr = np.squeeze(arr)
@@ -253,6 +422,8 @@ def read_tiff_stack(path, zrange=None, step=1, do_hash=True, pattern=None, **kw)
     z0, z1 = zrange or (0, len(files))
     rep.zrange = (z0, z1)
     sel = files[z0:z1:step]
+    if not sel:
+        raise ValueError(f"zrange {zrange} selects no slices from {len(files)} files")
 
     def load2d(f):
         if f.suffix.lower() in (".tif", ".tiff"):
@@ -264,6 +435,8 @@ def read_tiff_stack(path, zrange=None, step=1, do_hash=True, pattern=None, **kw)
     if first.ndim == 3:  # RGB slice
         rep.warnings.append("RGB slices converted to luminance")
     shape2d = first.shape[:2]
+    _check_alloc((len(sel), (shape2d[0] + step - 1) // step, (shape2d[1] + step - 1) // step),
+                 first.dtype if first.ndim == 2 else np.float32, f"image stack {p.name}")
     out = np.empty((len(sel), (shape2d[0] + step - 1) // step, (shape2d[1] + step - 1) // step),
                    dtype=first.dtype if first.ndim == 2 else np.float32)
     for k, f in enumerate(sel):
@@ -301,6 +474,17 @@ def read_tiff_stack(path, zrange=None, step=1, do_hash=True, pattern=None, **kw)
             m2 = re.search(re.escape(key) + r"\s*=\s*(.+)", txt)
             if m2:
                 rep.metadata_found[key] = m2.group(1).strip()
+    sidecar = p / "osteoquant_stack.json"
+    if spacing is None and sidecar.is_file():   # written by write_tiff_stack (QA-016: round-trip lost spacing)
+        import json
+        try:
+            sp = [float(v) for v in json.loads(sidecar.read_text())["spacing_um"]]
+            if len(sp) == 3 and all(np.isfinite(v) and v > 0 for v in sp):
+                spacing = sp
+                rep.metadata_found["spacing_um"] = spacing
+                rep.metadata_found["sidecar"] = sidecar.name
+        except (ValueError, KeyError, TypeError):
+            rep.warnings.append("osteoquant_stack.json present but unreadable; ignored")
     if spacing is None:
         spacing = [1.0, 1.0, 1.0]
         rep.metadata_assumed["spacing_um"] = spacing
@@ -316,15 +500,20 @@ def read_dicom_series(path, zrange=None, step=1, do_hash=True, **kw):
     rep = IngestReport(str(p), "dicom")
     files = [f for f in (p.iterdir() if p.is_dir() else [p]) if f.is_file()]
     dss = []
+    unreadable = []
     for f in files:   # header-only first pass (pixels are read one slice at a time later: bounded memory)
         try:
             ds = pydicom.dcmread(f, stop_before_pixels=True)
             if hasattr(ds, "Rows") and hasattr(ds, "Columns"):
                 dss.append((f, ds))
         except Exception:
+            unreadable.append(f.name)
             continue
     if not dss:
         raise ValueError("No DICOM images with pixel data found")
+    if unreadable:   # QA-005: a corrupt slice must not vanish silently
+        rep.warnings.append(f"{len(unreadable)} file(s) could not be parsed as DICOM and were skipped "
+                            f"(first: {unreadable[:3]})")
     series = {}
     for f, ds in dss:
         series.setdefault(getattr(ds, "SeriesInstanceUID", "unknown"), []).append((f, ds))
@@ -334,6 +523,7 @@ def read_dicom_series(path, zrange=None, step=1, do_hash=True, **kw):
     ds0 = f_ds[0][1]
     # multi-frame
     if int(getattr(ds0, "NumberOfFrames", 1)) > 1 and len(f_ds) == 1:
+        _check_alloc((int(ds0.NumberOfFrames), int(ds0.Rows), int(ds0.Columns)), np.float32, "DICOM multi-frame")
         ds0 = pydicom.dcmread(f_ds[0][0])
         arr = ds0.pixel_array.astype(np.float32)
         ps = [float(v) for v in getattr(ds0, "PixelSpacing", [1, 1])]
@@ -379,6 +569,9 @@ def read_dicom_series(path, zrange=None, step=1, do_hash=True, **kw):
         z0, z1 = zrange or (0, len(f_ds))
         rep.zrange = (z0, z1)
         sel = f_ds[z0:z1]
+        if not sel:
+            raise ValueError(f"zrange {zrange} selects no slices from {len(f_ds)} DICOM files")
+        _check_alloc((len(sel), int(ds0.Rows), int(ds0.Columns)), np.float32, "DICOM series")
         # memory-efficient: preallocate once; keep native integer dtype when no rescaling is needed
         slopes = {float(getattr(ds, "RescaleSlope", 1) or 1) for _, ds in sel}
         inters = {float(getattr(ds, "RescaleIntercept", 0) or 0) for _, ds in sel}
@@ -426,6 +619,7 @@ def read_nifti(path, zrange=None, step=1, do_hash=True, **kw):
     rep = IngestReport(str(p), "nifti")
     rep.files.append(_file_record(p, do_hash))
     img = nib.load(str(p))
+    _check_alloc(img.shape, img.get_data_dtype(), f"NIfTI {p.name}")
     arr = np.asanyarray(img.dataobj)
     if arr.ndim == 4 and arr.shape[3] == 1:
         arr = arr[..., 0]
@@ -455,6 +649,9 @@ def read_nrrd(path, zrange=None, step=1, do_hash=True, **kw):
     p = Path(path)
     rep = IngestReport(str(p), "nrrd")
     rep.files.append(_file_record(p, do_hash))
+    hdr0 = nrrd.read_header(str(p))
+    if "sizes" in hdr0 and "type" in hdr0:
+        _check_alloc(hdr0["sizes"], nrrd.reader._determine_datatype(hdr0), f"NRRD {p.name}")
     arr, hdr = nrrd.read(str(p), index_order="C")  # (z,y,x)
     if arr.ndim != 3:
         raise ValueError("Only 3D NRRD supported")
@@ -490,6 +687,10 @@ def read_itk(path, zrange=None, step=1, do_hash=True, **kw):
     p = Path(path)
     rep = IngestReport(str(p), "itk")
     rep.files.append(_file_record(p, do_hash))
+    info = sitk.ImageFileReader()
+    info.SetFileName(str(p))
+    info.ReadImageInformation()
+    _check_alloc(tuple(info.GetSize())[::-1] + (info.GetNumberOfComponents(),), np.float64, f"MetaImage {p.name}")
     img = sitk.ReadImage(str(p))
     arr = sitk.GetArrayFromImage(img)  # (z,y,x)
     sp = list(img.GetSpacing())[::-1]
@@ -507,6 +708,9 @@ def read_npy(path, zrange=None, step=1, do_hash=True, **kw):
     rep = IngestReport(str(p), "npy")
     rep.files.append(_file_record(p, do_hash))
     arr = np.load(p, mmap_mode="r")
+    if arr.ndim != 3:
+        raise ValueError(f"NumPy array has {arr.ndim} dims; expected 3 (z, y, x)")
+    _check_alloc(_selected_shape(arr.shape, zrange, step), arr.dtype, f"NumPy {p.name}")
     z0, z1 = zrange or (0, arr.shape[0])
     rep.metadata_assumed["spacing_um"] = [1.0, 1.0, 1.0]
     rep.warnings.append("NumPy arrays carry no spacing; assumed 1 µm")
@@ -521,6 +725,9 @@ def read_zarr(path, zrange=None, step=1, do_hash=False, **kw):
     rep = IngestReport(str(p), "zarr")
     g = zarr.open_group(str(p), mode="r")
     a = g["image"]
+    if len(a.shape) != 3:
+        raise ValueError(f"Zarr image has {len(a.shape)} dims; expected 3")
+    _check_alloc(_selected_shape(a.shape, zrange, step), a.dtype, f"Zarr {p.name}")
     attrs = dict(g.attrs)
     spacing = attrs.get("spacing_um")
     if spacing is None:
@@ -535,8 +742,16 @@ def read_zarr(path, zrange=None, step=1, do_hash=False, **kw):
     meta["format"] = "zarr"
     rep.decimation_step = step
     rep.files.append({"path": str(p), "sha256": attrs.get("content_sha256"), "kind": "zarr-store"})
-    return Volume(data, _apply_step_spacing(spacing, step), tuple(attrs.get("origin_um", (0, 0, 0))),
-                  meta=meta), rep
+    vol = Volume(data, _apply_step_spacing(spacing, step), tuple(attrs.get("origin_um", (0, 0, 0))), meta=meta)
+    stored = attrs.get("content_sha256")
+    if do_hash and stored and zrange is None and step == 1:
+        # QA-017: missing/corrupted chunks are silently replaced by the fill value; verify the recorded hash
+        actual = vol.content_hash()
+        if actual != stored:
+            raise CorruptInput(f"Zarr store {p.name} failed its integrity check (content SHA-256 {actual[:12]}… "
+                               f"!= recorded {str(stored)[:12]}…): chunks missing or modified")
+        rep.metadata_found["content_sha256_verified"] = True
+    return vol, rep
 
 
 # ----------------------------------------------------------------------------- Zeiss TXM
@@ -602,7 +817,9 @@ def read_txm(path, zrange=None, step=1, do_hash=True, **kw):
     md = txm_metadata(p)
     rep.metadata_found.update({k: v for k, v in md.items() if v is not None})
     w, h, n = md["width"], md["height"], md["n_images"]
-    dt = _TXM_DTYPES.get(md["data_type"])
+    if not isinstance(w, int) or not isinstance(h, int) or w <= 0 or h <= 0:
+        raise ValueError(f"TXM ImageWidth/ImageHeight missing or invalid ({w!r}, {h!r})")
+    dt = _TXM_DTYPES.get(md["data_type"]) if isinstance(md["data_type"], int) else None
     if dt is None:
         raise ValueError(f"Unsupported TXM DataType {md['data_type']}")
     if n is None or n == 0:
@@ -613,6 +830,7 @@ def read_txm(path, zrange=None, step=1, do_hash=True, **kw):
     z1 = min(z1, n)
     rep.zrange = (z0, z1)
     zs = list(range(z0, z1, step))
+    _check_alloc((len(zs), (h + step - 1) // step, (w + step - 1) // step), dt, f"TXM {p.name}")
     out = np.empty((len(zs), (h + step - 1) // step, (w + step - 1) // step), dtype=dt)
     with olefile.OleFileIO(str(p)) as ole:
         for k, z in enumerate(zs):

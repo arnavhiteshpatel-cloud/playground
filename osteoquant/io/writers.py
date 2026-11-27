@@ -121,7 +121,6 @@ def write_nrrd(vol: Volume, path):
 
 def write_dicom_series(vol: Volume, folder, series_description="OsteoQuant export"):
     """Minimal CT-like DICOM series export (research use; secondary capture semantics)."""
-    import pydicom
     from pydicom.dataset import FileDataset, FileMetaDataset
     from pydicom.uid import ExplicitVRLittleEndian, generate_uid, CTImageStorage
     f = Path(folder)

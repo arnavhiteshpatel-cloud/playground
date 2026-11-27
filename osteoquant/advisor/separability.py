@@ -282,6 +282,16 @@ class SupportAssessment:
         return e.status if e else NOT_SUPPORTED
 
 
+def _thickness_endpoint(ep: dict, voxel_um: float) -> None:
+    min_struct = 150.0 / max(voxel_um, 1e-6)
+    nb = ep.get("new_bone_volume")
+    ok = min_struct >= MIN_STRUCT_VOXELS and nb is not None and nb.status != NOT_SUPPORTED
+    ep["new_bone_thickness"] = EndpointSupport(
+        "new_bone_thickness", CONDITIONAL if ok else NOT_SUPPORTED, "local_thickness",
+        f"typical woven-bone trabeculae ≈150 µm = {min_struct:.1f} voxels",
+        ["depends on new-bone segmentation support", "border convention stated in report"])
+
+
 def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples_rel=None,
                    new_samples_rel=None, day0: dict | None = None, calibrated: bool = False,
                    no_graft: bool = False, validated_texture_model: bool = False,
@@ -325,6 +335,7 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
                                         "no graft implanted: all mineral in the defect is new bone")
             else:
                 ep[e] = EndpointSupport(e, NOT_SUPPORTED, None, "no graft implanted")
+        _thickness_endpoint(ep, voxel_um)
         return SupportAssessment(inputs["material"], ep, {}, inputs, policy)
 
     prof = material_profile(material, energy_keV)
@@ -347,6 +358,7 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
                 ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
                                         f"{prof.id} is radiolucent (mean ≈{prof.rel_mean:.2f} of host bone): "
                                         "residual graft is not visible on micro-CT; use histology")
+        _thickness_endpoint(ep, voxel_um)
         return SupportAssessment(inputs["material"], ep, intensity, inputs, policy)
 
     # --- metals: streak/beam-hardening artefacts are not modelled → never supported (review IMG-02)
@@ -454,13 +466,7 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
             ep[e] = EndpointSupport(e, NOT_SUPPORTED, None, why)
 
     # Thickness-type morphometry on new bone needs resolvable structures
-    min_struct = 150.0 / max(voxel_um, 1e-6)
-    ep["new_bone_thickness"] = EndpointSupport(
-        "new_bone_thickness",
-        CONDITIONAL if min_struct >= MIN_STRUCT_VOXELS and ep["new_bone_volume"].status != NOT_SUPPORTED else NOT_SUPPORTED,
-        "local_thickness",
-        f"typical woven-bone trabeculae ≈150 µm = {min_struct:.1f} voxels",
-        ["depends on new-bone segmentation support", "border convention stated in report"])
+    _thickness_endpoint(ep, voxel_um)
     return SupportAssessment(inputs["material"], ep, intensity, inputs, policy)
 
 

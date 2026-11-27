@@ -242,7 +242,14 @@ def detect_segmental_gap(img: np.ndarray, spacing, axis=0, min_gap_um=500.0, rad
     ring = proj & ~ndi.binary_erosion(proj, iterations=max(1, int(0.25 * r_env)))
     prof = dense[:, ring].mean(axis=1)
     ps = ndi.gaussian_filter1d(prof, 1.5)
-    specimen = dense.mean(axis=(1, 2)) > 0.1 * dense.mean(axis=(1, 2)).max()
+    has_bone = dense.mean(axis=(1, 2)) > 0.1 * dense.mean(axis=(1, 2)).max()
+    # specimen = slices between the first and last slice containing dense bone. Interior slices
+    # with no dense material (an empty, radiolucent gap) belong to the specimen (QA-021: they were
+    # excluded, so a clean empty gap was never detected).
+    specimen = np.zeros_like(has_bone)
+    if has_bone.any():
+        hb = np.where(has_bone)[0]
+        specimen[hb.min():hb.max() + 1] = True
     level = np.percentile(ps[specimen], 75) if specimen.any() else ps.max()
     hi = level
     low = (ps < 0.6 * level) & specimen

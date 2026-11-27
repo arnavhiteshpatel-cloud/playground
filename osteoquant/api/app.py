@@ -30,6 +30,25 @@ WEB = Path(__file__).resolve().parents[2] / "web" / "static"
 MAX_UPLOAD = int(os.environ.get("OQ_MAX_UPLOAD_BYTES", str(8 * 1024 ** 3)))
 
 
+def _json_safe(o):
+    """Replace non-finite floats (NaN/inf, e.g. an undefined QC cupping index) by null: strict JSON
+    cannot carry them and Starlette refuses to serialise them (QA-019)."""
+    if isinstance(o, float):
+        return o if np.isfinite(o) else None
+    if isinstance(o, dict):
+        return {k: _json_safe(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [_json_safe(v) for v in o]
+    if isinstance(o, np.generic):
+        return _json_safe(o.item())
+    return o
+
+
+class SafeJSONResponse(JSONResponse):
+    def render(self, content) -> bytes:
+        return super().render(_json_safe(content))
+
+
 # ----------------------------------------------------------------------------- job handlers
 def _store_path(store: Store, org_id, scan_id) -> Path:
     p = store.data_dir / f"org{int(org_id)}" / "scans" / f"scan{int(scan_id)}.zarr"
@@ -57,7 +76,7 @@ def job_qc(store, user, params, ctx):
 
 
 def job_analyze(store, user, params, ctx):
-    from ..pipeline import analyze, public, labels_hash
+    from ..pipeline import analyze, public
     from ..io import write_labels_zarr
     scan_id = params["scan_id"]
     sc, vol = _load_scan(store, user, scan_id)
@@ -74,7 +93,7 @@ def job_analyze(store, user, params, ctx):
     else:
         rid = store.latest_roi(user, scan_id)["id"] if store.latest_roi(user, scan_id) else None
     seg = res["segmentation"]
-    sid, v = store.save_segmentation(user, scan_id, "automatic", f"seg_v", res["labels_sha256"], method=seg["method"],
+    sid, v = store.save_segmentation(user, scan_id, "automatic", "seg_v", res["labels_sha256"], method=seg["method"],
                                      model_name=seg.get("model_name"), model_sha256=seg.get("model_sha256"), roi_id=rid)
     key = f"seg_v{v}"
     store.exec("UPDATE segmentations SET labels_key=? WHERE id=?", (key, sid))
@@ -204,7 +223,7 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
     Path(db_path).parent.mkdir(parents=True, exist_ok=True)
     store = Store(db_path, data_dir)
     runner = JobRunner(store, HANDLERS, workers=workers)
-    app = FastAPI(title="OsteoQuant (research prototype)", version=__version__)
+    app = FastAPI(title="OsteoQuant (research prototype)", version=__version__, default_response_class=SafeJSONResponse)
     app.state.store, app.state.runner = store, runner
 
     def current_user(authorization: str | None = Header(default=None)):
@@ -213,6 +232,17 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
         if not u:
             raise HTTPException(401, "Not authenticated")
         return u
+
+    @app.middleware("http")
+    async def security_headers(request, call_next):   # S-20: baseline browser hardening headers
+        resp = await call_next(request)
+        resp.headers.setdefault("X-Content-Type-Options", "nosniff")
+        resp.headers.setdefault("X-Frame-Options", "DENY")
+        resp.headers.setdefault("Referrer-Policy", "no-referrer")
+        resp.headers.setdefault("Content-Security-Policy",
+                                "default-src 'self'; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; "
+                                "object-src 'none'; base-uri 'self'; frame-ancestors 'none'")
+        return resp
 
     @app.exception_handler(PermissionError)
     async def perm(_, exc):
@@ -307,7 +337,7 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
 
     @app.get("/api/studies/{sid}/export")
     def export(sid: int, u=Depends(current_user)):
-        return JSONResponse(json.loads(json.dumps(store.export_study(u, sid), default=str)))
+        return SafeJSONResponse(json.loads(json.dumps(store.export_study(u, sid), default=str)))
 
     # ---------------------------------------------------------------- scans
     @app.post("/api/studies/{sid}/scans")
@@ -316,9 +346,12 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
                      acquisition: str = Form("{}"), u=Depends(current_user)):
         from ..io import read_volume, write_zarr, sha256_file
         from ..io.safe_archive import safe_extract
+        from ..io.readers import check_safe_input
         st = store.study(u, sid)
         store.require(u, "write", st["org_id"])
         name = re.sub(r"[^A-Za-z0-9_.\-]", "_", Path(file.filename or "upload").name)[:120] or "upload"
+        if not name.strip("."):   # S-21: '.', '..' would resolve to a directory
+            name = "upload"
         tmp = store.data_dir / "uploads" / uuid.uuid4().hex
         tmp.mkdir(parents=True)
         try:
@@ -340,12 +373,13 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
             if name.lower().endswith(".zip"):
                 ex = tmp / "extracted"
                 safe_extract(dest, ex, allow_tar=False)
+                check_safe_input(ex)   # whole extracted tree, not only the folder that is read (G2-05)
                 subdirs = {Path(p).parent for p in ex.rglob("*") if p.is_file()}
                 src = max(subdirs, key=lambda d: len(list(d.iterdir())))
             try:
                 acq = json.loads(acquisition or "{}")
             except json.JSONDecodeError:
-                raise HTTPException(400, "acquisition must be JSON")
+                raise HTTPException(400, "acquisition must be JSON") from None
             vol, rep = read_volume(src, spacing_um=spacing_um, safe=True)
             if rep.errors:
                 raise HTTPException(422, f"Ingest errors: {rep.errors[:3]}")
@@ -503,9 +537,7 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
     # ---------------------------------------------------------------- review / reports / jobs / audit
     @app.post("/api/reviews")
     def review(b: ReviewIn, u=Depends(current_user)):
-        full = store.q1("SELECT pw_hash FROM users WHERE id=?", (u["id"],))
-        from ..study.db import check_password
-        if not check_password(b.password, full["pw_hash"]):
+        if not store.reauthenticate(u, b.password):   # counts towards lockout (Gen-2 G2-03)
             store.audit.record("review.reauth_failed", u["id"], u["org_id"], b.object_type, b.object_id)
             raise HTTPException(401, "Re-authentication failed")
         return {"id": store.review(u, b.object_type, b.object_id, b.decision, b.meaning, b.comment)}

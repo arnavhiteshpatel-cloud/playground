@@ -93,9 +93,10 @@ def hash_password(pw: str, salt: bytes | None = None) -> str:
 def check_password(pw: str, stored: str) -> bool:
     try:
         _, s, h = stored.split("$")
-    except ValueError:
+        salt = bytes.fromhex(s)
+    except (ValueError, AttributeError):   # malformed stored hash -> no match, never a 500 (QA-010)
         return False
-    cand = hash_password(pw, bytes.fromhex(s)).split("$")[2]
+    cand = hash_password(pw, salt).split("$")[2]
     return hmac.compare_digest(cand, h)
 
 
@@ -170,6 +171,8 @@ class Store:
         u = self.q1("SELECT * FROM users WHERE id=?", (user_id,))
         self.require(actor, "manage_users", u["org_id"])
         self.exec("UPDATE users SET active=? WHERE id=?", (int(active), user_id))
+        if not active:   # S-20: deactivation ends existing sessions immediately
+            self.exec("DELETE FROM sessions WHERE user_id=?", (user_id,))
         self.audit.record("user.activate" if active else "user.deactivate", actor["id"], u["org_id"], "user", user_id)
 
     LOCK_SECONDS = 15 * 60
@@ -196,11 +199,36 @@ class Store:
                               {"reason": "bad password", "locked": n >= 5})
             return None
         self.exec("UPDATE users SET failed_logins=0, locked_until=0 WHERE id=?", (u["id"],))
+        self.exec("DELETE FROM sessions WHERE expires < ?", (time.time(),))   # S-20: purge expired sessions
         tok = secrets.token_urlsafe(32)
         self.exec("INSERT INTO sessions VALUES (?,?,?,?)",
                   (hashlib.sha256(tok.encode()).hexdigest(), u["id"], now(), time.time() + ttl_s))
         self.audit.record("auth.login", u["id"], u["org_id"], "user", u["id"])
         return tok
+
+    def reauthenticate(self, user, password) -> bool:
+        """Re-check the password of an authenticated user (e-signature). Failures count towards the
+        same temporary lockout as login, so a stolen session token cannot be used to brute-force
+        the password through the signing endpoint (QA-011 / Gen-2 G2-03)."""
+        u = self.q1("SELECT * FROM users WHERE id=?", (user["id"],))
+        if not u or not u["active"]:
+            return False
+        if (u.get("locked_until") or 0) > time.time():
+            check_password(password, u["pw_hash"])   # equal cost
+            self.audit.record("auth.reauth_failed", u["id"], u["org_id"], "user", u["id"], {"reason": "temporarily locked"})
+            return False
+        if check_password(password, u["pw_hash"]):
+            self.exec("UPDATE users SET failed_logins=0 WHERE id=?", (u["id"],))
+            return True
+        with self.lock:
+            self.exec("UPDATE users SET failed_logins=failed_logins+1 WHERE id=?", (u["id"],))
+            n = self.q1("SELECT failed_logins FROM users WHERE id=?", (u["id"],))["failed_logins"]
+            if n >= 5:
+                self.exec("UPDATE users SET locked_until=?, failed_logins=0 WHERE id=?",
+                          (time.time() + self.LOCK_SECONDS, u["id"]))
+        self.audit.record("auth.reauth_failed", u["id"], u["org_id"], "user", u["id"],
+                          {"reason": "bad password", "locked": n >= 5})
+        return False
 
     def user_for_token(self, tok) -> dict | None:
         if not tok:
@@ -357,6 +385,7 @@ class Store:
 
     def set_scan_qc(self, user, scan_id, qc):
         sc = self.scan(user, scan_id)
+        self.require(user, "write", sc["org_id"])   # QA-012: writes need write permission
         self.exec("UPDATE scans SET qc=?, status=? WHERE id=?", (json.dumps(qc, default=str), "qc_" + qc["verdict"], scan_id))
         self.audit.record("scan.qc", user["id"], sc["org_id"], "scan", scan_id, {"verdict": qc["verdict"]})
 
@@ -411,6 +440,7 @@ class Store:
 
     def save_measurement(self, user, scan_id, seg_id, roi_id, metrics, software_version, config_id=None):
         sc = self.scan(user, scan_id)
+        self.require(user, "write", sc["org_id"])   # QA-012
         mid = self.exec("INSERT INTO measurements(scan_id,segmentation_id,roi_id,config_id,metrics,software_version,created)"
                         " VALUES (?,?,?,?,?,?,?)", (scan_id, seg_id, roi_id, config_id,
                                                     json.dumps(metrics, default=float), software_version, now()))

@@ -1,0 +1,23 @@
+/home/user/playground/osteoquant/ml/train.py:168: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  rec = {"iter": it + 1, "loss": float(loss), "sec": round(time.time() - t0, 1)}
+{
+ "experiment": "P",
+ "checks": {
+  "pipeline_labels_identical": true,
+  "pipeline_metrics_identical": true,
+  "unet_pipeline_labels_identical": true,
+  "unet_probabilities_bit_identical": true,
+  "training_weights_identical_fixed_seed": true,
+  "max_abs_weight_diff": 0.0,
+  "rf_identical": true,
+  "format_roundtrip_voxels_identical": {
+   "nifti": true,
+   "nrrd": true,
+   "zarr": true,
+   "tiff": true,
+   "dicom": true
+  }
+ },
+ "all_pass": true
+}

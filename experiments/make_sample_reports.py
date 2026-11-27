@@ -53,7 +53,7 @@ def spec_entry(sid, group, tp, vol, res, truth=None, labels_true=None, source=""
 
 def report1():
     test = load_split("test")
-    specs = []
+    specs, exceptions = [], []
     for c in test:
         vol = Volume(c.image, c.spacing, meta={"ingest": {"metadata_found": {"spacing_um": list(c.spacing)}}})
         model = c.meta["spec"]["model"]
@@ -61,6 +61,9 @@ def report1():
                "segmentation": "unet:unet_ctx_s0", "tta": True, "abstain_tau": 0.6}
         res = analyze(vol, cfg)
         if res.get("status") != "complete_unreviewed":
+            exceptions.append({"specimen_id": c.case_id.replace("test_", "S"), "stage": "ROI detection",
+                               "reason": str(res.get("roi_error")) + " (healing has bridged the segmental gap)",
+                               "action": "Define ROI from the surgical record / day-0 scan, then re-run"})
             print("ROI failed", c.case_id, res.get("roi_error")); continue
         mat = {"beta_tcp": "beta-TCP", "bcp": "BCP", "ha": "HA", "calcium_sulfate": "CaSO4"}[c.meta["spec"]["material"]]
         specs.append(spec_entry(c.case_id.replace("test_", "S"), mat, f"stage {c.meta['spec']['stage']:.2f}", vol, res,
@@ -72,7 +75,7 @@ def report1():
          "study": {"name": "Synthetic benchmark (Experiment B test set)", "species": "in silico", "defect_model":
                    "condyle / calvarial / segmental phantoms", "graft_materials": "beta-TCP, BCP, HA, CaSO4 (simulated)", "blinded": False},
          "data_class": "synthetic", "review_status": "unreviewed_automated", "specimens": specs, "endpoints": ENDPOINTS,
-         "reference_group": "HA",
+         "reference_group": "HA", "exceptions": exceptions,
          "summary_text": (f"Mean Dice vs known truth in the defect ROI: new bone {np.mean([s['eval']['dice_new'] for s in specs]):.3f}, "
                           f"residual graft {np.mean([s['eval']['dice_graft'] for s in specs]):.3f} (n={len(specs)} synthetic specimens; "
                           "automatic ROI). These figures describe synthetic data only."),

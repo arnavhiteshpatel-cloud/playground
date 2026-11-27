@@ -124,16 +124,16 @@ def s_built(d):
         "Morphometry verified vs analytic truth and vs Scanco IPL on public data",
         "Web workbench: orthogonal viewer, brush correction with versioning, 3D surfaces, re-authenticated sign-off",
         "Hash-chained audit trail, RBAC, tenant isolation, blinding; DefectFill PDF/CSV reports",
-        "49 automated tests; 16 computational experiments; 3 sample reports",
+        "60 automated tests; 16 computational experiments; independent security + science review; 3 sample reports",
     ], image=SHOT / "04_viewer_edit_measure_3d.png", img_w=6.4, kicker="Product")
 
 
 def s_evidence(d):
-    b = B.get("models", {}).get("unet_ctx_s0", {}).get("summary", {})
+    b = B.get("models", {}).get("unet_noctx_s0", {}).get("summary", {})
     a = A.get("summary", {})
     g = G.get("agreement_vs_ipl", {}).get("TbTh", {})
     rows = [["Morphometry vs Scanco IPL (Tb.Th), 8 public samples", "REAL public data", f"ICC {fmt(g.get('icc_2_1', {}).get('icc', float('nan')), 3)}, mean diff {fmt(100*g.get('mean_rel_error', 0), 1)}%"],
-            ["3-class U-Net, 16 held-out phantoms: graft / new bone Dice", "SYNTHETIC", f"{fmt(b.get('dice_graft_roi', {}).get('mean', 0), 3)} / {fmt(b.get('dice_new_roi', {}).get('mean', 0), 3)}"],
+            ["3-class U-Net (no ROI input), 16 held-out phantoms: graft / new bone Dice", "SYNTHETIC", f"{fmt(b.get('dice_graft_roi', {}).get('mean', 0), 3)} / {fmt(b.get('dice_new_roi', {}).get('mean', 0), 3)}"],
             ["CTAn-style two-threshold workflow, same phantoms", "SYNTHETIC", f"{fmt(a.get('otsu_ctan_style', {}).get('dice_graft', {}).get('mean', 0), 3)} / {fmt(a.get('otsu_ctan_style', {}).get('dice_new_bone', {}).get('mean', 0), 3)}"],
             ["Day-0 registration when graft mimics new bone (graft Dice)", "SYNTHETIC", f"{fmt(L2.get('summary', {}).get('day0_estimated_registration', {}).get('dice_graft', 0), 3)} vs single-scan {fmt(L2.get('summary', {}).get('rf_single_timepoint', {}).get('dice_graft', 0), 3)}"],
             ["Adaptation to unseen material: labelled scans to reach graft Dice ≥0.8", "SYNTHETIC", str(Jd.get("curves", {}).get("unet_finetune", {}).get("min_k_reaching_0.8"))],

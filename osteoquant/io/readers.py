@@ -316,10 +316,10 @@ def read_dicom_series(path, zrange=None, step=1, do_hash=True, **kw):
     rep = IngestReport(str(p), "dicom")
     files = [f for f in (p.iterdir() if p.is_dir() else [p]) if f.is_file()]
     dss = []
-    for f in files:
+    for f in files:   # header-only first pass (pixels are read one slice at a time later: bounded memory)
         try:
-            ds = pydicom.dcmread(f, stop_before_pixels=False)
-            if "PixelData" in ds:
+            ds = pydicom.dcmread(f, stop_before_pixels=True)
+            if hasattr(ds, "Rows") and hasattr(ds, "Columns"):
                 dss.append((f, ds))
         except Exception:
             continue
@@ -334,6 +334,7 @@ def read_dicom_series(path, zrange=None, step=1, do_hash=True, **kw):
     ds0 = f_ds[0][1]
     # multi-frame
     if int(getattr(ds0, "NumberOfFrames", 1)) > 1 and len(f_ds) == 1:
+        ds0 = pydicom.dcmread(f_ds[0][0])
         arr = ds0.pixel_array.astype(np.float32)
         ps = [float(v) for v in getattr(ds0, "PixelSpacing", [1, 1])]
         st = float(getattr(ds0, "SliceThickness", ps[0]) or ps[0])
@@ -378,15 +379,29 @@ def read_dicom_series(path, zrange=None, step=1, do_hash=True, **kw):
         z0, z1 = zrange or (0, len(f_ds))
         rep.zrange = (z0, z1)
         sel = f_ds[z0:z1]
-        slices = []
-        for f, ds in sel:
-            a = ds.pixel_array.astype(np.float32)
+        # memory-efficient: preallocate once; keep native integer dtype when no rescaling is needed
+        slopes = {float(getattr(ds, "RescaleSlope", 1) or 1) for _, ds in sel}
+        inters = {float(getattr(ds, "RescaleIntercept", 0) or 0) for _, ds in sel}
+        first = pydicom.dcmread(sel[0][0]).pixel_array
+        native = slopes == {1.0} and all(i == int(i) for i in inters) and np.issubdtype(first.dtype, np.integer)
+        inter0 = next(iter(inters)) if len(inters) == 1 else None
+        if native and inter0 is not None:
+            out_dtype = np.int32 if inter0 < 0 and first.dtype.kind == "u" else first.dtype
+            if inter0 != 0:
+                out_dtype = np.int32
+        else:
+            out_dtype = np.float32
+        arr = np.empty((len(sel),) + first.shape, dtype=out_dtype)
+        for k, (f, ds) in enumerate(sel):
+            a = pydicom.dcmread(f).pixel_array
             slope = float(getattr(ds, "RescaleSlope", 1) or 1)
             inter = float(getattr(ds, "RescaleIntercept", 0) or 0)
-            slices.append(a * slope + inter)
+            if out_dtype == np.float32:
+                arr[k] = a.astype(np.float32) * slope + inter
+            else:
+                arr[k] = a.astype(out_dtype) + int(inter) if inter else a
             if do_hash and len(sel) <= 2000:
                 rep.files.append(_file_record(f, do_hash))
-        arr = np.stack(slices)
         if hasattr(ds0, "RescaleType"):
             rep.metadata_found["RescaleType"] = str(ds0.RescaleType)
     if "PixelSpacing" not in ds0:

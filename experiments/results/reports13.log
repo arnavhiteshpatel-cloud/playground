@@ -3,3 +3,40 @@ R1 test_001_calvarial_beta_tcp {'dice_new': 0.8931939516000128, 'dice_graft': 0.
 R1 test_002_segmental_beta_tcp {'dice_new': 0.8533812088569719, 'dice_graft': 0.955146195846303}
 R1 test_003_condyle_bcp {'dice_new': 0.9064872834500552, 'dice_graft': 0.9686148695773469}
 R1 test_004_calvarial_bcp {'dice_new': 0.922499349514924, 'dice_graft': 0.9541525070053062}
+R1 test_005_segmental_bcp {'dice_new': 0.8378640776699029, 'dice_graft': 0.9772244660032477}
+R1 test_006_condyle_ha {'dice_new': 0.8279409178828908, 'dice_graft': 0.9894944570201405}
+R1 test_007_calvarial_ha {'dice_new': 0.8980125743702266, 'dice_graft': 0.9900549091886496}
+ROI failed test_008_segmental_ha Gap shorter than 500.0 µm
+R1 test_009_condyle_calcium_sulfate {'dice_new': 0.9276429403338733, 'dice_graft': 0.851233671988389}
+R1 test_010_calvarial_calcium_sulfate {'dice_new': 0.8653086044390392, 'dice_graft': 0.9521481862618987}
+R1 test_011_segmental_calcium_sulfate {'dice_new': 0.7654320987654321, 'dice_graft': 0.9474017075998735}
+R1 test_012_condyle_beta_tcp {'dice_new': 0.9026843061490827, 'dice_graft': 0.8882521489971347}
+R1 test_013_calvarial_beta_tcp {'dice_new': 0.9153194277140261, 'dice_graft': 0.9450161265550606}
+R1 test_014_segmental_beta_tcp {'dice_new': 0.7991987981972959, 'dice_graft': 0.9863166473641316}
+R1 test_015_condyle_bcp {'dice_new': 0.9214467317313213, 'dice_graft': 0.9645046198883909}
+{'pdf': '/home/user/playground/reports_samples/DefectFill_SAMPLE1_synthetic_benchmark.pdf', 'csv': '/home/user/playground/reports_samples/DefectFill_SAMPLE1_synthetic_benchmark.csv', 'pdf_sha256': '06eefb43908a976db83258ae909b06699607f8611a24dcd37074ccea15a96482'}
+R3 beta_tcp 0 0.15 {'dice_new': 0.8469499368952461, 'dice_graft': 0.9826859379704909}
+R3 beta_tcp 0 0.4 {'dice_new': 0.8883741560297669, 'dice_graft': 0.9646394564333222}
+R3 beta_tcp 0 0.65 {'dice_new': 0.9087999024434859, 'dice_graft': 0.9160883280757098}
+R3 beta_tcp 0 0.9 {'dice_new': 0.9249769719299946, 'dice_graft': 0.844489179667841}
+R3 beta_tcp 1 0.15 {'dice_new': 0.8316088270304917, 'dice_graft': 0.9818644399504207}
+R3 beta_tcp 1 0.4 {'dice_new': 0.870844739929605, 'dice_graft': 0.9590700720366732}
+R3 beta_tcp 1 0.65 {'dice_new': 0.8979762346825102, 'dice_graft': 0.9332514789597053}
+R3 beta_tcp 1 0.9 {'dice_new': 0.9111721947345917, 'dice_graft': 0.8776716689404275}
+R3 beta_tcp 2 0.15 {'dice_new': 0.8410939934221915, 'dice_graft': 0.9783886067124788}
+R3 beta_tcp 2 0.4 {'dice_new': 0.8977850697292863, 'dice_graft': 0.9674618561915198}
+R3 beta_tcp 2 0.65 {'dice_new': 0.9235436195295876, 'dice_graft': 0.928099910793934}
+R3 beta_tcp 2 0.9 {'dice_new': 0.9309680619153623, 'dice_graft': 0.8400041369324646}
+R3 ha 0 0.15 {'dice_new': 0.8077522833593228, 'dice_graft': 0.9931305201177625}
+R3 ha 0 0.4 {'dice_new': 0.8687187733302705, 'dice_graft': 0.9860109289617486}
+R3 ha 0 0.65 {'dice_new': 0.9001473775465973, 'dice_graft': 0.9805830770982804}
+R3 ha 0 0.9 {'dice_new': 0.9036751511929288, 'dice_graft': 0.9763016157989228}
+R3 ha 1 0.15 {'dice_new': 0.807863031071655, 'dice_graft': 0.9955762279127379}
+R3 ha 1 0.4 {'dice_new': 0.8804683688404619, 'dice_graft': 0.9859720483938256}
+R3 ha 1 0.65 {'dice_new': 0.8963972247763938, 'dice_graft': 0.9754689754689755}
+R3 ha 1 0.9 {'dice_new': 0.9040339258134604, 'dice_graft': 0.9682944293283688}
+R3 ha 2 0.15 {'dice_new': 0.8340314623475752, 'dice_graft': 0.9922556916781061}
+R3 ha 2 0.4 {'dice_new': 0.8790773295396809, 'dice_graft': 0.9833735585947976}
+R3 ha 2 0.65 {'dice_new': 0.9021416161976976, 'dice_graft': 0.9757385151072672}
+R3 ha 2 0.9 {'dice_new': 0.9102497890082759, 'dice_graft': 0.9726067746686303}
+{'pdf': '/home/user/playground/reports_samples/DefectFill_SAMPLE3_synthetic_longitudinal.pdf', 'csv': '/home/user/playground/reports_samples/DefectFill_SAMPLE3_synthetic_longitudinal.csv', 'pdf_sha256': 'c9d1ae8735e6fd2d4245a1b30cd244ec159ea0d18e993910892ad43471c9cb1e'}

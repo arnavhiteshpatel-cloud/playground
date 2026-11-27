@@ -1,0 +1,21 @@
+{
+ "experiment": "P",
+ "checks": {
+  "pipeline_labels_identical": true,
+  "pipeline_metrics_identical": true,
+  "unet_pipeline_labels_identical": true,
+  "unet_probabilities_bit_identical": true,
+  "training_weights_identical_fixed_seed": true,
+  "max_abs_weight_diff": 0.0,
+  "rf_identical": true,
+  "format_roundtrip_voxels_identical": {
+   "nifti": true,
+   "nrrd": true,
+   "zarr": true,
+   "tiff": true,
+   "dicom": true
+  }
+ },
+ "all_pass": true,
+ "saved": "2026-11-27T09:11:13Z"
+}

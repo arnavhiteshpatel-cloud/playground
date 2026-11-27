@@ -54,6 +54,8 @@ def _child(stage, q):
         hist = np.zeros(65536, np.int64)
         for _, _, s, _ in iter_slabs(ZARR, 64):
             hist += np.bincount(s.ravel(), minlength=65536)
+        hist[0] = 0                     # exclude reconstruction padding (zeros outside the FOV circle; D-010)
+        hist[-1] = 0                    # and saturated voxels
         centers = np.arange(65536)
         t_otsu = threshold_otsu(hist=(hist, centers))
         mineral = 0
@@ -64,8 +66,9 @@ def _child(stage, q):
         from osteoquant.io import read_volume
         from osteoquant.qc import run_qc
         v, _ = read_volume(ZARR)
-        q = run_qc(v)
-        info = {"verdict": q["verdict"], "n_warn": q["n_warn"], "voxels": int(v.data.size)}
+        qc = run_qc(v)
+        info = {"verdict": qc["verdict"], "n_warn": qc["n_warn"], "voxels": int(v.data.size),
+                "warnings": [c["name"] for c in qc["checks"] if c["status"] in ("warn", "fail")]}
     elif stage == "roi_detect_decimated_x4":
         from osteoquant.io import read_volume
         from osteoquant.roi import detect_segmental_gap
@@ -132,7 +135,12 @@ if __name__ == "__main__":
     stages = ["txm_header", "sha256_full_file", "txm_to_zarr_streamed", "out_of_core_otsu_mineral", "qc_full_volume",
               "roi_detect_decimated_x4", "segment_classvolumes_384crop", "trabecular_morphometry_160crop",
               "unet_inference_96cube", "dicom_series_ingest"]
-    out = {"experiment": "O", "hardware": "4 vCPU Xeon 2.3 GHz, 15 GB RAM, no GPU (cloud container)", "stages": {}}
+    import json as _json
+    prev = ROOT / "experiments" / "results" / "exp_O_performance.json"
+    out = _json.loads(prev.read_text()) if (prev.exists() and len(sys.argv) > 1) else \
+        {"experiment": "O", "hardware": "4 vCPU Xeon 2.3 GHz, 15 GB RAM, no GPU (cloud container)", "stages": {}}
+    if len(sys.argv) > 1:
+        stages = sys.argv[1:]
     for s in stages:
         out["stages"][s] = run(s)
         print(s, json.dumps(out["stages"][s], default=str)[:300], flush=True)

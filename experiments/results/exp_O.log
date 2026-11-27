@@ -1,0 +1,22 @@
+txm_header {"shape": [1016, 1024, 1001], "pixel_um": 24.6068115234375, "seconds": 0.73, "peak_rss_mb": 218.9}
+sha256_full_file {"sha256": "5c0181039fe4f3c9", "bytes": 2097692672, "seconds": 20.08, "peak_rss_mb": 219.0}
+txm_to_zarr_streamed {"voxels": 1041424384, "zarr_bytes": 1204884094, "seconds": 11.33, "peak_rss_mb": 386.4}
+out_of_core_otsu_mineral {"otsu": 0, "mineral_voxels": 771933328, "mineral_mm3": 11501.254405402033, "seconds": 12.04, "peak_rss_mb": 722.8}
+Process SpawnProcess-5:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/usr/local/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/playground/experiments/exp_O_performance.py", line 117, in _child
+    q.put(info)
+    ^^^^^
+AttributeError: 'dict' object has no attribute 'put'
+qc_full_volume {"error": "exit 1"}
+roi_detect_decimated_x4 {"gap_um": 5118.216796875, "confidence": 0.5489468459149109, "seconds": 2.28, "peak_rss_mb": 289.4}
+segment_classvolumes_384crop {"voxels": 56623104, "class_volumes": {"TV_mm3": 843.6449310247176, "new_bone_volume_mm3": 87.6566228108028, "new_bone_fraction": 0.10390226929276078, "residual_graft_volume_mm3": 112.67199075465699, "residual_graft_fraction": 0.13355380517465096, "host_bone_volume_mm3": 0.0, "host_bone_fraction": 0
+trabecular_morphometry_160crop {"voxels": 4096000, "BV_TV": 0.5586113281249999, "Tb_Th_um": 374.20758056640625, "Conn_D": 18.139346823802157, "seconds": 46.72, "peak_rss_mb": 1031.4}
+unet_inference_96cube {"voxels": 884736, "voxels_per_s": 49416.217398495355, "seconds_per_100M_voxels_est": 2023.6271666362882, "seconds": 18.78, "peak_rss_mb": 352.4}
+dicom_series_ingest {"error": "exit -9"}

@@ -530,11 +530,74 @@ def available_models() -> list[dict]:
     return out
 
 
+# Time since implantation. The measurement-support advisor accepts intensity separation of resorbable materials
+# only at a KNOWN timepoint <=4 weeks (advisor 1.3.x), so the desktop passes ``healing_weeks`` to the pipeline:
+# "auto" = from the scan's timepoint (days, else a parseable label such as "Week 4"), "unknown" = explicitly unknown,
+# or a number of weeks entered by the user (review C2-BIZ-04).
+HEALING_AUTO = "auto"
+HEALING_UNKNOWN = "unknown"
+_TP_UNITS = {"d": 1 / 7, "day": 1 / 7, "days": 1 / 7, "w": 1.0, "wk": 1.0, "wks": 1.0, "week": 1.0, "weeks": 1.0,
+             "m": 30.4375 / 7, "mo": 30.4375 / 7, "month": 30.4375 / 7, "months": 30.4375 / 7}
+
+
+def parse_timepoint_weeks(label: str | None) -> float | None:
+    """Weeks since implantation from a timepoint label, or None when it cannot be parsed unambiguously.
+
+    Accepts e.g. "Week 4", "4 weeks", "wk4", "W4", "Day 28", "28 d", "D14", "3 months". "Day 0" gives 0.
+    Labels with no unit (e.g. "T2", "Baseline") or with more than one number are not guessed."""
+    import re
+    if not label:
+        return None
+    s = str(label).strip().lower()
+    nums = re.findall(r"\d+(?:\.\d+)?", s)
+    if len(nums) != 1:
+        return None
+    m = (re.fullmatch(r"(?P<u>[a-z]+)\s*[-_ ]?\s*(?P<n>\d+(?:\.\d+)?)", s)
+         or re.fullmatch(r"(?P<n>\d+(?:\.\d+)?)\s*[-_ ]?\s*(?P<u>[a-z]+)", s))
+    if not m or m.group("u") not in _TP_UNITS:
+        return None
+    return round(float(m.group("n")) * _TP_UNITS[m.group("u")], 3)
+
+
+def scan_healing_weeks(project, scan_id) -> tuple[float | None, str]:
+    """(weeks, source) for a stored scan: from the timepoint's days, else its label, else (None, "unknown")."""
+    store, user = project.store, project.require_user()
+    sc = store.scan(user, scan_id)
+    tp = store.q1("SELECT label, days FROM timepoints WHERE id=?", (sc["timepoint_id"],)) if sc.get("timepoint_id") else None
+    if not tp:
+        return None, "no timepoint assigned"
+    if tp.get("days") is not None and float(tp["days"]) >= 0:
+        return round(float(tp["days"]) / 7.0, 3), f"timepoint '{tp['label']}' ({float(tp['days']):g} days)"
+    w = parse_timepoint_weeks(tp.get("label"))
+    if w is not None:
+        return w, f"timepoint label '{tp['label']}'"
+    return None, f"timepoint '{tp['label']}' has no days and the label is not a parseable time"
+
+
+def resolve_healing_weeks(project, scan_id, value=HEALING_AUTO) -> tuple[float | None, str]:
+    """Resolve the analysis dialog's time-since-implantation setting for one scan."""
+    if value is None or value == HEALING_AUTO:
+        return scan_healing_weeks(project, scan_id)
+    if value == HEALING_UNKNOWN:
+        return None, "set to unknown by the user"
+    w = float(value)
+    if not (w >= 0 and w < 520):
+        raise ValueError(f"time since implantation must be 0-520 weeks, got {value!r}")
+    return w, "entered by the user"
+
+
 def analyze_scan(project, scan_id, config: dict | None = None, ctx=None, use_saved_roi=True) -> dict:
-    """Run the DefectFill pipeline on a stored scan via the shared job handler."""
+    """Run the DefectFill pipeline on a stored scan via the shared job handler.
+
+    ``config["healing_weeks"]`` may be "auto" (default: from the scan's timepoint), "unknown", or a number
+    of weeks; the resolved value and its source are recorded in the analysis configuration."""
     from ..api.app import job_analyze
     ctx = ctx or NullContext()
-    cfg = {k: v for k, v in {**ANALYSIS_DEFAULTS, **(config or {})}.items() if v is not None}
+    config = dict(config or {})
+    weeks, source = resolve_healing_weeks(project, scan_id, config.pop("healing_weeks", HEALING_AUTO))
+    config["healing_weeks"] = weeks
+    config["healing_weeks_source"] = source
+    cfg = {k: v for k, v in {**ANALYSIS_DEFAULTS, **config}.items() if v is not None}
     seg = str(cfg.get("segmentation", ""))
     if seg.startswith("rf:"):
         raise PermissionError("Pickled random-forest models are only available from the command line")

@@ -71,7 +71,7 @@ def run_selftest(out_dir: str | None = None) -> int:
         def s_import():
             p = Project.create(tmp / "project", "Self-test project", "analyst", DEMO_PASSWORD, "Self Test")
             ctx["p"] = p
-            sid = p.create_study("Self-test study", "rabbit", "condyle", "beta-TCP")
+            sid = p.create_study("Self-test study", "rabbit", "condyle", "beta-TCP", data_class="synthetic")
             ctx["sid"] = sid
             m = ImportModel(p, sid)
             c = m.add_path(ctx["src"])[0]

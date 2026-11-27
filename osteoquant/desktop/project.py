@@ -275,9 +275,14 @@ class Project:
             return r["id"]
         return self.store.create_project(u, self.name, "Created by OsteoQuant Desktop")
 
-    def create_study(self, name, species="", defect_model="", graft_materials="", blinded=False) -> int:
+    def create_study(self, name, species="", defect_model="", graft_materials="", blinded=False,
+                     data_class="research") -> int:
+        """``data_class``: synthetic (phantoms/demo) | public (public dataset) | research (own data) | customer."""
+        from ..api.bundle import DATA_CLASSES
+        if data_class not in DATA_CLASSES:
+            raise ValueError(f"data class must be one of {', '.join(DATA_CLASSES)}")
         return self.store.create_study(self.require_user(), self.default_store_project(), name, species,
-                                       defect_model, graft_materials, blinded)
+                                       defect_model, graft_materials, blinded, data_class=data_class)
 
     def timepoints(self, study_id) -> list[dict]:
         self.store.study(self.require_user(), study_id)

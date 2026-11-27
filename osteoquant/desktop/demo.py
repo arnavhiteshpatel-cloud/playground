@@ -37,7 +37,8 @@ def build_demo_project(folder, n_animals=4, shape=(48, 72, 72), analyze=True, ct
     p = Project.create(folder, "Synthetic condyle study (demo)", "analyst", DEMO_PASSWORD, "A. Analyst")
     oid = p.user["org_id"]
     p.store.create_user(oid, "reviewer", REVIEWER_PASSWORD, "reviewer", "R. Reviewer", actor=p.user)
-    sid = p.create_study("Condyle defect, beta-TCP (synthetic phantoms)", "rabbit", "condyle", "beta-TCP")
+    sid = p.create_study("Condyle defect, beta-TCP (synthetic phantoms)", "rabbit", "condyle", "beta-TCP",
+                         data_class="synthetic")
     g1 = p.store.add_group(p.user, sid, "Control (beta-TCP)")
     g2 = p.store.add_group(p.user, sid, "Treatment (beta-TCP + additive)")
     m = ImportModel(p, sid)

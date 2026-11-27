@@ -130,10 +130,16 @@ class NewStudyDialog(_Dialog):
         self.material = QLineEdit()
         self.material.setPlaceholderText("e.g. beta-TCP, HA")
         self.blinded = QCheckBox("Blinded study (group allocation hidden from non-administrators)")
+        self.data_class = QComboBox()
+        for key, label in (("research", "Own research data"), ("customer", "Customer / sponsor data (confidential)"),
+                           ("public", "Public dataset (reanalysis)"), ("synthetic", "Synthetic phantoms / demo data")):
+            self.data_class.addItem(label, key)
+        self.data_class.setToolTip("Printed on every report page. Synthetic and demo data are labelled as such.")
         f.addRow("Name", self.name)
         f.addRow("Species", self.species)
         f.addRow("Defect model", self.model)
         f.addRow("Graft material(s)", self.material)
+        f.addRow("Data class", self.data_class)
         f.addRow("", self.blinded)
         self.lay.addLayout(f)
         self.lay.addWidget(self.error)
@@ -147,7 +153,7 @@ class NewStudyDialog(_Dialog):
     def values(self):
         return dict(name=self.name.text().strip(), species=self.species.currentText().strip(),
                     defect_model=self.model.currentText(), graft_materials=self.material.text().strip(),
-                    blinded=self.blinded.isChecked())
+                    blinded=self.blinded.isChecked(), data_class=self.data_class.currentData())
 
 
 class AnalysisDialog(_Dialog):
@@ -194,11 +200,30 @@ class AnalysisDialog(_Dialog):
         self.thick.setChecked(True)
         self.saved_roi = QCheckBox("Use the latest saved ROI when present")
         self.saved_roi.setChecked(True)
+        # time since implantation: resorbable materials are intensity-supported only at a known timepoint <=4 weeks
+        self.tp_mode = QComboBox()
+        self.tp_mode.addItem("From each scan's timepoint (days, or a label such as 'Week 4')", "auto")
+        self.tp_mode.addItem("Enter weeks for all selected scans", "weeks")
+        self.tp_mode.addItem("Unknown", "unknown")
+        self.tp_weeks = QDoubleSpinBox()
+        self.tp_weeks.setRange(0, 520)
+        self.tp_weeks.setDecimals(1)
+        self.tp_weeks.setSuffix(" weeks")
+        self.tp_weeks.setValue(4)
+        self.tp_weeks.setEnabled(False)
+        self.tp_mode.currentIndexChanged.connect(
+            lambda *_: self.tp_weeks.setEnabled(self.tp_mode.currentData() == "weeks"))
+        self.tp_mode.setToolTip("Used by the measurement-support advisor. Resorbable grafts (beta-TCP, calcium sulfate, "
+                                "bioactive glass, composites) are separated by intensity only at a known timepoint of "
+                                "4 weeks or less. If a scan's timepoint has no days and its label cannot be read as a "
+                                "time, the timepoint is treated as unknown.")
         f.addRow("Defect model", self.model)
         f.addRow("Nominal defect diameter", self.diam)
         f.addRow("Segmentation", self.seg)
         f.addRow("Graft material", self.material)
         f.addRow("", self.bright)
+        f.addRow("Time since implantation", self.tp_mode)
+        f.addRow("", self.tp_weeks)
         f.addRow("", self.thick)
         f.addRow("", self.saved_roi)
         self.lay.addLayout(f)
@@ -220,10 +245,17 @@ class AnalysisDialog(_Dialog):
         mat = self.material.currentData()
         cfg = {"defect_model": self.model.currentText(), "segmentation": self.seg.currentData(),
                "graft_brighter": self.bright.isChecked(), "thickness_metrics": self.thick.isChecked(),
-               "nominal_diameter_um": self.diam.value() or None, "no_graft": mat == "__no_graft__"}
+               "nominal_diameter_um": self.diam.value() or None, "no_graft": mat == "__no_graft__",
+               "healing_weeks": self.healing_weeks()}
         if mat and mat != "__no_graft__":
             cfg["material"] = mat
         return cfg
+
+
+    def healing_weeks(self):
+        """"auto" (from each scan's timepoint), "unknown", or a number of weeks."""
+        mode = self.tp_mode.currentData()
+        return float(self.tp_weeks.value()) if mode == "weeks" else mode
 
 
 class RoiDialog(_Dialog):

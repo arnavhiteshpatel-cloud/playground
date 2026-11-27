@@ -21,6 +21,20 @@ ENDPOINTS = [
 ]
 
 
+# Data classes a study can carry (set at study creation and recorded in the audit trail). The report banner and
+# footer follow the study's class; synthetic or demo data are never labelled as customer data (review QA-REG-15,
+# C2-BIZ-05). Unknown or missing values fall back to "research" (the store default), not to "customer".
+DATA_CLASSES = ("synthetic", "public", "research", "customer")
+_DATA_CLASS_ALIASES = {"demo": "synthetic", "phantom": "synthetic", "simulated": "synthetic", "own": "research",
+                       "own_research": "research", "confidential": "customer", "sponsor": "customer"}
+
+
+def report_data_class(value) -> str:
+    v = str(value or "").strip().lower()
+    v = _DATA_CLASS_ALIASES.get(v, v)
+    return v if v in DATA_CLASSES else "research"
+
+
 def git_commit():
     try:
         return subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True,
@@ -85,13 +99,13 @@ def bundle_from_store(store, user, sid, ctx=None) -> dict:
             "analysis_parameters": {k: v for k, v in (res.get("segmentation") or {}).items()
                                     if k in ("method", "t_mineral", "t_graft", "t_graft_rel", "thresholds",
                                              "estimated_graft_share", "advisor_version", "runtime", "onnx_sha256",
-                                             "validation_record", "model_name")},
+                                             "validation_record", "model_name")}
+                                   | {k: (res.get("config") or {}).get(k) for k in ("healing_weeks", "healing_weeks_source")
+                                      if k in (res.get("config") or {})},
             "uncertainty": res.get("uncertainty", {}),
             "plausibility": res.get("plausibility", []), "figure": fig,
             "reviews": revs})
-    data_class = st.get("data_class") or "customer"
-    if data_class == "research":
-        data_class = "customer"
+    data_class = report_data_class(st.get("data_class"))
     return {
         "title": st["name"], "study": {"name": st["name"], "species": st["species"], "defect_model": st["defect_model"],
                                        "graft_materials": st["graft_materials"], "blinded": bool(st["blinded"])},

@@ -290,3 +290,10 @@ def test_scan_profile_mismatch_refuses():
     bad = assess_support("ha", noise_rel=0.03, voxel_um=20, observed_graft_level=1.5)
     assert bad.status("residual_graft_volume") == NOT_SUPPORTED
     assert "profile mismatch" in bad.endpoints["residual_graft_volume"].reason
+
+
+def test_bone_derived_not_supported_by_day0():
+    full = {"registered": True, "qc_pass": True, "untracked_fraction": 0.0, "max_displacement_um": 10.0}
+    for m in ("autograft", "allograft", "xenograft_dbbm"):
+        a = assess_support(m, noise_rel=0.05, voxel_um=20, day0=full)
+        assert a.status("residual_graft_volume") == NOT_SUPPORTED

@@ -29,3 +29,5 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
   
 {'method': 'synthetic_unet_finetuned_k1', 'case': '228420_Dachshund.tif', 'dice': 0.7949837644160789, 'hd95_vox': 3.605551275463989, 'vol_err': 0.15985489721886337}
 {'method': 'synthetic_unet_finetuned_k1', 'case': '232558_Beagle.tif', 'dice': 0.6817464492372436, 'hd95_vox': 4.47213595499958, 'vol_err': 0.8506091846298032}
+{'method': 'synthetic_unet_finetuned_k1', 'case': '238046_WH.tif', 'dice': 0.7143524444471406, 'hd95_vox': 2.23606797749979, 'vol_err': -0.42677037602595913}
+{'method': 'synthetic_unet_finetuned_k1', 'case': '239179_Yorkie.tif', 'dice': 0.8488659027143968, 'hd95_vox': 1.7320508075688772, 'vol_err': -0.17827452429336782}

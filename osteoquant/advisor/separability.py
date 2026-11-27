@@ -47,7 +47,7 @@ MIN_STRUCT_VOXELS = 3.0         # thickness endpoints need structures ≥3 voxel
 HOST_REL_MATURE = 1.0
 MIN_REFERENCE_SAMPLES = 500     # measured reference distributions need at least this many voxels
 MIN_GRAFT_FRACTION = 0.05       # below this share of mineral, relative graft-volume error is unbounded
-ADVISOR_VERSION = "1.3.2"
+ADVISOR_VERSION = "1.3.3"
 PROFILE_SCAN_MISMATCH_TOL = 0.15   # observed bright-mode vs profile graft level (relative)
 # Resorbable materials whose granules become microporous/fragmented and enter the bone intensity range as they
 # resorb (knowledge base: beta-TCP almost fully resorbed by 8 weeks in minipig; CaSO4 and glasses similar or faster).
@@ -66,6 +66,7 @@ EARLY_WEEKS_MAX = 4.0
 # profile level, support requires a measured reference (S1b 1.3.0: BCP profile 1.73 vs scan 1.43 → −42…−49% errors).
 # 1.3.2: measured new-bone references (empty-defect controls) get graft-adjacent partial-volume mixing (S1c: control
 # new bone is dimmer than new bone next to dense graft; threshold too low → graft +24%).
+# 1.3.3: bone-derived grafts are not supported by the day-0 mechanism either (remodelling).
 
 # Assumed new-bone maturity range in relative units. Early/mid healing: woven 650–1000 mgHA/cm³ vs
 # mature host ≈1075 → (0.60, 0.93) (SCIENTIFIC_EVIDENCE row 4, assumption anchored to a published callus
@@ -485,6 +486,12 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
             ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
                                     f"residual graft is scarce (≈{graft_prior:.0%} of mineral): relative graft-volume "
                                     "error is unbounded; report as 'trace residual graft'")
+        elif day0_ok and bone_like:
+            # bone-derived grafts (autograft, allograft, DBBM, DBM) are remodelled into bone: bone inside the day-0
+            # footprint cannot be attributed to residual graft (cycle-2 review C2-BIZ biology finding; 1.3.3)
+            ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
+                                    "graft is bone-derived: the day-0 footprint becomes remodelled bone, so residual "
+                                    "graft cannot be separated from new bone by registration either; use histology")
         elif day0 and not day0_complete:
             ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
                                     "day-0 assessment incomplete: registration QC and granule tracking must be computed "

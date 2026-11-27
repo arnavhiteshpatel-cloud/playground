@@ -1,6 +1,6 @@
 # Measurement Support (Identifiability) Policy
 
-Implementation: `osteoquant/advisor/` (version **1.3.2**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
+Implementation: `osteoquant/advisor/` (version **1.3.3**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
 
 ## Why
 Graft and new bone are both mineral. For many materials their X-ray attenuation overlaps (Experiments C, C2; the
@@ -27,7 +27,7 @@ by which mechanism, and under which conditions — and abstains otherwise.
    and a graft-volume ratio within ±10%, both at the graft share estimated from the scan and at half of it (volume
    error grows as residual graft becomes scarce). The Dice-optimal bin-union oracle is reported as the upper bound.
    Below 5% graft share of mineral, graft-volume endpoints are refused ("trace residual graft").
-4. **Bone-derived grafts** (allograft, DBBM/xenograft, autograft): never supported by intensity alone — they remodel
+4. **Bone-derived grafts** (allograft, DBBM/xenograft, autograft): never supported by intensity alone or by the day-0 mechanism — they remodel
    towards bone intensity.
 5. **Day-0 mechanism**: if intensity fails but a registered day-0 scan passes registration QC (residual
    displacement ≤ 2 voxels) and granule motion is within tolerance (default 200 µm) or tracked with ≤20% untracked

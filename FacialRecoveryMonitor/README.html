@@ -1,0 +1,134 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Overview — Facial Recovery Monitor</title><style>
+:root{--navy:#172B4D;--blue:#3B82F6;--teal:#14B8A6;--bg:#F3F6FB;--text:#334155;--gray:#64748B;--border:#E2E8F0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Segoe UI",-apple-system,BlinkMacSystemFont,Inter,Roboto,Helvetica,Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:20px 16px}header .in{max-width:980px;margin:auto;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+header img{width:44px;height:44px}header b{font-size:18px}header small{display:block;color:var(--teal);font-weight:700;letter-spacing:.08em}
+header nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}header nav a{color:#DCE6F5;text-decoration:none;padding:6px 12px;border-radius:8px;background:#22385E;font-size:14px}
+header nav a.on{background:var(--teal);color:#fff}
+main{max-width:980px;margin:24px auto;padding:8px 32px 40px;background:#fff;border:1px solid var(--border);border-radius:16px}
+@media(max-width:700px){main{margin:12px 8px;padding:4px 16px 24px}}
+h1{color:var(--navy);font-size:32px;line-height:1.2;margin-top:28px}h2{color:var(--navy);border-top:1px solid var(--border);padding-top:24px;margin-top:36px}h3{color:var(--navy)}
+a{color:#1D4ED8}code{background:#EEF2F7;padding:1px 6px;border-radius:6px;font-size:.92em}
+pre{background:#0F1B2E;color:#E2E8F0;padding:14px 16px;border-radius:12px;overflow-x:auto}pre code{background:none;color:inherit;padding:0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px;display:block;overflow-x:auto}th{background:#F8FAFC;color:var(--gray);text-align:left}
+th,td{border:1px solid var(--border);padding:8px 10px;vertical-align:top}
+blockquote{margin:16px 0;padding:12px 16px;background:#FEF3C7;border-left:4px solid #F59E0B;border-radius:8px;color:#92400E}blockquote p{margin:0}
+img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--border);margin:8px 0}
+footer{max-width:980px;margin:0 auto 32px;padding:0 16px;color:var(--gray);font-size:13px;text-align:center}
+</style></head><body>
+<header><div class="in"><img src="assets/icon.png" alt=""><div><b>Facial Recovery Monitor</b><small>v0.9.0 · RESEARCH PROTOTYPE</small></div><nav><a href="START_HERE.html" class="">Start here</a><a href="LAUNCH_GUIDE.html" class="">Launch guide</a><a href="FEATURES_GUIDE.html" class="">Features guide</a><a href="README.html" class="on">Overview</a></nav></div></header>
+<main><h1 id="facial-recovery-monitor">Facial Recovery Monitor</h1>
+<p><strong>A local, privacy-conscious desktop app for tracking facial movement, symptoms and recovery
+progress after facial nerve conditions</strong> — Bell's palsy, facial nerve injury, facial nerve
+reconstruction/reanimation, acoustic neuroma surgery and other conditions affecting facial nerve
+function. Version 0.9.0 · Research Prototype.</p>
+<blockquote>
+<p>⚠️ <strong>Research prototype — not a medical device.</strong> Not clinically validated. It does not diagnose,
+grade severity, rate recovery, predict outcomes or recommend treatment. All landmark-based
+numbers are <strong>experimental</strong>. Always follow the advice of your healthcare team.</p>
+</blockquote>
+<p><img alt="Dashboard" src="docs/screenshots/01_dashboard.png" /></p>
+<h2 id="start-in-3-steps">Start in 3 steps</h2>
+<ol>
+<li><strong>Unzip</strong> <code>FacialRecoveryMonitor.zip</code> (e.g. into Documents).</li>
+<li><strong>Double-click the launcher for your computer:</strong>
+   * Windows → <code>START_WINDOWS.bat</code>
+   * Mac → right-click <code>START_MAC.command</code> → <strong>Open</strong> (first time), then double-click afterwards
+   * Linux → <code>./start_linux.sh</code></li>
+<li>The first run installs everything automatically (Python 3.12 from the bundled official
+   installer if needed, then all app components from the bundled offline packages — no internet
+   needed on Windows and Apple-silicon Macs). The app then opens.</li>
+</ol>
+<p><strong>Full instructions:</strong> <a href="LAUNCH_GUIDE.html">LAUNCH_GUIDE</a> · <strong>Every feature explained:</strong>
+<a href="FEATURES_GUIDE.html">FEATURES_GUIDE</a> · Or open <strong><code>START_HERE.html</code></strong> in your browser.</p>
+<h2 id="what-it-does">What it does</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Highlights</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dashboard</strong></td>
+<td>Real statistics only (check-ins, surveys, last check-in, tracking duration), quick actions, recent activity, latest experimental values or an explicit "none available" message.</td>
+</tr>
+<tr>
+<td><strong>Facial Check-In</strong></td>
+<td>Preparation checklist → live webcam with camera selection, status indicators and MediaPipe face-landmark overlay → 5 guided expressions (neutral, smile, eyebrow raise, eye closure, optional pucker) with Back/Next/Skip/Cancel, countdown and explicit capture → summary with experimental metrics, missing measurements (with reasons) and notes → Save.</td>
+</tr>
+<tr>
+<td><strong>Symptom Survey</strong></td>
+<td>15 questions in 5 sections, validation, automatic drafts, confirmation. No scoring or recommendations.</td>
+</tr>
+<tr>
+<td><strong>Progress &amp; Analytics</strong></td>
+<td>Activity, experimental movement (right vs left) and symptom-history charts; All/7/30/90-day filters; hover values; never plots missing values as zero.</td>
+</tr>
+<tr>
+<td><strong>Check-In History</strong></td>
+<td>Filter, sort, detailed view, delete with confirmation.</td>
+</tr>
+<tr>
+<td><strong>Patient Profile</strong></td>
+<td>Optional name, start date, condition (own words), notes.</td>
+</tr>
+<tr>
+<td><strong>Settings</strong></td>
+<td>Camera options, CSV/JSON export, delete all data, privacy information, version.</td>
+</tr>
+<tr>
+<td><strong>About</strong></td>
+<td>Purpose, audience, computer-vision vision, limitations, disclaimer.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Privacy by design:</strong> local SQLite storage, no account, no network calls, camera only on when you
+start a check-in, no video recording, still images off by default, export and deletion under your
+control.</p>
+<h2 id="what-is-in-this-folder">What is in this folder</h2>
+<pre><code>FacialRecoveryMonitor/
+├── START_HERE.html            ← open in a browser: links to every guide
+├── START_WINDOWS.bat          ← one-click install + start (Windows)
+├── START_MAC.command          ← one-click install + start (macOS)
+├── start_linux.sh             ← install + start (Linux)
+├── LAUNCH_GUIDE.html / .md    ← installation &amp; launch guide, troubleshooting
+├── FEATURES_GUIDE.html / .md  ← every screen, button and measurement explained
+├── README.html / .md          ← this overview
+├── installers/                ← official Python 3.12.10 installers (Windows, macOS) + SHA256SUMS
+├── offline_packages/          ← all Python packages for Windows x64 and Apple-silicon Macs
+├── main.py                    ← application entry point
+├── requirements.txt
+├── app/                       ← application source code
+│   ├── ui.py, theme.py, dialogs.py, icons.py       (window, design system)
+│   ├── camera.py, facial_analysis.py, face_topology.py   (webcam + landmarks + metrics)
+│   ├── database.py, export.py, survey_definitions.py, charts.py, config.py, utils.py
+│   └── pages/  dashboard, checkin, survey, analytics, history, profile, settings, about
+├── assets/                    ← face-landmark model (offline), app icon
+├── scripts/                   ← demo-data generator, automated UI test
+├── tests/                     ← 26 unit tests (pytest)
+└── docs/screenshots/
+</code></pre>
+<h2 id="manual-installation-developers-vs-code">Manual installation (developers / VS Code)</h2>
+<pre><code class="language-bash">python3.12 -m venv .venv                     # Windows: py -3.12 -m venv .venv
+source .venv/bin/activate                    # Windows: .venv\Scripts\activate
+pip install -r requirements.txt              # or offline: --no-index --find-links offline_packages/&lt;platform&gt;
+python main.py
+</code></pre>
+<p>Tests: <code>pip install pytest &amp;&amp; python -m pytest -q</code> · UI walkthrough: <code>python scripts/ui_smoke_test.py</code>
+· Demo data: <code>python scripts/seed_demo_data.py</code> then <code>FRM_DATA_DIR=demo_data python main.py</code>.</p>
+<h2 id="technology">Technology</h2>
+<p>Python · CustomTkinter · OpenCV · MediaPipe Face Landmarker (Tasks API; the older
+<code>mp.solutions</code> API was removed from recent MediaPipe releases, so the current API is used with the
+model file bundled for offline use) · Matplotlib · SQLite · NumPy · Pillow.</p>
+<h2 id="known-limitations">Known limitations</h2>
+<p>Experimental, unvalidated measurements; sensitive to lighting, camera position and head turn; 2-D
+webcam cannot fully correct head rotation; landmark model not evaluated on facial palsy; synkinesis
+and muscle tone not measured; no encryption at rest; no clinical, regulatory or security
+validation.</p>
+<hr />
+<p><em>Face landmark model: MediaPipe Face Landmarker © Google, Apache License 2.0. Bundled Python
+installers © Python Software Foundation (PSF License). Bundled packages retain their own
+open-source licences.</em></p></main><footer>Not a medical device · Not clinically validated · All data stays on your computer</footer></body></html>

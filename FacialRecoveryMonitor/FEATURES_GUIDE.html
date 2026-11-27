@@ -1,0 +1,965 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Features Guide — Facial Recovery Monitor</title><style>
+:root{--navy:#172B4D;--blue:#3B82F6;--teal:#14B8A6;--bg:#F3F6FB;--text:#334155;--gray:#64748B;--border:#E2E8F0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Segoe UI",-apple-system,BlinkMacSystemFont,Inter,Roboto,Helvetica,Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:20px 16px}header .in{max-width:980px;margin:auto;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+header img{width:44px;height:44px}header b{font-size:18px}header small{display:block;color:var(--teal);font-weight:700;letter-spacing:.08em}
+header nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}header nav a{color:#DCE6F5;text-decoration:none;padding:6px 12px;border-radius:8px;background:#22385E;font-size:14px}
+header nav a.on{background:var(--teal);color:#fff}
+main{max-width:980px;margin:24px auto;padding:8px 32px 40px;background:#fff;border:1px solid var(--border);border-radius:16px}
+@media(max-width:700px){main{margin:12px 8px;padding:4px 16px 24px}}
+h1{color:var(--navy);font-size:32px;line-height:1.2;margin-top:28px}h2{color:var(--navy);border-top:1px solid var(--border);padding-top:24px;margin-top:36px}h3{color:var(--navy)}
+a{color:#1D4ED8}code{background:#EEF2F7;padding:1px 6px;border-radius:6px;font-size:.92em}
+pre{background:#0F1B2E;color:#E2E8F0;padding:14px 16px;border-radius:12px;overflow-x:auto}pre code{background:none;color:inherit;padding:0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px;display:block;overflow-x:auto}th{background:#F8FAFC;color:var(--gray);text-align:left}
+th,td{border:1px solid var(--border);padding:8px 10px;vertical-align:top}
+blockquote{margin:16px 0;padding:12px 16px;background:#FEF3C7;border-left:4px solid #F59E0B;border-radius:8px;color:#92400E}blockquote p{margin:0}
+img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--border);margin:8px 0}
+footer{max-width:980px;margin:0 auto 32px;padding:0 16px;color:var(--gray);font-size:13px;text-align:center}
+</style></head><body>
+<header><div class="in"><img src="assets/icon.png" alt=""><div><b>Facial Recovery Monitor</b><small>v0.9.0 · RESEARCH PROTOTYPE</small></div><nav><a href="START_HERE.html" class="">Start here</a><a href="LAUNCH_GUIDE.html" class="">Launch guide</a><a href="FEATURES_GUIDE.html" class="on">Features guide</a><a href="README.html" class="">Overview</a></nav></div></header>
+<main><h1 id="features-guide-facial-recovery-monitor">Features Guide — Facial Recovery Monitor</h1>
+<p>A complete tour of every screen, button and measurement in <strong>Facial Recovery Monitor v0.9.0
+(Research Prototype)</strong>. To install and start the app, see the <a href="LAUNCH_GUIDE.html">Launch Guide</a>.</p>
+<blockquote>
+<p>⚠️ <strong>Important.</strong> This software is a research prototype. It is <strong>not a medical device</strong>, has
+<strong>not been clinically validated</strong>, does <strong>not diagnose</strong> any condition, does <strong>not recommend
+treatment</strong> and does <strong>not replace healthcare professionals</strong>. Landmark-based numbers are
+<strong>experimental</strong>. Always follow the advice of your healthcare team.</p>
+</blockquote>
+<p><em>Screenshots show the built-in synthetic demo dataset (note the yellow "DEMO DATA" badge). The
+check-in result screenshots use synthetic values for illustration.</em></p>
+<hr />
+<h2 id="contents">Contents</h2>
+<ol>
+<li><a href="#1-who-it-is-for-and-what-it-does">Who it is for and what it does</a></li>
+<li><a href="#2-the-main-window-and-navigation">The main window and navigation</a></li>
+<li><a href="#3-dashboard">Dashboard</a></li>
+<li><a href="#4-facial-check-in">Facial Check-In</a></li>
+<li><a href="#5-the-experimental-measurements-explained">The experimental measurements explained</a></li>
+<li><a href="#6-symptom-survey">Symptom Survey</a></li>
+<li><a href="#7-progress-analytics">Progress &amp; Analytics</a></li>
+<li><a href="#8-check-in-history">Check-In History</a></li>
+<li><a href="#9-patient-profile">Patient Profile</a></li>
+<li><a href="#10-settings">Settings</a></li>
+<li><a href="#11-about">About</a></li>
+<li><a href="#12-your-data-privacy-storage-export-deletion">Your data: privacy, storage, export, deletion</a></li>
+<li><a href="#13-messages-and-error-handling">Messages and error handling</a></li>
+<li><a href="#14-tips-for-consistent-check-ins">Tips for consistent check-ins</a></li>
+<li><a href="#15-frequently-asked-questions">Frequently asked questions</a></li>
+<li><a href="#16-technical-reference">Technical reference</a></li>
+</ol>
+<hr />
+<h2 id="1-who-it-is-for-and-what-it-does">1. Who it is for and what it does</h2>
+<p>Facial Recovery Monitor helps people recovering from conditions that affect the facial nerve —
+<strong>Bell's palsy, facial nerve injury, facial nerve reconstruction or reanimation, acoustic neuroma
+surgery</strong> and similar — to:</p>
+<ul>
+<li>complete <strong>standardised, guided facial check-ins</strong> with a webcam;</li>
+<li>record <strong>symptoms</strong> with a structured survey;</li>
+<li>keep an <strong>organised, dated history</strong> on their own computer;</li>
+<li>review <strong>charts over time</strong> and <strong>export</strong> records to discuss with their clinician.</li>
+</ul>
+<p>The long-term idea is that computer vision could make home recordings more consistent and
+quantifiable. In this prototype the numbers are demonstrations of what facial landmarks can
+capture — not clinical measurements.</p>
+<hr />
+<h2 id="2-the-main-window-and-navigation">2. The main window and navigation</h2>
+<p><img alt="Main window" src="docs/screenshots/01_dashboard.png" /></p>
+<p><strong>Sidebar (left, dark navy)</strong> — always visible:</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logo + "Facial Recovery Monitor"</td>
+<td>Application identity.</td>
+</tr>
+<tr>
+<td><strong>Dashboard</strong></td>
+<td>Overview (start page).</td>
+</tr>
+<tr>
+<td><strong>Facial Check-In</strong></td>
+<td>Guided camera session.</td>
+</tr>
+<tr>
+<td><strong>Symptom Survey</strong></td>
+<td>15-question symptom questionnaire.</td>
+</tr>
+<tr>
+<td><strong>Progress &amp; Analytics</strong></td>
+<td>Charts over time.</td>
+</tr>
+<tr>
+<td><strong>Check-In History</strong></td>
+<td>Browse, inspect and delete records.</td>
+</tr>
+<tr>
+<td><strong>Patient Profile</strong></td>
+<td>Optional personal details.</td>
+</tr>
+<tr>
+<td><strong>Settings</strong></td>
+<td>Camera, export, deletion, privacy, version.</td>
+</tr>
+<tr>
+<td><strong>About</strong></td>
+<td>Purpose, limitations, disclaimer.</td>
+</tr>
+<tr>
+<td>Teal bar + highlighted button</td>
+<td>Shows which page you are on.</td>
+</tr>
+<tr>
+<td>"Stored on this device only" card</td>
+<td>Reminder that data is local; shows the version number.</td>
+</tr>
+<tr>
+<td>"DEMO DATA" badge</td>
+<td>Only shown when the synthetic demo database is open.</td>
+</tr>
+</tbody>
+</table>
+<p>Pages switch inside the same window. The window can be resized; cards rearrange into fewer columns
+on smaller windows. Notifications ("Survey saved", "Check-in saved…") appear briefly in the
+top-right corner.</p>
+<p><strong>Leaving a page with unfinished work</strong> — the app protects you from losing work:
+* leaving an unfinished check-in asks <em>"Leave this check-in?"</em> (and turns the camera off);
+* leaving an unsaved check-in summary asks <em>"Leave without saving?"</em>;
+* leaving the survey keeps your answers as a draft automatically.</p>
+<hr />
+<h2 id="3-dashboard">3. Dashboard</h2>
+<p><img alt="Dashboard" src="docs/screenshots/01_dashboard.png" /></p>
+<p><strong>Header (navy banner):</strong> today's date, the app name, a welcome message (uses your display name
+from the profile if you set one), a short description, and three <strong>quick-action buttons</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Button</th>
+<th>Goes to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Start Facial Check-In</strong></td>
+<td>Facial Check-In page</td>
+</tr>
+<tr>
+<td><strong>Complete Symptom Survey</strong></td>
+<td>Symptom Survey page</td>
+</tr>
+<tr>
+<td><strong>View Progress</strong></td>
+<td>Progress &amp; Analytics page</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Statistics cards</strong> (calculated from your saved records only — never invented):</p>
+<table>
+<thead>
+<tr>
+<th>Card</th>
+<th>Shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Facial check-ins</td>
+<td>Number of saved check-in sessions.</td>
+</tr>
+<tr>
+<td>Symptom surveys</td>
+<td>Number of saved surveys.</td>
+</tr>
+<tr>
+<td>Most recent check-in</td>
+<td>Date, "Today/Yesterday/N days ago" and time; "—" if none.</td>
+</tr>
+<tr>
+<td>Tracking duration</td>
+<td>Days between your first and most recent record (any type), with both dates.</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Dashboard lower part" src="docs/screenshots/02_dashboard_lower.png" /></p>
+<p><strong>Recent activity:</strong> your five most recent check-ins and surveys with type, date/time and a summary
+(e.g. <em>"4 of 5 expressions captured · 12 experimental metrics"</em> or <em>"15 responses recorded"</em>).
+<strong>Click a row</strong> to open that record in Check-In History. <em>View full history →</em> opens the History
+page. With no records you see a friendly empty state with a <em>Start Facial Check-In</em> button.</p>
+<p><strong>Recovery overview:</strong> the latest check-in's experimental right/left values for smile, eyebrow
+raise, eye closure and lip pucker, marked <strong>EXPERIMENTAL</strong>, plus a note that they are not validated
+clinical measurements. If no measurements exist it says so explicitly. Below it: the date of your
+latest symptom survey.</p>
+<p>A teal banner at the bottom reminds you that the dashboard does not diagnose, grade or predict
+recovery.</p>
+<hr />
+<h2 id="4-facial-check-in">4. Facial Check-In</h2>
+<p>A check-in has three stages: <strong>prepare → guided expressions → summary</strong>.</p>
+<h3 id="41-preparation-screen">4.1 Preparation screen</h3>
+<p><img alt="Check-in preparation" src="docs/screenshots/03_checkin_prepare.png" /></p>
+<p><strong>Before you begin</strong> — six numbered tips: camera at eye level, consistent lighting, keep your face
+visible, remove obstructions (hair over brows, glasses, hats), sit comfortably, keep the set-up
+consistent between sessions.</p>
+<p><strong>Session setup:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Camera</strong> dropdown</td>
+<td>Choose which camera to use (Camera 0 is usually the built-in one).</td>
+</tr>
+<tr>
+<td><strong>Scan</strong></td>
+<td>Tests camera numbers 0–4 and lists the ones that deliver images. (Only while the camera is off.)</td>
+</tr>
+<tr>
+<td><strong>Save a still image of each expression</strong> switch</td>
+<td><strong>Off by default.</strong> When on, one photo per captured expression is kept in memory and written to your data folder <strong>only if you press Save Session</strong>. Images are never uploaded or exported.</td>
+</tr>
+<tr>
+<td><em>What is recorded</em></td>
+<td>Plain-language summary of what is and is not stored.</td>
+</tr>
+<tr>
+<td><strong>Begin check-in</strong></td>
+<td>Starts the session and turns the camera on (this is the only way the camera turns on).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-guided-expressions">4.2 Guided expressions</h3>
+<p><img alt="Guided step" src="docs/screenshots/04_checkin_guided_step.png" /></p>
+<p><em>(The screenshot shows the camera-unavailable state on a computer with no webcam. With a camera
+you see a live, mirrored preview with a thin teal face outline and blue key points.)</em></p>
+<p><strong>Left: Live camera card</strong></p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Camera status pill</strong></td>
+<td><em>Camera 0 on</em> (green), <em>Starting camera…</em>, <em>Camera off</em> (grey) or <em>Camera error</em> (red).</td>
+</tr>
+<tr>
+<td><strong>Face pill</strong></td>
+<td><em>Face detected</em> (green), <em>No face detected</em> (amber), or <em>Detection unavailable</em>.</td>
+</tr>
+<tr>
+<td><strong>Recording landmarks</strong> pill (red)</td>
+<td>Visible only while measurements are being captured.</td>
+</tr>
+<tr>
+<td>Live preview</td>
+<td>Your camera image. A <strong>3-2-1 countdown</strong> appears in the middle before capture; a <strong>red border</strong> shows while capturing.</td>
+</tr>
+<tr>
+<td>Camera error / off panel</td>
+<td>Explains the problem (e.g. permission denied) with <strong>Try again</strong> / <strong>Turn camera on</strong>.</td>
+</tr>
+<tr>
+<td>Camera dropdown</td>
+<td>Switch camera (restarts the preview).</td>
+</tr>
+<tr>
+<td><strong>Turn camera on / off</strong></td>
+<td>Manually control the camera.</td>
+</tr>
+<tr>
+<td><strong>Landmark overlay</strong> switch</td>
+<td>Show/hide the facial contour drawing.</td>
+</tr>
+<tr>
+<td><strong>Mirror view</strong> switch</td>
+<td>Show the preview like a mirror (measurements are unaffected).</td>
+</tr>
+<tr>
+<td>fps</td>
+<td>Frames analysed per second.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Right: Step panel</strong></p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>STEP n OF 5</em> + progress segments</td>
+<td>Blue = current step, teal = captured, grey = skipped. <em>OPTIONAL</em> badge on step 5.</td>
+</tr>
+<tr>
+<td>Expression name, instruction, detail</td>
+<td>What to do and how.</td>
+</tr>
+<tr>
+<td>Status box</td>
+<td><em>Not captured yet</em> → <em>Get ready… 3/2/1</em> → <em>Recording landmarks…</em> → <strong>Expression captured</strong> (with face-detection quality and head-turn angle) or <strong>No face detected</strong> (with advice) or <em>Skipped</em>.</td>
+</tr>
+<tr>
+<td><strong>Capture expression</strong> / <strong>Recapture expression</strong></td>
+<td>Starts the countdown (3 s) and then records ~1.6 s of landmark measurements (up to 40 frames). A short system sound plays when capture finishes.</td>
+</tr>
+<tr>
+<td><strong>Back</strong></td>
+<td>Previous step (captures are kept).</td>
+</tr>
+<tr>
+<td><strong>Next</strong> / <strong>Finish</strong></td>
+<td>Next step; enabled after the step is captured or skipped. On the last step it finishes the session.</td>
+</tr>
+<tr>
+<td><strong>Skip this movement</strong> / <strong>Skip and finish</strong></td>
+<td>Skip without capturing — use this if a movement is uncomfortable.</td>
+</tr>
+<tr>
+<td><strong>Cancel check-in</strong> (top right)</td>
+<td>Asks for confirmation, turns the camera off and discards the session.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The five standardised expressions</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Expression</th>
+<th>Instruction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Neutral position</td>
+<td>"Relax your facial muscles and look directly at the camera." — the reference for all movements.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Gentle smile</td>
+<td>"Give a gentle smile without forcing the movement."</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Eyebrow movement</td>
+<td>"Raise your eyebrows gently."</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Eye closure</td>
+<td>"Gently close your eyes." Press Capture first, then close your eyes for about 5 seconds; listen for the alert sound.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Lip pucker (optional)</td>
+<td>"Gently pucker your lips as if about to whistle." Skip it if uncomfortable or not relevant.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What happens when you press Capture:</strong> a 3-second countdown, then the app analyses each camera
+frame for ~1.6 seconds <strong>on your computer</strong>, keeps the <em>median</em> of the landmark measurements and
+discards the frames. If fewer than 5 frames contained a face, the step is marked <em>No face
+detected</em> and you can retry or skip. If your head was turned more than 15°, you are warned.</p>
+<h3 id="43-session-summary">4.3 Session summary</h3>
+<p><img alt="Session summary" src="docs/screenshots/05_checkin_results.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Save Session</strong> (top and bottom)</td>
+<td>Stores the session. Before this, nothing is saved. After saving, the button becomes <strong>Update notes</strong>.</td>
+</tr>
+<tr>
+<td><em>Experimental prototype</em> banner</td>
+<td>Reminder that values are not a diagnosis, severity rating, recovery score or prognosis.</td>
+</tr>
+<tr>
+<td><strong>Session details</strong></td>
+<td>Date and time, duration, expressions captured (n of 5), face detection (frames with a face / frames analysed), still images.</td>
+</tr>
+<tr>
+<td><strong>Completed expressions</strong></td>
+<td>Each expression with a status badge: <em>Captured</em>, <em>Skipped</em>, <em>No face detected</em>, <em>Not analysed</em>.</td>
+</tr>
+<tr>
+<td><strong>Experimental landmark measurements</strong></td>
+<td>Table grouped by movement: Right, Left and L/R similarity (see section 5).</td>
+</tr>
+<tr>
+<td><strong>Missing measurements</strong></td>
+<td>Every value that could not be calculated, grouped by reason (e.g. <em>"Requires a successfully analysed 'Lip pucker' capture"</em>). <strong>No substitute values are ever used.</strong></td>
+</tr>
+<tr>
+<td><strong>Session notes</strong> (<em>USER-ENTERED</em>)</td>
+<td>Free text, up to 5,000 characters.</td>
+</tr>
+<tr>
+<td><strong>View Progress</strong>, <strong>Return to Dashboard</strong>, <strong>Start a new check-in</strong></td>
+<td>Navigation. Leaving without saving asks for confirmation.</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Measurement table" src="docs/screenshots/06_checkin_results_metrics.png" /></p>
+<hr />
+<h2 id="5-the-experimental-measurements-explained">5. The experimental measurements explained</h2>
+<p>The app uses the <strong>MediaPipe Face Landmarker</strong>, which locates <strong>478 points</strong> on the face in each
+camera frame. For each captured expression it:</p>
+<ol>
+<li><strong>Straightens</strong> the points so the line between the eyes is horizontal (removes head tilt).</li>
+<li><strong>Normalises</strong> distances by the <strong>inter-ocular distance (IOD)</strong> — the distance between the
+   centres of the two eyes — so sitting closer or further away does not change the values.</li>
+<li>Takes the <strong>median</strong> across all frames of the capture (robust to blinks and small movements).</li>
+<li>Compares each movement with your <strong>neutral</strong> capture from the same session.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Value</th>
+<th>How it is calculated</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resting position</td>
+<td>Eye opening — L/R similarity</td>
+<td>smaller ÷ larger resting eye opening</td>
+<td>ratio (1.00 = equal)</td>
+</tr>
+<tr>
+<td></td>
+<td>Brow height difference (L − R)</td>
+<td>left minus right brow height above each eye line</td>
+<td>% IOD</td>
+</tr>
+<tr>
+<td></td>
+<td>Mouth-corner height difference (L − R)</td>
+<td>positive = left corner sits lower</td>
+<td>% IOD</td>
+</tr>
+<tr>
+<td>Smile</td>
+<td>Right / Left movement</td>
+<td>how much closer each mouth corner moved toward the outer corner of the eye on the same side</td>
+<td>% IOD</td>
+</tr>
+<tr>
+<td>Eyebrow raise</td>
+<td>Right / Left movement</td>
+<td>increase in brow height compared with rest</td>
+<td>% IOD</td>
+</tr>
+<tr>
+<td>Eye closure</td>
+<td>Right / Left closure</td>
+<td>reduction of eye opening (lid gap ÷ eye width) compared with rest; 100% ≈ lids meet</td>
+<td>% of resting opening</td>
+</tr>
+<tr>
+<td>Lip pucker</td>
+<td>Right / Left movement</td>
+<td>how far each mouth corner moved toward the facial midline</td>
+<td>% IOD</td>
+</tr>
+<tr>
+<td>Each movement</td>
+<td><strong>L/R similarity</strong></td>
+<td>smaller side's movement ÷ larger side's movement (1.00 = equal). Only calculated if at least one side moved enough (≥1% IOD, or ≥10% for eye closure).</td>
+<td>ratio</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Right / Left = your own</strong> right and left side (not the side of the screen).</li>
+<li><strong>Head pose</strong> (turn, nod, tilt) is estimated and stored as a quality indicator.</li>
+<li>Model "blendshape" scores (e.g. smile, blink) are stored with each expression for future
+  research but are not displayed as results.</li>
+<li><strong>Missing ≠ zero.</strong> If a value cannot be calculated it is reported as missing with the reason,
+  never as 0 or a guess.</li>
+</ul>
+<p><strong>Limitations:</strong> values change with lighting, camera height/distance, head turn, glasses, facial
+hair and camera quality; a 2-D webcam cannot fully correct head rotation; the landmark model was
+not developed or tested specifically on faces with facial palsy; synkinesis and muscle tone are not
+measured. The values have <strong>not</strong> been compared with clinical grading systems such as
+House-Brackmann, Sunnybrook or eFACE.</p>
+<hr />
+<h2 id="6-symptom-survey">6. Symptom Survey</h2>
+<p><img alt="Survey" src="docs/screenshots/07_survey.png" /></p>
+<p><strong>15 questions in 5 sections</strong>, each in its own card. Click one answer pill per question (the
+chosen answer turns blue). The box at the top right shows <em>n of 15 answered</em> with a progress bar.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Section</th>
+<th>Question</th>
+<th>Answer options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Eye symptoms</td>
+<td>Do you experience eye dryness?</td>
+<td>No · Sometimes · Often · Always</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>Have you experienced excessive tearing?</td>
+<td>No · Sometimes · Often · Always</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td>Do you experience difficulty closing your eye?</td>
+<td>No · Sometimes · Often · Always</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td>Do you experience discomfort related to your eye?</td>
+<td>No · Sometimes · Often · Always</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Oral and speech</td>
+<td>Do you experience difficulty speaking?</td>
+<td>No · Sometimes · Often · Always</td>
+</tr>
+<tr>
+<td>6</td>
+<td></td>
+<td>Do you experience difficulty drinking liquids?</td>
+<td>No · Sometimes · Often · Always</td>
+</tr>
+<tr>
+<td>7</td>
+<td></td>
+<td>Do you notice food collecting on one side of your mouth?</td>
+<td>No · Sometimes · Often · Always</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Facial movement</td>
+<td>Have you noticed involuntary facial movements?</td>
+<td>No · Sometimes · Often · Always</td>
+</tr>
+<tr>
+<td>9</td>
+<td></td>
+<td>Have you noticed stiffness or tightness in your facial muscles?</td>
+<td>No · Sometimes · Often · Always</td>
+</tr>
+<tr>
+<td>10</td>
+<td></td>
+<td>Have you noticed changes in facial movement since your last check-in?</td>
+<td>No change noticed · More movement · Less movement · Not sure</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Daily activities</td>
+<td>Have facial symptoms affected eating?</td>
+<td>Not at all · A little · Moderately · A lot</td>
+</tr>
+<tr>
+<td>12</td>
+<td></td>
+<td>Have facial symptoms affected communication?</td>
+<td>Not at all · A little · Moderately · A lot</td>
+</tr>
+<tr>
+<td>13</td>
+<td></td>
+<td>Have facial symptoms affected your daily activities?</td>
+<td>Not at all · A little · Moderately · A lot</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Recovery habits</td>
+<td>Have you completed your recommended exercises?</td>
+<td>No · Partly · Yes · Not applicable</td>
+</tr>
+<tr>
+<td>15</td>
+<td></td>
+<td>Have you followed your recommended eye-care routine, if applicable?</td>
+<td>No · Partly · Yes · Not applicable</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Additional information (optional):</strong> a free-text notes box (up to 5,000 characters, with a
+counter).</p>
+<table>
+<thead>
+<tr>
+<th>Button / behaviour</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Save Survey</strong></td>
+<td>Checks every question is answered. If not, unanswered cards turn red with <em>"Please choose an answer"</em>, a red banner lists the question numbers, and the page scrolls to the first one. When complete, saves with the date and time and shows a <strong>Survey saved</strong> confirmation (with <em>View in History</em>).</td>
+</tr>
+<tr>
+<td><strong>Cancel</strong></td>
+<td>If anything is filled in, asks <em>"Discard survey answers?"</em>; then clears the form and returns to the Dashboard.</td>
+</tr>
+<tr>
+<td><strong>Automatic draft</strong></td>
+<td>Every answer and note is saved as a draft immediately ("Draft saved automatically"). If you leave the page — or the app closes — your answers are restored next time with a blue <em>"We restored unsaved answers…"</em> banner.</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Survey validation" src="docs/screenshots/08_survey_validation.png" /></p>
+<p>The survey <strong>never scores your answers or gives recommendations</strong>. A banner reminds you to contact
+your healthcare provider about worrying symptoms, especially eye pain, redness or difficulty
+protecting your eye.</p>
+<hr />
+<h2 id="7-progress-analytics">7. Progress &amp; Analytics</h2>
+<p><strong>Date filter</strong> (top right): <strong>All time · Last 7 days · Last 30 days · Last 90 days</strong> — applies to
+every chart on the page. A summary line shows how many records are in the selected period.
+<strong>Hover over any bar or point</strong> to see its exact date and value.</p>
+<h3 id="check-in-activity">Check-in activity</h3>
+<p><img alt="Activity" src="docs/screenshots/09_analytics_activity.png" /></p>
+<p>Bars of facial check-ins (blue) and symptom surveys (teal) per day — or per week when the period is
+longer than ~6 weeks.</p>
+<h3 id="experimental-facial-movement-data">Experimental facial movement data</h3>
+<p><img alt="Movement" src="docs/screenshots/10_analytics_movement.png" /></p>
+<p>Choose a <strong>Measurement</strong>:
+* <em>Smile / Eyebrow raise / Eye closure / Lip pucker — right vs left movement</em> (two lines:
+  <strong>right = blue circles, left = teal squares</strong>, each labelled at its end);
+* any <strong>L/R similarity</strong> (0–1 scale) or <strong>resting difference</strong> value.</p>
+<p>Check-ins without that measurement are <strong>left out, not drawn as zero</strong>. Labelled <em>EXPERIMENTAL ·
+not clinically validated</em>.</p>
+<h3 id="symptom-history">Symptom history</h3>
+<p><img alt="Symptoms" src="docs/screenshots/11_analytics_symptoms.png" /></p>
+<p>Choose any of the 15 survey questions. The vertical axis lists the answer options in order (they
+are positions, not scores). Question 10 has no natural order, so its points are not connected.
+"Not applicable" answers are not plotted (their number is noted).</p>
+<p>Every chart shows a clean empty state (with a shortcut button) when there is nothing to show. The
+page never says whether you are improving or getting worse — it shows what was recorded, for you
+and your clinician to interpret.</p>
+<hr />
+<h2 id="8-check-in-history">8. Check-In History</h2>
+<p><img alt="History" src="docs/screenshots/12_history_checkin.png" /></p>
+<p><strong>Left: record list</strong></p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>All activity / Facial check-ins / Symptom surveys</strong></td>
+<td>Filter by type.</td>
+</tr>
+<tr>
+<td><em>n records</em></td>
+<td>Count for the current filter.</td>
+</tr>
+<tr>
+<td><strong>Newest first / Oldest first</strong></td>
+<td>Sort by date.</td>
+</tr>
+<tr>
+<td>Record rows</td>
+<td>Type, date and time, and a summary. Click to select (highlighted in blue).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Right: detail panel</strong> for the selected record</p>
+<ul>
+<li><strong>Facial check-in:</strong> started/completed times, expressions captured, whether landmark detection
+  was available, still images; each expression with status, frames with a face and head-turn angle;
+  the experimental measurement table; your notes.</li>
+<li><strong>Symptom survey:</strong> every question and your answer, grouped by section; your notes.</li>
+</ul>
+<p><img alt="Survey detail" src="docs/screenshots/13_history_survey.png" /></p>
+<p><strong>Delete</strong> (red, top right of the detail panel): asks <em>"Delete this … ? This cannot be undone."</em>
+Deleting a check-in also deletes any still images saved with it.</p>
+<hr />
+<h2 id="9-patient-profile">9. Patient Profile</h2>
+<p><img alt="Profile" src="docs/screenshots/14_profile.png" /></p>
+<p>All fields are optional and stored only on this computer.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Display name</td>
+<td>Up to 60 characters; used in the Dashboard greeting.</td>
+</tr>
+<tr>
+<td>Date tracking started</td>
+<td><code>YYYY-MM-DD</code>; must be a real date and not in the future. <strong>Use today</strong> fills in today's date.</td>
+</tr>
+<tr>
+<td>Recovery condition or reason for tracking</td>
+<td>Pick a suggestion (Bell's palsy, facial nerve injury, reconstruction/reanimation, acoustic neuroma surgery, Ramsay Hunt syndrome, Other) or type your own. Not used to interpret any data.</td>
+</tr>
+<tr>
+<td>Personal notes</td>
+<td>Up to 5,000 characters.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Save profile</strong> validates the fields (problems are listed in a red box and the field is outlined
+in red). <strong>Revert changes</strong> reloads the saved version. "Last saved" shows when it was saved.
+The page reminds you not to enter unnecessary personal information.</p>
+<hr />
+<h2 id="10-settings">10. Settings</h2>
+<p><img alt="Settings" src="docs/screenshots/15_settings.png" /></p>
+<p><strong>Camera</strong></p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default camera + <strong>Scan for cameras</strong></td>
+<td>Which camera check-ins use.</td>
+</tr>
+<tr>
+<td>Show live camera preview</td>
+<td>Off = camera still runs during check-ins (for measurements) but no video is shown.</td>
+</tr>
+<tr>
+<td>Show landmark overlay</td>
+<td>Draw/hide the face contour on the preview.</td>
+</tr>
+<tr>
+<td>Mirror preview</td>
+<td>Mirror the preview (measurements unaffected).</td>
+</tr>
+<tr>
+<td>Save still images by default</td>
+<td>Pre-selects image saving at the start of each check-in (off recommended).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Export your data</strong> — <strong>Export CSV</strong> or <strong>Export JSON</strong> opens a <em>Save as</em> dialog. Exports contain
+check-in dates, expression status, experimental metrics (labelled as such), survey responses and
+notes, and your profile fields. <strong>Face images are never exported.</strong> <em>Storage location</em> shows the
+data folder; <strong>Open folder</strong> opens it.</p>
+<p><img alt="Settings – privacy and deletion" src="docs/screenshots/16_settings_privacy.png" /></p>
+<p><strong>Privacy</strong> — six plain-language points (local storage only, no uploads or network calls, explicit
+camera activation, no video recording, you control your data, facial data is sensitive) and a
+validation disclaimer.</p>
+<p><strong>Application</strong> — app name, version, Python version, landmark-model status, developer-mode status
+and log-file path. <strong>Check face detection</strong> loads the model and reports whether it works.</p>
+<p><strong>Delete stored data</strong> — <strong>Delete all data…</strong> permanently removes all check-ins, measurements,
+surveys, drafts and saved still images (camera preferences are kept). Tick <strong>Keep my profile
+details</strong> to keep your profile. You must type <strong>DELETE</strong> to confirm.</p>
+<hr />
+<h2 id="11-about">11. About</h2>
+<p><img alt="About" src="docs/screenshots/17_about.png" /></p>
+<p>Application name and version, purpose, <strong>who it is for</strong>, the <strong>important disclaimer</strong> (not a
+medical device; not clinically validated; does not diagnose; does not recommend treatments; does
+not replace healthcare professionals; uses experimental computer-vision calculations), <strong>how
+computer vision could support recovery tracking</strong> (standardised capture, objective movement
+tracking, longitudinal overview, clinician-ready summaries) and the <strong>current prototype
+limitations</strong>.</p>
+<p><img alt="About – limitations" src="docs/screenshots/18_about_lower.png" /></p>
+<hr />
+<h2 id="12-your-data-privacy-storage-export-deletion">12. Your data: privacy, storage, export, deletion</h2>
+<ul>
+<li><strong>Everything stays on your computer</strong> in a SQLite database. No account, no cloud, no internet
+  connection is used by the app. The face model is bundled and runs locally.</li>
+<li><strong>Camera:</strong> only on during a check-in you started; turns off when you finish, cancel or leave.</li>
+<li><strong>No video is ever recorded.</strong> By default only numbers derived from landmarks are stored.</li>
+<li><strong>Still images:</strong> only if you switch them on for a session and press Save Session.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Operating system</th>
+<th>Data folder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>%APPDATA%\FacialRecoveryMonitor\</code></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>~/Library/Application Support/FacialRecoveryMonitor/</code></td>
+</tr>
+<tr>
+<td>Linux</td>
+<td><code>~/.local/share/FacialRecoveryMonitor/</code></td>
+</tr>
+</tbody>
+</table>
+<p>Inside: <code>facial_recovery_monitor.sqlite3</code> (your records), <code>snapshots/</code> (only if you saved images),
+<code>logs/app.log</code> (technical log; no measurements or answers).</p>
+<p><strong>CSV export columns:</strong> <code>record_type</code> (profile / facial_checkin / symptom_survey), <code>record_id</code>,
+<code>date</code>, <code>time</code>, <code>section</code>, <code>item</code>, <code>value</code>, <code>unit</code>, <code>data_source</code> (<em>experimental_measurement</em>,
+<em>user_entered</em> or <em>capture_status</em>), <code>notes</code>. Opens in Excel, Numbers or Google Sheets.
+<strong>JSON export</strong> keeps the full nested structure, including per-expression landmark features.</p>
+<p>Facial images and facial measurements are sensitive health-related data: protect your computer
+account and any exported files (they are not encrypted).</p>
+<hr />
+<h2 id="13-messages-and-error-handling">13. Messages and error handling</h2>
+<p>The app explains problems in plain language instead of crashing:</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>What you see</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No camera / camera in use / permission denied</td>
+<td><em>Camera unavailable</em> dialog with OS-specific instructions; the preview shows <strong>Try again</strong>.</td>
+</tr>
+<tr>
+<td>Camera disconnected mid-session</td>
+<td>Status changes to <em>Camera error</em> with an explanation.</td>
+</tr>
+<tr>
+<td>No face in view</td>
+<td>Amber <em>No face detected</em> pill; capture reports <em>No face detected</em> with tips.</td>
+</tr>
+<tr>
+<td>Face model or MediaPipe unavailable</td>
+<td>Banner in the check-in camera card; steps can still be completed, measurements are listed as missing.</td>
+</tr>
+<tr>
+<td>Unanswered survey questions / invalid profile date / text too long</td>
+<td>Highlighted fields with a message.</td>
+</tr>
+<tr>
+<td>Saving fails (e.g. disk full)</td>
+<td><em>Not saved</em> dialog; nothing is partially saved; survey answers stay on screen as a draft.</td>
+</tr>
+<tr>
+<td>Database cannot be opened at start-up</td>
+<td>Dialog with the database location and the reason.</td>
+</tr>
+<tr>
+<td>Missing Python packages or Tkinter</td>
+<td>Message explaining exactly what to install.</td>
+</tr>
+<tr>
+<td>Any unexpected error</td>
+<td><em>Something went wrong</em> dialog; your saved records are unaffected; technical details go to the log file (shown on screen only in developer mode, <code>FRM_DEV=1</code>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="14-tips-for-consistent-check-ins">14. Tips for consistent check-ins</h2>
+<ul>
+<li>Same place, same time of day, same lighting (face a window or lamp; avoid bright light behind you).</li>
+<li>Camera at eye level, about an arm's length away, face filling a good part of the frame.</li>
+<li>Look straight at the camera; keep your head still and upright.</li>
+<li>Gentle, natural movements — do not force or strain. Skip anything uncomfortable.</li>
+<li>Watch the quality line after each capture (frames with a face, head-turn angle); recapture if
+  needed.</li>
+<li>Use session notes to record anything unusual (tired, different camera, new glasses…).</li>
+</ul>
+<hr />
+<h2 id="15-frequently-asked-questions">15. Frequently asked questions</h2>
+<p><strong>Does the app tell me whether I am recovering?</strong> No. It records and organises information; your
+clinician interprets it.</p>
+<p><strong>Why does a value say "missing"?</strong> It needs a successful neutral capture and the relevant movement,
+and a face visible in at least 5 frames. Ratios also need enough movement on at least one side.</p>
+<p><strong>Why did my values change although I feel the same?</strong> Lighting, camera position, distance, head
+angle and expression intensity all affect landmark geometry. Keep the set-up consistent and look
+at longer-term patterns, together with your clinician.</p>
+<p><strong>Is my face uploaded anywhere?</strong> No. Nothing leaves your computer unless you export a file and
+share it yourself.</p>
+<p><strong>Can I use it without a camera?</strong> Yes — the survey, history, analytics and profile work without
+one; check-in measurements need a camera.</p>
+<p><strong>Can I edit a saved record?</strong> You can update a check-in's notes right after saving (<em>Update
+notes</em>). Otherwise records are kept as recorded; you can delete them in History.</p>
+<hr />
+<h2 id="16-technical-reference">16. Technical reference</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Technology</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Language</td>
+<td>Python 3.10–3.13 (3.12 bundled/recommended)</td>
+</tr>
+<tr>
+<td>User interface</td>
+<td>CustomTkinter (modern Tk widgets), custom design system (<code>app/theme.py</code>), icons drawn with Pillow</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td>OpenCV <code>VideoCapture</code> on a background thread (DirectShow on Windows, AVFoundation on macOS)</td>
+</tr>
+<tr>
+<td>Face landmarks</td>
+<td>MediaPipe Face Landmarker (Tasks API, 478 landmarks, head-pose matrix, blendshapes), model bundled in <code>assets/models/</code></td>
+</tr>
+<tr>
+<td>Charts</td>
+<td>Matplotlib embedded in Tk, with hover tooltips</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>SQLite (WAL mode, foreign keys, parameterised queries)</td>
+</tr>
+<tr>
+<td>Numerical</td>
+<td>NumPy</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Database tables:</strong> <code>profile</code> · <code>checkin_sessions</code> · <code>expression_records</code> (per expression: status,
+frame counts, head pose, median landmark features, blendshapes, optional image path) ·
+<code>session_metrics</code> (derived experimental values) · <code>symptom_surveys</code> · <code>survey_responses</code> ·
+<code>app_settings</code>. Child tables cascade on delete. The schema is created automatically on first start
+and existing records are never overwritten.</p>
+<p><strong>Source layout:</strong> <code>main.py</code> (start-up checks) · <code>app/ui.py</code> (window, navigation, error handling) ·
+<code>app/pages/*.py</code> (one file per page) · <code>app/camera.py</code> · <code>app/facial_analysis.py</code> ·
+<code>app/database.py</code> · <code>app/export.py</code> · <code>app/charts.py</code> · <code>app/survey_definitions.py</code> ·
+<code>app/theme.py</code> · <code>app/dialogs.py</code> · <code>app/icons.py</code> · <code>app/config.py</code> · <code>app/utils.py</code>.</p>
+<p><strong>Environment variables:</strong> <code>FRM_DATA_DIR</code> (use another data folder, e.g. demo data) · <code>FRM_DEV=1</code>
+(show technical error details).</p>
+<p><strong>Tests:</strong> <code>python -m pytest -q</code> (26 unit tests) · <code>python scripts/ui_smoke_test.py</code> (automated walk
+through every page; <code>--fake-camera image.jpg</code> simulates a webcam for the full
+camera → landmarks → metrics → save pipeline).</p>
+<p><em>Face landmark model: MediaPipe Face Landmarker © Google, Apache License 2.0.</em></p></main><footer>Not a medical device · Not clinically validated · All data stays on your computer</footer></body></html>

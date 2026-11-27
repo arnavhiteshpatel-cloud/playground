@@ -1,0 +1,363 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Launch Guide — Facial Recovery Monitor</title><style>
+:root{--navy:#172B4D;--blue:#3B82F6;--teal:#14B8A6;--bg:#F3F6FB;--text:#334155;--gray:#64748B;--border:#E2E8F0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Segoe UI",-apple-system,BlinkMacSystemFont,Inter,Roboto,Helvetica,Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:20px 16px}header .in{max-width:980px;margin:auto;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+header img{width:44px;height:44px}header b{font-size:18px}header small{display:block;color:var(--teal);font-weight:700;letter-spacing:.08em}
+header nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}header nav a{color:#DCE6F5;text-decoration:none;padding:6px 12px;border-radius:8px;background:#22385E;font-size:14px}
+header nav a.on{background:var(--teal);color:#fff}
+main{max-width:980px;margin:24px auto;padding:8px 32px 40px;background:#fff;border:1px solid var(--border);border-radius:16px}
+@media(max-width:700px){main{margin:12px 8px;padding:4px 16px 24px}}
+h1{color:var(--navy);font-size:32px;line-height:1.2;margin-top:28px}h2{color:var(--navy);border-top:1px solid var(--border);padding-top:24px;margin-top:36px}h3{color:var(--navy)}
+a{color:#1D4ED8}code{background:#EEF2F7;padding:1px 6px;border-radius:6px;font-size:.92em}
+pre{background:#0F1B2E;color:#E2E8F0;padding:14px 16px;border-radius:12px;overflow-x:auto}pre code{background:none;color:inherit;padding:0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px;display:block;overflow-x:auto}th{background:#F8FAFC;color:var(--gray);text-align:left}
+th,td{border:1px solid var(--border);padding:8px 10px;vertical-align:top}
+blockquote{margin:16px 0;padding:12px 16px;background:#FEF3C7;border-left:4px solid #F59E0B;border-radius:8px;color:#92400E}blockquote p{margin:0}
+img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--border);margin:8px 0}
+footer{max-width:980px;margin:0 auto 32px;padding:0 16px;color:var(--gray);font-size:13px;text-align:center}
+</style></head><body>
+<header><div class="in"><img src="assets/icon.png" alt=""><div><b>Facial Recovery Monitor</b><small>v0.9.0 · RESEARCH PROTOTYPE</small></div><nav><a href="START_HERE.html" class="">Start here</a><a href="LAUNCH_GUIDE.html" class="on">Launch guide</a><a href="FEATURES_GUIDE.html" class="">Features guide</a><a href="README.html" class="">Overview</a></nav></div></header>
+<main><h1 id="launch-guide-facial-recovery-monitor">Launch Guide — Facial Recovery Monitor</h1>
+<p>This guide takes you from the downloaded ZIP file to a running app. <strong>No GitHub account,
+programming knowledge or VS Code is needed</strong> for the one-click method.</p>
+<blockquote>
+<p>⚠️ Research prototype — not a medical device. Measurements are experimental and not clinically
+validated.</p>
+</blockquote>
+<hr />
+<h2 id="contents">Contents</h2>
+<ol>
+<li><a href="#1-what-is-in-the-zip">What is in the ZIP</a></li>
+<li><a href="#2-system-requirements">System requirements</a></li>
+<li><a href="#3-step-1-unzip-the-folder">Step 1 — Unzip the folder</a></li>
+<li><a href="#4-step-2a-windows-one-click-start">Step 2A — Windows: one-click start</a></li>
+<li><a href="#5-step-2b-mac-one-click-start">Step 2B — Mac: one-click start</a></li>
+<li><a href="#6-step-2c-linux">Step 2C — Linux</a></li>
+<li><a href="#7-step-3-first-time-in-the-app">Step 3 — First time in the app</a></li>
+<li><a href="#8-starting-the-app-again-later">Starting the app again later</a></li>
+<li><a href="#9-alternative-run-it-from-vs-code">Alternative: run it from VS Code</a></li>
+<li><a href="#10-demo-mode-synthetic-data-for-presentations">Demo mode (synthetic data for presentations)</a></li>
+<li><a href="#11-updating-moving-or-uninstalling">Updating, moving or uninstalling</a></li>
+<li><a href="#12-troubleshooting">Troubleshooting</a></li>
+</ol>
+<hr />
+<h2 id="1-what-is-in-the-zip">1. What is in the ZIP</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>START_HERE.html</code></td>
+<td>Opens in your web browser and links to all guides.</td>
+</tr>
+<tr>
+<td><code>START_WINDOWS.bat</code></td>
+<td><strong>Double-click on Windows</strong> to install (first time) and start the app.</td>
+</tr>
+<tr>
+<td><code>START_MAC.command</code></td>
+<td><strong>Double-click on a Mac</strong> to install (first time) and start the app.</td>
+</tr>
+<tr>
+<td><code>start_linux.sh</code></td>
+<td>Launcher for Linux.</td>
+</tr>
+<tr>
+<td><code>LAUNCH_GUIDE</code> (.html / .md)</td>
+<td>This guide.</td>
+</tr>
+<tr>
+<td><code>FEATURES_GUIDE</code> (.html / .md)</td>
+<td>Every screen, button and measurement explained.</td>
+</tr>
+<tr>
+<td><code>README</code> (.html / .md)</td>
+<td>Overview of the project.</td>
+</tr>
+<tr>
+<td><code>installers/</code></td>
+<td>Official <strong>Python 3.12.10</strong> installers from python.org for Windows (64-bit) and macOS (+ checksums).</td>
+</tr>
+<tr>
+<td><code>offline_packages/windows-x64/</code></td>
+<td>Every Python package the app needs, for Windows — <strong>installs with no internet.</strong></td>
+</tr>
+<tr>
+<td><code>offline_packages/macos-apple-silicon/</code></td>
+<td>The same for Macs with M1/M2/M3/M4 chips.</td>
+</tr>
+<tr>
+<td><code>main.py</code>, <code>app/</code>, <code>assets/</code></td>
+<td>The application source code and its bundled face-landmark model.</td>
+</tr>
+<tr>
+<td><code>scripts/</code>, <code>tests/</code></td>
+<td>Demo-data generator, automated tests.</td>
+</tr>
+<tr>
+<td><code>docs/screenshots/</code></td>
+<td>Pictures used by the guides.</td>
+</tr>
+</tbody>
+</table>
+<p>Everything the app needs is included. The only software <strong>not</strong> bundled is optional:
+<a href="https://code.visualstudio.com/">VS Code</a> (only if you want to read or edit the code), and for
+<strong>Intel Macs or Linux</strong> the Python packages, which the launcher downloads automatically
+(about 200 MB, once).</p>
+<hr />
+<h2 id="2-system-requirements">2. System requirements</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Minimum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Windows</strong></td>
+<td>Windows 10 or 11, 64-bit</td>
+</tr>
+<tr>
+<td><strong>Mac</strong></td>
+<td>macOS 11 Big Sur or newer (Apple silicon: fully offline; Intel: needs internet on first start)</td>
+</tr>
+<tr>
+<td><strong>Linux</strong></td>
+<td>64-bit distribution with Python 3.10+ and Tkinter</td>
+</tr>
+<tr>
+<td>Disk space</td>
+<td>About 1.5 GB free during installation (≈ 700 MB afterwards)</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td>Any built-in or USB webcam (the app also works without one, but check-ins need it)</td>
+</tr>
+<tr>
+<td>Internet</td>
+<td><strong>Not required</strong> on Windows and Apple-silicon Macs. The app itself never uses the internet.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-step-1-unzip-the-folder">3. Step 1 — Unzip the folder</h2>
+<ol>
+<li>Find <code>FacialRecoveryMonitor.zip</code> in your <strong>Downloads</strong> folder.</li>
+<li><strong>Windows:</strong> right-click it → <strong>Extract All…</strong> → choose your <strong>Documents</strong> folder → <strong>Extract</strong>.
+   (Do not run the app from inside the ZIP preview — it must be extracted.)
+   <strong>Mac:</strong> double-click the ZIP; drag the <code>FacialRecoveryMonitor</code> folder into <strong>Documents</strong>.</li>
+<li>Open the extracted <code>FacialRecoveryMonitor</code> folder. You should see <code>START_HERE.html</code>,
+   <code>START_WINDOWS.bat</code>, <code>START_MAC.command</code> and the other files listed above.</li>
+</ol>
+<blockquote>
+<p>Tip: keep the folder somewhere permanent such as Documents. The app's own installation lives
+inside this folder (in a hidden <code>.venv</code> folder).</p>
+</blockquote>
+<hr />
+<h2 id="4-step-2a-windows-one-click-start">4. Step 2A — Windows: one-click start</h2>
+<ol>
+<li>Double-click <strong><code>START_WINDOWS.bat</code></strong>.</li>
+<li>If Windows shows <strong>"Windows protected your PC"</strong> (SmartScreen): click <strong>More info</strong> →
+   <strong>Run anyway</strong>. This appears because the file is not from the Microsoft Store.</li>
+<li>A black window opens and does the first-time setup:
+   * <strong>If Python 3.12 is not installed</strong>, it asks <em>"Install Python 3.12 now [Y,N]?"</em> — press
+     <strong>Y</strong>. The bundled official installer runs for your user account only (no administrator
+     password; a progress bar appears for about a minute).
+   * It creates the app's private environment and installs all components <strong>from the bundled
+     offline packages</strong> (1–3 minutes).
+   * When it says <strong>Setup complete</strong>, the app window opens and the black window closes.</li>
+<li>Later starts: double-click <code>START_WINDOWS.bat</code> again — the app opens within a few seconds.</li>
+</ol>
+<p><strong>Optional – desktop shortcut:</strong> right-click <code>START_WINDOWS.bat</code> → <strong>Show more options</strong> →
+<strong>Send to → Desktop (create shortcut)</strong>.</p>
+<hr />
+<h2 id="5-step-2b-mac-one-click-start">5. Step 2B — Mac: one-click start</h2>
+<ol>
+<li><strong>Right-click</strong> (or Control-click) <strong><code>START_MAC.command</code></strong> → <strong>Open</strong> → click <strong>Open</strong> in the
+   dialog. (The first time, macOS blocks double-clicking files downloaded from the internet that
+   are not from the App Store; right-click → Open is the approved way to allow it.)
+   * On newer macOS versions, if there is no <em>Open</em> button: open <strong>System Settings → Privacy &amp;
+     Security</strong>, scroll down to the message about <code>START_MAC.command</code> and click <strong>Open Anyway</strong>.</li>
+<li>A Terminal window opens and does the first-time setup:
+   * <strong>If Python 3.12 is not installed</strong>, the official Python installer opens. Click
+     <strong>Continue → Continue → Agree → Install</strong>, enter your Mac password, and wait for <em>"The
+     installation was successful"</em>. Close the installer, go back to the Terminal window and press
+     <strong>Return</strong>.
+   * It creates the app's private environment and installs all components (offline on Apple-silicon
+     Macs; Intel Macs download them once).</li>
+<li>The app window opens. <strong>Keep the Terminal window open while you use the app</strong> (closing it
+   closes the app).</li>
+<li>The first time you begin a check-in, macOS asks whether <strong>Terminal</strong> may access the camera —
+   click <strong>OK</strong>.</li>
+<li>Later starts: double-click <code>START_MAC.command</code>.</li>
+</ol>
+<blockquote>
+<p>Which Mac do I have? Apple menu  → <strong>About This Mac</strong>. "Chip: Apple M…" = Apple silicon;
+"Processor: Intel…" = Intel.</p>
+</blockquote>
+<hr />
+<h2 id="6-step-2c-linux">6. Step 2C — Linux</h2>
+<pre><code class="language-bash">sudo apt install python3 python3-venv python3-tk libegl1 libgl1    # Ubuntu / Debian
+cd ~/Documents/FacialRecoveryMonitor
+./start_linux.sh
+</code></pre>
+<p>The first run downloads the components (needs internet once). Later runs start immediately.
+Camera access may require: <code>sudo usermod -aG video $USER</code> (then log out and back in).</p>
+<hr />
+<h2 id="7-step-3-first-time-in-the-app">7. Step 3 — First time in the app</h2>
+<ol>
+<li>The app opens on the <strong>Dashboard</strong>. All counts are zero — the app never invents data.</li>
+<li>(Optional) <strong>Patient Profile</strong> → enter a display name → <strong>Save profile</strong>.</li>
+<li><strong>Facial Check-In</strong> → read <em>Before you begin</em> → <strong>Begin check-in</strong>. Allow camera access if
+   asked. You should see yourself with a thin teal outline on your face and a green
+   <strong>Face detected</strong> label.</li>
+<li>For each movement press <strong>Capture expression</strong>, perform the movement during the 3-second
+   countdown, hold it until the check mark appears, then press <strong>Next</strong>.</li>
+<li>On the summary screen press <strong>Save Session</strong>.</li>
+<li>Complete a <strong>Symptom Survey</strong>, then look at <strong>Progress &amp; Analytics</strong> and <strong>Check-In History</strong>.</li>
+</ol>
+<p>The <a href="FEATURES_GUIDE.html">Features Guide</a> explains every screen in detail.</p>
+<hr />
+<h2 id="8-starting-the-app-again-later">8. Starting the app again later</h2>
+<p>Double-click the same launcher (<code>START_WINDOWS.bat</code> or <code>START_MAC.command</code>). Your records are kept
+between sessions in your user data folder (see the Features Guide → <em>Your data</em>), separate from
+the app folder — so updating or re-installing the app does not delete them.</p>
+<hr />
+<h2 id="9-alternative-run-it-from-vs-code">9. Alternative: run it from VS Code</h2>
+<p>Use this if you want to look at or change the code.</p>
+<ol>
+<li>Install Python 3.12 (from <code>installers/</code> in this folder; on Windows tick <strong>"Add python.exe to
+   PATH"</strong>).</li>
+<li>Install <a href="https://code.visualstudio.com/">VS Code</a> and its <strong>Python</strong> extension (Extensions icon
+   → search "Python" → Install, by Microsoft).</li>
+<li><strong>File → Open Folder…</strong> → select <code>FacialRecoveryMonitor</code>.</li>
+<li><strong>Terminal → New Terminal</strong>, then:</li>
+</ol>
+<p><strong>Windows (PowerShell):</strong></p>
+<pre><code class="language-powershell">py -3.12 -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install --no-index --find-links offline_packages\windows-x64 -r requirements.txt
+python main.py
+</code></pre>
+<p>If PowerShell says scripts are disabled: <code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code>,
+then repeat the activate line.</p>
+<p><strong>Mac (Terminal / VS Code terminal):</strong></p>
+<pre><code class="language-bash">python3.12 -m venv .venv
+source .venv/bin/activate
+pip install --no-index --find-links offline_packages/macos-apple-silicon -r requirements.txt
+#   Intel Mac or with internet:   pip install -r requirements.txt
+python main.py
+</code></pre>
+<ol start="5">
+<li>In VS Code press <strong>Ctrl+Shift+P</strong> (Mac: <strong>Cmd+Shift+P</strong>) → <em>Python: Select Interpreter</em> → pick
+   the <code>.venv</code> entry, so the ▶ Run button uses it.</li>
+</ol>
+<p>If you already ran the one-click launcher, the <code>.venv</code> exists — just activate it and run
+<code>python main.py</code>.</p>
+<p><strong>Running the tests:</strong> <code>pip install pytest</code> then <code>python -m pytest -q</code> (26 tests) and
+<code>python scripts/ui_smoke_test.py</code> (opens every page automatically).</p>
+<hr />
+<h2 id="10-demo-mode-synthetic-data-for-presentations">10. Demo mode (synthetic data for presentations)</h2>
+<p>Creates a <strong>separate</strong> database of clearly labelled synthetic records; your real data is not
+touched. With the <code>.venv</code> activated (see section 9):</p>
+<pre><code class="language-bash">python scripts/seed_demo_data.py
+</code></pre>
+<p>Start the app on the demo data:</p>
+<pre><code class="language-bash"># Mac / Linux
+FRM_DATA_DIR=demo_data python main.py
+# Windows PowerShell
+$env:FRM_DATA_DIR=&quot;demo_data&quot;; python main.py
+# Windows Command Prompt
+set FRM_DATA_DIR=demo_data &amp;&amp; python main.py
+</code></pre>
+<p>A yellow <strong>"DEMO DATA — synthetic records"</strong> badge is shown in the sidebar. Start the app normally
+(launcher or <code>python main.py</code> in a new terminal) to return to your real data.</p>
+<hr />
+<h2 id="11-updating-moving-or-uninstalling">11. Updating, moving or uninstalling</h2>
+<ul>
+<li><strong>Moving the folder:</strong> delete the hidden <code>.venv</code> folder inside it after moving, then run the
+  launcher again (it rebuilds in 1–3 minutes). Your records are not affected.
+  (Show hidden files: Windows Explorer → View → Show → Hidden items; Mac Finder → Cmd+Shift+.)</li>
+<li><strong>Updating to a newer version:</strong> extract the new ZIP to a new folder and use its launcher. Your
+  records stay in your user data folder and appear automatically.</li>
+<li><strong>Removing your data:</strong> in the app, <strong>Settings → Delete stored data</strong>.</li>
+<li><strong>Uninstalling the app:</strong> delete the <code>FacialRecoveryMonitor</code> folder. To also remove your data,
+  delete the data folder (Windows <code>%APPDATA%\FacialRecoveryMonitor</code>, Mac
+  <code>~/Library/Application Support/FacialRecoveryMonitor</code>, Linux
+  <code>~/.local/share/FacialRecoveryMonitor</code>). Python can be removed via Windows <em>Settings → Apps</em> or
+  on a Mac by deleting <code>/Applications/Python 3.12</code>.</li>
+</ul>
+<hr />
+<h2 id="12-troubleshooting">12. Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Windows: "Windows protected your PC"</strong></td>
+<td>Click <strong>More info → Run anyway</strong>.</td>
+</tr>
+<tr>
+<td><strong>Mac: "cannot be opened because it is from an unidentified developer"</strong></td>
+<td>Right-click <code>START_MAC.command</code> → <strong>Open</strong> → <strong>Open</strong>, or System Settings → Privacy &amp; Security → <strong>Open Anyway</strong>.</td>
+</tr>
+<tr>
+<td><strong>Mac: "permission denied" / file opens in a text editor</strong></td>
+<td>Open Terminal and run <code>chmod +x ~/Documents/FacialRecoveryMonitor/START_MAC.command</code> (adjust the path), then try again.</td>
+</tr>
+<tr>
+<td>The black/Terminal window closes immediately or shows an error</td>
+<td>Read the message: it explains the problem. To retry the setup from scratch, delete the hidden <code>.venv</code> folder and run the launcher again.</td>
+</tr>
+<tr>
+<td>"Python could not be found or installed"</td>
+<td>Run the installer in <code>installers/</code> yourself (Windows: tick <strong>Add python.exe to PATH</strong> → <strong>Install Now</strong>), then run the launcher again.</td>
+</tr>
+<tr>
+<td>"Offline packages do not match this Python version"</td>
+<td>You have a different Python version (not 3.12). The launcher then downloads packages instead — connect to the internet, or install Python 3.12 from <code>installers/</code>, delete <code>.venv</code>, and retry.</td>
+</tr>
+<tr>
+<td><strong>Camera unavailable (Mac)</strong></td>
+<td>System Settings → <strong>Privacy &amp; Security → Camera</strong> → turn on <strong>Terminal</strong> (or <strong>Visual Studio Code</strong>), then quit Terminal completely (Cmd+Q) and start again.</td>
+</tr>
+<tr>
+<td><strong>Camera unavailable (Windows)</strong></td>
+<td>Settings → <strong>Privacy &amp; security → Camera</strong> → turn on <em>Camera access</em> and <em>Let desktop apps access your camera</em>. Close Zoom/Teams/other apps using the camera.</td>
+</tr>
+<tr>
+<td>Wrong camera (e.g. external webcam not used)</td>
+<td>In Facial Check-In or Settings press <strong>Scan</strong>, then choose another camera number.</td>
+</tr>
+<tr>
+<td>"No face detected"</td>
+<td>Face a window or lamp, make sure your whole face is in view, remove hat/sunglasses, sit about an arm's length away, and look straight at the camera.</td>
+</tr>
+<tr>
+<td>"Facial landmark detection is unavailable"</td>
+<td>Settings → Application → <strong>Check face detection</strong> shows the reason. Usually the MediaPipe package did not install — delete <code>.venv</code> and run the launcher again (use Python 3.12).</td>
+</tr>
+<tr>
+<td>Text looks tiny or huge</td>
+<td>The app follows your system display scaling; change it in your OS display settings. The window can be resized.</td>
+</tr>
+<tr>
+<td>Linux: <code>libEGL.so.1</code> or <code>libGL.so.1</code> not found</td>
+<td><code>sudo apt install libegl1 libgl1 libgles2</code></td>
+</tr>
+<tr>
+<td>Something else went wrong</td>
+<td>The app writes details to a log file (path shown in <strong>Settings → Application → Log file</strong>). Start with the environment variable <code>FRM_DEV=1</code> to see technical details in error dialogs.</td>
+</tr>
+</tbody>
+</table></main><footer>Not a medical device · Not clinically validated · All data stays on your computer</footer></body></html>

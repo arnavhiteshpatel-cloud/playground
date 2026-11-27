@@ -1,6 +1,6 @@
 # Facial Recovery Monitor — Python 3.10–3.12 recommended (MediaPipe wheels are most widely available there)
 customtkinter>=5.2.0
-opencv-python>=4.8
+opencv-contrib-python>=4.8   # same OpenCV build MediaPipe uses (avoids two conflicting copies)
 mediapipe>=0.10.14
 matplotlib>=3.7
 numpy>=1.24

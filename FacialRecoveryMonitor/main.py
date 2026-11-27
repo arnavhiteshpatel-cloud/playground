@@ -15,7 +15,7 @@ MIN_PYTHON = (3, 9)
 
 REQUIRED = {  # import name -> pip package name
     "customtkinter": "customtkinter",
-    "cv2": "opencv-python",
+    "cv2": "opencv-contrib-python",
     "numpy": "numpy",
     "PIL": "pillow",
     "matplotlib": "matplotlib",
@@ -65,7 +65,9 @@ def check_environment() -> None:
 
 def setup_logging() -> None:
     from app.config import DEV_MODE, LOG_DIR, LOG_FILE
-    handlers: list[logging.Handler] = [logging.StreamHandler(sys.stderr)]
+    handlers: list[logging.Handler] = []
+    if sys.stderr is not None:  # pythonw (no console) has no stderr
+        handlers.append(logging.StreamHandler(sys.stderr))
     try:
         LOG_DIR.mkdir(parents=True, exist_ok=True)
         handlers.append(logging.handlers.RotatingFileHandler(

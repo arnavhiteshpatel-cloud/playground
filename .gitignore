@@ -19,3 +19,5 @@ models/*.pt
 .coverage
 models/*.onnx
 experiments/results/*_.log
+experiments/results/q4_*.log
+experiments/results/QUEUE*.log

@@ -7,7 +7,8 @@ Segmentation methods:
   "ctan_style"  manual/global two-threshold workflow (thresholds in config)
   "advisor_threshold"  threshold implied by the measurement-support advisor (material model + scan levels)
   "rf:<path>"   pickled RFSegmenter (joblib)
-  "unet:<name>" locked U-Net from models/registry.json (sha256 verified)
+  "unet:<name>" locked U-Net from models/registry.json (sha256 verified), PyTorch runtime
+  "onnx:<name>" same locked model exported to ONNX (hash verified), ONNX Runtime — no PyTorch needed
 """
 from __future__ import annotations
 
@@ -89,6 +90,20 @@ def segment(vol: Volume, roi_mask: np.ndarray, cfg: dict, progress=lambda f, m: 
         for i, c in enumerate(rf.clf.classes_):
             full[int(c)] = p[i]
         return lab, full, info
+    if method.startswith("onnx:"):
+        from .ml.runtime import OnnxSegmenter
+        from .ml.train import Case
+        name = method[5:]
+        seg = OnnxSegmenter(name, threads=int(cfg.get("threads", 4)))   # registry-hash verified
+        from .ml.train import MODEL_DIR
+        import json as _json
+        reg = _json.loads((MODEL_DIR / "registry.json").read_text()).get(name, {})
+        info.update({"model_name": name, "runtime": "onnxruntime", "onnx_sha256": reg.get("onnx_sha256"),
+                     "model_sha256": reg.get("sha256"), "model_provenance": reg.get("provenance"),
+                     "licence_tag": reg.get("licence_tag")})
+        progress(0.4, "inference (ONNX Runtime)")
+        p = seg.predict_proba(Case("scan", vol.data, None, roi_mask, vol.spacing))
+        return p.argmax(0).astype(np.uint8), p, info
     if method.startswith("unet:"):
         from .ml.train import load_model, predict_proba, Case
         name = method[5:]

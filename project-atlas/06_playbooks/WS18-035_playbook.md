@@ -5,12 +5,12 @@
 >
 > - **Refreshed model, base case.** Operating profit is **$65,781 in year 3** and **$67,046 in year 5**, on about $0.93–1.07M revenue. That figure includes the founder's own unpaid field labour.
 > - **Conservative case.** It loses money every year: **−$31,419 in year 3** and **−$16,235 in year 5**.
-> - **Peak funding.** Base-case peak funding is **$93,434** with the standardized $4k/month draw, and $43,278 without it.
+> - **Peak funding.** Base-case peak funding is **$93,434** with the standardized $4k/month draw, and $43,278 without it (Stage D: ~$76k with draw).
 > - **Ten-year deployable cash.** The base case produces only **$8,701**.
 >
 > It is a real, cash-paid, essential trade. As an *honest-priced, paid-lead* business, though, it mostly pays the founder a technician's wage.
 >
-> **The decisive economics are ticket and acquisition cost per paid job.** At $575 per job, a job done by a hired technician contributes only about $96 before overhead. The business clears $100k of year-3 operating profit only if acquisition cost per job is ≤ ~$83, or the average ticket is ≥ ~$614.
+> **The decisive economics are ticket and acquisition cost per paid job.** At $575 per job, a job done by a hired technician contributes only about $74 before overhead at today's prices (about $96 at year-5 prices). The business clears $100k of year-3 operating profit only if acquisition cost per job is ≤ ~$83, or the average ticket is ≥ ~$614.
 
 ### What changed since Stage D (explicit corrections)
 1. **Correction — gross margin.** Stage D's base margin after parts was 65%, which assumed dealer-level parts pricing nobody has confirmed. Re-derived from the ticket mix, it is **60%** (conservative 52%, optimistic 64%).
@@ -28,6 +28,29 @@
    - SSC's new-account form accepts applicants with "<1 Year" in the industry and activates accounts in 5–7 business days, but sells **only to professional dealers** [B, E-WS18035-S008].
    - C.H.I. runs a 4-day, $550 residential course recommended for new installers [B, E-WS18035-S010]. Its commercial and fire-door courses require 1+ years of experience [B, E-WS18035-S012, E-WS18035-S015].
 8. **Long-term drivers.** The EV multiple moves from 3.0× to 2.5× base (2.0 conservative / 3.0 optimistic): asking multiples of 3.2× and 4.4× [D, DF-S004, DF-S005] are not sale prices. Year-6 growth goes from 8% to 5% base (2% / 10%). Incremental ROIC goes from 60% to 50% base (30% / 80%). Maintenance capex goes from 8% to 10% base (15% / 8%). Every change is justified in the assumptions JSON.
+9. **Revised scores (Stage D → E).**
+
+| Key | Stage D | Stage E |
+|---|---|---|
+| fcf | 4 | **3** |
+| roic | 6 | **4** |
+| access | 6 | 6 |
+| scale | 5 | **4** |
+| resilience | 6 | 6 |
+| entry | 4 | **3** |
+| delegation | 6 | **5** |
+| cash | 8 | 8 |
+| feasibility | 8 | **7** |
+| ai | 4 | 4 |
+
+   - Composite: raw **4.59**, evidence-adjusted **4.71** (D). Stage D was 5.42 / 5.29.
+   - Why each score fell:
+     - fcf: base year 3 is ~$66k.
+     - roic: year-3 operating profit ÷ peak funding is 0.70.
+     - scale: thin returns on each added technician.
+     - entry: the honest-pricing wedge is legally required in Chicago and claimed by incumbents.
+     - delegation: removing the founder from the van makes base unprofitable.
+     - feasibility: the founder must first become a technician.
 
 ---
 
@@ -64,7 +87,7 @@ The target launch area is eight suburbs (Arlington Heights, Palatine, Schaumburg
 
 **Why it is harder than it looks.** Demand is reached mostly through paid search. That channel is crowded with franchise brands, dealer showrooms and fake-listing lead generators:
 - Google has sued sellers of fake Business Profiles; one named listing was "Western Los Angeles Garage Door Repair" [C, E-WS18035-S017].
-- In 2025 Google removed more than 10,000 illegitimate listings run through "lead generation" call routing [C, E-WS18035-S005].
+- In 2025 Google sued a network whose fake listings routed callers through a "lead generation service" to operators who demanded far more than quoted; it removed more than 10,000 illegitimate listings [C, E-WS18035-S005].
 - Consumer reporting documents a $400–500 spring quote turning into a $1,258 bill [D, E-WS18035-S018].
 
 An honest newcomer must buy the same clicks as these operators and charge less. That squeezes the margin that mature firms earn from decades of repeat and referral demand.
@@ -154,7 +177,7 @@ The opener price is deliberately ≥$870. At DDM public cost a $750 opener insta
 
 **Sales and acquisition strategy:**
 1. A Google Business Profile with the posted price menu and real job photos. Never buy or rent listings or reviews; that is the exact conduct Google is litigating [C, E-WS18035-S017].
-2. Google LSA after Advanced Verification (budget $800–1,200/month at plateau is the agency norm [D, E-WS18035-S006]).
+2. Google LSA after Advanced Verification. One agency suggests $800–1,200/month of LSA inside a $2,500–4,000/month residential budget [D, E-WS18035-S006].
 3. Neighbour door-hangers after each job (check village solicitation ordinances).
 4. B2B: CAM vendor packets (COI, W-9, price sheet, safety checklist), inspector menus and brokerage office talks.
 5. **Avoid Angi/HomeAdvisor shared leads.**

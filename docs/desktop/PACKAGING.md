@@ -63,7 +63,7 @@ all 8 steps pass. Users can run the same check on an installed copy.
 | last build, 27 Nov 2026 (unneeded Qt plugins removed before dependency analysis) | **869 MiB** | **318 MiB** | **PASS** | **PASS** (8/8 steps, frozen) |
 | with PyTorch and SimpleITK (`OQ_BUNDLE_TORCH=1 OQ_BUNDLE_SITK=1`, measured on the first build) | 1.9 GiB | not archived | n/a | not run |
 
-**Last build: 28 November 2026**, from a clean tree at commit `1f568f4`, advisor 1.4.3 (both recorded in `build-info.json`, cycle-3 review
+**Last build: 28 November 2026**, from a clean tree at commit `cf6fea7`, advisor 1.4.3 (both recorded in `build-info.json`, cycle-3 review
 C3-BIZ-05): packaged self-test PASS, licence check exit 0, 198 licence files, 855 MiB folder, 310 MiB archive. It is
 not distributed (B-016). Rebuild after any change to `osteoquant/` before using a bundle.
 

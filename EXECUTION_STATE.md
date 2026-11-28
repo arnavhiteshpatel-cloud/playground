@@ -12,11 +12,11 @@ EXPERIMENT_REGISTRY.md, EVIDENCE_LEDGER.md._
 | Gen | Scope | Status |
 |---|---|---|
 | 0 | Forensic audit, reproduction (G exact, H/I 29 rows identical, C ±0.004), remediation register, §55 ledgers | done |
-| 1–2 | Science: measurement-support advisor 1.4.3 bound to its validated method and evaluated at read time; pre-registered held-out validations S1H, S1H2, S1H3 (structure-level bound 0.34) and S1H4 (shipped 1.4.3 on the application's material paths: no supported failure, bound 0.14, very low coverage); blur-estimator check B1-blur; generator v2; granule tracking v2; fail-closed registration QC; ROI propagation; DR synthesis; ONNX runtime | advisor and longitudinal done; ML campaign (S2b/S2c, S3, U1, O2) running on CPU (restarted after a container restart at 02:11) |
+| 1–2 | Science: measurement-support advisor 1.4.3 bound to its validated method and evaluated at read time; pre-registered held-out validations S1H, S1H2, S1H3 (structure-level bound 0.34) and S1H4 (shipped 1.4.3 on the application's material paths: no supported failure, bound 0.14, very low coverage); blur-estimator check B1-blur; generator v2; granule tracking v2; fail-closed registration QC; ROI propagation; DR synthesis; ONNX runtime | done: advisor, longitudinal and the ML campaign (S2 a–c, S3, U1, O2; two container restarts, queue resumed each time) |
 | 3 | Desktop application (PySide6+VTK), offline licensing (test keys only), PyInstaller packaging, CI for 3 OS | done (Linux bundle built locally; Windows/macOS builds only in CI, never run here) |
 | 4 | QA, security Gen-2, CI | CI first green on Ubuntu/Windows/macOS × Python 3.12/3.13 on 2026-11-28 (earlier runs never passed: DF-022); desktop and licensing tests blocking; a macOS teardown segfault (DF-043) fixed; 636 passed, 1 skipped, coverage 93.4% / 98.7% critical (`docs/qa/test_summary.json`) |
 | 4 | Reviews (automated reviewer agents, 12 perspectives) | cycles 1–3 done (cycle 3: 63 findings, 2 critical — all critical/high fixed or mitigated; responses for science, product and business/regulatory in `docs/reviews/cycle3/`) |
-| 5 | Website, documentation set, final deliverables | website, user docs and decks quote S1H4 (claims checker passes); Linux bundle being rebuilt; report, workbook and handoff rebuilt after the ML results |
+| 5 | Website, documentation set, final deliverables | done: website, user docs and decks quote S1H4/S1H5 (claims checker passes, blocking in CI); Linux bundle `cf6fea7` and macOS app (CI) pass their packaged self-tests; report, workbook, decks, model registry and handoff rebuilt with all results |
 
 ## Component status (Generation 2)
 | Component | Status | Evidence |
@@ -55,7 +55,7 @@ EXPERIMENT_REGISTRY.md, EVIDENCE_LEDGER.md._
 | Commercial / grants / outreach / validation packages | ✅ drafts | business/, grants/, outreach/, validation/ |
 
 ## Experiments (see EXPERIMENT_REGISTRY.md)
-Generation 1: all 16 (A–P) run; C/C2/L2 oracle corrected; A, K, H re-run after review. Generation 2: S1/S1b/S1c (in-sample), S1H/S1H2/S1H3/S1H4 (held out), L3, L4, L5, F2, B1-blur, S2 (part a done; b running), S3, U1, O2 (queued) — status per row in EXPERIMENT_REGISTRY.md.
+Generation 1: all 16 (A–P) run; C/C2/L2 oracle corrected; A, K, H re-run after review. Generation 2: S1/S1b/S1c (in-sample), S1H/S1H2/S1H3/S1H4 (held out), L3, L4, L5, F2, B1-blur, S2 (a, b, c), S3, U1, O2 (all done) — status per row in EXPERIMENT_REGISTRY.md.
 
 ## Reviews
 Generation 1: 21 security + 18 science findings (docs/security/REVIEW_RESPONSE.md). Generation 2: REVIEW_REGISTRY.md (automated reviewer agents; not human expert review).

@@ -28,4 +28,4 @@ source), `docs/quality/` (URS/FS/risk/IQ/OQ/PQ/SOPs/traceability, all DRAFT and 
 (reviews, response, SBOM of the 27 Nov build, IP provenance), `docs/ip/` (IP strategy and invention register,
 preliminary, not legal advice), and the website draft `website/` (unpublished). The Generation-1 landing page
 `web/landing/` is superseded by `website/`. The only packaged desktop build (`packaging/dist/`, Linux, 28 Nov 2026,
-commit `1f568f4`, advisor 1.4.3) passed its packaged self-test and licence check; it is not distributed (B-016).
+commit `cf6fea7`, advisor 1.4.3) passed its packaged self-test and licence check; it is not distributed (B-016).

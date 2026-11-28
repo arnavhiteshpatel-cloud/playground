@@ -39,7 +39,7 @@ optionally, ONNX models.
 
 ### From a built package
 Linux: unpack the archive and start `OsteoQuant/OsteoQuant`; check it with `OsteoQuant/osteoquant-desktop-console
---selftest`. The only packaged Linux build (`packaging/dist/`, built 28 Nov 2026, commit `1f568f4`, advisor 1.4.3) passed its self-test;
+--selftest`. The only packaged Linux build (`packaging/dist/`, built 28 Nov 2026, commit `cf6fea7`, advisor 1.4.3) passed its self-test;
 rebuild it (§11) after any code change, and do not distribute it (B-016). Windows and macOS packages are configured in CI but **have never been built or run**; their first CI run
 is their first test (`docs/user/INSTALLATION.md`). Builds are unsigned: SmartScreen and Gatekeeper will warn.
 

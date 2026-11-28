@@ -18,7 +18,7 @@ whenever a number is on screen.
    Sign in as `analyst`. Keep the `reviewer` password at hand (both are demo-only constants in
    `osteoquant/desktop/demo.py`; they are public, so never reuse them).
 2. Run `python -m osteoquant.desktop --selftest` once from the source checkout; it must end with `"selftest": "PASS"`.
-   The packaged Linux build in `packaging/dist/` (28 Nov, commit `1f568f4`, advisor 1.4.3) passed its self-test; check
+   The packaged Linux build in `packaging/dist/` (28 Nov, commit `cf6fea7`, advisor 1.4.3) passed its self-test; check
    `build-info.json` against the current commit before demoing it, and do not hand the archive out (B-016).
 3. Open in a second window the two sample reports (regenerated at commit `14141db` under advisor 1.4.3, watermarked
    "SAMPLE - SYNTHETIC DATA - NOT FOR STUDY DECISIONS"):

@@ -62,6 +62,6 @@ recorded in ARCHITECTURE_DECISIONS.md (ADR-G2-01). Audit finding IDs (FA-NN) ref
 | T6.3 | Engineering validation dossier | done (v0.2, 28 Nov) |
 | T6.4 | Founder executive summary | doing (current to S1H5 and S2 b; final update after the ML queue) |
 | T6.5 | Comparison against Gen-0 baseline | done (BASELINE_COMPARISON.md) |
-| T6.6 | Linux desktop bundle rebuilt from a clean tree with provenance | done (1f568f4; rebuild again after the last code change) |
+| T6.6 | Linux desktop bundle rebuilt from a clean tree with provenance | done (cf6fea7; rebuild again after the last code change) |
 | T6.7 | Cycle-3 review responses (science, product, business/regulatory) | done (docs/reviews/cycle3/RESPONSE_*.md) |
 | T6.8 | Pre-registered held-out tests of the shipped advisor (S1H4 product paths; S1H5 HA precision) | done |

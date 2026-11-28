@@ -57,7 +57,7 @@ marked ⚖ need counsel, the university's Office of Technology Management (OTM) 
   coverage are in `docs/qa/test_summary.json` (single source), and the gates in `business/PRICING_VALIDATION_PLAN.md`
   §7 (an entry was added to the handoff).
 * The Windows and macOS desktop bundles have never been built, so their licence check and inventory have not run. The
-  only Linux build (28 Nov 2026, commit `1f568f4`, advisor 1.4.3) passed its self-test and licence check and is not distributed.
+  only Linux build (28 Nov 2026, commit `cf6fea7`, advisor 1.4.3) passed its self-test and licence check and is not distributed.
 * M0 has one definition (`investor/FUNDING_STRATEGY.md` §3): an entity exists, the OTM determination is received,
   insurance is in place, and the NDA, SOW and DPA templates are counsel-reviewed. Requests start Dec 2026 – Feb 2027;
   no completion date is set.

@@ -390,9 +390,11 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
         rows = [["Specimen", "New bone frac (meas / true)", "Graft frac (meas / true)", "Segmentation Dice new / graft"]]
         for s in bundle["specimens"]:
             if "truth" in s:
+                # measured values follow the support status: a refused value is "n/m" here too
+                nbk, gfk = "class_volumes.new_bone_fraction", "class_volumes.residual_graft_fraction"
                 rows.append([str(s["specimen_id"]),
-                             f"{_fmt(_get(s['metrics'],'class_volumes.new_bone_fraction'))} / {_fmt(s['truth'].get('new_bone_fraction'))}",
-                             f"{_fmt(_get(s['metrics'],'class_volumes.residual_graft_fraction'))} / {_fmt(s['truth'].get('graft_fraction'))}",
+                             f"{_fmt_support(_get(s['metrics'], nbk), _support(s, nbk))} / {_fmt(s['truth'].get('new_bone_fraction'))}",
+                             f"{_fmt_support(_get(s['metrics'], gfk), _support(s, gfk))} / {_fmt(s['truth'].get('graft_fraction'))}",
                              f"{_fmt(_get(s,'eval.dice_new'))} / {_fmt(_get(s,'eval.dice_graft'))}"])
         flow.append(table(rows))
 

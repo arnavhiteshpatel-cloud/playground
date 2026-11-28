@@ -44,8 +44,7 @@ TINY = {"iters": 2, "patch": (16, 16, 16), "batch": 1, "base": 4, "levels": 2, "
 
 @pytest.fixture
 def tiny_model(model_dir):
-    if sys.platform == "win32":
-        pytest.skip("QA-022: ml.train.update_registry needs fcntl (POSIX only); assigned to lead")
+    # QA-022 resolved: the registry lock is portable (fcntl / msvcrt / mkdir), so Windows runs these tests too
     from osteoquant.ml.train import train_model
     card = train_model([_case(0)], [_case(1)], TINY, "tiny", log=lambda s: None)
     return card
@@ -73,7 +72,6 @@ def test_load_model_verifies_hash_before_deserialising(tiny_model, model_dir):
         load_model("absent")
 
 
-@pytest.mark.skipif(sys.platform == "win32", reason="QA-022: update_registry needs fcntl")
 def test_load_model_refuses_pickled_code_even_if_registered(model_dir):
     """A registered (hash-matching) checkpoint that contains a pickled callable must still be rejected by
     torch.load(weights_only=True) — the registry is not trusted to vouch for code."""
@@ -164,6 +162,20 @@ def test_onnx_runtime_matches_torch_and_verifies_hash(tiny_model, model_dir):
     with pytest.raises(ValueError):
         OnnxSegmenter("../x")
     assert len(info["sha256"]) == 64
+
+
+def test_onnx_small_volume_is_padded_and_int8_quantisation_registers(tiny_model, model_dir):
+    pytest.importorskip("onnxruntime")
+    pytest.importorskip("onnx")
+    from osteoquant.ml.runtime import OnnxSegmenter, export_onnx, quantize_int8_static
+    export_onnx("tiny", patch=(16, 16, 16))
+    seg = OnnxSegmenter("tiny", threads=1)
+    small = _case(7, shape=(10, 12, 16))                  # smaller than the patch in two axes: edge padding path
+    p = seg.predict_proba(small)
+    assert p.shape == (4, 10, 12, 16) and np.allclose(p.sum(0), 1, atol=1e-4)
+    q = quantize_int8_static("tiny", [_case(0), _case(1)], n_patches=4)
+    reg = json.loads((model_dir / "registry.json").read_text())
+    assert reg["tiny"]["onnx_int8_sha256"] == q["sha256"] and (model_dir / "tiny.int8.onnx").exists()
 
 
 # ----------------------------------------------------------------------------- synthetic data

@@ -107,3 +107,66 @@ def test_group_stats_ignore_refused_values_and_uncomputable_tests():
     assert all(c["endpoint"] != "class_volumes.new_bone_volume_mm3" for c in comps)
     mineral = [c for c in comps if c["endpoint"] == "class_volumes.mineral_volume_mm3"]
     assert mineral and mineral[0]["p_holm"] is not None and mineral[0]["n_reference"] == 3
+
+
+def _supported_bundle():
+    """Bundle exercising the honesty features: refused values print as 'n/m' with the reason, conditional values are
+    marked, analysis parameters and the advisor version are listed, exceptions and a reference-group comparison."""
+    eps = EPS + [("class_volumes.residual_graft_fraction", "Residual graft fraction", "fraction"),
+                 ("class_volumes.mineral_volume_mm3", "Total mineral volume", "mm³")]
+    ms_ok = {"residual_graft_volume": {"status": "supported"}, "graft_fraction_of_defect": {"status": "supported"},
+             "new_bone_volume": {"status": "not_supported", "reason": "ambiguous graft rim exceeds 10% of new bone"},
+             "new_bone_fraction_of_defect": {"status": "not_supported", "reason": "ambiguous graft rim"},
+             "total_mineral_volume": {"status": "supported_with_conditions", "reason": "",
+                                      "conditions": ["graft has no mineral phase"]},
+             "mineral_fraction_of_defect": {"status": "supported"}}
+    specs = []
+    # refused new-bone values get magnitudes no supported endpoint produces (≈7 mm³, fraction ≈0.93), so the leak
+    # check below cannot collide with a supported number or a confidence limit
+    for i, (g, nb, gf, mv) in enumerate([("Ctrl", 7.2137, 0.10, 1.0), ("Ctrl", 7.3141, 0.12, 1.1),
+                                          ("Ctrl", 7.2718, 0.11, 1.2), ("Tx", 7.5413, 0.08, 1.5),
+                                          ("Tx", 7.6029, 0.07, 1.6), ("Tx", 7.5557, 0.09, 1.4)]):
+        specs.append({"specimen_id": f"S{i}", "animal_id": f"S{i}", "group": g, "timepoint": "Week 4",
+                      "qc": {"verdict": "pass"},
+                      "metrics": {"class_volumes": {"new_bone_volume_mm3": nb, "new_bone_fraction": nb / 8,
+                                                    "residual_graft_fraction": gf, "mineral_volume_mm3": mv}},
+                      "measurement_support": ms_ok, "advisor_version": "1.4.2",
+                      "segmentation": {"model_provenance": ["synthetic"]},
+                      "analysis_parameters": {"method": "advisor_threshold", "t_mineral": 410.0, "t_graft": 1530.0,
+                                              "estimated_graft_share": 0.31, "healing_weeks": 4.0,
+                                              "healing_weeks_source": "timepoint label"},
+                      "truth": {"new_bone_fraction": 0.25, "graft_fraction": gf},
+                      "eval": {"dice_new": 0.8, "dice_graft": 0.9}})
+    return {"title": "Support test", "study": {"name": "Support test"}, "data_class": "synthetic",
+            "review_status": "unreviewed_automated", "specimens": specs, "endpoints": eps, "reference_group": "Ctrl",
+            "summary_text": "Six synthetic specimens.",
+            "exceptions": [{"specimen_id": "S9", "stage": "import", "reason": "corrupt file", "action": "re-export"}],
+            "signature_note": "Signed copy: approvals recorded in the audit trail."}
+
+
+def test_report_prints_refused_values_as_not_measured_with_reasons(tmp_path):
+    r = build_pdf(_supported_bundle(), tmp_path / "s.pdf", tmp_path / "s.csv", watermark="EVALUATION COPY")
+    text = _pdf_text(r["pdf"])
+    assert "n/m" in text                                         # refused new-bone values are never printed as numbers
+    assert "ambiguous graft rim exceeds 10% of new bone" in text and "not measured" in text
+    assert "conditional" in text and "graft has no mineral phase" in text
+    assert "SYNTHETIC-TRAINED MODEL" in text and "EVALUATION COPY" in text
+    assert "advisor_threshold" in text and "1.4.2" in text and "timepoint label" in text
+    assert "corrupt file" in text and "re-export" in text
+    assert "Signed copy: approvals recorded in the audit trail." in text
+    assert "Six synthetic specimens." in text and "meas / true" in text
+    for s in _supported_bundle()["specimens"]:                  # no refused new-bone value leaks into the PDF
+        cv = s["metrics"]["class_volumes"]
+        for v in (cv["new_bone_volume_mm3"], cv["new_bone_fraction"]):
+            assert f"{v:.3f}" not in text and f"{v:.4f}" not in text
+    csv = (tmp_path / "s.csv").read_text()
+    assert "not_supported" in csv
+
+
+def test_report_without_groups_and_legacy_specimen_without_support(tmp_path):
+    b = _bundle()
+    for s in b["specimens"]:
+        s["group"] = None
+    b["specimens"][0]["analysis_parameters"] = {"method": "multiotsu"}
+    text = _pdf_text(build_pdf(b, tmp_path / "n.pdf")["pdf"])
+    assert "No group statistics: no specimen is assigned to a group." in text

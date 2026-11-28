@@ -367,3 +367,68 @@ def test_blur_own_fraction_bounds():
     thin = blur_own_fraction(10000, rng, 0.8, 1.5)
     assert thin.mean() < f.mean()                         # thin structures lose more intensity to blur
     assert blur_surface_fraction(2.0, 0.8) == 1.0 and blur_surface_fraction(20.0, 0.5) < 0.5
+
+
+def _char_scene(seed=3, mat_rel=2.0, radius2=25):
+    rng = np.random.default_rng(seed)
+    img = rng.normal(100, 10, (40, 40, 40)).astype(np.float32)
+    zz, yy, xx = np.indices(img.shape)
+    host = xx < 8
+    img[host] += 900
+    mat = np.zeros(img.shape, bool)
+    for c in ((20, 15, 20), (20, 28, 28), (10, 22, 30)):
+        mat |= ((zz - c[0]) ** 2 + (yy - c[1]) ** 2 + (xx - c[2]) ** 2) <= radius2
+    img[mat] = 100 + mat_rel * 900 + rng.normal(0, 10, mat.sum())
+    soft = ~host & ~ndi.binary_dilation(mat, iterations=2)
+    return img, mat, soft, ndi.binary_erosion(host)
+
+
+def test_characterisation_is_bound_to_its_acquisition():
+    """A measured profile only transfers to scans with the same voxel size (±25%), kVp, filter and scanner model."""
+    import json
+    from osteoquant.advisor.characterize import characterise_material
+    img, mat, soft, host = _char_scene()
+    ch = characterise_material(img, mat, soft, host, 40.0, "new_ceramic", bone_derived=False,
+                               acquisition={"kvp": 70, "filter": "Al 0.5 mm", "scanner_model": "S1"})
+    assert ch.compatible_with(40.0, {"kvp": 70, "filter": "Al 0.5 mm"}) == (True, "compatible")
+    ok, why = ch.compatible_with(40.0, {"kvp": 90})
+    assert not ok and "kvp" in why
+    assert not ch.compatible_with(40.0, {"scanner_model": "S2"})[0]
+    assert not ch.compatible_with(52.0)[0] and ch.compatible_with(49.0)[0]
+    d = json.loads(ch.to_json())
+    assert d["material_id"] == "new_ceramic" and d["bone_derived"] is False and len(d["scan_sha256"]) == 64
+
+
+def test_characterisation_guards_and_warnings():
+    from osteoquant.advisor.characterize import characterise_material
+    img, mat, soft, host = _char_scene()
+    with pytest.raises(ValueError, match="not brighter"):            # host darker than soft tissue: inverted scan
+        characterise_material(img.max() - img, mat, soft, host, 40.0, "x", bone_derived=False)
+    few = np.zeros_like(soft)
+    few.flat[:50] = True
+    with pytest.raises(ValueError, match="≥100 voxels"):
+        characterise_material(img, mat, few, host, 40.0, "x", bone_derived=False)
+    # thin structures (radius ≈1.4 voxels) at coarse voxels: partial-volume warning; undeclared bone status warning
+    img2, thin, soft2, host2 = _char_scene(radius2=2)
+    thin_many = thin.copy()
+    zz, yy, xx = np.indices(thin.shape)
+    thin_many |= ((xx % 6 == 0) & (yy % 6 == 0) & (zz > 4) & (zz < 36) & (xx > 10))   # 1-voxel rods
+    img2[thin_many] = 100 + 2.0 * 900
+    ch = characterise_material(img2, thin_many, soft2 & ~thin_many, host2, 40.0, "rods")
+    assert any("< 3 voxels" in w for w in ch.warnings)
+    assert any("not declared" in w for w in ch.warnings) and ch.profile().bone_derived is True
+    # heterogeneous material (two phases) is flagged
+    img3, mat3, soft3, host3 = _char_scene()
+    img3[mat3 & (np.indices(img3.shape)[2] > 25)] = 100 + 0.6 * 900
+    ch3 = characterise_material(img3, mat3, soft3, host3, 40.0, "mixed", bone_derived=False)
+    assert any("heterogeneous" in w for w in ch3.warnings)
+
+
+def test_characterise_from_day0_recovers_graft_level():
+    """Day-0 scan (no new bone): graft = mineral inside the ROI; the measured level matches the simulated one."""
+    from osteoquant.advisor.characterize import characterise_from_day0
+    img, mat, soft, host = _char_scene(mat_rel=1.8)
+    roi = ndi.binary_dilation(mat, iterations=3)
+    ch = characterise_from_day0(img, roi, 40.0, "day0_ceramic", bone_derived=False)
+    assert ch.source == "day0" and ch.rel_mean == pytest.approx(1.8, abs=0.08)
+    assert ch.n_voxels >= 500

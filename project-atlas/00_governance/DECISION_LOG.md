@@ -53,3 +53,16 @@ Each entry: date · decision · rationale · evidence · reversibility.
 - **2026-11-28 · Stage D complete (25 concepts); Stage E finalists = 11.** DG added WS12-012 (offshore staff for
   CPA firms; base yr-3 $231k, C) and WS12-014 (controls/automation recruiting; base yr-3 $171k, conservative +$44k, C)
   as conditional finalists; WS14-008 dropped (free recovery offers by Clairelist/SPS/Glimpse).
+- **2026-11-28 · Stage F complete.** Six independent reviews + cross-model audit. Fails: WS12-012, WS16-006, WS18-035,
+  WS18-003 (as primary). Survive with major revisions: SYN-006, SYN-004, SYN-001, WS05-007, WS04-014, WS13-014,
+  WS12-014. Harmonized ranking (skeptic drivers + founder-delivery charge): WS12-014 #1 in every variant; SYN-006 and
+  WS12-012 #2–3; SYN-004 #4; WS04-014 #5. After charging founder delivery labour, no finalist reaches $100k harmonized Y5.
+- **2026-11-28 · FINAL RECOMMENDATION.** Primary: WS12-014 (employer-paid contingency recruiting desk for Illinois
+  controls/automation/I&C engineers) as a 2–3-year cash engine with a month-24 boutique-or-harvest decision.
+  Alternative 1: SYN-006 (construction subcontractor back office) — durable-asset choice. Alternative 2: SYN-004
+  (license-exempt large-C&I energy cost management) — high-upside choice. Reserve: WS04-014.
+  Rationale: WS12-014 is the only finalist robust to every harmonization variant, has the lowest validation cost (≈$600)
+  and near-lowest capital at risk (≤$30k post-review), a clean statutory licence exclusion, and the best post-review cash
+  (≈$81k Y3 / $114k Y5) — it wins the founder's two heaviest criteria (FCF, ROIC). It is weak on delegation, resilience and
+  transfer value, which is why it is framed as stage 1 of a sequence rather than the holding-company core. The choice
+  between WS12-014 and SYN-006 is close; the day-60 gates decide. See `10_deliverables/EXECUTIVE_DECISION_MEMO.md`.

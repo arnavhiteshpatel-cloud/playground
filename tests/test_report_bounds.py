@@ -191,3 +191,15 @@ def test_renderer_enforces_refusal_in_group_stats_and_csv(tmp_path):
     text = _pdf_text(r["pdf"])
     assert "(f)" in text and "7.267" not in text and "7.567" not in text
 
+
+def test_group_statistics_count_conditional_values(tmp_path):
+    """C3-SCI-11: a group statistic that includes conditional or flagged values says how many."""
+    b = _supported_bundle()
+    table, _ = group_stats(b)
+    ctrl = next(r for r in table if r["group"] == "Ctrl")
+    assert ctrl["class_volumes.mineral_volume_mm3"]["n_conditional"] == 3       # total mineral is conditional
+    assert ctrl["class_volumes.residual_graft_fraction"]["n_conditional"] == 0
+    text = _pdf_text(build_pdf(b, tmp_path / "c.pdf")["pdf"])
+    import re
+    assert re.search(r"incl\.\s*3\s*c/f", text)
+

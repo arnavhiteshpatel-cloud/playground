@@ -162,8 +162,12 @@ def group_stats(bundle):
     table = []
     for (g, tp), ss in sorted(groups.items(), key=lambda x: (str(x[0][1]), str(x[0][0]))):
         row = {"group": g, "timepoint": tp, "n": len(ss)}
+        raw = [s for s in bundle["specimens"] if s.get("group", "—") == g and s.get("timepoint", "—") == tp]
         for key, label, unit in eps:
             row[key] = bounded_describe([_value(s, key) for s in ss], key, unit)
+            # values that entered the statistic with conditions or a review flag are counted (cycle-3 C3-SCI-11)
+            row[key]["n_conditional"] = sum(1 for s in raw if _status(s, key) in ("supported_with_conditions", "flagged")
+                                            and _value(s, key) is not None)
         table.append(row)
     comps = []
     ref = bundle.get("reference_group")
@@ -339,6 +343,7 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     gt, comps = group_stats(bundle)
     flow.append(Paragraph("3. Group summaries (animal-level: repeated scans of an animal are averaged; mean ± SD [95% CI])", H2))
     any_clipped = False
+    any_cond = False
     for i0 in range(0, len(eps), 4):          # all endpoints, four per table (review CRO-02)
         chunk = eps[i0:i0 + 4]
         rows = [["Group", "Timepoint", "n"] + [f"{l} ({u})" for _, l, u in chunk]]
@@ -347,6 +352,9 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
             for k, _, _ in chunk:
                 d = r[k]
                 nnote = f"\n(n={d.get('n', 0)} of {r['n']})" if d.get("n", 0) and d.get("n", 0) < r["n"] else ""
+                if d.get("n_conditional"):
+                    nnote += f"\n(incl. {d['n_conditional']} c/f)"
+                    any_cond = True
                 if d.get("n", 0) >= 2 and "ci95_low" in d:
                     clip = d.get("ci95_clipped", [])
                     any_clipped = any_clipped or bool(clip)
@@ -362,6 +370,9 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
             rows.append(cells)
         flow.append(table(rows))
         flow.append(Spacer(1, 3))
+    if any_cond:
+        flow.append(Paragraph("'incl. k c/f': k of the values in the statistic are supported with conditions (c) or "
+                              "flagged for review (f); see section 4 and the support table.", SM))
     if any_clipped:
         flow.append(Paragraph(f"{CLIP_MARK} The t-interval extended beyond the physical range of the endpoint "
                               "(volumes ≥ 0, fractions 0–1) and is clipped to it. A clipped interval signals a small or "
@@ -377,7 +388,7 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
                               "and hypothesis tests have low power.", SM))
     if comps:
         flow.append(Spacer(1, 4))
-        flow.append(Paragraph("Comparisons vs reference group (Welch t-test; Holm-adjusted across all comparisons; "
+        flow.append(Paragraph("Comparisons vs reference group (Welch t-test; Holm-adjusted across the comparisons that could be computed; "
                               "Hedges g with approximate 95% CI). Reported for transparency; interpretation requires a "
                               "pre-specified analysis plan.", SM))
         crow = [["Timepoint", "Group vs ref", "Endpoint", "Mean diff", "Hedges g [95% CI]", "p (Welch)", "p (Holm)"]]

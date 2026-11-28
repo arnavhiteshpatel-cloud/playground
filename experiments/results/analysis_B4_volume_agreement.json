@@ -1,0 +1,44 @@
+{
+ "experiment": "B4 from S1H3 (derived)",
+ "source": "exp_S1H3_heldout.json",
+ "advisor_version": "1.4.1",
+ "preregistered_source": "docs/science/PREREGISTRATION.md \u00a79",
+ "data_class": "SYNTHETIC",
+ "endpoints": {
+  "residual_graft_volume": {
+   "n_supported": 80,
+   "n_structures": 9,
+   "bias": 0.0005979352189609835,
+   "sd": 0.04978726430582872,
+   "bias_ci95_bootstrap_structures": [
+    -0.018961260361727156,
+    0.022898810609949305
+   ],
+   "loa95": [
+    -0.09698510282046331,
+    0.09818097325838528
+   ],
+   "max_abs": 0.13031275060144343,
+   "b4_met": true
+  },
+  "total_mineral_volume": {
+   "n_supported": 22,
+   "n_structures": 7,
+   "bias": -0.012225582802325502,
+   "sd": 0.014239104577037783,
+   "bias_ci95_bootstrap_structures": [
+    -0.020808354250542636,
+    -0.004347783915555512
+   ],
+   "loa95": [
+    -0.040134227773319556,
+    0.01568306216866855
+   ],
+   "max_abs": 0.03207505191337878,
+   "b4_met": true
+  },
+  "new_bone_volume": {
+   "n_supported": 0
+  }
+ }
+}

@@ -36,3 +36,6 @@ ledger `SCIENTIFIC_EVIDENCE.md` (rows 1–7, R1–R12, which remain valid with t
 | G2-013 | The advisor's safety was reached by sacrificing coverage: residual graft supported in 37%, total mineral in 10% and new bone in 0% of the final held-out specimens | E4 | exp_S1H3_heldout.json |
 
 (Entries are appended as Generation-2 experiments complete.)
+| G2-014 | Registration QC that projects block shifts onto directions the anatomy constrains flagged all 6 harmful misalignments, passed 78% of harmless ones, and passed 16/16 correctly propagated segmental ROIs (propagated ROI Dice mean 0.984, min 0.963) | E4 | exp_L4_registration_qc.json, exp_F2_roi_propagation.json (re-runs 2026-11-28) |
+| G2-015 | The Gen-0 synthetic U-Net segments real dog bone at Dice 0.377 zero-shot; upsampling the real scan 2× (zoom chosen on training scans only) raises it to 0.513, pointing to a structure-scale mismatch between phantom and real trabeculae | E3 (real, 5 test scans) | exp_S2v2_sim2real_a.json |
+| G2-016 | Among held-out specimens the advisor supported, graft-volume bias was +0.1% (95% LoA −9.7…+9.8%, n=80) and total-mineral bias −1.2% (LoA −4.0…+1.6%, n=22); derived, not pre-registered, and conditional on support | E4 | analysis_B4_volume_agreement.json |

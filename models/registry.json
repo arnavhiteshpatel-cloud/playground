@@ -1088,5 +1088,125 @@
    48,
    48
   ]
+ },
+ "s2v2_scratch_lr3e3_k3_s0": {
+  "sha256": "38503d58bd29bc3bd692fb75df27f2fb7c4c29e923170106fea7d710a4d1f1b7",
+  "created": "2026-11-28T05:10:45Z",
+  "provenance": [
+   "public-real"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 3,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.003,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "n_classes": 2,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "seed": 0,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0,
+    "boundary_ignore_aware": true
+   }
+  },
+  "parent": null,
+  "onnx_sha256": "20e6b5c487b8610ba5b721c5bf885ce5b7a8c61c7ba9c4d1a5f0a1a3623bed78",
+  "onnx_patch": [
+   48,
+   48,
+   48
+  ]
+ },
+ "s2v2_gen0_synth_k3_s0": {
+  "sha256": "1a813d50b683bf52e86fa4c6a75c5a2450c14bfaa7dc6e2a24c2ccdc0fe7df56",
+  "created": "2026-11-28T05:16:29Z",
+  "provenance": [
+   "public-real",
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 3,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0,
+    "boundary_ignore_aware": true
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": false,
+   "seed": 0
+  },
+  "parent": "unet_noctx_s0",
+  "onnx_sha256": "3d6a30e9ba6f3f80cb83f77a0bdd2f5641d62a09fec6f96a163c10b991644f49",
+  "onnx_patch": [
+   48,
+   48,
+   48
+  ]
+ },
+ "s2v2_dr_synth_k3_s0": {
+  "sha256": "333c921b652e548f29f2d1d36758fe7c8313a6957c042ab3d3860eae55bde176",
+  "created": "2026-11-28T05:22:33Z",
+  "provenance": [
+   "public-real",
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 3,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "n_classes": 2,
+   "log_every": 300,
+   "seed": 0,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0,
+    "boundary_ignore_aware": true
+   },
+   "val_every": 1000000000
+  },
+  "parent": "unet_dr2_mineral_s0",
+  "onnx_sha256": "2686c1e1dd0f02437a930e33a6af7bde6822bdbc286872bfb87d329aa05162df",
+  "onnx_patch": [
+   48,
+   48,
+   48
+  ]
  }
 }

@@ -259,3 +259,9 @@ These experiments involve contact and are for the founder to run. None were perf
 - Plausible ceiling $250k/yr. $500k needs multiple remote pods selling WIP-heavy work beyond Illinois.
 
 **Verdict: FINALIST (conditional on §13 experiments 1–2).**
+
+**Research limitations (this session):**
+- ilga.gov was unreachable (TLS/503), so statutes were read on FindLaw.
+- The BLS OEWS API hit its daily limit after one series, so bookkeeper wages are MISSING.
+- Insurance quotes, surety-underwriting WIP requirements and referral-partner behaviour were not obtainable without contact.
+- IDOT contract-status data needs a search form and was not used.

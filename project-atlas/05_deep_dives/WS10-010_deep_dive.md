@@ -245,3 +245,9 @@ Total validation cost is about **$1,100**.
 | Optimistic | $347k |
 
 **Verdict: DROP.** Revisit only if the founder secures a committed supervising-mason partner with an existing book of business.
+
+**Research limitations (this session):**
+- The Illinois NCCI class-5022 rate was not found; the Missouri loss cost is used as a proxy.
+- The BAC Local 21 site was unreachable, so the union share of tuckpointing is MISSING.
+- Scaffold rental rates and supplier credit terms were not published.
+- Permit costs are applicant-reported.

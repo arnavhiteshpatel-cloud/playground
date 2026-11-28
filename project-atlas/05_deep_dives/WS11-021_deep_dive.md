@@ -254,3 +254,8 @@ Total validation cost is about **$400**.
 | Optimistic | $168k |
 
 **Verdict: RESERVE.** Best used as a module inside a broader construction-compliance or site-services business. One possibility is cross-selling to SYN-006's public-works subs, who also need IDOL payroll on BMP crews.
+
+**Research limitations (this session):**
+- No private Illinois inspection price list was found; municipal engineering packets (e.g., North Aurora) blocked automated fetch.
+- BLS inspector wages were not retrievable (API limit).
+- Active vs stale ILR10 coverages and the share of GCs that self-inspect remain MISSING.

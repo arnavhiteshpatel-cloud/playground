@@ -20,7 +20,7 @@ whenever a number is on screen.
 2. Run `python -m osteoquant.desktop --selftest` once from the source checkout; it must end with `"selftest": "PASS"`.
    Do not demo the packaged Linux build in `packaging/dist/`: it was built on 27 Nov, predates advisor 1.3.1–1.4.3 and
    the cycle-2/3 fixes, and must be rebuilt before any use.
-3. Open in a second window the two sample reports (regenerated at commit `969d9a5` under advisor 1.4.3, watermarked
+3. Open in a second window the two sample reports (regenerated at commit `14141db` under advisor 1.4.3, watermarked
    "SAMPLE - SYNTHETIC DATA - NOT FOR STUDY DECISIONS"):
    * `reports_samples/DefectFill_SAMPLE4_gen2_synthetic_betatcp.pdf` (β-TCP, week 4): graft and new-bone endpoints
      refused in 6/6; total mineral reported in 5/6;

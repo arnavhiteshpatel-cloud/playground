@@ -1,0 +1,262 @@
+{
+ "experiment": "S3",
+ "summary": {
+  "ssl_k1": {
+   "mean": 0.782258107333295,
+   "ci_lo": 0.7288623992458452,
+   "ci_hi": 0.8357407367151144,
+   "n_specimens": 5
+  },
+  "ssl_k3": {
+   "mean": 0.7935291004246163,
+   "ci_lo": 0.7322556573182701,
+   "ci_hi": 0.8548025435309625,
+   "n_specimens": 5
+  }
+ },
+ "rows": [
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 0,
+   "case": "228420_Dachshund.tif",
+   "dice": 0.8388150221600187,
+   "hd95_vox": 3.3166247903554,
+   "vol_err": 0.07351874244256348
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 0,
+   "case": "232558_Beagle.tif",
+   "dice": 0.771736671442576,
+   "hd95_vox": 4.123105625617661,
+   "vol_err": 0.48566073102155577
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 0,
+   "case": "238046_WH.tif",
+   "dice": 0.7210425278827922,
+   "hd95_vox": 2.449489742783178,
+   "vol_err": -0.3792899408284024
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 0,
+   "case": "239179_Yorkie.tif",
+   "dice": 0.839155445576373,
+   "hd95_vox": 3.4641016151377544,
+   "vol_err": -0.08381057946917914
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 0,
+   "case": "244195_Lab.tif",
+   "dice": 0.8866811745040527,
+   "hd95_vox": 1.0,
+   "vol_err": 0.019554140127388535
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 1,
+   "case": "228420_Dachshund.tif",
+   "dice": 0.8045950864422202,
+   "hd95_vox": 4.123105625617661,
+   "vol_err": 0.12623941958887544
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 1,
+   "case": "232558_Beagle.tif",
+   "dice": 0.7285841760856633,
+   "hd95_vox": 4.47213595499958,
+   "vol_err": 0.5207122774133084
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 1,
+   "case": "238046_WH.tif",
+   "dice": 0.6715949931837898,
+   "hd95_vox": 2.449489742783178,
+   "vol_err": -0.45982057644588664
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 1,
+   "case": "239179_Yorkie.tif",
+   "dice": 0.8222883231876038,
+   "hd95_vox": 2.23606797749979,
+   "vol_err": -0.21959480263563028
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 1,
+   "case": "244195_Lab.tif",
+   "dice": 0.8678776065733537,
+   "hd95_vox": 1.4142135623730951,
+   "vol_err": -0.10468152866242038
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 2,
+   "case": "228420_Dachshund.tif",
+   "dice": 0.7842268498006203,
+   "hd95_vox": 4.358898943540674,
+   "vol_err": 0.18331318016928658
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 2,
+   "case": "232558_Beagle.tif",
+   "dice": 0.7295804091384201,
+   "hd95_vox": 4.47213595499958,
+   "vol_err": 0.5105904404873477
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 2,
+   "case": "238046_WH.tif",
+   "dice": 0.6408318532794216,
+   "hd95_vox": 3.605551275463989,
+   "vol_err": -0.48465355983966407
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 2,
+   "case": "239179_Yorkie.tif",
+   "dice": 0.7548201640608567,
+   "hd95_vox": 4.242640687119285,
+   "vol_err": -0.24336473920807933
+  },
+  {
+   "method": "fewshot_ssl_k1",
+   "seed": 2,
+   "case": "244195_Lab.tif",
+   "dice": 0.8720413066816625,
+   "hd95_vox": 1.4142135623730951,
+   "vol_err": -0.13111464968152867
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 0,
+   "case": "228420_Dachshund.tif",
+   "dice": 0.815435856207649,
+   "hd95_vox": 4.47213595499958,
+   "vol_err": 0.105683192261185
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 0,
+   "case": "232558_Beagle.tif",
+   "dice": 0.7277586328152472,
+   "hd95_vox": 4.242640687119285,
+   "vol_err": 0.6652296157450797
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 0,
+   "case": "238046_WH.tif",
+   "dice": 0.740078112210295,
+   "hd95_vox": 2.23606797749979,
+   "vol_err": -0.3676655850353121
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 0,
+   "case": "239179_Yorkie.tif",
+   "dice": 0.878422712933754,
+   "hd95_vox": 2.0,
+   "vol_err": -0.04790935402426258
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 0,
+   "case": "244195_Lab.tif",
+   "dice": 0.8889595734690477,
+   "hd95_vox": 1.0,
+   "vol_err": 0.1025796178343949
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 1,
+   "case": "228420_Dachshund.tif",
+   "dice": 0.8183235399928049,
+   "hd95_vox": 3.499464030219313,
+   "vol_err": 0.016686819830713424
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 1,
+   "case": "232558_Beagle.tif",
+   "dice": 0.7717978848413631,
+   "hd95_vox": 2.23606797749979,
+   "vol_err": 0.39268978444236174
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 1,
+   "case": "238046_WH.tif",
+   "dice": 0.6525563013612696,
+   "hd95_vox": 3.0,
+   "vol_err": -0.4786218744035121
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 1,
+   "case": "239179_Yorkie.tif",
+   "dice": 0.7910917615539182,
+   "hd95_vox": 4.049242250247019,
+   "vol_err": -0.1612168236960404
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 1,
+   "case": "244195_Lab.tif",
+   "dice": 0.8772093799549362,
+   "hd95_vox": 1.0,
+   "vol_err": -0.09187898089171974
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 2,
+   "case": "228420_Dachshund.tif",
+   "dice": 0.772020725388601,
+   "hd95_vox": 4.123105625617661,
+   "vol_err": 0.4270858524788392
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 2,
+   "case": "232558_Beagle.tif",
+   "dice": 0.6159399196600105,
+   "hd95_vox": 4.898979485566356,
+   "vol_err": 1.2196813495782568
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 2,
+   "case": "238046_WH.tif",
+   "dice": 0.7808965182043125,
+   "hd95_vox": 3.0,
+   "vol_err": -0.27203664821530826
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 2,
+   "case": "239179_Yorkie.tif",
+   "dice": 0.8851247305204805,
+   "hd95_vox": 2.23606797749979,
+   "vol_err": -0.0004926411724859905
+  },
+  {
+   "method": "fewshot_ssl_k3",
+   "seed": 2,
+   "case": "244195_Lab.tif",
+   "dice": 0.8873208572555551,
+   "hd95_vox": 1.0,
+   "vol_err": 0.17996815286624204
+  }
+ ],
+ "seconds": 1611.9975080490112,
+ "saved": "2026-11-28T06:45:52Z",
+ "git_commit": "2508181"
+}

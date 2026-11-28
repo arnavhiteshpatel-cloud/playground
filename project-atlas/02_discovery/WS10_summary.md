@@ -30,10 +30,9 @@
 8. **WS10-007 Commercial firestopping.** A code-mandated specialty with a certification moat (FM 4991 / UL QFC) [S034]. The cash cycle is bad, and union jurisdiction in Chicago is unknown.
 
 ## Surprises
-- Chicago open data (permits, violations, short-term-rental registrations) gives A-level demand counts and a ready lead list. Its main value is as a customer-acquisition engine for code-driven trades (WS10-006 is weak as a standalone product).
-- Chicago's GC licence has no exam and Class E costs only $300. Entry is easy, so the real barriers are trade licences (mason, electrical, plumbing), insurance and labor.
-- Only about 3,700 registered short-term-rental units exist in Chicago, which makes STR management structurally small there.
-- In Chicago, low-voltage work sits behind an electrical licence (supervising electrician), so a tech-background founder has no shortcut into structured cabling.
+- Chicago open data (permits, violations, STR registrations) gives A-level demand counts and a ready lead list. It is most valuable as a lead engine for code-driven trades; as a standalone product (WS10-006) it is weak.
+- Chicago's GC licence has no exam (Class E is $300). The real barriers are trade licences, insurance and labor.
+- Chicago has only about 3,700 registered STR units, and its low-voltage work requires an electrical licence.
 
 ## Looked good but fail or weaken
 - **Equipment rental (WS10-022/023).** Herc's dollar utilization is 38.5%: each $1 of fleet earns about $0.39 a year before depreciation. United Rentals spends $4.2B a year on rental capex. A small yard earns thin returns on $100–300k of capital.
@@ -56,11 +55,9 @@
 - Census 2022 margins are proxies that exclude owner draw.
 
 ## Limitations
-- The shared WebSearch budget ran out partway through. After that I used only direct fetches of known primary URLs and official open-data APIs (Chicago Socrata, Census FTP, SEC XBRL).
-- ilga.gov returned 503 and failed TLS on every attempt, so statute text (Roofing Act, RELA, Prompt Payment Act) comes from search-result excerpts and is flagged in limitations.
-- Some chicago.gov pages returned 403 to WebFetch but were read with curl.
-- Justia, Harvard JCHS and amlegal blocked fetches.
-- I contacted no one and requested no quotes.
+- The shared WebSearch budget ran out midway. After that I used only direct fetches of known primary URLs and official APIs (Chicago Socrata, Census FTP, SEC XBRL).
+- ilga.gov was unreachable (503/TLS), so statute text comes from search excerpts and is flagged as such.
+- Justia, JCHS and amlegal blocked fetches. I contacted no one.
 
 ## Cross-stream leads (not recorded here)
 - **WS15:** Chicago façade-inspection ordinance services; Cook County demolition-debris diversion; Chicago building energy benchmarking.

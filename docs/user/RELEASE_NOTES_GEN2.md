@@ -82,8 +82,9 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
   workflow yet.
 
 ### Runtime and models (FA-23, FA-26; T1.10, T1.13)
-* ONNX Runtime inference path (`onnx:<name>`); a spot check gave identical labels and about 8.5× the speed of PyTorch
-  under the same load. The full benchmark (O2) has not completed.
+* ONNX Runtime inference path (`onnx:<name>`), so PyTorch is not needed to run a model. The full benchmark (O2,
+  SYNTHETIC, 16 specimens) found it about as fast as PyTorch (688k vs 769k voxels/s on 4 busy CPU threads; an earlier
+  single-specimen spot check suggesting 8× was wrong), with ≥98% label agreement and the same volume error.
 * Model registry with locked atomic writes, provenance and licence inheritance for fine-tuned models, and code
   version in checkpoints; training refuses research-only data for commercial-eligible weights.
 * A learned model may support graft endpoints only with material-specific validation records (none exist).

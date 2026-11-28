@@ -117,6 +117,14 @@ def main():
     S2a, S2b, S2c = J("exp_S2v2_sim2real_a"), J("exp_S2v2_sim2real_b"), J("exp_S2v2_sim2real_c")
     S3, U1, O2, G, H = J("exp_S3_selfsupervised"), J("exp_U1_ensemble_conformal"), J("exp_O2_runtime"), \
         J("exp_G_morphometry"), J("exp_H_I_real")
+    HO = {"S1H": J("exp_S1H_heldout"), "S1H2": J("exp_S1H2_heldout"), "S1H3": J("exp_S1H3_heldout")}
+    B4 = J("analysis_B4_volume_agreement")
+    qs_path = ROOT / "docs/qa/test_summary.json"
+    QS = json.loads(qs_path.read_text()) if qs_path.exists() else {}
+    h3 = (HO["S1H3"].get("summary") or [{}])[0].get("per_endpoint", {})
+
+    def cov(e):
+        return ((e.get("supported_and_ok", 0) or 0) + (e.get("supported_but_failed", 0) or 0)) / e["n"] if e.get("n") else None
     FM = json.loads((ROOT / "business/financial_model_outputs.json").read_text()) \
         if (ROOT / "business/financial_model_outputs.json").exists() else {}
     build = json.loads((ROOT / "packaging/dist/build-info.json").read_text()) \
@@ -160,11 +168,14 @@ def main():
         "CI but have not been run.",
         "<b>The central scientific change: abstention.</b> Before reporting graft or new-bone volume, a measurement-support "
         "advisor decides whether the split is identifiable for this material, scan and design — and refuses otherwise. "
-        f"In the density × noise simulation (SYNTHETIC, advisor {S1b.get('advisor_version', 'pending')}) it refused "
-        f"{s1b_b.get('failures_refused', 'pending')} of {s1b_b.get('n_fail', 'pending')} failing measurements and "
-        f"{s1b_b.get('supported_but_failed', 'pending')} of the "
-        f"{(s1b_b.get('supported_and_ok', 0) or 0) + (s1b_b.get('supported_but_failed', 0) or 0)} supported cases failed "
-        f"(median graft-volume error {f(s1b_b.get('abs_err_supported_median'), 1, pct=True)}).",
+        "Support is bound to the method it was validated with (the advisor's own threshold). In the final pre-registered "
+        f"held-out simulation (S1H3, SYNTHETIC, advisor {HO['S1H3'].get('advisor_version', 'pending')}, "
+        f"{(HO['S1H3'].get('summary') or [{}])[0].get('n', 'pending')} specimens) it refused every failing measurement "
+        f"on every endpoint; residual graft was supported in {f(cov(h3.get('residual_graft_volume', {})), 0, pct=True)} "
+        f"of specimens with no supported failure (95% upper bound "
+        f"{f(h3.get('residual_graft_volume', {}).get('p_fail_given_supported_upper95'), 3)}), total mineral in "
+        f"{f(cov(h3.get('total_mineral_volume', {})), 0, pct=True)}, new bone in none. Two earlier held-out tests "
+        "(S1H, S1H2) found supported measurements that failed; each failure led to a rule tested on new data.",
         "<b>The honest consequence.</b> By intensity alone, graft/new-bone separation is supportable only for dense "
         "calcium phosphates at low noise and known early timepoints; bone-derived grafts, resorbing materials at later "
         "timepoints and uncharacterised materials are refused. The product's value is therefore a <i>separability "
@@ -184,8 +195,10 @@ def main():
         f"(mutual information, pooled) {f(u1fd.get('score_mutual_info', {}).get('pooled', {}).get('failure'))}.",
         "<b>Verification.</b> " + (f"Traceability now {tr_counts.get('VERIFIED', 0)} verified / {tr_counts.get('PARTIAL', 0)} "
                                    f"partial / {tr_counts.get('GAP', 0)} gap (was 12 / 24 / 45). " if tr_counts else "")
-        + "Test suite ≈500 tests, 91% line+branch coverage (critical modules 96–100%), 25 QA defects found (21 fixed), "
-          "three review cycles across twelve perspectives (Section 8).",
+        + (f"Test suite {QS.get('passed', '?')} passed / {QS.get('failed', '?')} failed / {QS.get('skipped', '?')} skipped "
+           f"({QS.get('date', '')}); line+branch coverage {QS.get('coverage_total', '?')}% overall, desktop excluded. "
+           if QS else "Test suite and coverage: see docs/qa/QA_REPORT.md. ")
+        + "Review cycles across twelve perspectives by automated reviewer agents (Section 8).",
         "<b>Commercial.</b> All prices remain hypotheses; the reachable US niche is ≈$0.8–3.9M per year — a founder-scale "
         "business unless evidence supports expansion. The next value-creating step is physical evidence (phantom study) and "
         "ten discovery conversations, not more software."]), PageBreak()]
@@ -241,11 +254,39 @@ def main():
     # ---------------------------------------------------------------- 5 science
     flow += [P("5. Science", H1), P("5.1 Measurement support (abstention) — validation in simulation", H2),
              P("Rules (advisor " + ADVISOR_VERSION + "): intensity support requires the best single-threshold rule to reach "
-               "graft Dice ≥ 0.85 and volume within ±10% at the scan's estimated graft share and at half of it; bone-derived "
-               "grafts and metals are never intensity-supported; resorbable materials only at known timepoints ≤ 4 weeks; "
-               "knowledge-base/physics disagreement or scan-vs-profile mismatch requires a measured material reference; a "
-               "partial-volume rule gates new-bone and mineral endpoints; day-0 support requires computed registration QC and "
-               "granule tracking. Failure = graft-volume error > 20%.", SM)]
+               "graft Dice ≥ 0.85 and volume within ±10% at the scan's estimated graft share and at half of it, with blur, "
+               "granule thickness and graft level measured in the scan; new-bone error is propagated from the graft error; "
+               "an ambiguous rim of about two blur widths around graft refuses new bone (>10%) and total mineral (>20%); "
+               "bone-derived grafts are never intensity-supported and remodelling grafts never by day-0; metals are "
+               "refused on every endpoint; resorbable materials (incl. BCP) only at known timepoints ≤ 4 weeks; "
+               "knowledge-base/physics disagreement or scan-vs-profile mismatch requires a measured material reference; "
+               "support applies only to the advisor-threshold method. Failure = volume error > 20% (per endpoint).", SM),
+             P("Held-out validations (pre-registered, conditions unseen by the version tested)", H2)]
+    rows = [["Test (advisor)", "Endpoint", "n", "Failures", "Refused failures", "Supported", "Supported & failed",
+             "95% upper bound P(fail|supp.)", "Median / max |err| supported"]]
+    for tid, d in HO.items():
+        pe = (d.get("summary") or [{}])[0].get("per_endpoint", {})
+        for ep, lab in (("residual_graft_volume", "residual graft"), ("new_bone_volume", "new bone"),
+                        ("total_mineral_volume", "total mineral")):
+            e = pe.get(ep)
+            if not e:
+                continue
+            ns = (e.get("supported_and_ok", 0) or 0) + (e.get("supported_but_failed", 0) or 0)
+            rows.append([f"{tid} ({d.get('advisor_version', '?')})", lab, str(e["n"]), str(e["n_fail"]),
+                         str(e["failures_refused"]), str(ns), str(e["supported_but_failed"]),
+                         ("1.000" if ns and e["supported_but_failed"] == ns else      # all supported failed (CP bound 1)
+                          f(e.get("p_fail_given_supported_upper95"), 3)) if ns else "—",
+                         (f(e.get("abs_err_supported_median"), 3, pct=True) + " / " +
+                          f(e.get("abs_err_supported_max"), 3, pct=True)) if ns else "—"])
+    flow += [table(rows, [24 * mm, 22 * mm, 10 * mm, 15 * mm, 17 * mm, 16 * mm, 18 * mm, 24 * mm, 32 * mm])]
+    if B4.get("endpoints"):
+        bg, bm = B4["endpoints"].get("residual_graft_volume", {}), B4["endpoints"].get("total_mineral_volume", {})
+        flow += [P(f"Agreement among supported S1H3 specimens (benchmark B4; derived, not pre-registered): residual graft "
+                   f"bias {f(bg.get('bias'), 3, pct=True)}, 95% limits of agreement {f(bg.get('loa95', [None])[0], 3, pct=True)} "
+                   f"to {f(bg.get('loa95', [None, None])[1], 3, pct=True)} (n={bg.get('n_supported')}); total mineral bias "
+                   f"{f(bm.get('bias'), 3, pct=True)}, limits {f(bm.get('loa95', [None])[0], 3, pct=True)} to "
+                   f"{f(bm.get('loa95', [None, None])[1], 3, pct=True)} (n={bm.get('n_supported')}).", SM)]
+    flow += [P("In-sample development experiments (the data the rules were developed on; not evidence of generalisation)", H2)]
     rows = [["Experiment / method", "n", "Failures", "Refused failures", "Supported & failed", "Supported & OK",
              "Accurate but refused", "P(fail|supported) 95% upper", "Median |err| supported (graft / new / mineral)"]]
     for lab, d, m in (("S1 multi-Otsu (dataset)", S1, "multiotsu"), ("S1 synthetic U-Net (dataset)", S1, "unet_synth"),
@@ -273,8 +314,8 @@ def main():
     flow += [table(rows, [34 * mm, 24 * mm, 38 * mm, 38 * mm, 34 * mm]),
              P(f"L3 (SYNTHETIC, 3 specimens/condition). Registration QC: gross misregistration flagged "
                f"{f(L3.get('registration_failure_detection', {}).get('flagged_identity_fraction'), 2)}, correct registrations "
-               f"passed {f(L3.get('registration_failure_detection', {}).get('passed_correct_fraction'), 2)}. L4: displacement-based "
-               f"QC flagged {f(L4.get('summary', {}).get('qc_flags_harmful'), 2)} of harmful misalignments and passed "
+               f"passed {f(L3.get('registration_failure_detection', {}).get('passed_correct_fraction'), 2)}. L4: block-wise, "
+               f"aperture-aware QC flagged {f(L4.get('summary', {}).get('qc_flags_harmful'), 2)} of harmful misalignments and passed "
                f"{f(L4.get('summary', {}).get('qc_passes_harmless'), 2)} of harmless ones. F2: ROI propagated from an early "
                f"timepoint reached Dice {f(F2.get('summary', {}).get('propagated_dice_mean'))} (automatic detection on the "
                f"late scan {f(F2.get('summary', {}).get('auto_dice_when_found'))}).", SM)]
@@ -358,9 +399,13 @@ def main():
     qa = (ROOT / "docs/qa/QA_REPORT.md").read_text() if (ROOT / "docs/qa/QA_REPORT.md").exists() else ""
     m = re.search(r"(\d+)\s*%\s*overall", qa)
     flow += [P("7. Verification, quality and security", H1), bullets([
-        "Tests: library + desktop suites (≈500 tests incl. property-based round-trips, fuzzing of 7 readers, destructive "
-        "tests, and mutation-tested critical modules: segment/metrics 94.6%, stats 94.2%, morphometry 81.5% mutation score).",
-        "Coverage (line + branch, desktop excluded): 62% → 91%; critical modules 96–100% (docs/qa/QA_REPORT.md).",
+        (f"Tests: {QS.get('passed', '?')} passed, {QS.get('failed', '?')} failed, {QS.get('skipped', '?')} skipped on "
+         f"{QS.get('date', '?')} (library + desktop suites, incl. property-based round-trips, fuzzing of readers and "
+         "destructive tests); mutation-tested critical modules: segment/metrics 94.6%, stats 94.2%, morphometry 81.5% "
+         "mutation score (docs/qa/QA_REPORT.md)." if QS else
+         "Tests: see docs/qa/QA_REPORT.md (mutation scores: segment/metrics 94.6%, stats 94.2%, morphometry 81.5%)."),
+        (f"Coverage (line + branch, desktop excluded): Gen-0 62% → {QS.get('coverage_total', '?')}% "
+         f"({QS.get('coverage_note', '')})." if QS else "Coverage: docs/qa/QA_REPORT.md."),
         "Security: Gen-2 review (docs/security/SECURITY_REVIEW_GEN2.md) — critical Zarr pickle-codec code execution and "
         "unbounded allocation fixed; e-signature lockout unified; validation records vendor-signed; licence verification "
         "Ed25519. Open low/medium items listed there.",

@@ -28,3 +28,4 @@ Historical defects fixed in Generation 1 (S-01…S-19, Q-01…Q-14, RESEARCH_LOG
 | DF-018 | S1 | ML | ONNX model hash verified, then file re-read (time-of-check/time-of-use) | cycle-1 security review | fixed | `ml/runtime.py` loads the verified bytes |
 | DF-019 | S3 | ML | ONNX runtime path imported PyTorch | Gen-2 packaging | fixed | torch-free `ml/core.py` |
 | DF-020 | S2 | longitudinal | Granule tracking v1 produced spurious ~700 µm matches that the advisor accepted | Experiment L3 | fixed | tracking v2 (distance prior, ambiguity); 0 supported-but-failed |
+| DF-021 | S3 | docs | S1H2 total-mineral count misquoted as "10/141 supported failed" (141 were the supported-and-OK cases; 151 were supported) in EXPERIMENT_REGISTRY and EVIDENCE_LEDGER | report rebuild cross-check | fixed | corrected to 10/151; the Gen-2 report table reads the counts from the result file |

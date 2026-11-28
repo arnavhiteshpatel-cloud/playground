@@ -15,6 +15,7 @@ import json
 import math
 import os
 import shutil
+import threading
 import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -628,25 +629,50 @@ def resolve_healing_weeks(project, scan_id, value=HEALING_AUTO) -> tuple[float |
 ANALYSIS_MEMORY_FACTOR = 8      # peak bytes ≈ 8 × float32 volume (image, labels, probabilities, morphometry buffers)
 
 
-def _memory_preflight(project, scan_id, available: int | None = None) -> None:
+def _memory_preflight(project, scan_id, available: int | None = None) -> tuple[int, int | None]:
     """Refuse an analysis that would not fit in memory, before loading anything (cycle-3 review C3-PRD-20: on Linux a
-    too-large analysis is killed by the OS instead of raising MemoryError, and unsaved work is lost)."""
+    too-large analysis is killed by the OS instead of raising MemoryError, and unsaved work is lost). Returns the
+    estimated need and the available memory (None when it cannot be measured)."""
     sc = project.store.scan(project.require_user(), scan_id)
     shape = sc.get("shape") or []
     try:
         n = int(np.prod([int(x) for x in shape])) if shape else 0
     except (TypeError, ValueError):
-        return
+        return 0, None
     need = n * 4 * ANALYSIS_MEMORY_FACTOR
     if available is None:
         try:
             import psutil
             available = int(psutil.virtual_memory().available)
         except Exception:  # noqa: BLE001 - without psutil the check is skipped
-            return
+            return need, None
     if need > available:
         raise MemoryError(f"This analysis needs about {need / 2**30:.1f} GB of memory and {available / 2**30:.1f} GB is "
                           "available. Close other analyses or applications, or analyse a cropped or decimated copy.")
+    return need, available
+
+
+# Analyses whose estimated peak exceeds this share of the available memory run one at a time (C3-PRD-20: two large
+# analyses started together could each pass the pre-flight and then exhaust memory together).
+LARGE_ANALYSIS_SHARE = 0.4
+_LARGE_ANALYSIS = threading.Lock()
+
+
+def _large_analysis_slot(project, scan_id, need, available, ctx):
+    """Wait (cancellably) for the single large-analysis slot when this analysis is large; re-check memory once it is
+    obtained. Returns True when the slot is held and must be released by the caller."""
+    if not need or available is None or need <= LARGE_ANALYSIS_SHARE * available:
+        return False
+    if not _LARGE_ANALYSIS.acquire(blocking=False):
+        ctx.progress(0.0, "waiting for another large analysis to finish")
+        while not _LARGE_ANALYSIS.acquire(timeout=0.5):
+            ctx.check()                          # cancelling while waiting leaves nothing to roll back
+    try:
+        _memory_preflight(project, scan_id)      # memory may have changed while waiting
+    except BaseException:
+        _LARGE_ANALYSIS.release()
+        raise
+    return True
 
 
 def analyze_scan(project, scan_id, config: dict | None = None, ctx=None, use_saved_roi=True) -> dict:
@@ -654,10 +680,19 @@ def analyze_scan(project, scan_id, config: dict | None = None, ctx=None, use_sav
 
     ``config["healing_weeks"]`` may be "auto" (default: from the scan's timepoint), "unknown", or a number
     of weeks; the resolved value and its source are recorded in the analysis configuration."""
-    from ..study.handlers import job_analyze
     ctx = ctx or NullContext()
     config = dict(config or {})
-    _memory_preflight(project, scan_id)
+    need, available = _memory_preflight(project, scan_id)
+    held = _large_analysis_slot(project, scan_id, need, available, ctx)
+    try:
+        return _analyze_scan(project, scan_id, config, ctx, use_saved_roi)
+    finally:
+        if held:
+            _LARGE_ANALYSIS.release()
+
+
+def _analyze_scan(project, scan_id, config, ctx, use_saved_roi) -> dict:
+    from ..study.handlers import job_analyze
     weeks, source = resolve_healing_weeks(project, scan_id, config.pop("healing_weeks", HEALING_AUTO))
     config["healing_weeks"] = weeks
     config["healing_weeks_source"] = source

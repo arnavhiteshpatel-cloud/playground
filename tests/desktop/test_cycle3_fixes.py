@@ -140,3 +140,38 @@ def test_schema_change_at_project_open_is_audited(tmp_path):
     assert len(ev) == 1 and ev[0]["details"]["added"] == ["desktop_review_meta"]
     assert p.store.audit.verify_chain()["ok"]
     p.close()
+
+
+def test_large_analyses_run_one_at_a_time_and_waiting_is_cancellable(team):
+    """C3-PRD-20: an analysis whose estimated peak exceeds the large-analysis share waits for the slot; cancelling while
+    waiting stops it before anything is loaded; small analyses never wait."""
+    import threading
+
+    project, sid, scan, _, _ = team
+
+    class Cancelled(Exception):
+        pass
+
+    class Ctx:
+        def __init__(self):
+            self.msgs, self.cancel = [], threading.Event()
+
+        def progress(self, frac, msg=""):
+            self.msgs.append(msg)
+
+        def check(self):
+            if self.cancel.is_set():
+                raise Cancelled()
+    assert S._large_analysis_slot(project, scan, 10, 1000, Ctx()) is False          # small: no slot needed
+    held = S._large_analysis_slot(project, scan, 900, 1000, Ctx())
+    assert held is True                                                             # large: holds the slot
+    try:
+        ctx = Ctx()
+        ctx.cancel.set()
+        with pytest.raises(Cancelled):
+            S._large_analysis_slot(project, scan, 900, 1000, ctx)                   # second large analysis waits
+        assert "waiting for another large analysis to finish" in ctx.msgs
+    finally:
+        S._LARGE_ANALYSIS.release()
+    assert S._LARGE_ANALYSIS.acquire(blocking=False)                                # released again
+    S._LARGE_ANALYSIS.release()

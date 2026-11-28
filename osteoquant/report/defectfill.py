@@ -508,26 +508,37 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
         "verdict 'review' or an automatic ROI not yet accepted) are marked '(f)'. "
         "Evidence stage of the advisor and models: computational (stage A of the validation programme) — no physical "
         "or in-vivo validation of graft/new-bone separation has been performed.", SM))
-    sup_rows = []
+    # identical (endpoint, status, reason) entries are grouped with the specimens they apply to (cycle-3 review
+    # C3-PRD-17: one study showed 51 rows repeating the same reasons for 5 specimens)
+    grouped: dict = {}
+    order = []
     for s_ in bundle["specimens"]:
         ms = s_.get("measurement_support") or {}
+        sid_ = str(s_.get("specimen_id"))
         if not ms:
-            sup_rows.append([str(s_.get("specimen_id")), "all", "not assessed",
-                             Paragraph("analysis predates the measurement-support advisor; treat graft/new-bone "
-                                       "values as unassessed", SM)])
-            continue
+            k = ("all endpoints", "not assessed", "analysis predates the measurement-support advisor; treat graft/new-bone "
+                                                  "values as unassessed")
+        items = [k] if not ms else []
         for ep, d in ms.items():
             if d.get("status") == "supported":
                 continue
             text = d.get("reason", "") or ""
             if d.get("conditions"):
                 text += " Conditions: " + "; ".join(d["conditions"])
-            sup_rows.append([str(s_.get("specimen_id")), ep.replace("_", " "),
-                             "conditional" if d.get("status") == "supported_with_conditions" else "not measured",
-                             Paragraph(esc(text), SM)])
+            status = {"supported_with_conditions": "conditional", "not_assessed": "not assessed"}.get(
+                d.get("status"), "not measured")
+            items.append((ep.replace("_", " "), status, text))
+        for k in items:
+            if k not in grouped:
+                grouped[k] = []
+                order.append(k)
+            grouped[k].append(sid_)
+    n_spec = len(bundle["specimens"])
+    sup_rows = [[(f"all {n_spec}" if len(grouped[k]) == n_spec and n_spec > 1 else ", ".join(grouped[k])),
+                 k[0], k[1], Paragraph(esc(k[2]), SM)] for k in order]
     if sup_rows:
-        flow.append(table([["Specimen", "Endpoint", "Status", "Reason / conditions"]] + sup_rows,
-                          [22 * mm, 38 * mm, 22 * mm, 98 * mm]))
+        flow.append(table([["Specimens", "Endpoint", "Status", "Reason / conditions"]] + sup_rows,
+                          [26 * mm, 36 * mm, 22 * mm, 96 * mm]))
     else:
         flow.append(Paragraph("All reported endpoints are supported for all specimens.", SM))
     par_rows = []

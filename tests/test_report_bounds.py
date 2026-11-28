@@ -149,6 +149,7 @@ def test_report_prints_refused_values_as_not_measured_with_reasons(tmp_path):
     text = _pdf_text(r["pdf"])
     assert "n/m" in text                                         # refused new-bone values are never printed as numbers
     assert "ambiguous graft rim exceeds 10% of new bone" in text and "not measured" in text
+    assert text.count("ambiguous graft rim exceeds 10% of new bone") == 1 and "all 6" in text   # grouped (C3-PRD-17)
     assert "conditional" in text and "graft has no mineral phase" in text
     assert "SYNTHETIC-TRAINED MODEL" in text and "EVALUATION COPY" in text
     assert "advisor_threshold" in text and "1.4.2" in text and "timepoint label" in text

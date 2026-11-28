@@ -23,7 +23,7 @@ limitation documented), **open** (planned; reason given).
 | C3-PRD-14 | Medium | partly fixed | New assertions: hostile `key_id`, non-boolean `validation_ok`, recorded `method_binding`, tissue-mineral-density exemption, stale/unbound records, renderer-side refusal, exact-tolerance QC, featureless-tube QC. No mutation tool was run. |
 | C3-PRD-15 | Low | fixed | A corrupt `validation_records.json` yields "unreadable" (no record) instead of aborting analyses. |
 | C3-PRD-16 | Low | fixed | `job_analyze` writes labels under a unique key, then commits ROI, segmentation, measurement and status in one transaction; the array is removed on failure; derived masks are written after commit. |
-| C3-PRD-17 | Low | open | Report readability (grouped refusal reasons, "not measured, 0 of n" in group tables, overlay colours for refused splits, comparison-omission notice) — planned with the next report revision. |
+| C3-PRD-17 | Low | partly fixed | Identical refusal reasons are grouped with the specimens they apply to ("all 6"), test in `test_report_bounds.py`. Open: "not measured, 0 of n" in group tables, overlay colours for refused splits, comparison-omission notice. |
 | C3-PRD-18 | Low | fixed | See C3-PRD-13. |
 | C3-PRD-19 | Low | open | Timing-dependent tests to be converted to event-based waits. |
 | C3-PRD-20 | Low | open | Memory pre-flight and serialisation of large analyses. |

@@ -45,7 +45,7 @@ decision, `docs/ip/IP_STRATEGY.md`).
   workflow.
 * **Synthetic → real** (REAL dog forelimb, 5 test scans): the synthetic model reaches Dice 0.377 zero-shot and 0.513 with
   2× upsampling; domain-randomised pretraining was worse on every one of the 5 test scans (0.353 native, 0.457 at 2×;
-  one seed); few-shot, self-supervised, ensemble/conformal and runtime results: §3a.
+  one seed); with 1–3 real labelled scans, training from scratch (0.805 / 0.816) was as good as or better than any synthetic pretraining (S2 part c) — synthetic data did not help the real bone task; self-supervised, ensemble/conformal and runtime results: §3a.
 * **Morphometry** agrees with Scanco IPL on public cubes; graft-specific endpoints have no real reference yet.
 
 ### 3a. ML campaign (filled from the result files when the runs finish)

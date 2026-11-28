@@ -14,3 +14,8 @@ Each entry: date · decision · rationale · evidence · reversibility.
 - **2026-11-28 · Taxonomy.** 18 discovery workstreams (founder's sector list + mechanism-first, regulation-driven,
   quiet-money niches, specialty distribution, automotive/fleet, local/consumer services) to avoid anchoring on the
   founder's examples.
+- **2026-11-28 · Stage A complete.** 18 workstreams → 630 records, 630 sources, all validated (0 errors).
+- **2026-11-28 · De-duplication.** 32 cross-workstream clusters reviewed manually from the full title list plus
+  Jaccard similarity; in each, the record with the strongest evidence (then most sources) is kept and the others
+  linked via `duplicate_of` (`03_screening/dedupe_decisions.json`). Duplicates are excluded from ranking, but
+  Stage C investigators read them. Result: 37 records linked as duplicates; 593 distinct opportunities. Reversible.

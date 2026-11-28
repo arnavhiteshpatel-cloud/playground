@@ -5,9 +5,9 @@
 ## Landscape
 Three very different economic animals:
 
-1. **Asset-light placement (brokerage/referral).** Revenue is a success fee or lender-paid commission per funded deal. Capital at risk is tiny, but income is lumpy, founder- and relationship-driven, and highly cyclical. Small broker firms (<5 employees) averaged ~$367k receipts in 2022 (Illinois ~$326k) [C, S022].
+1. **Asset-light placement (brokerage/referral).** Success fees or lender-paid commissions; tiny capital, but lumpy, founder-driven and cyclical income. Small broker firms (<5 employees) averaged ~$367k receipts in 2022 (Illinois ~$326k) [C, S022].
 2. **Lender services (outsourced work for lenders).** SBA processing/LSP, loan review, draw inspections, field exams, servicing: recurring, delegable and AI-amenable, but buyers expect an experienced team.
-3. **Own-capital lending (bridge loans, factoring, leasing, notes, funds).** Returns are capital-bound: a six-person public hard-money lender earned ~12% on equity in 2025 [B, S032], so a $100k book yields ~$10–15k/yr before losses. Factoring incumbents earn about 15% on funds employed and name fraud as their main loss risk [B, S033]. These models suit the future holdco, not the first business.
+3. **Own-capital lending (bridge loans, factoring, leasing, notes, funds).** Returns are capital-bound: a six-person public hard-money lender earned ~12% on equity in 2025 [B, S032], so a $100k book yields ~$10–15k/yr before losses. Factoring incumbents earn ~15% on funds and cite fraud as the main risk [B, S033]. These models suit the future holdco, not the first business.
 
 ## Key regulatory findings (primary sources)
 - **Illinois Loan Brokers Act.** A broker whose fee is *wholly contingent* on a binding loan commitment is exempt from Secretary of State registration. There is no business-loan or dollar-size exemption, and the broker carries the burden of proof [A, S002]. Non-exempt brokers must register, and the $25k bond applies only to consumer (TILA) loans [A, S003].
@@ -26,13 +26,13 @@ Three very different economic animals:
 
 ## Strongest candidates
 1. **WS01-003, acquisition-financing advisory (SBA 7(a) change of ownership).** Buyers identify themselves and business brokers want them financed. High tickets: $22.5k applicant fee cap on a $2M loan, plus a disclosed lender referral fee. AI does real work in spreading and memo drafting. Risks: deal mortality, the non-contingent-fee sale, and the need for Illinois SOS registration.
-2. **WS01-011, business-purpose investor loan brokerage (DSCR, bridge, flip).** Compensation is published (Kiavi pays YSP up to 2.5% on $75k–$5M loans) [B, S030]. Repeat borrowers, findable in deed data; low Illinois licence barrier. It is housing-cycle exposed, and the purpose-misclassification risk must be policed.
+2. **WS01-011, business-purpose investor loan brokerage (DSCR, bridge, flip).** Compensation is published (Kiavi pays YSP up to 2.5% on $75k–$5M loans) [B, S030]. Repeat borrowers, findable in deed data; low Illinois licence barrier. Housing-cycle exposed; purpose misclassification must be policed.
 3. **WS01-007, equipment-finance desk built on dealer programs.** Dealers supply recurring deal flow in a large market ($1.5T industry) [C, S036]. Light regulation; can later add its own book (WS01-024). Broker point levels are still unverified.
 4. **WS01-028, AI-assisted independent loan review and credit analysis for community banks and credit unions.** Demand comes from interagency guidance [A, S040]. Illinois has 267 FDIC banks under $1B [A, S039]. Recurring, delegable, best durable AI leverage in the workstream. It is gated on recruiting a credible ex-bank credit officer; pricing is MISSING.
-5. **WS01-005, SBA LSP / outsourced processing (hold).** Same buyer base and AI leverage as WS01-028, but it needs a veteran SBA hire and the sales cycles are long.
+5. **WS01-005, SBA LSP / outsourced processing (hold).** Like WS01-028 but needs a veteran SBA hire; long sales cycles.
 6. **Holds:** WS01-001 (small-balance CRE brokerage: clean but crowded), WS01-018 (practice finance; better as a vertical of 003) and WS01-027 (draw inspections; a delegable adjunct to 011/012).
 
-**Strategic note:** 011, 012, 027 and 031, followed later by 020 and 026, form a coherent "business-purpose investor finance" stack. It starts asset-light and builds the track record a future credit fund needs. This is a reasonable holdco path, but no single step is proven to reach $500k/yr.
+**Strategic note:** 011, 012, 027 and 031, followed later by 020 and 026, form a coherent "business-purpose investor finance" stack. It starts asset-light and builds the track record a future credit fund needs. No single step is proven to reach $500k/yr.
 
 ## Looked good but fail
 - **MCA/ISO brokerage (006):** reachable customers and fast commissions, but the economics depend on renewals and stacking to distressed merchants. State regimes are tightening. G3 FAIL.

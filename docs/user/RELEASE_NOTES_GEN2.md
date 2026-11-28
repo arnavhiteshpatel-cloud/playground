@@ -95,7 +95,7 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
 * PyInstaller one-folder builds; a CI build workflow for Windows x64, macOS 14 arm64 and Ubuntu 22.04. It creates no
   GitHub Release, but on a manual dispatch or a `desktop-v*` tag it uploads unsigned application archives as workflow
   artifacts that any signed-in GitHub user can download from this public repository, so starting it is a distribution
-  decision for the founder (B-013). It has never run. Signing and notarisation steps are present but inactive until the
+  decision for the founder (B-013). The founder approved it on 28 Nov: macOS and Linux pass, Windows fails on a headless test crash (DF-044). Signing and notarisation steps are present but inactive until the
   publisher's credentials exist.
 * The only packaged build is a local Linux build of 28 November 2026 (advisor 1.4.3); it passed its packaged
   self-test and licence check and is not distributed.
@@ -144,7 +144,7 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
 | L3 | Synthetic | Done | Day-0 is fragile under granule motion: naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35. The advisor refuses these cases |
 | L4 | Synthetic | Done | Registration QC flagged all 6 harmful misalignments and passed 78% of harmless ones |
 | S2 | Real | Part a done; parts b and c running | Part a only; no number from b or c |
-| U1, O2 | Synthetic | Queued | — |
+| U1, O2 | Synthetic | Done | Ensemble failure flags work in simulation; conformal intervals hold in distribution (15/16) but not for a new material (25/40); ONNX Runtime about as fast as PyTorch, int8 slower |
 
 Details: [SCIENTIFIC_METHODS.md](SCIENTIFIC_METHODS.md), [EXPERIMENT_REGISTRY.md](../../EXPERIMENT_REGISTRY.md).
 
@@ -156,7 +156,7 @@ Details: [SCIENTIFIC_METHODS.md](SCIENTIFIC_METHODS.md), [EXPERIMENT_REGISTRY.md
 * Day-0 method fails under small granule motion in simulation; bone formed inside a resorbing footprint is counted as graft.
 * Desktop: no day-0 or characterisation workflow; no locked model installed by default (ONNX inference no longer
   needs PyTorch); histology not included. Users are managed under *Project > Users...*.
-* Windows and macOS builds never run; the only Linux build predates the current code and must be rebuilt; no build is
-  signed or notarised.
+* No Windows build (a desktop test crashes on the headless CI machine); macOS and Linux builds pass their packaged
+  self-tests; no build is signed or notarised or has been tried on a user's computer.
 * Traceability matrix not regenerated (FA-20). Coverage in the local run recorded in `docs/qa/test_summary.json`:
   93.4% overall and 98.7% on critical modules.

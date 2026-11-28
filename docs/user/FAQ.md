@@ -97,9 +97,9 @@ not a result. The application can record real interaction timing, locally and on
 
 ### Does it work on Windows and macOS?
 
-Not yet known. The Windows and macOS builds have never been run (the CI build workflow has never run) and would be
-unsigned (signing and notarisation await the publisher's credentials). Linux is the only platform built so far (a local
-build of 28 November 2026 with advisor 1.4.3 passed its packaged self-test); it is not distributed, so use a source
+Partly known. On 28 November 2026 the macOS (Apple silicon) and Linux builds passed their packaged self-tests in CI;
+the Windows build stops at a desktop test that crashes on a headless machine. No build is signed or notarised (that
+awaits the publisher's credentials), and none has yet been tried on a user's own computer. Builds are not distributed, so use a source
 install. See [INSTALLATION.md](INSTALLATION.md).
 
 ### Do I need a licence?

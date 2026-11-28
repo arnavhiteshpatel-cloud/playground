@@ -40,8 +40,9 @@ optionally, ONNX models.
 ### From a built package
 Linux: unpack the archive and start `OsteoQuant/OsteoQuant`; check it with `OsteoQuant/osteoquant-desktop-console
 --selftest`. The only packaged Linux build (`packaging/dist/`, built 28 Nov 2026, commit `cf6fea7`, advisor 1.4.3) passed its self-test;
-rebuild it (§11) after any code change, and do not distribute it (B-016). Windows and macOS packages are configured in CI but **have never been built or run**; their first CI run
-is their first test (`docs/user/INSTALLATION.md`). Builds are unsigned: SmartScreen and Gatekeeper will warn.
+rebuild it (§11) after any code change, and do not distribute it (B-016). On 28 Nov the CI `desktop-build` workflow built macOS (Apple silicon `.dmg`/`.zip`) and Linux bundles that passed their
+packaged self-tests and licence checks; Windows fails on a desktop test that crashes on a headless machine (DF-044)
+(`docs/user/INSTALLATION.md`). Builds are unsigned: SmartScreen and Gatekeeper will warn.
 
 ## 3. Run
 ```bash
@@ -129,11 +130,10 @@ pip install -e ".[desktop]" pyinstaller pypdfium2 onnxruntime
 python packaging/build.py      # -> packaging/dist/OsteoQuant/ and an archive; runs the licence check and the self-test
 ```
 `packaging/dist/build-info.json` records the result. The build **fails** on any GPL-only Qt module or unmapped bundled
-library. Do not distribute or use any archive yet: the Linux build on disk (27 Nov) predates the complete notices,
-and it was built before advisor 1.3.1–1.4.3 and the cycle-2/3 fixes (`docs/desktop/PACKAGING.md` §Distribution
-status), and the LGPL source
-arrangement and the EULA are counsel questions (decision #12). Windows/macOS builds run only in CI
-(`.github/workflows/desktop-release.yml`) and have never been run. That workflow creates no GitHub Release, but on a
+library. Do not distribute any archive yet: the local Linux build (28 Nov, commit `cf6fea7`, advisor 1.4.3) passed its
+self-test and licence check, but the LGPL source arrangement and the EULA are counsel questions (decision #12). Windows/macOS builds run only in CI
+(`.github/workflows/desktop-release.yml`); its 28 Nov run (decision #21) produced macOS and Linux bundles, and Windows
+failed on DF-044. That workflow creates no GitHub Release, but on a
 manual dispatch or a `desktop-v*` tag it uploads the unsigned application archives as workflow artifacts, which any
 signed-in GitHub user can download from this public repository: starting it is a distribution (decisions #12, #21;
 B-013). Pull-request runs upload only the licence report and build information. Code signing needs certificates

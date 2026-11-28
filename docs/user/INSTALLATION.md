@@ -25,8 +25,8 @@ PyTorch or SimpleITK (see [Build options](#build-options)).
 | Platform | How it is built | Tested in this project | Code signing |
 |---|---|---|---|
 | Linux x86_64 | `packaging/build.py`, locally and in CI (Ubuntu 22.04) | Yes: packaged self-test passed 8 of 8 steps (headless); also run from source on an X server | Not applicable; `.tar.gz` archive |
-| Windows x64 | CI build matrix (`.github/workflows/desktop-release.yml`) only | **No.** The Windows build has never been run here; its first CI run is its first real test | **Not signed** (pending the publisher's code-signing certificate) |
-| macOS 14, Apple silicon | CI build matrix only | **No.** Never run here; the model-folder path inside the `.app` also needs confirming | **Not signed or notarised** (pending the publisher's Apple Developer ID credentials) |
+| Windows x64 | CI build (`.github/workflows/desktop-release.yml`), attempted 28 Nov 2026 | **No.** The build stops at a desktop test that crashes when the 3D view opens on the headless CI machine (DF-044); no Windows bundle exists | **Not signed** (pending the publisher's code-signing certificate) |
+| macOS 15, Apple silicon | CI build (`.dmg`, `.zip`), 28 Nov 2026 | **Desktop tests and packaged self-test passed in CI**; not yet tried on a user's Mac; the model-folder path inside the `.app` still needs confirming | **Not signed or notarised** (pending the publisher's Apple Developer ID credentials) |
 
 The CI workflow builds, runs the desktop tests and the packaged self-test, and uploads archives as workflow
 artifacts kept for 14 days. It never publishes a release. Signing and notarisation steps exist in the workflow but

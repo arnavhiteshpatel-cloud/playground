@@ -243,7 +243,7 @@
 <li><strong>Synthetic-to-real gap.</strong> Synthetic-only models fail on real scans (Dice 0.379 above).</li>
 <li><strong>Day-0 under motion.</strong> Footprint accuracy collapses with tens of micrometres of granule motion (L3) and tracking does not yet fix it; the advisor refuses these cases. Bone formed inside a resorbing footprint is counted as graft. There is no desktop day-0 workflow.</li>
 <li><strong>Advisor coverage is low.</strong> In held-out simulation the advisor was safe but reported little: in S1H4, on the material paths the application uses, residual graft was supported only for HA (10% of specimens), total mineral in 2% and new bone never; with the material set to Unspecified nothing was supported. Next to dense graft at these voxel sizes, new bone is not identifiable by intensity.</li>
-<li><strong>Out-of-distribution detection</strong> is weak (AUROC 0.66). Ensembles and conformal volume intervals (U1), the synthetic-to-real campaign (S2) and the ONNX runtime benchmark (O2) have not completed.</li>
+<li><strong>Out-of-distribution detection</strong> is weak (AUROC 0.66). In simulation, a five-model ensemble flags its own segmentation failures, but conformal 90% volume intervals hold only in distribution (15/16), not for a new material (25/40) (U1). Synthetic or self-supervised pretraining did not help on real scans: one real labelled scan from scratch did better (S2, S3).</li>
 </ul>
 <h3 id="biology">Biological limits</h3>
 <ul>

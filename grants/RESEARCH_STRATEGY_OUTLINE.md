@@ -16,7 +16,7 @@ OsteoQuant's approach combines three elements:
 2. Material-aware segmentation that reports calibrated uncertainty.
 3. Low-label adaptation to new materials and scanners.
 
-The project is a pre-incorporation research prototype from a UIUC undergraduate founder. A synthetic-phantom benchmark is in progress [PENDING RESULT]. Physical phantom scans are planned on the Beckman Institute Zeiss Xradia 630 Versa. There are no customers or physical validation yet. Phase I will establish ground truth and an expert-comparison validation. Phase II will pursue multi-site validation and a production product for CROs and orthobiologic developers.
+The project is a pre-incorporation research prototype from a UIUC undergraduate founder. A pre-registered synthetic-phantom benchmark is complete: the measurement-support advisor reported residual graft only for sintered HA and new bone never (`EXPERIMENT_REGISTRY.md`, S1H4, S1H5). Physical phantom scans are planned on the Beckman Institute Zeiss Xradia 630 Versa. There are no customers or physical validation yet. Phase I will establish ground truth and an expert-comparison validation. Phase II will pursue multi-site validation and a production product for CROs and orthobiologic developers.
 
 ## 0b. Technical innovation (≈250 words)
 

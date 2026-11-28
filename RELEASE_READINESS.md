@@ -20,7 +20,7 @@ external sign-off.
 - [ ] Benchmark scorecard targets met: B4, B10 met on synthetic data only; B5 sensitivity met but precision not demonstrated (S1H4 structure-level bound 0.14 > 0.10) and coverage very low on the application's material paths; B1–B3 and B6–B8 not met or pending (BENCHMARK_SCORECARD.md)
 - [x] Review cycles: 3 completed across 12 perspectives (automated reviewer agents, not human experts); responses in `docs/reviews/cycle3/` (all critical and high findings fixed or mitigated; open items listed there)
 
-**Gate status:** Gate 1 not met (Windows/macOS builds never run; the only Linux build predates the current code and
-must be rebuilt; critical-module coverage and the security items unconfirmed). Gate 2 not met (no real-data
+**Gate status:** Gate 1 not met (no Windows build: DF-044; macOS and Linux CI builds pass their self-tests but none is
+signed or tried on a user's machine; critical-module coverage and the security items unconfirmed). Gate 2 not met (no real-data
 validation of the graft/new-bone task; no human expert review; pilot templates not reviewed by counsel). Gate 3 is
 never claimed. No evaluation on customer data has been agreed, and the company is not incorporated.

@@ -28,7 +28,7 @@ given). Nothing in this response is legal advice; every IP and privacy point nee
 | C3-BIZ-18 | Medium | fixed | Refusal reasons no longer advise a day-0 scan (advisor 1.4.3; commit `969d9a5`). |
 | C3-BIZ-19 | Low | fixed | Quick Start and FAQ list bone-derived grafts as refused by every mechanism, with or without a day-0 scan, and say the desktop application has no day-0 workflow. |
 | C3-BIZ-20 | Low | partly fixed | The website scorecard and validation programme stage A are regenerated from `BENCHMARK_SCORECARD.md` and the registry (S1H3 as the exit criterion; in-sample runs are development checks); the about page no longer lists a day-0 study design as a focus. Open: the report-preview screenshot (`website/assets/img/08_report_preview.png`) is regenerated with the final deliverables. |
-| C3-BIZ-21 | Low | fixed | The registry gives the actual state per experiment (S2 part b running since 00:34, part c, S3, U1 and O2 queued). |
+| C3-BIZ-21 | Low | fixed | The registry gives the actual state per experiment; at the time of this response S2 part b was running and part c, S3, U1 and O2 queued; all have since completed and are recorded with results. |
 | C3-BIZ-22 | Low | fixed | The NSF pitch uses the competitor matrix's wording: deep learning is available from others; graft-aware abstention was not found in the sources reviewed. |
 | C3-BIZ-23 | Low | partly fixed / founder | Decision #3 now names `outreach/collaborators.csv` and `outreach/OUTREACH_EMAILS.md`; the CSV is re-quoted (23 fields per row); one personal email address was removed from the current tree and runtime logs are no longer tracked. History is unchanged: rewriting it is part of decision #3. |
 

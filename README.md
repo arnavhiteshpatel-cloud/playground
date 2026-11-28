@@ -25,8 +25,9 @@ osteoquant-desktop                            # the desktop application
 pytest -q                                     # test counts and coverage: docs/qa/test_summary.json
 python scripts/check_claims.py                # customer-facing numbers against their result files
 ```
-A Linux one-folder bundle can be built with `python packaging/build.py` (`docs/desktop/PACKAGING.md`); Windows and
-macOS bundles have not been built. No build is distributed.
+Bundles are built with `python packaging/build.py` (`docs/desktop/PACKAGING.md`) or the `desktop-build` CI workflow,
+which produced self-tested macOS (Apple silicon) and Linux bundles on 28 Nov; the Windows build fails on a headless
+desktop-test crash (DF-044). Nothing is signed or distributed.
 
 ## Repository map
 | Path | Contents |

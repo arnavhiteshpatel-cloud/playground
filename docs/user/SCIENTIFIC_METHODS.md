@@ -205,9 +205,10 @@ oracle drops to 0.36 and the random forest to 0.65–0.70.
 * **Evidence** [SYNTHETIC, Experiment K]: deferring the 10% least-confident voxels raised retained accuracy from
   0.940 to 0.973. A scan-level failure flag (graft Dice <0.8) had sensitivity 4/4 and specificity 0.75.
   Out-of-distribution detection is weak: ID-vs-OOD AUROC 0.66. Temperature scaling did not improve calibration.
-* **Not yet available.** Deep ensembles, failure-detection AUROC on the current models and conformal volume intervals
-  (Experiment U1) have not completed. Reports therefore carry no interval around volumes; the design intent is to
-  abstain rather than claim coverage under distribution shift.
+* **Ensembles and conformal intervals (Experiment U1, SYNTHETIC).** A five-model ensemble flags its own failures
+  (volume-spread failure-detection score 0.95 with only 5 failures in 56 scans), and conformal 90% graft-volume intervals
+  covered 15/16 in-distribution scans but only 25/40 scans of a held-out material. Reports therefore carry no interval
+  around volumes: coverage does not survive a change of material.
 * **Domain shift** [REAL, Experiments H/I]: a U-Net trained only on synthetic phantoms reached Dice 0.379 zero-shot on
   real dog-forelimb scans (bone vs background); one labelled real scan lifted it to 0.787 (10-scan real model: 0.826).
   Do not use synthetic-only models on real scans.

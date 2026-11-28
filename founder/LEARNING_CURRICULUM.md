@@ -59,8 +59,8 @@ using a separate *calibration* set: you measure how wrong the model was on calib
 prediction by the corresponding quantile. The guarantee is *marginal* (on average over cases, not for each scan) and
 holds only if new cases resemble the calibration cases (exchangeability). Under distribution shift — a new graft
 material, a new scanner — coverage can collapse, which is why Experiment U1 also tests *gating*: refusing scans the
-failure detector flags before giving an interval (`docs/science/PREREGISTRATION.md` §6). U1 is queued, not yet run
-(`EXPERIMENT_REGISTRY.md`); quote no number from it.
+failure detector flags before giving an interval (`docs/science/PREREGISTRATION.md` §6). U1 (SYNTHETIC) showed exactly
+this: 15/16 covered in distribution, 25/40 for a held-out material, and gating did not repair it (`EXPERIMENT_REGISTRY.md`).
 **Self-test:** A CRO asks: "your 90% interval — does that mean 90% certainty for *my* scan?" What do you say?
 
 ### A6. LGPL obligations of the desktop bundle

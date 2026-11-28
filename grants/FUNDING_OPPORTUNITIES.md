@@ -1,7 +1,7 @@
 # OsteoQuant: Funding Opportunities (verified scan)
 
 **Prepared:** 2026-11-27 · **Scope:** non-dilutive and early-dilutive funding for a pre-incorporation UIUC undergraduate project (preclinical micro-CT bone-regeneration quantification software).
-**Project status (use these facts everywhere):** a research prototype. Computational experiments are in progress. There are **no customers**, **no physical validation** and **no incorporated entity**.
+**Project status (use these facts everywhere):** a research prototype. The planned computational (synthetic-phantom) experiments are complete; no real-data validation exists. There are **no customers**, **no physical validation** and **no incorporated entity**.
 
 ## Evidence labels
 

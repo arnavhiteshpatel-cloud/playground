@@ -13,7 +13,7 @@ Nothing in the build needs a network connection at run time.
 | `packaging/licenses/` | LGPL-3.0 and GPL-3.0 texts shipped in every build |
 | `packaging/make_icons.py` | renders `packaging/icons/osteoquant.{png,ico,icns}` and the in-app window icon |
 | `packaging/macos/entitlements.plist` | hardened-runtime exceptions needed by the embedded Python (for signing) |
-| `.github/workflows/desktop-release.yml` | CI matrix: Windows x64, macOS 14 arm64, Ubuntu 22.04 x64; builds and tests. It creates no GitHub Release, but on a manual dispatch or a `desktop-v*` tag it uploads the unsigned application archives as workflow artifacts, which any signed-in GitHub user can download from this public repository: **starting it is a distribution** (founder decisions #12, #21; B-013). Pull-request runs upload only the licence report and build information. It has never run |
+| `.github/workflows/desktop-release.yml` | CI matrix: Windows x64, macOS 15 arm64, Ubuntu 22.04 x64; builds and tests. It creates no GitHub Release, but on a manual dispatch or a `desktop-v*` tag it uploads the unsigned application archives as workflow artifacts, which any signed-in GitHub user can download from this public repository: **starting it is a distribution** (founder decisions #12, #21; B-013). Pull-request runs upload only the licence report and build information. It has never run |
 
 ## Build locally
 

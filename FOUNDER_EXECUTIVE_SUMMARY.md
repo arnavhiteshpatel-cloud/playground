@@ -10,8 +10,8 @@ interviews or pilots, and no test on real graft materials.
   correct the segmentation (every edit saved as a new version with a reason), runs the analysis in the background,
   requires a second person to sign off, keeps a hash-chained audit trail and writes PDF/CSV reports
   (`docs/desktop/USER_GUIDE.md`). The only packaged build is a local Linux build of 28 November (commit `cf6fea7`, advisor 1.4.3); it
-  passed its packaged self-test and licence check (`packaging/dist/build-info.json`) and is not distributed. Windows and macOS builds are configured but have never been built or run
-  (`docs/user/INSTALLATION.md`).
+  passed its packaged self-test and licence check (`packaging/dist/build-info.json`) and is not distributed. In CI on 28 Nov, macOS (Apple silicon) and Linux builds passed their
+  self-tests; the Windows build fails on a headless desktop-test crash (DF-044) (`docs/user/INSTALLATION.md`).
 * **The core idea, the measurement-support advisor** (shipped version 1.4.3 in the source,
   `osteoquant/advisor/separability.py`; no packaged build contains it yet). Before reporting graft, new-bone or total
   mineral volume, it decides whether the scan can support that number for this material, noise, blur and timepoint.

@@ -9,7 +9,7 @@
 > - federal ceiling rates of $124.69–135.26 per hour for utility field technicians [B, DF-S029; B, E-WS13014-S014];
 > - a GPRS federal award median of $5,800 per project [A, DF-S027].
 >
-> **The capital structure is fixed.**
+> **The capital structure has been repaired.**
 > - Stage D: buy $42k of equipment before any proof, plus a $45k kit and vehicle for every technician. That gave about $230k peak funding.
 > - Stage E: rent first, buy the founder's kit only after proof, lease technician kits and pay technicians mileage for their own cars. Base-case peak funding is now **$51,180 with the standard owner draw and $48,622 without it**.
 > - About $48.6k of that is at risk before the first technician is hired.
@@ -39,9 +39,9 @@
 - reinforcing steel;
 - in post-tensioned buildings, steel tendons under tens of thousands of pounds of tension.
 
-A drill bit that hits a tendon or an energized conduit can injure workers, shut down a building and trigger a claim. GPRS, the largest scanning firm, says a missed post-tension cable or conduit costs an average of $56,000 per incident [D, E-WS13014-S004]. That figure is incumbent marketing, but it shows the order of magnitude.
+A drill bit that hits a tendon or an energized conduit can injure workers, shut down a building and trigger a claim. GPRS, which calls itself the largest private subsurface contractor, says a missed post-tension cable or conduit costs an average of $56,000 per incident [D, E-WS13014-S004]. That figure is incumbent marketing, but it shows the order of magnitude.
 
-The same logic applies outdoors. In Illinois, the one-call system's member utilities mark only their own lines. They do not locate customer-owned lines such as sewer laterals, site lighting, sprinkler and fire mains, secondary electric or septic lines, and the owner bears the cost of protecting them [B, WS11-S031]. Inside the City of Chicago, the one-call service is 811 Chicago (DIGGER). Outside the city it is JULIE [A, E-WS13014-S012].
+The same logic applies outdoors. JULIE, the Illinois one-call system, says its member utilities mark only their own lines. They do not locate customer-owned lines such as sewer laterals, site lighting, sprinkler and fire mains, secondary electric or septic lines, and the owner bears the cost of protecting them [B, WS11-S031]. Inside the City of Chicago the one-call service is 811 Chicago (DIGGER), where utilities likewise mark only "their facilities" [A, E-WS13014-S012]. Outside the city it is JULIE.
 
 **What the business sells.** A trained technician arrives with two instruments:
 - a **ground-penetrating radar (GPR)** unit, which sends radio pulses into concrete or soil and reads the reflections;
@@ -94,7 +94,7 @@ The technician scans the area, marks the slab or ground with paint or tape ("no-
 | EM locator (rental) | UCG Underground Supplies | RD8200 + TX10 kit at $599 for one month, or $499 a month for two or more | [B, DF-S026] |
 | EM locator (buy, used or new) | UCG | Used RD7000 DL + TX5 kit $2,300; used Vermeer Verifier G3+ $2,949; new RD7200 + TX5 $5,657; new RD8200 + TX10 $9,592 | [B, E-WS13014-S007; B, DF-S026] |
 | Concrete GPR (rental) | CSDS (Sensors & Software Conquest 100) | $125 per day, 3-day minimum; California dealer, shipping cost MISSING | [B, E-WS13014-S001] |
-| Concrete GPR (rental) | Field Environmental (GSSI StructureScan Mini XT 3D) | $450 per day, $1,050 per week, $3,000 per month | [D, DF-S038] |
+| Concrete GPR (rental) | Field Environmental (GSSI StructureScan Mini XT 3D) | $450 per day, $1,050 per week, $3,000 per month; GPRS puts handheld rentals at $1,000–4,000 a month | [D, DF-S038; D, E-WS13014-S005] |
 | Utility GPR (rental) | CSDS (LMX200 bundle) | $155 per day, 3-day minimum | [B, E-WS13014-S001] |
 | Concrete GPR (buy) | GSSI, Proceq, Hilti, Leica via dealers | Complete system $12–19k [D, E-WS13014-S004]; handheld $11–17k [D, C3-S024]; used StructureScan Mini LT around $10.8k asking [D, E-WS13014-S017] | D |
 | Utility GPR cart (buy or lease) | UCG | LMX100 $20,508; LMX200 $36,476; ImpulseRadar PinPointR $18,444 | [B, DF-S026] |
@@ -173,8 +173,7 @@ The model's ARPC of $750 a month means about one visit per account per month at 
 3. **First visit at the floor price ($550).** Deliver the report before the crew leaves. Ask for the next booking on site.
 4. **Lunch-and-learns** at subcontractor offices: "reading a scan report; what GPR cannot see".
 5. **Coring firms.** Offer overflow and utility-locate capacity to 3 firms (test E3).
-6. **Google Business Profile and a simple site** for "concrete scanning [suburb]" (in the $400 a month fixed marketing line).
-7. **Prequalification.** Prepare COIs to GC forms [B, E-WS13014-S008] and register on GC vendor portals only when asked.
+6. **Search and prequalification:** a Google Business Profile and simple site (in the $400/month marketing line); COIs to GC forms [B, E-WS13014-S008]; vendor portals only when asked.
 
 **Model funnel (base, all E):** 22 qualified conversations a month → 50% get a priced first job → 35% become repeat accounts → about 3.9 new accounts a month at full pace. Churn is 5% a month, CAC $250.
 
@@ -216,11 +215,7 @@ At the base cost the break-even ARPC per technician is about **$488**, and **$55
 ## 4. Validation plan (ordered by information value per dollar)
 
 ### 4.1 Minimum viable commercial offering
-- One founder-technician, insured to GC-form limits.
-- NULCA-accredited EM training and hands-on concrete GPR training.
-- A rented kit: EM locator monthly, concrete GPR by the week, utility GPR by the 3-day block.
-- A published half-day and full-day rate card, and same-day PDF reports.
-- Service area: Chicago plus near Cook and DuPage.
+One founder-technician, insured to GC-form limits and trained (NULCA-accredited EM plus hands-on concrete GPR). A rented kit: EM monthly, concrete GPR by the week, utility GPR by the 3-day block. The published rate card, same-day PDF reports, and a Chicago plus near Cook/DuPage service area.
 
 ### 4.2 Experiments
 
@@ -320,13 +315,13 @@ At the base cost the break-even ARPC per technician is about **$488**, and **$55
 | Hiring and training technicians | ✓ | ✓ SOPs and quizzes | | | ✓ field mentoring |
 
 ### 5.3 Fulfilment, support, QA, exceptions
-- **QA.** Every interpretation is checked against the walk-through and, on PT slabs, a second pass at a different orientation. Every report carries a limitations section: GPR cannot reliably see below congested top mats, through some metal decks, or plastic conduits without water.
+- **QA.** Every interpretation is checked against the walk-through and, on PT slabs, a second pass at a different orientation. Every report carries a limitations section: GPR cannot reliably see below congested top mats, through some metal decks, or reliably detect empty plastic conduits (E).
   - From technician #1: monthly peer review of 5 random reports, plus a "strike drill" checklist.
+- **Support:** a reachable mobile line; reports kept 7 years for claims (E).
 - **Exceptions:**
   - **Strike or suspected strike:** stop work, make safe, notify the GC and 811 Chicago if it involves a utility facility (Chicago code requires immediate notification [A, E-WS13014-S013]), photograph, notify the insurer the same day.
   - **Unscannable slab:** recommend X-ray (refer to a partner) or a no-cut decision; charge the half-day.
   - **Rental unit failure:** keep a backup reservation; never scan PT with an unverified unit.
-- **Support:** a reachable mobile line; reports kept 7 years for claims (E).
 
 ### 5.4 Software stack (prices E unless tagged)
 
@@ -371,10 +366,8 @@ It says those in responsible charge and certifying deliverables should be regist
 **So:** sell "private utility locating and marking" and "concrete scanning reports". Never sell "QL-B" or "SUE". Offer QL work only as a subcontractor to a PE-led firm.
 
 ### 5.7 Financial administration
-- Weekly invoicing review, DSO tracking and a 13-week cash forecast.
-- Separate tax savings at 30% of profit after draw (model tax rate).
-- Equipment lease payments on autopay.
-- A rental-damage waiver (+10% of the daily rate at CSDS [B, E-WS13014-S001]) during the pilot.
+- Weekly invoicing and DSO review; a 13-week cash forecast; tax set aside at 30% of profit after draw; leases on autopay.
+- Buy the rental-damage waiver during the pilot (+10% of the daily rate at CSDS [B, E-WS13014-S001]).
 
 ---
 
@@ -497,34 +490,34 @@ It says those in responsible charge and certifying deliverables should be regist
 
 ### 7.4 Twenty-four-month base view (engine monthly rows = `M_Base` sheet)
 
-| Month | Active accounts | Revenue | Operating profit | Staff cost | Capex | Cumulative retained | Cash (with $52k injection) |
-|---|---|---|---|---|---|---|---|
-| 1 | 0.0 | $0 | –$4,850 | 0 | 0 | –$4,850 | $47,150 |
-| 2 | 0.0 | $0 | –$4,850 | 0 | 0 | –$9,700 | $42,300 |
-| 3 | 0.6 | $481 | –$4,601 | 0 | 0 | –$14,999 | $37,001 |
-| 4 | 1.9 | $1,424 | –$2,527 | 0 | $21,657 | –$40,550 | $11,450 |
-| 5 | 3.7 | $2,811 | –$1,511 | 0 | 0 | –$44,073 | $7,927 |
-| 6 | 6.2 | $4,624 | –$136 | 0 | 0 | –$46,837 | $5,163 |
-| 7 | 9.1 | $6,845 | $1,586 | 0 | 0 | –$48,472 | $3,528 |
-| 8 | 12.6 | $9,459 | $3,640 | 0 | 0 | –$48,622 | $3,378 |
-| 9 | 16.0 | $11,968 | $5,764 | 0 | 0 | –$46,496 | $5,504 |
-| 10 | 19.2 | $14,377 | $7,803 | 0 | 0 | –$42,281 | $9,719 |
-| 11 | 22.3 | $16,689 | $9,760 | 0 | 0 | –$38,802 | $13,198 |
-| 12 | 25.2 | $18,909 | $3,340 | $8,300 | $3,000 | –$42,683 | $9,317 |
-| 13 | 28.1 | $21,671 | $5,164 | $8,549 | $1,266 | –$47,140 | $4,860 |
-| 14 | 30.8 | $23,779 | $6,948 | $8,549 | 0 | –$48,132 | $3,868 |
-| 15 | 33.4 | $25,802 | $8,661 | $8,549 | 0 | –$47,802 | $4,198 |
-| 16 | 35.9 | $27,744 | $10,305 | $8,549 | 0 | –$46,205 | $5,795 |
-| 17 | 38.3 | $29,608 | $11,884 | $8,549 | 0 | –$43,389 | $8,611 |
-| 18 | 40.6 | $31,398 | $13,399 | $8,549 | 0 | –$39,405 | $12,595 |
-| 19 | 42.9 | $33,116 | $6,305 | $17,098 | $3,000 | –$43,284 | $8,716 |
-| 20 | 45.0 | $34,766 | $7,701 | $17,098 | 0 | –$43,084 | $8,916 |
-| 21 | 47.1 | $36,349 | $5,437 | $20,703 | 0 | –$44,375 | $7,625 |
-| 22 | 49.0 | $37,869 | $6,724 | $20,703 | 0 | –$44,672 | $7,328 |
-| 23 | 50.9 | $39,329 | $7,959 | $20,703 | 0 | –$44,017 | $7,983 |
-| 24 | 53.9 | $41,657 | $9,633 | $20,703 | 0 | –$43,449 | $8,551 |
+| Month | Active accounts | Revenue | Operating profit | Capex | Cumulative retained | Cash (with $52k injection) |
+|---|---|---|---|---|---|---|
+| 1 | 0.0 | $0 | –$4,850 | 0 | –$4,850 | $47,150 |
+| 2 | 0.0 | $0 | –$4,850 | 0 | –$9,700 | $42,300 |
+| 3 | 0.6 | $481 | –$4,601 | 0 | –$14,999 | $37,001 |
+| 4 | 1.9 | $1,424 | –$2,527 | $21,657 | –$40,550 | $11,450 |
+| 5 | 3.7 | $2,811 | –$1,511 | 0 | –$44,073 | $7,927 |
+| 6 | 6.2 | $4,624 | –$136 | 0 | –$46,837 | $5,163 |
+| 7 | 9.1 | $6,845 | $1,586 | 0 | –$48,472 | $3,528 |
+| 8 | 12.6 | $9,459 | $3,640 | 0 | –$48,622 | $3,378 |
+| 9 | 16.0 | $11,968 | $5,764 | 0 | –$46,496 | $5,504 |
+| 10 | 19.2 | $14,377 | $7,803 | 0 | –$42,281 | $9,719 |
+| 11 | 22.3 | $16,689 | $9,760 | 0 | –$38,802 | $13,198 |
+| 12 | 25.2 | $18,909 | $3,340 | $3,000 | –$42,683 | $9,317 |
+| 13 | 28.1 | $21,671 | $5,164 | $1,266 | –$47,140 | $4,860 |
+| 14 | 30.8 | $23,779 | $6,948 | 0 | –$48,132 | $3,868 |
+| 15 | 33.4 | $25,802 | $8,661 | 0 | –$47,802 | $4,198 |
+| 16 | 35.9 | $27,744 | $10,305 | 0 | –$46,205 | $5,795 |
+| 17 | 38.3 | $29,608 | $11,884 | 0 | –$43,389 | $8,611 |
+| 18 | 40.6 | $31,398 | $13,399 | 0 | –$39,405 | $12,595 |
+| 19 | 42.9 | $33,116 | $6,305 | $3,000 | –$43,284 | $8,716 |
+| 20 | 45.0 | $34,766 | $7,701 | 0 | –$43,084 | $8,916 |
+| 21 | 47.1 | $36,349 | $5,437 | 0 | –$44,375 | $7,625 |
+| 22 | 49.0 | $37,869 | $6,724 | 0 | –$44,672 | $7,328 |
+| 23 | 50.9 | $39,329 | $7,959 | 0 | –$44,017 | $7,983 |
+| 24 | 53.9 | $41,657 | $9,633 | 0 | –$43,449 | $8,551 |
 
-**Note.** Months 1–3 carry the full overhead (insurance, the founder's car at the mileage rate, software, accounting, marketing, rental) and no pilot revenue, because account revenue starts in month 3. So the model's –$14,999 at month 3 is more cautious than the ≈ $9–10k cash pilot budget in §4.3.
+**Note.** Technician #1 starts in month 12, #2 in month 19 and the BD hire in month 21, which is why profit dips in those months. Months 1–3 carry the full overhead (insurance, the founder's car at the mileage rate, software, accounting, marketing, rental) and no pilot revenue, because account revenue starts in month 3. So the model's –$14,999 at month 3 is more cautious than the ≈ $9–10k cash pilot budget in §4.3.
 
 ### 7.5 Sensitivity (±25%, base)
 - **ARPC:** $562.50 gives year-3 profit of **$5,322**; $937.50 gives **$243,518**. Peak funding ranges from $396,957 to $47,514.

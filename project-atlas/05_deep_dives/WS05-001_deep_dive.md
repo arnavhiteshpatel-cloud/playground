@@ -44,7 +44,7 @@
 | EL1825/1826 | Emergency-lighting systems | 61 |
 
 - **By bureau:** 629 records came from the Conservation bureau (existing, mostly residential buildings). Property managers are therefore a core channel, alongside storefront owners.
-- **Wider base:** every food licence (about 11,000 retail [A, C2-S015]) needs extinguishers.
+- **Wider base:** about 11,000 retail food licences [A, C2-S015] are likely buyers. The exact Chicago extinguisher requirements were not verified (chicago.gov returned 403).
 
 **Licence scope:** start Class A only (portables). Kitchen hood systems need a Class B licence ($1,500), a 2K employee licence and manufacturer training. Add those in phase 2.
 

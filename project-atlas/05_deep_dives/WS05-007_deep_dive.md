@@ -45,8 +45,8 @@ The five cluster ZIPs are contiguous. They contain the Stockyards/Back of the Ya
 
 **What the inspection comments say:**
 - Of 3,182 violation-38 comments, 1,267 cite door gaps or openings. That is an exclusion upsell.
-- 878 tell the operator to contact or increase pest-control service.
-- 181 licences were cited for a missing or incomplete pest logbook [A, DA-S001].
+- 878 mention contacting, recommending or adding pest-control service.
+- 181 licences drew logbook-related comments, mostly a missing or incomplete pest logbook [A, DA-S001].
 
 **Residential line (WS18-007).** It is modelled as about 25% of accounts. Its pricing is D-level: Chicago monthly visits run about $40–70 [D, DA-S021]. It uses paid search leads rather than inspection data, so its acquisition cost is higher.
 

@@ -115,6 +115,38 @@ def main():
                 o[f"current_{k}"] = o.get(k)
         o["latest_verdict"] = (latest or {}).get("verdict") or o.get("preliminary_verdict")
 
+    # synthesized cross-stream bundles (placeholder scores = mean of components until a stage update exists)
+    bpath = SCR / "synthesized_bundles.json"
+    if bpath.exists():
+        idx = {o["id"]: o for o in opps}
+        for b in json.loads(bpath.read_text()):
+            comps = [idx[c] for c in b["components"] if c in idx]
+            if not comps:
+                continue
+            mean = {k: round(sum(c["current_scores"][k] for c in comps) / len(comps), 2) for k in SCORE_KEYS}
+            lead = idx.get(b.get("lead")) or comps[0]
+            rec = {"id": b["id"], "title": b["title"], "workstream": "SYN", "industry": lead.get("industry"),
+                   "subindustry": "cross-stream bundle", "mechanisms": ["bundling"] + (lead.get("mechanisms") or []),
+                   "product_service": b["thesis"], "components": b["components"], "lead_component": b.get("lead"),
+                   "target_customer": lead.get("target_customer"), "evidence_confidence": "E",
+                   "original_scores": mean, "scores": mean, "gates": [], "source_ids": [],
+                   "preliminary_verdict": "advance to Stage C as bundle hypothesis", "duplicate_of": None,
+                   "blind_scores": None, "launch_capital_usd_low": lead.get("launch_capital_usd_low"),
+                   "launch_capital_usd_high": lead.get("launch_capital_usd_high"),
+                   "time_to_first_revenue_months": lead.get("time_to_first_revenue_months")}
+            u = sorted(updates.get(b["id"], []), key=lambda r: order.get(r.get("stage"), 0))
+            rec["stage_history"] = u
+            rec["max_stage"] = u[-1]["stage"] if u else "A"
+            latest = u[-1] if u else None
+            rec["current_scores"] = latest["scores"] if latest and latest.get("scores") else mean
+            rec["current_score_basis"] = f"stage {latest['stage']} revision" if latest else "mean of components (placeholder)"
+            rec["current_evidence_confidence"] = (latest or {}).get("evidence_confidence") or "E"
+            for k in ("yr3_operating_profit_usd_low", "yr3_operating_profit_usd_high", "launch_capital_usd_low",
+                      "launch_capital_usd_high", "validation_cost_usd", "plausible_milestone_ceiling"):
+                rec[f"current_{k}"] = (latest or {}).get(k) if latest and latest.get(k) is not None else lead.get(k)
+            rec["latest_verdict"] = (latest or {}).get("verdict") or rec["preliminary_verdict"]
+            opps = [o for o in opps if o["id"] != b["id"]] + [rec]
+
     with (DB / "opportunities.jsonl").open("w", encoding="utf-8") as f:
         for o in opps:
             f.write(json.dumps(o, ensure_ascii=False) + "\n")

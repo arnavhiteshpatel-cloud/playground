@@ -15,9 +15,7 @@ Consumer products is the toughest workstream for this founder. Public disclosure
 | Grove | 54% | Lost 15% of revenue in a year when it cut ads [B, S012] |
 | Pattern (scaled exclusive marketplace reseller, $3.3B TTM) | ~44% | 1–5% [C, S010] |
 
-The only clearly profitable comparators are:
-- **Vita Coco**, an asset-light importer brand with 11–18% operating margin [C, S025]. Even so, its gross margin collapsed to 24% in the 2022 freight shock.
-- **Freshpet**, but only after reaching more than $1B in revenue.
+Only Vita Coco (asset-light importer brand, 11–18% operating margin; gross margin fell to 24% in the 2022 freight shock) [C, S025] and Freshpet (after passing $1B revenue) are clearly profitable.
 
 Structural headwinds that apply across this workstream:
 - **Tariffs are unstable.** The Supreme Court struck down the IEEPA tariffs on 2026‑02‑20 [C, S005]. A Section 122 tariff of 10% (some sources say 15%) ran from Feb to Jul 2026 [C, S007]. Since 2026‑07‑24, Section 301 "forced-labor" tariffs of 10–12.5% apply to 60 economies [A, S006], on top of the legacy China 301 duties. A Section 301 excess-capacity case is still pending, with a determination due by March 2027.
@@ -33,15 +31,15 @@ Structural headwinds that apply across this workstream:
 ## Strongest candidates (5–8)
 
 **1. WS06-005 — Adult incontinence DTC autoship with a caregiver-referral channel** (composite 5.68 raw / 5.48 adjusted, evidence D, advance)
-- Daily, non-discretionary consumable with an aging tailwind. Buyers are embarrassed and actively search online.
+- Daily non-discretionary consumable, aging tailwind, embarrassed buyers who search online.
 - An Illinois precedent exists (NorthShore Care Supply, since 2002).
-- Start as an authorized reseller. That avoids private-label MOQs and the open questions about FDA device registration.
+- Start as an authorized reseller to avoid private-label MOQs and FDA device-registration questions.
 - Risks: bulky shipping and search CAC.
 
 **2. WS06-018 — Mobile safety-footwear store serving employer boot-allowance programs** (5.45 / 5.25, evidence E, advance)
 - Under OSHA 1910.132(h)(2), employers need not pay for non-specialty safety-toe boots [A, S016]. That supports a market of employer allowances and vouchers plus employee top-ups.
 - The buyer is a defined role (EHS manager), the need recurs every year, and each vehicle is a delegable route unit.
-- Not yet verified: allowance prevalence and size, brand dealer and territory terms, incumbent share, and the import duty stack on boots.
+- Unverified: allowance size and prevalence, dealer/territory terms, incumbent share, boot duty stack.
 
 **3. WS06-004 — Replacement filters via property-manager/HOA B2B2C plus autoship** (5.43 / 5.30, evidence D, advance)
 - True replenishment product, mostly U.S.-made, so it is insulated from tariffs.
@@ -69,10 +67,10 @@ Structural headwinds that apply across this workstream:
 - It **fails G1**, because the initial investment is $339k–$486k. Revisit it later as a capital-allocation option.
 
 ## Surprises
-- **Pattern's numbers.** The exclusive-reseller model is a multi-billion-dollar business, but it earns 1% operating margin in a bad year (2025). Scale alone does not fix marketplace economics.
+- **Pattern:** multi-billion-dollar scale, yet 1% operating margin in 2025; scale does not fix marketplace economics.
 - **OSHA's boot exception.** The rule that exempts employers from paying for safety-toe footwear indirectly creates a voucher-retail niche.
-- **Continuity of the tariff regime.** Striking down IEEPA did not lower the duty burden for long. Section 122 and then Section 301 replaced it within months.
-- **The federal hemp redefinition** took effect around 2026‑11‑12 and wiped out a once-popular category [A, S015].
+- **Tariff continuity.** Striking down IEEPA barely lowered the duty burden; Section 122, then Section 301, replaced it within months.
+- **Hemp redefinition** (~2026‑11‑12) wiped out a once-popular category [A, S015].
 
 ## Looked good but fail
 - **Amazon private label (001), TikTok Shop brands (006) and supplements (008):** single-platform risk, copycats, stacked fees and CAC.
@@ -80,11 +78,11 @@ Structural headwinds that apply across this workstream:
 - **Children's products (009):** testing plus eFiling plus the China tariff stack.
 - **Hemp (028) and vape shops (029):** G3 legal failure.
 - **Low-ceiling or founder-capped models:** cottage food (019; in-state only, home production), arbitrage (007), Etsy (022), print-on-demand (023) and bin stores (025).
-- **Co-packed specialty food brand (010):** realistic only with a sharp niche and a direct-store-delivery start.
+- **Co-packed food brand (010):** only with a sharp niche and DSD start.
 
 ## Evidence gaps
 - The session's shared **web-search budget ran out partway through.** All later evidence came from direct fetches of known primary pages.
-- **Pages that returned 403/blocks:** NorthShore, Etsy fees, Nonwovens Industry, HME News, Pattern's own filings, eCFR, and the ABA tariff article. Some figures come from aggregators (stockanalysis.com) and are labelled C.
+- **Blocked pages (403):** NorthShore, Etsy fees, trade press, Pattern filings, eCFR, ABA. Aggregator figures (stockanalysis.com) labelled C.
 - **Missing data:**
   - Employer boot-allowance prevalence and size; boot-brand dealer margins
   - Rack-jobber and DSD margin norms
@@ -94,16 +92,12 @@ Structural headwinds that apply across this workstream:
   - The exact 2026 FBA fee table and the status of the April 2026 surcharge
   - Whether coffee and food staples are exempt from the 2026 Section 301 tariffs
   - Chicago counts of independent convenience stores, ethnic grocers and youth clubs
-- **Highest-value next checks:**
-  - For 018: interviews or desk research on EHS boot programs
-  - For 005: supplier reseller terms
-  - For 004: domestic filter wholesale and drop-ship costs
-  - For 003: small exclusive-reseller contract terms
+- **Next checks:** EHS boot programs (018), reseller supply terms (005), domestic filter wholesale/drop-ship costs (004), small exclusive-reseller contract terms (003).
 
 ## Cross-stream leads
 - **WS16:** safety/PPE and workwear programs for employers, including glove vending and hi-vis (an extension of 018); promotional and corporate apparel (from 020 and 021).
 - **WS04:** Medicaid-funded incontinence supply (needs DME enrollment); medically tailored meals.
 - **WS07:** liquidation sourcing; 3PL for small brands; import consolidation for ethnic food importers.
 - **WS11/WS03:** ITAD and device buyback from businesses and schools (a better framing of 035).
-- **WS13:** office coffee service; packaged firewood/ice routes to retailers.
+- **WS13:** office coffee service; firewood/ice routes.
 - **WS18:** single-family rental resident-benefit services (the adjacency in 004).

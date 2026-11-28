@@ -50,7 +50,7 @@ All graft and new-bone evidence is **simulation** (computational phantoms with a
   with 2× upsampling (`experiments/results/exp_S2v2_sim2real_a.json`). Status per `EXPERIMENT_REGISTRY.md`: S2 part b
   (domain-randomised pretraining, one seed) was worse than the Gen-0 model on every test scan (0.353 native, 0.457 at
   2×); part c: with 1–3 real labelled scans, training from scratch (0.805 / 0.816) matched or beat synthetic pretraining;
-  S3 (self-supervised pretraining) did not help either (0.782 / 0.794); U1 (SYNTHETIC): ensemble failure flags work (AUROC 0.95), conformal
+  S3 (self-supervised pretraining) did not help either (0.782 / 0.794); U1 (SYNTHETIC): ensemble failure flags work (volume-CV failure-detection score 0.95), conformal
   intervals hold in distribution (15/16) but not for a new material (25/40); O2 (ONNX runtime) is being re-run.
 
 ## 3. What is unknown

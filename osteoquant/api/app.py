@@ -461,7 +461,7 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
         write_labels_zarr(sc["store_path"], f"roi_v{v}", roi.astype(np.uint8))
         prev = json.loads(base_m["metrics"]) if base_m else {}
         record = {"metrics": met, "corrected_from": b.base_version, "config": {"thickness_metrics": thick},
-                  "segmentation": prev.get("segmentation")}
+                  "config_sha256": prev.get("config_sha256"), "segmentation": prev.get("segmentation")}
         if prev.get("measurement_support"):
             # carry the base assessment over; read time downgrades it for the manual edit (C3-SCI-02, C3-PRD-04).
             # Without it the record has no assessment and reports fail closed.

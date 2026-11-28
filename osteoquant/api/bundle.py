@@ -59,6 +59,14 @@ def git_commit():
 
 
 
+def _config_hashes(specs) -> str:
+    """Distinct analysis-configuration hashes with the number of specimens analysed with each (FS-080-1). Specimen
+    identifiers are not listed, so a blinded report reveals nothing through this field."""
+    from collections import Counter
+    c = Counter(s.get("config_sha256") or "not recorded" for s in specs)
+    return "; ".join(f"{h} ({n} specimen{'s' if n != 1 else ''})" for h, n in sorted(c.items())) or "no specimens"
+
+
 def _named_events(store, org_id) -> list[dict]:
     """Audit excerpt with the user's name next to the id (cycle-3 review C3-PRD-17)."""
     names = {str(r["id"]): (r["full_name"] or r["username"])          # audit user ids are stored as text
@@ -143,6 +151,7 @@ def bundle_from_store(store, user, sid, ctx=None, measurements=None, figures=Tru
                                         "mechanism": v.get("mechanism"), "conditions": v.get("conditions", [])}
                                     for k, v in eff_support.get("endpoints", {}).items()},
             "advisor_version": eff_support.get("advisor_version"),
+            "config_sha256": res.get("config_sha256"),
             "support_rules": eff_support.get("support_rules"), "support_stale": bool(eff_support.get("stale")),
             "analysis_parameters": {k: v for k, v in (res.get("segmentation") or {}).items()
                                     if k in ("method", "t_mineral", "t_graft", "t_graft_rel", "thresholds",
@@ -165,7 +174,8 @@ def bundle_from_store(store, user, sid, ctx=None, measurements=None, figures=Tru
                          "voxels with insufficient confidence were labelled uncertain. Volumes are voxel counts × voxel volume within "
                          "the ROI. Statistics are computed at the specimen level."),
         "limitations": biological_limitations(st),
-        "reproducibility": {"software_version": __version__, "git_commit": git_commit()},
+        "reproducibility": {"software_version": __version__, "git_commit": git_commit(),
+                            "analysis_config_sha256": _config_hashes(out_specs)},
         "reviewers": [{"role": "Scientific reviewer", "name": r["full_name"] or r["username"], "meaning": r["meaning"],
                        "decision": r["decision"], "time": r["created"]} for s in out_specs for r in s["reviews"]][:6],
         "audit_excerpt": _named_events(store, user["org_id"]),

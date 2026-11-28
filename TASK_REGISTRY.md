@@ -44,7 +44,7 @@ recorded in ARCHITECTURE_DECISIONS.md (ADR-G2-01). Audit finding IDs (FA-NN) ref
 | T4.1 | Coverage, property, fuzz, destructive, mutation tests; CI | QA stream | done (611 passed, 1 skipped; 93.4% / 99% critical; CI green on 3 OS × 2 Python with desktop tests and claims checker blocking) | FA-18 |
 | T4.2 | Security review Gen 2 | QA stream | done (docs/security/SECURITY_REVIEW_GEN2.md; cycle-3 product review fixes) | FA-19 |
 | T4.3 | Claims checker for documents vs result files | lead | done (scripts/check_claims.py) | FA-10, FA-27 |
-| T4.4 | Traceability matrix regeneration | lead | done (58 verified / 47 partial / 24 gap FS rows, 28 Nov) | FA-20 |
+| T4.4 | Traceability matrix regeneration | lead | done (70 verified / 35 partial / 24 gap FS rows, 28 Nov) | FA-20 |
 | T4.5 | Independent reviews: 12 perspectives × ≥3 cycles | lead + reviewers | done (3 cycles; automated reviewer agents, not human experts; human review is founder decision #24) | — |
 
 ## Commercial

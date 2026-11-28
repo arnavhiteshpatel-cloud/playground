@@ -772,6 +772,7 @@ def save_label_revision(project, scan_id: int, base_segmentation_id: int, labels
     met = defect_report_metrics(labels, roi, vol, thickness=thick)
     prev = json.loads(base_m["metrics"]) if base_m else {}
     record = {"metrics": met, "corrected_from": base["version"], "config": prev.get("config", {"thickness_metrics": thick}),
+              "config_sha256": prev.get("config_sha256"),        # the configuration the base was analysed with
               "qc": prev.get("qc"), "plausibility": prev.get("plausibility"), "uncertainty": prev.get("uncertainty"),
               "roi": prev.get("roi"), "status": "corrected_unreviewed",
               # the method that produced the base labels: read-time support binding needs it (C3-PRD-01/-04)

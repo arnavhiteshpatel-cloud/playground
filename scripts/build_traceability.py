@@ -54,6 +54,8 @@ RETIRED_URS = {"URS-012", "URS-130"}
 RETIRED_FS = {"FS-012-1", "FS-012-2", "FS-130-1"}
 
 D = "tests/desktop/"
+TG = D + "test_traceability_gaps.py::"
+TGL = "tests/test_traceability_gaps_library.py::"
 
 
 @dataclass
@@ -79,13 +81,15 @@ ROWS: list[Row] = [
         level="system", risks="RSK-34", protocol="OQ-GEN-01",
         notes="About dialog is constructed but its RUO / not-validated text is not asserted",
         proposed="test_about_and_start_page_show_ruo_statement"),
-    Row("URS-001", "FS-001-2", "general", P, ["tests/test_controls.py::test_report_contains_ruo_and_not_validated_statements",
+    Row("URS-001", "FS-001-2", "general", V, ["tests/test_controls.py::test_report_contains_ruo_and_not_validated_statements",
                                                "tests/test_report_bounds.py::test_pdf_banner_and_bounds",
-                                               D + "test_timepoint_dataclass.py::test_synthetic_demo_report_is_labelled_synthetic"],
+                                               D + "test_timepoint_dataclass.py::test_synthetic_demo_report_is_labelled_synthetic",
+                                               TGL + "test_every_pdf_and_csv_carry_ruo_data_class_and_review_status",
+                                               TG + "test_pdf_and_csv_text_contain_ruo_statement"],
         level="integration", risks="RSK-34", protocol="OQ-GEN-01",
-        notes="rendered PDF asserted to contain 'Research use only' and the data-class banner, CSV header the data class; "
-              "the not-validated wording is checked only in the report source, the CSV review status is not asserted",
-        proposed="test_pdf_and_csv_text_contain_ruo_statement"),
+        notes="rendered PDF text: full RUO / not-validated statement on page 1 and the RUO footer on every page, for "
+              "every data class and both review statuses and for the desktop report; CSV header and every row carry "
+              "the data class and the review status (unreviewed_automated, then reviewed after approval)"),
     Row("URS-002", "FS-002-1", "general", P, ["tests/test_analysis_modules.py::test_cli_commands"],
         level="integration", risks="RSK-18", protocol="OQ-GEN-02",
         notes="software_version asserted in the analysis JSON only; PDF, measurement row and About not asserted",
@@ -220,12 +224,12 @@ ROWS: list[Row] = [
                                            "tests/test_core.py::test_cylinder_roi_volume_and_hash",
                                            D + "test_services.py::test_manual_roi_then_analysis"],
         risks="RSK-06", protocol="OQ-ROI-01"),
-    Row("URS-041", "FS-041-1", "roi", P, [D + "test_services.py::test_manual_roi_then_analysis",
-                                           D + "test_cycle2_fixes.py::test_c2_17_manual_roi_needs_reason_and_second_person"],
+    Row("URS-041", "FS-041-1", "roi", V, [D + "test_services.py::test_manual_roi_then_analysis",
+                                           D + "test_cycle2_fixes.py::test_c2_17_manual_roi_needs_reason_and_second_person",
+                                           TG + "test_manual_roi_requires_reason_and_is_audited"],
         level="integration", risks="RSK-06", protocol="OQ-ROI-02",
-        notes="manual ROI without a reason is refused by the service; the roi.save audit event (version, hash, method, "
-              "reason) is not asserted",
-        proposed="test_manual_roi_requires_reason_and_is_audited"),
+        notes="roi.save asserted for the automatic and the manual ROI (scan, version, definition hash, method, reason); "
+              "the ROI dialog and the service refuse a missing or short reason and then store and audit nothing"),
     Row("URS-042", "FS-042-1", "roi", P, [D + "test_main_window.py::test_open_project_view_scan_edit_and_save",
                                            D + "test_main_window.py::test_oblique_reslice_identity",
                                            D + "test_review_fixes.py::test_ux01_roi_drawn_in_slice_views_and_3d"],
@@ -248,15 +252,15 @@ ROWS: list[Row] = [
         level="integration", risks="RSK-10", protocol="OQ-SEG-01",
         notes="model SHA-256 recorded; preprocessing configuration not recorded separately",
         proposed="test_segmentation_record_contains_model_hash_and_preprocessing"),
-    Row("URS-052", "FS-052-1", "segmentation", P, [D + "test_services.py::test_label_revision_audit",
+    Row("URS-052", "FS-052-1", "segmentation", V, [D + "test_services.py::test_label_revision_audit",
                                                     "tests/test_api.py::test_end_to_end",
                                                     D + "test_main_window.py::test_open_project_view_scan_edit_and_save",
                                                     D + "test_review_fixes.py::test_ux06_version_detail_and_compare_overlay",
-                                                    D + "test_cycle2_fixes.py::test_c2_10_cancelled_or_failed_revision_leaves_nothing"],
+                                                    D + "test_cycle2_fixes.py::test_c2_10_cancelled_or_failed_revision_leaves_nothing",
+                                                    TG + "test_automatic_prediction_is_version_1_and_base_labels_unchanged"],
         level="integration", risks="RSK-13", protocol="OQ-SEG-03",
-        notes="new corrected version with parent asserted; the compare overlay re-reads the stored base labels after a "
-              "revision (difference = edited voxels); kind=automatic of version 1 is not asserted",
-        proposed="test_automatic_prediction_is_version_1_and_base_labels_unchanged"),
+        notes="version 1 is kind=automatic without parent; each correction is a new corrected version with its parent "
+              "under a new labels key; the stored arrays of earlier versions re-read unchanged (and match their hash)"),
     Row("URS-053", "FS-053-1", "segmentation", V, [D + "test_services.py::test_label_revision_audit",
                                                     "tests/test_controls.py::test_correction_requires_reason"],
         level="integration", risks="RSK-13", protocol="OQ-SEG-03"),
@@ -327,36 +331,42 @@ ROWS: list[Row] = [
     Row("URS-075", "FS-075-1", "blinding", V, ["tests/test_api.py::test_blinding",
                                                 "tests/test_store_api_workflows.py::test_blinded_specimen_listing_and_export"],
         level="integration", risks="RSK-12", protocol="OQ-BLD-01"),
-    Row("URS-075", "FS-075-3", "blinding", P, [D + "test_main_window.py::test_blinded_mode_and_audit_verify",
-                                                D + "test_services.py::test_results_rows"],
+    Row("URS-075", "FS-075-3", "blinding", V, [D + "test_main_window.py::test_blinded_mode_and_audit_verify",
+                                                D + "test_services.py::test_results_rows",
+                                                D + "test_review_fixes.py::test_ux09_blinded_mode_hides_identity_everywhere",
+                                                TG + "test_blinded_mode_switch_records_ui_blinded_mode_event"],
         level="system", risks="RSK-12", protocol="OQ-BLD-02",
-        notes="tree, results and file names hidden; ui.blinded_mode audit event not asserted (PARTIAL since 2026-11-28)",
-        proposed="test_blinded_mode_switch_records_ui_blinded_mode_event"),
-    Row("URS-075", "FS-075-4", "blinding", P, ["tests/test_security_fixes.py::test_S06_unblinded_report_download_denied",
+        notes="group name, animal ID and file name hidden in the tree, the Results rows and the viewer info bar for "
+              "each of the five roles and shown again when switched off; every switch audited ui.blinded_mode "
+              "{on: true/false} under the signed-in user"),
+    Row("URS-075", "FS-075-4", "blinding", V, ["tests/test_security_fixes.py::test_S06_unblinded_report_download_denied",
                                                 D + "test_cycle2_fixes.py::test_c2_03_study_blinding_enforced_for_reviewer",
-                                                D + "test_review_fixes.py::test_ux09_blinded_mode_hides_identity_everywhere"],
+                                                D + "test_review_fixes.py::test_ux09_blinded_mode_hides_identity_everywhere",
+                                                TG + "test_blinded_download_denial_is_audited"],
         level="integration", risks="RSK-12", protocol="OQ-BLD-03",
-        notes="API and desktop export of an unblinded report denied to a user without unblind; the "
-              "report.blinded_download_denied audit event is not asserted",
-        proposed="test_blinded_download_denial_is_audited"),
-    Row("URS-075", "FS-075-2", "blinding", P, ["tests/test_api.py::test_blinding",
-                                                D + "test_cycle2_fixes.py::test_c2_03_study_blinding_enforced_for_reviewer"],
+        notes="report generated with unblinded allocation is marked (reports.unblinded=1; blinded reports 0); its "
+              "export, and that of an identifying report of a now-blinded study, is refused to a reviewer with no file "
+              "written and audited report.blinded_download_denied (report id, user); allowed to a user with unblind"),
+    Row("URS-075", "FS-075-2", "blinding", V, ["tests/test_api.py::test_blinding",
+                                                D + "test_cycle2_fixes.py::test_c2_03_study_blinding_enforced_for_reviewer",
+                                                TG + "test_desktop_unblind_requires_reason"],
         level="integration", risks="RSK-12", protocol="OQ-BLD-04",
-        notes="desktop unblind_study: refused without unblind permission and with a wrong password; audited study.unblind "
-              "with signer and reason; refusal of a missing or short reason is not asserted",
-        proposed="test_desktop_unblind_requires_reason"),
+        notes="desktop unblind_study: refused without unblind permission, with a wrong password and with a missing or "
+              "short (< 5 characters) reason (service and Unblind dialog; nothing audited); Study > Unblind study enabled "
+              "for the study director and unblinds from the window; audited study.unblind with signer and reason"),
     Row("URS-076", "FS-076-1", "blinding", G, level="integration", risks="RSK-12", protocol="OQ-BLD-04",
         notes="not implemented", proposed="test_post_unblinding_edits_flagged_in_report"),
     # ------------------------------------------------------------------ 3.9 reporting
-    Row("URS-080", "FS-080-1", "reporting", P, [D + "test_services.py::test_report_with_watermark_and_preview",
+    Row("URS-080", "FS-080-1", "reporting", V, [D + "test_services.py::test_report_with_watermark_and_preview",
                                                  "tests/test_analysis_modules.py::test_build_pdf_and_figures",
                                                  "tests/test_report_bounds.py::test_pdf_banner_and_bounds",
-                                                 "tests/test_report_bounds.py::test_report_prints_refused_values_as_not_measured_with_reasons"],
+                                                 "tests/test_report_bounds.py::test_report_prints_refused_values_as_not_measured_with_reasons",
+                                                 TG + "test_report_provenance_section_complete"],
         level="integration", risks="RSK-18", protocol="OQ-REP-01",
-        notes="banner, data class, support-filtered values, support section and sign-off table asserted in the PDF text; "
-              "software version, corrections table and reproducibility block (config hash) not asserted; acquisition "
-              "parameters missing (CRO-06)",
-        proposed="test_report_provenance_section_complete"),
+        notes="banner, study, data class, software version, support-filtered specimen table, corrections table of a "
+              "corrected segmentation, support section, reproducibility block (software version, git commit and the "
+              "analysis configuration hashes, carried over on label revisions; added 2026-11-28) and sign-off table "
+              "asserted in the desktop PDF; acquisition parameters are outside this FS item (CRO-06)"),
     Row("URS-081", "FS-081-1", "reporting", P, [D + "test_services.py::test_report_with_watermark_and_preview"],
         level="integration", risks="RSK-33", protocol="OQ-REP-02",
         notes="PDF + CSV export and report.export audit asserted; JSON provenance and label-map export not offered in the desktop",
@@ -374,13 +384,16 @@ ROWS: list[Row] = [
         risks="RSK-26", protocol="OQ-SIG-01",
         notes="decision values validated; there is no draft/in-review/approved state machine",
         proposed="test_review_state_machine_rejects_invalid_transitions"),
-    Row("URS-091", "FS-091-1", "signature", P, [D + "test_services.py::test_review_requires_reauth_and_separation_of_duties",
+    Row("URS-091", "FS-091-1", "signature", V, [D + "test_services.py::test_review_requires_reauth_and_separation_of_duties",
                                                  "tests/test_store_api_workflows.py::test_reviews_on_reports_and_unknown_objects",
-                                                 D + "test_review_fixes.py::test_ux07_08_report_signoff_roles_gates_and_signed_rows"],
+                                                 D + "test_review_fixes.py::test_ux07_08_report_signoff_roles_gates_and_signed_rows",
+                                                 TG + "test_signature_meaning_rule_and_review_panel_history",
+                                                 TGL + "test_api_refuses_signature_meaning_shorter_than_5"],
         level="integration", risks="RSK-26", protocol="OQ-SIG-02",
-        notes="signature row and audit asserted; the signed PDF copy shows the in-system signers, roles and meaning; "
-              "the meaning-length rule and the Review-panel signature history are not asserted",
-        proposed="test_signature_manifestation_in_review_panel_and_pdf"),
+        notes="meaning < 5 characters refused by the desktop and the API before re-authentication (the Store itself "
+              "does not check the length); review row stores reviewer, UTC time, decision, meaning and comment; the "
+              "Review panel lists the history (time, reviewer, signature role, decision, meaning, comment on hover); "
+              "the signed PDF copy shows the in-system signers, roles and meaning"),
     Row("URS-092", "FS-092-1", "signature", V, [D + "test_services.py::test_review_requires_reauth_and_separation_of_duties",
                                                  "tests/test_api.py::test_end_to_end"],
         level="integration", risks="RSK-26", protocol="OQ-SIG-02"),
@@ -461,10 +474,12 @@ ROWS: list[Row] = [
                                              "tests/test_controls.py::test_trained_model_roundtrips_through_safe_loading",
                                              "tests/test_ml_phantom.py::test_onnx_runtime_matches_torch_and_verifies_hash"],
         risks="RSK-10", protocol="OQ-MOD-01", notes="ONNX loader time-of-check/time-of-use issue open (QA-023)"),
-    Row("URS-111", "FS-111-2", "models", P, ["tests/test_ml_phantom.py::test_pipeline_rf_requires_trusted_local_flag",
-                                             "tests/test_security_fixes.py::test_S02_model_paths_and_pickles_rejected"],
-        risks="RSK-10;RSK-45", protocol="OQ-MOD-01",
-        notes="library flag and API refusal tested; desktop refusal of rf: models not tested", proposed="test_desktop_refuses_pickled_rf_models"),
+    Row("URS-111", "FS-111-2", "models", V, ["tests/test_ml_phantom.py::test_pipeline_rf_requires_trusted_local_flag",
+                                             "tests/test_security_fixes.py::test_S02_model_paths_and_pickles_rejected",
+                                             TG + "test_desktop_refuses_pickled_rf_models"],
+        level="integration", risks="RSK-10;RSK-45", protocol="OQ-MOD-01",
+        notes="library trusted-local flag and API refusal tested; desktop analyze_scan refuses rf: models, also with "
+              "the trusted-local flag set, before the analysis job starts (nothing stored)"),
     Row("URS-112", "FS-112-1", "models", G, level="integration", risks="RSK-10", protocol="OQ-MOD-02",
         notes="not implemented: no release status; the desktop lists every locked model with its licence tag",
         proposed="test_only_released_models_selectable"),
@@ -516,16 +531,18 @@ ROWS: list[Row] = [
         notes="About component/licence list asserted; manual pip-audit and SBOM; dependency floors allow vulnerable "
               "versions (QA-024); no hash-pinned lock file",
         proposed="ci_pip_audit_on_hash_pinned_lock_file"),
-    Row("URS-132", "FS-132-1", "security", P, ["tests/test_security_gen2.py::test_reauthentication_counts_towards_lockout",
+    Row("URS-132", "FS-132-1", "security", V, ["tests/test_security_gen2.py::test_reauthentication_counts_towards_lockout",
                                                 D + "test_services.py::test_review_requires_reauth_and_separation_of_duties",
                                                 "tests/test_controls.py::test_author_cannot_approve_own_segmentation",
                                                 D + "test_admin_lock_audit.py::test_user_admin_add_deactivate_reset_audited",
                                                 D + "test_cycle2_fixes.py::test_c2_09_role_change_audited_and_database_edit_detected",
-                                                D + "test_services.py::test_report_with_watermark_and_preview"],
+                                                D + "test_services.py::test_report_with_watermark_and_preview",
+                                                TG + "test_security_events_logged",
+                                                TG + "test_blinded_download_denial_is_audited"],
         level="integration", risks="RSK-23", protocol="OQ-ACC-08",
-        notes="auth.reauth_failed, review.reauth_failed, review.self_approval_denied, user.* and report.export asserted; "
-              "auth.login, auth.login_failed, authz.denied and report.blinded_download_denied not asserted",
-        proposed="test_security_events_logged"),
+        notes="every listed event asserted: auth.login and auth.login_failed (bad password, unknown user) at desktop "
+              "sign-in, authz.denied for desktop actions (unblind, write, audit export), auth.reauth_failed, "
+              "review.reauth_failed, review.self_approval_denied, user.*, report.export, report.blinded_download_denied"),
     Row("URS-133", "FS-133-1", "security", V, ["tests/test_io_destructive.py::test_zarr_pickle_codec_rejected_before_decoding",
                                                 "tests/test_io_destructive.py::test_huge_nifti_dims_fail_fast",
                                                 "tests/test_io_destructive.py::test_huge_zarr_shape_fail_fast",
@@ -565,14 +582,15 @@ ROWS: list[Row] = [
         level="integration", risks="RSK-37", protocol="OQ-SUP-03"),
     Row("URS-151", "FS-151-2", "measurement support", V, [D + "test_services.py::test_label_revision_audit"],
         level="integration", risks="RSK-37", protocol="OQ-SUP-03"),
-    Row("URS-152", "FS-152-1", "measurement support", P, [D + "test_services.py::test_measurement_support_statuses",
+    Row("URS-152", "FS-152-1", "measurement support", V, [D + "test_services.py::test_measurement_support_statuses",
                                                            D + "test_services.py::test_results_rows",
                                                            D + "test_review_fixes.py::test_ux03_results_csv_and_report_have_no_number_for_not_supported",
-                                                           D + "test_review_fixes.py::test_ux02_accept_roi_is_signed_audited_and_clears_flag"],
+                                                           D + "test_review_fixes.py::test_ux02_accept_roi_is_signed_audited_and_clears_flag",
+                                                           TG + "test_results_csv_contains_support_columns"],
         level="integration", risks="RSK-38", protocol="OQ-SUP-04",
-        notes="statuses and row reasons asserted; not-supported values are blank in the results CSV; its per-endpoint "
-              "support columns and the hover reason are not asserted",
-        proposed="test_results_csv_contains_support_columns"),
+        notes="Results-tab Support column shows supported, flagged, not supported and not analysed; a not-supported "
+              "value reads 'not measured' with the status and reason as tooltip; the results CSV has a support and a "
+              "reasons column per endpoint and no number for not-supported values"),
     Row("URS-152", "FS-152-2", "measurement support", P, ["tests/test_report_bounds.py::test_report_prints_refused_values_as_not_measured_with_reasons",
                                                            "tests/test_report_bounds.py::test_renderer_enforces_refusal_in_group_stats_and_csv",
                                                            D + "test_cycle3_fixes.py::test_stale_and_unbound_records_show_not_assessed_in_report"],
@@ -608,12 +626,12 @@ ROWS: list[Row] = [
     Row("URS-170", "FS-170-2", "material characterisation", V, ["tests/test_advisor.py::test_characterise_rejects_tiny_mask",
                                                                  "tests/test_advisor.py::test_small_reference_samples_ignored_and_bone_rule_not_bypassed"],
         risks="RSK-40", protocol="OQ-MAT-01"),
-    Row("URS-171", "FS-171-1", "material characterisation", P, ["tests/test_advisor.py::test_characterise_material_and_use_in_advisor",
-                                                                 "tests/test_advisor.py::test_characterisation_is_bound_to_its_acquisition"],
+    Row("URS-171", "FS-171-1", "material characterisation", V, ["tests/test_advisor.py::test_characterise_material_and_use_in_advisor",
+                                                                 "tests/test_advisor.py::test_characterisation_is_bound_to_its_acquisition",
+                                                                 TGL + "test_characterisation_incompatible_filter_refused"],
         risks="RSK-40", protocol="OQ-MAT-02",
-        notes="voxel-size (25 % boundary), kVp and scanner-model refusals asserted; refusal for a differing filter is "
-              "not asserted",
-        proposed="test_characterisation_incompatible_filter_refused"),
+        notes="voxel size (25 % boundary on both sides), kVp, filter and scanner-model refusals asserted; a field "
+              "missing from either acquisition record is not compared (reuse allowed)"),
     Row("URS-171", "FS-171-2", "material characterisation", G, level="system", risks="RSK-40", protocol="OQ-MAT-03",
         notes="not implemented: no desktop workflow to run, store and attach a characterisation",
         proposed="test_desktop_characterisation_stored_attached_and_audited"),

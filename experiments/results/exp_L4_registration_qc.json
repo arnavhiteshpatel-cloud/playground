@@ -4,7 +4,7 @@
   "n": 33,
   "n_harmful": 6,
   "qc_flags_harmful": 1.0,
-  "qc_passes_harmless": 0.8518518518518519,
+  "qc_passes_harmless": 0.7777777777777778,
   "max_host_dice_among_harmful": 0.5196797652462363,
   "min_host_dice_among_harmless": 0.5049947233747272
  },
@@ -117,7 +117,7 @@
    "harmful": false,
    "host_dice": 0.6628492252007692,
    "host_ncc": 0.5930522431610187,
-   "pass": true
+   "pass": false
   },
   {
    "seed": 910,
@@ -359,7 +359,7 @@
    "harmful": false,
    "host_dice": 0.6754195953612425,
    "host_ncc": 0.5983026821862294,
-   "pass": true
+   "pass": false
   },
   {
    "seed": 912,
@@ -373,5 +373,5 @@
    "pass": false
   }
  ],
- "saved": "2026-11-27T21:44:10Z"
+ "saved": "2026-11-28T00:42:45Z"
 }

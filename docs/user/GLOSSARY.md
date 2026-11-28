@@ -6,7 +6,7 @@ Terms as used in OsteoQuant documents, the application and its reports. Endpoint
 | Term | Meaning |
 |---|---|
 | **Abstention** | Declining to report. At voxel level, labelling a voxel *uncertain*; at endpoint level, reporting *not measured* because the advisor does not support the endpoint |
-| **Advisor** (measurement-support advisor) | The component (`osteoquant/advisor/`, version 1.3.3) that decides, before reporting, whether each endpoint is supported for the material and scan |
+| **Advisor** (measurement-support advisor) | The component (`osteoquant/advisor/`, version 1.4.2) that decides, before reporting, whether each endpoint is supported for the material and scan |
 | **Allograft** | Bone from another individual of the same species; bone-derived, so never separable from new bone by intensity |
 | **Anchor** | The sequence number and head hash of the audit trail, recorded outside the project so that truncation of recent events can be detected |
 | **Audit trail** | Append-only, SHA-256 hash-chained log of every action in a project |

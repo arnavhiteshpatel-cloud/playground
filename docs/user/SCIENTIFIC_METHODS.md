@@ -75,12 +75,11 @@ n <3 per group no interval is printed. Specimens without a group are listed but 
 
 ---
 
-## 3. Measurement-support advisor (1.3.3)
+## 3. Measurement-support advisor (1.4.2)
 
-Implementation: `osteoquant/advisor/separability.py` (`ADVISOR_VERSION = "1.3.3"`) and `integration.py`. Every
+Implementation: `osteoquant/advisor/separability.py` (`ADVISOR_VERSION = "1.4.2"`) and `integration.py`. Every
 assessment records the advisor version, and the PDF report prints it. Policy:
-[MEASUREMENT_SUPPORT.md](../science/MEASUREMENT_SUPPORT.md). **Validation under advisor 1.3.3 in progress** — see
-[EXPERIMENT_REGISTRY.md](../../EXPERIMENT_REGISTRY.md).
+[MEASUREMENT_SUPPORT.md](../science/MEASUREMENT_SUPPORT.md). Evidence: §3.6.
 
 ### 3.1 The question
 
@@ -96,6 +95,8 @@ endpoint can be measured, by which mechanism, and under which conditions.
 | Graft intensity distribution | Material profile from the knowledge base, cross-checked against NIST attenuation physics × assumed porosity | Measured: a day-0 scan or a scan of the material alone, same scanner and protocol |
 | New-bone intensity | Assumed maturity range 0.60–1.00 of host bone (a narrower early-healing range, 0.60–0.93, is defined in the code but not yet applied, even when the timepoint is known) | Measured from empty-defect controls at the same timepoint |
 | Noise | Median absolute deviation of soft tissue outside the defect (conservative: includes tissue texture) | — |
+| Blur | Edge-spread fit at host-bone/soft-tissue edges outside the defect, inflated conservatively above 0.6 voxel | — |
+| Graft granule thickness and graft level | Measured in the scan (local thickness of graft-like voxels; their level one voxel inside the granules) | — |
 | Grey-scale anchor | Soft-tissue and host-bone levels outside the defect | HA calibration phantom |
 | Time since implantation | The scan's timepoint in the desktop (days, or a label such as "Week 4"); unknown if neither is usable | Entered explicitly in the analysis dialog when timepoint labels are not times |
 | Day-0 information | Registration result, QC, granule tracking | — |
@@ -106,8 +107,11 @@ host bone ≈ 1 without HA calibration. Noise is expressed the same way (`noise_
 ### 3.3 How a decision is computed
 
 1. **Class models.** The graft is modelled as a normal distribution from its profile (or as measured samples), new bone
-   as a uniform maturity range. Both get the scan's noise and partial-volume mixing: a share of voxels, derived from
-   granule size and voxel size, is mixed towards neighbouring phases (soft tissue, the other class, host bone).
+   as a uniform maturity range. Both get the scan's noise and partial-volume mixing: a share of voxels is mixed towards
+   neighbouring phases (soft tissue, the other class, host bone). For the graft that share comes from the measured
+   blur and granule thickness (a two-sided edge model, Φ(δ/σ) + Φ((T−δ)/σ) − 1 of each granule's voxels keep their own
+   value); for new bone and halos it comes from voxel and structure size. Measured reference samples get the analysis
+   scan's noise added.
 2. **Oracle.** For two histograms, every voxel-wise intensity rule is a union of bins; the Dice-maximising union is the
    *intensity-only oracle*, an upper bound for any threshold workflow. If the oracle fails, every threshold fails.
 3. **The rule actually applied.** Because real methods use a single threshold, the decision uses the best
@@ -121,6 +125,11 @@ host bone ≈ 1 without HA calibration. Noise is expressed the same way (`noise_
    and physics model disagree by >25%), when the scan's graft-like intensities disagree with the profile by >15%, or
    when a resorbable material is scanned at an unknown timepoint or later than 4 weeks (rules 4a–4c below). A
    measured material reference lifts the first two refusals; nothing lifts the third except a known early timepoint.
+7. **New bone is mineral minus graft.** Its relative error is its own error plus the graft error scaled by p/(1−p),
+   where p is the scan's graft share of mineral; new-bone endpoints need the propagated error ≤10%.
+8. **Ambiguous rim.** Mineral that is not graft-like but lies within max(1, ⌈2σ⌉) voxels of graft-like voxels may be
+   new-bone coating or graft halo. New-bone endpoints are refused if this rim exceeds 10% of the would-be new bone;
+   total mineral is refused if it exceeds 20% of the mineral.
 
 ### 3.4 Decision rules
 
@@ -131,15 +140,18 @@ host bone ≈ 1 without HA calibration. Noise is expressed the same way (`noise_
 | 2a | DBM (radiolucent but bone-derived) | Graft **and** new-bone endpoints **not supported**: mineralised DBM particles are indistinguishable from new bone |
 | 3 | Intensity mechanism: single-threshold graft Dice ≥0.85 **and** graft-volume ratio within ±10%, at the estimated graft share and at half of it | Graft and new-bone endpoints **supported** |
 | 3a | Graft share below 5% of mineral | Graft-volume endpoints **not supported** ("trace residual graft") |
-| 4 | Bone-derived graft (autograft, allograft, DBBM xenograft, DBM) | Never supported by intensity, even with measured samples, and (since 1.3.3) **never by the day-0 mechanism**: the day-0 footprint is remodelled into bone |
+| 4 | Bone-derived graft (autograft, allograft, DBBM xenograft, DBM) | Never supported by intensity, even with measured samples. The remodelling grafts (autograft, allograft, DBM) are **never supported by the day-0 mechanism** either: their footprint becomes bone. Slowly resorbing DBBM may use the day-0 mechanism (since 1.4.2) |
 | 4a | Knowledge-base profile and NIST physics model disagree by >25% (currently β-TCP and bioactive glass 45S5) and no measured material reference | Intensity mechanism refused ("material appearance is uncertain") |
 | 4b | Scan-versus-profile consistency: the median of the defect's graft-like intensities (brighter than mature bone) differs >15% from the profile's graft level, and no measured reference | Intensity mechanism refused (profile does not describe this scanner/protocol) |
-| 4c | Resorbable material (β-TCP, calcium sulfate, bioactive glasses 45S5 and S53P4, polymer–ceramic composites) at an unknown timepoint or later than 4 weeks | Intensity mechanism refused; the reason states the timepoint used ("timepoint: unknown" or the weeks) |
+| 4c | Resorbable material (β-TCP, BCP, calcium sulfate, bioactive glasses 45S5 and S53P4, polymer–ceramic composites) at an unknown timepoint or later than 4 weeks | Intensity mechanism refused; the reason states the timepoint used ("timepoint: unknown" or the weeks) |
 | 5 | Intensity fails, but a registered day-0 scan passes registration QC, with granule motion ≤200 µm (or tracked) and ≤20% untracked graft volume; all four day-0 fields computed by the software; graft not bone-derived | **Supported with conditions**. For resorbable materials the conditions state that bone formed inside the original footprint is counted as graft. There is no desktop day-0 workflow |
 | 6 | Texture/morphology model | Only with material-specific validation evidence in the model card (none exists) |
 | 7 | Material not in the knowledge base, or measured reference samples with <500 voxels | **Not supported** until characterised |
-| 7b | Measured new-bone reference (empty-defect controls) | Used, with graft-adjacent partial-volume mixing added, because control new bone lacks the blur of new bone next to dense graft |
-| 7a | Metals (magnesium, titanium) | Never supported (streak and beam-hardening artefacts are not modelled) |
+| 7b | Measured new-bone reference (empty-defect controls) | Used, with graft-adjacent partial-volume mixing and the analysis scan's noise added, because control new bone lacks the blur of new bone next to dense graft |
+| 7a | Metals (magnesium, titanium) | Never supported, including total mineral (streak and beam-hardening artefacts are not modelled) |
+| 9 | Propagated new-bone error >10% (step 7) | New-bone endpoints **not supported** |
+| 10 | Ambiguous rim >10% of new bone, or >20% of mineral (step 8) | New-bone, or total-mineral, endpoints **not supported** |
+| 11 | Segmentation method other than the advisor's own threshold (`advisor_threshold`) | Tissue endpoints **not supported**; graft endpoints of a learned model only with a qualifying signed validation record (none exists). Tissue mineral density is unaffected |
 | 8 | Density endpoints | Only with HA calibration |
 | — | New-bone thickness endpoints | Need structures ≥3 voxels (about 150 µm woven trabeculae) and supported new bone |
 
@@ -153,22 +165,25 @@ automatic ROI requires review.
 
 ### 3.5 What the advisor does **not** do
 
-* It does not check the segmentation method you used. The decision says whether the endpoint is identifiable from
-  intensities; a poor method can still mis-measure a supported endpoint. The `advisor_threshold` method applies the advisor's own threshold; the desktop default is
-  multi-Otsu.
+* It does not evaluate the quality of a segmentation. Support is bound to the method it was validated with
+  (`advisor_threshold`, the desktop and pipeline default, which applies the advisor's own threshold); other methods
+  are refused by name (rule 11). Within that method, a supported endpoint can still be mis-measured when the scan
+  differs from anything validated in simulation.
 * It does not validate its own material profiles. Porosities and granule sizes are assumptions; the advisor and the
   phantom simulator share the same attenuation model, so their agreement in simulation is partly self-consistent.
-* Its thresholds (0.85, ±10%, 0.35, 25%, 15%, 4 weeks, 200 µm, 20%) are policy choices, to be revisited with real
-  data.
+* Its thresholds (0.85, ±10%, 0.35, 25%, 15%, 10%, 20%, 4 weeks, 200 µm) are policy choices, to be revisited with
+  real data.
 
 ### 3.6 Evidence for the advisor
 
-**Validation under advisor 1.3.3 in progress** — see [EXPERIMENT_REGISTRY.md](../../EXPERIMENT_REGISTRY.md).
-Experiments S1 (does the advisor refuse the measurements that fail?), S1b (with the advisor's own threshold) and S1c
-(with a measured control-animal reference) are being re-run under the shipped version. Earlier runs used advisor
-versions the software no longer runs; they motivated the 1.2.x and 1.3.x rules (the mineral rule, the profile checks,
-the timepoint rule and control-reference mixing) but are not evidence for the current version and are not quoted
-here. The day-0 rule is discussed with Experiment L3 in §5.
+[SYNTHETIC, pre-registered held-out tests] In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.045); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported.
+
+The shipped advisor 1.4.2 differs from 1.4.1 only in rules this test does not exercise. The simulator and the advisor share attenuation physics, so this is evidence of internal safety, not of accuracy on real scans; no physical validation has been run. Two earlier held-out tests found supported measurements that failed: S1H (advisor 1.3.3: supported new-bone
+volumes over-estimated by 20–50% and some supported graft volumes under-estimated by 21–28%, under wider blur) and S1H2 (advisor 1.4.0: supported total mineral over-estimated
+under heavy blur). Each failure led to a rule (scan-measured blur, new-bone error propagation, the blur-scaled
+ambiguous rim) that was then tested on new held-out data, not on the data that revealed it. The in-sample development
+experiments (S1, S1b, S1c) are in [EXPERIMENT_REGISTRY.md](../../EXPERIMENT_REGISTRY.md) and are not evidence of
+generalisation. The day-0 rule is discussed with Experiment L3 in §5.
 
 **Why separability fails** [SYNTHETIC, Experiments C and C2]: when graft density lies in the overlap regime
 simulated in Experiment C (800–1000 mgHA/cm³, inside the assumed 650–1000 mgHA/cm³ woven-bone range), the
@@ -236,8 +251,8 @@ cell; result file `exp_L3_displacement.json`]:
   glass (β-TCP, calcium sulfate, bioactive glass) is counted as graft, so residual graft is over-estimated and new
   bone under-estimated. The generator models resorption as shrinkage and translation, not replacement, so simulation
   cannot reveal this bias.
-* **Bone-derived grafts** (autograft, allograft, DBBM, DBM) are never supported by the day-0 mechanism: the footprint
-  is remodelled into bone (advisor 1.3.3).
+* **Remodelling bone-derived grafts** (autograft, allograft, DBM) are never supported by the day-0 mechanism: the
+  footprint is remodelled into bone. Slowly resorbing DBBM may be (advisor 1.4.2).
 * **Study design.** The method needs an in vivo post-operative scan with the same protocol, which not every study
   has.
 
@@ -303,7 +318,9 @@ forests and NIfTI/NRRD/Zarr/TIFF/DICOM round-trips were bit-identical across run
 * No real three-class (new bone / residual graft / host bone) ground truth exists yet; separation on real graft
   material is unknown.
 * Material profiles are physics plus assumed porosity and granule size.
-* Validation of the current advisor (1.3.3) is in progress (S1, S1b, S1c re-runs).
+* The advisor has been validated only in simulation (held-out test S1H3), where it refused every failing
+  measurement but supported residual graft in about a third of specimens, total mineral only with sharp imaging and
+  new bone never.
 * The day-0 method degrades with tens of micrometres of granule motion, counts bone formed inside a resorbing
   footprint as graft, and has no desktop workflow.
 * **Biological limits.** In segmental and long-bone models the bone-diameter cylinder ROI excludes periosteal and

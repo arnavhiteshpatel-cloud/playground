@@ -158,16 +158,26 @@ def group_stats(bundle):
                 if t2 != tp or g == ref:
                     continue
                 for key, label, unit in eps:
-                    a = [_get(s["metrics"], key) for s in ss]
-                    b = [_get(s["metrics"], key) for s in groups[(ref, tp)]]
+                    # only measured (finite) values: refused endpoints are None and must not count (C2-SCI-14)
+                    a = [v for v in (_get(s["metrics"], key) for s in ss) if _finite(v)]
+                    b = [v for v in (_get(s["metrics"], key) for s in groups[(ref, tp)]) if _finite(v)]
                     if len(a) >= 2 and len(b) >= 2:
                         c = compare_two_groups(a, b)
+                        c["n_group"], c["n_reference"] = len(a), len(b)
                         comps.append({"timepoint": tp, "group": g, "reference": ref, "endpoint": key, **c})
-        if comps:
-            adj = adjust_pvalues([c["welch_t"]["p"] for c in comps], "holm")
-            for c, p in zip(comps, adj):
+        # Holm adjustment only over tests that produced a p-value; uncomputable tests show "n/a", never p = 1.000
+        valid = [c for c in comps if _finite(c.get("welch_t", {}).get("p"))]
+        if valid:
+            adj = adjust_pvalues([c["welch_t"]["p"] for c in valid], "holm")
+            for c, p in zip(valid, adj):
                 c["p_holm"] = p
+        for c in comps:
+            c.setdefault("p_holm", None)
     return table, comps
+
+
+def _finite(v) -> bool:
+    return isinstance(v, (int, float, np.floating)) and bool(np.isfinite(v))
 
 
 def _csv_safe(v):
@@ -316,16 +326,17 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
             cells = [str(r["group"]), str(r["timepoint"]), str(r["n"])]
             for k, _, _ in chunk:
                 d = r[k]
+                nnote = f"\n(n={d.get('n', 0)} of {r['n']})" if d.get("n", 0) and d.get("n", 0) < r["n"] else ""
                 if d.get("n", 0) >= 2 and "ci95_low" in d:
                     clip = d.get("ci95_clipped", [])
                     any_clipped = any_clipped or bool(clip)
                     lo = _fmt(d["ci95_low"]) + (CLIP_MARK if "low" in clip else "")
                     hi = _fmt(d["ci95_high"]) + (CLIP_MARK if "high" in clip else "")
-                    cells.append(f"{_fmt(d['mean'])} ± {_fmt(d['sd'])}\n[{lo}, {hi}]")
+                    cells.append(f"{_fmt(d['mean'])} ± {_fmt(d['sd'])}\n[{lo}, {hi}]{nnote}")
                 elif d.get("n", 0) >= 2:
-                    cells.append(f"{_fmt(d['mean'])} ± {_fmt(d['sd'])}\n[CI not shown, n={d['n']}]")
+                    cells.append(f"{_fmt(d['mean'])} ± {_fmt(d['sd'])}\n[CI not shown, n={d['n']}]{nnote}")
                 elif d.get("n", 0) == 1:
-                    cells.append(_fmt(d["mean"]))
+                    cells.append(_fmt(d["mean"]) + nnote)
                 else:
                     cells.append("—")
             rows.append(cells)
@@ -354,7 +365,8 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
             hg = c["hedges_g"]
             crow.append([str(c["timepoint"]), f"{c['group']} vs {c['reference']}", c["endpoint"], _fmt(c["mean_diff"]),
                          f"{_fmt(hg['g'],2)} [{_fmt(hg.get('ci95_low'),2)}, {_fmt(hg.get('ci95_high'),2)}]",
-                         _fmt(c["welch_t"]["p"]), _fmt(c["p_holm"])])
+                         _fmt(c["welch_t"]["p"]) if _finite(c["welch_t"].get("p")) else "n/a",
+                         _fmt(c["p_holm"]) if c.get("p_holm") is not None else "n/a"])
         flow.append(table(crow))
     for fig in bundle.get("group_figures", []):
         flow.append(Spacer(1, 4))

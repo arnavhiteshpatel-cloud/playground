@@ -151,12 +151,15 @@ def class_volume_change(labs, roi, spacing_um, times) -> list[dict]:
 # ----------------------------------------------------------------------------- v2: QC and granule tracking
 def registration_qc(fixed: np.ndarray, moved_back: np.ndarray, exclude: np.ndarray | None = None,
                     spacing_um=(1.0, 1.0, 1.0), tolerance_um: float | None = None, shell_vox: int = 12,
-                    min_host_dice: float = 0.85, min_ncc: float = 0.6, n_blocks: int = 4) -> dict:
+                    min_host_dice: float = 0.85, min_ncc: float = 0.6, n_blocks: int = 8,
+                    aperture_ratio: float = 0.1) -> dict:
     """Registration quality from anatomy that should not change (host bone around the defect).
 
     Primary criterion (Gen-2 revision after review IMG-07): the *residual displacement* between the two
     registered scans, estimated by masked normalised cross-correlation (integer voxels) in ``n_blocks`` blocks of the
-    peri-defect shell. The maximum block displacement captures residual translation and the local effect of
+    peri-defect shell (8 octant blocks). Each block's shift is projected onto the directions its structure tensor can
+    constrain (eigenvalue ≥ ``aperture_ratio`` × largest); shifts along featureless directions (e.g. a tube's axis)
+    cannot be verified and are reported, not guessed. The maximum block displacement captures residual translation and the local effect of
     residual rotation, in µm, and is compared with ``tolerance_um`` (default: 2 voxels). Correlation over whole
     blocks is far less noise-sensitive than thresholded mask overlap. Host-mineral Dice and NCC are reported as
     secondary diagnostics (they were the Gen-2.0 criteria and failed perfect alignment at high noise).
@@ -180,36 +183,52 @@ def registration_qc(fixed: np.ndarray, moved_back: np.ndarray, exclude: np.ndarr
     hr = ndi.binary_dilation(a | b, iterations=2) & region
     x, y = fixed[hr].astype(np.float64), moved_back[hr].astype(np.float64)
     ncc = float(np.corrcoef(x, y)[0, 1]) if x.size > 10 else float("nan")
-    # primary: block-wise residual displacement
-    shifts = []
+    # primary: block-wise residual displacement, projected onto directions the block can constrain (aperture problem:
+    # a diaphyseal tube is nearly translation-invariant along its axis — cycle-2 review C2-SCI-04)
+    shifts, blocks = [], []
     if region.any():
         zz, yy, xx = np.nonzero(region)
         lo = np.array([zz.min(), yy.min(), xx.min()])
         hi = np.array([zz.max(), yy.max(), xx.max()]) + 1
-        ax = int(np.argmax(hi - lo))
-        edges = np.linspace(lo[ax], hi[ax], n_blocks + 1).astype(int)
-        for i in range(n_blocks):
-            l2, h2 = lo.copy(), hi.copy()
-            l2[ax], h2[ax] = edges[i], edges[i + 1]
-            if np.any(h2 - l2 < 8):
-                continue
-            sl = tuple(slice(int(a_), int(b_)) for a_, b_ in zip(l2, h2))
-            m = region[sl]
-            if m.mean() < 0.05:
-                continue
-            f = fixed[sl].astype(np.float32)
-            g = moved_back[sl].astype(np.float32)
-            if f[m].std() == 0 or g[m].std() == 0:
-                continue
-            # masked normalised cross-correlation (Padfield 2012): the changing defect is excluded without
-            # imposing an artificial mask edge that would pin the peak at zero shift
-            sh = phase_cross_correlation(f, g, reference_mask=m, moving_mask=m)[0]
-            shifts.append(float(np.linalg.norm(np.asarray(sh) * sp)))
+        mid = (lo + hi) // 2
+        for oz in (0, 1):
+            for oy in (0, 1):
+                for ox in (0, 1):                        # octants around the defect (covers the circumference)
+                    l2 = np.array([lo[0] if oz == 0 else mid[0], lo[1] if oy == 0 else mid[1], lo[2] if ox == 0 else mid[2]])
+                    h2 = np.array([mid[0] if oz == 0 else hi[0], mid[1] if oy == 0 else hi[1], mid[2] if ox == 0 else hi[2]])
+                    if np.any(h2 - l2 < 8):
+                        continue
+                    sl = tuple(slice(int(a_), int(b_)) for a_, b_ in zip(l2, h2))
+                    m = region[sl]
+                    if m.mean() < 0.05:
+                        continue
+                    f = fixed[sl].astype(np.float32)
+                    g = moved_back[sl].astype(np.float32)
+                    if f[m].std() == 0 or g[m].std() == 0:
+                        continue
+                    sh = np.asarray(phase_cross_correlation(f, g, reference_mask=m, moving_mask=m)[0], float)
+                    # structure tensor of the (smoothed) fixed block inside the mask: directions with little gradient
+                    # energy cannot be verified, so the shift component along them is dropped and reported
+                    fs = ndi.gaussian_filter(f, 1.0)
+                    grads = [ndi.sobel(fs, axis=k)[m] for k in range(3)]
+                    J = np.array([[float(np.mean(gi * gj)) for gj in grads] for gi in grads])
+                    w, V = np.linalg.eigh(J)
+                    ok_dir = w >= aperture_ratio * max(float(w.max()), 1e-12)
+                    proj = V[:, ok_dir] @ (V[:, ok_dir].T @ (sh * sp)) if ok_dir.any() else np.zeros(3)
+                    # the eigen-projection reintroduces floating-point noise (an exact 2-voxel shift came out as
+                    # 80.00000000000001 µm and failed an 80 µm tolerance): round to 1 nm before comparing
+                    mag = round(float(np.linalg.norm(proj)), 3)
+                    shifts.append(mag)
+                    blocks.append({"shift_um_raw": float(np.linalg.norm(sh * sp)), "shift_um_constrained": mag,
+                                   "n_unconstrained_directions": int((~ok_dir).sum())})
     max_shift = float(max(shifts)) if shifts else float("nan")
-    ok = bool(shifts) and max_shift <= tolerance_um
-    return {"residual_shift_um_max": max_shift, "residual_shift_um_blocks": shifts, "tolerance_um": tolerance_um,
-            "host_dice": float(dice), "host_ncc": ncc, "pass": ok,
-            "policy": {"criterion": "max block residual displacement ≤ tolerance", "tolerance_um": tolerance_um,
+    unverifiable = bool(blocks) and all(b_["n_unconstrained_directions"] > 0 for b_ in blocks)
+    ok = bool(shifts) and max_shift <= round(float(tolerance_um), 3)
+    return {"residual_shift_um_max": max_shift, "residual_shift_um_blocks": shifts, "blocks": blocks,
+            "tolerance_um": tolerance_um, "host_dice": float(dice), "host_ncc": ncc, "pass": ok,
+            "partially_unverifiable": unverifiable,
+            "policy": {"criterion": "max block residual displacement along constrained directions ≤ tolerance",
+                       "tolerance_um": tolerance_um, "aperture_ratio": aperture_ratio,
                        "secondary_min_host_dice": min_host_dice, "secondary_min_ncc": min_ncc}}
 
 

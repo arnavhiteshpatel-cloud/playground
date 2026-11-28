@@ -162,8 +162,9 @@ def test_ux05_synthetic_model_labelled_everywhere(qtbot, window, analysed, monke
                                                          "provenance_text": "trained on synthetic phantoms"}])
     d = AnalysisDialog(1)
     qtbot.addWidget(d)
-    assert "SYNTHETIC-TRAINED" in d.seg.itemText(1) and "commercial" not in str(d.seg.itemData(1, 3))
-    d.seg.setCurrentIndex(1)
+    i = d.seg.findData("onnx:m1")                       # look the model up by data, not by position
+    assert i >= 0 and "SYNTHETIC-TRAINED" in d.seg.itemText(i) and "commercial" not in str(d.seg.itemData(i, 3))
+    d.seg.setCurrentIndex(i)
     assert not d.chip.isHidden()
     # a stored segmentation made with a synthetic-trained model
     seg = _seg(project, scan)

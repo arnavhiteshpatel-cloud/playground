@@ -67,7 +67,7 @@
 <p><strong>Question.</strong> Are the algorithms correct, and where can separation work in principle?</p>
 <p><strong>Truth.</strong> Exact synthetic labels; Scanco IPL reference maps; manual bone labels on public scans.</p>
 <p><strong>Exit criteria.</strong> Morphometry exact on analytic objects; advisor refuses ≥95% of failing measurements; ROI propagation, tracking and registration QC behave.</p>
-<p><strong>Open items.</strong> Validation under advisor 1.3.3 in progress — see <a href="../EXPERIMENT_REGISTRY.md">EXPERIMENT_REGISTRY.md</a> (S1, S1b, S1c re-runs); earlier advisor versions supported some measurements that failed, which led to the 1.3.x rules. The day-0 method is fragile under granule motion (L3). Ensemble/conformal (U1) and synthetic-to-real (S2) experiments have not completed.</p>
+<p><strong>Open items.</strong> In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.045); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported. Coverage is the open problem; earlier versions supported some measurements that failed, which led to the 1.4.x rules (<a href="../EXPERIMENT_REGISTRY.md">EXPERIMENT_REGISTRY.md</a>). The day-0 method is fragile under granule motion (L3). Ensemble/conformal (U1) and synthetic-to-real (S2) experiments have not completed.</p>
 </div>
 <div class="stage-status"><span class="st st-cond">Run, items open</span><div aria-hidden="true" class="progress"><i class="on"></i><i class="on"></i><i class="part"></i></div></div>
 </li>
@@ -174,7 +174,7 @@
 <h2>What has not been demonstrated</h2>
 <ul class="checklist no">
 <li>Accuracy of residual-graft or new-bone measurements on any real graft material.</li>
-<li>That the current advisor (1.3.3) refuses the measurements that fail, even in simulation: validation under advisor 1.3.3 in progress.</li>
+<li>That the advisor refuses the measurements that fail on real scans: it has been tested only in simulation, where the simulator and the advisor share attenuation physics.</li>
 <li>That the advisor’s decisions match real separability (its material profiles are assumptions).</li>
 <li>Volume bias and limits of agreement against physical truth.</li>
 <li>Agreement with expert analysts on in vivo scans, and any analyst time saving.</li>

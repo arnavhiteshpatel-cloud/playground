@@ -13,7 +13,8 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
 
 * A native **desktop application** replaces the local server and browser as the primary interface.
 * The software now **refuses to report** graft and new-bone endpoints it cannot support, through a
-  **measurement-support advisor** (version 1.3.3), and reports say why.
+  **measurement-support advisor** (version 1.4.2), and reports say why. Support is bound to the advisor's own
+  threshold method, now the default segmentation.
 * Endpoints, analysis conventions and acceptance criteria are written down and pre-registered.
 * New longitudinal tools (granule tracking, registration QC, ROI propagation) and an ONNX runtime path.
 * Offline licensing, packaging for three operating systems, a second security review and a larger test suite.
@@ -47,7 +48,10 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
   new-bone endpoints refused), 1.3.0 (knowledge-base material profiles cross-checked against the physics model; a
   >25% disagreement requires a measured reference; resorbable materials intensity-supported only at a known
   timepoint ≤4 weeks), 1.3.1 (scan-versus-profile consistency check, >15%), 1.3.2 (graft-adjacent partial-volume
-  mixing for measured control references), 1.3.3 (bone-derived grafts not supported by the day-0 mechanism).
+  mixing for measured control references), 1.3.3 (bone-derived grafts not supported by the day-0 mechanism), 1.4.0
+  (blur, granule thickness and graft level measured in the scan; new-bone error propagation; ambiguous graft rim),
+  1.4.1 (rim width scaled to the measured blur), 1.4.2 (metals refuse total mineral; BCP treated as resorbable; DBBM
+  allowed the day-0 mechanism; scan noise added to measured references; support bound to the segmentation method).
 * The desktop passes each scan's time since implantation to the advisor (from the timepoint's days or a label such as
   "Week 4"; or entered in the analysis dialog; otherwise unknown) and the report prints it with its source.
 * Studies carry a data class (synthetic, public, own research, customer) chosen at creation; synthetic demo studies
@@ -122,7 +126,8 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
 
 | ID | Data | Status | Key result |
 |---|---|---|---|
-| S1, S1b, S1c | Synthetic | Validation under advisor 1.3.3 in progress — see [EXPERIMENT_REGISTRY.md](../../EXPERIMENT_REGISTRY.md) | Earlier runs used older advisor versions and are not quoted |
+| S1H3 | Synthetic, pre-registered, held out | Done | In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.045); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported. |
+| S1H, S1H2 | Synthetic, pre-registered, held out | Done | Earlier versions (1.3.3, 1.4.0) supported some measurements that failed; the fixes were then tested on S1H3 |
 | F2 | Synthetic | Done | Propagated segmental ROI Dice 0.995; the Gen-1 failure mode was not reproduced |
 | L3 | Synthetic | Done | Day-0 is fragile under granule motion: naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35. The advisor refuses these cases |
 | L4 | Synthetic | Done | Registration QC flagged all harmful misalignments |

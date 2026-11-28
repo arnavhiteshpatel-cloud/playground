@@ -89,3 +89,21 @@ def test_pdf_banner_and_bounds(tmp_path, data_class, banner_word):
 def test_banners_cover_every_data_class():
     from osteoquant.api.bundle import DATA_CLASSES
     assert set(DATA_CLASSES) <= set(BANNERS)
+
+
+def test_group_stats_ignore_refused_values_and_uncomputable_tests():
+    from osteoquant.report.defectfill import group_stats
+    eps = [("class_volumes.new_bone_volume_mm3", "New bone", "mm3"), ("class_volumes.mineral_volume_mm3", "Mineral", "mm3")]
+
+    def spec(i, g, nb, mn):
+        return {"specimen_id": f"A{i}", "animal_id": f"A{i}", "group": g, "timepoint": "w4",
+                "metrics": {"class_volumes": {"new_bone_volume_mm3": nb, "mineral_volume_mm3": mn}}}
+    specs = [spec(1, "ctrl", None, 1.0), spec(2, "ctrl", None, 1.2), spec(3, "ctrl", None, 1.1),
+             spec(4, "trt", 0.5, 2.0), spec(5, "trt", None, 2.2), spec(6, "trt", 0.6, 2.1)]
+    table, comps = group_stats({"endpoints": eps, "specimens": specs, "reference_group": "ctrl"})
+    trt = next(r for r in table if r["group"] == "trt")
+    assert trt["n"] == 3 and trt["class_volumes.new_bone_volume_mm3"]["n"] == 2
+    # new-bone comparison is impossible (reference has no measured values): no test, no p = 1.000
+    assert all(c["endpoint"] != "class_volumes.new_bone_volume_mm3" for c in comps)
+    mineral = [c for c in comps if c["endpoint"] == "class_volumes.mineral_volume_mm3"]
+    assert mineral and mineral[0]["p_holm"] is not None and mineral[0]["n_reference"] == 3

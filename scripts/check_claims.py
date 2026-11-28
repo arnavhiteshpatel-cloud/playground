@@ -50,7 +50,39 @@ CLAIMS = [
     ("L3_dice_0um", "exp_L3_displacement.json", "summary.0.dice_graft", 2, [r"no motion:\s*"]),
     ("L3_dice_50um", "exp_L3_displacement.json", "summary.8.dice_graft", 3, [r"50 µm motion:\s*"]),
     ("L3_dice_100um", "exp_L3_displacement.json", "summary.16.dice_graft", 2, [r"100 µm motion:\s*"]),
+    # Held-out advisor validation (Experiment S1H3, advisor 1.4.1 frozen; 1.4.2 changed only paths S1H3 does not
+    # exercise). Standard phrase — quote it whole, with the advisor version and the word SYNTHETIC/simulation:
+    # "In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens; a failure is a volume
+    # error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none
+    # of the supported ones failed (95% upper bound on the supported-failure rate 0.045); supported graft volumes:
+    # median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only);
+    # supported mineral volumes: maximum error 3.2%; new-bone volume never supported."
+    # Percent claims carry a scale (6th field); a callable path computes the value.
+    ("S1H3_graft_cov", "exp_S1H3_heldout.json", lambda d: _cov(d, "residual_graft_volume"), 0,
+     [r"residual graft volume supported in\s*"], 100),
+    ("S1H3_graft_bound", "exp_S1H3_heldout.json",
+     "summary.0.per_endpoint.residual_graft_volume.p_fail_given_supported_upper95", 3,
+     [r"upper bound on the supported-failure rate\s*"]),
+    ("S1H3_graft_median", "exp_S1H3_heldout.json",
+     "summary.0.per_endpoint.residual_graft_volume.abs_err_supported_median", 1,
+     [r"supported graft volumes: median error\s*"], 100),
+    ("S1H3_graft_max", "exp_S1H3_heldout.json",
+     "summary.0.per_endpoint.residual_graft_volume.abs_err_supported_max", 1,
+     [r"supported graft volumes: median error [\d.]+%, maximum\s*"], 100),
+    ("S1H3_mineral_cov", "exp_S1H3_heldout.json", lambda d: _cov(d, "total_mineral_volume"), 0,
+     [r"total mineral volume supported in\s*"], 100),
+    ("S1H3_mineral_max", "exp_S1H3_heldout.json",
+     "summary.0.per_endpoint.total_mineral_volume.abs_err_supported_max", 1,
+     [r"supported mineral volumes: maximum error\s*"], 100),
+    ("S1H3_n", "exp_S1H3_heldout.json", "summary.0.n", 0, [r"held-out simulation S1H3 \(advisor [\d.]+; "], 1),
 ]
+# guard: S1H3 claims must come from the pre-registered, frozen run
+S1H3_REQUIRED = {"preregistered": "docs/science/PREREGISTRATION.md §9", "advisor_version": "1.4.1"}
+
+
+def _cov(d, ep):
+    e = d["summary"][0]["per_endpoint"][ep]
+    return (e["supported_and_ok"] + e["supported_but_failed"]) / e["n"]
 # guard: the L3 rows above must be the naive footprint without fragmentation at 0 / 50 / 100 µm
 L3_ROWS = {"L3_dice_0um": (0, 0.0), "L3_dice_50um": (50, 0.0), "L3_dice_100um": (100, 0.0)}
 
@@ -103,8 +135,8 @@ BANNED = [
     (r"GLP[- ]supporting|GLP[- ]readiness", "no GLP-related offer may be made"),
     (r"defensible numbers", "overclaim"),
     (r"[Cc]alibrated uncertainty on every endpoint", "not achieved (Experiment K)"),
-    (r"\d+\s*(?:of|/)\s*\d+ failures refused", "advisor-validation number from a superseded advisor version"),
-    (r"P\(fail\s*\\?\|\s*supported\)\s*\d", "advisor-validation number from a superseded advisor version"),
+    (r"\d+\s*(?:of|/)\s*\d+ failures refused", "advisor-validation numbers: use the standard S1H3 phrase (CLAIMS)"),
+    (r"P\(fail\s*\\?\|\s*supported\)\s*\d", "advisor-validation numbers: use the standard S1H3 phrase (CLAIMS)"),
     (r"automated tests", "use the CI-generated test count, not a hard-coded one"),
 ]
 # bare 'verified' as a quality claim is banned on the website and in the investor one-pager
@@ -173,12 +205,31 @@ def check_banned() -> list[str]:
     return bad
 
 
+VALIDATION_RUNS = {"S1H3": "exp_S1H3_heldout.json", "S1H2": "exp_S1H2_heldout.json", "S1H": "exp_S1H_heldout.json"}
+
+
+def _run_versions() -> dict:
+    out = {}
+    for rid, fn in VALIDATION_RUNS.items():
+        try:
+            out[rid] = json.loads((RES / fn).read_text()).get("advisor_version")
+        except (OSError, ValueError):
+            pass
+    return out
+
+
 def check_versions() -> list[str]:
+    """Every advisor version cited must be the shipped one, except on history lines or on a line that names a
+    validation run (S1H, S1H2, S1H3) whose result file records exactly that version."""
     cur, bad = _advisor_version(), []
+    runs = _run_versions()
     files = sorted({p for g in VERSION_GLOBS for p in ROOT.glob(g) if p.is_file()})
     for f in files:
         for i, line in enumerate(f.read_text(errors="ignore").splitlines(), 1):
             for m in VERSION_RE.finditer(line):
+                named = {rid for rid in runs if re.search(rf"\b{rid}\b", line)}
+                if any(runs[rid] == m.group(1) for rid in named):
+                    continue
                 if m.group(1) != cur and not VERSION_ALLOW.search(line):
                     bad.append(f"VERSION {f.relative_to(ROOT)}:{i}: cites advisor {m.group(1)}, shipped is {cur}")
     return bad
@@ -192,24 +243,31 @@ def main(paths=None) -> int:
         files = [Path(p).resolve() for p in paths]
     files = sorted(set(files))
     num = re.compile(r"(?<![\d.])(\d+\.\d+)")
+    num_scaled = re.compile(r"(?<![\d.])(\d+(?:\.\d+)?)")     # percentages and counts may be integers
     bad, found = [], {c[0]: 0 for c in CLAIMS}
-    for cid, jf, path, dec, anchors in CLAIMS:
+    for cid, jf, path, dec, anchors, *rest in CLAIMS:
+        scale = rest[0] if rest else None
         jp = RES / jf
         if not jp.exists():
             bad.append(f"{cid}: result file missing {jf}")
             continue
-        want = round(float(get(json.loads(jp.read_text()), path)), dec)
+        jd = json.loads(jp.read_text())
+        if cid.startswith("S1H3_") and any(jd.get(k) != v for k, v in S1H3_REQUIRED.items()):
+            bad.append(f"{cid}: {jf} is not the pre-registered frozen run ({S1H3_REQUIRED})")
+        raw = float(path(jd) if callable(path) else get(jd, path)) * (scale or 1)
+        want = round(raw, dec)
         for f in sorted(set(files)):
             text = f.read_text(errors="ignore")
             for a in anchors:
                 for m in re.finditer(a, text):
                     window = text[m.end(): m.end() + 40]
-                    n = num.search(window)
+                    n = (num_scaled if scale else num).search(window)
                     if not n:
                         continue
                     got = float(n.group(1))
-                    if len(n.group(1).split(".")[1]) < dec:     # quoted with fewer decimals: compare at that precision
-                        ok = round(want, len(n.group(1).split(".")[1])) == got
+                    qd = len(n.group(1).split(".")[1]) if "." in n.group(1) else 0
+                    if qd < dec:     # quoted with fewer decimals: compare at that precision
+                        ok = round(raw, qd) == got
                     else:
                         ok = round(got, dec) == want
                     found[cid] += 1

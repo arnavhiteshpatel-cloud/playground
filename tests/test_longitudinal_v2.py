@@ -33,6 +33,20 @@ def test_registration_qc_passes_aligned_and_flags_shift():
     assert not bad["pass"]
 
 
+def test_registration_qc_exact_tolerance_shift_passes():
+    """A shift of exactly the tolerance (2 voxels) must pass: the eigen-projection used to produce
+    80.00000000000001 µm for an exact 2-voxel shift, which failed the 80 µm tolerance (F2 v2 false alarms)."""
+    img, _, roi = _scene()
+    noisy = img + np.random.default_rng(1).normal(0, 8, img.shape).astype(np.float32)
+    shifted = ndi.shift(noisy, (0, 2, 0), order=0, mode="nearest")
+    q = registration_qc(img, shifted, exclude=roi, spacing_um=SP)
+    assert q["tolerance_um"] == pytest.approx(80.0)
+    assert max(q["residual_shift_um_blocks"]) == pytest.approx(80.0, abs=1e-6)
+    assert q["pass"]
+    worse = ndi.shift(noisy, (0, 3, 0), order=0, mode="nearest")
+    assert not registration_qc(img, worse, exclude=roi, spacing_um=SP)["pass"]
+
+
 def test_track_granules_recovers_known_shift():
     img, gran, roi = _scene()
     later = ndi.shift(img, (0, 3, -2), order=0, mode="nearest")

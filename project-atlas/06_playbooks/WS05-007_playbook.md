@@ -30,14 +30,14 @@
 
 | # | Earlier claim | Correction (Stage E) | Evidence |
 |---|---|---|---|
-| 1 | Stage D: 1,416 food licences with live pests citywide and 256 in the south-west cluster (13 months) | **942 citywide and 165 in the cluster (12 months)** under a stricter classification. Stage D's pattern counted any comment containing "rodent", such as "make door rodent proof", which describes a gap, not pests. Of 3,182 violation-38 comments, most are gaps and door sweeps. The prospect pool is about one-third smaller than stated | [A, E-WS05007-S001] |
-| 2 | Stage D: "the re-inspection deadline is the urgency" for walk-ins within 72 hours | After a failed inspection with pest activity, the next inspection comes a **median 7 days later** (59% within 7 days, 93% within 14). **79.5% pass** it, and only 8.5% still show pests. The feed posts records about 2–5 days after the inspection. A newcomer usually arrives after the incumbent has fixed the crisis. **Base win rate cut from 0.30 to 0.25** | [A, E-WS05007-S001] |
-| 3 | Stage C/D: Chicago requires a pest logbook, so most establishments already have a vendor | Confirmed, and refined. Inspectors cite a rule that retail food establishments must contract with a licensed Illinois exterminator "at least twice a year". They must also keep a 12-month logbook containing service reports and the company's **IDPH licence number**. Monthly service is a choice driven by pest pressure, audits and fear of citations, not a legal minimum | [A, E-WS05007-S001] (code text not retrievable) |
-| 4 | Stage D: about 2 months from start to first sale | The exam needs the application **received** 15 days ahead, by mail, with a check and a photo [A, E-WS05007-S013]. The last 2026 Westchester sitting is **12/16/2026**, so the application must arrive by **12/1/2026**. No 2027 dates are posted [A, E-WS05007-S002]. Base start delay is now 3 months, so first sales fall in month 5 | [A] |
-| 5 | Stage D model notes cited the technician wage (Chicago MSA median $46,740) as DA-S011 | DA-S011 is the **janitor** wage table. The pest-control-worker wage is C2-S021 [C]. The value was right; the citation was wrong | [C, C2-S021] |
-| 6 | Stage D prospect list: 23 licences "with live pest evidence" | In the 12-month window, four of these had **no pest-activity inspections**: MingHin Cuisine, 88 Marketplace, La Catedral Cafe and Park to Shop (Canal St). Their violation-38 citations were for gaps or logbooks. The CSV is annotated, and 12 repeat offenders from the Stage E list were added (42 rows) | [A, E-WS05007-S001] |
-| 7 | Business licence "renew by Dec 1" | Both are true. Renewal is **due** 1 December and the licence **expires** 31 December [A, E-WS05007-S003]. A licence issued in spring 2027 still expires 12/31/2027 | [A] |
-| 8 | Stage D: base year-3 profit $52k, year-5 $143k, 10-year deployable $375k | Refreshed base: **$61,514 / $101,452 / $177,267**. Year 3 rose only because fewer accounts delay the first technician hire to month 34, so the founder's unpaid labour flatters profit. Years 5 and 10 fell. Section 7 explains why year 3 is a misleading single metric here | Model |
+| 1 | Stage D: 1,416 food licences with live pests citywide, 256 in the south-west cluster | **942 citywide, 165 in the cluster (12 months).** Stage D counted any comment with "rodent", e.g. "make door rodent proof", which is a gap, not pests. The pool is about one-third smaller | [A, E-WS05007-S001] |
+| 2 | Stage D: "the re-inspection deadline is the urgency" | Next inspection comes a **median 7 days** after a failed pest inspection (93% within 14); **79.5% pass**, only 8.5% still show pests. Records post 2–5 days late, so a newcomer usually arrives after the incumbent fixed it. **Base win rate cut 0.30 → 0.25** | [A, E-WS05007-S001] |
+| 3 | Stage C/D: a pest logbook is required, so most sites have a vendor | Refined: inspectors cite a rule requiring a licensed exterminator "at least twice a year" and a 12-month logbook carrying the company's **IDPH licence number**. Monthly service is a choice, not a legal minimum | [A, E-WS05007-S001] |
+| 4 | Stage D: about 2 months to first sale | Exam applications must be **received** 15 days ahead, by mail [A, E-WS05007-S013]. The last 2026 sitting is **12/16/2026** (deadline **12/1/2026**); no 2027 dates are posted [A, E-WS05007-S002]. Base delay is now 3 months; first sales in month 5 | [A] |
+| 5 | Technician wage ($46,740) cited as DA-S011 | DA-S011 is the **janitor** table; the correct source is C2-S021. The value was right | [C, C2-S021] |
+| 6 | 23 prospect licences "with live pest evidence" | Four had **no pest-activity inspections** in the window: MingHin Cuisine, 88 Marketplace, La Catedral Cafe, Park to Shop (Canal St). CSV annotated; 12 repeat offenders added (42 rows) | [A, E-WS05007-S001] |
+| 7 | Business licence "renew by Dec 1" | Renewal is **due** 1 December; the licence **expires** 31 December, even if issued in spring | [A, E-WS05007-S003] |
+| 8 | Base year-3 $52k, year-5 $143k, 10-year deployable $375k | Now **$61,514 / $101,452 / $177,267**. Year 3 rose only because the first technician hire slips to month 34, so unpaid founder labour flatters it (Section 7) | Model |
 
 ---
 
@@ -69,13 +69,7 @@ Costs are mostly the technician's time and the van. Bait, monitors and sealant a
 - **The licence is reachable.** One certified technician (CT) is needed per location. The founder can become that person with a $75 exam that has no experience requirement [A, WS05-S013, E-WS05007-S013]. Uncertified technicians may work under supervision [A, C2-S002].
 - **Small books sell.** Consolidators buy recurring books continuously. Rollins did 26 deals in 2025 [A, C2-S008]. Rentokil paid about $37m for businesses with about $26m of prior-year revenue in H1 2026 [B, E-WS05007-S006].
 
-**Why it is hard:**
-- Almost every buyer already has a vendor.
-- Incumbents fix most crises within a week (correction 2).
-- The legal minimum is cheap: twice a year (correction 3).
-- The idea is fully copyable. Rollins itself calls the market fragmented with "low barriers to entry" [A, C2-S008].
-
-The business is won or lost on the founder's **displacement close rate** and on technician quality.
+**Why it is hard:** almost every buyer already has a vendor; incumbents fix most crises within a week; the legal minimum is twice a year; and the idea is fully copyable (Rollins calls the market fragmented with "low barriers to entry" [A, C2-S008]). The business is won or lost on the founder's **displacement close rate** and technician quality.
 
 ---
 
@@ -141,21 +135,21 @@ Counts are inspections with pest activity in the 12 months to 2026-11-25 [A, E-W
 
 | # | Prospect (licensed premises) | Why it ranks |
 |---|---|---|
-| 1 | Tacos y Tamales El Pollo, 4014 W 26th St | 4 of 9 inspections show pest activity; 7 violation-38 citations. Current control is clearly failing; anchors a 26th St walking route |
-| 2 | Taquizas Don Rafa 2, 3857 W 26th St | 4 pest inspections; latest 2026-10-14; same corridor as #1 |
+| 1 | Tacos y Tamales El Pollo, 4014 W 26th St | 4 of 9 inspections with pests; 7 violation-38 citations; anchors a 26th St route |
+| 2 | Taquizas Don Rafa 2, 3857 W 26th St | 4 pest inspections, latest 2026-10-14; same corridor |
 | 3 | New Grand Chinese Kitchen, 5401 S Wentworth Ave | 4 pest inspections of 9 |
-| 4 | Del Refugio Bakery, 5005 S Ashland Ave | 4 pest inspections. **Amazcakes**, across the street at 5020 S Ashland, has 2: a two-account block |
-| 5 | La Torta Chilanga #2, 5407 S Kedzie Ave | 3 pest inspections; latest 2026-10-06 |
-| 6 | Pete's Fresh Market (4343 S Pulaski; 2526 W Cermak) | Chain stores with 2 pest inspections each. One chain-level decision covers several stores, so the ticket is larger |
-| 7 | Park to Shop Supermarket, 2425 S Wallace St | 2 pest inspections of 4; a two-store owner |
-| 8 | Dongpo Impression, 228 W Cermak Rd | 2 pest inspections; Chinatown density with Yummy Yummy Noodles and Mayflower Seafood (2 each) |
-| 9 | M K Poultry, Inc., 2600 W 51st St | 2 pest inspections; latest 2026-11-12, the most recent repeat; rodent and exclusion need |
-| 10 | La Casa del Pueblo, 1834 S Blue Island Ave | 2 pest inspections; latest 2026-10-21; Pilsen |
-| 11 | Birrieria La Tapatia, 2861 W Cermak Rd | 2 pest inspections; latest 2026-09-08 |
-| 12 | Shiki Buffet, 4717 S Kedzie Ave | 4 violation-38 citations, 1 with pest activity (2026-11-04); high-volume buffet, so twice-monthly service |
-| 13 | The Montclare Supportive Living, 4339 W 18th Pl | Institutional kitchen plus resident units; larger facility-wide IPM ticket |
-| 14 | Winfar Foods, Inc., 3800 W 45th St | Wholesale site with a pest citation; audit-ready programme at $300–600/mo |
-| 15 | El Milagro (2919 S Western; 3120 W 36th; 1927 S Blue Island) | Multi-plant tortilla maker with a wholesale licence; displacement of an audit vendor, so long cycle but high ticket (no citation found) |
+| 4 | Del Refugio Bakery, 5005 S Ashland Ave | 4 pest inspections; **Amazcakes** across the street (2) makes a two-account block |
+| 5 | La Torta Chilanga #2, 5407 S Kedzie Ave | 3 pest inspections, latest 2026-10-06 |
+| 6 | Pete's Fresh Market (4343 S Pulaski; 2526 W Cermak) | 2 each; one chain decision covers several stores |
+| 7 | Park to Shop Supermarket, 2425 S Wallace St | 2 of 4; two-store owner |
+| 8 | Dongpo Impression, 228 W Cermak Rd | 2; Chinatown density with Yummy Yummy Noodles and Mayflower Seafood (2 each) |
+| 9 | M K Poultry, Inc., 2600 W 51st St | 2, latest 2026-11-12 (most recent repeat) |
+| 10 | La Casa del Pueblo, 1834 S Blue Island Ave | 2, latest 2026-10-21 |
+| 11 | Birrieria La Tapatia, 2861 W Cermak Rd | 2, latest 2026-09-08 |
+| 12 | Shiki Buffet, 4717 S Kedzie Ave | 4 violation-38 citations, 1 with pests (2026-11-04); high-volume, twice-monthly service |
+| 13 | The Montclare Supportive Living, 4339 W 18th Pl | Institutional kitchen plus resident units; facility-wide ticket |
+| 14 | Winfar Foods, Inc., 3800 W 45th St | Wholesale site with a pest citation; $300–600/mo audit programme |
+| 15 | El Milagro (2919 S Western; 3120 W 36th; 1927 S Blue Island) | Multi-plant tortilla maker; long displacement cycle, high ticket (no citation found) |
 
 Excluded: national chains, Chicago Public Schools sites (bought centrally), and anything procured through public bids. City IPM work flows through incumbent joint-purchasing contracts. One example: City Colleges' $1.2M award (2026–29) to ABC Humane/Landmark Pest Management under City contract #280182 [A, E-WS05007-S008].
 
@@ -198,7 +192,7 @@ The documented proof point is the client's own public inspection record. The qua
 | "Compliance-minimum" semi-annual plan | **$95 per visit minimum**; steer buyers to monthly | E; see transaction 4 |
 | Landlord or homeowner quarterly plan | $150 initial plus $150 per quarter | D, DA-S021 |
 
-The model blends this to **$105/month per account**: 75% commercial at about $125 and 25% residential at about $45/month equivalent.
+The model blends this to **$105/month per account**: 75% commercial at about $125 and 25% residential at about $45/month equivalent. Nationally, published commercial plans span $35 to $2,000+ a month, and a trade-press average acquisition cost of $63 per customer (2023) sits below the model's blended $120 [D, E-WS05007-S011].
 
 A sensitivity run shows the residential line dilutes results. A commercial-only book (blended price $125, acquisition cost $40) gives base year-3 profit of $88,104 and year-5 of $148,000, if the same number of accounts could be won commercially (E). **Keep residential only if experiment 6 shows a cost per won plan of $150 or less, and only as winter-season filler.**
 
@@ -208,10 +202,10 @@ A sensitivity run shows the residential line dilutes results. A commercial-only 
    - failed re-inspections (13% of re-inspections fail);
    - new or changed licences;
    - other violation-38 records.
-2. **Walk in 7–21 days after the citation**, after the re-inspection. The opener is factual: the site's public record shows a pest citation; the founder offers a free inspection, a written IPM plan and a logbook audit. With repeat offenders the angle is "your current programme isn't preventing citations"; with others it is "be ready before the next canvass".
-3. **Density first.** After each signed account, canvass the same block or corridor: 26th St, Cermak, Archer, Wentworth, Ashland and Kedzie.
-4. **Referrals.** Ask every signed owner for two names. Chinatown and Little Village owner networks are dense.
-5. **Wholesale plants.** Reach QA managers by direct letter and visit from the licence register (Stage D list), with food-safety consultants as referrers. Expect 1–3-month cycles.
+2. **Walk in 7–21 days after the citation**, after the re-inspection, with a factual opener: the public record shows a pest citation; offer a free inspection, a written IPM plan and a logbook audit. Repeat offenders hear "your current programme isn't preventing citations"; others, "be ready before the next canvass".
+3. **Density first:** after each signed account, canvass the same block or corridor (26th St, Cermak, Archer, Wentworth, Ashland, Kedzie).
+4. **Referrals:** two names from every signed owner; Chinatown and Little Village owner networks are dense.
+5. **Wholesale plants:** letter and visit to QA managers from the licence register, with food-safety consultants as referrers; 1–3-month cycles.
 6. **Residential.** Google Business Profile plus a capped Local Services Ads test. Pest LSA leads cost $22–65 (median $38) across 600 accounts [D, E-WS05007-S010]. Booked-job costs run higher, and agency estimates for Midwest leads across all channels are $140–220 [D, E-WS05007-S010].
 7. **No paid commercial lead buying.** No telemarketing lists or automated calling (TCPA risk). All contact is in person, by mail, or by email to a published business address.
 
@@ -321,17 +315,10 @@ E4 measures the first three directly.
 | 10. Exceptions | Pesticide incident, customer complaint, failed audit, misapplication | **Not automatable**; CT and insurer |
 
 ### 5.2 Fulfilment, support, quality assurance and exceptions
-- **Service standard:** a monthly visit window agreed with the site; a 24-hour response to sightings; a written report every visit.
-- **Callback rule:** a free revisit within 48 h. Track callbacks as a share of visits; the target is under 10% and the alarm level is 20%.
-- **Quality assurance:**
-  - Monthly self-audit of three logbooks against the CDPH expectations (reports, licence number, 12 months kept).
-  - Photograph every station map.
-  - Re-check client inspection results weekly (step 9).
-- **Exceptions:**
-  - A pesticide exposure goes to the poison-centre number and the insurer.
-  - Follow the hazardous-incident rules (830.870, not read).
-  - Label instructions always prevail.
-  - No termite work and no warranties at first: Rentokil carries $392M of termite provisions [B, C2-S009].
+- **Service standard:** agreed monthly visit window; 24-hour response to sightings; a written report every visit.
+- **Callbacks:** free revisit within 48 h; target under 10% of visits, alarm at 20%.
+- **Quality assurance:** monthly self-audit of three logbooks against CDPH expectations; photographed station maps; weekly check of client inspections (step 9).
+- **Exceptions:** pesticide exposures go to the poison centre and insurer (830.870, not read); label instructions prevail; no termite work or warranties at first (Rentokil carries $392M of termite provisions [B, C2-S009]).
 
 ### 5.3 Equipment, storage and vehicle (legal minimums)
 - **Storage [A, E-WS05007-S012].** A dedicated, locked, signed, ventilated-to-outside, lit area. It needs a fire extinguisher, nearby washing facilities, absorbent, emergency information and a label file.
@@ -369,20 +356,10 @@ E4 measures the first three directly.
 | Employer rules (from first hire) | Chicago minimum wage $17.05 (July 2026); workers' comp; Chicago Paid Leave | B, DA-S013 |
 
 ### 5.6 Financial administration
-- A separate LLC bank account.
-- A monthly close: profit and loss by account and route; receivables ageing.
-- Quarterly estimated taxes (the model uses a 30% blended rate).
-- An annual IDPH renewal calendar (1 December).
-- Capitalise devices installed at plants as job cost.
-- Collect a card on file for every restaurant.
+Separate LLC bank account; monthly close (profit by account and route, receivables ageing); quarterly estimated taxes (model: 30%); IDPH renewal calendar (1 December); a card on file for every restaurant.
 
 ### 5.7 After December 2026 (end of heavy AI access)
-**Nothing in the operation depends on AI.**
-- The prospect pull is a plain script.
-- Reports and routing live in the field app.
-- Translations and proposal drafts need an ordinary $20–40/month subscription.
-
-At 3× AI and software cost, base year-3 profit is $60,495, against $61,514. Before 5 December, Claude should finish the tasks in Section 10.1.
+**Nothing in the operation depends on AI.** The prospect pull is a plain script, reports and routing live in the field app, and translations and proposals need an ordinary $20–40/month subscription. At 3× AI and software cost, base year-3 profit is $60,495 against $61,514. Claude should finish the Section 10.1 tasks before 5 December.
 
 ---
 
@@ -410,10 +387,7 @@ At 3× AI and software cost, base year-3 profit is $60,495, against $61,514. Bef
 **Why the sequence matters.** In the base case **the founder is CT, salesperson and office for five years.** A rep hired before 300 accounts destroys profit. In Stage D, a salaried rep hired at month 20 cut base year-3 profit to about $4k. The "hires 30% sooner" stress takes base year-3 profit to $7,090.
 
 ### 6.4 Capacity limits
-- **Founder:** about 110 serviced accounts while also selling 12–15 h a week (about 50 h a week in total, E).
-- **Technician:** about 190 blended accounts, or 8–12 commercial stops a day (E).
-- **Licensing:** one licensed location per CT [A, C2-S003]. One location can, however, serve all of Chicago: the licence is per business location, not per territory.
-- **Route time:** drive time is the hidden limit, which is why the strategy stays inside five ZIPs until about 150 accounts.
+Founder: about 110 serviced accounts while selling 12–15 h a week (about 50 h a week, E). Technician: about 190 blended accounts, or 8–12 commercial stops a day (E). One licensed location per CT [A, C2-S003], but one location can serve all of Chicago (the licence is per location, not territory). Drive time is the hidden limit, hence five ZIPs until about 150 accounts.
 
 ### 6.5 Geographic expansion
 1. Fill the south-west cluster (60632, 60623 and 60616 first).
@@ -431,10 +405,7 @@ At 3× AI and software cost, base year-3 profit is $60,495, against $61,514. Bef
 | **OSFM Class A fire-extinguisher licence** (second service) | Licence about $1,520: NAFED exam $320, distributor licence $900 for 3 years, employee licence $300 [A, WS05-S001/S002; B, WS05-S025]. Needs **$1M liability insurance** [A, DA-S003] | **Trigger: about 150 commercial accounts** (base month 45; optimistic month 22) |
 | Kitchen-hood suppression inspections (OSFM Class B) | Public Illinois prices $185–240 per inspection (Fox Valley) and $250–500 (JCI), semi-annual [A, DA-S005]. Class B is $1,500 [A, WS05-S001] plus manufacturer training, which is gated: Amerex wants "proven experience" [B, DA-S018] | Year 3+, only if a manufacturer will train |
 
-**How the extinguisher line works.** Tag and inspect units, replace them, and subcontract recharges and hydrotests at first, so no shop is needed [WS05-001 deep dive]. A shared account adds about $155 a year in contribution.
-- At 40% uptake across 150 commercial accounts, that is about **$9k a year of contribution** (E), before about $1–3k a year of extra insurance and licence cost.
-- It is a retention and visit-density add-on, not a growth engine. The standalone WS05-001 base model earns only $34,321 in year 3.
-- The OSFM Act's scheduled 1 January 2028 repeal is unresolved. The 2022 review recommended continuation [A, DA-S002], and no 2026 extension bill was found. Decide at the 150-account point.
+**How the extinguisher line works.** Tag, inspect and replace units; subcontract recharges and hydrotests at first, so no shop is needed [WS05-001 deep dive]. At about $155 a year of contribution per shared account and 40% uptake across 150 commercial accounts, it adds about **$9k a year** (E), before $1–3k a year of extra insurance and licence cost. It is a retention add-on, not a growth engine (standalone WS05-001 base year 3: $34,321). The OSFM Act's 1 January 2028 repeal date is unresolved; the 2022 review recommended continuation [A, DA-S002] and no 2026 extension bill was found. Decide at 150 accounts.
 
 ### 6.7 Vertical integration (incremental return logic)
 - **Own storage and warehouse:** no. Storage is a compliance cost, not a margin source.
@@ -600,14 +571,7 @@ Base 5-year retained cash is $2,753.
 | Founder capacity −40% | $35,853 | $62,279 | $85,066 | $34,034 |
 | Growth takes twice as long | **$18,147** | $59,509 | $124,178 | $20,785 |
 
-**What the stresses show:**
-- **Survivable:** cash and AI shocks.
-- **Dangerous:**
-  - Hiring early.
-  - Slow growth: the only base stress that pushes peak funding above $100k ($124,178).
-  - Competitor price pressure, which eliminates deployable surplus (10-year $373).
-  - A win rate at the conservative level.
-- Recession resilience is real. Pest demand is code-driven, and in that stress year-5 profit is still $81,663.
+**Survivable:** cash and AI shocks; recession (code-driven demand keeps year-5 profit at $81,663). **Dangerous:** hiring early; slow growth (the only stress pushing peak funding above $100k, to $124,178); competitor price pressure (10-year deployable $373); a conservative-level win rate.
 
 ### 7.7 Capital accumulation to year 10 and owner distributions
 
@@ -672,20 +636,7 @@ Both are detectable within about 4 months of selling (E4 and E7). That is why th
 
 **Is it a strong first company for a diversified portfolio?**
 
-Points in favour:
-- Small, staged capital at risk.
-- A fast, cheap, paid test.
-- Code-driven recurring demand.
-- Regulated but obtainable entry.
-- A real exit market.
-- AI-independent operations.
-- The founder learns route operations, hiring and density economics, which transfer to other service roll-ups.
-
-Points against:
-- Base economics look like a job, not an asset, for 5+ years.
-- The business is founder-dependent (CT and seller).
-- The wedge is copyable.
-- Ceiling: two-thirds of US pest firms stay under $500k in revenue [C, C2-S012].
+**For:** small, staged capital at risk; a fast, cheap, paid test; code-driven recurring demand; obtainable regulated entry; a real exit market; AI-independent operations; and route, hiring and density skills that transfer to other service roll-ups. **Against:** base economics look like a job for 5+ years; founder-dependent (CT and seller); copyable wedge; two-thirds of US pest firms stay under $500k revenue [C, C2-S012].
 
 **It is a strong first company only if E4 lands at or above the optimistic conversion** (about 15% per conversation, about 9 wins a month at full pace). At base conversion, it is a respectable but slow first asset. Compare it against the other finalists' refreshed models before committing to a 12-month build.
 
@@ -703,14 +654,7 @@ Points against:
 3. Answer the founder facts: age, credit, vehicle, weekly hours, languages, location (UNRESOLVED_QUESTIONS F1–F7).
 4. Run **10 of the 30 E1 interviews** with the questionnaire. Research only: no offers.
 
-**What Claude prepares before 5 December** (from the materials file; all drafts):
-- The SoQL data-pull and ranking script specification (materials, Section J).
-- Walk lists for the 26th St, Cermak/Archer and Wentworth corridors.
-- The interview questionnaire and a tally sheet.
-- Spanish and Chinese draft leave-behinds, flagged for native-speaker review.
-- A 100-question practice quiz drawn from the free IDPH manual.
-- The insurance and supplier question lists.
-- The KPI sheet.
+**What Claude prepares before 5 December** (all drafts): the SoQL data-pull and ranking script specification (materials, Section J); walk lists for the 26th St, Cermak/Archer and Wentworth corridors; the interview questionnaire and tally sheet; Spanish and Chinese leave-behind drafts for native-speaker review; a 100-question practice quiz from the free IDPH manual; insurance and supplier question lists; the KPI sheet.
 
 **Spend this week:** about $100 or less. **Evidence required:** 10 completed interview tallies.
 
@@ -743,13 +687,8 @@ Points against:
 
 ### 10.3 First 90 days (to about end of February 2027)
 1. Sit the January exam.
-2. On passing:
-   - form the LLC;
-   - bind insurance (the insurer files the certificate);
-   - mail the business licence application with $250.
-3. Set up storage and fit the vehicle.
-4. Open supplier accounts (licence number required).
-5. Pre-book free inspections with the E1 owners who agreed.
+2. On passing: form the LLC, bind insurance (the insurer files the certificate), and mail the business licence application with $250.
+3. Set up storage, fit the vehicle, open supplier accounts (licence number required), and pre-book free inspections with the E1 owners who agreed.
 
 **Conditions to accept a first paid order:**
 - The IDPH business licence is issued and the certificate of insurance is on file.

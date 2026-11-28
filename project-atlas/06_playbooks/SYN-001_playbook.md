@@ -24,7 +24,7 @@ DRAFT.*
 >
 > A newly licensed Illinois agency working through wholesalers alone could compete for only about 39% of the
 > business that changes hands each year [A, E-SYN001-S003]. Even through an association, Progressive demands 2–3
-> years of agency experience [B, E-SYN001-S005]. The workable route is for the founder to be licensed as a
+> years of agency experience (a Texas association's published terms) [B, E-SYN001-S005]. The workable route is for the founder to be licensed as a
 > **sub-producer** inside an established trucking agency that already holds those appointments. The founder gives
 > up about half the commission. Whether such an agency exists and will sign written terms is the single cheapest
 > decisive test (§4).
@@ -116,9 +116,10 @@ median carrier runs 6 trucks; the mean is 7.9 trucks and 7.8 drivers [A, DC-S001
 **Who we target:** established (registered 2020 or earlier) for-hire carriers with 3–20 PU in Cook, DuPage and Will
 counties first; 2,580 of the 3,166 are there [A, E-SYN001-S001].
 
-**Where we start:** the O'Hare freight cluster of Bensenville, Elk Grove Village, Itasca and Addison. Those towns hold
-four of the top-15 named prospects (Partner Carriers, OVN, Lion Logistics, Area Wide), so a founder can walk between
-yards in a day.
+**Where we start:** the O'Hare freight cluster of Bensenville, Elk Grove Village, Itasca, Addison and Northlake. The
+top-15 list includes four carriers there: Partner Carriers, OVN, Lion Logistics and Champion/ICAT. The full list adds
+Area Wide, Nationwide Logistics, M&M Direct Express and Swift Global Intermodal. A founder can walk between these yards
+in a day.
 
 **Why established carriers:**
 - **They survive.** Among carriers registered before 2021 that are now inactive, authority revocations ran
@@ -141,7 +142,7 @@ The channel classification is our judgement (E, ±3 pts).
 
 | Path | Documented terms | Evidence | What a start-up can quote |
 |---|---|---|---|
-| **A. Direct carrier appointment** (Progressive, Great West, Northland, Sentry, Acuity, Berkley) | Progressive access through an association aggregator still needs a Progressive-approved subcode, 2–3 years of agency ownership and P&C experience, $1M E&O, a storefront and monthly minimum production. Commission schedules are unpublished. Other carriers' criteria are MISSING | B, E-SYN001-S005; D, E-SYN001-S016 | ~0% in year 1 |
+| **A. Direct carrier appointment** (Progressive, Great West, Northland, Sentry, Acuity, Berkley) | Progressive access through a (Texas) association aggregator still needs a Progressive-approved subcode, 2–3 years of agency ownership and P&C experience, $1M E&O, a storefront and monthly minimum production. Commission schedules are unpublished. Other carriers' criteria are MISSING | B, E-SYN001-S005; D, E-SYN001-S016 | ~0% in year 1 |
 | **B. Aggregator / network** (SIAA, Smart Choice) | SIAA promises "carriers from day one" and start-up E&O, but fees and splits are unpublished [B, DC-S008]. Smart Choice claims no fees and 24-hour Express appointments [B, DC-S009]. Its example shows it taking 4% on Level I carriers against 20% for a generic network [D, E-SYN001-S008]. Which trucking carriers are open to an Illinois start-up is MISSING. Anecdotes mention joining, monthly and departure fees (one 25%) [D, WS02-S015] | B/D | Unknown: the decisive question |
 | **C. Wholesaler / general agent (GA)** (Amwins, XPT, Canal GAs, Union General-type) | A trucking GA's agreement requires $1M E&O and a trucking questionnaire (years in business, trucking premium volume, existing GAs). Commission is "as approved" by the GA. The producer must pay premiums within 30 days of billing **whether or not collected**, and premiums are held in trust; the producer owns its expirations [B, E-SYN001-S007]. Amwins' 1–25-unit ANTU program is sold "through a select group of retail brokers" and needs 2 years on the current DOT [B, E-SYN001-S006]. Canal sells only through GAs [B, DC-S011]. XPT has an appointment form [B, DC-S012] | B | Specialty paper, ≈39% of switch flow |
 | **D. MGA online appointment** (Cover Whale) | Appointment in about 2 days. Auto liability for 1–25 PU in 41 states, with dashcam or ELD required. Commission is called "competitive" but not published. Illinois is not confirmed [B, E-SYN001-S009, DC-S010] | B | Part of the specialty share, if Illinois is open |
@@ -200,8 +201,8 @@ How to read the table:
 | 14 | Coach Xpress (Lemont) | 15/15, 2012 | Berkley (10/2025) | 2 | 15 drivers |
 | 15 | Gordon Driveaway (Lynwood) | 16/16, 1985, hazmat | Canal (11/2025) | 2 | Canal is reached through GAs; long-tenured |
 
-**What the 33 named prospects show.** Only about 8 of the 32 with filings are on specialty paper. Twenty-four are with
-standard appointment carriers, which confirms §2.2 at the prospect level.
+**What the 33 named prospects show.** Of the 32 with a filing, 7 are on specialty paper, 24 are with standard
+appointment carriers and 1 is with a captive writer (Country). That confirms §2.2 at the prospect level.
 
 ### 2.5 Named competitors
 | Competitor | Profile | Evidence |
@@ -484,8 +485,8 @@ producer can be an employee [A, DC-S006].
 - That reaches about $430 by year 5.
 
 **Hiring triggers.**
-- Stage D forced a producer hire at month 24 regardless of book size. That alone made its conservative case lose
-  $604k.
+- Stage D forced a producer hire at month 24 regardless of book size. That alone drove its conservative case to
+  $603,950 of peak funding.
 - **Correction:** the producer is hired at 60 clients.
 - The CSR moves to 150 clients because the host agency services policies.
 - Coordinator capacity is set at 60 clients, consistent with 2.7 hours per client-month. Stage D's 70 contradicted
@@ -551,7 +552,7 @@ upper tail.
 - **Base:** 20 qualified conversations a month × 40% to proposal × 25% won ≈ 2 new clients a month at full pace,
   with 1.5% monthly churn and attach maturing to ~28%.
 - **Conservative:** 12 conversations, 30% to proposal, 15% won, $236 ARPC, 2.2% churn and wholesale-only insurance. It
-  never covers fixed costs of about $3.3k a month plus the draw. It is a stop case.
+  never covers fixed costs of about $4.2k a month (overhead plus fixed marketing) plus the draw. It is a stop case.
 - **Optimistic:** 25 conversations, 45% to proposal, 30% won, $375 ARPC rising 10% a year, 1.1% churn. It needs 282
   clients by year 5, which is 8.9% of the niche. Do not plan on it.
 
@@ -638,7 +639,7 @@ fund other ventures in the base case.
 | **$0–500** | FMCSA data ranking (done); materials; 12 market-access conversations (mileage); domain and email; letter templates | None | Founder time only |
 | **$500–2k** | Pre-licensing course, exams, producer licence (~$700); LLC (~$150, E); first 300 letters (~$240); sample MVRs | ≥2 host or aggregator parties willing to put terms in writing; ≥10 carriers accept a free audit | Licensing fees, if no host signs |
 | **$2–5k** | Setup kit ($4,500 base: computer and scanner, website, attorney review of service agreement, POA and BAA-style data terms); compliance-services E&O | Written host term sheet meeting V1; ≥3 paid pilots | E&O and legal fees, if pilots stall |
-| **$5–10k** | Months 1–6 of fixed costs (~$2.6–3.4k/month) | ≥5 paying clients; ≥1 renewal submitted through the host | Burn, if conversion is <15% of audits |
+| **$5–10k** | Months 1–6 of fixed costs (~$2.6–3.5k/month) | ≥5 paying clients; ≥1 renewal submitted through the host | Burn, if conversion is <15% of audits |
 | **$10–25k** | Run-rate losses through month 12 (base year-1 operating profit −$29,694) | ≥10 clients by month 9; quote permission ≥30%; ≥2 binds | Slow ramp; host underquotes |
 | **$25–50k** | Founder draw from month 13 until operating profit covers it | ≥20 clients and break-even operating profit by month 15 | Cash crunch, if attach stays <10% |
 | **$50–100k** | First coordinator (35 clients), producer (60 clients), working capital; base peak $69,328 | ≥35 retained clients; churn ≤1.5%/month for 6 months; attach ≥15%; SOPs written | Freight-recession churn; E&O claim; host terminates the agreement and keeps the book |

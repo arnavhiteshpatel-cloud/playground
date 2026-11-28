@@ -29,7 +29,7 @@
   "founder_leads_per_month": {
    "conservative": 8,
    "base": 12,
-   "optimistic": 18
+   "optimistic": 15
   },
   "founder_leads_per_month__evidence": "E",
   "founder_leads_per_month__source": "Founder/finance conversations at $3-30M brands selling through UNFI/KeHE/Walmart (25 named Midwest prospects, DG-S059/S061; national outreach possible) plus broker/3PL/fractional-CFO referrals; the qualified pool is limited because sub-$5M brands are uneconomic (see transactions). Estimate.",
@@ -43,7 +43,7 @@
   "proposal_to_win_pct": {
    "conservative": 0.12,
    "base": 0.2,
-   "optimistic": 0.3
+   "optimistic": 0.28
   },
   "proposal_to_win_pct__evidence": "E",
   "proposal_to_win_pct__source": "Review -> signed contingency engagement. Lowered vs a typical B2B service because SPS offers free audits [D, C9-S010], a UNFI service advertises $0 fees [D, DG-S050] and Glimpse targets $1-30M brands [D, DG-S056]. Estimate.",

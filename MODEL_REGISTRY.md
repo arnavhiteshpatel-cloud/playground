@@ -15,8 +15,44 @@ records the SHA-256 that `osteoquant.ml.train.load_model` verifies before loadin
 | `adapt_k3_r1` | 3-class + background | synthetic | commercial_eligible | 3 | 300 | 101 | research | `f22800220557` |
 | `adapt_k5_r0` | 3-class + background | synthetic | commercial_eligible | 5 | 300 | 100 | research | `715f5f3e6af0` |
 | `adapt_k5_r1` | 3-class + background | synthetic | commercial_eligible | 5 | 300 | 101 | research | `f4539c83a920` |
+| `s2v2_dr_synth_k1_s0` | 2-class | public-real, synthetic | commercial_eligible | 1 | 300 | 0 | research | `7f9d50a5654b` |
+| `s2v2_dr_synth_k1_s1` | 2-class | public-real, synthetic | commercial_eligible | 1 | 300 | 1 | research | `d6433f46064a` |
+| `s2v2_dr_synth_k1_s2` | 2-class | public-real, synthetic | commercial_eligible | 1 | 300 | 2 | research | `8a74da75f4ac` |
+| `s2v2_dr_synth_k3_s0` | 2-class | public-real, synthetic | commercial_eligible | 3 | 300 | 0 | research | `333c921b652e` |
+| `s2v2_dr_synth_k3_s1` | 2-class | public-real, synthetic | commercial_eligible | 3 | 300 | 1 | research | `4a354db526d7` |
+| `s2v2_dr_synth_k3_s2` | 2-class | public-real, synthetic | commercial_eligible | 3 | 300 | 2 | research | `42dd80948b3a` |
+| `s2v2_gen0_synth_k1_s0` | 3-class + background | public-real, synthetic | commercial_eligible | 1 | 300 | 0 | research | `91ae36ee542e` |
+| `s2v2_gen0_synth_k1_s1` | 3-class + background | public-real, synthetic | commercial_eligible | 1 | 300 | 1 | research | `7f3b71cf36d2` |
+| `s2v2_gen0_synth_k1_s2` | 3-class + background | public-real, synthetic | commercial_eligible | 1 | 300 | 2 | research | `4348f4d5ff82` |
+| `s2v2_gen0_synth_k3_s0` | 3-class + background | public-real, synthetic | commercial_eligible | 3 | 300 | 0 | research | `1a813d50b683` |
+| `s2v2_gen0_synth_k3_s1` | 3-class + background | public-real, synthetic | commercial_eligible | 3 | 300 | 1 | research | `1501a105906a` |
+| `s2v2_gen0_synth_k3_s2` | 3-class + background | public-real, synthetic | commercial_eligible | 3 | 300 | 2 | research | `1a1c1e5356f8` |
+| `s2v2_scratch_lr1e3_k1_s0` | 2-class | public-real | commercial_eligible | 1 | 300 | 0 | research | `12714e805238` |
+| `s2v2_scratch_lr1e3_k1_s1` | 2-class | public-real | commercial_eligible | 1 | 300 | 1 | research | `91f67c4d1b0e` |
+| `s2v2_scratch_lr1e3_k1_s2` | 2-class | public-real | commercial_eligible | 1 | 300 | 2 | research | `b33da6a36c42` |
+| `s2v2_scratch_lr1e3_k3_s0` | 2-class | public-real | commercial_eligible | 3 | 300 | 0 | research | `79bc48751441` |
+| `s2v2_scratch_lr1e3_k3_s1` | 2-class | public-real | commercial_eligible | 3 | 300 | 1 | research | `28a37f23ed96` |
+| `s2v2_scratch_lr1e3_k3_s2` | 2-class | public-real | commercial_eligible | 3 | 300 | 2 | research | `47d8f2ef834c` |
+| `s2v2_scratch_lr3e3_k1_s0` | 2-class | public-real | commercial_eligible | 1 | 300 | 0 | research | `4e7ed92e9a42` |
+| `s2v2_scratch_lr3e3_k1_s1` | 2-class | public-real | commercial_eligible | 1 | 300 | 1 | research | `9c8e2499aab4` |
+| `s2v2_scratch_lr3e3_k1_s2` | 2-class | public-real | commercial_eligible | 1 | 300 | 2 | research | `a8acb00d51bf` |
+| `s2v2_scratch_lr3e3_k3_s0` | 2-class | public-real | commercial_eligible | 3 | 300 | 0 | research | `38503d58bd29` |
+| `s2v2_scratch_lr3e3_k3_s1` | 2-class | public-real | commercial_eligible | 3 | 300 | 1 | research | `9b719fdc281c` |
+| `s2v2_scratch_lr3e3_k3_s2` | 2-class | public-real | commercial_eligible | 3 | 300 | 2 | research | `d06fa7ad3194` |
+| `s3_ssl_k1_s0` | 2-class | public-real | commercial_eligible | 1 | 300 | 0 | research | `72ab0420775f` |
+| `s3_ssl_k1_s1` | 2-class | public-real | commercial_eligible | 1 | 300 | 1 | research | `4801058db9c1` |
+| `s3_ssl_k1_s2` | 2-class | public-real | commercial_eligible | 1 | 300 | 2 | research | `375c7cb6c6a2` |
+| `s3_ssl_k3_s0` | 2-class | public-real | commercial_eligible | 3 | 300 | 0 | research | `3039f5d7796f` |
+| `s3_ssl_k3_s1` | 2-class | public-real | commercial_eligible | 3 | 300 | 1 | research | `bfdc0954d296` |
+| `s3_ssl_k3_s2` | 2-class | public-real | commercial_eligible | 3 | 300 | 2 | research | `aab7594bc6c0` |
 | `unet_ctx_s0` | 3-class + background | synthetic | commercial_eligible | 48 | 1500 | 0 | research | `78a6927964eb` |
 | `unet_dog_bone_real` | 2-class | public-real | commercial_eligible | 10 | 800 | 0 | research | `2f73f5a2371d` |
+| `unet_dr2_mineral_s0` | 2-class | synthetic | commercial_eligible | 0 | 1500 | 0 | research | `316854142ad7` |
 | `unet_noctx_s0` | 3-class + background | synthetic | commercial_eligible | 48 | 1500 | 0 | research | `28f0e4f9b95c` |
+| `unet_noctx_s1` | 3-class + background | synthetic | commercial_eligible | 48 | 1500 | 1 | research | `a0f57e52a497` |
+| `unet_noctx_s2` | 3-class + background | synthetic | commercial_eligible | 48 | 1500 | 2 | research | `fbce91e0ecbc` |
+| `unet_noctx_s3` | 3-class + background | synthetic | commercial_eligible | 48 | 1500 | 3 | research | `86ce7a7079fe` |
+| `unet_noctx_s4` | 3-class + background | synthetic | commercial_eligible | 48 | 1500 | 4 | research | `119f7499b6dd` |
+| `unet_ssl_real_s0` | 2-class | public-real | commercial_eligible | 10 | 800 | 0 | research | `7f2986381fd3` |
 | `unet_synth_ft_dog_k1` | 3-class + background | public-real, synthetic | commercial_eligible | 1 | 300 | 7 | research | `2cf92340c66f` |
 | `unet_synth_ft_dog_k3` | 3-class + background | public-real, synthetic | commercial_eligible | 3 | 300 | 7 | research | `651add372dbf` |

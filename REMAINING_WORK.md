@@ -1,29 +1,37 @@
-# Prioritised Remaining-Work Checklist
+# Prioritised Remaining-Work Checklist (end of Generation 2, 28 November 2026)
 
-Priority: P0 = blocks the 90-day gate (≈25 Feb 2027); P1 = needed before first paid study; P2 = before GLP/scale.
-Owner: F = founder; C = collaborator/advisor; E = engineering (founder + AI-assisted); X = external professional.
+Priority: **P0** = needed before any outreach, pilot or distribution; **P1** = before a first paid study or Gate 2;
+**P2** = before GLP-adjacent use or scale. Owner: **F** = founder; **C** = collaborator or advisor; **E** = engineering;
+**X** = external professional. Nothing below has been started on the founder's behalf: no email sent, nothing bought,
+signed, submitted or distributed. Decision numbers refer to `FOUNDER_DECISIONS.md`.
 
 | # | Pri | Item | Owner | Needs | Done when |
 |---|---|---|---|---|---|
-| 1 | P0 | File OTM invention/ownership disclosure; book Landuyt IP Clinic; get written answer on Beckman-equipment use | F | 1–2 meetings | written ownership position |
-| 2 | P0 | 15 discovery interviews (business/INTERVIEW_GUIDE.md) with price ladder; code in interview_log_template.csv | F | outreach (business/PROSPECTS.md top 15) | ≥15 coded interviews; go/pivot decision |
-| 3 | P0 | Beckman Versa 630 access: confirm billing category, training, current rates (2021 rates may be stale) | F | email itg-ms@beckman.illinois.edu | scheduled training + quote |
-| 4 | P0 | Imaging scientist signs the 14 decisions in validation/DECISIONS_FOR_IMAGING_SCIENTIST.md | C | advisor (e.g. M. Kersh) | signed protocol |
-| 5 | P0 | Pilot phantom scans (3 materials, 1 voxel size) → run `osteoquant analyze` + separability scripts on real scans | F+C | materials (BOM), scanner time | first real graft/new-bone separability result |
-| 6 | P0 | Cozad registration (Dec 1 2026 – Feb 2 2027 window [CC]); adapt grants/COZAD_APPLICATION_PACKAGE.md in own words | F | — | submitted |
-| 7 | P0 | NSF Project Pitch (needs eligible PI plan; see grants/NSF_vs_NIH_ELIGIBILITY.md) | F | PI decision | pitch submitted or NIH STTR path chosen |
-| 8 | P1 | Retrospective pilot with one company/CRO on 20–30 scans under a DPA (business/templates/PILOT_PROPOSAL.md) | F | partner | ICC, Bland–Altman, time per scan; LOI |
-| 9 | P1 | Timed reviewer study to replace the assumed 20 s/90 s effort constants (Experiment M) | F+C | 2–3 analysts | measured hands-on time |
-| 10 | P1 | GPU training: nnU-Net (or current U-Net on GPU) once real labelled scans exist; port device to Apple `mps` | E | personal/company cloud GPU (not NCSA) | model trained on real data with specimen-level CV |
-| 11 | P1 | Address independent security/scientific review findings (docs/security/*_REVIEW.md) | E | — | all high/critical closed, tests added |
-| 12 | P1 | Close traceability gaps (45 GAP, 24 PARTIAL of 81 in docs/quality/traceability_matrix.csv) — prioritise review state machine, signature invalidation on change, report self-approval, retention locks, TLS | E | — | matrix ≥ PARTIAL everywhere |
-| 13 | P1 | Histology: integrate Cellpose/StarDist or QuPath export; fix Macenko normalisation (degrades synthetic bone quantification) | E | — | nuclei F1 ≥0.6 on NuInsSeg held-out |
-| 14 | P1 | Download blocked datasets on a normal network: BONe subset (Dryad), MarrowQuant H&E (EBI) → rerun H/I and N | F | browser | experiments rerun |
-| 15 | P1 | Incorporate (after OTM); MSA, DPA, quality-agreement templates reviewed by counsel (business/templates/LEGAL_REVIEW_TERMS.md) | F+X | counsel | signed templates |
-| 16 | P1 | Device-status opinion for any human-clinical extension; keep product research-only meanwhile | X | counsel/513(g) | written opinion |
-| 17 | P2 | Fractional CSV consultant scoping quote (A6); IQ/OQ execution on a locked release | X | $ | executed IQ/OQ |
-| 18 | P2 | Multi-scanner benchmark (Bruker, Scanco, Zeiss) with collaborators; cross-scanner adaptation on real data | C | data-sharing agreements | multi-site paper |
-| 19 | P2 | Cone-beam CT simulation (ASTRA/TIGRE on GPU) to add cone-beam artefacts to the phantom library | E | GPU | Mode C simulator |
-| 20 | P2 | Deformable longitudinal registration validation (biological deformation) | E+C | longitudinal in vivo data | TRE under deformation |
-| 21 | P2 | PostgreSQL + HTTPS deployment for multi-user lab installs | E | — | deployment guide executed |
-| 22 | P1 | Founder rewrites grant drafts in own words (NIH AI-authorship policy) | F | — | drafts rewritten |
+| 1 | P0 | IP questions with counsel: public disclosures of 27–28 Nov start US and grace-period clocks; non-US filings; licence of the repository; whether new inventive work stays public (#1, #2, #17, #19) | F+X | counsel | written decisions with dates |
+| 2 | P0 | OTM ownership determination (lab history, appointments, resources used) (#4) | F | `outreach/IP_AND_OTM_QUESTIONS.md` | written determination |
+| 3 | P0 | Personal data in the public repository (named academics, contact details) and whether to rewrite history (#3) | F | — | files kept or removed; history decision recorded |
+| 4 | P0 | Positioning after S1H3/S1H4: the shipped advisor supports almost nothing on the application's material paths (residual graft only for HA; nothing with Unspecified). Decide whether to lead with material characterisation and feasibility checks (#20) | F | `EXPERIMENT_REGISTRY.md` S1H4 | positioning recorded; website, decks and pricing aligned |
+| 5 | P0 | Ten discovery conversations by segment (`business/INTERVIEW_GUIDE.md`; drafts in `outreach/`, unsent) | F | outreach approval | ≥10 coded interviews; price-gate input (around 25 Feb 2027) |
+| 6 | P0 | Physical phantom study, stage B (`validation/`): imaging scientist signs the protocol decisions; materials per BOM; scanner access | F+C | approval, collaborator, budget | first real graft/new-bone separability data |
+| 7 | P0 | Human expert review of the advisor rules and statistics (imaging scientist, bone biologist, biostatistician) (#24) | F+X | budget or volunteers | written reviews; responses recorded |
+| 8 | P1 | Windows and macOS builds: decide on running the `desktop-build` workflow (public, unsigned artefacts) (#21); then test on own machines | F | decision | builds pass their self-tests on both OS |
+| 9 | P1 | LGPL-2.1 written source offer: name the offeror once incorporated, or ship source archives with each build (#22); counsel on the EULA | F+X | entity, counsel | notice names an offeror; B-016 closed |
+| 10 | P1 | Advisor 1.4.4 (one version, then a new pre-registered held-out test S1H5): blur treated as unmeasured at high noise (DF-041, B1-blur); upper bound on the graft share in the new-bone budget (C3-SCI-17); enforce `compatible_with` for measured references (C3-SCI-07); species/kinetics for the ≤4-week rule (C2-SCI-11) | E | — | S1H5 registered before running, with ≥36 structures carrying support so the 0.10 bound can be demonstrated |
+| 11 | P1 | ML campaign completion: S2 parts b/c, S3, U1, O2 (running on CPU at the end of Generation 2) and their registry rows | E | CPU time | registry, scorecard (B2, B3, B6, B7, B11) and handoff §3a filled from result files |
+| 12 | P1 | Retrospective pilot on partner scans only after incorporation, a DPA and Gate 1 (#18) | F | partner, DPA | agreed protocol; no customer data before then |
+| 13 | P1 | Study tables inside the audit hash chain, or per-row content hashes in audit details (dossier D-3) | E | — | direct database edits detectable |
+| 14 | P1 | Traceability gaps: 54 verified / 42 partial / 33 gap FS rows (`docs/quality/traceability_matrix.csv`) | E | — | no GAP rows for URS items in the pilot scope |
+| 15 | P1 | Remaining low review items: report appendix for technical refusal reasons; second-instance detection; desktop backup/label export; SAP object; offline test with the network blocked; ONNX output-channel check (ARC-06); Windows/macOS owner mapping in the bundle inventory (C3-PRD-10) | E | — | each closed with a test or recorded as accepted |
+| 16 | P1 | Timed reviewer study to replace assumed effort constants (Experiment M) | F+C | 2–3 analysts | measured hands-on time |
+| 17 | P1 | Grant and manuscript drafts rewritten in the founder's own words; AI-assistance disclosure per venue (#23) | F | — | drafts rewritten; submission decisions recorded |
+| 18 | P1 | Cozad: registration deadline 2 Feb 2027; finals in April (date not confirmed) | F | #4 first | registered or declined |
+| 19 | P2 | Release and version policy: tagged releases, semantic versions, "shipped" only for a rebuilt, self-tested bundle whose `build-info.json` records commit and advisor version (#25) | F+E | — | first tagged release |
+| 20 | P2 | IQ/OQ execution on a locked release with a quality consultant | X | budget | executed protocols |
+| 21 | P2 | Multi-scanner benchmark with collaborators; cross-scanner checks of the advisor's material profiles | C | data-sharing agreements | multi-site data |
+| 22 | P2 | Histology integration (nuclei model or QuPath export); fix Macenko normalisation | E | — | nuclei F1 ≥0.6 on a held-out set |
+
+Generation-1 items that are done or superseded: security review findings S-01…S-21 (fixed, `docs/security/REVIEW_RESPONSE.md`);
+the Generation-2 security review (`docs/security/SECURITY_REVIEW_GEN2.md`); three review cycles across twelve
+perspectives (automated reviewer agents, `REVIEW_REGISTRY.md`); the 90-day single gate (replaced by a price gate and a
+later evidence gate, `business/PRICING_VALIDATION_PLAN.md`); PostgreSQL/HTTPS deployment (the product is now an
+offline desktop application).

@@ -458,9 +458,15 @@ def test_validation_records_hostile_key_id_and_corrupt_file(tmp_path, monkeypatc
     bind_support_to_method(sup, {"method": "onnx:m", "validation_record": "qualifying validation record",
                                  "validation_ok": ok})
     assert {d["status"] for d in sup["endpoints"].values()} == {"not_supported"}
-    sup2 = {"endpoints": {"residual_graft_volume": {"status": "supported", "reason": ""}}}
+    sup2 = {"endpoints": {"residual_graft_volume": {"status": "supported", "reason": ""},
+                          "tissue_mineral_density": {"status": "supported", "reason": ""}}}
     bind_support_to_method(sup2, {"method": "onnx:m", "validation_ok": "yes"})      # only the boolean True counts
     assert sup2["endpoints"]["residual_graft_volume"]["status"] == "not_supported"
+    assert sup2["endpoints"]["tissue_mineral_density"]["status"] == "supported"        # calibration: not bound
+    assert sup2["method_binding"]["method"] == "onnx:m" and sup2["support_rules"]       # binding is recorded (C3-PRD-14)
+    ok3 = {"endpoints": {"residual_graft_volume": {"status": "supported", "reason": ""}}}
+    bind_support_to_method(ok3, {"method": "onnx:m", "validation_ok": True})
+    assert ok3["endpoints"]["residual_graft_volume"]["status"] == "supported" and ok3["method_binding"]["validated_model_record"]
     (tmp_path / "validation_records.json").write_text("{corrupt")
     ok, why = vr.validated_for("m", "abc", "ha", 20)
     assert not ok and "unreadable" in why

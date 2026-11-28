@@ -37,6 +37,15 @@ def load_split(split: str, limit: int | None = None, materials=None) -> list[Cas
 def save_result(name: str, obj: dict):
     obj = dict(obj)
     obj.setdefault("saved", time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
+    # provenance (cycle-3 review, C2-SCI-22): the commit the result was produced from, and whether the code was dirty
+    try:
+        import subprocess
+        head = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True, cwd=ROOT).stdout.strip()
+        dirty = bool(subprocess.run(["git", "status", "--porcelain", "--", "osteoquant", "experiments/*.py"],
+                                    capture_output=True, text=True, cwd=ROOT).stdout.strip())
+        obj.setdefault("git_commit", head + ("-dirty" if dirty else ""))
+    except Exception:  # noqa: BLE001 - provenance is best effort
+        pass
     p = RESULTS / f"{name}.json"
     p.write_text(json.dumps(obj, indent=1, default=_default))
     return p

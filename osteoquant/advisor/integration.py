@@ -206,6 +206,7 @@ def bind_support_to_method(support: dict, seg_info: dict) -> None:
             if ep in _KEEP or d.get("status") == NOT_SUPPORTED:
                 continue
             if validated and ep in VALIDATED_MODEL_ENDPOINTS:
+                d["mechanism"] = "validated_texture_model"      # not "intensity" (cycle-3 review C3-SCI-16)
                 continue
             _refuse(d, f"segmentation method '{method}' is not covered by the measurement-support validation; use the "
                        "advisor threshold method or a model with a qualifying validation record")

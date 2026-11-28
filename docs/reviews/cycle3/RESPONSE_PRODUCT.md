@@ -1,0 +1,40 @@
+# Cycle 3 — Product review response (REVIEW_PRODUCT.md)
+
+Status: **fixed** (code change with a test that fails on the old code where stated), **mitigated** (risk reduced, residual
+limitation documented), **open** (planned; reason given).
+
+## New findings
+
+| ID | Sev | Status | Response / evidence |
+|---|---|---|---|
+| C3-PRD-01 | High | fixed | Support is evaluated at read time (`advisor.integration.effective_support` / `reported_view`), used by the Results view (`desktop/support.py`), the report bundle (`api/bundle.py`) and therefore the PDF and CSV. A record made by another advisor version or support-rule set, or stored before method binding, is shown as **not assessed** ("re-analyse this scan"); method binding is re-applied on every read; every new assessment carries `support_rules` and `method_binding`. Tests: `test_support_is_evaluated_at_read_time`, `test_stale_and_unbound_records_show_not_assessed_in_report`. Not done: a "Re-analyse affected scans" action at project open (the Results view states the reason per scan). |
+| C3-PRD-02 | High | fixed | The pipeline sets `validation_ok` from `validated_for`; binding uses only that boolean. Unsigned envelope fields are never echoed. Test `test_validation_records_hostile_key_id_and_corrupt_file` reproduces the review's file. |
+| C3-PRD-03 | High | mitigated | (1) Role/active changes count only when recorded by another audited, active administrator of the same organisation; the review's self-promotion probe is refused at sign-in. (2) Exactly one `report.generate` event per report, written by the report's creator; an appended one fails verification. (3) The first record per review wins for signature roles. (4) **External anchors** (`desktop/anchors.py`): the chain head is written outside the project folder at report generation, signature and audit export, verified at sign-in (mismatch → audit event, signatures disabled) and printed on every report. Tests: `tests/desktop/test_cycle3_fixes.py`. Residual: a user who can write both the project folder and their own configuration directory can rewrite both; only anchors held by others (printed reports, QA-filed export hashes) detect that. Per-user keyed signing of security events is not implemented. |
+| C3-PRD-04 | Medium | fixed | A manually corrected segmentation keeps at most *supported with conditions* (condition names the edit); desktop and API edits carry the base method so binding still applies. |
+| C3-PRD-05 | Medium | fixed | Records signed with a test key are labelled and never qualify unless a caller explicitly accepts test evidence (unit tests only). |
+| C3-PRD-06 | Medium | fixed | Under ONNX Runtime the record must name the SHA-256 of the ONNX bytes that run. |
+| C3-PRD-07 | Medium | fixed | `report/defectfill.py` treats a refused or not-assessed value as missing in per-animal means, group statistics, comparisons and the CSV, whatever the caller passes (`_value`). Test `test_renderer_enforces_refusal_in_group_stats_and_csv`; the cycle-2 test's group-mean leak (7.267/7.567) is now asserted absent. |
+| C3-PRD-08 | Medium | fixed | The desktop exports its own per-metric status (`metric_status`: flagged / not supported / not assessed, with reasons); the CSV `__support` column carries it; flagged values print with "(f)" and the legend explains it. Not done: an ROI-state column. |
+| C3-PRD-09 | Medium | fixed | CI's full-set job installs the desktop extra and runs **all** tests (desktop and licensing included) as a blocking step; the overall coverage gate is raised to 90%. Not done: moving licensing tests out of `tests/desktop/`. |
+| C3-PRD-10 | Medium | partly fixed | The licence check recognises macOS frameworks and PySide modules and fails when no QtCore is detected (tests `tests/test_bundle_licence_check.py`). Windows/macOS owner mapping in `bundle_inventory.py` is open until a first Windows/macOS build exists (B-013). |
+| C3-PRD-11 | Medium | fixed | Signing is disabled in `pull_request` runs; PR runs upload only build info and the licence report, never application archives. |
+| C3-PRD-12 | Medium | fixed | Dialog: "Advisor threshold — the only method with measurement support" (tooltip: validated in simulation only); every other method, including U-Net items, says "no measurement support"; the material is pre-selected from the study and an *Unspecified* warning is shown. Method column wording changed. Not done: checking UI strings with the claims checker. |
+| C3-PRD-13 | Medium | fixed | API default `advisor_threshold` (selectable, with `onnx:`); CLI default `advisor_threshold`; customer documents corrected (website, Quick Start, Glossary, Installation, Scientific Methods). |
+| C3-PRD-14 | Medium | partly fixed | New assertions: hostile `key_id`, non-boolean `validation_ok`, recorded `method_binding`, tissue-mineral-density exemption, stale/unbound records, renderer-side refusal, exact-tolerance QC, featureless-tube QC. No mutation tool was run. |
+| C3-PRD-15 | Low | fixed | A corrupt `validation_records.json` yields "unreadable" (no record) instead of aborting analyses. |
+| C3-PRD-16 | Low | fixed | `job_analyze` writes labels under a unique key, then commits ROI, segmentation, measurement and status in one transaction; the array is removed on failure; derived masks are written after commit. |
+| C3-PRD-17 | Low | open | Report readability (grouped refusal reasons, "not measured, 0 of n" in group tables, overlay colours for refused splits, comparison-omission notice) — planned with the next report revision. |
+| C3-PRD-18 | Low | fixed | See C3-PRD-13. |
+| C3-PRD-19 | Low | open | Timing-dependent tests to be converted to event-based waits. |
+| C3-PRD-20 | Low | open | Memory pre-flight and serialisation of large analyses. |
+| C3-PRD-21 | Low | partly fixed | The store refuses a database with a newer schema version (test `test_newer_schema_database_is_refused`). Not done: deferring the desktop's own schema additions until after sign-in. |
+| C3-PRD-22 | Low | open | The mkdir lock fallback is reached only without both `fcntl` and `msvcrt`; existing-name overwrite protection planned. |
+
+## Cycle-2 dispositions the review disputed
+
+| ID | Response |
+|---|---|
+| C2-PRD-04 | Agreed it was partial. Now: one generation record per report from the report's creator, plus external anchors (C3-PRD-03). |
+| C2-PRD-09 | Agreed it was partial. Now: actor-bound audited state (C3-PRD-03). |
+| C2-PRD-13 | Agreed the disposition text was stale (records were already signed). The bypasses found in cycle 3 (C3-PRD-02/05/06/15) are fixed. |
+| ARC-03, ARC-06 | Open (ARC-03 is C3-PRD-22; ONNX output-channel check planned). |

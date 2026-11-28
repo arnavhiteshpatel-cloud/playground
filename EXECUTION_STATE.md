@@ -12,23 +12,24 @@ EXPERIMENT_REGISTRY.md, EVIDENCE_LEDGER.md._
 | Gen | Scope | Status |
 |---|---|---|
 | 0 | Forensic audit, reproduction (G exact, H/I 29 rows identical, C ±0.004), remediation register, §55 ledgers | done |
-| 1–2 | Science: measurement-support advisor 1.4.2 bound to its validated method; three pre-registered held-out validations (S1H, S1H2, S1H3); generator v2; granule tracking v2; aperture-aware registration QC; ROI propagation; DR synthesis; ONNX runtime | advisor and longitudinal done; ML campaign (S2b/S2c, S3, U1, O2) running on CPU |
+| 1–2 | Science: measurement-support advisor 1.4.3 bound to its validated method and evaluated at read time; pre-registered held-out validations S1H, S1H2, S1H3 (structure-level bound 0.34), S1H4 (1.4.3, product material paths; running); generator v2; granule tracking v2; fail-closed registration QC; ROI propagation; DR synthesis; ONNX runtime | advisor and longitudinal done; ML campaign (S2b/S2c, S3, U1, O2) running on CPU |
 | 3 | Desktop application (PySide6+VTK), offline licensing (test keys only), PyInstaller packaging, CI for 3 OS | done (Linux bundle built locally; Windows/macOS builds only in CI, never run here) |
-| 4 | QA, security Gen-2, CI | done; coverage to be re-measured on the final code |
-| 4 | Reviews (automated reviewer agents, 12 perspectives) | cycle 1 done (all perspectives); cycle 2 done (68 findings, responses written); cycle 3 running |
+| 4 | QA, security Gen-2, CI | CI green on Ubuntu/Windows/macOS × Python 3.12/3.13 since 2026-11-28 (earlier runs never passed: DF-022); desktop and licensing tests blocking; coverage 90.8% (`docs/qa/test_summary.json`) |
+| 4 | Reviews (automated reviewer agents, 12 perspectives) | cycles 1–3 done (cycle 3: 63 findings, 2 critical — all critical/high fixed or mitigated; responses in `docs/reviews/cycle3/`) |
 | 5 | Website, documentation set, final deliverables | website and user docs on advisor 1.4.2 (claims checker passes); final report, workbook, decks and handoff being rebuilt |
 
 ## Component status (Generation 2)
 | Component | Status | Evidence |
 |---|---|---|
-| Measurement-support advisor | ✅ 1.4.2; 37 unit tests; held-out S1H3: safe on every endpoint, low coverage | osteoquant/advisor, tests/test_advisor.py, EXPERIMENT_REGISTRY S1H3 |
-| Method binding of support | ✅ only `advisor_threshold` (default) carries support | osteoquant/pipeline.py, test_pipeline_binds_support_to_method |
+| Measurement-support advisor | ✅ 1.4.3; 44 unit tests; held-out S1H3 (1.4.1): no supported failure, low coverage, precision not demonstrated at the structure level | osteoquant/advisor, tests/test_advisor.py, EXPERIMENT_REGISTRY S1H3 |
+| Method binding and read-time support | ✅ only `advisor_threshold` (default everywhere) carries support; stale or unbound records are not assessed; refused values never reach reports or statistics | osteoquant/advisor/integration.py, tests |
+| Audit integrity | ✅ authority-bound role changes; one generation record per report; external anchors verified at sign-in and printed on reports | osteoquant/desktop/anchors.py, tests/desktop/test_cycle3_fixes.py |
 | Reports honour abstention; group statistics exclude refused values | ✅ | report/defectfill.py, tests/test_report_bounds.py |
-| Longitudinal v2 (tracking, aperture-aware QC, ROI propagation) | ✅ L3, L4, F2 re-run | tests/test_longitudinal_v2.py |
+| Longitudinal v2 (tracking, fail-closed QC, ROI propagation) | ✅ L3, L4, F2 re-run; L5 (axis verification) | tests/test_longitudinal_v2.py |
 | ONNX Runtime inference (no PyTorch at analysis time) | ✅ identical labels (spot check); O2 benchmark queued | osteoquant/ml/runtime.py |
 | Signed validation records for learned models | ✅ format and verification; no qualifying record exists | osteoquant/ml/validation_records.py |
 | Claims checker | ✅ L3, S1H3, real-data and financial claims; banned phrases; advisor-version consistency | scripts/check_claims.py |
-| Full test suite | 562 passed, 1 skipped (local run 2026-11-28, before the QC rounding fix; its test file passes) | CI workflow `.github/workflows/ci.yml` |
+| Full test suite | 597 passed, 1 skipped (local, 2026-11-28); CI runs all suites | `docs/qa/test_summary.json`, `.github/workflows/ci.yml` |
 
 ## Generation-1 component table (history)
 

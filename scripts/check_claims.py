@@ -209,7 +209,7 @@ FACING_GLOBS = ["website/*.html", "docs/user/*.md", "investor/*.md", "investor/b
                 "outreach/*.md", "founder/*.md", "FOUNDER_EXECUTIVE_SUMMARY.md",
                 # pages and ledgers the website links to (C3-BIZ-12)
                 "validation/*.md", "EXPERIMENT_REGISTRY.md", "EVIDENCE_LEDGER.md", "BENCHMARK_SCORECARD.md",
-                "FOUNDER_HANDOFF.md"]
+                "FOUNDER_HANDOFF.md", "README.md"]
 # Source ledgers hold the raw per-run counts by design; only the run-count bans are lifted for them.
 LEDGERS = {"EXPERIMENT_REGISTRY.md", "EVIDENCE_LEDGER.md", "BENCHMARK_SCORECARD.md"}
 LEDGER_EXEMPT = "advisor-validation numbers"

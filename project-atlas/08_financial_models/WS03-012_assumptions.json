@@ -7,7 +7,8 @@
   "Repair pull-through: Konecranes Industrial Service ~EUR 1.6B annual sales vs EUR 351.7M agreement base (~3.5x, incumbent, B, C3-S007); new entrant assumed 1.5/2.5/3.5x inspection revenue (E).",
   "Federal awards A: 183rd Wing hoist inspections $30,328 (2 yrs) re-bid to $9,600/yr (DC-S025); crane repair task orders $8-19k (DC-S026).",
   "Tech pay: Chicago industrial machinery mechanic median $75,800 (C, C3-S010); Konecranes Chicago tech $22-48/h (D, DC-S027).",
-  "ARPC base = 8 cranes x ~$200/yr inspections ($133/mo) + 2.5x repairs ($333) = $466 -> $470/mo."
+  "ARPC base = 8 cranes x ~$200/yr inspections ($133/mo) + 2.5x repairs ($333) = $466 -> $470/mo.",
+  "No dedicated sales rep: a $6.5k/mo rep lowered base y3 operating profit by ~$41k in testing; founder + lead tech sell."
  ],
  "drivers": {
   "sales_start_delay_months": {
@@ -140,15 +141,6 @@
    "per": 200000,
    "max_count": 2,
    "monthly_cost": 5000,
-   "notes": "E"
-  },
-  {
-   "role": "Sales rep",
-   "trigger": "month",
-   "start_month": 30,
-   "count": 1,
-   "is_sales_rep": true,
-   "monthly_cost": 6500,
    "notes": "E"
   }
  ],

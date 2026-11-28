@@ -7,7 +7,8 @@
   "PM price anchors A: Rockford POs $66 (oil+rotation), $380.50 for 2 PMs, $1,218 full service + repairs (DC-S019..S021); mobile priced at quality-shop parity (C, C4-S021).",
   "Parts margin 28-30% at Rush (A, WS17-S021); tech wages C: Chicago auto tech median $55,320, diesel $65,680 (C4-S016).",
   "Tech capacity: 1,200 billable h x $125 / (1 - 40% parts share) / 12 = ~$21k revenue/month per tech (E).",
-  "ARPC base 15 vehicles x (3.5 PM x $130/12 + 1.2x repairs) = $1,251/mo (E)."
+  "ARPC base 15 vehicles x (3.5 PM x $130/12 + 1.2x repairs) = $1,251/mo (E).",
+  "No dedicated sales rep: a $6k/mo rep adding ~1.2 accounts/mo lowered base y3 operating profit by ~$45k in testing; founder + lead tech sell."
  ],
  "drivers": {
   "sales_start_delay_months": {
@@ -169,15 +170,6 @@
    "per": 10000000,
    "max_count": 1,
    "monthly_cost": 8000,
-   "notes": "E"
-  },
-  {
-   "role": "Sales rep",
-   "trigger": "month",
-   "start_month": 30,
-   "count": 1,
-   "is_sales_rep": true,
-   "monthly_cost": 6000,
    "notes": "E"
   }
  ],

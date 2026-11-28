@@ -175,7 +175,7 @@ The 4imprint margin fell 1.3 points in one half-year on tariff costs. **I would 
   - 10–15 h a week of quotes and orders;
   - kitting and yard delivery.
 - **Corrected base never reaches $10k/month operating profit within 60 months.**
-- **Rep economics are thin.** A rep takes 40–50% of gross profit [D/C, DH-S028/S029]. At a 27% GM a rep must sell about $55–60k a month to cover a $5k loaded cost and leave any profit. Delegation of selling is therefore weak.
+- **Rep economics are thin.** A rep takes 40–50% of gross profit [D/C, DH-S028/S029]. At a 27% GM, a rep paid 45% of gross profit must sell about $41k a month of their own book just to earn $5k. The firm keeps only about 15% of that rep's sales to cover coordinators, overhead and bad debt. Delegation of selling is therefore weak.
 - **Delegation verdict:** order operations are delegable (coordinators); selling stays with the founder (G7 WARN stands).
 
 ---

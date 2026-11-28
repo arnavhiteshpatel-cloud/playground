@@ -7,61 +7,61 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
-| 1 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 5.65 | 5.93 |
-| 2 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.60 | 5.86 |
-| 3 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 5.57 | 5.67 |
-| 4 | SYN-004 | Commercial energy cost management bundle (ICC-licensed electricity/gas brokerage + utility bill audit + demand-response enrollment + capacity-tag peak alerts) | D | 5.56 | 5.80 |
-| 5 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | D | 5.51 | 5.73 |
-| 6 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | C | 5.49 | 5.58 |
-| 7 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 5.46 | 5.48 |
-| 8 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.42 | 5.60 |
-| 9 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 5.41 | 5.58 |
-| 10 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 5.40 | 5.47 |
-| 11 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 5.38 | 5.45 |
-| 12 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 5.38 | 5.45 |
-| 13 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.38 | 5.54 |
-| 14 | WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | E | 5.35 | 5.64 |
-| 15 | WS14-023 | Estate sale & downsizing liquidation company (commission on gross sales) | E | 5.35 | 5.63 |
-| 16 | WS17-006 | Mobile trailer repair and trailer PM (dry van/reefer box, lights, air, doors, floors, welding) | E | 5.35 | 5.63 |
-| 17 | WS03-025 | Lockout/tagout procedure development & machine-safeguarding compliance service (AI-assisted) | E | 5.34 | 5.62 |
-| 18 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.34 | 5.49 |
-| 19 | WS02-031 | Tax resolution & representation practice (Enrolled Agent-led) | E | 5.33 | 5.61 |
-| 20 | WS12-021 | Outsourced HR compliance subscription for Illinois small employers | E | 5.32 | 5.59 |
-| 21 | WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | E | 5.32 | 5.59 |
-| 22 | WS17-018 | Mobile ADAS calibration and diagnostic service for collision/glass shops and dealers | E | 5.32 | 5.58 |
-| 23 | WS09-017 | Illinois local-government bid & procurement intelligence (aggregated bids from municipalities, school/park districts, townships) | E | 5.31 | 5.57 |
-| 24 | WS10-029 | Residential property management for small landlords (Chicago 2-6 flats), via licensed brokerage | E | 5.31 | 5.56 |
-| 25 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 5.30 | 5.43 |
+| 1 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.60 | 5.86 |
+| 2 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.42 | 5.60 |
+| 3 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 5.41 | 5.58 |
+| 4 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 5.40 | 5.47 |
+| 5 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 5.38 | 5.45 |
+| 6 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.38 | 5.54 |
+| 7 | WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | E | 5.35 | 5.64 |
+| 8 | WS14-023 | Estate sale & downsizing liquidation company (commission on gross sales) | E | 5.35 | 5.63 |
+| 9 | WS17-006 | Mobile trailer repair and trailer PM (dry van/reefer box, lights, air, doors, floors, welding) | E | 5.35 | 5.63 |
+| 10 | WS03-025 | Lockout/tagout procedure development & machine-safeguarding compliance service (AI-assisted) | E | 5.34 | 5.62 |
+| 11 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.34 | 5.49 |
+| 12 | WS02-031 | Tax resolution & representation practice (Enrolled Agent-led) | E | 5.33 | 5.61 |
+| 13 | WS12-021 | Outsourced HR compliance subscription for Illinois small employers | E | 5.32 | 5.59 |
+| 14 | WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | E | 5.32 | 5.59 |
+| 15 | WS17-018 | Mobile ADAS calibration and diagnostic service for collision/glass shops and dealers | E | 5.32 | 5.58 |
+| 16 | WS09-017 | Illinois local-government bid & procurement intelligence (aggregated bids from municipalities, school/park districts, townships) | E | 5.31 | 5.57 |
+| 17 | WS10-029 | Residential property management for small landlords (Chicago 2-6 flats), via licensed brokerage | E | 5.31 | 5.56 |
+| 18 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 5.30 | 5.43 |
+| 19 | WS15-009 | Energy benchmarking & building-performance-standard compliance service (Chicago first, then BPS cities) | E | 5.30 | 5.55 |
+| 20 | WS15-017 | AHERA school asbestos compliance programs (3-year reinspections, periodic surveillance, management plans, designated-person support) | E | 5.30 | 5.54 |
+| 21 | WS04-012 | Provider credentialing & payer enrollment service | E | 5.30 | 5.54 |
+| 22 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 5.28 | 5.51 |
+| 23 | WS02-006 | Hard-to-place E&S niche retail agency (e.g., security guard firms, vacant buildings, Illinois cannabis/hemp operators) | E | 5.28 | 5.51 |
+| 24 | WS03-006 | Hard-to-find & obsolete MRO part sourcing service (no inventory, back-to-back buying for plant maintenance) | E | 5.28 | 5.51 |
+| 25 | WS13-032 | Trauma, unattended-death and biohazard remediation (incl. hoarding cleanup) | E | 5.28 | 5.50 |
 
 ## highest_confidence
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
-| 1 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 5.50 | 5.67 |
-| 2 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 5.46 | 5.93 |
-| 3 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | C | 5.43 | 5.58 |
-| 4 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 5.43 | 5.48 |
-| 5 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.43 | 5.86 |
-| 6 | SYN-004 | Commercial energy cost management bundle (ICC-licensed electricity/gas brokerage + utility bill audit + demand-response enrollment + capacity-tag peak alerts) | D | 5.40 | 5.80 |
-| 7 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | D | 5.37 | 5.73 |
-| 8 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 5.36 | 5.47 |
-| 9 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 5.34 | 5.45 |
-| 10 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 5.33 | 5.45 |
-| 11 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.30 | 5.60 |
-| 12 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 5.29 | 5.58 |
-| 13 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.27 | 5.54 |
-| 14 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.24 | 5.49 |
-| 15 | WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | C | 5.24 | 5.32 |
-| 16 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 5.22 | 5.43 |
-| 17 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 5.22 | 5.24 |
-| 18 | WS18-035 | Garage door repair & installation | D | 5.21 | 5.42 |
-| 19 | SYN-001 | Small motor-carrier compliance & back-office hub (DOT compliance subscription → drug/alcohol consortium → IRP/title → bookkeeping/IFTA → insurance) | D | 5.21 | 5.42 |
-| 20 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 5.21 | 5.28 |
-| 21 | WS02-010 | Medicare (MA/Med Supp/PDP) local field-and-referral agency in Illinois | C | 5.20 | 5.26 |
-| 22 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.20 | 5.39 |
-| 23 | WS14-002 | LTL/truckload freight bill audit, overcharge and cargo-claim recovery for mid-market shippers | D | 5.20 | 5.39 |
-| 24 | WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | E | 5.19 | 5.64 |
-| 25 | WS14-023 | Estate sale & downsizing liquidation company (commission on gross sales) | E | 5.19 | 5.63 |
+| 1 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.43 | 5.86 |
+| 2 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 5.36 | 5.47 |
+| 3 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 5.33 | 5.45 |
+| 4 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.30 | 5.60 |
+| 5 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 5.29 | 5.58 |
+| 6 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.27 | 5.54 |
+| 7 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.24 | 5.49 |
+| 8 | WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | C | 5.24 | 5.32 |
+| 9 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 5.22 | 5.43 |
+| 10 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 5.22 | 5.24 |
+| 11 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 5.21 | 5.28 |
+| 12 | WS02-010 | Medicare (MA/Med Supp/PDP) local field-and-referral agency in Illinois | C | 5.20 | 5.26 |
+| 13 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.20 | 5.39 |
+| 14 | WS14-002 | LTL/truckload freight bill audit, overcharge and cargo-claim recovery for mid-market shippers | D | 5.20 | 5.39 |
+| 15 | WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | E | 5.19 | 5.64 |
+| 16 | WS14-023 | Estate sale & downsizing liquidation company (commission on gross sales) | E | 5.19 | 5.63 |
+| 17 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 5.19 | 5.38 |
+| 18 | WS11-021 | Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance | D | 5.19 | 5.38 |
+| 19 | WS17-006 | Mobile trailer repair and trailer PM (dry van/reefer box, lights, air, doors, floors, welding) | E | 5.19 | 5.63 |
+| 20 | WS03-025 | Lockout/tagout procedure development & machine-safeguarding compliance service (AI-assisted) | E | 5.19 | 5.62 |
+| 21 | WS02-031 | Tax resolution & representation practice (Enrolled Agent-led) | E | 5.18 | 5.61 |
+| 22 | WS04-018 | Biosafety cabinet, fume hood and USP <797>/<800> cleanroom certification | D | 5.18 | 5.36 |
+| 23 | WS12-021 | Outsourced HR compliance subscription for Illinois small employers | E | 5.18 | 5.59 |
+| 24 | WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | E | 5.18 | 5.59 |
+| 25 | WS11-020 | Asbestos building inspection, sampling and air monitoring (IDPH licensed) | D | 5.17 | 5.35 |
 
 ## profit_potential
 
@@ -74,174 +74,174 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 | 5 | WS17-006 | Mobile trailer repair and trailer PM (dry van/reefer box, lights, air, doors, floors, welding) | E | 5.22 | 5.63 |
 | 6 | WS18-028 | Residential HVAC maintenance memberships + replacement sales | E | 5.22 | 5.40 |
 | 7 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 5.21 | 5.28 |
-| 8 | SYN-004 | Commercial energy cost management bundle (ICC-licensed electricity/gas brokerage + utility bill audit + demand-response enrollment + capacity-tag peak alerts) | D | 5.21 | 5.80 |
-| 9 | WS05-013 | Commercial HVAC preventive-maintenance agreements (light commercial RTUs) with repair/replacement pull-through | E | 5.19 | 5.13 |
-| 10 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.17 | 5.39 |
-| 11 | WS01-028 | Outsourced commercial credit analysis and independent loan review for community banks and credit unions (AI-assisted) | E | 5.17 | 5.46 |
-| 12 | WS17-034 | Fixed-location independent truck & trailer repair shop (baseline format) | E | 5.17 | 5.26 |
-| 13 | WS15-007 | Lead service line replacement contracting (with licensed plumbers) for Illinois utilities and homeowners | E | 5.14 | 4.38 |
-| 14 | WS11-027 | Portable sanitation (construction sites, events) route business | E | 5.11 | 5.39 |
-| 15 | WS10-029 | Residential property management for small landlords (Chicago 2-6 flats), via licensed brokerage | E | 5.08 | 5.56 |
-| 16 | WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | D | 5.07 | 5.27 |
-| 17 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 5.07 | 5.93 |
-| 18 | WS15-005 | Lead service line inventory verification & LCRI compliance data services for small Illinois water systems | E | 5.05 | 5.42 |
-| 19 | WS01-005 | Outsourced SBA loan processing, closing and Lender Service Provider (LSP) services for community banks and credit unions | E | 5.03 | 5.04 |
-| 20 | WS05-010 | Grease interceptor pumping & FOG compliance route (vacuum truck liquid-waste hauling) | E | 5.03 | 5.16 |
-| 21 | WS11-013 | Commercial & community solar O&M (inspections, preventive maintenance, vegetation management) | E | 5.00 | 5.07 |
-| 22 | WS12-005 | IT contract staffing for mid-market companies | C | 5.00 | 4.80 |
-| 23 | WS12-006 | Scientific, lab, quality & engineering contract staffing | E | 5.00 | 4.96 |
-| 24 | WS13-002 | Commercial ice-machine subscription (ice-as-a-service) for restaurants, bars, healthcare and hotels | D | 5.00 | 5.00 |
-| 25 | WS17-018 | Mobile ADAS calibration and diagnostic service for collision/glass shops and dealers | E | 5.00 | 5.58 |
+| 8 | WS05-013 | Commercial HVAC preventive-maintenance agreements (light commercial RTUs) with repair/replacement pull-through | E | 5.19 | 5.13 |
+| 9 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.17 | 5.39 |
+| 10 | WS01-028 | Outsourced commercial credit analysis and independent loan review for community banks and credit unions (AI-assisted) | E | 5.17 | 5.46 |
+| 11 | WS17-034 | Fixed-location independent truck & trailer repair shop (baseline format) | E | 5.17 | 5.26 |
+| 12 | WS15-007 | Lead service line replacement contracting (with licensed plumbers) for Illinois utilities and homeowners | E | 5.14 | 4.38 |
+| 13 | WS11-027 | Portable sanitation (construction sites, events) route business | E | 5.11 | 5.39 |
+| 14 | WS10-029 | Residential property management for small landlords (Chicago 2-6 flats), via licensed brokerage | E | 5.08 | 5.56 |
+| 15 | WS15-005 | Lead service line inventory verification & LCRI compliance data services for small Illinois water systems | E | 5.05 | 5.42 |
+| 16 | WS01-005 | Outsourced SBA loan processing, closing and Lender Service Provider (LSP) services for community banks and credit unions | E | 5.03 | 5.04 |
+| 17 | WS05-010 | Grease interceptor pumping & FOG compliance route (vacuum truck liquid-waste hauling) | E | 5.03 | 5.16 |
+| 18 | WS11-013 | Commercial & community solar O&M (inspections, preventive maintenance, vegetation management) | E | 5.00 | 5.07 |
+| 19 | WS12-005 | IT contract staffing for mid-market companies | C | 5.00 | 4.80 |
+| 20 | WS12-006 | Scientific, lab, quality & engineering contract staffing | E | 5.00 | 4.96 |
+| 21 | WS13-002 | Commercial ice-machine subscription (ice-as-a-service) for restaurants, bars, healthcare and hotels | D | 5.00 | 5.00 |
+| 22 | WS17-018 | Mobile ADAS calibration and diagnostic service for collision/glass shops and dealers | E | 5.00 | 5.58 |
+| 23 | WS13-032 | Trauma, unattended-death and biohazard remediation (incl. hoarding cleanup) | E | 4.97 | 5.50 |
+| 24 | WS02-017 | Public adjusting firm (commercial and residential property claims, Chicago metro) | D | 4.96 | 5.33 |
+| 25 | WS03-018 | Nondestructive testing (NDT) services for fabricators, welding shops and structural steel (UT/MT/PT/VT) | C | 4.96 | 5.07 |
 
 ## return_on_capital
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
-| 1 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | C | 6.91 | 5.58 |
-| 2 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 6.70 | 5.45 |
-| 3 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.58 | 5.86 |
-| 4 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 6.58 | 5.93 |
-| 5 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.49 | 4.83 |
-| 6 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 6.42 | 5.48 |
-| 7 | WS18-013 | Pet waste removal weekly route (yard scooping) | D | 6.40 | 5.23 |
-| 8 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.38 | 5.45 |
-| 9 | WS02-029 | Fractional CFO / FP&A for a niche (e.g., trucking fleets or contractors $5M-$50M) | E | 6.24 | 4.97 |
-| 10 | WS03-008 | Used-machinery consignment & plant-surplus brokerage (commission, no ownership) | D | 6.22 | 4.93 |
-| 11 | WS02-010 | Medicare (MA/Med Supp/PDP) local field-and-referral agency in Illinois | C | 6.17 | 5.26 |
-| 12 | WS09-018 | Paid peer-advisory roundtables for owners of trade/service businesses (industry-specific) | E | 6.17 | 4.96 |
-| 13 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 6.17 | 5.47 |
-| 14 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.17 | 5.21 |
-| 15 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.10 | 5.32 |
-| 16 | WS01-001 | Small-balance commercial real estate (CRE) debt brokerage — Chicago-area investors and owner-users | D | 6.05 | 5.01 |
-| 17 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 6.05 | 5.43 |
-| 18 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | D | 6.05 | 5.73 |
-| 19 | WS11-007 | Commercial electricity procurement brokerage (ICC-licensed ABC) with gas add-on | D | 6.05 | 5.23 |
-| 20 | WS13-018 | Multifamily doorstep (valet) trash collection service | D | 6.05 | 5.26 |
-| 21 | WS13-038 | Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration | D | 6.05 | 5.27 |
-| 22 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 6.05 | 5.58 |
-| 23 | SYN-004 | Commercial energy cost management bundle (ICC-licensed electricity/gas brokerage + utility bill audit + demand-response enrollment + capacity-tag peak alerts) | D | 6.05 | 5.80 |
-| 24 | WS14-023 | Estate sale & downsizing liquidation company (commission on gross sales) | E | 6.03 | 5.63 |
-| 25 | WS18-010 | Home inspection firm (licensed, multi-inspector with ancillary tests) | E | 6.03 | 5.05 |
+| 1 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.58 | 5.86 |
+| 2 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.49 | 4.83 |
+| 3 | WS18-013 | Pet waste removal weekly route (yard scooping) | D | 6.40 | 5.23 |
+| 4 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 6.40 | 5.28 |
+| 5 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.38 | 5.45 |
+| 6 | WS02-029 | Fractional CFO / FP&A for a niche (e.g., trucking fleets or contractors $5M-$50M) | E | 6.24 | 4.97 |
+| 7 | WS03-008 | Used-machinery consignment & plant-surplus brokerage (commission, no ownership) | D | 6.22 | 4.93 |
+| 8 | WS02-010 | Medicare (MA/Med Supp/PDP) local field-and-referral agency in Illinois | C | 6.17 | 5.26 |
+| 9 | WS09-018 | Paid peer-advisory roundtables for owners of trade/service businesses (industry-specific) | E | 6.17 | 4.96 |
+| 10 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 6.17 | 5.47 |
+| 11 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.17 | 5.21 |
+| 12 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.10 | 5.32 |
+| 13 | WS01-001 | Small-balance commercial real estate (CRE) debt brokerage — Chicago-area investors and owner-users | D | 6.05 | 5.01 |
+| 14 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 6.05 | 5.43 |
+| 15 | WS11-007 | Commercial electricity procurement brokerage (ICC-licensed ABC) with gas add-on | D | 6.05 | 5.23 |
+| 16 | WS13-018 | Multifamily doorstep (valet) trash collection service | D | 6.05 | 5.26 |
+| 17 | WS13-038 | Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration | D | 6.05 | 5.27 |
+| 18 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 6.05 | 5.58 |
+| 19 | WS14-023 | Estate sale & downsizing liquidation company (commission on gross sales) | E | 6.03 | 5.63 |
+| 20 | WS18-010 | Home inspection firm (licensed, multi-inspector with ancillary tests) | E | 6.03 | 5.05 |
+| 21 | WS02-023 | Merchant services ISO sub-agent / independent sales office (local SMB card processing) | D | 5.96 | 5.32 |
+| 22 | WS04-012 | Provider credentialing & payer enrollment service | E | 5.96 | 5.54 |
+| 23 | WS12-015 | Retained executive search for mid-market and PE-backed companies | E | 5.96 | 4.30 |
+| 24 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 5.96 | 4.76 |
+| 25 | WS18-026 | Exterior cleaning route: window, gutter & pressure washing with twice-yearly plans | E | 5.96 | 5.33 |
 
 ## capital_efficiency
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
 | 1 | WS18-013 | Pet waste removal weekly route (yard scooping) | D | 7.21 | 5.23 |
-| 2 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | C | 7.17 | 5.58 |
-| 3 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 7.17 | 5.45 |
-| 4 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 7.17 | 5.47 |
-| 5 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 7.10 | 4.83 |
-| 6 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 7.09 | 5.48 |
-| 7 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.89 | 5.86 |
-| 8 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 6.82 | 5.30 |
-| 9 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 6.79 | 5.93 |
-| 10 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.77 | 5.32 |
-| 11 | WS06-019 | Illinois cottage food home bakery / specialty confections | C | 6.76 | 3.51 |
-| 12 | WS05-022 | Storefront & low-rise commercial window cleaning route | E | 6.73 | 5.24 |
-| 13 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.70 | 5.45 |
-| 14 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 6.69 | 4.76 |
-| 15 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.65 | 5.21 |
-| 16 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | D | 6.61 | 5.73 |
-| 17 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 6.61 | 5.58 |
-| 18 | WS16-006 | Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship) | C | 6.57 | 5.24 |
-| 19 | WS04-012 | Provider credentialing & payer enrollment service | E | 6.57 | 5.54 |
-| 20 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 6.54 | 5.51 |
-| 21 | WS09-018 | Paid peer-advisory roundtables for owners of trade/service businesses (industry-specific) | E | 6.53 | 4.96 |
-| 22 | WS03-008 | Used-machinery consignment & plant-surplus brokerage (commission, no ownership) | D | 6.52 | 4.93 |
-| 23 | WS02-029 | Fractional CFO / FP&A for a niche (e.g., trucking fleets or contractors $5M-$50M) | E | 6.51 | 4.97 |
-| 24 | WS04-011 | Dental insurance verification, claims & AR recovery outsourcing for independent practices | D | 6.50 | 4.92 |
-| 25 | WS13-038 | Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration | D | 6.50 | 5.27 |
+| 2 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 7.17 | 5.47 |
+| 3 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 7.10 | 4.83 |
+| 4 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.89 | 5.86 |
+| 5 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 6.82 | 5.30 |
+| 6 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.77 | 5.32 |
+| 7 | WS06-019 | Illinois cottage food home bakery / specialty confections | C | 6.76 | 3.51 |
+| 8 | WS05-022 | Storefront & low-rise commercial window cleaning route | E | 6.73 | 5.24 |
+| 9 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.70 | 5.45 |
+| 10 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 6.69 | 4.76 |
+| 11 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.65 | 5.21 |
+| 12 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 6.61 | 5.58 |
+| 13 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 6.58 | 5.28 |
+| 14 | WS04-012 | Provider credentialing & payer enrollment service | E | 6.57 | 5.54 |
+| 15 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 6.54 | 5.51 |
+| 16 | WS09-018 | Paid peer-advisory roundtables for owners of trade/service businesses (industry-specific) | E | 6.53 | 4.96 |
+| 17 | WS03-008 | Used-machinery consignment & plant-surplus brokerage (commission, no ownership) | D | 6.52 | 4.93 |
+| 18 | WS02-029 | Fractional CFO / FP&A for a niche (e.g., trucking fleets or contractors $5M-$50M) | E | 6.51 | 4.97 |
+| 19 | WS04-011 | Dental insurance verification, claims & AR recovery outsourcing for independent practices | D | 6.50 | 4.92 |
+| 20 | WS13-038 | Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration | D | 6.50 | 5.27 |
+| 21 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | D | 6.50 | 5.33 |
+| 22 | WS18-026 | Exterior cleaning route: window, gutter & pressure washing with twice-yearly plans | E | 6.50 | 5.33 |
+| 23 | WS09-017 | Illinois local-government bid & procurement intelligence (aggregated bids from municipalities, school/park districts, townships) | E | 6.47 | 5.57 |
+| 24 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 6.45 | 5.43 |
+| 25 | WS14-023 | Estate sale & downsizing liquidation company (commission on gross sales) | E | 6.44 | 5.63 |
 
 ## cash_conversion
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
-| 1 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 7.47 | 5.48 |
-| 2 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | C | 7.04 | 5.58 |
-| 3 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 6.87 | 5.47 |
-| 4 | WS18-013 | Pet waste removal weekly route (yard scooping) | D | 6.82 | 5.23 |
-| 5 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.68 | 5.86 |
-| 6 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 6.68 | 5.93 |
-| 7 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.62 | 5.45 |
-| 8 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 6.54 | 5.02 |
-| 9 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.53 | 4.83 |
-| 10 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 6.53 | 5.45 |
-| 11 | WS09-018 | Paid peer-advisory roundtables for owners of trade/service businesses (industry-specific) | E | 6.49 | 4.96 |
-| 12 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.49 | 5.21 |
-| 13 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.43 | 5.32 |
-| 14 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | D | 6.40 | 5.73 |
-| 15 | WS13-038 | Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration | D | 6.40 | 5.27 |
-| 16 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 6.40 | 5.58 |
-| 17 | WS02-029 | Fractional CFO / FP&A for a niche (e.g., trucking fleets or contractors $5M-$50M) | E | 6.38 | 4.97 |
-| 18 | WS13-036 | School and youth-sports volume photography (picture days, league photos) | E | 6.38 | 5.33 |
-| 19 | WS18-008 | Handyman service company (W-2 craftsmen, small residential repairs) | B | 6.33 | 4.99 |
-| 20 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 6.32 | 4.76 |
-| 21 | WS18-010 | Home inspection firm (licensed, multi-inspector with ancillary tests) | E | 6.32 | 5.05 |
-| 22 | WS01-010 | Residential mortgage brokerage (licensed MLO + Illinois mortgage broker license, wholesale channel) | C | 6.28 | 4.34 |
-| 23 | WS12-015 | Retained executive search for mid-market and PE-backed companies | E | 6.26 | 4.30 |
-| 24 | WS18-026 | Exterior cleaning route: window, gutter & pressure washing with twice-yearly plans | E | 6.26 | 5.33 |
-| 25 | WS18-027 | Holiday & permanent exterior lighting installation | E | 6.26 | 5.13 |
+| 1 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 6.87 | 5.47 |
+| 2 | WS18-013 | Pet waste removal weekly route (yard scooping) | D | 6.82 | 5.23 |
+| 3 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.68 | 5.86 |
+| 4 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.62 | 5.45 |
+| 5 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 6.54 | 5.02 |
+| 6 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 6.54 | 5.28 |
+| 7 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.53 | 4.83 |
+| 8 | WS09-018 | Paid peer-advisory roundtables for owners of trade/service businesses (industry-specific) | E | 6.49 | 4.96 |
+| 9 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.49 | 5.21 |
+| 10 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.43 | 5.32 |
+| 11 | WS13-038 | Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration | D | 6.40 | 5.27 |
+| 12 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 6.40 | 5.58 |
+| 13 | WS02-029 | Fractional CFO / FP&A for a niche (e.g., trucking fleets or contractors $5M-$50M) | E | 6.38 | 4.97 |
+| 14 | WS13-036 | School and youth-sports volume photography (picture days, league photos) | E | 6.38 | 5.33 |
+| 15 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | C | 6.36 | 4.45 |
+| 16 | WS18-008 | Handyman service company (W-2 craftsmen, small residential repairs) | B | 6.33 | 4.99 |
+| 17 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 6.32 | 4.76 |
+| 18 | WS18-010 | Home inspection firm (licensed, multi-inspector with ancillary tests) | E | 6.32 | 5.05 |
+| 19 | WS01-010 | Residential mortgage brokerage (licensed MLO + Illinois mortgage broker license, wholesale channel) | C | 6.28 | 4.34 |
+| 20 | WS12-015 | Retained executive search for mid-market and PE-backed companies | E | 6.26 | 4.30 |
+| 21 | WS18-026 | Exterior cleaning route: window, gutter & pressure washing with twice-yearly plans | E | 6.26 | 5.33 |
+| 22 | WS18-027 | Holiday & permanent exterior lighting installation | E | 6.26 | 5.13 |
+| 23 | WS01-001 | Small-balance commercial real estate (CRE) debt brokerage — Chicago-area investors and owner-users | D | 6.26 | 5.01 |
+| 24 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 6.26 | 5.43 |
+| 25 | WS03-008 | Used-machinery consignment & plant-surplus brokerage (commission, no ownership) | D | 6.26 | 4.93 |
 
 ## fastest_validation
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
 | 1 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 7.34 | 5.47 |
-| 2 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 7.04 | 5.48 |
-| 3 | WS06-019 | Illinois cottage food home bakery / specialty confections | C | 7.04 | 3.51 |
-| 4 | WS18-005 | Residential lawn mowing & snow removal maintenance route | C | 6.96 | 4.87 |
-| 5 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 6.92 | 5.30 |
-| 6 | WS18-013 | Pet waste removal weekly route (yard scooping) | D | 6.86 | 5.23 |
-| 7 | WS05-022 | Storefront & low-rise commercial window cleaning route | E | 6.79 | 5.24 |
-| 8 | WS18-008 | Handyman service company (W-2 craftsmen, small residential repairs) | B | 6.76 | 4.99 |
-| 9 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 6.75 | 5.45 |
-| 10 | WS16-006 | Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship) | C | 6.74 | 5.24 |
-| 11 | WS08-001 | DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship) | C | 6.57 | 5.09 |
-| 12 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.55 | 4.83 |
-| 13 | WS04-011 | Dental insurance verification, claims & AR recovery outsourcing for independent practices | D | 6.54 | 4.92 |
-| 14 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | C | 6.53 | 5.58 |
-| 15 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.47 | 5.86 |
-| 16 | WS04-017 | Dental handpiece repair (mail-in + local pickup) | D | 6.46 | 4.62 |
-| 17 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.46 | 5.32 |
-| 18 | WS18-024 | Wash-and-fold pickup & delivery laundry service (asset-light) | E | 6.42 | 5.25 |
-| 19 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.41 | 5.67 |
-| 20 | WS12-028 | Document translation agency incl. certified translations (immigration, legal, technical) | D | 6.38 | 4.36 |
-| 21 | WS04-012 | Provider credentialing & payer enrollment service | E | 6.38 | 5.54 |
-| 22 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 6.38 | 5.51 |
-| 23 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 6.38 | 4.76 |
-| 24 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | D | 6.37 | 5.73 |
-| 25 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 6.37 | 5.58 |
+| 2 | WS06-019 | Illinois cottage food home bakery / specialty confections | C | 7.04 | 3.51 |
+| 3 | WS18-005 | Residential lawn mowing & snow removal maintenance route | C | 6.96 | 4.87 |
+| 4 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 6.92 | 5.30 |
+| 5 | WS18-013 | Pet waste removal weekly route (yard scooping) | D | 6.86 | 5.23 |
+| 6 | WS05-022 | Storefront & low-rise commercial window cleaning route | E | 6.79 | 5.24 |
+| 7 | WS18-008 | Handyman service company (W-2 craftsmen, small residential repairs) | B | 6.76 | 4.99 |
+| 8 | WS08-001 | DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship) | C | 6.57 | 5.09 |
+| 9 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.55 | 4.83 |
+| 10 | WS04-011 | Dental insurance verification, claims & AR recovery outsourcing for independent practices | D | 6.54 | 4.92 |
+| 11 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.47 | 5.86 |
+| 12 | WS04-017 | Dental handpiece repair (mail-in + local pickup) | D | 6.46 | 4.62 |
+| 13 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.46 | 5.32 |
+| 14 | WS18-024 | Wash-and-fold pickup & delivery laundry service (asset-light) | E | 6.42 | 5.25 |
+| 15 | WS12-028 | Document translation agency incl. certified translations (immigration, legal, technical) | D | 6.38 | 4.36 |
+| 16 | WS04-012 | Provider credentialing & payer enrollment service | E | 6.38 | 5.54 |
+| 17 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 6.38 | 5.51 |
+| 18 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 6.38 | 4.76 |
+| 19 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 6.37 | 5.58 |
+| 20 | WS16-013 | Niche B2B e-commerce store using manufacturer drop-ship, stocking only proven SKUs (Global Industrial playbook in a vertical) | D | 6.36 | 5.03 |
+| 21 | WS03-005 | Obsolete & surplus industrial-automation parts reseller (tested inventory: PLCs, drives, servos) | D | 6.35 | 5.33 |
+| 22 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.34 | 5.45 |
+| 23 | WS02-023 | Merchant services ISO sub-agent / independent sales office (local SMB card processing) | D | 6.33 | 5.32 |
+| 24 | WS11-021 | Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance | D | 6.33 | 5.38 |
+| 25 | WS07-019 | Liquidation/returns pallet buy-and-resell (bin store, online resale) | C | 6.32 | 3.79 |
 
 ## owner_distributions
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
-| 1 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 6.14 | 5.48 |
-| 2 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 5.88 | 5.93 |
-| 3 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.84 | 5.86 |
-| 4 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | D | 5.80 | 5.73 |
-| 5 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 5.78 | 5.24 |
-| 6 | WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | E | 5.78 | 5.59 |
-| 7 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.75 | 5.54 |
-| 8 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.74 | 5.39 |
-| 9 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.74 | 5.02 |
-| 10 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.74 | 5.60 |
-| 11 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 5.72 | 5.67 |
-| 12 | WS10-011 | Residential roofing contractor (Illinois licensed) | C | 5.68 | 5.17 |
-| 13 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | C | 5.68 | 5.58 |
-| 14 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 5.67 | 5.38 |
-| 15 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 5.67 | 5.58 |
-| 16 | WS02-031 | Tax resolution & representation practice (Enrolled Agent-led) | E | 5.62 | 5.61 |
-| 17 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 5.59 | 5.47 |
-| 18 | WS10-029 | Residential property management for small landlords (Chicago 2-6 flats), via licensed brokerage | E | 5.56 | 5.56 |
-| 19 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.55 | 5.30 |
-| 20 | WS18-032 | Drain cleaning & sewer camera inspection service | D | 5.53 | 5.19 |
-| 21 | WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | E | 5.52 | 5.64 |
-| 22 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 5.52 | 5.51 |
-| 23 | WS15-020 | UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination) | E | 5.52 | 5.41 |
-| 24 | WS18-028 | Residential HVAC maintenance memberships + replacement sales | E | 5.52 | 5.40 |
-| 25 | WS04-018 | Biosafety cabinet, fume hood and USP <797>/<800> cleanroom certification | D | 5.49 | 5.36 |
+| 1 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.84 | 5.86 |
+| 2 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 5.78 | 5.24 |
+| 3 | WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | E | 5.78 | 5.59 |
+| 4 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.75 | 5.54 |
+| 5 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.74 | 5.39 |
+| 6 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.74 | 5.02 |
+| 7 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.74 | 5.60 |
+| 8 | WS10-011 | Residential roofing contractor (Illinois licensed) | C | 5.68 | 5.17 |
+| 9 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 5.67 | 5.38 |
+| 10 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 5.67 | 5.58 |
+| 11 | WS02-031 | Tax resolution & representation practice (Enrolled Agent-led) | E | 5.62 | 5.61 |
+| 12 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 5.59 | 5.47 |
+| 13 | WS10-029 | Residential property management for small landlords (Chicago 2-6 flats), via licensed brokerage | E | 5.56 | 5.56 |
+| 14 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.55 | 5.30 |
+| 15 | WS18-032 | Drain cleaning & sewer camera inspection service | D | 5.53 | 5.19 |
+| 16 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 5.53 | 5.28 |
+| 17 | WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | E | 5.52 | 5.64 |
+| 18 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 5.52 | 5.51 |
+| 19 | WS15-020 | UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination) | E | 5.52 | 5.41 |
+| 20 | WS18-028 | Residential HVAC maintenance memberships + replacement sales | E | 5.52 | 5.40 |
+| 21 | WS04-018 | Biosafety cabinet, fume hood and USP <797>/<800> cleanroom certification | D | 5.49 | 5.36 |
+| 22 | WS06-005 | Adult incontinence supplies: discreet DTC autoship with caregiver/agency referral channel | D | 5.49 | 5.33 |
+| 23 | WS11-028 | Septic pumping and inspection route (exurban/rural) | E | 5.48 | 4.99 |
+| 24 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | C | 5.47 | 5.05 |
+| 25 | WS13-038 | Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration | D | 5.46 | 5.27 |
 
 ## management_delegation
 
@@ -250,88 +250,88 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 | 1 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 6.28 | 5.38 |
 | 2 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 6.14 | 5.24 |
 | 3 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 6.08 | 5.54 |
-| 4 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.06 | 5.67 |
-| 5 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | C | 6.06 | 5.05 |
-| 6 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 6.00 | 5.28 |
-| 7 | WS06-005 | Adult incontinence supplies: discreet DTC autoship with caregiver/agency referral channel | D | 5.93 | 5.33 |
-| 8 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | D | 5.88 | 5.32 |
-| 9 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.88 | 5.60 |
-| 10 | WS16-001 | Local jan-san (janitorial & sanitation) distributor for Chicago-area facilities | C | 5.85 | 5.06 |
-| 11 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.82 | 5.49 |
-| 12 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 5.81 | 5.48 |
-| 13 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | D | 5.77 | 5.73 |
-| 14 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.77 | 5.30 |
-| 15 | WS03-018 | Nondestructive testing (NDT) services for fabricators, welding shops and structural steel (UT/MT/PT/VT) | C | 5.74 | 5.07 |
-| 16 | WS13-020 | Local portable storage container rental, sales and modification | C | 5.74 | 4.93 |
-| 17 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.74 | 4.80 |
-| 18 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 5.74 | 5.22 |
-| 19 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.74 | 4.43 |
-| 20 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | C | 5.72 | 5.58 |
-| 21 | WS04-003 | Illinois Medicaid in-home services provider (IDoA Community Care Program) | B | 5.71 | 4.17 |
-| 22 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.70 | 5.86 |
-| 23 | WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | E | 5.69 | 5.64 |
-| 24 | WS11-027 | Portable sanitation (construction sites, events) route business | E | 5.67 | 5.39 |
-| 25 | WS11-026 | Roll-off dumpster rental (C&D, cleanouts, light commercial) | D | 5.67 | 4.84 |
+| 4 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | C | 6.06 | 5.05 |
+| 5 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 6.00 | 5.28 |
+| 6 | WS06-005 | Adult incontinence supplies: discreet DTC autoship with caregiver/agency referral channel | D | 5.93 | 5.33 |
+| 7 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | D | 5.88 | 5.32 |
+| 8 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.88 | 5.60 |
+| 9 | WS16-001 | Local jan-san (janitorial & sanitation) distributor for Chicago-area facilities | C | 5.85 | 5.06 |
+| 10 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.82 | 5.49 |
+| 11 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.77 | 5.30 |
+| 12 | WS03-018 | Nondestructive testing (NDT) services for fabricators, welding shops and structural steel (UT/MT/PT/VT) | C | 5.74 | 5.07 |
+| 13 | WS13-020 | Local portable storage container rental, sales and modification | C | 5.74 | 4.93 |
+| 14 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.74 | 4.80 |
+| 15 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 5.74 | 5.22 |
+| 16 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.74 | 4.43 |
+| 17 | WS04-003 | Illinois Medicaid in-home services provider (IDoA Community Care Program) | B | 5.71 | 4.17 |
+| 18 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.70 | 5.86 |
+| 19 | WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | E | 5.69 | 5.64 |
+| 20 | WS11-027 | Portable sanitation (construction sites, events) route business | E | 5.67 | 5.39 |
+| 21 | WS11-026 | Roll-off dumpster rental (C&D, cleanouts, light commercial) | D | 5.67 | 4.84 |
+| 22 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 5.67 | 5.58 |
+| 23 | WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | E | 5.66 | 5.59 |
+| 24 | WS16-003 | Industrial & warehouse packaging distributor (stretch film, corrugated, tape, equipment service) for Chicago logistics/manufacturing | C | 5.66 | 5.07 |
+| 25 | WS15-017 | AHERA school asbestos compliance programs (3-year reinspections, periodic surveillance, management plans, designated-person support) | E | 5.65 | 5.54 |
 
 ## ai_leverage
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
-| 1 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 5.85 | 5.45 |
-| 2 | SYN-004 | Commercial energy cost management bundle (ICC-licensed electricity/gas brokerage + utility bill audit + demand-response enrollment + capacity-tag peak alerts) | D | 5.70 | 5.80 |
-| 3 | WS03-025 | Lockout/tagout procedure development & machine-safeguarding compliance service (AI-assisted) | E | 5.61 | 5.62 |
-| 4 | WS14-001 | Small-parcel spend audit + UPS/FedEx contract renegotiation on gain-share | D | 5.56 | 5.20 |
-| 5 | WS09-017 | Illinois local-government bid & procurement intelligence (aggregated bids from municipalities, school/park districts, townships) | E | 5.55 | 5.57 |
-| 6 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 5.51 | 5.45 |
-| 7 | WS08-001 | DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship) | C | 5.51 | 5.09 |
-| 8 | WS12-021 | Outsourced HR compliance subscription for Illinois small employers | E | 5.50 | 5.59 |
-| 9 | WS14-002 | LTL/truckload freight bill audit, overcharge and cargo-claim recovery for mid-market shippers | D | 5.49 | 5.39 |
-| 10 | WS14-013 | Duty drawback recovery for small and mid-size importer-exporters (partnered with a licensed customs broker) | D | 5.49 | 4.87 |
-| 11 | WS03-006 | Hard-to-find & obsolete MRO part sourcing service (no inventory, back-to-back buying for plant maintenance) | E | 5.44 | 5.51 |
-| 12 | WS04-012 | Provider credentialing & payer enrollment service | E | 5.44 | 5.54 |
-| 13 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 5.44 | 5.32 |
-| 14 | WS15-001 | ADA Title II digital-accessibility compliance programs for small Illinois local governments | E | 5.44 | 5.33 |
-| 15 | WS15-009 | Energy benchmarking & building-performance-standard compliance service (Chicago first, then BPS cities) | E | 5.44 | 5.55 |
-| 16 | WS01-003 | Business-acquisition financing advisory for first-time buyers and search funds (SBA 7(a) change-of-ownership loans) | D | 5.42 | 4.92 |
-| 17 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.42 | 5.86 |
-| 18 | WS14-008 | Retailer/distributor deduction & chargeback recovery for emerging CPG brands | D | 5.42 | 5.35 |
-| 19 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 5.42 | 5.58 |
-| 20 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 5.42 | 5.93 |
-| 21 | WS14-011 | Commercial lease CAM / operating-expense reconciliation audit for multi-site tenants | E | 5.38 | 5.36 |
-| 22 | WS14-016 | R&D tax-credit studies for small manufacturers and software firms (with CPA sign-off partner) | E | 5.38 | 5.10 |
-| 23 | WS15-002 | Document/PDF accessibility remediation production service (per-page) for public entities and universities | E | 5.38 | 5.21 |
-| 24 | WS15-030 | SDS/label authoring and GHS (HazCom 2024) conversion service for small chemical manufacturers and formulators | E | 5.38 | 5.07 |
-| 25 | WS03-005 | Obsolete & surplus industrial-automation parts reseller (tested inventory: PLCs, drives, servos) | D | 5.35 | 5.33 |
+| 1 | WS03-025 | Lockout/tagout procedure development & machine-safeguarding compliance service (AI-assisted) | E | 5.61 | 5.62 |
+| 2 | WS14-001 | Small-parcel spend audit + UPS/FedEx contract renegotiation on gain-share | D | 5.56 | 5.20 |
+| 3 | WS09-017 | Illinois local-government bid & procurement intelligence (aggregated bids from municipalities, school/park districts, townships) | E | 5.55 | 5.57 |
+| 4 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 5.51 | 5.45 |
+| 5 | WS08-001 | DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship) | C | 5.51 | 5.09 |
+| 6 | WS12-021 | Outsourced HR compliance subscription for Illinois small employers | E | 5.50 | 5.59 |
+| 7 | WS14-002 | LTL/truckload freight bill audit, overcharge and cargo-claim recovery for mid-market shippers | D | 5.49 | 5.39 |
+| 8 | WS14-013 | Duty drawback recovery for small and mid-size importer-exporters (partnered with a licensed customs broker) | D | 5.49 | 4.87 |
+| 9 | WS03-006 | Hard-to-find & obsolete MRO part sourcing service (no inventory, back-to-back buying for plant maintenance) | E | 5.44 | 5.51 |
+| 10 | WS04-012 | Provider credentialing & payer enrollment service | E | 5.44 | 5.54 |
+| 11 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 5.44 | 5.32 |
+| 12 | WS15-001 | ADA Title II digital-accessibility compliance programs for small Illinois local governments | E | 5.44 | 5.33 |
+| 13 | WS15-009 | Energy benchmarking & building-performance-standard compliance service (Chicago first, then BPS cities) | E | 5.44 | 5.55 |
+| 14 | WS01-003 | Business-acquisition financing advisory for first-time buyers and search funds (SBA 7(a) change-of-ownership loans) | D | 5.42 | 4.92 |
+| 15 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.42 | 5.86 |
+| 16 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 5.42 | 5.58 |
+| 17 | WS14-011 | Commercial lease CAM / operating-expense reconciliation audit for multi-site tenants | E | 5.38 | 5.36 |
+| 18 | WS14-016 | R&D tax-credit studies for small manufacturers and software firms (with CPA sign-off partner) | E | 5.38 | 5.10 |
+| 19 | WS15-002 | Document/PDF accessibility remediation production service (per-page) for public entities and universities | E | 5.38 | 5.21 |
+| 20 | WS15-030 | SDS/label authoring and GHS (HazCom 2024) conversion service for small chemical manufacturers and formulators | E | 5.38 | 5.07 |
+| 21 | WS03-005 | Obsolete & surplus industrial-automation parts reseller (tested inventory: PLCs, drives, servos) | D | 5.35 | 5.33 |
+| 22 | WS07-005 | LTL-focused 3PL for small shippers (multi-carrier LTL quoting and management) | D | 5.35 | 5.21 |
+| 23 | WS03-015 | Vibration analysis & reliability route services (condition monitoring for rotating equipment) | E | 5.33 | 5.34 |
+| 24 | WS10-001 | Chicago permit expediting firm (BACP-licensed) with AI-assisted application prep | E | 5.33 | 5.14 |
+| 25 | WS10-002 | Outsourced quantity takeoff & estimating for specialty subcontractors (remote, AI-assisted) | E | 5.33 | 5.31 |
 
 ## geographic_expansion
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
 | 1 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 6.05 | 5.38 |
-| 2 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | C | 5.85 | 5.58 |
-| 3 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.70 | 5.49 |
-| 4 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.69 | 5.30 |
-| 5 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 5.64 | 5.28 |
-| 6 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 5.64 | 5.67 |
-| 7 | WS12-005 | IT contract staffing for mid-market companies | C | 5.64 | 4.80 |
-| 8 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | C | 5.64 | 5.05 |
-| 9 | WS05-013 | Commercial HVAC preventive-maintenance agreements (light commercial RTUs) with repair/replacement pull-through | E | 5.62 | 5.13 |
-| 10 | WS06-003 | Exclusive marketplace distributor for small and mid-size U.S.-made brands | C | 5.53 | 4.86 |
-| 11 | WS07-001 | Own-authority truckload freight brokerage for small/mid Midwest shippers (dry van) | C | 5.53 | 4.83 |
-| 12 | WS16-001 | Local jan-san (janitorial & sanitation) distributor for Chicago-area facilities | C | 5.53 | 5.06 |
-| 13 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | D | 5.53 | 5.32 |
-| 14 | WS06-005 | Adult incontinence supplies: discreet DTC autoship with caregiver/agency referral channel | D | 5.53 | 5.33 |
-| 15 | WS11-026 | Roll-off dumpster rental (C&D, cleanouts, light commercial) | D | 5.53 | 4.84 |
-| 16 | WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | D | 5.53 | 5.27 |
-| 17 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.53 | 5.60 |
-| 18 | SYN-004 | Commercial energy cost management bundle (ICC-licensed electricity/gas brokerage + utility bill audit + demand-response enrollment + capacity-tag peak alerts) | D | 5.53 | 5.80 |
-| 19 | WS12-016 | Embedded recruiter / RPO subscription for growth-stage and mid-market employers | E | 5.48 | 5.42 |
-| 20 | WS15-007 | Lead service line replacement contracting (with licensed plumbers) for Illinois utilities and homeowners | E | 5.48 | 4.38 |
-| 21 | WS07-005 | LTL-focused 3PL for small shippers (multi-carrier LTL quoting and management) | D | 5.44 | 5.21 |
-| 22 | WS09-012 | Regional niche B2B trade show / conference (Chicago hub) for an underserved vertical | D | 5.44 | 5.07 |
-| 23 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.44 | 5.54 |
-| 24 | WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | C | 5.42 | 5.32 |
-| 25 | WS03-018 | Nondestructive testing (NDT) services for fabricators, welding shops and structural steel (UT/MT/PT/VT) | C | 5.42 | 5.07 |
+| 2 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.70 | 5.49 |
+| 3 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.69 | 5.30 |
+| 4 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 5.64 | 5.28 |
+| 5 | WS12-005 | IT contract staffing for mid-market companies | C | 5.64 | 4.80 |
+| 6 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | C | 5.64 | 5.05 |
+| 7 | WS05-013 | Commercial HVAC preventive-maintenance agreements (light commercial RTUs) with repair/replacement pull-through | E | 5.62 | 5.13 |
+| 8 | WS06-003 | Exclusive marketplace distributor for small and mid-size U.S.-made brands | C | 5.53 | 4.86 |
+| 9 | WS07-001 | Own-authority truckload freight brokerage for small/mid Midwest shippers (dry van) | C | 5.53 | 4.83 |
+| 10 | WS16-001 | Local jan-san (janitorial & sanitation) distributor for Chicago-area facilities | C | 5.53 | 5.06 |
+| 11 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | D | 5.53 | 5.32 |
+| 12 | WS06-005 | Adult incontinence supplies: discreet DTC autoship with caregiver/agency referral channel | D | 5.53 | 5.33 |
+| 13 | WS11-026 | Roll-off dumpster rental (C&D, cleanouts, light commercial) | D | 5.53 | 4.84 |
+| 14 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.53 | 5.60 |
+| 15 | WS12-016 | Embedded recruiter / RPO subscription for growth-stage and mid-market employers | E | 5.48 | 5.42 |
+| 16 | WS15-007 | Lead service line replacement contracting (with licensed plumbers) for Illinois utilities and homeowners | E | 5.48 | 4.38 |
+| 17 | WS07-005 | LTL-focused 3PL for small shippers (multi-carrier LTL quoting and management) | D | 5.44 | 5.21 |
+| 18 | WS09-012 | Regional niche B2B trade show / conference (Chicago hub) for an underserved vertical | D | 5.44 | 5.07 |
+| 19 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.44 | 5.54 |
+| 20 | WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | C | 5.42 | 5.32 |
+| 21 | WS03-018 | Nondestructive testing (NDT) services for fabricators, welding shops and structural steel (UT/MT/PT/VT) | C | 5.42 | 5.07 |
+| 22 | WS07-004 | Flatbed / open-deck brokerage for steel, building-materials and machinery shippers | C | 5.42 | 4.97 |
+| 23 | WS13-020 | Local portable storage container rental, sales and modification | C | 5.42 | 4.93 |
+| 24 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 5.42 | 5.19 |
+| 25 | WS01-005 | Outsourced SBA loan processing, closing and Lender Service Provider (LSP) services for community banks and credit unions | E | 5.41 | 5.04 |
 
 ## adjacent_expansion
 
@@ -344,96 +344,96 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 | 5 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.56 | 5.49 |
 | 6 | WS01-028 | Outsourced commercial credit analysis and independent loan review for community banks and credit unions (AI-assisted) | E | 5.44 | 5.46 |
 | 7 | WS05-013 | Commercial HVAC preventive-maintenance agreements (light commercial RTUs) with repair/replacement pull-through | E | 5.38 | 5.13 |
-| 8 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 5.34 | 5.67 |
-| 9 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | C | 5.34 | 5.05 |
-| 10 | WS15-007 | Lead service line replacement contracting (with licensed plumbers) for Illinois utilities and homeowners | E | 5.33 | 4.38 |
-| 11 | WS17-006 | Mobile trailer repair and trailer PM (dry van/reefer box, lights, air, doors, floors, welding) | E | 5.33 | 5.63 |
-| 12 | WS18-028 | Residential HVAC maintenance memberships + replacement sales | E | 5.33 | 5.40 |
-| 13 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.28 | 5.39 |
-| 14 | WS06-005 | Adult incontinence supplies: discreet DTC autoship with caregiver/agency referral channel | D | 5.28 | 5.33 |
-| 15 | WS17-004 | Mobile preventive maintenance for light/medium-duty service and delivery fleets | D | 5.28 | 4.86 |
-| 16 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.28 | 5.60 |
-| 17 | SYN-004 | Commercial energy cost management bundle (ICC-licensed electricity/gas brokerage + utility bill audit + demand-response enrollment + capacity-tag peak alerts) | D | 5.28 | 5.80 |
-| 18 | WS05-010 | Grease interceptor pumping & FOG compliance route (vacuum truck liquid-waste hauling) | E | 5.28 | 5.16 |
-| 19 | WS10-029 | Residential property management for small landlords (Chicago 2-6 flats), via licensed brokerage | E | 5.28 | 5.56 |
-| 20 | WS15-005 | Lead service line inventory verification & LCRI compliance data services for small Illinois water systems | E | 5.28 | 5.42 |
-| 21 | WS17-034 | Fixed-location independent truck & trailer repair shop (baseline format) | E | 5.28 | 5.26 |
-| 22 | WS16-001 | Local jan-san (janitorial & sanitation) distributor for Chicago-area facilities | C | 5.25 | 5.06 |
-| 23 | WS02-017 | Public adjusting firm (commercial and residential property claims, Chicago metro) | D | 5.21 | 5.33 |
-| 24 | WS13-002 | Commercial ice-machine subscription (ice-as-a-service) for restaurants, bars, healthcare and hotels | D | 5.21 | 5.00 |
-| 25 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 5.19 | 5.24 |
+| 8 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | C | 5.34 | 5.05 |
+| 9 | WS15-007 | Lead service line replacement contracting (with licensed plumbers) for Illinois utilities and homeowners | E | 5.33 | 4.38 |
+| 10 | WS17-006 | Mobile trailer repair and trailer PM (dry van/reefer box, lights, air, doors, floors, welding) | E | 5.33 | 5.63 |
+| 11 | WS18-028 | Residential HVAC maintenance memberships + replacement sales | E | 5.33 | 5.40 |
+| 12 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.28 | 5.39 |
+| 13 | WS06-005 | Adult incontinence supplies: discreet DTC autoship with caregiver/agency referral channel | D | 5.28 | 5.33 |
+| 14 | WS17-004 | Mobile preventive maintenance for light/medium-duty service and delivery fleets | D | 5.28 | 4.86 |
+| 15 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.28 | 5.60 |
+| 16 | WS05-010 | Grease interceptor pumping & FOG compliance route (vacuum truck liquid-waste hauling) | E | 5.28 | 5.16 |
+| 17 | WS10-029 | Residential property management for small landlords (Chicago 2-6 flats), via licensed brokerage | E | 5.28 | 5.56 |
+| 18 | WS15-005 | Lead service line inventory verification & LCRI compliance data services for small Illinois water systems | E | 5.28 | 5.42 |
+| 19 | WS17-034 | Fixed-location independent truck & trailer repair shop (baseline format) | E | 5.28 | 5.26 |
+| 20 | WS16-001 | Local jan-san (janitorial & sanitation) distributor for Chicago-area facilities | C | 5.25 | 5.06 |
+| 21 | WS02-017 | Public adjusting firm (commercial and residential property claims, Chicago metro) | D | 5.21 | 5.33 |
+| 22 | WS13-002 | Commercial ice-machine subscription (ice-as-a-service) for restaurants, bars, healthcare and hotels | D | 5.21 | 5.00 |
+| 23 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 5.19 | 5.24 |
+| 24 | WS03-018 | Nondestructive testing (NDT) services for fabricators, welding shops and structural steel (UT/MT/PT/VT) | C | 5.17 | 5.07 |
+| 25 | WS10-007 | Commercial firestopping subcontractor (code-required penetration & joint sealing) | C | 5.17 | 4.83 |
 
 ## holding_company_foundation
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
-| 1 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 6.14 | 5.48 |
-| 2 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.01 | 5.86 |
-| 3 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 6.01 | 5.93 |
-| 4 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | D | 5.98 | 5.73 |
-| 5 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 5.89 | 5.67 |
-| 6 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | C | 5.89 | 5.58 |
-| 7 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 5.84 | 5.58 |
-| 8 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.84 | 5.60 |
-| 9 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.79 | 5.54 |
-| 10 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.77 | 5.39 |
-| 11 | WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | E | 5.77 | 5.59 |
-| 12 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 5.74 | 5.47 |
-| 13 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 5.74 | 5.24 |
-| 14 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 5.73 | 5.51 |
-| 15 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 5.70 | 5.38 |
-| 16 | SYN-004 | Commercial energy cost management bundle (ICC-licensed electricity/gas brokerage + utility bill audit + demand-response enrollment + capacity-tag peak alerts) | D | 5.70 | 5.80 |
-| 17 | WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | E | 5.69 | 5.64 |
-| 18 | WS15-020 | UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination) | E | 5.69 | 5.41 |
-| 19 | WS10-011 | Residential roofing contractor (Illinois licensed) | C | 5.68 | 5.17 |
-| 20 | WS02-031 | Tax resolution & representation practice (Enrolled Agent-led) | E | 5.67 | 5.61 |
-| 21 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 5.67 | 5.30 |
-| 22 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.67 | 5.02 |
-| 23 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | D | 5.67 | 5.33 |
-| 24 | WS14-023 | Estate sale & downsizing liquidation company (commission on gross sales) | E | 5.65 | 5.63 |
-| 25 | WS04-012 | Provider credentialing & payer enrollment service | E | 5.63 | 5.54 |
+| 1 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.01 | 5.86 |
+| 2 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | D | 5.84 | 5.58 |
+| 3 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | D | 5.84 | 5.60 |
+| 4 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.79 | 5.54 |
+| 5 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.77 | 5.39 |
+| 6 | WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | E | 5.77 | 5.59 |
+| 7 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 5.74 | 5.47 |
+| 8 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 5.74 | 5.24 |
+| 9 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 5.73 | 5.51 |
+| 10 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 5.70 | 5.38 |
+| 11 | SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | D | 5.70 | 5.28 |
+| 12 | WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | E | 5.69 | 5.64 |
+| 13 | WS15-020 | UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination) | E | 5.69 | 5.41 |
+| 14 | WS10-011 | Residential roofing contractor (Illinois licensed) | C | 5.68 | 5.17 |
+| 15 | WS02-031 | Tax resolution & representation practice (Enrolled Agent-led) | E | 5.67 | 5.61 |
+| 16 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 5.67 | 5.30 |
+| 17 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.67 | 5.02 |
+| 18 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | D | 5.67 | 5.33 |
+| 19 | WS14-023 | Estate sale & downsizing liquidation company (commission on gross sales) | E | 5.65 | 5.63 |
+| 20 | WS04-012 | Provider credentialing & payer enrollment service | E | 5.63 | 5.54 |
+| 21 | WS15-017 | AHERA school asbestos compliance programs (3-year reinspections, periodic surveillance, management plans, designated-person support) | E | 5.63 | 5.54 |
+| 22 | WS11-007 | Commercial electricity procurement brokerage (ICC-licensed ABC) with gas add-on | D | 5.63 | 5.23 |
+| 23 | WS13-018 | Multifamily doorstep (valet) trash collection service | D | 5.63 | 5.26 |
+| 24 | WS18-013 | Pet waste removal weekly route (yard scooping) | D | 5.63 | 5.23 |
+| 25 | WS10-029 | Residential property management for small landlords (Chicago 2-6 flats), via licensed brokerage | E | 5.62 | 5.56 |
 
 ## Weight-sensitivity stability (1,000 Dirichlet perturbations of v1 weights)
 
 | ID | Title | P(top 10) | P(top 25) |
 |---|---|---|---|
-| SYN-006 | Construction subcontractor back office (job-cost bookkeeping + prevailing-wage certified payroll + lien-rights administration + surety/insurance referrals) | 0.99 | 1.00 |
-| WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | 0.93 | 0.99 |
-| WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | 0.87 | 0.99 |
-| WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | 0.95 | 0.99 |
-| SYN-004 | Commercial energy cost management bundle (ICC-licensed electricity/gas brokerage + utility bill audit + demand-response enrollment + capacity-tag peak alerts) | 0.88 | 0.98 |
-| WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | 0.43 | 0.88 |
-| WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | 0.66 | 0.80 |
-| WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | 0.33 | 0.79 |
-| WS18-003 | Junk removal and hauling (with optional dumpster rental) | 0.54 | 0.76 |
-| WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | 0.42 | 0.67 |
-| WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | 0.31 | 0.67 |
-| WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | 0.38 | 0.66 |
-| WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | 0.07 | 0.64 |
-| WS17-006 | Mobile trailer repair and trailer PM (dry van/reefer box, lights, air, doors, floors, welding) | 0.18 | 0.61 |
-| WS14-023 | Estate sale & downsizing liquidation company (commission on gross sales) | 0.07 | 0.60 |
-| WS12-014 | Contingency direct-hire recruiting desk in a technical niche | 0.36 | 0.58 |
-| WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | 0.17 | 0.56 |
-| WS02-031 | Tax resolution & representation practice (Enrolled Agent-led) | 0.12 | 0.54 |
-| WS03-025 | Lockout/tagout procedure development & machine-safeguarding compliance service (AI-assisted) | 0.08 | 0.51 |
-| WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | 0.17 | 0.51 |
-| WS10-029 | Residential property management for small landlords (Chicago 2-6 flats), via licensed brokerage | 0.06 | 0.46 |
-| WS17-018 | Mobile ADAS calibration and diagnostic service for collision/glass shops and dealers | 0.02 | 0.44 |
-| WS12-021 | Outsourced HR compliance subscription for Illinois small employers | 0.02 | 0.40 |
-| WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | 0.20 | 0.40 |
-| WS09-017 | Illinois local-government bid & procurement intelligence (aggregated bids from municipalities, school/park districts, townships) | 0.03 | 0.37 |
-| WS15-017 | AHERA school asbestos compliance programs (3-year reinspections, periodic surveillance, management plans, designated-person support) | 0.06 | 0.34 |
-| WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | 0.01 | 0.33 |
-| WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | 0.01 | 0.32 |
-| WS15-009 | Energy benchmarking & building-performance-standard compliance service (Chicago first, then BPS cities) | 0.01 | 0.32 |
-| WS04-012 | Provider credentialing & payer enrollment service | 0.00 | 0.31 |
-| WS04-018 | Biosafety cabinet, fume hood and USP <797>/<800> cleanroom certification | 0.12 | 0.30 |
-| WS01-028 | Outsourced commercial credit analysis and independent loan review for community banks and credit unions (AI-assisted) | 0.06 | 0.27 |
-| WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | 0.07 | 0.26 |
-| WS13-032 | Trauma, unattended-death and biohazard remediation (incl. hoarding cleanup) | 0.01 | 0.26 |
-| WS02-006 | Hard-to-place E&S niche retail agency (e.g., security guard firms, vacant buildings, Illinois cannabis/hemp operators) | 0.02 | 0.26 |
-| SYN-001 | Small motor-carrier compliance & back-office hub (DOT compliance subscription → drug/alcohol consortium → IRP/title → bookkeeping/IFTA → insurance) | 0.01 | 0.26 |
-| WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | 0.06 | 0.25 |
-| WS14-002 | LTL/truckload freight bill audit, overcharge and cargo-claim recovery for mid-market shippers | 0.04 | 0.24 |
-| WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | 0.01 | 0.23 |
-| WS11-021 | Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance | 0.01 | 0.20 |
+| WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | 0.97 | 0.99 |
+| WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | 0.70 | 0.94 |
+| WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | 0.62 | 0.87 |
+| WS02-027 | Small-business retirement plan setup & administration (Illinois Secure Choice-driven 401(k) TPA) | 0.31 | 0.81 |
+| WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | 0.53 | 0.75 |
+| WS14-023 | Estate sale & downsizing liquidation company (commission on gross sales) | 0.32 | 0.75 |
+| WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | 0.55 | 0.73 |
+| WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | 0.54 | 0.72 |
+| WS17-006 | Mobile trailer repair and trailer PM (dry van/reefer box, lights, air, doors, floors, welding) | 0.40 | 0.70 |
+| WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | 0.36 | 0.69 |
+| WS03-025 | Lockout/tagout procedure development & machine-safeguarding compliance service (AI-assisted) | 0.27 | 0.68 |
+| WS02-031 | Tax resolution & representation practice (Enrolled Agent-led) | 0.30 | 0.67 |
+| WS17-018 | Mobile ADAS calibration and diagnostic service for collision/glass shops and dealers | 0.17 | 0.63 |
+| WS12-021 | Outsourced HR compliance subscription for Illinois small employers | 0.15 | 0.60 |
+| WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | 0.34 | 0.59 |
+| WS10-029 | Residential property management for small landlords (Chicago 2-6 flats), via licensed brokerage | 0.21 | 0.58 |
+| WS09-017 | Illinois local-government bid & procurement intelligence (aggregated bids from municipalities, school/park districts, townships) | 0.16 | 0.52 |
+| WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | 0.11 | 0.52 |
+| WS15-017 | AHERA school asbestos compliance programs (3-year reinspections, periodic surveillance, management plans, designated-person support) | 0.15 | 0.48 |
+| WS15-009 | Energy benchmarking & building-performance-standard compliance service (Chicago first, then BPS cities) | 0.11 | 0.47 |
+| WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | 0.30 | 0.46 |
+| WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | 0.10 | 0.45 |
+| WS04-012 | Provider credentialing & payer enrollment service | 0.13 | 0.44 |
+| WS13-032 | Trauma, unattended-death and biohazard remediation (incl. hoarding cleanup) | 0.08 | 0.39 |
+| WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | 0.07 | 0.38 |
+| WS04-018 | Biosafety cabinet, fume hood and USP <797>/<800> cleanroom certification | 0.20 | 0.38 |
+| WS02-006 | Hard-to-place E&S niche retail agency (e.g., security guard firms, vacant buildings, Illinois cannabis/hemp operators) | 0.09 | 0.37 |
+| WS01-028 | Outsourced commercial credit analysis and independent loan review for community banks and credit unions (AI-assisted) | 0.13 | 0.36 |
+| WS03-006 | Hard-to-find & obsolete MRO part sourcing service (no inventory, back-to-back buying for plant maintenance) | 0.06 | 0.34 |
+| WS14-002 | LTL/truckload freight bill audit, overcharge and cargo-claim recovery for mid-market shippers | 0.12 | 0.34 |
+| WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | 0.14 | 0.33 |
+| WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | 0.16 | 0.33 |
+| WS11-021 | Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance | 0.08 | 0.33 |
+| WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | 0.10 | 0.32 |
+| WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | 0.12 | 0.26 |
+| WS06-005 | Adult incontinence supplies: discreet DTC autoship with caregiver/agency referral channel | 0.06 | 0.25 |
+| WS02-017 | Public adjusting firm (commercial and residential property claims, Chicago metro) | 0.07 | 0.25 |
+| WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | 0.08 | 0.24 |
+| WS18-020 | School & park-district enrichment programs and STEM camps | 0.01 | 0.24 |
+| WS03-005 | Obsolete & surplus industrial-automation parts reseller (tested inventory: PLCs, drives, servos) | 0.07 | 0.22 |

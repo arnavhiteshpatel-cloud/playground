@@ -38,19 +38,19 @@ The OSFM licence rolls (dated 11/19/2026) show how small the licensed pool is:
    - Licence obtainable in weeks; mandated annual demand; sellable to consolidators.
    - Chicago building violations cite extinguishers at 489 addresses a year (S035).
    - This is the natural base for adding suppression (003), alarm (006) and sprinkler (002) lines.
-3. **WS05-026 Medical/dental clinic janitorial** (5.84, E)
+3. **WS05-026 Medical/dental clinic janitorial** (5.75, E)
    - Nearly customer-funded and highly reachable, with a healthcare angle. The industry is crowded; the evidence is weak.
 4. **WS05-011 Fire-door inspection (NFPA 80) + hardware repair** (5.53, E)
    - Specialist niche with low licensing barriers and repair pull-through. Institutional sales cycles and pricing are unverified.
 5. **WS05-025 Restroom hygiene route** (5.48, E)
    - Simple to delegate; recurring replenishment. Tickets are small and Cintas bundles this service.
 6. **WS05-006 Fire alarm ITM + monitoring revenue** and **WS05-002 Sprinkler ITM**
-   - Attractive economics, but each needs licensed staff or experience. Best treated as phase-2 lines.
+   - Attractive, but each needs licensed staff or experience: phase-2 lines.
 
-The likely winning structure is a **multi-line fire and life-safety company built inspection-first**: start with extinguishers and emergency lighting, then add kitchen suppression. Add alarm and sprinkler lines once licensed hires are in place. Pest control is the strongest standalone alternative.
+The likely winning structure is a **multi-line fire and life-safety company built inspection-first**: start with extinguishers and emergency lighting, then add kitchen suppression. Add alarm and sprinkler lines once licensed hires are in place. Pest control is the strongest standalone alternative. Elevators, guards, high-rise windows, snow and sweeping were rejected (labour, licensing, weather or price).
 
 ## Surprises
-- Licence rosters are public and small. Sprinkler inspection is labour-constrained statewide, with 699 inspectors.
+- Licence rosters are public and small; sprinkler inspection is labour-constrained (699 inspectors statewide).
 - The extinguisher-employee licence has no experience requirement; only an open-book certification is needed.
 - The Fire Equipment Act may face a 1 Jan 2028 sunset (Justia note, unverified). This is a regulatory risk, and possibly an opportunity if the law lapses.
 - City enforcement data (food inspections, building violations) turns compliance demand into named prospects.
@@ -59,7 +59,6 @@ The likely winning structure is a **multi-line fire and life-safety company buil
 - **Backflow testing:** the mandate is perfect, but the founder can never hold the credential and pricing is commodity.
 - **Facilities-management aggregation:** thin pass-through margins, severe working-capital float, and Lessen already runs 34K vendors and 3M work orders a year (S031).
 - **Hood cleaning:** mandated but crowded, and franchises charge about $200–247k to enter (S026).
-- **Elevators, guards, high-rise windows, snow, sweeping:** closed off by labour, licensing, weather or price.
 
 ## Evidence gaps
 - No primary pricing for any service: per-extinguisher fees, pest contracts, backflow tests, door inspections.
@@ -69,12 +68,12 @@ The likely winning structure is a **multi-line fire and life-safety company buil
 - CMS/TJC requirements for fire doors, dampers and generators: the federal sites blocked access with a captcha.
 - BLS state wage tables could not be parsed, and the Census API needs a key.
 - Not verified: manufacturer gatekeeping for kitchen-suppression parts, and whether fire-alarm-only work requires the IDFPR licence.
-- The shared web-search budget ran out partway through; later work used direct fetches only.
+- The shared web-search budget ran out; later work used direct fetches only.
 
 ## Cross-stream leads
 - **WS15:** Chicago facade ordinance, building energy benchmarking, POTS-line sunset forcing alarm communicator replacement, and the fire-equipment Act sunset.
 - **WS08:** City of Chicago contract records (S036) show multi-million-dollar extinguisher, pest and elevator awards.
 - **WS11:** cooling-tower and boiler water-treatment routes; used cooking oil collection.
-- **WS09:** NAFED/ICC/NICET exam prep and fire-inspector continuing education.
-- **WS13:** mat rental and first-aid cabinet routes, which are Cintas-adjacent.
+- **WS09:** NAFED/ICC/NICET exam prep.
+- **WS13:** mat rental and first-aid cabinet routes.
 - **WS14:** compliance-calendar software for property managers.

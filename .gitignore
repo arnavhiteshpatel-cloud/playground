@@ -21,3 +21,6 @@ models/*.onnx
 experiments/results/*_.log
 experiments/results/q4_*.log
 experiments/results/QUEUE*.log
+experiments/results/exp_S1H*.log
+experiments/results/p_*.log
+experiments/results/P_S1.log

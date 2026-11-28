@@ -29,7 +29,7 @@ Each entry: date · decision · rationale · evidence · reversibility.
   ≈5.40 on a 1–10 scale), so each value-capture family (freight, customs, contingency audit, government, GPO,
   recruiting, sourcing brokerage, code-driven trades) gets its best representative tested rather than being
   excluded by sub-0.2-point noise. Organized into 9 themed batches (`03_screening/stage_C_batches.json`).
-- **2026-11-28 · Stage C complete.** 74 investigations (9 batches, ~280 new sources). Almost every opportunity's
+- **2026-11-28 · Stage C complete.** 74 investigations (9 batches, 312 new sources). Almost every opportunity's
   evidence-adjusted score fell (median ≈ −0.3) once real prices were found; most realistic new-entrant year-3
   operating-profit ranges sit at ~$25–250k. Bundles: SYN-001 (insurance-led carrier hub) and SYN-006 (construction
   back office, narrowed) survived; SYN-002/003/005/007 dropped (bundles mixed buyers, licenses or delivery systems).
@@ -66,3 +66,7 @@ Each entry: date · decision · rationale · evidence · reversibility.
   (≈$81k Y3 / $114k Y5) — it wins the founder's two heaviest criteria (FCF, ROIC). It is weak on delegation, resilience and
   transfer value, which is why it is framed as stage 1 of a sequence rather than the holding-company core. The choice
   between WS12-014 and SYN-006 is close; the day-60 gates decide. See `10_deliverables/EXECUTIVE_DECISION_MEMO.md`.
+- **2026-11-28 · Record-keeping note.** `judgment_picks.json` lists 10 mechanism-coverage picks; 9 appear as judgment
+  picks in `screening_dispositions.csv` because WS05-011 had already qualified as a wildcard (highest raw score with weak
+  evidence), so it is recorded under that category. Reviewer and wealth-analysis helper scripts were
+  copied from temporary storage into `07_review/scripts/` so all re-runs are reproducible from the repository.

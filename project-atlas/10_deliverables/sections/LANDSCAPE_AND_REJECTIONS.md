@@ -1,6 +1,6 @@
 # Landscape and Rejections
 
-*Stage A discovery and Stage B screening, as of 2026-11-28. Citations follow EVIDENCE_STANDARDS.md as [evidence level, source ID]. Record IDs (WSxx-nnn) refer to `09_databases/opportunities.jsonl`; dispositions and scores come from `03_screening/screening_dispositions.csv`. Composites run 1–10, where 5 means a typical small business. "Adj" is the evidence-adjusted composite; current scores average the author score and the blind re-score. Stage C is still running and is not reflected here.*
+*Stage A discovery and Stage B screening, as of 2026-11-28. Citations follow EVIDENCE_STANDARDS.md as [evidence level, source ID]. Record IDs (WSxx-nnn) refer to `09_databases/opportunities.jsonl`; dispositions and scores come from `03_screening/screening_dispositions.csv`. Composites run 1–10, where 5 means a typical small business. "Adj" is the evidence-adjusted composite; current scores average the author score and the blind re-score. Stage C–F results (investigations, deep dives, playbooks, adversarial review) are summarized in `MASTER_RESEARCH_REPORT.md` and `INDEPENDENT_REVIEW_REPORT.md`; this chapter reflects the Stage A–B view.*
 
 ## 1. The opportunity landscape
 

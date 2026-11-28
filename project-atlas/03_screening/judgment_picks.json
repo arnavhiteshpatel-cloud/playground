@@ -1,0 +1,13 @@
+{"_rationale": "Mechanism-family coverage: composite scores are tightly bunched (Stage C core cut ~5.40), so each major value-capture family gets its best-ranked representative tested at Stage C rather than being excluded by sub-0.2-point scoring noise. Logged in DECISION_LOG.md.",
+ "picks": {
+  "WS07-036": "Freight/logistics family (best-ranked: fee-based managed transportation, no carrier float)",
+  "WS07-015": "Licensed-moat trade services (customs brokerage; tariff/de-minimis changes created mandatory entry demand)",
+  "WS14-001": "Contingency-recovery family (parcel audit + contract renegotiation, near-zero capital)",
+  "WS14-004": "Contingency-recovery, tax (Illinois POA permits non-attorney/non-CPA representative [A])",
+  "WS08-017": "Government/institutional family (E-Rate integrator; A-level award data; best founder fit in WS08)",
+  "WS05-011": "Fire & life-safety extension family (fire-door inspection + repair pull-through)",
+  "WS10-010": "Code-enforcement-driven trades (Chicago masonry; C-level permit/violation data)",
+  "WS03-001": "Asset-light manufacturing brokerage (C-level Xometry economics)",
+  "WS14-019": "Aggregation/GPO family (best-evidenced mechanism in WS14, evidence B)",
+  "WS12-014": "Recruiting/placement family (contingency technical recruiting, near-zero capital)"
+ }}

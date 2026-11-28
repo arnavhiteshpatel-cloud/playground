@@ -1,0 +1,387 @@
+opportunity_id,title,risk_type,risk,stage_recorded,status
+WS01-003,Business-acquisition financing advisory for first-time buyers and search funds (SBA 7(a) change-of-ownership loans),failure mode,High deal mortality with unpaid work,A,open
+WS01-003,Business-acquisition financing advisory for first-time buyers and search funds (SBA 7(a) change-of-ownership loans),failure mode,"SBA policy swings (equity injection, seller-note rules) shrinking eligible deals",A,open
+WS01-003,Business-acquisition financing advisory for first-time buyers and search funds (SBA 7(a) change-of-ownership loans),failure mode,Competing against lender BDOs who are free to the buyer,A,open
+WS01-003,Business-acquisition financing advisory for first-time buyers and search funds (SBA 7(a) change-of-ownership loans),operational,"Deal mortality (seller issues, QoE surprises); reputational risk if buyer overpays and defaults.",A,open
+WS01-003,Business-acquisition financing advisory for first-time buyers and search funds (SBA 7(a) change-of-ownership loans),financial,Lumpy; acquisition market rate-sensitive; non-contingent fee model may lower close rate of engagements.,A,open
+WS01-003,Business-acquisition financing advisory for first-time buyers and search funds (SBA 7(a) change-of-ownership loans),regulatory,"SBA can suspend/revoke agent privileges for unreasonable fees or undisclosed relationships [A, WS01-S012]; conflict between SBA non-contingency rule and Illinois exemption structure needs legal review.",A,open
+WS02-001,Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets),failure mode,Churn of new-venture truckers erodes book faster than sales add,A,open
+WS02-001,Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets),failure mode,Carrier exits leave agency without markets,A,open
+WS02-001,Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets),failure mode,Lead-chasing CAC exceeds first-year commission,A,open
+WS02-001,Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets),failure mode,E&O claim on a missed filing,A,open
+WS02-001,Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets),operational,Claims-heavy servicing; carrier/MGA withdrawal from trucking; E&O exposure on filings; high account churn.,A,open
+WS02-001,Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets),financial,Return commissions on cancellations; book value impaired by churn; carrier concentration.,A,open
+WS02-001,Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets),regulatory,"Producer licensing is modest; FMCSA tightened authority vetting in 2026 (Motus registration; automated screening of new/reinstated authority applications), which may shrink new-venture volume [C, WS02-S030].",A,open
+WS02-002,Contractor & trades commercial insurance agency (Chicagoland small contractors),failure mode,Price-shopping customers churn,A,open
+WS02-002,Contractor & trades commercial insurance agency (Chicagoland small contractors),failure mode,Servicing load outruns revenue,A,open
+WS02-002,Contractor & trades commercial insurance agency (Chicagoland small contractors),failure mode,Concentration in a cyclical trade,A,open
+WS02-002,Contractor & trades commercial insurance agency (Chicagoland small contractors),operational,High-volume COI servicing; misclassification disputes at audit; claims advocacy.,A,open
+WS02-002,Contractor & trades commercial insurance agency (Chicagoland small contractors),financial,Construction downturn reduces payrolls/premiums; carrier appetite swings.,A,open
+WS02-002,Contractor & trades commercial insurance agency (Chicagoland small contractors),regulatory,Producer license only; WC class-code and audit complexity raises E&O risk.,A,open
+WS02-004,Small habitational / landlord property insurance niche (Chicago 2-6 flats and small apartment owners),failure mode,Capacity crunch leaves no markets,A,open
+WS02-004,Small habitational / landlord property insurance niche (Chicago 2-6 flats and small apartment owners),failure mode,Thin commission on low-premium dwellings,A,open
+WS02-004,Small habitational / landlord property insurance niche (Chicago 2-6 flats and small apartment owners),operational,Hard-market capacity shortages; catastrophic/fire claims; vacancy exclusions.,A,open
+WS02-004,Small habitational / landlord property insurance niche (Chicago 2-6 flats and small apartment owners),financial,Premium spikes cause non-renewals; carrier exits.,A,open
+WS02-004,Small habitational / landlord property insurance niche (Chicago 2-6 flats and small apartment owners),regulatory,Producer license; possibly surplus lines via wholesaler.,A,open
+WS02-018,"Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data)",failure mode,Price war with large BPOs,A,open
+WS02-018,"Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data)",failure mode,AI tools let agencies self-serve,A,open
+WS02-018,"Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data)",operational,Quality errors create client E&O; staff turnover.,A,open
+WS02-018,"Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data)",financial,Client concentration; AI substitution reduces FTE demand.,A,open
+WS02-018,"Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data)",regulatory,"Data privacy (GLBA/state), carrier system access rules.",A,open
+WS02-019,Certificate-of-insurance (COI) tracking & vendor insurance compliance service,failure mode,SaaS commoditization,A,open
+WS02-019,Certificate-of-insurance (COI) tracking & vendor insurance compliance service,failure mode,Liability from missed lapses,A,open
+WS02-019,Certificate-of-insurance (COI) tracking & vendor insurance compliance service,operational,Missed deficiency creates liability claims; need E&O/professional liability.,A,open
+WS02-019,Certificate-of-insurance (COI) tracking & vendor insurance compliance service,financial,Low.,A,open
+WS02-019,Certificate-of-insurance (COI) tracking & vendor insurance compliance service,regulatory,Possible licensing if advising on coverage.,A,open
+WS02-026,"Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform",failure mode,Price compression by SaaS,A,open
+WS02-026,"Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform",failure mode,Tax error liability,A,open
+WS02-026,"Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform",failure mode,Slow client acquisition,A,open
+WS02-026,"Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform",operational,Payroll errors are costly; tax-notice handling.,A,open
+WS02-026,"Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform",financial,Fiduciary/tax-deposit failures can be catastrophic; E&O/crime coverage needed [E].,A,open
+WS02-026,"Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform",regulatory,Tax deposit liability; data security.,A,open
+WS02-028,"Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants)",failure mode,Low-price competition,A,open
+WS02-028,"Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants)",failure mode,Quality failures cause churn,A,open
+WS02-028,"Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants)",failure mode,Founder becomes the bottleneck reviewer,A,open
+WS02-028,"Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants)",operational,"Errors, staff turnover, scope creep, cleanup projects.",A,open
+WS02-028,"Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants)",financial,Low; client concentration.,A,open
+WS02-028,"Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants)",regulatory,Low; data security/privacy.,A,open
+WS03-001,Contract-manufacturing sourcing broker for CNC machining & sheet-metal parts (Midwest job-shop network),failure mode,Price race against instant-quote engines,A,open
+WS03-001,Contract-manufacturing sourcing broker for CNC machining & sheet-metal parts (Midwest job-shop network),failure mode,One quality escape loses a key account,A,open
+WS03-001,Contract-manufacturing sourcing broker for CNC machining & sheet-metal parts (Midwest job-shop network),failure mode,Customers or suppliers cut out the broker,A,open
+WS03-001,Contract-manufacturing sourcing broker for CNC machining & sheet-metal parts (Midwest job-shop network),failure mode,Founder remains the only salesperson and quoter,A,open
+WS03-001,Contract-manufacturing sourcing broker for CNC machining & sheet-metal parts (Midwest job-shop network),operational,Supplier late deliveries and quality escapes for which the broker is liable; disintermediation (customer goes direct to the shop); drawing confidentiality; founder quoting errors.,A,open
+WS03-001,Contract-manufacturing sourcing broker for CNC machining & sheet-metal parts (Midwest job-shop network),financial,Receivables concentration with a few OEMs; funding remakes; supplier prepayment for new accounts.,A,open
+WS03-001,Contract-manufacturing sourcing broker for CNC machining & sheet-metal parts (Midwest job-shop network),regulatory,Low. Quality-system expectations (ISO 9001/AS9100) for aerospace and medical buyers; export controls (ITAR/EAR) for defense-related drawings.,A,open
+WS03-012,"Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs)",failure mode,Can't recruit or retain techs,A,open
+WS03-012,"Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs)",failure mode,Liability event after inspection,A,open
+WS03-012,"Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs)",failure mode,Consolidators undercut on price for anchor accounts,A,open
+WS03-012,"Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs)",operational,Technician recruiting/retention; injury risk at height; liability for missed defects.,A,open
+WS03-012,"Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs)",financial,Liability claims; tech underutilization early.,A,open
+WS03-012,"Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs)",regulatory,Liability after inspection sign-off; ASME B30 compliance expectations.,A,open
+WS03-013,"Pallet-rack inspection, damage repair & compliance service for warehouses and plants",failure mode,Dealers bundle inspections free with rack sales,A,open
+WS03-013,"Pallet-rack inspection, damage repair & compliance service for warehouses and plants",failure mode,Low repair conversion,A,open
+WS03-013,"Pallet-rack inspection, damage repair & compliance service for warehouses and plants",operational,Installation injuries; liability for missed damage.,A,open
+WS03-013,"Pallet-rack inspection, damage repair & compliance service for warehouses and plants",financial,Low-moderate.,A,open
+WS03-013,"Pallet-rack inspection, damage repair & compliance service for warehouses and plants",regulatory,Consensus standard not regulation; engineering questions require PE partner.,A,open
+WS03-014,Infrared thermography & electrical predictive-maintenance surveys (NFPA 70B-2023 driven),failure mode,Plants buy cheap cameras and self-scan,A,open
+WS03-014,Infrared thermography & electrical predictive-maintenance surveys (NFPA 70B-2023 driven),failure mode,Commodity pricing,A,open
+WS03-014,Infrared thermography & electrical predictive-maintenance surveys (NFPA 70B-2023 driven),failure mode,Safety incident,A,open
+WS03-014,Infrared thermography & electrical predictive-maintenance surveys (NFPA 70B-2023 driven),operational,Arc-flash exposure; reliance on plant electricians to open covers; utilization swings.,A,open
+WS03-014,Infrared thermography & electrical predictive-maintenance surveys (NFPA 70B-2023 driven),financial,Low.,A,open
+WS03-014,Infrared thermography & electrical predictive-maintenance surveys (NFPA 70B-2023 driven),regulatory,NFPA 70E arc-flash safety; liability for missed faults; NFPA 70B enforceability varies.,A,open
+WS03-017,"Industrial scale & weighing service (Illinois-registered service agency: calibration, repair, sales)",failure mode,Tech shortage,A,open
+WS03-017,"Industrial scale & weighing service (Illinois-registered service agency: calibration, repair, sales)",failure mode,Consolidators' pricing,A,open
+WS03-017,"Industrial scale & weighing service (Illinois-registered service agency: calibration, repair, sales)",operational,Tech hiring; heavy lifting; truck-scale work requires big equipment.,A,open
+WS03-017,"Industrial scale & weighing service (Illinois-registered service agency: calibration, repair, sales)",financial,Weight truck capex if pursued.,A,open
+WS03-017,"Industrial scale & weighing service (Illinois-registered service agency: calibration, repair, sales)",regulatory,State registration; NIST Handbook 44 compliance [E].,A,open
+WS04-010,"Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP)",failure mode,Commoditized price competition from offshore firms,A,open
+WS04-010,"Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP)",failure mode,Reputation damage from a few denial disasters,A,open
+WS04-010,"Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP)",failure mode,Platformization of the niche (EHR or marketplace bundles billing for free),A,open
+WS04-010,"Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP)",operational,Biller turnover; errors causing denials/recoupment; data breach.,A,open
+WS04-010,"Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP)",financial,Client concentration; practice closures/acquisitions by PE platforms.,A,open
+WS04-010,"Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP)",regulatory,"Moderate - HIPAA, False Claims Act exposure if upcoding, fee-structure rules; payer and federal policy churn (OBBBA Medicaid changes from 2027) [C, WS04-S007].",A,open
+WS04-011,"Dental insurance verification, claims & AR recovery outsourcing for independent practices",failure mode,Race to the bottom vs offshore,A,open
+WS04-011,"Dental insurance verification, claims & AR recovery outsourcing for independent practices",failure mode,DSO consolidation erodes base,A,open
+WS04-011,"Dental insurance verification, claims & AR recovery outsourcing for independent practices",operational,Access to practice PM systems; staff turnover.,A,open
+WS04-011,"Dental insurance verification, claims & AR recovery outsourcing for independent practices",financial,Client loss when practices sell to DSOs.,A,open
+WS04-011,"Dental insurance verification, claims & AR recovery outsourcing for independent practices",regulatory,"Low-moderate; Medicaid dental (if any) fee rules [A, WS04-S012].",A,open
+WS04-013,Medical records retrieval + AI-assisted medical chronologies for personal-injury law firms,failure mode,Commoditized by legal-tech SaaS,A,open
+WS04-013,Medical records retrieval + AI-assisted medical chronologies for personal-injury law firms,failure mode,One bad chronology loses a firm,A,open
+WS04-013,Medical records retrieval + AI-assisted medical chronologies for personal-injury law firms,operational,Errors/omissions in chronologies; data breach; provider delays.,A,open
+WS04-013,Medical records retrieval + AI-assisted medical chronologies for personal-injury law firms,financial,Slow-paying firms; AI-native legal-tech competitors cut prices.,A,open
+WS04-013,Medical records retrieval + AI-assisted medical chronologies for personal-injury law firms,regulatory,Low-moderate; avoid unauthorized practice of law (no legal advice) and nursing scope issues (nurse reviewer is consultant).,A,open
+WS04-014,"HIPAA-focused managed IT services for independent dental, vet and small medical practices",failure mode,Consolidation removes clients,A,open
+WS04-014,"HIPAA-focused managed IT services for independent dental, vet and small medical practices",failure mode,Security incident liability,A,open
+WS04-014,"HIPAA-focused managed IT services for independent dental, vet and small medical practices",failure mode,Underpricing support,A,open
+WS04-014,"HIPAA-focused managed IT services for independent dental, vet and small medical practices",operational,Ransomware incident at a client; technician dependence.,A,open
+WS04-014,"HIPAA-focused managed IT services for independent dental, vet and small medical practices",financial,Client loss when practices are acquired by DSOs/corporate vet groups that centralize IT.,A,open
+WS04-014,"HIPAA-focused managed IT services for independent dental, vet and small medical practices",regulatory,Low; liability for breaches (cyber/E&O insurance).,A,open
+WS04-015,"Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis",failure mode,Can't hire/retain BMETs,A,open
+WS04-015,"Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis",failure mode,OEM parts lockout,A,open
+WS04-015,"Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis",failure mode,Liability event,A,open
+WS04-015,"Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis",operational,Technician scarcity (BMET labor market); errors causing patient harm.,A,open
+WS04-015,"Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis",financial,Professional liability; dependence on 1-2 techs.,A,open
+WS04-015,"Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis",regulatory,Moderate - documentation quality; X-ray servicing registration; liability.,A,open
+WS04-024,Small-generator regulated medical waste (PIMW) collection route,failure mode,Squeezed by competitor-owned treatment facilities,A,open
+WS04-024,Small-generator regulated medical waste (PIMW) collection route,failure mode,Route too sparse to cover vehicle/driver,A,open
+WS04-024,Small-generator regulated medical waste (PIMW) collection route,operational,Needlestick/exposure injuries; spills; vehicle accidents.,A,open
+WS04-024,Small-generator regulated medical waste (PIMW) collection route,financial,Treatment-fee increases from facilities owned by competitors; insurance (pollution liability).,A,open
+WS04-024,Small-generator regulated medical waste (PIMW) collection route,regulatory,"Moderate - permit, manifests, vehicle rules, hazmat training; no professional license.",A,open
+WS05-001,Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor),failure mode,Never reaching route density - drive time eats margin,A,open
+WS05-001,Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor),failure mode,Competing on price with Cintas bundles,A,open
+WS05-001,Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor),failure mode,Founder stuck as only technician (hours cap),A,open
+WS05-001,Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor),failure mode,Liability from improper servicing/tagging,A,open
+WS05-001,Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor),operational,Route density takes years; technician quality/tagging fraud liability; seasonality; customer concentration in property managers.,A,open
+WS05-001,Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor),financial,Low capital at risk; main risk is slow ramp leaving founder underpaid for 12-24 months; price competition from bundled national providers.,A,open
+WS05-001,Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor),regulatory,"Low-moderate: licensing achievable in ~1-3 months; Act carries a scheduled repeal date of 1 Jan 2028 (renewal status unverified) [A, WS05-S003]; emergency lighting repairs beyond battery/lamp swaps may need electrical licensing in Chicago (unverified).",A,open
+WS05-007,"Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses)",failure mode,Callbacks and lost accounts from poor tech quality,A,open
+WS05-007,"Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses)",failure mode,Underpricing to win accounts,A,open
+WS05-007,"Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses)",failure mode,Founder stuck servicing,A,open
+WS05-007,"Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses)",operational,Technician retention; pesticide misapplication liability; callbacks.,A,open
+WS05-007,"Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses)",financial,Low capital; restaurant bad debt.,A,open
+WS05-007,"Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses)",regulatory,"Low-moderate - founder can certify personally within ~2-4 months (no experience prerequisite listed on application) [A, WS05-S013].",A,open
+WS05-011,"Annual fire door assembly inspection (NFPA 80) and door hardware repair for hospitals, schools and commercial buildings",failure mode,Institutional sales cycles too long,A,open
+WS05-011,"Annual fire door assembly inspection (NFPA 80) and door hardware repair for hospitals, schools and commercial buildings",failure mode,Inspection commoditized while repair goes to incumbents,A,open
+WS05-011,"Annual fire door assembly inspection (NFPA 80) and door hardware repair for hospitals, schools and commercial buildings",operational,Accuracy liability in accreditation surveys; labor skill for door repair.,A,open
+WS05-011,"Annual fire door assembly inspection (NFPA 80) and door hardware repair for hospitals, schools and commercial buildings",financial,Slow institutional payment.,A,open
+WS05-011,"Annual fire door assembly inspection (NFPA 80) and door hardware repair for hospitals, schools and commercial buildings",regulatory,Low for inspection; healthcare vendor credentialing.,A,open
+WS05-025,"Restroom hygiene service route (feminine hygiene units, air care, sanitizer/soap dispensers, urinal treatments)",failure mode,Nationals underprice via bundles,A,open
+WS05-025,"Restroom hygiene service route (feminine hygiene units, air care, sanitizer/soap dispensers, urinal treatments)",failure mode,Low density,A,open
+WS05-025,"Restroom hygiene service route (feminine hygiene units, air care, sanitizer/soap dispensers, urinal treatments)",operational,Low-skill labor retention; route density.,A,open
+WS05-025,"Restroom hygiene service route (feminine hygiene units, air care, sanitizer/soap dispensers, urinal treatments)",financial,Unit capital per account; churn.,A,open
+WS05-025,"Restroom hygiene service route (feminine hygiene units, air care, sanitizer/soap dispensers, urinal treatments)",regulatory,Low.,A,open
+WS05-026,"Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning)",failure mode,Labor turnover destroys quality,A,open
+WS05-026,"Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning)",failure mode,Price competition from franchises,A,open
+WS05-026,"Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning)",operational,"Labor turnover, quality consistency, theft claims.",A,open
+WS05-026,"Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning)",financial,Low capital; payroll float.,A,open
+WS05-026,"Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning)",regulatory,Low.,A,open
+WS07-015,Licensed customs brokerage for small/mid importers (founder sits the CBLE),failure mode,Fails exam repeatedly,A,open
+WS07-015,Licensed customs brokerage for small/mid importers (founder sits the CBLE),failure mode,Penalty exposure from errors,A,open
+WS07-015,Licensed customs brokerage for small/mid importers (founder sits the CBLE),failure mode,Fee competition from large forwarders,A,open
+WS07-015,Licensed customs brokerage for small/mid importers (founder sits the CBLE),operational,Classification/valuation errors leading to penalties; volume spikes during tariff changes.,A,open
+WS07-015,Licensed customs brokerage for small/mid importers (founder sits the CBLE),financial,Duty advances to clients; E&O claims; trade-policy reversals change workload.,A,open
+WS07-015,Licensed customs brokerage for small/mid importers (founder sits the CBLE),regulatory,"Hard exam; ~12-24 months from study start to license; strict broker liability and recordkeeping; cannot share fees with unlicensed persons except forwarders [A, WS07-S028].",A,open
+WS07-023,Online consignment auctions for business liquidations (restaurant/industrial/office assets),failure mode,Insufficient consignments,A,open
+WS07-023,Online consignment auctions for business liquidations (restaurant/industrial/office assets),failure mode,Licensing problem,A,open
+WS07-023,Online consignment auctions for business liquidations (restaurant/industrial/office assets),failure mode,Platform competition,A,open
+WS07-023,Online consignment auctions for business liquidations (restaurant/industrial/office assets),operational,"Pickup logistics, item misdescription disputes.",A,open
+WS07-023,Online consignment auctions for business liquidations (restaurant/industrial/office assets),financial,Low.,A,open
+WS07-023,Online consignment auctions for business liquidations (restaurant/industrial/office assets),regulatory,Licensing uncertainty; sales-tax collection on auction sales [E].,A,open
+WS07-036,Managed transportation / outsourced logistics department for mid-size shippers (fee-based),failure mode,Credibility wall,A,open
+WS07-036,Managed transportation / outsourced logistics department for mid-size shippers (fee-based),failure mode,Clients revert to brokers in soft markets,A,open
+WS07-036,Managed transportation / outsourced logistics department for mid-size shippers (fee-based),operational,Service failures blamed on manager; key-person risk.,A,open
+WS07-036,Managed transportation / outsourced logistics department for mid-size shippers (fee-based),financial,Client concentration.,A,open
+WS07-036,Managed transportation / outsourced logistics department for mid-size shippers (fee-based),regulatory,"Broker-definition boundary [A, WS07-S006].",A,open
+WS08-001,"DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship)",failure mode,Price war with automated incumbents,A,open
+WS08-001,"DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship)",failure mode,Quality defects leading to exclusion,A,open
+WS08-001,"DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship)",failure mode,Supplier refuses to sell or undercuts by quoting DLA directly,A,open
+WS08-001,"DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship)",failure mode,Cash float strain when awards spike,A,open
+WS08-001,"DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship)",operational,"Wrong-part or non-conforming shipments trigger PQDRs, poor PIPRS scores and eventual exclusion; supplier lead-time misses; packaging non-compliance.",A,open
+WS08-001,"DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship)",financial,Pricing errors on automated awards; supplier price increases after award; float risk if DLA rejects shipment.,A,open
+WS08-001,"DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship)",regulatory,"Approved-source/traceability rules for non-manufacturers; counterfeit-parts and product-quality deficiency exposure; Buy American/Berry provisions; NMR waived under SAT for SB set-asides [A, WS08-S012].",A,open
+WS08-017,"E-Rate Category 2 network integrator for schools & libraries (Wi-Fi, switching, cabling, managed broadband)",failure mode,Price-only competition vs CDW/SHI,A,open
+WS08-017,"E-Rate Category 2 network integrator for schools & libraries (Wi-Fi, switching, cabling, managed broadband)",failure mode,USAC denials leave receivables uncollectible,A,open
+WS08-017,"E-Rate Category 2 network integrator for schools & libraries (Wi-Fi, switching, cabling, managed broadband)",failure mode,Summer capacity crunch,A,open
+WS08-017,"E-Rate Category 2 network integrator for schools & libraries (Wi-Fi, switching, cabling, managed broadband)",operational,"Install labor quality, summer crunch, USAC denials/delays.",A,open
+WS08-017,"E-Rate Category 2 network integrator for schools & libraries (Wi-Fi, switching, cabling, managed broadband)",financial,USF funding/program-rule changes; denied FRNs leave unpaid work; audit clawbacks.,A,open
+WS08-017,"E-Rate Category 2 network integrator for schools & libraries (Wi-Fi, switching, cabling, managed broadband)",regulatory,"E-Rate rules (lowest corresponding price, gift rules, competitive bidding, red-light/CIPA), USAC audits; Universal Service Fund political/legal risk.",A,open
+WS10-010,Chicago masonry restoration & tuckpointing contractor (code-violation and condo-reserve driven),failure mode,Injury claim / insurance spike,A,open
+WS10-010,Chicago masonry restoration & tuckpointing contractor (code-violation and condo-reserve driven),failure mode,Inability to keep skilled masons,A,open
+WS10-010,Chicago masonry restoration & tuckpointing contractor (code-violation and condo-reserve driven),failure mode,Underbidding to win work,A,open
+WS10-010,Chicago masonry restoration & tuckpointing contractor (code-violation and condo-reserve driven),operational,Fall hazards and injury claims; seasonality (Apr-Nov); skilled-mason scarcity; weather.,A,open
+WS10-010,Chicago masonry restoration & tuckpointing contractor (code-violation and condo-reserve driven),financial,High insurance/workers-comp cost; warranty claims.,A,open
+WS10-010,Chicago masonry restoration & tuckpointing contractor (code-violation and condo-reserve driven),regulatory,Supervising-mason requirement (founder could sit the exam if 21+; experience prerequisites not stated); OSHA fall-protection/scaffold rules; silica rules.,A,open
+WS10-016,Multifamily unit-turn (make-ready) services for property managers,failure mode,Quality lapses lose accounts,A,open
+WS10-016,Multifamily unit-turn (make-ready) services for property managers,failure mode,Payment delays,A,open
+WS10-016,Multifamily unit-turn (make-ready) services for property managers,failure mode,Labor shortages at peak,A,open
+WS10-016,Multifamily unit-turn (make-ready) services for property managers,operational,Labor reliability and quality; summer peaks; scope creep.,A,open
+WS10-016,Multifamily unit-turn (make-ready) services for property managers,financial,Slow PM payments; damage claims.,A,open
+WS10-016,Multifamily unit-turn (make-ready) services for property managers,regulatory,Lead-safe work practices for pre-1978 housing (EPA RRP certification likely needed - not verified here).,A,open
+WS11-007,Commercial electricity procurement brokerage (ICC-licensed ABC) with gas add-on,failure mode,Cannot differentiate from telemarketing brokers,A,open
+WS11-007,Commercial electricity procurement brokerage (ICC-licensed ABC) with gas add-on,failure mode,Clawbacks from supplier/customer defaults,A,open
+WS11-007,Commercial electricity procurement brokerage (ICC-licensed ABC) with gas add-on,failure mode,Regulatory crackdown on broker fee disclosure,A,open
+WS11-007,Commercial electricity procurement brokerage (ICC-licensed ABC) with gas add-on,operational,Supplier credit events; mis-sold index products; reputation in a telemarketing-heavy niche.,A,open
+WS11-007,Commercial electricity procurement brokerage (ICC-licensed ABC) with gas add-on,financial,"Commission clawbacks; churn at renewal; supplier commission cuts; regulatory change (new Illinois grid legislation noted by IPA [B, WS11-S045]).",A,open
+WS11-007,Commercial electricity procurement brokerage (ICC-licensed ABC) with gas add-on,regulatory,"Part 454 technical requirement needs individual(s) with electric-industry experience (years MISSING) - founder may need a hire/partner; consumer-protection rules (Parts 412/453) if serving small commercial [A, WS11-S023].",A,open
+WS11-010,"Utility bill audit and rate optimization on contingency (electric, gas, water/sewer, waste)",failure mode,Low hit rate burns time,A,open
+WS11-010,"Utility bill audit and rate optimization on contingency (electric, gas, water/sewer, waste)",failure mode,Clients dispute savings,A,open
+WS11-010,"Utility bill audit and rate optimization on contingency (electric, gas, water/sewer, waste)",failure mode,Non-repeatable one-time audits,A,open
+WS11-010,"Utility bill audit and rate optimization on contingency (electric, gas, water/sewer, waste)",operational,Low hit rate; savings disputes; utility refund limitation periods.,A,open
+WS11-010,"Utility bill audit and rate optimization on contingency (electric, gas, water/sewer, waste)",financial,"Lumpy, delayed cash.",A,open
+WS11-010,"Utility bill audit and rate optimization on contingency (electric, gas, water/sewer, waste)",regulatory,Low; contract clarity on savings definitions.,A,open
+WS11-017,Commercial cooling-tower/boiler water treatment service route,failure mode,Treatment failure liability,A,open
+WS11-017,Commercial cooling-tower/boiler water treatment service route,failure mode,Cannot win switching customers without track record,A,open
+WS11-017,Commercial cooling-tower/boiler water treatment service route,operational,Treatment failure causing equipment damage or Legionella event.,A,open
+WS11-017,Commercial cooling-tower/boiler water treatment service route,financial,Professional liability claims.,A,open
+WS11-017,Commercial cooling-tower/boiler water treatment service route,regulatory,Low formal barriers; technical credibility barrier high.,A,open
+WS11-021,Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance,failure mode,Price competition from engineers bundling,A,open
+WS11-021,Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance,failure mode,Construction downturn,A,open
+WS11-021,Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance,failure mode,Winter lull,A,open
+WS11-021,Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance,operational,Rain-event surges; missed inspection exposes client to violations.,A,open
+WS11-021,Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance,financial,Construction cyclicality; slow-paying GCs.,A,open
+WS11-021,Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance,regulatory,Low.,A,open
+WS11-026,"Roll-off dumpster rental (C&D, cleanouts, light commercial)",failure mode,Tipping fee squeeze,A,open
+WS11-026,"Roll-off dumpster rental (C&D, cleanouts, light commercial)",failure mode,Truck breakdowns with one-truck fleet,A,open
+WS11-026,"Roll-off dumpster rental (C&D, cleanouts, light commercial)",failure mode,Price war with independents,A,open
+WS11-026,"Roll-off dumpster rental (C&D, cleanouts, light commercial)",operational,"Driver hiring (CDL), truck downtime, overweight/prohibited items, property damage.",A,open
+WS11-026,"Roll-off dumpster rental (C&D, cleanouts, light commercial)",financial,"Truck financing, tipping fee increases set by vertically integrated competitors, fuel.",A,open
+WS11-026,"Roll-off dumpster rental (C&D, cleanouts, light commercial)",regulatory,Municipal franchise/licensing rules vary; some suburbs franchise haulers.,A,open
+WS12-012,Offshore/nearshore dedicated remote staff for US SMB verticals,failure mode,AI agents replace the seat,A,open
+WS12-012,Offshore/nearshore dedicated remote staff for US SMB verticals,failure mode,Commodity price war,A,open
+WS12-012,Offshore/nearshore dedicated remote staff for US SMB verticals,failure mode,Quality failures cause churn,A,open
+WS12-012,Offshore/nearshore dedicated remote staff for US SMB verticals,operational,"Worker attrition, time-zone management, data breaches, quality drift.",A,open
+WS12-012,Offshore/nearshore dedicated remote staff for US SMB verticals,financial,Currency moves; client churn; concentrated vertical downturn.,A,open
+WS12-012,Offshore/nearshore dedicated remote staff for US SMB verticals,regulatory,Cross-border employment/tax compliance (EOR partners); client data security.,A,open
+WS12-014,Contingency direct-hire recruiting desk in a technical niche,failure mode,Ramp longer than founder runway,A,open
+WS12-014,Contingency direct-hire recruiting desk in a technical niche,failure mode,Hiring freeze in niche,A,open
+WS12-014,Contingency direct-hire recruiting desk in a technical niche,failure mode,Recruiters leave with client relationships,A,open
+WS12-014,Contingency direct-hire recruiting desk in a technical niche,operational,"Fallouts, counteroffers, clients hiring candidate later without paying (fee disputes), founder dependence.",A,open
+WS12-014,Contingency direct-hire recruiting desk in a technical niche,financial,"Highly cyclical (2025 perm placements -13.6% at RH [A, WS12-S008]); lumpy cash.",A,open
+WS12-014,Contingency direct-hire recruiting desk in a technical niche,regulatory,Low beyond IDOL licensing; anti-discrimination and pay-transparency rules (IL Equal Pay Act job-posting pay-scale amendments — not fetched) [E].,A,open
+WS13-004,Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance),failure mode,Sub-scale routes with too much drive time,A,open
+WS13-004,Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance),failure mode,Dependence on one big account,A,open
+WS13-004,Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance),operational,Route-rep turnover; inventory shrink; expired product.,A,open
+WS13-004,Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance),financial,Price wars; low ticket.,A,open
+WS13-004,Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance),regulatory,Low.,A,open
+WS13-009,"Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange)",failure mode,Too small per stop,A,open
+WS13-009,"Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange)",failure mode,Easy copying,A,open
+WS13-009,"Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange)",operational,Low ticket requires dense routes.,A,open
+WS13-009,"Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange)",financial,Low.,A,open
+WS13-009,"Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange)",regulatory,Minimal.,A,open
+WS13-014,Private utility locating & concrete GPR scanning for contractors and facilities,failure mode,A missed line liability event,A,open
+WS13-014,Private utility locating & concrete GPR scanning for contractors and facilities,failure mode,Construction downturn,A,open
+WS13-014,Private utility locating & concrete GPR scanning for contractors and facilities,failure mode,GPRS price competition,A,open
+WS13-014,Private utility locating & concrete GPR scanning for contractors and facilities,operational,Liability for missed lines; interpretation skill.,A,open
+WS13-014,Private utility locating & concrete GPR scanning for contractors and facilities,financial,Construction cycle; E&O claims.,A,open
+WS13-014,Private utility locating & concrete GPR scanning for contractors and facilities,regulatory,Low.,A,open
+WS13-016,"Lake, pond & stormwater-basin management for HOAs, business parks and municipalities",failure mode,Fish-kill liability,A,open
+WS13-016,"Lake, pond & stormwater-basin management for HOAs, business parks and municipalities",failure mode,Price competition,A,open
+WS13-016,"Lake, pond & stormwater-basin management for HOAs, business parks and municipalities",failure mode,Weather,A,open
+WS13-016,"Lake, pond & stormwater-basin management for HOAs, business parks and municipalities",operational,Chemical misapplication/fish kills; water safety.,A,open
+WS13-016,"Lake, pond & stormwater-basin management for HOAs, business parks and municipalities",financial,Weather-driven seasonality.,A,open
+WS13-016,"Lake, pond & stormwater-basin management for HOAs, business parks and municipalities",regulatory,Exam-based license (obtainable within months).,A,open
+WS13-018,Multifamily doorstep (valet) trash collection service,failure mode,Labor no-shows,A,open
+WS13-018,Multifamily doorstep (valet) trash collection service,failure mode,Fee backlash from residents/regulators,A,open
+WS13-018,Multifamily doorstep (valet) trash collection service,operational,Evening labor reliability; resident complaints.,A,open
+WS13-018,Multifamily doorstep (valet) trash collection service,financial,Contract cancellation at property sale.,A,open
+WS13-018,Multifamily doorstep (valet) trash collection service,regulatory,"Resident fee disclosure and Chicago RLTO/consumer rules on fees [E, unverified].",A,open
+WS13-028,"Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later)",failure mode,Mix-up of remains,A,open
+WS13-028,"Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later)",failure mode,Dependence on competitor's crematory,A,open
+WS13-028,"Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later)",failure mode,Corporate vet groups centralize vendor,A,open
+WS13-028,"Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later)",operational,Chain-of-custody errors (reputational catastrophe).,A,open
+WS13-028,"Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later)",financial,Retort capex; vet consolidation.,A,open
+WS13-028,"Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later)",regulatory,Crematory siting/air permits (later phase).,A,open
+WS13-030,"Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory)",failure mode,Regulatory violation,A,open
+WS13-030,"Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory)",failure mode,Ad-cost inflation,A,open
+WS13-030,"Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory)",failure mode,Incumbent low-cost brands,A,open
+WS13-030,"Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory)",operational,Custody/handling errors; dependence on trade crematory.,A,open
+WS13-030,"Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory)",financial,Ad costs; price wars.,A,open
+WS13-030,"Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory)",regulatory,Licensing via employee; strict documentation.,A,open
+WS13-038,"Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration",failure mode,Lead-cost inflation,A,open
+WS13-038,"Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration",failure mode,Injury,A,open
+WS13-038,"Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration",operational,Ladder/roof work; rabies exposure.,A,open
+WS13-038,"Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration",financial,Ad costs.,A,open
+WS13-038,"Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration",regulatory,Wildlife permits; bat seasonal restrictions [E].,A,open
+WS14-001,Small-parcel spend audit + UPS/FedEx contract renegotiation on gain-share,failure mode,"Cannot beat incumbents' benchmark data, so savings are small",A,open
+WS14-001,Small-parcel spend audit + UPS/FedEx contract renegotiation on gain-share,failure mode,Clients take the new agreement and terminate before savings share accrues,A,open
+WS14-001,Small-parcel spend audit + UPS/FedEx contract renegotiation on gain-share,failure mode,3PL/aggregator rates commoditize SMB parcel pricing,A,open
+WS14-001,Small-parcel spend audit + UPS/FedEx contract renegotiation on gain-share,operational,Thin benchmark data vs. incumbents with thousands of agreements; baseline/attribution disputes; data access depends on client exporting carrier billing files.,A,open
+WS14-001,Small-parcel spend audit + UPS/FedEx contract renegotiation on gain-share,financial,Clients churn after first renegotiation or migrate to 3PL pooled rates; shipping volume declines cut fees.,A,open
+WS14-001,Small-parcel spend audit + UPS/FedEx contract renegotiation on gain-share,regulatory,Low. Carrier agreements may contain confidentiality clauses restricting disclosure of pricing to third parties [E].,A,open
+WS14-004,Sales/use tax reverse audit (overpayment recovery) for manufacturers and other heavy purchasers,failure mode,Long payout lag starves the firm,A,open
+WS14-004,Sales/use tax reverse audit (overpayment recovery) for manufacturers and other heavy purchasers,failure mode,Technical mistakes cause denials or client audits,A,open
+WS14-004,Sales/use tax reverse audit (overpayment recovery) for manufacturers and other heavy purchasers,failure mode,CPA firms bundle reverse audits into existing relationships,A,open
+WS14-004,Sales/use tax reverse audit (overpayment recovery) for manufacturers and other heavy purchasers,operational,Technical errors in exemption interpretation lead to denied claims or audit exposure for client; contested claims need attorneys.,A,open
+WS14-004,Sales/use tax reverse audit (overpayment recovery) for manufacturers and other heavy purchasers,financial,Long payout lag; claims denied after work done; concentration in few large wins.,A,open
+WS14-004,Sales/use tax reverse audit (overpayment recovery) for manufacturers and other heavy purchasers,regulatory,"Contingent-fee restrictions in some jurisdictions/for public companies [D, WS14-S029]; claim statutes of limitation (Illinois lookback length to verify) [E]; vendor-refund route needed where tax was paid to vendors [E].",A,open
+WS14-008,Retailer/distributor deduction & chargeback recovery for emerging CPG brands,failure mode,Recoveries too small for <$10M brands,A,open
+WS14-008,Retailer/distributor deduction & chargeback recovery for emerging CPG brands,failure mode,SaaS tools make service unnecessary,A,open
+WS14-008,Retailer/distributor deduction & chargeback recovery for emerging CPG brands,failure mode,Retailer blocks automated portal access,A,open
+WS14-008,Retailer/distributor deduction & chargeback recovery for emerging CPG brands,operational,Short dispute windows; retailer rule changes; documentation gaps at 3PLs.,A,open
+WS14-008,Retailer/distributor deduction & chargeback recovery for emerging CPG brands,financial,Brand failures/consolidation; fee compression from SaaS.,A,open
+WS14-008,Retailer/distributor deduction & chargeback recovery for emerging CPG brands,regulatory,Low; retailer portal terms of use may restrict automated access [E].,A,open
+WS14-019,Niche non-healthcare group purchasing organization (GPO) for fragmented SMB buyers,failure mode,Members join but don't buy,A,open
+WS14-019,Niche non-healthcare group purchasing organization (GPO) for fragmented SMB buyers,failure mode,Vendors refuse fees at low volume,A,open
+WS14-019,Niche non-healthcare group purchasing organization (GPO) for fragmented SMB buyers,failure mode,Distributor programs undercut,A,open
+WS14-019,Niche non-healthcare group purchasing organization (GPO) for fragmented SMB buyers,operational,Low member activation; distributor pushback; rebate-tracking accuracy.,A,open
+WS14-019,Niche non-healthcare group purchasing organization (GPO) for fragmented SMB buyers,financial,"Fee compression (Premier's rising member fee share shows pressure) [A, WS14-S024]; dependence on few vendors.",A,open
+WS14-019,Niche non-healthcare group purchasing organization (GPO) for fragmented SMB buyers,regulatory,Low outside healthcare; disclosure of admin fees to members is best practice.,A,open
+WS15-020,"UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination)",failure mode,Owners see it as optional until fined,A,open
+WS15-020,"UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination)",failure mode,Liability exposure from missed leaks,A,open
+WS15-020,"UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination)",failure mode,Low station margins limit willingness to pay,A,open
+WS15-020,"UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination)",operational,Missed leak indication -> liability; technician reliability.,A,open
+WS15-020,"UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination)",financial,Pollution liability insurance; customer churn from station turnover.,A,open
+WS15-020,"UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination)",regulatory,OSFM rules (41 Ill. Adm. Code 174-176) not verified.,A,open
+WS15-023,Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing,failure mode,Payroll vendors bundle cheaply,A,open
+WS15-023,Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing,failure mode,Errors cause client penalties,A,open
+WS15-023,Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing,operational,Errors exposing clients to penalties; dependency on client data quality.,A,open
+WS15-023,Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing,financial,Errors & omissions exposure.,A,open
+WS15-023,Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing,regulatory,Low; avoid giving legal wage-classification advice.,A,open
+WS16-006,"Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship)",failure mode,Can't generate enough orders,A,open
+WS16-006,"Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship)",failure mode,Price competition,A,open
+WS16-006,"Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship)",failure mode,Recession cuts marketing budgets,A,open
+WS16-006,"Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship)",failure mode,Dependency on one or two big clients,A,open
+WS16-006,"Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship)",operational,"Order errors, decoration quality, deadlines.",A,open
+WS16-006,"Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship)",financial,"Discretionary marketing spend falls in recessions; tariffs raise imported hard-goods costs [A, WS16-S022].",A,open
+WS16-006,"Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship)",regulatory,"Low (product safety/CPSIA for youth items, Prop 65 for CA shipments).",A,open
+WS16-018,"Warehouse storage & material-handling products dealer-integrator (pallet rack, shelving, lockers, mezzanines, dock equipment) incl. used rack",failure mode,Install accident/liability,A,open
+WS16-018,"Warehouse storage & material-handling products dealer-integrator (pallet rack, shelving, lockers, mezzanines, dock equipment) incl. used rack",failure mode,Cyclical warehouse slowdown,A,open
+WS16-018,"Warehouse storage & material-handling products dealer-integrator (pallet rack, shelving, lockers, mezzanines, dock equipment) incl. used rack",failure mode,Underbidding projects,A,open
+WS16-018,"Warehouse storage & material-handling products dealer-integrator (pallet rack, shelving, lockers, mezzanines, dock equipment) incl. used rack",operational,Installation quality/safety; project delays; wrong capacities.,A,open
+WS16-018,"Warehouse storage & material-handling products dealer-integrator (pallet rack, shelving, lockers, mezzanines, dock equipment) incl. used rack",financial,Industrial construction cyclicality; steel price/tariff swings; project cost overruns.,A,open
+WS16-018,"Warehouse storage & material-handling products dealer-integrator (pallet rack, shelving, lockers, mezzanines, dock equipment) incl. used rack",regulatory,Moderate — permits/seismic/fire-code (high-piled storage) rules vary by municipality.,A,open
+WS17-001,Done-for-you DOT compliance management for small/mid motor carriers,failure mode,Commodity pricing by national players,A,open
+WS17-001,Done-for-you DOT compliance management for small/mid motor carriers,failure mode,Client churn from carrier failure,A,open
+WS17-001,Done-for-you DOT compliance management for small/mid motor carriers,failure mode,Reputation damage from a client fined due to missed item,A,open
+WS17-001,Done-for-you DOT compliance management for small/mid motor carriers,failure mode,Founder becomes the only person who understands the rules,A,open
+WS17-001,Done-for-you DOT compliance management for small/mid motor carriers,operational,Missed expiry creates client fines and liability; data security of driver PII; dependence on timely client document submission.,A,open
+WS17-001,Done-for-you DOT compliance management for small/mid motor carriers,financial,"High churn of small carriers during freight recessions (Rush reports freight recession pressure in 2025 [A, WS17-S021]); price competition.",A,open
+WS17-001,Done-for-you DOT compliance management for small/mid motor carriers,regulatory,Low barrier to entry; risk of being lumped with deceptive 'FMCSA update' mailers - marketing must be scrupulously non-deceptive.,A,open
+WS17-004,Mobile preventive maintenance for light/medium-duty service and delivery fleets,failure mode,Technician turnover,A,open
+WS17-004,Mobile preventive maintenance for light/medium-duty service and delivery fleets,failure mode,Underpricing travel time,A,open
+WS17-004,Mobile preventive maintenance for light/medium-duty service and delivery fleets,failure mode,Comebacks damaging trust,A,open
+WS17-004,Mobile preventive maintenance for light/medium-duty service and delivery fleets,failure mode,Founder unable to supervise quality without mechanical knowledge,A,open
+WS17-004,Mobile preventive maintenance for light/medium-duty service and delivery fleets,operational,Technician hiring/retention; work limited without lifts; weather.,A,open
+WS17-004,Mobile preventive maintenance for light/medium-duty service and delivery fleets,financial,Comebacks/warranty claims; customer concentration.,A,open
+WS17-004,Mobile preventive maintenance for light/medium-duty service and delivery fleets,regulatory,Low; environmental handling of fluids on customer sites.,A,open
+WS17-009,Outsourced fleet maintenance management for 15-300 vehicle service fleets,failure mode,Unable to prove savings,A,open
+WS17-009,Outsourced fleet maintenance management for 15-300 vehicle service fleets,failure mode,Vendor network quality failures,A,open
+WS17-009,Outsourced fleet maintenance management for 15-300 vehicle service fleets,failure mode,Becoming a low-margin bill-pay service,A,open
+WS17-009,Outsourced fleet maintenance management for 15-300 vehicle service fleets,operational,Vendor quality control; dispute handling.,A,open
+WS17-009,Outsourced fleet maintenance management for 15-300 vehicle service fleets,financial,Credit risk if paying vendors on clients' behalf.,A,open
+WS17-009,Outsourced fleet maintenance management for 15-300 vehicle service fleets,regulatory,Low; transparency on vendor rebates to avoid conflicts.,A,open
+WS17-023,Forklift planned-maintenance and repair route (multi-brand) with operator training,failure mode,OEM dealer competition,A,open
+WS17-023,Forklift planned-maintenance and repair route (multi-brand) with operator training,failure mode,Tech scarcity,A,open
+WS17-023,Forklift planned-maintenance and repair route (multi-brand) with operator training,operational,Tech hiring.,A,open
+WS17-023,Forklift planned-maintenance and repair route (multi-brand) with operator training,financial,Moderate.,A,open
+WS17-023,Forklift planned-maintenance and repair route (multi-brand) with operator training,regulatory,Low.,A,open
+WS18-002,Non-medical in-home senior care agency (IDPH-licensed Home Services agency),failure mode,Cannot staff hours sold — reputation collapse,A,open
+WS18-002,Non-medical in-home senior care agency (IDPH-licensed Home Services agency),failure mode,Thin margin if dependent on CCP Medicaid rate,A,open
+WS18-002,Non-medical in-home senior care agency (IDPH-licensed Home Services agency),failure mode,Founder underestimates 24/7 on-call burden and referral-sales time,A,open
+WS18-002,Non-medical in-home senior care agency (IDPH-licensed Home Services agency),operational,"Caregiver recruiting/retention, missed shifts, client injury or abuse allegations, 24/7 on-call scheduling.",A,open
+WS18-002,Non-medical in-home senior care agency (IDPH-licensed Home Services agency),financial,Wage inflation vs. bill rates; CCP rate fixed by state; payroll float; workers' comp and liability claims.,A,open
+WS18-002,Non-medical in-home senior care agency (IDPH-licensed Home Services agency),regulatory,"Moderate: state licensure and surveys, background checks, wage-and-hour (federal home care overtime rule), Medicaid program compliance if CCP.",A,open
+WS18-003,Junk removal and hauling (with optional dumpster rental),failure mode,Underpriced loads after dump fees and labor,A,open
+WS18-003,Junk removal and hauling (with optional dumpster rental),failure mode,Truck breakdowns stop revenue,A,open
+WS18-003,Junk removal and hauling (with optional dumpster rental),failure mode,Lead-gen cost inflation on Google,A,open
+WS18-003,Junk removal and hauling (with optional dumpster rental),operational,"Worker injury (lifting), truck downtime, property damage.",A,open
+WS18-003,Junk removal and hauling (with optional dumpster rental),financial,Truck capital; marketing costs; seasonality (winter slower).,A,open
+WS18-003,Junk removal and hauling (with optional dumpster rental),regulatory,"Low; disposal rules for appliances (refrigerant), electronics (Illinois electronics landfill ban — not verified), tires, paint.",A,open
+WS18-004,Lawn fertilization & weed-control subscription route (IDOA-licensed),failure mode,Low density → drive time kills margin,A,open
+WS18-004,Lawn fertilization & weed-control subscription route (IDOA-licensed),failure mode,High churn after poor results,A,open
+WS18-004,Lawn fertilization & weed-control subscription route (IDOA-licensed),failure mode,Spring capacity crunch when hiring licensed techs,A,open
+WS18-004,Lawn fertilization & weed-control subscription route (IDOA-licensed),operational,"Weather windows, chemical misapplication/drift claims, technician licensing turnover.",A,open
+WS18-004,Lawn fertilization & weed-control subscription route (IDOA-licensed),financial,Seasonal cash (Apr-Nov); spring inventory; CAC high in year 1.,A,open
+WS18-004,Lawn fertilization & weed-control subscription route (IDOA-licensed),regulatory,Moderate: pesticide licensing and recordkeeping; possible local pesticide restrictions (MISSING).,A,open
+WS18-007,Residential pest control quarterly service plans (IDPH-licensed),failure mode,High churn of D2D-sold accounts,A,open
+WS18-007,Residential pest control quarterly service plans (IDPH-licensed),failure mode,Callbacks erode margin,A,open
+WS18-007,Residential pest control quarterly service plans (IDPH-licensed),failure mode,Can't hire certified techs,A,open
+WS18-007,Residential pest control quarterly service plans (IDPH-licensed),operational,"Technician turnover, chemical exposure, callbacks.",A,open
+WS18-007,Residential pest control quarterly service plans (IDPH-licensed),financial,D2D sales commissions; vehicle costs.,A,open
+WS18-007,Residential pest control quarterly service plans (IDPH-licensed),regulatory,Moderate — exam-based certification obtainable in months; recordkeeping; restricted-use pesticide categories.,A,open
+WS18-009,"Residential painting company (sales-led owner, employed or subcontracted crews)",failure mode,Crew no-shows and quality failures,A,open
+WS18-009,"Residential painting company (sales-led owner, employed or subcontracted crews)",failure mode,Seasonal cash crunch,A,open
+WS18-009,"Residential painting company (sales-led owner, employed or subcontracted crews)",failure mode,Price competition,A,open
+WS18-009,"Residential painting company (sales-led owner, employed or subcontracted crews)",operational,"Crew quality, weather (exterior season Apr-Oct in Chicago), callbacks.",A,open
+WS18-009,"Residential painting company (sales-led owner, employed or subcontracted crews)",financial,Seasonality; bid underpricing.,A,open
+WS18-009,"Residential painting company (sales-led owner, employed or subcontracted crews)",regulatory,Low-moderate (lead-safe practices; subcontractor misclassification risk).,A,open
+WS18-013,Pet waste removal weekly route (yard scooping),failure mode,Too spread-out routes,A,open
+WS18-013,Pet waste removal weekly route (yard scooping),failure mode,Ceiling too low to matter,A,open
+WS18-013,Pet waste removal weekly route (yard scooping),operational,"Winter seasonality, disease cross-contamination (sanitizing), dogs.",A,open
+WS18-013,Pet waste removal weekly route (yard scooping),financial,Low.,A,open
+WS18-013,Pet waste removal weekly route (yard scooping),regulatory,Low.,A,open
+WS18-030,Senior move management & estate sale/cleanout service,failure mode,Inconsistent deal flow,A,open
+WS18-030,Senior move management & estate sale/cleanout service,failure mode,Reputation incidents,A,open
+WS18-030,Senior move management & estate sale/cleanout service,operational,Theft/valuation disputes.,A,open
+WS18-030,Senior move management & estate sale/cleanout service,financial,Low.,A,open
+WS18-030,Senior move management & estate sale/cleanout service,regulatory,Low-moderate.,A,open
+WS18-032,Drain cleaning & sewer camera inspection service,failure mode,Licensing blocks model,A,open
+WS18-032,Drain cleaning & sewer camera inspection service,failure mode,Lead-gen costs,A,open
+WS18-032,Drain cleaning & sewer camera inspection service,operational,Sewage exposure; equipment damage.,A,open
+WS18-032,Drain cleaning & sewer camera inspection service,financial,Moderate.,A,open
+WS18-032,Drain cleaning & sewer camera inspection service,regulatory,Potentially high if licensed plumber required.,A,open
+WS18-035,Garage door repair & installation,failure mode,Lead-gen price wars,A,open
+WS18-035,Garage door repair & installation,failure mode,Tech turnover,A,open
+WS18-035,Garage door repair & installation,operational,Spring injuries; technician skill.,A,open
+WS18-035,Garage door repair & installation,financial,Lead-gen costs.,A,open
+WS18-035,Garage door repair & installation,regulatory,Low-moderate.,A,open

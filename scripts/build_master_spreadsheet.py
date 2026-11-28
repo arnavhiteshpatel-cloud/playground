@@ -198,19 +198,39 @@ def md_sheet(wb, title, path, first_only=True):
 def gen2_sheets(wb):
     # advisor validation, per endpoint
     rows = []
-    for name in ("exp_S1H_heldout", "exp_S1b_advisor_threshold", "exp_S1c_control_reference", "exp_S1_advisor"):
+    for name in ("exp_S1H3_heldout", "exp_S1H2_heldout", "exp_S1H_heldout", "exp_S1b_advisor_threshold",
+                 "exp_S1c_control_reference", "exp_S1_advisor"):
         d = load(name)
         if not d:
             continue
+        kind = "held-out (pre-registered)" if "heldout" in name else "in-sample (development)"
         for s_ in d.get("summary", []):
             for ep, v in (s_.get("per_endpoint") or {}).items():
-                rows.append([name, d.get("advisor_version"), s_["method"], ep, v["n"], v["n_fail"], v["failures_refused"],
-                             v["supported_but_failed"], v["supported_and_ok"], v["refused_but_ok"],
-                             v["p_fail_given_supported_upper95"], v["abs_err_supported_median"], v["abs_err_supported_max"]])
-    sheet(wb, "Advisor_Validation", ["Experiment", "Advisor", "Method", "Endpoint", "n", "Failures (>20%)", "Failures refused",
-                                     "Supported & failed", "Supported & OK", "Refused but OK", "P(fail|supported) 95% upper",
+                ns = (v["supported_and_ok"] or 0) + (v["supported_but_failed"] or 0)
+                bound = 1.0 if ns and v["supported_but_failed"] == ns else v["p_fail_given_supported_upper95"]
+                rows.append([name, kind, d.get("advisor_version"), s_["method"], ep, v["n"], v["n_fail"], v["failures_refused"],
+                             v["supported_but_failed"], v["supported_and_ok"], v["refused_but_ok"], ns / v["n"],
+                             bound, v["abs_err_supported_median"], v["abs_err_supported_max"]])
+    sheet(wb, "Advisor_Validation", ["Experiment", "Kind", "Advisor", "Method", "Endpoint", "n", "Failures (>20%)",
+                                     "Failures refused", "Supported & failed", "Supported & OK", "Refused but OK",
+                                     "Coverage (share supported)", "P(fail|supported) 95% upper",
                                      "Median |err| supported", "Max |err| supported"], rows,
-          {"Experiment": 28, "Method": 22, "Endpoint": 24})
+          {"Experiment": 28, "Kind": 24, "Method": 22, "Endpoint": 24})
+    b4 = load("analysis_B4_volume_agreement")
+    if b4:
+        sheet(wb, "Volume_Agreement_B4", ["Endpoint", "n supported", "Structures", "Bias", "Bias CI low (bootstrap)",
+                                          "Bias CI high", "LoA low", "LoA high", "Max |err|", "B4 met"],
+              [[ep, v.get("n_supported"), v.get("n_structures"), v.get("bias"),
+                *(v.get("bias_ci95_bootstrap_structures") or [None, None]), *(v.get("loa95") or [None, None]),
+                v.get("max_abs"), v.get("b4_met")] for ep, v in b4["endpoints"].items()], {"Endpoint": 26})
+    rows = []
+    for name in ("exp_L4_registration_qc", "exp_F2_roi_propagation"):
+        d = load(name)
+        if d:
+            for k, v in (d.get("summary") or {}).items():
+                rows.append([name, k, v])
+    if rows:
+        sheet(wb, "Registration_QC_L4_F2", ["Experiment", "Quantity", "Value"], rows, {"Experiment": 28, "Quantity": 34})
     L3 = load("exp_L3_displacement")
     if L3:
         sheet(wb, "Longitudinal_L3", ["Displacement mean (µm)", "Fragment prob.", "Method", "Graft Dice", "Mean |graft vol err|", "n"],

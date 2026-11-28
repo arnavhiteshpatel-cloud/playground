@@ -87,6 +87,40 @@ CLAIMS = [
 S1H3_REQUIRED = {"preregistered": "docs/science/PREREGISTRATION.md §9", "advisor_version": "1.4.1"}
 
 
+def _a4(ep, field):
+    return lambda d: d["analysis"][ep][field]
+
+
+# Held-out validation S1H4 of the shipped advisor (PREREGISTRATION §10; knowledge-base and Unspecified material
+# paths; structures are the unit). Same standard sentence as S1H3, naming S1H4; numbers are bound to the run named
+# before them (see _run_context).
+S1H4_FILE = "exp_S1H4_heldout.json"
+S1H4_CLAIMS = [
+    ("S1H4_graft_cov", S1H4_FILE, _a4("residual_graft_volume", "coverage"), 0,
+     [r"residual graft volume supported in\s*"], 100),
+    ("S1H4_graft_bound_struct", S1H4_FILE, _a4("residual_graft_volume", "structure_upper95"), 2,
+     [r"upper bound on the supported-failure rate (?=\d)"]),
+    ("S1H4_graft_bound", S1H4_FILE, _a4("residual_graft_volume", "row_upper95"), 3,
+     [r"counting phantom structures as the unit;\s*"]),
+    ("S1H4_n_struct", S1H4_FILE, lambda d: len({r["structure"] for r in d["rows"]}), 0,
+     [r"synthetic specimens from\s*"], 1),
+    ("S1H4_no_endpoint", S1H4_FILE, lambda d: d["analysis"]["no_volume_endpoint_supported_fraction"], 0,
+     [r"no volume endpoint supported for\s*"], 100),
+    ("S1H4_graft_median", S1H4_FILE, _a4("residual_graft_volume", "abs_err_supported_median"), 1,
+     [r"supported graft volumes: median error\s*"], 100),
+    ("S1H4_graft_max", S1H4_FILE, _a4("residual_graft_volume", "abs_err_supported_max"), 1,
+     [r"supported graft volumes: median error [\d.]+%, maximum\s*"], 100),
+    ("S1H4_mineral_cov", S1H4_FILE, _a4("total_mineral_volume", "coverage"), 0,
+     [r"total mineral volume supported in\s*"], 100),
+    ("S1H4_mineral_max", S1H4_FILE, _a4("total_mineral_volume", "abs_err_supported_max"), 1,
+     [r"supported mineral volumes: maximum error\s*"], 100),
+    ("S1H4_n", S1H4_FILE, lambda d: len(d["rows"]), 0, [r"held-out simulation S1H4 \(advisor [\d.]+; "], 1),
+]
+S1H4_REQUIRED = {"preregistered": "docs/science/PREREGISTRATION.md §10", "advisor_version": "1.4.3"}
+if (RES / S1H4_FILE).exists():
+    CLAIMS += S1H4_CLAIMS
+
+
 _SUP = ("supported", "supported_with_conditions")
 
 
@@ -326,6 +360,14 @@ def main(paths=None) -> int:
         jd = json.loads(jp.read_text())
         if cid.startswith("S1H3_") and any(jd.get(k) != v for k, v in S1H3_REQUIRED.items()):
             bad.append(f"{cid}: {jf} is not the pre-registered frozen run ({S1H3_REQUIRED})")
+        if cid.startswith("S1H4_") and any(jd.get(k) != v for k, v in S1H4_REQUIRED.items()):
+            bad.append(f"{cid}: {jf} is not the pre-registered run ({S1H4_REQUIRED})")
+        try:
+            raw_v = path(jd) if callable(path) else get(jd, path)
+        except (KeyError, TypeError):
+            raw_v = None
+        if raw_v is None:      # e.g. no structure-level bound when a supported failure occurred: nothing to quote
+            continue
         raw = float(path(jd) if callable(path) else get(jd, path)) * (scale or 1)
         want = round(raw, dec)
         for f in sorted(set(files)):

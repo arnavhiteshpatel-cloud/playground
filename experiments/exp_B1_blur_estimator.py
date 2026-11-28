@@ -24,7 +24,8 @@ MODELS = ("condyle", "segmental")
 
 
 def calibrated(raw):
-    """The advisor's conservative calibration (integration._assess_scan, ≥1.4.0)."""
+    """The advisor's conservative calibration (``integration.estimate_blur``, ≥1.4.0); used here only to check that
+    the value the advisor returns is the documented calibration of the raw fit."""
     return None if raw is None else raw * (1 + max(0.0, raw - 0.6) * 1.5)
 
 
@@ -41,17 +42,28 @@ def main():
                     est = scan_relative_units(img, exclude_mask=ph.roi_mask)
                     b = estimate_blur(img, ph.roi_mask, est["soft"], est["host"])
                     ref = float(np.hypot(psf / VOX, 1 / np.sqrt(12)))
-                    raw = b.get("sigma_vox")
+                    raw, used = b.get("sigma_vox_raw"), b.get("sigma_vox")      # estimate_blur already calibrates
+                    assert used is None or abs(used - calibrated(raw)) < 1e-9, "calibration in the script is stale"
                     rows.append({"model": model, "seed": seed, "psf_um": psf, "noise": s, "noise_rel": est["noise_rel"],
-                                 "sigma_ref_vox": ref, "sigma_raw_vox": raw, "sigma_used_vox": calibrated(raw),
-                                 "ratio_used_to_ref": (calibrated(raw) / ref) if raw else None})
+                                 "sigma_ref_vox": ref, "sigma_raw_vox": raw, "sigma_used_vox": used,
+                                 "ratio_raw_to_ref": (raw / ref) if raw else None,
+                                 "ratio_used_to_ref": (used / ref) if used else None})
                     print(rows[-1], flush=True)
     summ = {}
     for s in NOISE:
-        r = [x["ratio_used_to_ref"] for x in rows if x["noise"] == s and x["ratio_used_to_ref"]]
-        summ[f"noise_{int(s)}"] = {"n": len(r), "ratio_median": float(np.median(r)) if r else None,
+        sel = [x for x in rows if x["noise"] == s]
+        r = [x["ratio_used_to_ref"] for x in sel if x["ratio_used_to_ref"]]
+        rr = [x["ratio_raw_to_ref"] for x in sel if x["ratio_raw_to_ref"]]
+        summ[f"noise_{int(s)}"] = {"n": len(sel), "n_estimated": len(r),
+                                   "ratio_median": float(np.median(r)) if r else None,
                                    "ratio_min": float(min(r)) if r else None,
+                                   "ratio_max": float(max(r)) if r else None,
+                                   "raw_ratio_median": float(np.median(rr)) if rr else None,
                                    "share_underestimated_by_20pct": float(np.mean([x < 0.8 for x in r])) if r else None}
+    for psf in PSFS:
+        r = [x["ratio_used_to_ref"] for x in rows if x["psf_um"] == psf and x["ratio_used_to_ref"]]
+        summ[f"psf_{int(psf)}"] = {"n_estimated": len(r), "ratio_median": float(np.median(r)) if r else None,
+                                   "ratio_min": float(min(r)) if r else None}
     print(summ)
     save_result("exp_B1_blur_estimator", {"experiment": "B1", "summary": summ, "rows": rows, "seconds": time.time() - t0})
 

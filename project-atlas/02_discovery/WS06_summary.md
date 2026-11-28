@@ -20,13 +20,13 @@ Only Vita Coco (asset-light importer brand, 11–18% operating margin; gross mar
 Structural headwinds that apply across this workstream:
 - **Tariffs are unstable.** The Supreme Court struck down the IEEPA tariffs on 2026‑02‑20 [C, S005]. A Section 122 tariff of 10% (some sources say 15%) ran from Feb to Jul 2026 [C, S007]. Since 2026‑07‑24, Section 301 "forced-labor" tariffs of 10–12.5% apply to 60 economies [A, S006], on top of the legacy China 301 duties. A Section 301 excess-capacity case is still pending, with a determination due by March 2027.
 - **De minimis is gone indefinitely** for all countries and all modes. CBP's interim final rule took effect 2026‑06‑24 [A, S032, S003, S004]. Low-value shipments now need Type 11 or formal entries.
-- **Children's products** now require importers to eFile certificates with CBP from 2026‑07‑08, on top of the existing third-party testing [A, S017].
+- **Children's products:** CBP certificate eFiling from 2026‑07‑08 on top of third-party testing [A, S017].
 - **Platform fees keep rising.**
   - Amazon: referral fees of 8–17%, and FBA fees up an average of $0.08 per unit in 2026 [B, S001, S002].
   - TikTok Shop: 6% referral fee (sellers report 8%), plus 10–20% creator commissions [D, S014].
   - Faire: 15% commission plus $10 per opening order [B, S009].
 
-**Conclusion:** the strongest WS06 ideas are not "brands." They are **B2B2C, route-based or authorized-reseller models** where the founder sells to an identifiable business buyer and the end consumer reorders.
+**Conclusion:** the strongest WS06 ideas are **B2B2C, route or authorized-reseller models**, not brands: sell to an identifiable business buyer; the consumer reorders.
 
 ## Strongest candidates (5–8)
 
@@ -56,7 +56,7 @@ Structural headwinds that apply across this workstream:
 - Margins are unverified, and imported merchandise is tariff-exposed.
 
 **6. WS06-020 — Youth sports team dealer with prepaid online team stores** (5.32 / 5.18, evidence E, hold)
-- Customer-funded and recurs every season. The ceiling is modest, roughly $250k/yr.
+- Customer-funded, recurs each season; ceiling ~$250k/yr.
 
 **7. WS06-011 — Exclusive importer of foreign food brands for Chicago ethnic grocers** (5.15 / 5.11, evidence D, hold)
 - Weekly reorders and walk-in access to buyers.
@@ -100,4 +100,4 @@ Structural headwinds that apply across this workstream:
 - **WS07:** liquidation sourcing; 3PL for small brands; import consolidation for ethnic food importers.
 - **WS11/WS03:** ITAD and device buyback from businesses and schools (a better framing of 035).
 - **WS13:** office coffee service; firewood/ice routes.
-- **WS18:** single-family rental resident-benefit services (the adjacency in 004).
+- **WS18:** resident-benefit services for rentals (from 004).

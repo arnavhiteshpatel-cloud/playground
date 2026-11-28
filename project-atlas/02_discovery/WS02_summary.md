@@ -13,8 +13,8 @@
 - **Books are valuable, which is the wealth-creation evidence.**
   - Deals for agencies above $1M EBITDA averaged about 11.4x EBITDA in 2025 [C, S007].
   - There were 695 deals in 2025. About 30,000 agencies under $1.25M revenue lack a succession path [C, S006].
-  - Best-practice agencies earn 23–31% EBITDA margins, and 42.5% for the top quartile of the under-$1.25M band [C, S008].
-  - Incumbent economics, not new-entrant economics: Brown & Brown 35.9% adjusted EBITDAC margin with 2.8% organic growth; Baldwin 22.7% margin with 7% organic growth [B, S009–S010].
+  - Best-practice agencies earn 23–31% EBITDA margins [C, S008].
+  - Incumbent economics (not new-entrant): Brown & Brown 35.9% adjusted EBITDAC margin; Baldwin 22.7% [B, S009–S010].
   - Small books trade far below the 11.4x figure. The sub-$1M EBITDA multiple is unverified.
 - **Payments:** an acquirer's 10-K shows a working residual economy. Priority buys ISO residual streams and amortizes them over 3–9 years (6-year weighted average), which means a merchant book is a *wasting* asset [A, S019].
 - **Payroll incumbent (Paychex):** 38.6% operating margin, 82–83% client retention, and more than 50% of payroll clients come from CPA, broker and bank referrals [A, S022].
@@ -65,19 +65,14 @@ This cross-sell assumption (E) is the main thing to validate.
 5. **Merchant program terms:** ISO residual split and vesting, and annual merchant attrition rates.
 6. **Pricing benchmarks:** bookkeeping and payroll fees by vertical, white-label payroll platform costs, and COI-tracking prices.
 7. **Illinois Secure Choice:** employer thresholds and deadlines, and federal start-up plan credits.
-8. **Other Illinois rules:**
-   - Public-adjuster fee caps and solicitation rules.
-   - Whether surety needs a separate line of authority.
-   - Whether fee-based insurance consulting requires a license (affects 019 and 021).
-   - The current CPI-adjusted dram-shop caps.
+8. **Other Illinois rules:** public-adjuster fee caps and solicitation rules; surety line of authority; whether fee-based insurance consulting needs a license (affects 019, 021); current CPI-adjusted dram-shop caps.
 9. **CMS 2026/2027 MA compensation caps:** the ZIP files were not reviewed.
 
-**Limitations:** the shared web-search budget ran out partway through, so later evidence came from direct fetches of primary pages and SEC EDGAR. The Hartford and FMCSA pages returned 503/403. The B&B/Baldwin multiples and the sub-$1M multiples come partly from search summaries.
+**Limitations:** the shared web-search budget ran out partway through, so later evidence came from direct fetches (agency pages, SEC EDGAR). Hartford/FMCSA pages returned 503/403. The Baldwin figures and sub-$1M multiples come from search summaries.
 
 ## Cross-stream leads
 - **WS01:** premium finance as a lending business; DSCR lenders as referral partners for habitational insurance.
 - **WS07:** dispatch or factoring services for small carriers, paired with trucking insurance.
 - **WS12:** offshore back-office pods (the WS02-018 model applied to other professions).
 - **WS15:** Illinois Secure Choice; Prevailing Wage Act certified payroll; Chicago contractor licensing insurance minimums.
-- **WS10/WS15:** condo-association insurance appraisals and replacement-cost valuations (lead only).
-- **WS14:** subrogation recovery for self-insured fleets (not recorded here).
+- **WS10/WS15:** condo-association replacement-cost insurance appraisals. **WS14:** fleet subrogation recovery.

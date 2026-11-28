@@ -147,7 +147,13 @@ SCALE = {"K": 1e3, "M": 1e6, "%": 0.01}
 # Customer-, investor- and grant-facing files and phrases that must not appear in them.
 FACING_GLOBS = ["website/*.html", "docs/user/*.md", "investor/*.md", "investor/build_decks.py", "grants/*.md",
                 "business/*.md", "business/templates/*.md", "investor/*.pptx", "publications/*.md", "web/landing/*.html",
-                "outreach/*.md", "founder/*.md", "FOUNDER_EXECUTIVE_SUMMARY.md"]
+                "outreach/*.md", "founder/*.md", "FOUNDER_EXECUTIVE_SUMMARY.md",
+                # pages and ledgers the website links to (C3-BIZ-12)
+                "validation/*.md", "EXPERIMENT_REGISTRY.md", "EVIDENCE_LEDGER.md", "BENCHMARK_SCORECARD.md",
+                "FOUNDER_HANDOFF.md"]
+# Source ledgers hold the raw per-run counts by design; only the run-count bans are lifted for them.
+LEDGERS = {"EXPERIMENT_REGISTRY.md", "EVIDENCE_LEDGER.md", "BENCHMARK_SCORECARD.md"}
+LEDGER_EXEMPT = "advisor-validation numbers"
 BANNED = [
     (r"audit[- ]ready", "compliance-flavoured: use 'tamper-evident audit trail (research prototype; not validated)'"),
     (r"validated (?:analysis )?services?", "no service is validated"),
@@ -249,7 +255,8 @@ def check_banned() -> list[str]:
     files = sorted({p for g in FACING_GLOBS for p in ROOT.glob(g) if p.is_file()})
     for f in files:
         rel = f.relative_to(ROOT).as_posix()
-        pats = [(re.compile(p, re.I if "verified" not in p else 0), why) for p, why in BANNED]
+        pats = [(re.compile(p, re.I if "verified" not in p else 0), why) for p, why in BANNED
+                if not (rel in LEDGERS and why.startswith(LEDGER_EXEMPT))]
         for g, extra in BANNED_STRICT.items():
             if f in set(ROOT.glob(g)):
                 pats += [(re.compile(p), "quality claim: say what was checked, not 'verified'") for p in extra]

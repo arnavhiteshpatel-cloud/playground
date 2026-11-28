@@ -21,8 +21,10 @@ dependent), whereas an RF with shape/texture features retained 0.85–0.92 — b
 compact; with strut-like granules the oracle was 0.36 and the RF 0.66–0.70. A registered day-0 graft footprint gave graft Dice 0.915 (compact) and 0.816 (strut-like) with sub-voxel
 registration error. An explicit ROI-context channel did not improve the U-Net (0.919 vs 0.918).
 **Conclusions.** In simulation, intensity is sufficient only when graft and new bone differ in density by more than the
-noise; spatial context compensates only when graft morphology is distinctive; a day-0 baseline scan is the most robust
-strategy. Physical phantoms of commercial materials are required to determine where real materials fall.
+noise; spatial context compensates only when graft morphology is distinctive; a registered day-0 baseline helps only
+when granules do not move between scans (in a later simulation, naive footprint graft Dice fell from 0.80 to 0.535 and
+0.35 with 50 and 100 µm granule motion; Experiment L3, `EXPERIMENT_REGISTRY.md`) and does not help for remodelling
+bone-derived grafts. Physical phantoms of commercial materials are required to determine where real materials fall.
 
 ## 1. Introduction
 * FDA special controls for resorbable calcium-salt bone void fillers (21 CFR 888.3045/888.3046) require animal data on

@@ -25,6 +25,9 @@ from osteoquant import __version__
 OUT = ROOT / "reports_samples"
 OUT.mkdir(exist_ok=True)
 FIGD = OUT / "fig"
+# Generation-1 samples are superseded (cycle-3 review, C2-BIZ-07 residual); they are written apart from current samples.
+OLD = OUT / "superseded"
+OLD.mkdir(exist_ok=True)
 FIGD.mkdir(exist_ok=True)
 LIM_SYN = ["All data are computational phantoms; performance on synthetic data does not establish performance on "
            "real tissue or real graft materials.",
@@ -97,7 +100,7 @@ def report1():
                                                      "model": "unet_ctx_s0 (see models/registry.json for SHA-256)"},
          "max_figures": 4}
     b["group_figures"] = [group_dotplot(b, ENDPOINTS[1:5], str(FIGD / "r1_groups.png"))]
-    return build_pdf(b, OUT / "DefectFill_SAMPLE1_synthetic_benchmark.pdf", OUT / "DefectFill_SAMPLE1_synthetic_benchmark.csv")
+    return build_pdf(b, OLD / "DefectFill_SAMPLE1_synthetic_benchmark.pdf", OLD / "DefectFill_SAMPLE1_synthetic_benchmark.csv")
 
 
 def report2():
@@ -137,7 +140,7 @@ def report2():
                          "Distraction osteogenesis is not a graft-filled defect; this report demonstrates ingestion, ROI and reporting on real data only."],
          "reproducibility": {"software_version": __version__, "git_commit": git_commit(), "dataset": "doi:10.5281/zenodo.17255310",
                              "licence": "CC-BY-4.0"}}
-    return build_pdf(b, OUT / "DefectFill_SAMPLE2_public_ovine_callus.pdf", OUT / "DefectFill_SAMPLE2_public_ovine_callus.csv")
+    return build_pdf(b, OLD / "DefectFill_SAMPLE2_public_ovine_callus.pdf", OLD / "DefectFill_SAMPLE2_public_ovine_callus.csv")
 
 
 def report3():
@@ -172,7 +175,7 @@ def report3():
          "limitations": LIM_SYN + ["Group differences reflect the generator's assumed resorption rates, not material biology."],
          "reproducibility": {"software_version": __version__, "git_commit": git_commit()}, "max_figures": 2}
     b["group_figures"] = [group_dotplot(b, ENDPOINTS[2:4], str(FIGD / "r3_groups.png"))]
-    return build_pdf(b, OUT / "DefectFill_SAMPLE3_synthetic_longitudinal.pdf", OUT / "DefectFill_SAMPLE3_synthetic_longitudinal.csv")
+    return build_pdf(b, OLD / "DefectFill_SAMPLE3_synthetic_longitudinal.pdf", OLD / "DefectFill_SAMPLE3_synthetic_longitudinal.csv")
 
 
 if __name__ == "__main__":

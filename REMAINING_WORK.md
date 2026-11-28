@@ -1,5 +1,10 @@
 # Prioritised Remaining-Work Checklist (end of Generation 2, 28 November 2026)
 
+> **SHELVED (28 Nov 2026, founder decision D-027).** Development has stopped. The main risk (whether new bone and
+> residual graft can be told apart in micro-CT for commercially important materials) was never tested on real data,
+> and the simulations leaned against it. Nothing was sent, bought, signed, submitted or distributed. To resume, start with
+> `REMAINING_WORK.md` items 5 (discovery conversations) and 7 (an imaging scientist's review), then the phantom study.
+
 Priority: **P0** = needed before any outreach, pilot or distribution; **P1** = before a first paid study or Gate 2;
 **P2** = before GLP-adjacent use or scale. Owner: **F** = founder; **C** = collaborator or advisor; **E** = engineering;
 **X** = external professional. Nothing below has been started on the founder's behalf: no email sent, nothing bought,

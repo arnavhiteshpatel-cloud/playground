@@ -1,5 +1,10 @@
 # OsteoQuant
 
+> **SHELVED (28 Nov 2026, founder decision D-027).** Development has stopped. The main risk (whether new bone and
+> residual graft can be told apart in micro-CT for commercially important materials) was never tested on real data,
+> and the simulations leaned against it. Nothing was sent, bought, signed, submitted or distributed. To resume, start with
+> `REMAINING_WORK.md` items 5 (discovery conversations) and 7 (an imaging scientist's review), then the phantom study.
+
 **Offline micro-CT analysis for preclinical bone-graft and bone-healing studies — research prototype.**
 A desktop workstation that measures defect-fill endpoints and, before it reports graft or new-bone volume, decides per
 scan whether that split is identifiable for the material, scan and design. When it is not, it refuses the endpoint and

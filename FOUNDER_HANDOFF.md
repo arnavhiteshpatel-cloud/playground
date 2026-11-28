@@ -1,5 +1,10 @@
 # Founder Handoff — OsteoQuant (28 November 2026, end of Generation 2)
 
+> **SHELVED (28 Nov 2026, founder decision D-027).** Development has stopped. The main risk (whether new bone and
+> residual graft can be told apart in micro-CT for commercially important materials) was never tested on real data,
+> and the simulations leaned against it. Nothing was sent, bought, signed, submitted or distributed. To resume, start with
+> `REMAINING_WORK.md` items 5 (discovery conversations) and 7 (an imaging scientist's review), then the phantom study.
+
 Written for you to act on. Every number comes from a file in this repository; SYNTHETIC results are labelled. Read §1,
 §2 and §15 first. Nothing has been sent, bought, signed, submitted or incorporated. The repository is public (your
 decision, `docs/ip/IP_STRATEGY.md`).

@@ -1,5 +1,10 @@
 # Execution State
 
+> **SHELVED (28 Nov 2026, founder decision D-027).** Development has stopped. The main risk (whether new bone and
+> residual graft can be told apart in micro-CT for commercially important materials) was never tested on real data,
+> and the simulations leaned against it. Nothing was sent, bought, signed, submitted or distributed. To resume, start with
+> `REMAINING_WORK.md` items 5 (discovery conversations) and 7 (an imaging scientist's review), then the phantom study.
+
 _Last updated: 2026-11-28, after S1H4 (Generation 2, final phase). Branch `claude/osteoquant-autonomous-dev-ujqgkl` (public
 repository — founder decision recorded in docs/ip/IP_STRATEGY.md). Ledgers: TASK_REGISTRY.md (tasks),
 FORENSIC_AUDIT.md (Gen-0 audit), REVIEW_REGISTRY.md (reviews), DEFECT_REGISTRY.md, BENCHMARK_SCORECARD.md,

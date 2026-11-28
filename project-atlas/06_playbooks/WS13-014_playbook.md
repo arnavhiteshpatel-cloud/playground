@@ -612,18 +612,18 @@ The "win rate" and "recession" rows look benign in year 3 only because fewer acc
 - **Can it fund other ventures?** Modestly. Deployable cash starts in year 4 at $23,795 and reaches $86,862 by year 10. That is enough to seed one small adjacent business, not a holding company.
 - **As a first company in a diversified portfolio:**
   - **For:**
-    - the lowest-capital route after restructuring (peak $51,180);
-    - a B2B, repeat-account model;
-    - technical skills that compound;
+    - lowest capital after restructuring (peak $51,180);
+    - B2B repeat accounts;
+    - compounding technical skill;
     - founder fit;
     - an acquirer exit.
   - **Against:**
     - construction-cyclical (permits –34% [A, WS10-S010]);
-    - labour-intensive, with payroll at 45.9% of receipts in the NAICS proxy [C, C3-S015];
+    - labour-intensive (payroll 45.9% of receipts [C, C3-S015]);
     - strike-liability tail;
-    - an entrenched national incumbent;
-    - a base ceiling of about $233k by year 10.
-  - **Verdict:** a solid first asset *if* E1 and E5 pass. It is not the place to expect $500k a year without multi-metro replication.
+    - entrenched incumbent;
+    - base year-10 operating profit only about $233k.
+  - **Verdict:** a solid first asset *if* E1 and E5 pass, but not a route to $500k a year without multi-metro replication.
 
 ---
 
@@ -637,14 +637,7 @@ The "win rate" and "recession" rows look benign in year 3 only because fewer acc
 - Start E1 with 4–5 site walk-ups at permitted downtown jobs.
 - Call 2 commercial insurance brokers for indications only (E2).
 
-**Claude prepares by 5 Dec:**
-- a fresh 90-day permit pull for the top 39 prospects with job addresses;
-- the interview tracker and scoring sheet;
-- the insurance submission narrative (no PII sent);
-- a rental reservation checklist;
-- the KPI sheet;
-- report and quote templates;
-- a QGIS export template.
+**Claude prepares by 5 Dec:** a fresh 90-day permit pull for all 39 prospects with job addresses, the interview tracker and scoring sheet, an insurance submission narrative (no PII sent), a rental reservation checklist, the KPI sheet, report and quote templates, and a QGIS export template.
 
 **Spend:** $0–200.
 
@@ -710,38 +703,32 @@ The "win rate" and "recession" rows look benign in year 3 only because fewer acc
 ---
 
 ## 12. Required confirmations (must be confirmed directly)
-**Supplier:**
-- Chicago-area availability and weekly rates for a concrete GPR (Mini XT, Conquest 100, GP8000, PS1000).
-- Whether CSDS ships rentals to Illinois, and at what cost.
-- UCG RD8200 rental availability.
-- Lease approval terms for a new LLC (depends on founder credit, F2).
-- An Illinois NULCA-accredited course date.
-- Hands-on GPR course price.
-
-**Customer:**
-- Actual last-paid half-day prices.
-- Booking lead times with GPRS and local firms in the collar counties.
-- Share of subcontractors that rent or own scanners, or rely on coring subcontractors.
-- Who chooses the vendor (foreman, PM or GC).
-- Prequalification platforms required (ISNetworld, Avetta, others).
-
-**Regulatory:**
-- 220 ILCS 50 text on private locating (ilga.gov unavailable).
-- City of Chicago business-licence applicability.
-- FCC UWB operator coordination for GPR.
-- Illinois employee-classification rules for field technicians.
-- Prevailing-wage classification on public jobs.
-- The boundary of the Illinois Professional Land Surveyor Act for maps.
-
-**Insurance:**
-- Availability for a start-up locator.
-- XCU/underground coverage and whether mis-locates fall under GL or E&O.
-- A $2M umbrella.
-- Workers' comp for an owner-only LLC (GC forms require it [B, E-WS13014-S008]).
-- Inland marine for owned or rented kit.
-- Total annual premium (modelled at $750 a month base).
-
----
+- **Supplier:**
+  - Chicago-area availability and weekly rates for a concrete GPR (Mini XT, Conquest 100, GP8000, PS1000).
+  - Whether CSDS ships rentals to Illinois, and at what cost.
+  - UCG RD8200 rental availability.
+  - Lease approval for a new LLC (depends on founder credit, F2).
+  - An Illinois NULCA-accredited course date and the hands-on GPR course price.
+- **Customer:**
+  - Actual last-paid half-day prices.
+  - Booking lead times with GPRS and local firms in the collar counties.
+  - Share of subcontractors that rent or own scanners, or rely on coring subcontractors.
+  - Who chooses the vendor (foreman, PM or GC).
+  - Required prequalification platforms (ISNetworld, Avetta, others).
+- **Regulatory:**
+  - 220 ILCS 50 text on private locating (ilga.gov unavailable).
+  - Whether a City of Chicago business licence applies.
+  - FCC UWB operator coordination for GPR.
+  - Illinois employee-classification rules for field technicians.
+  - Prevailing-wage classification on public jobs.
+  - The boundary of the Illinois Professional Land Surveyor Act for maps.
+- **Insurance:**
+  - Whether a start-up locator can get cover at all.
+  - XCU/underground coverage, and whether mis-locates fall under GL or E&O.
+  - A $2M umbrella.
+  - Workers' comp for an owner-only LLC (GC forms require it [B, E-WS13014-S008]).
+  - Inland marine for owned or rented kit.
+  - Total premium (modelled at $750 a month base).
 
 ## Appendix — Corrections log (Stage D → Stage E)
 1. **Peak funding** fell from about $230k / $161k (with / without draw) to **$51,180 / $48,622** after the switch to rent-first, lease and mileage (§7.1).

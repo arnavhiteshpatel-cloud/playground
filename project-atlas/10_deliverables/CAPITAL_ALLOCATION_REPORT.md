@@ -45,7 +45,7 @@ All figures are operating profit before owner pay. "Stage E base" is the pre-rev
 - **SYN-004:** a 10-month lag from mandate to first fee, because the fee starts only when the customer's current contract expires [B, F2-S005]. Also 7 leads a month, a 20% win rate and ARPC $800.
 - **WS04-014:** technician cost $7,500, re-based on Chicago network-support wages [C, F4-S004]. ARPC $650 and onboarding $500, against Siotek's $399 price with free onboarding [B, F4-S003].
 
-**Where the evidence cuts against the decision.** On post-review numbers the primary leads on year-3 profit, capital efficiency and stress survival. That much supports the orchestrator's choice. But after charging the founder's own delivery labour (the cross-model audit's founder-delivery charge, FDC: the market cost of the delivery job the founder does unpaid), its base year-5 profit is only **$21.3k**, and **$0** under the audit's harmonized rules [E, WS12-014-REV; review, CROSS_MODEL_AUDIT §3]. It is a well-paid job that needs very little capital, not a capital-absorbing asset. That is exactly why capital allocation here is mostly about *not* spending.
+**Where the evidence cuts against the decision.** On post-review numbers the primary leads on year-3 and year-5 profit and on stress survival: every stress leaves year 3 positive, and only one pushes peak funding above $100k. That much supports the orchestrator's choice. SYN-006 needs slightly less capital ($11.5k against $15.2k without the draw). But after charging the founder's own delivery labour (the cross-model audit's founder-delivery charge, FDC: the market cost of the delivery job the founder does unpaid), its base year-5 profit is only **$21.3k**, and **$0** under the audit's harmonized rules [E, WS12-014-REV; review, CROSS_MODEL_AUDIT §3]. It is a well-paid job that needs very little capital, not a capital-absorbing asset. That is exactly why capital allocation here is mostly about *not* spending.
 
 ---
 
@@ -162,7 +162,7 @@ Each tier's money is released only when the gate is met. The gates incorporate t
 | Hires 30% sooner | $80.7k | **−$86.8k** | $23.9k | $21.5k |
 | Growth twice as slow | **$17.1k** | $68.2k | −$1.1k | $34.7k |
 | Worst peak funding (test) | $132.6k (growth twice as slow) | $653.7k (hires sooner) | $198.7k (growth twice as slow) | $278.5k (hires sooner) |
-| Stresses with peak > $100k | 1 of 17 | 3 of 17 | **all 17** | 4 of 17 |
+| Stresses with peak > $100k | 1 of 17 | 3 of 17 | **all 17** | 7 of 17 |
 
 \* Lower demand defers hires, so the founder works unpaid. This is founder wage, not resilience [review, CROSS_MODEL_AUDIT §2].
 

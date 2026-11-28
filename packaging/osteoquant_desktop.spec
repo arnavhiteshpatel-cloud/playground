@@ -72,7 +72,8 @@ excludes = [
     "PySide6.QtDesigner", "PySide6.QtHelp", "PySide6.QtQuickWidgets", "PySide6.QtQuickControls2",
     "PySide6.QtWebView", "PySide6.QtNetworkAuth",
     "uvicorn", "uvloop", "httptools", "watchfiles", "websockets",     # the desktop never serves HTTP
-    "mypy", "hypothesis", "wheel", "pip",     # development tools pulled in by hooks (bundle inventory, C2-BIZ-08)
+    "mypy", "hypothesis", "pip",     # development tools pulled in by hooks (bundle inventory, C2-BIZ-08); "wheel" is not
+    # excluded: setuptools aliases its vendored copy to it, and excluding it aborts the analysis (DF-044)
 ]
 # The shared job handlers live in osteoquant/study/handlers.py (no web framework), so the web stack is excluded too.
 excludes += ["fastapi", "starlette", "pydantic", "pydantic_core", "anyio", "sniffio", "python_multipart", "multipart",

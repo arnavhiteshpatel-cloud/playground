@@ -14,7 +14,7 @@
   "STAGE E (2026-11-28): Surety demand for WIP now documented at B: Tokio Marine HCC's contract bond packet requires two FYE statements plus a current interim if the FYE is >6 months old and a Work-on-Hand schedule (contract price, estimated cost at completion, billed to date, cost to date) [B, E-SYN006-S004]; Western National's Central-region (incl. IL) chart offers 'Xpress Xtra' bonding to $1.5M aggregate with 'No C.P.A. Requirement', underwritten on business statements, personal financial statements, a bank letter and a WIP schedule [B, E-SYN006-S005]. Counter-evidence: SBA QuickApp (contracts <= $500k) and carrier express programs (<= $500k on a 1-page application and credit) need little or no WIP [A, E-SYN006-S006/S007; B, E-SYN006-S005] - so the buyer is the sub graduating past ~$500k jobs.",
   "STAGE E correction: LCPcertified describes itself as certified-payroll reporting 'for an individual organization' and lists only CA/WA/MD state exports [B, E-SYN006-S010]; the Stage D firm-level multi-client licence ($210/mo) is replaced by in-house IDOL-template tooling ($75/mo base).",
   "STAGE E: Insureon bookkeeper medians E&O $37/mo ($1M/$1M) and cyber $47/mo [D, E-SYN006-S008] are a floor; base keeps $275/mo because certified-payroll filing (SB1344 agent penalties [C, C5-S019]) and surety reliance raise the risk class (E).",
-  "STAGE E: BLS May 2025 median pay for bookkeeping/accounting clerks $50,670 nationally and $54,890 in construction [A, E-SYN006-S009]; base bookkeeper $5,800/mo loaded (~$58k + 20%) is consistent; conservative raised to $6,400.",
+  "STAGE E: BLS May 2025 median pay for bookkeeping/accounting clerks $50,670 nationally and $54,890 in construction [C, E-SYN006-S009]; base bookkeeper $5,800/mo loaded (~$58k + 20%) is consistent; conservative raised to $6,400.",
   "STAGE E: an external part-time construction-accounting reviewer (QA on WIP/job-cost) is added from month 3 because the founder has no construction-accounting track record; hourly rate MISSING (E).",
   "STAGE E standardization: owner draw $4,000/mo from month 13 in all scenarios; tax 30%; start capital = smallest base-case injection keeping cash >= 0; long-term drivers evidenced below."
  ],
@@ -196,7 +196,7 @@
     "base": 5800,
     "optimistic": 5500
    },
-   "notes": "~$58k salary + ~20% burden; BLS May 2025 median bookkeeping clerk $50,670 (US) / $54,890 in construction [A, E-SYN006-S009]; Census 541219 payroll/employee ~$45k [C, DB-S036]. 15 clients per bookkeeper (E). Founder covers the first ~12 clients."
+   "notes": "~$58k salary + ~20% burden; BLS May 2025 median bookkeeping clerk $50,670 (US) / $54,890 in construction [C, E-SYN006-S009]; Census 541219 payroll/employee ~$45k [C, DB-S036]. 15 clients per bookkeeper (E). Founder covers the first ~12 clients."
   },
   {
    "role": "Senior construction accountant / reviewer",

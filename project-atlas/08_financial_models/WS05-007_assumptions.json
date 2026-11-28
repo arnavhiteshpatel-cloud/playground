@@ -1,23 +1,25 @@
 {
  "id": "WS05-007",
  "name": "Chicago food-facility commercial pest control (SW-side route) with residential/landlord plan line",
- "summary": "One IDPH-licensed pest company: founder becomes the Certified Technician, wins food establishments cited for live pests in CDPH inspections (SW cluster 60608/60609/60616/60623/60632), adds residential/2-6-flat landlord quarterly plans as a secondary line. Customer unit = blended service account (~75% commercial monthly, ~25% residential quarterly). Technician labor is modelled as capacity-triggered staff (founder services the first ~110 accounts); gross margin therefore covers materials/devices only.",
+ "summary": "One IDPH-licensed pest company: founder becomes the Certified Technician, wins food establishments in Chicago's SW cluster (60608/60609/60616/60623/60632) using CDPH inspection triggers (pest citations, repeat offenders, new licences), adds residential/2-6-flat landlord quarterly plans as a secondary line. Customer unit = blended service account (~75% commercial monthly, ~25% residential quarterly). Technician labour is capacity-triggered staff (founder services the first ~110 accounts); gross margin covers materials/devices only. Stage E refresh (2026-11-28): licensing timeline re-dated to the posted IDPH exam calendar, win rate cut for the 7-day re-inspection finding, overhead/capex start aligned with licensure, standardized draw/tax/injection and evidenced long-term drivers. The fire-extinguisher (OSFM) second licence is NOT in this model (see WS05-001 model).",
  "evidence_notes": [
-  "Demand: 1,416 Chicago food licences showed live pest evidence (droppings, roaches, flies, rodents) in CDPH inspections 2025-11-01..2026-11-25; 256 of these in the SW cluster out of 1,572 licences inspected there [A, DA-S001].",
-  "Pricing: restaurants ~$100-150/mo [D, C2-S020]; operator-published restaurant range $50-422/mo [D, C2-S019]; public per-building bids $30-180/mo [A, C2-S017]; Chicago residential monthly visits ~$40-70 [D, DA-S021]. No Chicago commercial rate card was found (MISSING).",
-  "Churn: Rentokil North America customer retention 80.7%/yr [B, C2-S009] -> ~1.8%/mo; ~10% of inspected Chicago food licences were found 'Out of Business' within 13 months [A, DA-S001].",
-  "Labour: Chicago MSA pest-control worker median $46,740 ($22.47/hr) [C, DA-S011]. Insurance: broker averages GL $112/mo, auto $114/mo, WC $90/mo for small pest firms [C, DA-S010]; statutory minimum limits per IDPH form [A, C2-S004].",
-  "Software: GorillaDesk published plans $49-149/mo first route [B, DA-S016]. Supplier: Veseris branch at 3642 S Kedzie Ave, Chicago, requires applicator licence number to open an account [B, DA-S014].",
-  "Win rates, lead volumes, CAC and one-time revenue are analyst assumptions (E) to be tested by the validation plan. Incumbent gross margin (Rollins 52.8% incl. labour) is incumbent economics, not used directly."
+  "Demand (Stage E re-query, 2025-11-26..2026-11-25): 10,140 Chicago food licences inspected; 2,008 cited under violation 38; 942 with pest-activity evidence in inspector comments (stricter regex than Stage D's 1,416, which counted gap-only 'rodent' comments); SW cluster 165 of 1,492 (11.1%) [A, E-WS05007-S001].",
+  "Urgency correction: after a failed inspection with pest activity the next inspection follows a median 7 days later (59% within 7 days, 93% within 14) and 80% pass it; only 8.5% still show pests [A, E-WS05007-S001]. The incumbent usually resolves the crisis before a newcomer arrives, so the 'rescue before re-inspection' pitch works mainly for repeat offenders.",
+  "Rule floor: CDPH inspectors cite that retail food establishments must contract with a licensed Illinois exterminator providing service at least twice a year and keep a 12-month logbook with service reports and the company's IDPH licence number (Municipal Code 7-38-020(C)) [A, E-WS05007-S001; code text itself not retrievable].",
+  "Pricing: restaurants ~$100-150/mo [D, C2-S020]; operator-published restaurant range $50-422/mo [D, C2-S019]; public per-building bids $30-180/mo [A, C2-S017]; Chicago residential monthly visit ~$40-70 [D, DA-S021]. No Chicago commercial rate card found (MISSING).",
+  "Churn: Rentokil North America customer retention 80.7%/yr [B, C2-S009] -> ~1.8%/mo; commercial retention target >94% and independents ~85-88% per trade press [D, E-WS05007-S009]; ~9.7% of inspected Chicago food licences recorded 'Out of Business' in 12 months [A, E-WS05007-S001].",
+  "Labour: Chicago MSA pest control workers median $46,740 [C, C2-S021] (Correction: Stage D cited DA-S011, which is the janitor wage table). Insurance: broker averages GL $112/mo, auto $114/mo [C, DA-S010]; statutory minimum limits [A, C2-S004].",
+  "Supply: Veseris branch 3642 S Kedzie Ave requires applicator licence number [B, DA-S014]; Pest Management Supply, Inc. holds a Chicago wholesale licence at 2027-2029 S Wabash Ave (60616) [A, E-WS05007-S005]. Software: GorillaDesk $49-149/mo first route [B, DA-S016].",
+  "Win rates, lead volumes, CAC and one-time revenue remain analyst assumptions (E) to be tested by the validation plan. Incumbent gross margin (Rollins 52.8% incl. labour) is incumbent economics, not used directly."
  ],
  "drivers": {
   "sales_start_delay_months": {
-   "conservative": 3,
-   "base": 2,
+   "conservative": 4,
+   "base": 3,
    "optimistic": 2
   },
   "sales_start_delay_months__evidence": "A",
-  "sales_start_delay_months__source": "IDPH exams roughly monthly at Westchester, application due 15 days prior [A, C2-S005, WS05-S013]; business licence $250 + insurance certificate [A, WS05-S012, C2-S004]. Processing time itself MISSING.",
+  "sales_start_delay_months__source": "IDPH exam calendar (fetched 2026-11-28) lists Westchester sessions 12/16/2026 (10 seats each) and no 2027 dates yet; application must be RECEIVED 15 days before the exam (i.e., by 1 Dec for 16 Dec) [A, E-WS05007-S002, WS05-S013]. Base assumes a January 2027 sitting, then business licence ($250) + insurance certificate; processing time MISSING. Optimistic = December seat obtained; conservative = February sitting or a re-take.",
   "sales_cycle_months": 1,
   "sales_cycle_months__evidence": "E",
   "sales_cycle_months__source": "Restaurants decide in days after a citation; plants 1-3 months (Stage A/C, E).",
@@ -28,7 +30,7 @@
    "optimistic": 60
   },
   "founder_leads_per_month__evidence": "E",
-  "founder_leads_per_month__source": "Qualified owner/manager conversations from walk-ins at CDPH-cited licences (~20/mo with live pests in SW cluster, ~109/mo citywide [A, DA-S001]), new licences (~124/mo citywide [A, C2-S014]) and residential inbound. Conversation volume is E.",
+  "founder_leads_per_month__source": "Composition (Stage E, SW cluster, 12 months [A, E-WS05007-S001/S004]): ~14/mo licences with pest activity, ~22/mo other violation-38 citations (gaps, door sweeps, logbooks), ~10/mo newly issued Retail Food licences = ~46 trigger sites/mo; assume ~60% reach a decision-maker (~28) + ~10 residential inbound + ~7 cold/referral walk-ins = 45. Conversation volume is E.",
   "lead_to_proposal_pct": {
    "conservative": 0.35,
    "base": 0.4,
@@ -37,12 +39,12 @@
   "lead_to_proposal_pct__evidence": "E",
   "lead_to_proposal_pct__source": "Analyst estimate; free inspection offered on the spot.",
   "proposal_to_win_pct": {
-   "conservative": 0.22,
-   "base": 0.3,
-   "optimistic": 0.38
+   "conservative": 0.18,
+   "base": 0.25,
+   "optimistic": 0.33
   },
   "proposal_to_win_pct__evidence": "E",
-  "proposal_to_win_pct__source": "Displacement sale (most cited sites already have a provider: 212 comments 'additional service needed' vs 98 no provider [A, C2-S014]); L.E.K. survey: ~37% of facility managers switched a provider in the past year [C, DA-S019].",
+  "proposal_to_win_pct__source": "Correction (Stage E): cut from 0.22/0.30/0.38. Displacement sale (most cited sites already have a provider [A, C2-S014]); re-inspection follows a failed pest inspection in a median 7 days and 80% pass [A, E-WS05007-S001], so the newcomer usually arrives after the incumbent has fixed the crisis. L.E.K.: ~37% of facility managers switched some provider in the past year [C, DA-S019]. Still E.",
   "rep_ramp_months": 3,
   "rep_new_customers_per_month": {
    "conservative": 3,
@@ -129,20 +131,51 @@
   "tax_rate_pct": 0.3,
   "founder_draw_per_month": 4000,
   "founder_draw_start_month": 13,
-  "start_capital_injection": {
-   "conservative": 20000,
-   "base": 15000,
-   "optimistic": 12000
-  },
+  "start_capital_injection": 47300,
   "start_capital_injection__evidence": "E",
-  "start_capital_injection__source": "Launch budget: equipment, insurance deposit, storage, 3 months overhead.",
-  "ev_multiple": 3.5,
-  "ev_multiple__evidence": "E",
-  "ev_multiple__source": "Small recurring pest books are acquired actively (Rollins 26 deals in 2025 [A, C2-S008]); multiple not disclosed (MISSING) - 3.5x EBITDA assumed.",
-  "lt_growth_y6_pct": 0.1,
-  "lt_growth_decay": 0.85,
-  "incremental_roic_pct": 0.6,
-  "maint_capex_pct_op": 0.05
+  "start_capital_injection__source": "Standardized: smallest amount (rounded up to $100) that keeps the BASE-case cash balance >= 0 with the $4k/mo draw from month 13 = $47,300. Same injection in all scenarios; conservative/optimistic cash balances show the resulting gap/surplus.",
+  "ev_multiple": {
+   "conservative": 2.4,
+   "base": 3.0,
+   "optimistic": 4.0
+  },
+  "ev_multiple__evidence": "D",
+  "ev_multiple__source": "BizBuySell sold service businesses 2021-25: owner-earnings multiple lower quartile 1.75, median 2.38, upper quartile 3.13 [D, E-WS05007-S007]; Rentokil paid ~$37m for businesses with ~$26m prior-year revenue in H1 2026 (~1.4x revenue, incl. contingent) [B, E-WS05007-S006]. Base 3.0x SDE-basis for a recurring contract book; operating profit here is before owner pay (SDE-like).",
+  "lt_growth_y6_pct": {
+   "conservative": 0.03,
+   "base": 0.08,
+   "optimistic": 0.12
+  },
+  "lt_growth_decay": {
+   "conservative": 0.75,
+   "base": 0.85,
+   "optimistic": 0.9
+  },
+  "incremental_roic_pct": {
+   "conservative": 0.3,
+   "base": 0.5,
+   "optimistic": 0.8
+  },
+  "maint_capex_pct_op": {
+   "conservative": 0.08,
+   "base": 0.05,
+   "optimistic": 0.04
+  },
+  "lt_growth_y6_pct__evidence": "C",
+  "lt_growth_y6_pct__source": "Rollins 2025 organic growth: commercial 7.6%, residential 5.0% [A, C2-S008] (incumbent); contract escalators ~3% common [C, DA-S019]. Base 8% = route additions slowing; conservative 3% = price escalators only; optimistic 12% = second route cluster.",
+  "lt_growth_decay__evidence": "E",
+  "lt_growth_decay__source": "Analyst: density gains fade as the five-ZIP cluster saturates; second cluster needs a second CT/location [A, C2-S003].",
+  "incremental_roic_pct__evidence": "E",
+  "incremental_roic_pct__source": "Derived from model drivers: once the founder stops selling, a rep at ~$5.5k/mo adding ~4 accounts/mo implies ~$1,500 acquisition cost per account vs ~$56/mo contribution after technician time and ~56-month life (1.8%/mo churn) -> ~2x lifetime return, ~40-60%/yr pre-tax; conservative 30% if churn or rep productivity disappoint.",
+  "maint_capex_pct_op__evidence": "E",
+  "maint_capex_pct_op__source": "Vehicles are leased (in overhead/staff cost); maintenance capex = sprayers, insect-light traps, stations, tablets replaced on 3-5 yr cycles (E).",
+  "reserve_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 2
+  },
+  "reserve_months__evidence": "E",
+  "reserve_months__source": "Policy: 2 months of cash operating costs (3 in conservative) because insurance renewals and winter seasonality (Dec inspection pest share 4.8% vs Sep 8.8% [A, E-WS05007-S001]) bunch cash needs."
  },
  "staff": [
   {
@@ -157,7 +190,7 @@
     "base": 5700,
     "optimistic": 5400
    },
-   "notes": "Chicago MSA median $46,740/yr [C, DA-S011] x ~1.25 load (payroll tax, WC, Chicago paid leave) = ~$4,870 + leased van/fuel ~$850. Capacity ~190 blended accounts (8-12 commercial stops/day; residential quarterly). Supervision rule allows uncertified techs [A, C2-S002]. Threshold uses base value (structural)."
+   "notes": "Chicago MSA median $46,740/yr [C, C2-S021] (Correction: Stage D cited DA-S011, the janitor table) x ~1.25 load (payroll tax, WC, Chicago paid leave) = ~$4,870 + leased van/fuel ~$850. Capacity ~190 blended accounts (8-12 commercial stops/day; residential quarterly). Supervision rule allows uncertified techs [A, C2-S002]. Threshold uses base value (structural)."
   },
   {
    "role": "Office / dispatch coordinator",
@@ -206,12 +239,14 @@
     "optimistic": 260
    },
    "annual_growth_pct": 0.06,
-   "notes": "Broker averages GL $112, auto $114, professional $58/mo [C, DA-S010]; hardening market [A, C2-S008]."
+   "notes": "Broker averages GL $112, auto $114, professional $58/mo [C, DA-S010]; hardening market [A, C2-S008].",
+   "start_month": 3
   },
   {
    "item": "IDPH business licence + CT renewal/CEUs",
    "monthly": 30,
-   "notes": "$250/location/yr [A, WS05-S012]; 9 classroom hours per 3 yrs [A, C2-S007]."
+   "notes": "$250/location/yr [A, WS05-S012]; 9 classroom hours per 3 yrs [A, C2-S007].",
+   "start_month": 3
   },
   {
    "item": "Pesticide storage (small unit/garage space)",
@@ -220,7 +255,8 @@
     "base": 300,
     "optimistic": 200
    },
-   "notes": "E; storage disclosure required on licence application [A, WS05-S012]."
+   "notes": "E; storage disclosure required on licence application [A, WS05-S012].",
+   "start_month": 3
   },
   {
    "item": "Founder service vehicle (lease, fuel, maintenance)",
@@ -229,7 +265,8 @@
     "base": 850,
     "optimistic": 700
    },
-   "notes": "E."
+   "notes": "E.",
+   "start_month": 4
   },
   {
    "item": "Field-service software (routing, digital logbooks, billing)",
@@ -239,7 +276,8 @@
     "optimistic": 99
    },
    "annual_growth_pct": 0.05,
-   "notes": "GorillaDesk Pro $99/mo + $50/added route [B, DA-S016]."
+   "notes": "GorillaDesk Pro $99/mo + $50/added route [B, DA-S016].",
+   "start_month": 4
   },
   {
    "item": "AI assistant + inspection-data prospecting scripts",
@@ -260,13 +298,13 @@
  "capex": [
   {
    "item": "Sprayers, dusters, bait stock, PPE, ladder, tablet, van shelving",
-   "month": 1,
+   "month": 3,
    "amount": {
     "conservative": 7500,
     "base": 5500,
     "optimistic": 4000
    },
-   "notes": "E (no supplier price list accessible without account)."
+   "notes": "E (no supplier price list accessible without licence/account); bought only after the CT exam is passed (month 3)."
   }
  ],
  "transactions": [
@@ -341,6 +379,58 @@
    ],
    "notes": "Initial $150 + 3 x $150 quarterly; autopay. Contribution ~$245 in year 1 (41%), higher in year 2 without acquisition cost. Prices D/E.",
    "evidence": "D"
+  },
+  {
+   "name": "Compliance-floor corner grocery: twice-yearly service only (the legal minimum CDPH inspectors cite)",
+   "revenue": 190,
+   "lines": [
+    {
+     "item": "Materials (glue boards, gel bait, monitors)",
+     "amount": 30
+    },
+    {
+     "item": "Technician time 2 visits x 1h at ~$28/h loaded",
+     "amount": 56
+    },
+    {
+     "item": "Vehicle/fuel allocation 2 stops",
+     "amount": 16
+    },
+    {
+     "item": "Card fees/bad debt 3%",
+     "amount": 6
+    }
+   ],
+   "notes": "2 x $95 per visit (E). Shows why compliance-only buyers are poor accounts: ~$82/yr contribution (43%) and no density benefit. Rule floor: 'at least twice a year' + 12-month logbook [A, E-WS05007-S001]. Decline or price at a $95+ visit minimum.",
+   "evidence": "E"
+  },
+  {
+   "name": "Phase-2 add-on (needs OSFM Class A licence): annual extinguisher + exit-light service on an existing pest restaurant account",
+   "revenue": 289,
+   "lines": [
+    {
+     "item": "Technician time 1.2h at ~$34/h loaded",
+     "amount": 41
+    },
+    {
+     "item": "Tags, O-rings",
+     "amount": 6
+    },
+    {
+     "item": "One 5-lb replacement unit at est. cost",
+     "amount": 45
+    },
+    {
+     "item": "Batteries",
+     "amount": 30
+    },
+    {
+     "item": "Vehicle (shared stop)",
+     "amount": 12
+    }
+   ],
+   "notes": "Copied from WS05-001 deep dive transaction 1 (5 x $12 + $65 trip + 6 x $9 light test + $85 unit + 2 x $25 batteries; E between A-level public $3-7/unit and D-level small-account prices). Contribution ~$155/yr (54%). Not in this model's revenue.",
+   "evidence": "E"
   }
  ]
 }

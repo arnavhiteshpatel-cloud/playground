@@ -1,98 +1,118 @@
 {
  "id": "WS18-003",
- "name": "Junk removal & cleanouts — independent, Chicago north/west side + near-west suburbs (B2B-first: property managers, self-storage, restoration)",
- "summary": "Job-based hauling service. Each 'customer' is one paid job (monthly churn = 100%; active = jobs in the month). Demand = company inbound leads (LSA/search, property-manager, storage and restoration accounts) ramping over ~24 months to a single-territory plateau calibrated to Junk King and College Hunks FDD unit revenues. Crew labour and tipping fees are variable COGS (hourly crews, per-ton disposal); trucks are added by capacity (jobs/month) as 'staff' lines carrying each truck's fixed costs. Founder drives truck #1 in year 1 (unpaid inside operating profit). Operating profit is before owner compensation.",
+ "name": "Junk removal & cleanouts — independent, B2B-referral-led (property managers, restoration, storage, realtors/estates), Chicago north/west side + near-west suburbs, with gated second/third service zones",
+ "summary": "Job-based hauling service. Each 'customer' is one paid job (monthly churn = 100%; active = jobs in the month). Zone-1 demand (LSA/search + B2B accounts) ramps to a single-zone plateau calibrated to junk-only franchise unit revenues (1-800-GOT-JUNK years 1-3, Junk King median, College Hunks junk-only). A second (and in the optimistic case third) service zone is modelled as a 'zone expansion' staff line (is_sales_rep) that opens only after month 24 AND once monthly revenue reaches $42k (zone 1 near plateau); it adds jobs after a 9-month build. Crew labour and disposal are variable COGS; trucks are added by capacity (55 jobs/truck/month). Founder is owner-GM (operating profit is before owner compensation); an operations manager takes the founder off the truck and out of dispatch at $50k/month revenue. Replacing the founder with a salaried GM (~$95-110k/yr loaded) is NOT in operating profit and is discussed in the playbook.",
  "evidence_notes": [
-  "Ticket and cost structure: Junk King CY2024 avg $399/job (median $389); labour 20.6%, dumping 7.2%, gasoline 3.3% of sales; gross profit 56.3% after 13% franchise/call-centre fees [B, WS18-S001].",
-  "Unit revenue/profit: College Hunks CY2025 franchised stores 13-36 months median sales $691k, median EBITDA $44k (before truck payments and owner pay); 60+ months $1.56M / $137k [B, C8-S017]. Junk King avg $554k, median $436k, bottom quartile $194k, top quartile $1.12M [B, WS18-S001].",
-  "Independent owner economics (seller-claimed, D): Naperville property-cleanout/junk firm est. 2020, 4 employees, revenue $814,489, cash flow $219,912, asking $284,999 [DF-S018]; Chicagoland 4-territory franchise est. 2021 listed with $25k cash flow [DF-S019].",
-  "Chicago disposal: SWANCC Glenview Transfer Station (from 1 Mar 2026) $100/ton commercial & residential waste ($25 min), white goods $25/item, mattresses $75/item [B, DF-S016]; Chicago-region landfills: 4 sites, 12.4 years life [A, DF-S017].",
-  "Licensing: Chicago 'Private Scavenger Vehicle' regulated licence is held per vehicle (337 active vehicle licences, 37 holders; 1-800-GOT-JUNK? Chicagoland holds 10) and 29 'Junk Peddler' licences are active [A, DF-S015]; fee MISSING.",
-  "Model structure: leads at plateau back-solved from franchise unit revenues — cons ~59 jobs x $380 = ~$270k/yr (Junk King bottom half); base ~118 x $420 = ~$590k/yr (between Junk King median $436k and College Hunks yr1-3 median $691k); opt ~185 x $470 = ~$1.04M (Junk King top quartile $1.12M). Truck capacity ~55 jobs/month (≈2.5 jobs/day).",
+  "Ticket: Junk King CY2024 avg $399/job (median $389) [B, WS18-S001]; College Hunks CY2025 junk-only franchised median job size $443 [B, E-WS18003-S001]; 1-800-GOT-JUNK 2025 national load averages $107-396 small, $396-600 medium, $600-1,099 large; sofa $125, mattress $101 [B, E-WS18003-S004].",
+  "Lead economics: College Hunks CY2025 franchised median cost per lead $32 and lead-to-close 40%; junk-only units 4,726 leads -> 2,345 completed jobs median; its sales & loyalty centre generated 48% of junk gross sales [B, E-WS18003-S001].",
+  "Unit revenue by tenure (junk-only brand): 1-800-GOT-JUNK CY2023 US franchisees 0-12 months avg $220,855, 12-24 months avg $511,647, >72 months avg $3,599,006 / median $2,764,205 (median 17 subterritories) [B, E-WS18003-S003]; CY2024 >72 months median $2,032,678, per-subterritory median $130,727 [D, E-WS18003-S005]. Junk King CY2024 avg $554k, median $436k [B, WS18-S001].",
+  "Scale economics: College Hunks CY2025 franchised 60+ months (avg 3 territories) median sales $1,555,903, EBITDA median $137,005 (8.8%) after ~12% fees and before truck payments/owner pay; insurance median $112,206, office labour $108,661, marketing $165,909; corporate 60+ months (avg 8 territories, GM-run) median sales $5,037,584, EBITDA median $211,776 [B, E-WS18003-S002].",
+  "Correction vs Stage D: College Hunks medians include moving revenue (138 of 144 franchised stores are junk & move), so the Stage D single-zone plateau (~$690k by month 24) was calibrated above junk-only benchmarks; zone-1 plateau lowered to ~$540k and ramp lengthened to 30 months (base).",
+  "Chicago disposal: SWANCC Glenview $100/ton ($25 min), white goods $25/item, mattresses $75/item from 1 Mar 2026 [B, DF-S016]; private transfer-station gate rates MISSING. Electronics: illegal to landfill covered devices in Illinois (Consumer Electronics Recycling Act) [A, E-WS18003-S009]; refrigerant appliances: final disposer must verify recovery (EPA s.608) [A, E-WS18003-S010].",
+  "Labour: Chicago MSA hand laborers median $40,550, light-truck drivers $47,950 [C, DF-S020]; first-line supervisors of laborers/material movers median $68,330 [C, E-WS18003-S011]; general & operations managers median $109,390 [C, E-WS18003-S012].",
+  "Trucks: Penske Used Trucks listings Nov-2026: 2021-22 Isuzu NPR/NPRXD box trucks $27,500-$52,000 asking (e.g., 2022 NPRXD 129k mi $44,500); Ford E350 cutaways $27,250-$37,250 [B asking, E-WS18003-S007]. U-Haul rentals are DIY-moving only and junk-removal firms are ineligible for U-Haul business accounts [B, E-WS18003-S006, E-WS18003-S015] - pilot must use a commercial rental or subcontracted truck.",
+  "Insurance: Insureon debris-removal median premiums GL $138/mo, WC $175/mo, commercial auto $268/mo, umbrella $93/mo (small applicants, D floor) [E-WS18003-S008]; College Hunks insurance ~7% of sales at every tenure [B, E-WS18003-S002].",
+  "Licensing: Chicago Private Scavenger Vehicle licences are per vehicle; 1-800-GOT-JUNK? Chicagoland is the only junk-removal brand holding them (10); Junk Peddler licences run 2 years (29 unexpired, new issues 1-7/yr since 2020) [A, DF-S015, E-WS18003-S013]; fees MISSING (chicago.gov and amlegal blocked).",
   "Churn-based stress tests and the churn tornado bar are not meaningful here (churn is structurally 100% in a job-based model); read CAC, ticket, margin, labour and demand tests."
  ],
  "drivers": {
   "sales_start_delay_months": 1,
   "sales_start_delay_months__evidence": "E",
-  "sales_start_delay_months__source": "Entity, insurance, used truck, Chicago private-scavenger vehicle licence (category documented [A, DF-S015]; processing time and fee MISSING).",
+  "sales_start_delay_months__source": "Entity, insurance binder, used truck purchase, Chicago licence application (category documented [A, DF-S015]; processing time and fee MISSING). Validation pilot runs before this clock starts.",
   "sales_cycle_months": 0,
   "sales_cycle_months__evidence": "D",
-  "sales_cycle_months__source": "Consumers book same day to one week (Stage C memo).",
+  "sales_cycle_months__source": "Consumers book same day to one week; B2B accounts order after a trial job (Stage C memo).",
   "founder_ramp_months": {
-   "conservative": 30,
-   "base": 24,
-   "optimistic": 18
+   "conservative": 36,
+   "base": 30,
+   "optimistic": 20
   },
   "founder_ramp_months__evidence": "B",
-  "founder_ramp_months__source": "Months to plateau. College Hunks stores reach median $691k within 13-36 months with brand + call centre [B, C8-S017]; independent assumed no faster (E).",
+  "founder_ramp_months__source": "Months for zone-1 demand to reach plateau. 1-800-GOT-JUNK US franchisees average $220,855 in months 0-12 and $511,647 in months 12-24 WITH national brand and call centre (CY2023) [B, E-WS18003-S003]; an independent is assumed slower (E).",
   "founder_leads_per_month": {
-   "conservative": 180,
-   "base": 280,
-   "optimistic": 380
+   "conservative": 170,
+   "base": 245,
+   "optimistic": 330
   },
   "founder_leads_per_month__evidence": "B",
-  "founder_leads_per_month__source": "Company inbound leads/month at plateau, back-solved from franchise unit revenues (see evidence notes) [B, WS18-S001, C8-S017].",
+  "founder_leads_per_month__source": "Zone-1 inbound leads/month at plateau, back-solved to junk-only revenue benchmarks: cons ~58 jobs x $390 = ~$270k/yr (Junk King bottom half); base ~106 x $430 = ~$545k/yr (between Junk King median $436k and 1-800-GOT-JUNK 12-24 month average $512k); opt ~170 x $470 = ~$960k (College Hunks junk-only median $849k-Junk King top quartile $1.12M) [B, WS18-S001, E-WS18003-S001, E-WS18003-S003]. College Hunks junk-only median 4,726 leads/yr (394/mo) across 3 territories [B, E-WS18003-S001].",
   "lead_to_proposal_pct": {
    "conservative": 0.6,
-   "base": 0.7,
-   "optimistic": 0.75
+   "base": 0.68,
+   "optimistic": 0.72
   },
   "lead_to_proposal_pct__evidence": "E",
-  "lead_to_proposal_pct__source": "Lead -> photo/on-site quote.",
+  "lead_to_proposal_pct__source": "Lead -> photo/on-site quote. Combined with win rate gives lead-to-job 33% / 41% / 47% vs College Hunks median lead-to-close 40% (range 22-82%) [B, E-WS18003-S001].",
   "proposal_to_win_pct": {
    "conservative": 0.55,
    "base": 0.6,
    "optimistic": 0.65
   },
-  "proposal_to_win_pct__evidence": "E",
-  "proposal_to_win_pct__source": "Quote -> booked paid job; consumers shop 2-3 quotes (E).",
-  "rep_ramp_months": 1,
-  "rep_new_customers_per_month": 0,
+  "proposal_to_win_pct__evidence": "B",
+  "proposal_to_win_pct__source": "Quote -> booked paid job; calibrated so lead-to-job brackets College Hunks median lead-to-close 40% [B, E-WS18003-S001].",
+  "rep_ramp_months": 9,
+  "rep_new_customers_per_month": {
+   "conservative": 35,
+   "base": 50,
+   "optimistic": 65
+  },
   "rep_new_customers_per_month__evidence": "E",
-  "rep_new_customers_per_month__source": "No sales reps; B2B account development is founder work inside the lead driver.",
+  "rep_new_customers_per_month__source": "Jobs/month added by each productive expansion zone (~45-60% of a zone-1 plateau: shared brand/reviews, B2B accounts that span zones). Benchmarks: College Hunks franchised medians rise from $691k (1 territory) to $869k (2) and $1.56M (3) [B, E-WS18003-S002, includes moving and tenure]; 1-800-GOT-JUNK mature per-subterritory median $130,727 [D, E-WS18003-S005].",
   "referral_new_per_100_active": {
    "conservative": 3,
    "base": 6,
-   "optimistic": 10
+   "optimistic": 9
   },
   "referral_new_per_100_active__evidence": "E",
-  "referral_new_per_100_active__source": "Repeat B2B jobs (property-manager turnovers, storage auctions, restoration contents) per 100 jobs in prior month.",
+  "referral_new_per_100_active__source": "Repeat B2B jobs (property-manager turnovers, storage defaults, restoration contents) generated per 100 jobs in the prior month.",
   "monthly_churn_pct": 1.0,
   "monthly_churn_pct__evidence": "E",
   "monthly_churn_pct__source": "Structural: each customer = one job.",
   "arpc_monthly": 0,
   "onetime_revenue_per_new_customer": {
-   "conservative": 380,
-   "base": 420,
+   "conservative": 390,
+   "base": 430,
    "optimistic": 470
   },
   "onetime_revenue_per_new_customer__evidence": "B",
-  "onetime_revenue_per_new_customer__source": "Junk King CY2024 avg $399/job, median $389 [B, WS18-S001]; Chicago premium +5% in base (E).",
+  "onetime_revenue_per_new_customer__source": "Junk King CY2024 avg $399/job (median $389) [B, WS18-S001]; College Hunks junk-only median job $443 (CY2025) [B, E-WS18003-S001]; B2B full-load mix lifts the base slightly (E).",
   "arpc_annual_growth_pct": 0.03,
-  "gross_margin_pct": 0.65,
+  "gross_margin_pct": 0.64,
   "onetime_gross_margin_pct": {
-   "conservative": 0.59,
-   "base": 0.65,
-   "optimistic": 0.7
+   "conservative": 0.57,
+   "base": 0.64,
+   "optimistic": 0.68
   },
   "onetime_gross_margin_pct__evidence": "B",
-  "onetime_gross_margin_pct__source": "After crew labour and disposal only. Junk King labour 20.6% + dumping 7.2% [B, WS18-S001]; Chicago: labour 24% (laborer median $40,550, light-truck driver $47,950 [C, DF-S020], loaded) and disposal ~11% at $100/ton + item fees [B, DF-S016] (E for the uplift).",
-  "variable_opex_pct_revenue": 0.07,
+  "onetime_gross_margin_pct__source": "After crew labour and disposal only. Junk King labour 20.6% + dumping 7.2% (=72% GM before fees) [B, WS18-S001]. Chicago: base labour 25% (laborer median $40,550 [C, DF-S020], loaded) + disposal 11% at $100/ton + item fees net of ~20-30% donation/scrap diversion [B, DF-S016]; cons 28% + 15%; opt 23% + 9% (E uplift on B base). Correction: Stage D base 65% understated labour vs its own job examples (2 crew x 2.5 h x $24 = 28.6% of a $420 job).",
+  "variable_opex_pct_revenue": {
+   "conservative": 0.08,
+   "base": 0.07,
+   "optimistic": 0.06
+  },
   "variable_opex_pct_revenue__evidence": "B",
-  "variable_opex_pct_revenue__source": "Fuel ~4% (Junk King 3.3% [B, WS18-S001], Chicago uplift E) + card processing ~3% (E).",
+  "variable_opex_pct_revenue__source": "Fuel ~3.3-4% (Junk King 3.3% [B, WS18-S001]) + card processing ~3% (E).",
   "cac_per_new_customer": {
-   "conservative": 75,
-   "base": 55,
-   "optimistic": 40
+   "conservative": 90,
+   "base": 65,
+   "optimistic": 55
   },
   "cac_per_new_customer__evidence": "B",
-  "cac_per_new_customer__source": "College Hunks franchisees spend median $83k on $691k sales (~12%) on local marketing ON TOP of brand fund and call centre [B, C8-S017]; base $55 = 13% of ticket; junk-specific LSA CPL MISSING.",
-  "fixed_marketing_per_month": 700,
+  "cac_per_new_customer__source": "College Hunks CY2025 median cost per lead $32 / 40% close = ~$80 per paid-lead job (12% of a $676 job) - and that is ON TOP of a national brand and a call centre that books 48% of junk sales [B, E-WS18003-S001]. Base blends ~70% paid-lead jobs at ~$80 with ~30% B2B/repeat jobs at ~$25 account-servicing cost (E). Stage D used $55; corrected upward.",
+  "fixed_marketing_per_month": {
+   "conservative": 900,
+   "base": 700,
+   "optimistic": 600
+  },
   "fixed_marketing_per_month__evidence": "E",
-  "fixed_marketing_per_month__source": "Website/GBP, truck wrap amortisation, BOMA/realtor association dues, donation-partner materials.",
-  "dso_days": 4,
+  "fixed_marketing_per_month__source": "Website/GBP, truck-wrap amortisation, BOMA/IREM/CAI and realtor-board dues/events, donation-partner materials.",
+  "dso_days": {
+   "conservative": 8,
+   "base": 6,
+   "optimistic": 4
+  },
   "dso_days__evidence": "E",
-  "dso_days__source": "Consumers pay at completion; property managers/restoration net-30 (~15% of revenue).",
+  "dso_days__source": "Consumers pay at completion; property managers/restoration on net-30 (~20% of revenue in base).",
   "inventory_days_cogs": 0,
   "dpo_days": 0,
   "dpo_days__evidence": "B",
@@ -100,27 +120,68 @@
   "tax_rate_pct": 0.3,
   "founder_draw_per_month": 4000,
   "founder_draw_start_month": 13,
-  "start_capital_injection": 55000,
+  "start_capital_injection": 142300,
   "start_capital_injection__evidence": "E",
-  "start_capital_injection__source": "Used truck + equipment + insurance deposits + 3 months fixed costs.",
-  "lt_growth_y6_pct": 0.07,
-  "lt_growth_decay": 0.85,
-  "incremental_roic_pct": 0.5,
-  "maint_capex_pct_op": 0.12,
+  "start_capital_injection__source": "Smallest round amount keeping the base-case cash balance >= 0 (Stage E standardisation) - see playbook section 7. This is NOT spent up front: ~$2-3k validation, then ~$55k at truck purchase, the rest is ramp losses + second/third truck.",
+  "lt_growth_y6_pct": {
+   "conservative": 0.01,
+   "base": 0.04,
+   "optimistic": 0.07
+  },
+  "lt_growth_decay": {
+   "conservative": 0.8,
+   "base": 0.85,
+   "optimistic": 0.9
+  },
+  "incremental_roic_pct": {
+   "conservative": 0.3,
+   "base": 0.6,
+   "optimistic": 0.9
+  },
+  "maint_capex_pct_op": {
+   "conservative": 0.3,
+   "base": 0.17,
+   "optimistic": 0.12
+  },
   "maint_capex_pct_op__evidence": "E",
-  "maint_capex_pct_op__source": "Truck replacement cycle heavy relative to profit.",
-  "reserve_months": 2,
-  "ev_multiple": 2.0,
+  "maint_capex_pct_op__source": "Truck replacement: 3-6 used box trucks x ~$45k every ~7 years = ~$20-38k/yr vs operating profit; heavier share when profit is thin (conservative). Truck prices per Penske used listings [B asking, E-WS18003-S007].",
+  "reserve_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 2
+  },
+  "ev_multiple": {
+   "conservative": 1.3,
+   "base": 2.0,
+   "optimistic": 2.75
+  },
   "ev_multiple__evidence": "D",
-  "ev_multiple__source": "Naperville listing asks $285k on $220k cash flow (1.3x) [DF-S018]; franchise resale listings ask more on thin cash flow [DF-S019]. Asking ≠ sold."
+  "ev_multiple__source": "Naperville junk/cleanout firm asks $285k on $220k seller-claimed cash flow (1.3x) [D, DF-S018]; BizBuySell waste-management & recycling sold comps 2021-25 median earnings multiple 3.14 (quartiles 2.14-3.88) on median $176,635 owner earnings - category includes route-based haulers that deserve more than junk removal [D, E-WS18003-S014]. Operating profit here is before owner pay (~SDE).",
+  "rep_ramp_months__evidence": "E",
+  "rep_ramp_months__source": "Here = months from opening a new service zone (yard/parking, local LSA profile, B2B accounts) until it produces its steady job flow. No direct evidence; College Hunks franchise ramp shows month-12 sales ~1.5x month-1 [B, E-WS18003-S001].",
+  "arpc_annual_growth_pct__evidence": "E",
+  "arpc_annual_growth_pct__source": "Price index growth; disposal fees in the region face upward pressure (Region-2 landfill life 12.4 yrs [A, DF-S017]).",
+  "tax_rate_pct__source": "Standardised for cross-finalist comparison (Stage E protocol).",
+  "founder_draw_per_month__source": "Standardised $4,000/mo from month 13 (Stage E protocol).",
+  "lt_growth_y6_pct__evidence": "B",
+  "lt_growth_y6_pct__source": "1-800-GOT-JUNK system-wide revenue growth: 2020 +8.0%, 2021 +24.4%, 2022 +9.2%, 2023 -0.6% [B, E-WS18003-S003] - mature metro junk removal grows roughly with price + housing turnover; base 4% after zone build-out (E).",
+  "lt_growth_decay__evidence": "E",
+  "lt_growth_decay__source": "Growth fades as zones saturate; no further zones modelled after year 5.",
+  "incremental_roic_pct__evidence": "E",
+  "incremental_roic_pct__source": "Pre-tax return on growth capital (truck ~$42k + zone launch losses) at ~12-15% incremental operating margin on ~$250k revenue per truck-zone (cost structure per College Hunks 60+ months [B, E-WS18003-S002]).",
+  "reserve_months__evidence": "E",
+  "reserve_months__source": "Truck-downtime and winter-seasonality buffer (Chicago winter slower, E).",
+  "owner_comp_growth_pct": 0.03,
+  "owner_comp_growth_pct__evidence": "E",
+  "owner_comp_growth_pct__source": "Owner draw growth years 6-10."
  },
  "staff": [
   {
-   "role": "Additional truck unit (fixed costs: insurance, maintenance, licence, parking)",
+   "role": "Additional truck unit (fixed costs: commercial auto, maintenance, plates/licence, GPS)",
    "trigger": "active_customers",
-   "threshold": 55,
+   "threshold": 60,
    "per": 55,
-   "max_count": 4,
+   "max_count": 6,
    "start_month": 1,
    "capex_per_hire": 42000,
    "monthly_cost": {
@@ -128,115 +189,150 @@
     "base": 1400,
     "optimistic": 1100
    },
-   "notes": "Not a person: capacity trigger for trucks (≈55 jobs/truck/month). Fixed cost = box-truck commercial auto (~$800/mo, E; small-biz avg $245/mo is a floor [D, DF-S034]) + maintenance (~$600/mo, E). Crew wages are variable COGS. Capex = used 14-16 ft box/dump truck (E — requires quotes)."
+   "annual_raise_pct": 0.04,
+   "notes": "Not a person: capacity trigger for trucks (first extra truck at 60 jobs/month, then one per 55 jobs = ~2.5-2.7 jobs/truck/day). Fixed cost = box-truck commercial auto ~$750/mo (E; Insureon debris-removal median $268/mo is a floor [D, E-WS18003-S008]) + maintenance ~$550/mo (E; College Hunks truck R&M ~2-3% of sales [B]) + plates/licence/GPS. Capex = used 16 ft box truck ~$37-45k + kit (Penske/dealer asking prices [B, E-WS18003-S007]). Crew wages are variable COGS."
   },
   {
-   "role": "Dispatcher / office coordinator",
+   "role": "Office coordinator / dispatcher-CSR",
    "trigger": "revenue",
    "threshold": 35000,
-   "per": 120000,
-   "max_count": 2,
+   "per": 60000,
+   "max_count": 3,
    "start_month": 1,
    "monthly_cost": {
     "conservative": 5300,
     "base": 4900,
     "optimistic": 4600
    },
-   "notes": "Chicago dispatcher median $58,900; CSR $47,100 [C, DF-S033]; loaded x1.2 (E)."
+   "notes": "Answers phones/LSA messages, books, routes, invoices B2B accounts. Chicago dispatcher median $58,900; CSR $47,100 [C, DF-S033]; loaded x1.2 (E). Hired at ~$420k/yr revenue run-rate (before that: founder + AI answering/booking) (College Hunks franchises spend ~6-7% of sales on office labour [B, E-WS18003-S002])."
   },
   {
-   "role": "Operations manager",
+   "role": "Operations manager (field supervisor; takes founder off the truck and out of dispatch)",
    "trigger": "revenue",
-   "threshold": 80000,
-   "per": 400000,
+   "threshold": 50000,
+   "per": 1000000,
    "max_count": 1,
    "start_month": 1,
-   "monthly_cost": 6500,
-   "notes": "E."
+   "monthly_cost": {
+    "conservative": 7200,
+    "base": 6500,
+    "optimistic": 6000
+   },
+   "notes": "Chicago first-line supervisors of laborers/material movers median $68,330 [C, E-WS18003-S011] x1.15 loaded. Hired at ~$600k/yr run-rate. Founder remains owner-GM (sales, accounts, finance); a full GM replacement (~$95-110k loaded; general & operations managers median $109,390 [C, E-WS18003-S012]) is NOT modelled."
+  },
+  {
+   "role": "Admin & accounts at scale (bookkeeper/AR, B2B account coordinator, claims)",
+   "trigger": "revenue",
+   "threshold": 90000,
+   "per": 60000,
+   "max_count": 2,
+   "start_month": 1,
+   "monthly_cost": {
+    "conservative": 5800,
+    "base": 5500,
+    "optimistic": 5200
+   },
+   "notes": "Hired above ~$1.08M/yr run-rate. College Hunks 60+ month stores spend ~8% of sales on office labour and carry 7-12% of sales in other unitemised costs [B, E-WS18003-S002]; this line keeps the multi-zone case from understating overhead (E)."
+  },
+  {
+   "role": "Service-zone expansion (satellite parking, zone LSA/GBP profile and B2B launch budget, zone crew-lead premium)",
+   "trigger": "revenue",
+   "threshold": 42000,
+   "per": 40000,
+   "max_count": 2,
+   "start_month": 25,
+   "is_sales_rep": true,
+   "monthly_cost": {
+    "conservative": 4000,
+    "base": 3500,
+    "optimistic": 3200
+   },
+   "notes": "Opens zone 2 only after month 24 and once monthly revenue >= $42k (zone 1 near plateau); zone 3 at >= $82k/month (optimistic only). Each productive zone adds rep_new_customers_per_month jobs after rep_ramp_months (9). Cost (E): satellite parking ~$1,000, zone marketing minimums ~$1,000, crew-lead premium/supervision travel ~$1,500. Trucks for the extra jobs come from the capacity trigger."
   }
  ],
  "overhead": [
   {
-   "item": "Truck #1 fixed costs (insurance, maintenance, licence)",
+   "item": "Truck #1 fixed costs (commercial auto, maintenance, plates/licence, GPS)",
    "monthly": {
     "conservative": 1700,
     "base": 1400,
     "optimistic": 1100
    },
    "start_month": 1,
-   "notes": "Commercial auto small-biz avg $245/mo is a floor for box trucks [D, DF-S034]; E."
+   "annual_growth_pct": 0.04,
+   "notes": "Insureon debris-removal commercial auto median $268/mo is a floor [D, E-WS18003-S008]; box truck driven by hired crew in Cook County ~$600-900/mo (E) + maintenance on a ~100k-mile truck (E)."
   },
   {
-   "item": "GL + umbrella + WC minimum premium",
+   "item": "GL + umbrella + workers' comp minimum premium + inland marine",
    "monthly": {
-    "conservative": 1800,
-    "base": 1500,
-    "optimistic": 1100
+    "conservative": 1500,
+    "base": 1100,
+    "optimistic": 800
    },
    "annual_growth_pct": 0.06,
-   "notes": "College Hunks stores (13-36 months) report median insurance ~$49k/yr (incl. moving and more trucks) [B, C8-S017]; this line + truck lines ≈ $37k/yr at 2 trucks in base (E). WC on crew wages also inside labour %."
+   "notes": "Insureon debris-removal medians GL $138 + WC $175 + umbrella $93 + inland marine $42 = ~$450/mo for small applicants [D, E-WS18003-S008]; base is ~2.4x that for a crewed operator (E). WC on crew payroll is inside the labour %. College Hunks insurance median ~7% of sales at every tenure [B, E-WS18003-S002] - total insurance in this model is ~6-8% of revenue at plateau."
   },
   {
    "item": "Yard / parking + small sorting space",
    "monthly": {
-    "conservative": 2000,
-    "base": 1500,
-    "optimistic": 1000
+    "conservative": 2300,
+    "base": 1800,
+    "optimistic": 1200
    },
    "start_month": 4,
-   "notes": "E."
+   "notes": "College Hunks franchise rent & utilities median $33,371/yr at 13-36 months [B, E-WS18003-S002]; independent starts smaller (E)."
   },
   {
-   "item": "Booking/FSM software + AI photo-quote and call answering",
+   "item": "Booking/FSM software + AI photo-quote and call/text answering",
    "monthly": 350,
    "is_ai": true,
-   "notes": "Housecall Pro Essentials $149-189/mo [B, DF-S035] + AI tools (E)."
+   "notes": "Housecall Pro Essentials $149-189/mo [B, DF-S035] + AI receptionist/quote-draft tools ~$100-160/mo (E). AI x3 stress = +$700/mo."
   },
   {
-   "item": "Phones, accounting, legal",
-   "monthly": 400,
-   "notes": "E."
+   "item": "Phones, accounting, legal, Chicago/suburban licences",
+   "monthly": 450,
+   "notes": "Junk Peddler licence reportedly $150 per 2-year term [D, E-WS18003-S018; city fact sheet via search snippet, not fetched]; Private Scavenger per-vehicle fee MISSING (E)."
   }
  ],
  "capex": [
   {
-   "item": "Used box/dump truck + dollies, straps, tools",
+   "item": "Used 16 ft box truck (2020-22 Isuzu NPR class) + wrap, ramps, dollies, straps, tools, PPE",
    "month": 1,
    "amount": {
     "conservative": 55000,
     "base": 45000,
-    "optimistic": 30000
+    "optimistic": 32000
    },
-   "notes": "E — no dealer quotes obtained; optimistic = pickup + 14 ft dump trailer."
+   "notes": "Penske Used Trucks asking prices Nov-2026: 2021-22 NPR/NPRXD $27.5-52k; E350 cutaway $27-37k [B asking, E-WS18003-S007]; dealer 2021 NPR 16 ft ~$36-38k asking [D, E-WS18003-S020]. +$4-6k kit/wrap (E). Optimistic = E350 cutaway or pickup + 14 ft dump trailer."
   }
  ],
  "transactions": [
   {
-   "name": "Half-truck household cleanout (Chicago bungalow basement)",
-   "revenue": 420,
+   "name": "Half-truck household cleanout (consumer, paid lead; Chicago bungalow basement)",
+   "revenue": 430,
    "lines": [
     {
-     "item": "2-person crew 2.5 h incl. drive & tip run at ~$24/h loaded each",
+     "item": "2-person crew 2.5 h incl. drive & tip at ~$24/h loaded each",
      "amount": 120
     },
     {
-     "item": "Disposal ~0.5 t at $100/t + 1 mattress $75",
+     "item": "Disposal ~0.5 t at $100/t + 1 mattress $75 (mattress surcharge billed separately in practice)",
      "amount": 125
     },
     {
      "item": "Fuel + card fees (7%)",
-     "amount": 29
+     "amount": 30
     },
     {
-     "item": "Acquisition cost",
-     "amount": 55
+     "item": "Acquisition cost (paid lead: ~$32/lead / 40% close)",
+     "amount": 80
     }
    ],
-   "notes": "Disposal at SWANCC published rates [B, DF-S016]; ticket per Junk King avg [B, WS18-S001]. Contribution ~$91 (22%). Paid at completion.",
+   "notes": "Disposal at SWANCC published rates [B, DF-S016]; ticket per Junk King avg / College Hunks junk median [B]; CPL and close rate per College Hunks CY2025 [B, E-WS18003-S001]. Contribution ~$75 (17%). Paid at completion.",
    "evidence": "B"
   },
   {
-   "name": "Apartment turnover / eviction cleanout for a property manager (full truck)",
+   "name": "Apartment turnover / eviction cleanout for a property manager (full truck, repeat account)",
    "revenue": 850,
    "lines": [
     {
@@ -249,38 +345,62 @@
     },
     {
      "item": "Fuel + card/ACH fees",
-     "amount": 55
+     "amount": 50
     },
     {
-     "item": "Acquisition cost (account already won)",
-     "amount": 0
+     "item": "Account servicing (no paid lead; share of field-sales time)",
+     "amount": 25
     }
    ],
-   "notes": "Price for a full truck is an assumption (E); net-30 invoice. Contribution ~$445 (52%) shows why repeat B2B accounts matter.",
-   "evidence": "E"
+   "notes": "Full-truck price $850 sits inside 1-800-GOT-JUNK's published 2025 large-load range $600-1,099 [B, E-WS18003-S004]; net-30 invoice. Contribution ~$425 (50%) - why repeat B2B accounts carry the business.",
+   "evidence": "B"
   },
   {
-   "name": "Single-item pickup (sofa)",
-   "revenue": 150,
+   "name": "Single-item pickup (sofa), paid lead",
+   "revenue": 135,
    "lines": [
     {
      "item": "2-person crew 1 h",
      "amount": 48
     },
     {
-     "item": "Disposal (minimum charge $25 or by weight)",
+     "item": "Disposal (minimum $25 or by weight)",
      "amount": 25
     },
     {
      "item": "Fuel + card fees",
-     "amount": 11
+     "amount": 10
     },
     {
      "item": "Acquisition cost (paid lead)",
-     "amount": 55
+     "amount": 80
     }
    ],
-   "notes": "Minimum-charge job; contribution ~$11 — paid-lead small jobs barely cover CAC. Price E.",
+   "notes": "1-800-GOT-JUNK 2025 average sofa price $125 (most pay $75-188) [B, E-WS18003-S004]. Contribution about -$28: paid-lead single items LOSE money unless batched on a route or set at a $150+ minimum.",
+   "evidence": "B"
+  },
+  {
+   "name": "Estate cleanout via realtor/senior-move-manager referral (whole house, 2 truckloads, 2 days)",
+   "revenue": 2400,
+   "lines": [
+    {
+     "item": "3-person crew 2 x 8 h",
+     "amount": 1150
+    },
+    {
+     "item": "Disposal ~3.5 t at $100/t + 2 mattresses + 1 fridge",
+     "amount": 525
+    },
+    {
+     "item": "Fuel + card fees",
+     "amount": 150
+    },
+    {
+     "item": "Referral thank-you / partner cost (no cash referral fee to licensed agents assumed)",
+     "amount": 50
+    }
+   ],
+   "notes": "Price assumed at ~2.2 full loads x 1-800-GOT-JUNK large-load range [B anchor, E price]. Donation/resale diversion can cut disposal 20-40% (E). Contribution ~$525 (22%); labour-heavy. Adjacency to WS18-030 (estate sale/senior move).",
    "evidence": "E"
   }
  ]

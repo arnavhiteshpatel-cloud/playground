@@ -275,11 +275,11 @@
      "amount": 24
     },
     {
-     "item": "Acquisition cost (paid lead)",
-     "amount": 110
+     "item": "Acquisition cost (paid lead, base blend)",
+     "amount": 105
     }
    ],
-   "notes": "Price within Chicago dealer guide $250-400 for a pair [D, DF-S036]; springs median $52 each [B, DF-S012]. Paid at completion.",
+   "notes": "Price within Chicago dealer guide $250-400 for a pair [D, E-WS18035-S009]; springs median $52 each at DDM public prices [B, DF-S012]. Paid at completion. Contribution ~$77 (19%) after technician time and the paid lead; ~$182 (46%) when the job comes from a referral or account (row 5).",
    "evidence": "D"
   },
   {
@@ -303,11 +303,11 @@
      "amount": 45
     },
     {
-     "item": "Acquisition cost",
-     "amount": 110
+     "item": "Acquisition cost (paid lead, base blend)",
+     "amount": 105
     }
    ],
-   "notes": "At DDM public price the job loses money ($750 − $867); viable only with dealer pricing (MISSING) or price ≥$900. Shows why distributor terms matter. Paid at completion.",
+   "notes": "At DDM public price the job loses money ($750 revenue vs $862 cost); viable only with dealer pricing (MISSING) or price >= ~$870. Shows why the SSC/Clopay account is a gate. Paid at completion.",
    "evidence": "D"
   },
   {
@@ -331,12 +331,64 @@
      "amount": 130
     },
     {
-     "item": "Acquisition cost",
-     "amount": 110
+     "item": "Acquisition cost (paid lead, base blend)",
+     "amount": 105
     }
    ],
-   "notes": "Door cost MISSING (dealer pricing not public) — assumed 50% of price, consistent with Access COGS 46-47% [B, DF-S001]. 50% deposit at order; Home Repair Act written contract + brochure (>$1,000) [A, WS18-S011].",
+   "notes": "Door cost MISSING (dealer pricing not public) — assumed 50% of price, consistent with Access COGS 46-47% [B, DF-S001]. 50% deposit at order; Home Repair Act written contract + brochure (>$1,000) [A, WS18-S011]; 3-business-day cancellation if sold at the home [A, WS18-S011].",
    "evidence": "E"
+  },
+  {
+   "name": "Light-commercial preventive-maintenance visit (6 sectional doors, flex/industrial unit) — HYPOTHETICAL PRICE",
+   "revenue": 540,
+   "lines": [
+    {
+     "item": "Lubricant, small hardware, rollers allowance",
+     "amount": 30
+    },
+    {
+     "item": "Technician 3 h incl. drive at ~$40/h loaded",
+     "amount": 120
+    },
+    {
+     "item": "Fuel + card/ACH (6%)",
+     "amount": 32
+    },
+    {
+     "item": "Acquisition cost (account; sold once, renews)",
+     "amount": 0
+    }
+   ],
+   "notes": "E — $90/door/visit is an analyst hypothesis to be priced against local quotes; commercial search leads cost $300-600 [D, E-WS18035-S006] so these accounts must be won by direct B2B selling. Invoiced net-30. Value is the repair pull-through and annual renewal, not the visit itself.",
+   "evidence": "E"
+  },
+  {
+   "name": "Spring pair from a referral / HOA account (no lead cost)",
+   "revenue": 395,
+   "lines": [
+    {
+     "item": "Two torsion springs (DDM public price)",
+     "amount": 104
+    },
+    {
+     "item": "Rollers/hardware allowance",
+     "amount": 25
+    },
+    {
+     "item": "Technician time 1.5 h + drive",
+     "amount": 60
+    },
+    {
+     "item": "Fuel + card fee (6%)",
+     "amount": 24
+    },
+    {
+     "item": "Acquisition cost",
+     "amount": 0
+    }
+   ],
+   "notes": "Same job as row 1 without the paid lead: contribution rises from ~$77 to ~$182 — the whole case for B2B/referral share.",
+   "evidence": "D"
   }
  ]
 }

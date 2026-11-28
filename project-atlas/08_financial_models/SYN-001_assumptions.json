@@ -1,14 +1,19 @@
 {
  "id": "SYN-001",
  "name": "Insurance-led small-carrier compliance hub (Chicago 8 counties)",
- "summary": "Done-for-you DOT compliance + D&A consortium subscription sold to established 3-20 PU for-hire carriers; ~25% of clients also place trucking insurance through an aggregator/wholesaler (commission netted of split) - insurance commission is folded into blended ARPC.",
+ "summary": "Stage E refresh. Done-for-you DOT compliance + D&A consortium subscription sold to established (pre-2021) 3-20 PU for-hire carriers in the 8 Chicago counties; trucking insurance commission is earned only as clients reach renewal and is folded into blended ARPC, which therefore starts near compliance-only and rises as the insured share of the book matures (arpc_annual_growth_pct = ~3% price + attach maturation). Base case = founder licensed as an Illinois P&C producer placing insurance as a sub-producer of an established trucking agency that holds standard-carrier appointments (50% split, host services policies); conservative = own agency with wholesale/MGA access only; optimistic = own agency with an aggregator that includes Progressive plus wholesale.",
  "evidence_notes": [
-  "Buyer universe A: 3,166 for-hire carriers with 3-20 PU registered before 2021 in 8 Chicago counties, median 6 PU (DC-S001).",
-  "Churn derived from census cohorts: exit of 5-10-yr-old carriers ~6-7%/yr, 3-5 yr ~15%/yr (A data, E arithmetic, DC-S002); agency/vendor switching added as E.",
-  "Compliance price D: $149-$249/mo done-for-you plans incl. consortium, $99 setup (C4-S011); $150-400 (C4-S012). Consortium $149/yr (C, C4-S006). DQ software $5/driver/mo (B, C4-S008).",
-  "Insurance: ~10% commission via MGAs/wholesalers (D, DC-S014) inside a 15.9% Illinois selling-expense pool (C, C4-S015); premium/PU $12k base anchored on ATRI 10.6 c/mile (C, WS02-S017); aggregator split 20% and attach rate 25% are E.",
-  "Licensing A: 40 h pre-licensing, $184 exams, $215 producer + $250 entity licence, broker bond $2,500+ (DC-S005..S007).",
-  "ARPC base = $250 compliance + $12.5 consortium + $25 filings + 0.25 x (6 PU x $12k x 10% x 0.8)/12 = $407.5 -> $405."
+  "Buyer universe A: 3,166 active for-hire carriers, 3-20 PU, registered before 2021, MCS-150 updated 2024+, in 8 Chicago counties (re-derived 2026-11-28 from FMCSA census az4n-8mr2; E-SYN001-S001).",
+  "Market structure A (E-SYN001-S002): of 2,750 niche carriers with a current BIPD primary filing, ~63% are insured by standard agency-appointment carriers (Progressive 14.1%, Great West 13.0%, Northland/Travelers 12.4%, Sentry 5.5%, Acuity 5.3%, Berkley 4.0%), ~10% by direct/captive writers (GEICO 8.4%), ~27% by specialty/fronting/E&S/RRG paper (channel classification is analyst E).",
+  "Insurer switching A (E-SYN001-S003): 29.8-37.0% of established niche carriers changed BIPD insurer group each year 2019-2025 (37.0% in 2025); of 2,366 switches in 2024-25, ~50% went to standard appointment carriers, ~39% to specialty paper, ~11% to direct writers.",
+  "Carrier exit A (E-SYN001-S004): involuntary/voluntary authority revocations among established 3-20 PU carriers ran 2.4-5.8%/yr 2019-2025 (lower bound; other exit modes not captured); DC-S002 cohort arithmetic ~6-7%/yr all modes.",
+  "Market access B/D: Progressive subcode via an association aggregator requires 2-3 yrs agency ownership + P&C experience, $1M E&O, storefront and monthly minimums (E-SYN001-S005); Amwins ANTU 1-25 unit trucking program is 'distributed through a select group of retail brokers' and requires 2 yrs on current DOT (E-SYN001-S006); a trucking GA's producer agreement makes the producer liable to remit premium within 30 days whether or not collected (E-SYN001-S007). Start-up network terms (SIAA, Smart Choice) unpublished (DC-S008, DC-S009, E-SYN001-S008).",
+  "Commission: no published trucking schedule found; 10% via MGAs/wholesalers (D, DC-S014, 2010); Illinois commercial-auto selling expense 15.9% of premium (C, C4-S015); sub-producer split 50% (D, E-SYN001-S010). Base net to founder = 12% x 50% = 6% of premium; conservative 10% x 85% = 8.5% but on wholesale-only access; optimistic 11% x 90%.",
+  "Attach (E, built on A base rates): annual capture = P(client changes insurer) 0.35 [A] x P(lets us quote) 0.7 [E] x P(we can quote the winning market) 0.39/0.60/0.89 [A shares x E] x P(win) 0.5 [E] -> attach after 3 yrs ~11% (wholesale only) / ~17% (with Progressive) / ~24% (host-agency appointments).",
+  "Compliance price D: $149-$249/mo done-for-you incl. consortium + $99 setup (C4-S011); $150-400 (C4-S012); consortium $149/yr (C4-S006); DQ software $5/driver/mo (B, C4-S008).",
+  "Base ARPC derivation: compliance $250 + consortium $12.5 + filings $25 = $287.5; insurance per insured account 6 PU x $12k x 12% x 50% / 12 = $360/mo; average attach yr1-5 ~5/14/21/25/28% -> blended ~$305 (yr1) rising to ~$430 (yr5) = 305 x 1.09^(yr-1).",
+  "Licensing A: 40 h pre-licensing, ~$184 exams, $215 producer + $250 entity licence, broker bond $2,500+ when placing without an agent contract (DC-S005..S007).",
+  "Standardization (Stage E): founder draw $4,000/mo from month 13 and tax 30% in all scenarios; start_capital_injection = smallest amount keeping base-case cash >= 0."
  ],
  "drivers": {
   "sales_start_delay_months": {
@@ -17,36 +22,36 @@
    "optimistic": 1
   },
   "sales_start_delay_months__evidence": "A/E",
-  "sales_start_delay_months__source": "IDOI 20 h/line pre-licensing + exams + 5-day wait + NIPR (DC-S005); aggregator onboarding 24-48 h claimed (DC-S009, DC-S010) but trucking market access unconfirmed",
+  "sales_start_delay_months__source": "Compliance can be sold without a licence; 2 months for entity, software, E&O, templates. Producer licence 6-10 weeks in parallel (DC-S005, DC-S007).",
   "sales_cycle_months": {
    "conservative": 3,
    "base": 2,
    "optimistic": 1
   },
   "sales_cycle_months__evidence": "E",
-  "sales_cycle_months__source": "Insurance shopped 30-60 days pre-renewal; compliance 1-6 weeks (Stage A/C, E)",
+  "sales_cycle_months__source": "Compliance 1-6 weeks; insurance is won only at renewal (current filing months spread evenly, 192-289 per month; E-SYN001-S003).",
   "founder_ramp_months": 6,
   "founder_leads_per_month": {
    "conservative": 12,
    "base": 20,
-   "optimistic": 30
+   "optimistic": 25
   },
   "founder_leads_per_month__evidence": "E",
-  "founder_leads_per_month__source": "Qualified conversations from mail/web/yard visits to a 3,166-carrier universe (DC-S001); hours-based estimate",
+  "founder_leads_per_month__source": "Qualified conversations from letters/yard visits/referrals to 3,166-carrier niche (E-SYN001-S001); hours-based estimate, unchanged from Stage D.",
   "lead_to_proposal_pct": {
    "conservative": 0.3,
    "base": 0.4,
-   "optimistic": 0.5
+   "optimistic": 0.45
   },
   "lead_to_proposal_pct__evidence": "E",
-  "lead_to_proposal_pct__source": "Free DQ/CSA audit converts conversation to proposal; no benchmark found",
+  "lead_to_proposal_pct__source": "Free DQ/Clearinghouse audit converts conversation to proposal; no benchmark found.",
   "proposal_to_win_pct": {
    "conservative": 0.15,
    "base": 0.25,
-   "optimistic": 0.35
+   "optimistic": 0.3
   },
   "proposal_to_win_pct__evidence": "E",
-  "proposal_to_win_pct__source": "Assumed; competitors OOIDA/Simplex/agency freebies (C4-S004, C4-S013, C4-S038) cap win rate",
+  "proposal_to_win_pct__source": "Competitors OOIDA/Simplex/agency freebies (C4-S004, C4-S013, C4-S038) cap win rate; unvalidated.",
   "rep_ramp_months": 4,
   "rep_new_customers_per_month": {
    "conservative": 1.0,
@@ -54,89 +59,141 @@
    "optimistic": 2.0
   },
   "rep_new_customers_per_month__evidence": "E",
-  "rep_new_customers_per_month__source": "Licensed producer hired yr 2; assumed",
+  "rep_new_customers_per_month__source": "Licensed producer hired once 60 clients are active (gated, not calendar); assumed.",
   "referral_new_per_100_active": {
    "conservative": 0.5,
    "base": 1.0,
    "optimistic": 1.5
   },
   "referral_new_per_100_active__evidence": "E",
-  "referral_new_per_100_active__source": "Factoring/dispatch/word-of-mouth referrals assumed",
+  "referral_new_per_100_active__source": "Factoring/dispatch/word-of-mouth referrals assumed.",
   "monthly_churn_pct": {
    "conservative": 0.022,
    "base": 0.015,
    "optimistic": 0.011
   },
-  "monthly_churn_pct__evidence": "A/E",
-  "monthly_churn_pct__source": "Census cohort survival (DC-S002): 6-15%/yr carrier exit for 3-10-yr-old carriers + vendor switching (E)",
+  "monthly_churn_pct__evidence": "A/C/E",
+  "monthly_churn_pct__source": "Carrier exit 2.4-5.8%/yr revocations (A, E-SYN001-S004) to ~6-7%/yr all modes (DC-S002) + vendor switching; base 16.6%/yr ~ average independent-agency retention 84% (C/D, E-SYN001-S012).",
   "arpc_monthly": {
-   "conservative": 275,
-   "base": 405,
-   "optimistic": 640
+   "conservative": 236,
+   "base": 305,
+   "optimistic": 375
   },
   "arpc_monthly__evidence": "D/C/E",
-  "arpc_monthly__source": "Compliance $200/250/300 (C4-S011, C4-S012) + consortium (C4-S006) + filings (E) + attach 15/25/35% x commission on 6-7 PU x $10-14k premium x 9-12% x 75-85% retained (DC-S014, C4-S015, WS02-S017)",
+  "arpc_monthly__source": "Year-1 blended: compliance $227.5/$287.5/$347.5 (C4-S011, C4-S012, C4-S006) + insurance at year-1 attach ~2.4/5/4% (see evidence_notes; E-SYN001-S002, S003).",
   "onetime_revenue_per_new_customer": {
    "conservative": 99,
    "base": 150,
    "optimistic": 250
   },
   "onetime_revenue_per_new_customer__evidence": "D",
-  "onetime_revenue_per_new_customer__source": "$99 enrolment fee observed (C4-S011); file rebuild priced higher in base/opt (E)",
-  "arpc_annual_growth_pct": 0.03,
+  "onetime_revenue_per_new_customer__source": "$99 enrolment fee observed (C4-S011); file rebuild priced higher in base/opt (E).",
+  "arpc_annual_growth_pct": {
+   "conservative": 0.06,
+   "base": 0.09,
+   "optimistic": 0.1
+  },
+  "arpc_annual_growth_pct__evidence": "E",
+  "arpc_annual_growth_pct__source": "~2-3% price + attach maturation as clients reach renewal (attach paths in evidence_notes); fitted so year-5 ARPC ~$298/$430/$549 (optimistic capped below its ~$616 attach-path value).",
   "gross_margin_pct": {
    "conservative": 0.78,
    "base": 0.84,
-   "optimistic": 0.87
+   "optimistic": 0.86
   },
   "gross_margin_pct__evidence": "B/E",
-  "gross_margin_pct__source": "Direct costs ~$56/mo on $405: DQ software 8 drivers x $5 (C4-S008), MVR $12.95/driver/yr, consortium cost ~50% of fee (E); coordinator labor carried in staff",
+  "gross_margin_pct__source": "Compliance direct costs ~$55/mo (DQ software 8 x $5 B C4-S008; MVR $12.95/driver/yr B; consortium cost ~50% E) -> 76-82% GM; insurance commission ~97% GM; blended by mix.",
   "onetime_gross_margin_pct": 0.3,
   "onetime_gross_margin_pct__evidence": "E",
-  "onetime_gross_margin_pct__source": "MVR/PSP pulls at onboarding consume most of the setup fee",
+  "onetime_gross_margin_pct__source": "MVR/PSP pulls at onboarding consume most of the setup fee.",
   "variable_opex_pct_revenue": {
    "conservative": 0.05,
    "base": 0.035,
    "optimistic": 0.03
   },
   "variable_opex_pct_revenue__evidence": "E",
-  "variable_opex_pct_revenue__source": "Card/ACH ~1.5% + commission chargebacks/bad debt 2-3.5% (cancellation for non-pay common in trucking)",
+  "variable_opex_pct_revenue__source": "Card/ACH ~1.5% + commission chargebacks/bad debt 2-3.5% (unearned commission refunded when insurer returns premium; E-SYN001-S007).",
   "cac_per_new_customer": {
    "conservative": 250,
    "base": 150,
    "optimistic": 100
   },
   "cac_per_new_customer__evidence": "E",
-  "cac_per_new_customer__source": "Audit time/MVR samples, travel to yards",
+  "cac_per_new_customer__source": "Audit time/MVR samples, travel to yards.",
   "fixed_marketing_per_month": {
    "conservative": 900,
    "base": 700,
    "optimistic": 600
   },
   "fixed_marketing_per_month__evidence": "E",
-  "fixed_marketing_per_month__source": "Direct mail to ~3,166 carriers x 3-4 touches/yr at ~$0.80 + web",
+  "fixed_marketing_per_month__source": "Letters to ~3,166 carriers x 3-4 touches/yr at ~$0.80 + web.",
   "dso_days": {
    "conservative": 25,
    "base": 15,
    "optimistic": 10
   },
   "dso_days__evidence": "E",
-  "dso_days__source": "Compliance billed monthly in advance by ACH; commissions arrive ~30-45 days after premium collection",
+  "dso_days__source": "Compliance billed monthly in advance by ACH; sub-producer commission paid by host monthly after carrier pays host (~30-45 days).",
   "inventory_days_cogs": 0,
   "dpo_days": 15,
+  "tax_rate_pct": 0.3,
+  "tax_rate_pct__evidence": "E",
+  "tax_rate_pct__source": "Stage E standardization.",
   "founder_draw_per_month": 4000,
   "founder_draw_start_month": 13,
-  "start_capital_injection": 15000,
-  "ev_multiple": 3.0,
-  "ev_multiple__evidence": "C",
-  "ev_multiple__source": "Sub-$1M-EBITDA agencies trade far below large-deal multiples (WS02-S007); 3x kept"
+  "founder_draw_per_month__evidence": "E",
+  "founder_draw_per_month__source": "Stage E standardization: modest living stipend from month 13 in all scenarios.",
+  "start_capital_injection": 70000,
+  "start_capital_injection__evidence": "E",
+  "start_capital_injection__source": "Smallest amount (rounded up to $1k) that keeps the base-case cash balance >= 0 (= base peak funding need incl. draw).",
+  "lt_growth_y6_pct": {
+   "conservative": 0.03,
+   "base": 0.08,
+   "optimistic": 0.12
+  },
+  "lt_growth_y6_pct__evidence": "C/E",
+  "lt_growth_y6_pct__source": "Niche 3,166 carriers, wider 2-50 PU pool 9,112 (DC-S001) and non-resident licences allow continued growth; IA Valuations reports ~13% average organic growth for independent agencies in 2025 (C, E-SYN001-S011) - we use less because trucking books churn ~30-37%/yr insurer switching (A, E-SYN001-S003).",
+  "lt_growth_decay": {
+   "conservative": 0.8,
+   "base": 0.85,
+   "optimistic": 0.9
+  },
+  "lt_growth_decay__evidence": "E",
+  "lt_growth_decay__source": "Growth fades as the local niche saturates (~3k carriers).",
+  "incremental_roic_pct": {
+   "conservative": 0.5,
+   "base": 1.0,
+   "optimistic": 1.5
+  },
+  "incremental_roic_pct__evidence": "E",
+  "incremental_roic_pct__source": "Asset-light service: growth spend is CAC + coordinator hires; model CAC payback a few months; conservative halves it for churn and price pressure.",
+  "maint_capex_pct_op": {
+   "conservative": 0.05,
+   "base": 0.03,
+   "optimistic": 0.02
+  },
+  "maint_capex_pct_op__evidence": "E",
+  "maint_capex_pct_op__source": "Computers/software only; no vehicles or equipment beyond founder car.",
+  "reserve_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 2
+  },
+  "reserve_months__evidence": "E",
+  "reserve_months__source": "Commission chargebacks and market/host-agency withdrawal risk (E-SYN001-S006, S007) justify 2-3 months of cash costs.",
+  "ev_multiple": {
+   "conservative": 2.5,
+   "base": 3.5,
+   "optimistic": 4.5
+  },
+  "ev_multiple__evidence": "C/E",
+  "ev_multiple__source": "IA Valuations YE2024: <$500k-revenue independent agencies avg 6.8x EBITDA, $500k-$1M 7.55x (C, E-SYN001-S011); sub-$1M-EBITDA ~4x (C, WS02-S007). Discounted for trucking churn (A, E-SYN001-S003), compliance-service share and, in the base case, a sub-producer book whose expirations may belong to the host agency."
  },
  "staff": [
   {
    "role": "Compliance coordinator",
    "trigger": "active_customers",
    "threshold": 35,
-   "per": 70,
+   "per": 60,
    "start_month": 1,
    "capex_per_hire": 2000,
    "monthly_cost": {
@@ -144,14 +201,14 @@
     "base": 5350,
     "optimistic": 5100
    },
-   "notes": "BLS Chicago claims/policy clerk median $51,280 x1.25 load (C, C4-S016)"
+   "notes": "BLS Chicago claims/policy clerk median $51,280 x1.25 load (C, C4-S016); ~2.7 h per client-month -> ~60 clients each (E)"
   },
   {
    "role": "Licensed CSR (insurance servicing)",
    "trigger": "active_customers",
-   "threshold": 80,
-   "per": 150,
-   "max_count": 3,
+   "threshold": 150,
+   "per": 200,
+   "max_count": 2,
    "start_month": 1,
    "capex_per_hire": 2000,
    "monthly_cost": {
@@ -159,13 +216,15 @@
     "base": 5600,
     "optimistic": 5300
    },
-   "notes": "Licensed premium over clerk median (E)"
+   "notes": "Host agency services policies in the base case; own CSR needed once ~30+ insured accounts / own appointments (E)"
   },
   {
    "role": "Licensed producer / sales rep",
-   "trigger": "month",
-   "start_month": 24,
-   "count": 1,
+   "trigger": "active_customers",
+   "threshold": 60,
+   "per": 100000,
+   "max_count": 1,
+   "start_month": 1,
    "is_sales_rep": true,
    "capex_per_hire": 2000,
    "monthly_cost": {
@@ -173,7 +232,7 @@
     "base": 6000,
     "optimistic": 5500
    },
-   "notes": "Base + commission (E)"
+   "notes": "Hired only once 60 clients are active (milestone-gated); base + commission (BLS Chicago insurance sales agent median $69,240, C, C4-S016)"
   },
   {
    "role": "Office manager / bookkeeper",
@@ -187,11 +246,11 @@
  ],
  "overhead": [
   {
-   "item": "E&O (agency + compliance services)",
+   "item": "E&O (agency + compliance-services professional liability)",
    "monthly": {
-    "conservative": 500,
-    "base": 350,
-    "optimistic": 250
+    "conservative": 400,
+    "base": 250,
+    "optimistic": 200
    },
    "annual_growth_pct": 0.06
   },
@@ -201,11 +260,11 @@
    "annual_growth_pct": 0.06
   },
   {
-   "item": "Agency management system + comparative rater + CRM (AgencyZoom $99 B)",
+   "item": "CRM + quoting/rater + agency tools (AgencyZoom $99 B; AMS MISSING)",
    "monthly": {
-    "conservative": 500,
-    "base": 400,
-    "optimistic": 300
+    "conservative": 400,
+    "base": 300,
+    "optimistic": 250
    },
    "is_ai": true
   },
@@ -229,7 +288,7 @@
    "start_month": 6
   },
   {
-   "item": "Licences, broker bond, CE, dues",
+   "item": "Licences, broker bond, CE, dues, Clearinghouse/consortium admin",
    "monthly": 80
   },
   {
@@ -247,12 +306,12 @@
  ],
  "capex": [
   {
-   "item": "Setup: licensing courses/exams/licences, computers, website",
+   "item": "Setup: pre-licensing course, exams, producer+entity licences, LLC, computers/scanner, website, contract templates",
    "month": 1,
    "amount": {
-    "conservative": 6500,
-    "base": 5000,
-    "optimistic": 4000
+    "conservative": 6000,
+    "base": 4500,
+    "optimistic": 3500
    }
   }
  ],
@@ -262,47 +321,63 @@
    "revenue": 262.5,
    "lines": [
     {
-     "item": "DQ software 8 drivers x $5",
+     "item": "DQ software 8 drivers x $5 (B)",
      "amount": 40
     },
     {
-     "item": "MVR amortised 8 x $12.95/12",
+     "item": "MVR amortised 8 x $12.95/12 (B)",
      "amount": 8.63
     },
     {
-     "item": "Consortium cost share",
+     "item": "Consortium cost share (E)",
      "amount": 6
     },
     {
-     "item": "Coordinator 3 h x $32.9 loaded",
-     "amount": 98.7
+     "item": "Coordinator 2.7 h x $32.9 loaded (C/E)",
+     "amount": 88.83
     }
    ],
-   "notes": "Contribution ~$109/mo; prices D (C4-S011, C4-S006, C4-S008); labor C/E",
+   "notes": "Contribution ~$119/mo; prices D (C4-S011, C4-S006, C4-S008); labor C/E",
    "evidence": "D"
   },
   {
-   "name": "Annual insurance placement - 6 PU at $12k premium/PU",
+   "name": "Annual insurance placement as sub-producer of a host trucking agency - 6 PU x $12k",
+   "revenue": 4320,
+   "lines": [
+    {
+     "item": "Founder renewal prep/submission 10 h x $32.9 (host services the policy)",
+     "amount": 329
+    },
+    {
+     "item": "Chargeback reserve 3% (E)",
+     "amount": 130
+    },
+    {
+     "item": "E&O allocation (E)",
+     "amount": 100
+    }
+   ],
+   "notes": "Host gross commission 12% of $72k = $8,640 (E; IL commercial-auto selling expense 15.9% C, C4-S015); 50% producer split (D, E-SYN001-S010); contribution ~$3,761/yr",
+   "evidence": "E"
+  },
+  {
+   "name": "Annual insurance placement via own agency + trucking wholesaler/MGA - 6 PU x $12k",
    "revenue": 7200,
    "lines": [
     {
-     "item": "Aggregator/network split 20% (E)",
-     "amount": 1440
-    },
-    {
-     "item": "CSR servicing 25 h x $34",
+     "item": "CSR servicing 25 h x $34 (filings, COIs, endorsements)",
      "amount": 850
     },
     {
-     "item": "Chargeback reserve 3%",
-     "amount": 216
+     "item": "Chargeback / uncollected-premium reserve 4% (agency-bill, E-SYN001-S007)",
+     "amount": 288
     },
     {
      "item": "E&O allocation",
      "amount": 150
     }
    ],
-   "notes": "10% commission D (DC-S014); premium C/E (WS02-S017); contribution ~$4,544/yr",
+   "notes": "10% retail commission (D, DC-S014); wholesaler may also charge a broker/policy fee to the insured (MISSING); contribution ~$5,912/yr but quotable on only ~39% of switching risks (A, E-SYN001-S003)",
    "evidence": "D"
   },
   {
@@ -330,7 +405,7 @@
      "amount": 75
     }
    ],
-   "notes": "$149 market price (C4-S006)",
+   "notes": "$149 market price (C, C4-S006)",
    "evidence": "C"
   }
  ]

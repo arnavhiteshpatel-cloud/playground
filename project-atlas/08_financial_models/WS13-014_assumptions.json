@@ -1,22 +1,24 @@
 {
  "id": "WS13-014",
  "name": "Private utility locating & concrete GPR scanning — owner-operator for renovation subcontractors and GCs, Chicago + Cook/DuPage",
- "summary": "Recurring B2B accounts. A 'customer' is an active contractor account (electrical, plumbing/mechanical, GC, coring) that books scanning/locating visits; ARPC = average monthly billing per active account. New accounts come from founder field-sales conversations (site visits, superintendent meetings) and a part-time BD hire from month 24; technicians (each with a concrete GPR + EM locator kit and vehicle) are hired by capacity (~20 visits/accounts per tech per month) after the founder's first ~15 accounts. Operating profit is before owner compensation and includes the founder's own field work.",
+ "summary": "Recurring B2B accounts. A 'customer' is an active contractor account (electrical, plumbing/mechanical, GC, coring) that books scanning/locating visits; ARPC = average monthly billing per active account. Stage E capital-light structure: months 1-3 are a rented-kit pilot (rental expensed; no equipment bought); the founder's own concrete GPR + EM kit is bought in month 4 only after the promotion gate passes; the utility GPR cart is rented per job until month 13 and then leased; technicians are hired only when the founder carries ~20 active accounts (one per +20), with their kit leased (~7% APR, 36 months) and their own car reimbursed at the IRS rate instead of a $45k purchased kit + vehicle; the business-development hire is triggered by 45 active accounts, not by the calendar. Operating profit is before owner compensation and includes the founder's own field work.",
  "evidence_notes": [
   "Price evidence: GSA CALC ceiling rates — LaBella 'Subsurface Utility Field Technician' $124.69/h, senior $134.66/h [B, DF-S029] (≈$1,000 per 8-h day); consumer/SEO price guides half-day $300-600, full day $800-1,500 or $1,000-3,000 [D, C3-S028]; GPRS federal awards FY22-26 median $5,800 per project (range $925-$18,609), incl. $5,800 sewer mapping at VA Danville IL [A, DF-S027].",
   "Equipment (dealer list prices, UCG Underground Supplies): Radiodetection RD8200+TX10 $9,592; RD7200+TX5 $5,657; Vivax vLoc3-Pro+Loc3-5Tx $5,530; Radiodetection LMX100 GPR $20,508; LMX200 $36,476; ImpulseRadar PinPointR $18,444; RD8200 kit rental $599/month [B, DF-S026]. Concrete GPR (GSSI Mini XT class) $11-17k [D, C3-S024]; federal buys: ImpulseRadar $16,710 (Army 2024), Leica GPR system $31,417 (NASA 2026) [A, DF-S028].",
   "Demand: City of Chicago issued 5,042 permits with reported cost ≥$250k from Jan 2025 to Nov 2026 (3,325 renovation/alteration) [A, DF-S030]; total issued permits fell 34% 2019-2025 [A, WS10-S010]. JULIE does not locate private lines [B, WS11-S031].",
   "Competition: GPRS (national, Chicago crews, active acquirer) [D, DF-S032, WS13-S033]; Hard Rock Technologies (Chicago, 5 CSDA-certified GPR techs), Butler Scanning (Gurnee), Cobra Concrete Cutting (in-house GPR team) [D, DF-S031].",
   "Labour: BLS/O*NET 2025 Surveying & Mapping Technicians, Chicago median $57,470 [C, DF-S033]; experienced GPR tech assumed $65k + 25% load (E). Productivity ~20 billable visits/tech/month ≈ $180k/yr revenue per tech, vs US NAICS 541370 ~$138k receipts per employee [C, C3-S015].",
-  "Pricing and account behaviour (ARPC, churn, win rates) are E — no Chicago rate card or contractor purchase data was found. Validation experiments must establish them."
+  "Pricing and account behaviour (ARPC, churn, win rates) are E — no Chicago rate card or contractor purchase data was found. Validation experiments must establish them.",
+  "Stage E corrections (2026-11-28): (1) Stage D bought $42k of equipment in months 1-4 before any proof; Stage E rents in months 1-3 (EM kit $599/$499 per month [B, DF-S026]; concrete GPR $125/day 3-day minimum [B, E-WS13014-S001] or $1,050/week [D, DF-S038]; utility GPR $155/day [B, E-WS13014-S001]) and buys the founder kit only after the gate; the utility GPR cart is leased from month 13. (2) Stage D charged each technician $45k of up-front capex (kit + $20k used vehicle) AND $0.9k/month vehicle cost; Stage E leases the tech kit (published lease schedule implies ~7% APR [B, E-WS13014-S006]) and reimburses mileage at 72.5-76 cents/mile [A, E-WS13014-S016]. (3) Stage D held insurance flat at $750/month regardless of headcount; Stage E adds per-technician workers' comp/auto inside the technician cost. (4) Stage D's BD hire started in month 24 regardless of demand; Stage E triggers it at 45 active accounts. (5) Stage D assumed JULIE tickets on Chicago sites; inside city limits the one-call is 811 Chicago (DIGGER) [A, E-WS13014-S012]. (6) Deliverables must not be labelled ASCE 38 quality levels: a QL requires a PE in responsible charge [C, E-WS13014-S011; A, E-WS13014-S010].",
+  "New price anchor: GSA CALC 'Utility Field Technician' $135.26/h (Southeastern Surveying & Mapping) alongside LaBella $124.69/h [B, E-WS13014-S014]. GC insurance requirements (Chicago GC W.E. O'Neil): CGL $1M/$2M with XCU incl. underground, auto $1M, EL $1M, umbrella $2M+, PL $1M if design services [B, E-WS13014-S008]. Insureon excavation-class medians GL $120, E&O $67, umbrella $93, inland marine $101, WC $190, auto $370 per month [D, E-WS13014-S009]."
  ],
  "drivers": {
-  "sales_start_delay_months": 2,
+  "sales_start_delay_months": 1,
   "sales_start_delay_months__evidence": "E",
-  "sales_start_delay_months__source": "Buy kit, manufacturer training + NDT/CSDA-type certification (~$1,000/level [D, C3-S024]), GL/E&O certificates GCs require.",
+  "sales_start_delay_months__source": "Month 1: LLC, GL/E&O/umbrella binding, NULCA-accredited EM course ($500, B, E-WS13014-S002), Radiodetection GPR online course ($200, B, E-WS13014-S003), 2 days hands-on concrete GPR training (~$500/day, D, E-WS13014-S004), price-discovery interviews. Rented kit from month 1; first priced jobs month 2-3.",
   "sales_cycle_months": 1,
   "sales_cycle_months__evidence": "E",
-  "sales_cycle_months__source": "Subs book days ahead; first job usually a trial (Stage C).",
+  "sales_cycle_months__source": "Subs book days ahead; first job usually a trial (Stage C). 811 Chicago/JULIE need 2 business days' notice before digging, so locates are booked 2-14 days ahead [A, E-WS13014-S012].",
   "founder_ramp_months": 6,
   "founder_leads_per_month": {
    "conservative": 15,
@@ -67,7 +69,7 @@
    "optimistic": 1000
   },
   "arpc_monthly__evidence": "D",
-  "arpc_monthly__source": "≈1 visit per active account per month x $550-1,000 per visit (half/full-day mix). GSA CALC $124.69/h [B, DF-S029]; price guides $300-1,500/visit [D, C3-S028]; GPRS federal project median $5,800 [A, DF-S027] (multi-day).",
+  "arpc_monthly__source": "~1 visit per active account per month x $550-1,000 per visit (half/full-day mix). GSA CALC ceilings $124.69-135.26/h [B, DF-S029; B, E-WS13014-S014]; price guides $300-1,500/visit [D, C3-S028]; GPRS federal project median $5,800 [A, DF-S027]. Conservative $550 = the promotion-gate half-day price with one visit a month.",
   "onetime_revenue_per_new_customer": 0,
   "arpc_annual_growth_pct": 0.03,
   "gross_margin_pct": {
@@ -100,51 +102,85 @@
   "dso_days__source": "Subcontractor/GC net-30 to net-60 (Stage A record); small jobs card-paid on site.",
   "inventory_days_cogs": 0,
   "dpo_days": 15,
+  "start_capital_injection": 52000,
+  "start_capital_injection__evidence": "E",
+  "start_capital_injection__source": "Standardization rule: smallest injection that keeps the base-case cash balance >= 0 = base peak funding (incl. $4k/month owner draw from month 13), rounded up to the next $1k. NOT all of it is at risk before proof: see playbook section 8 (capital at risk before the hire gate).",
+  "lt_growth_y6_pct": {
+   "conservative": 0.03,
+   "base": 0.08,
+   "optimistic": 0.12
+  },
+  "lt_growth_decay": {
+   "conservative": 0.8,
+   "base": 0.85,
+   "optimistic": 0.9
+  },
+  "incremental_roic_pct": {
+   "conservative": 0.3,
+   "base": 0.6,
+   "optimistic": 0.9
+  },
+  "maint_capex_pct_op": {
+   "conservative": 0.1,
+   "base": 0.06,
+   "optimistic": 0.05
+  },
+  "maint_capex_pct_op__evidence": "E",
+  "maint_capex_pct_op__source": "Technician kits are leased (replacement sits inside staff cost); owned capex is the founder kit (~$22k) and utility GPR cart (~$20.5k [B, DF-S026]) replaced every ~5-7 years plus calibration -> ~$7-10k/yr = ~4-6% of base op; conservative 10% (lower op, same kit).",
+  "reserve_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 2
+  },
+  "ev_multiple": {
+   "conservative": 2.0,
+   "base": 3.0,
+   "optimistic": 3.5
+  },
+  "ev_multiple__evidence": "D",
+  "ev_multiple__source": "Applied to op before owner pay (SDE-like). GPRS is an active acquirer of small locating/scanning firms (13 deals 2018-25) but discloses no multiples [D, WS13-S033]; a Chicago-suburb owner-operated trade service business asked ~3.2x SDE [D, DF-S004]. Owner-dependent, construction-cyclical book -> 2.0/3.0/3.5x.",
+  "lt_growth_y6_pct__evidence": "E",
+  "lt_growth_y6_pct__source": "Years 6-10 growth = adding 1-2 technician units per year in Cook/DuPage/Lake/Will plus adjacencies (sewer CCTV, mapping); GPRS shows multi-metro scale is possible [D, WS13-S032] but Chicago permit volume fell 34% 2019-25 [A, WS10-S010], so base 8% decaying, conservative 3%.",
+  "lt_growth_decay__evidence": "E",
+  "lt_growth_decay__source": "Metro saturation: one owner-managed firm in a market where GPRS, Hard Rock, Butler and coring firms already operate [D, DF-S031].",
+  "incremental_roic_pct__evidence": "E",
+  "incremental_roic_pct__source": "Growth capital per technician unit = lease deposit/tablet ~$3k + receivables (~22 accounts x $750 x 45/30 = ~$25k) + 2-3 months of under-utilisation (~$15-20k) = ~$45k, for ~$40-55k/yr unit operating profit at maturity (model staff/ARPC drivers) -> ~1.0x pre-tax at best; haircut to 0.6 base for slower fill, 0.3 conservative (price pressure from GPRS/coring firms).",
+  "reserve_months__evidence": "E",
+  "reserve_months__source": "Construction-cyclical demand (Chicago permits -34% 2019-25 [A, WS10-S010]) and net-45 receivables justify 2 months of cash costs; 3 in conservative.",
   "tax_rate_pct": 0.3,
   "founder_draw_per_month": 4000,
-  "founder_draw_start_month": 13,
-  "start_capital_injection": 50000,
-  "start_capital_injection__evidence": "E",
-  "start_capital_injection__source": "Kit (concrete GPR + EM locator), later utility GPR, insurance, 6 months of fixed costs and receivables.",
-  "lt_growth_y6_pct": 0.08,
-  "lt_growth_decay": 0.85,
-  "incremental_roic_pct": 0.6,
-  "maint_capex_pct_op": 0.1,
-  "maint_capex_pct_op__evidence": "E",
-  "maint_capex_pct_op__source": "GPR/locator replacement every ~5-7 years plus vehicles.",
-  "reserve_months": 2,
-  "ev_multiple": 3.0,
-  "ev_multiple__evidence": "E",
-  "ev_multiple__source": "GPRS is an active acquirer of locating firms (13 deals 2018-25) [D, WS13-S033]; multiples not disclosed."
+  "founder_draw_start_month": 13
  },
  "staff": [
   {
-   "role": "GPR / locating technician (+ kit + vehicle)",
+   "role": "GPR / locating technician (leased kit, own car reimbursed)",
    "trigger": "active_customers",
-   "threshold": 15,
+   "threshold": 20,
    "per": 20,
    "max_count": 15,
    "start_month": 1,
-   "capex_per_hire": 45000,
+   "capex_per_hire": 3000,
    "monthly_cost": {
-    "conservative": 8500,
-    "base": 7700,
-    "optimistic": 7000
+    "conservative": 9200,
+    "base": 8300,
+    "optimistic": 7700
    },
-   "notes": "Hired when active accounts exceed founder capacity (~15) and every +20 accounts. Pay: Chicago surveying/mapping tech median $57,470 [C, DF-S033]; experienced GPR tech $65k x1.25 load = $6.8k + vehicle ~$0.9k/mo (E). Capex/hire: concrete GPR ~$15k [D, C3-S024] + EM locator $5.5k [B, DF-S026] + used vehicle ~$20k + tablet/software (E)."
+   "notes": "Hired only when the founder carries ~20 active accounts (~23-25 half-day visits/month alongside 10-15 h/week of selling) and then one per +20 accounts (unchanged from Stage D: ~$180k/yr revenue per tech at $750 ARPC, below GPRS-implied ~$200-250k per project manager [E from D, C3-S027]). Monthly cost base = $65k salary x1.25 load incl. payroll tax/WC ($6.8k; Chicago surveying/mapping tech median $57,470, 75th pct $68,640 [C, DF-S033]) + mileage ~900 mi x $0.725-0.76 ($0.7k [A, E-WS13014-S016]) + 36-month lease of a $21.7k concrete GPR + EM kit at ~7% APR ($0.67k [B, E-WS13014-S006]; kit prices B/D, DF-S026, E-WS13014-S004) + tablet/phone/PPE ($0.13k). Conservative: $70k salary, 15% APR, $26.6k kit. Capex/hire = first+last lease payment (~$1.3k), tablet, PPE, marking kit = $3k in all scenarios (the workbook takes one value) (E)."
   },
   {
    "role": "Business development (part-time, commission-heavy)",
-   "trigger": "month",
-   "start_month": 24,
-   "count": 1,
+   "trigger": "active_customers",
+   "threshold": 45,
+   "per": 1000,
+   "max_count": 1,
+   "start_month": 13,
    "is_sales_rep": true,
    "monthly_cost": {
     "conservative": 4000,
     "base": 3500,
     "optimistic": 3500
    },
-   "notes": "E."
+   "notes": "E. Stage E correction: hired when >=45 active accounts prove the account model (Stage D hired at month 24 regardless of demand)."
   },
   {
    "role": "Scheduler / report admin",
@@ -163,19 +199,19 @@
  ],
  "overhead": [
   {
-   "item": "GL ($1-2M) + E&O/professional + umbrella + auto",
+   "item": "Business insurance package: GL $1M/$2M with XCU/underground, E&O/PL $1M, umbrella $2M, inland marine (kit), hired/non-owned auto",
    "monthly": {
     "conservative": 1100,
     "base": 750,
     "optimistic": 550
    },
    "annual_growth_pct": 0.06,
-   "notes": "GC-required limits MISSING; Insureon small-biz averages GL $45/mo, E&O $88/mo, commercial auto $245/mo are floors [D, DF-S034]."
+   "notes": "Limits per Chicago GC sub requirements [B, E-WS13014-S008]. Insureon excavation-class medians GL $120 + E&O $67 + umbrella $93 + inland marine $101 = $381/mo, WC $190, auto $370 [D, E-WS13014-S009]; locating-specific quote MISSING. Per-tech WC/auto sits in the technician cost."
   },
   {
-   "item": "Founder vehicle running cost",
+   "item": "Founder vehicle running cost (own car, ~1,200 business mi/month)",
    "monthly": 900,
-   "notes": "E."
+   "notes": "~1,200 mi x IRS 72.5-76 cents/mi [A, E-WS13014-S016]; parking downtown included (E)."
   },
   {
    "item": "GPR processing / CAD-PDF reporting / FSM software + AI report drafting",
@@ -186,37 +222,112 @@
   {
    "item": "Training, certifications, calibration/service",
    "monthly": 200,
-   "notes": "NDT Level I ~$1,000/level [D, C3-S024]; E."
+   "notes": "NULCA-accredited EM course $500 [B, E-WS13014-S002]; GPR online $200 [B, E-WS13014-S003]; NDT Level I ~$1,000/level [D, C3-S024]; annual calibration (E)."
   },
   {
    "item": "Accounting, phone, office",
    "monthly": 400,
    "notes": "E."
+  },
+  {
+   "item": "Pilot kit rental, months 1-3 (EM locator monthly + concrete GPR by the week/3-day block + one utility-GPR block per month)",
+   "monthly": {
+    "conservative": 2850,
+    "base": 1900,
+    "optimistic": 1600
+   },
+   "start_month": 1,
+   "annual_growth_pct": 0.0,
+   "notes": "Base: RD8200 kit $599 then $499/mo [B, DF-S026] + concrete GPR ~1.5 weeks/month at $1,050/wk in months 2-3 [D, DF-S038] + LMX200 3-day block $465 [B, E-WS13014-S001], averaged over 3 months. Conservative: Mini XT monthly $3,000 [D, DF-S038]. Optimistic: Conquest 100 at $125/day, 3-day blocks [B, E-WS13014-S001]."
+  },
+  {
+   "item": "Pilot kit rental ends (offset from month 4, when own kit is bought)",
+   "monthly": {
+    "conservative": -2850,
+    "base": -1900,
+    "optimistic": -1600
+   },
+   "start_month": 4,
+   "annual_growth_pct": 0.0,
+   "notes": "Offset line: the engine has no end-month for overhead, so the rental is cancelled with an equal negative line from month 4."
+  },
+  {
+   "item": "Per-job utility GPR rental until own cart (months 4-12)",
+   "monthly": 465,
+   "start_month": 4,
+   "annual_growth_pct": 0.0,
+   "notes": "One LMX200 3-day block per month at $155/day [B, E-WS13014-S001]; shipping MISSING."
+  },
+  {
+   "item": "Per-job utility GPR rental ends (offset from month 13, cart leased)",
+   "monthly": -465,
+   "start_month": 13,
+   "annual_growth_pct": 0.0,
+   "notes": "Offset line (see above)."
+  },
+  {
+   "item": "Utility GPR cart lease (36 months; kept as replacement reserve afterwards)",
+   "monthly": {
+    "conservative": 1264,
+    "base": 633,
+    "optimistic": 569
+   },
+   "start_month": 13,
+   "annual_growth_pct": 0.0,
+   "notes": "Base LMX100 $20,508 at ~7% APR / 36 mo (rate implied by a published GPR lease schedule [B, E-WS13014-S006]); conservative LMX200 $36,476 at 15%; optimistic PinPointR $18,444 at 7%. Lease approval depends on founder credit (F2, unknown)."
   }
  ],
  "capex": [
   {
-   "item": "Concrete GPR scanner + EM locator/transmitter kit",
-   "month": 1,
-   "amount": {
-    "conservative": 26600,
-    "base": 21700,
-    "optimistic": 20500
-   },
-   "notes": "Concrete GPR $11-17k [D, C3-S024]; RD7200+TX5 $5,657 / RD8200+TX10 $9,592 / vLoc3-Pro set $5,530 [B, DF-S026]."
-  },
-  {
-   "item": "Utility (ground) GPR cart",
+   "item": "Founder kit: concrete GPR + EM locator/transmitter (bought only after the promotion gate)",
    "month": 4,
    "amount": {
-    "conservative": 36476,
-    "base": 20508,
-    "optimistic": 18444
+    "conservative": 26600,
+    "base": 21657,
+    "optimistic": 13100
    },
-   "notes": "LMX200 $36,476 / LMX100 $20,508 / PinPointR $18,444 dealer list prices [B, DF-S026]."
+   "notes": "Base: concrete GPR system ~$16k (GPRS: complete system $12-19k [D, E-WS13014-S004]) + RD7200+TX5 $5,657 [B, DF-S026]. Conservative: $17k GPR + RD8200+TX10 $9,592 [B]. Optimistic: used StructureScan Mini LT (~$10.8k asking, D, search result) + used RD7000 DL+TX5 $2,300 [B, E-WS13014-S007]."
+  },
+  {
+   "item": "Utility (ground) GPR cart lease deposit (first + last payment), month 13",
+   "month": 13,
+   "amount": {
+    "conservative": 2528,
+    "base": 1266,
+    "optimistic": 1138
+   },
+   "notes": "Cart leased, not bought: LMX200 $36,476 / LMX100 $20,508 / PinPointR $18,444 dealer list prices [B, DF-S026]; lease terms see overhead line."
   }
  ],
  "transactions": [
+  {
+   "name": "Pilot half-day slab scan on a RENTED kit at the gate price (month 2-3)",
+   "revenue": 550,
+   "lines": [
+    {
+     "item": "Concrete GPR rental share (one $1,050 week spread over 3 jobs) [D, DF-S038]",
+     "amount": 350
+    },
+    {
+     "item": "EM locator rental share ($499/month over ~5 jobs) [B, DF-S026]",
+     "amount": 100
+    },
+    {
+     "item": "Vehicle/parking/fuel (founder car, ~40 mi + downtown parking) [A, E-WS13014-S016]",
+     "amount": 55
+    },
+    {
+     "item": "Marking supplies, PDF report",
+     "amount": 10
+    },
+    {
+     "item": "Founder time 5 h (unpaid; shadow cost at $40/h shown for honesty)",
+     "amount": 200
+    }
+   ],
+   "notes": "Contribution ~$35 after the founder's shadow wage (~$235 before it): rented-kit jobs are a demand test, not a profit centre. The pilot is judged on price and repeat bookings, not margin.",
+   "evidence": "E"
+  },
   {
    "name": "Half-day slab scan before core drilling (high-rise renovation, electrical sub)",
    "revenue": 600,

@@ -1,0 +1,388 @@
+{
+ "id": "SYN-006-REV",
+ "name": "Construction subcontractor back office: surety-ready job-cost/WIP bookkeeping + Illinois certified payroll (Chicagoland public-works subs) (post-review)",
+ "summary": "POST-REVIEW MODEL. Stage E assumptions with the Stage F adversarial reviewer's corrected drivers applied. Corrected base (review §4, 'all four'): ARPC $950, 13 clients per bookkeeper, bookkeeper $6,200/mo loaded, external construction reviewer $1,000/mo. Conservative = Stage E conservative + bookkeeper $7,000 and reviewer $1,500 (review 'corrected conservative'). Optimistic = Stage E optimistic + bookkeeper $5,800 / reviewer $700 / 13 per bookkeeper; NOT reviewer-endorsed (review ceiling ~$150k/yr). Original Stage E model: SYN-006_assumptions.json (unchanged).",
+ "evidence_notes": [
+  "STAGE F CORRECTIONS (07_review/SYN-006_review.md): arpc_monthly base 1000->950; bookkeeper clients-per-head 15->13 (all scenarios; reviewer cons 11 not representable); bookkeeper loaded cost 5800/5800/5500 -> 7000/6200/5800 (cons/base/opt); external reviewer 1200/600/400 -> 1500/1000/700; not modelled (reviewer 'missing line'): clean-up overruns/write-offs ~1-2% of revenue (E)",
+  "Bookkeeping is not restricted to CPAs in Illinois: 225 ILCS 450/8.05(b)(3) says bookkeeping and tax preparation 'are not restricted to licensed or registered CPAs' [A, DB-S014]; titles 'certified public accountant', 'public accountant', 'C.P.A.' or similar misleading terms are barred, civil penalty up to $10,000 per offense [A, DB-S015]; assurance/opinion reports are CPA practice [A, DB-S016].",
+  "Certified payroll mandate: monthly by the 15th, per project, for every contractor and sub on Illinois public works [A, C5-S014, C5-S017]; Davis-Bacon-only contracts do not file with IDOL; no filing for months without work; liability 'falls with the individual contractor'; a filer entering payrolls for two companies needs a separate log-in per company - i.e., third-party filing is contemplated [A, DB-S013]. SB1344 penalties reach the filing agent [C, C5-S019].",
+  "Price anchors: vertical construction bookkeeping lists $500-$1,000 (specialty sub), $900-$1,800 (WIP/retainage), $1,600-$2,800+ (multi-entity) [D, C5-S009]; the same vendor's Chicago ZIP pages show $150-$300 for small businesses (inconsistent) [D, DB-S029]; Bench accrual tiers $699-$999+ [B, C5-S003]; AI-only tiers $65-$99 [B, C5-S004/S005]; offshore 'construction-trained' bookkeeper $999/mo [D, C5-S035].",
+  "Certified-payroll software substitutes are cheap: LCPcertified $12/report or $145/mo for up to 5 active projects [B, DB-S020]; PaidReady $49-$99/mo [B, DB-S021]; Points North on ADP $175/mo + $7.50/report [B, C5-S013]. A done-for-you add-on must be sold on labour/penalty avoidance, not software.",
+  "Bond trigger: Illinois public works over $150,000 require performance/payment bonds until 2029 ($50,000 after), IDOT/Tollway over $500,000 [A, DB-S017]; SBA guarantees bonds up to $9M non-federal [A, DB-S028]. That surety underwriting asks for WIP schedules is industry practice, documented here only at D (vendor pages) - MISSING at A/B.",
+  "Prospect pool: City of Chicago SBI/LSLR/JOC awards to small contractors 2022-2026 [A, DB-S018]; 226 federal specialty-trade construction awards to Illinois-based recipients FY2025-27 [A, DB-S019]; Illinois has ~18,685 specialty-trade establishments, ~5,200 with 5-49 employees [C, C5-S002].",
+  "Incumbent benchmark: Paychex 82-83% client retention, >50% of payroll clients via referrals [A, WS02-S022] (incumbent economics). Illinois bookkeeping firms with <5 employees average ~$189k receipts; 5-9 employees ~$731k [C, C5-S001].",
+  "Lead volumes, conversion rates, attach rates and churn for THIS entrant are E. BLS wage data for bookkeepers could not be retrieved (API daily limit) - staff costs anchored on Census payroll/employee (C) plus burden (E).",
+  "STAGE E (2026-11-28): Surety demand for WIP now documented at B: Tokio Marine HCC's contract bond packet requires two FYE statements plus a current interim if the FYE is >6 months old and a Work-on-Hand schedule (contract price, estimated cost at completion, billed to date, cost to date) [B, E-SYN006-S004]; Western National's Central-region (incl. IL) chart offers 'Xpress Xtra' bonding to $1.5M aggregate with 'No C.P.A. Requirement', underwritten on business statements, personal financial statements, a bank letter and a WIP schedule [B, E-SYN006-S005]. Counter-evidence: SBA QuickApp (contracts <= $500k) and carrier express programs (<= $500k on a 1-page application and credit) need little or no WIP [A, E-SYN006-S006/S007; B, E-SYN006-S005] - so the buyer is the sub graduating past ~$500k jobs.",
+  "STAGE E correction: LCPcertified describes itself as certified-payroll reporting 'for an individual organization' and lists only CA/WA/MD state exports [B, E-SYN006-S010]; the Stage D firm-level multi-client licence ($210/mo) is replaced by in-house IDOL-template tooling ($75/mo base).",
+  "STAGE E: Insureon bookkeeper medians E&O $37/mo ($1M/$1M) and cyber $47/mo [D, E-SYN006-S008] are a floor; base keeps $275/mo because certified-payroll filing (SB1344 agent penalties [C, C5-S019]) and surety reliance raise the risk class (E).",
+  "STAGE E: BLS May 2025 median pay for bookkeeping/accounting clerks $50,670 nationally and $54,890 in construction [C, E-SYN006-S009]; base bookkeeper $5,800/mo loaded (~$58k + 20%) is consistent; conservative raised to $6,400.",
+  "STAGE E: an external part-time construction-accounting reviewer (QA on WIP/job-cost) is added from month 3 because the founder has no construction-accounting track record; hourly rate MISSING (E).",
+  "STAGE E standardization: owner draw $4,000/mo from month 13 in all scenarios; tax 30%; start capital = smallest base-case injection keeping cash >= 0; long-term drivers evidenced below."
+ ],
+ "drivers": {
+  "sales_start_delay_months": 1,
+  "sales_start_delay_months__evidence": "A",
+  "sales_start_delay_months__source": "No licence needed for bookkeeping [A, DB-S014]; setup = LLC, E&O/cyber policy, engagement letter, software (days-weeks) (E).",
+  "sales_cycle_months": {
+   "conservative": 2,
+   "base": 1,
+   "optimistic": 1
+  },
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "Stage A/C: 1-6 weeks; owner decides; trigger = surety/bank request or first public award [E, WS02-028 memo].",
+  "founder_ramp_months": 6,
+  "founder_ramp_months__evidence": "E",
+  "founder_ramp_months__source": "Founder must first learn construction accrual/WIP and IDOL template; referral relationships take months (E).",
+  "founder_leads_per_month": {
+   "conservative": 8,
+   "base": 12,
+   "optimistic": 16
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Qualified owner conversations from public award lists (Chicago SBI/LSLR/JOC [A, DB-S018], USASpending [A, DB-S019]), ASA/FWC/CFMA events (Porte Brown lists these associations [B, DB-S023]) and CPA/surety-agent introductions. Volume E.",
+  "lead_to_proposal_pct": 0.35,
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Proposal requires a books review/discovery call (E).",
+  "proposal_to_win_pct": {
+   "conservative": 0.2,
+   "base": 0.3,
+   "optimistic": 0.35
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "No benchmark found; switching friction is low (client owns QBO file) but trust barrier is high for an unknown firm (E).",
+  "rep_ramp_months": 3,
+  "rep_new_customers_per_month": 1,
+  "referral_new_per_100_active": {
+   "conservative": 1.0,
+   "base": 1.5,
+   "optimistic": 2.0
+  },
+  "referral_new_per_100_active__evidence": "D",
+  "referral_new_per_100_active__source": "Paychex: >50% of payroll clients via CPA/bank/broker referrals [A, WS02-S022] (incumbent). New-entrant referral rate E.",
+  "monthly_churn_pct": {
+   "conservative": 0.025,
+   "base": 0.016,
+   "optimistic": 0.012
+  },
+  "monthly_churn_pct__evidence": "C",
+  "monthly_churn_pct__source": "Paychex retention 82-83%/yr ~1.5%/mo [A, WS02-S022, incumbent]; base slightly worse. Conservative raised to 2.5%/mo (~26%/yr) in Stage E: a new entrant's first clients skew to clean-up/troubled books and contractors fail in downturns (E).",
+  "arpc_monthly": {
+   "conservative": 800,
+   "base": 950,
+   "optimistic": 1200
+  },
+  "arpc_monthly__evidence": "D/E",
+  "arpc_monthly__source": "STAGE F CORRECTION: 07_review/SYN-006_review.md §4 top-5 table: ARPC $1,000 -> $950 base / $800 conservative (already filed). Newcomer sells against Wishup's dedicated construction-trained bookkeeper from $999/month that lists WIP preparation [D, C5-S035]; vendor bands are the vendor's own pricing [D, C5-S009]. Optimistic $1,200 unchanged (not reviewer-endorsed) | Stage E source: Blended: close+job cost+WIP $700-$1,000 (vertical list $500-$1,800 [D, C5-S009]; Bench accrual $699-$999 [B, C5-S003]) plus certified-payroll add-on ~$250-$350 on ~40% of clients for ~9.5 months (E; software substitute $49-$190/mo [B, DB-S020/S021, C5-S013]).",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 750,
+   "base": 1500,
+   "optimistic": 2500
+  },
+  "onetime_revenue_per_new_customer__evidence": "E",
+  "onetime_revenue_per_new_customer__source": "Onboarding/clean-up (job setup, cost codes, opening WIP) typical at onboarding [E, WS02-028 memo]; price unbenchmarked.",
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": {
+   "conservative": 0.84,
+   "base": 0.88,
+   "optimistic": 0.9
+  },
+  "gross_margin_pct__evidence": "B",
+  "gross_margin_pct__source": "Direct costs here are per-client tools only (labour is in Staff): WIP tool $20-70/mo [D, C5-S036]; certified-payroll software $12/report or $145/mo per 5 projects [B, DB-S020]; QBO subscription normally client-paid (E). ~$100-160 per client-month.",
+  "onetime_gross_margin_pct": 0.8,
+  "onetime_gross_margin_pct__evidence": "E",
+  "onetime_gross_margin_pct__source": "Clean-up done by founder/staff (labour in Staff); direct cost = software/setup only (E).",
+  "variable_opex_pct_revenue": 0.01,
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "ACH collection fees (E).",
+  "cac_per_new_customer": {
+   "conservative": 400,
+   "base": 250,
+   "optimistic": 200
+  },
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Meetings, travel, event fees per won client (E).",
+  "fixed_marketing_per_month": {
+   "conservative": 500,
+   "base": 400,
+   "optimistic": 400
+  },
+  "fixed_marketing_per_month__evidence": "E",
+  "fixed_marketing_per_month__source": "CFMA Chicago associate membership $500/yr [B, E-SYN006-S011]; ASA Chicago/FWC dues MISSING; website, award-list mailers, event fees (E).",
+  "dso_days": {
+   "conservative": 30,
+   "base": 8,
+   "optimistic": 3
+  },
+  "dso_days__evidence": "D",
+  "dso_days__source": "Monthly in advance by ACH/card is the online-bookkeeper norm (Bench annual prepay [B, C5-S003]); Stage E conservative 30 days because contractors habitually pay by check net-30 (E).",
+  "inventory_days_cogs": 0,
+  "dpo_days": 15,
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "founder_draw_per_month__evidence": "E",
+  "founder_draw_per_month__source": "Stage E standardization rule: modest living stipend $4,000/mo from month 13 in all scenarios (cross-finalist comparability).",
+  "start_capital_injection": 11600,
+  "lt_growth_y6_pct": {
+   "conservative": 0.03,
+   "base": 0.08,
+   "optimistic": 0.12
+  },
+  "lt_growth_decay": {
+   "conservative": 0.7,
+   "base": 0.85,
+   "optimistic": 0.9
+  },
+  "incremental_roic_pct": {
+   "conservative": 0.5,
+   "base": 1.0,
+   "optimistic": 1.5
+  },
+  "maint_capex_pct_op": {
+   "conservative": 0.05,
+   "base": 0.03,
+   "optimistic": 0.02
+  },
+  "reserve_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 2
+  },
+  "ev_multiple": {
+   "conservative": 1.5,
+   "base": 2.5,
+   "optimistic": 3.5
+  },
+  "ev_multiple__evidence": "D",
+  "ev_multiple__source": "Multiple of operating profit BEFORE owner pay (SDE-like). Bookkeeping-practice multiples MISSING; anchors: a Chicago-suburb owner-operated service business asked ~3.2x SDE [D, DF-S004]; sub-$1M-EBITDA insurance agencies ~4x EBITDA [C, WS02-S007]; small insurance books 5-7x profit [C, C5-S021] (stickier commission streams). Recurring bookkeeping books are sticky but key-person heavy -> 1.5/2.5/3.5x.",
+  "tax_rate_pct__evidence": "E",
+  "tax_rate_pct__source": "Stage E standardization rule (simplified blended pass-through rate).",
+  "start_capital_injection__evidence": "E",
+  "start_capital_injection__source": "Stage E standardization rule re-applied to the post-review base: smallest round injection keeping base cash >= 0 (REV base peak funding rounded up to $100). Does not change operating profit, FCF or peak funding.",
+  "lt_growth_y6_pct__evidence": "E",
+  "lt_growth_y6_pct__source": "Model y4->y5 operating-profit growth is ~+33% base / ~+100% conservative from a low base; an Illinois-only public-works niche decelerates as the founder-led pipeline saturates. Illinois has ~18,685 specialty-trade establishments [C, C5-S002]; Chicago alone has 400k+ lead service lines to replace over decades [C, E-SYN006-S012]. Conservative 3% ~ inflation-only.",
+  "lt_growth_decay__evidence": "E",
+  "lt_growth_decay__source": "Analyst assumption; conservative decays fastest (construction cyclicality; AI price compression of generic bookkeeping [A, C5-S008]).",
+  "incremental_roic_pct__evidence": "E",
+  "incremental_roic_pct__source": "Growth capital in this business is hiring-ahead payroll plus small working capital; years 1-5 base op of ~$190k is reached on <$15k peak funding (model). Years 6-10 assume $1 of reinvested cash adds $1.00 of annual op (base), $0.50 (conservative: geographic expansion beyond Illinois needs new state rules and sales staff).",
+  "maint_capex_pct_op__evidence": "E",
+  "maint_capex_pct_op__source": "Laptops/monitors ~$1.5-2k per seat every ~3-4 years and security tooling; capex per hire $2,000 in the staff table (E).",
+  "reserve_months__evidence": "E",
+  "reserve_months__source": "Staff is ~65-75% of cash costs; 2 months of payroll cover (3 conservative) protects against a client-loss shock (E)."
+ },
+ "staff": [
+  {
+   "role": "External construction-accounting reviewer (part-time QA on WIP/job cost)",
+   "trigger": "month",
+   "start_month": 3,
+   "count": 1,
+   "capex_per_hire": 0,
+   "annual_raise_pct": 0.03,
+   "monthly_cost": {
+    "conservative": 1500,
+    "base": 1000,
+    "optimistic": 700
+   },
+   "notes": "STAGE F CORRECTION (07_review/SYN-006_review.md §4): reviewer $600 -> $1,000 base / $1,500 conservative / $700 optimistic; an experienced construction controller/CPA is unlikely to bill under $150/h (E; rate MISSING). | Stage E: Stage E addition: ~5-8 h/mo of review by an experienced construction controller/CPA (no attest, no CPA association with our reports) while the founder learns; continues as second-level QA. Hourly rate MISSING (E)."
+  },
+  {
+   "role": "Construction bookkeeper (job-cost/WIP)",
+   "trigger": "active_customers",
+   "threshold": 12,
+   "per": 13,
+   "start_month": 1,
+   "capex_per_hire": 2000,
+   "monthly_cost": {
+    "conservative": 7000,
+    "base": 6200,
+    "optimistic": 5800
+   },
+   "notes": "STAGE F CORRECTION (07_review/SYN-006_review.md §4): 15 -> 13 clients per bookkeeper (reviewer base 13 / conservative 11; the engine's 'per' is not scenario-specific, so 13 is used in all scenarios as in the reviewer's own corrected-conservative run); loaded cost $5,800 -> $6,200 base / $7,000 conservative / $5,800 optimistic: Chicago metro bookkeeping clerk mean $53,560 [C, F1-S001], business & financial ops mean $46.54/h [C, F1-S002]; a full-charge construction bookkeeper sits between. | Stage E: ~$58k salary + ~20% burden; BLS May 2025 median bookkeeping clerk $50,670 (US) / $54,890 in construction [C, E-SYN006-S009]; Census 541219 payroll/employee ~$45k [C, DB-S036]. 15 clients per bookkeeper (E). Founder covers the first ~12 clients."
+  },
+  {
+   "role": "Senior construction accountant / reviewer",
+   "trigger": "active_customers",
+   "threshold": 30,
+   "per": 45,
+   "start_month": 1,
+   "max_count": 2,
+   "capex_per_hire": 2000,
+   "monthly_cost": {
+    "conservative": 9000,
+    "base": 8500,
+    "optimistic": 8000
+   },
+   "notes": "~$85k + burden; reviews WIP/revenue recognition (E). Stage C base used $90k."
+  },
+  {
+   "role": "Payroll & prevailing-wage compliance specialist",
+   "trigger": "active_customers",
+   "threshold": 25,
+   "per": 60,
+   "start_month": 1,
+   "capex_per_hire": 2000,
+   "monthly_cost": {
+    "conservative": 5800,
+    "base": 5500,
+    "optimistic": 5200
+   },
+   "notes": "Maps hours to project/classification/county rate; IDOL template; fringe reconciliation (E)."
+  },
+  {
+   "role": "Office/admin coordinator",
+   "trigger": "revenue",
+   "threshold": 60000,
+   "per": 150000,
+   "max_count": 2,
+   "monthly_cost": 4200,
+   "notes": "Billing, onboarding, document chasing (E)."
+  }
+ ],
+ "overhead": [
+  {
+   "item": "E&O (professional liability) + cyber insurance",
+   "monthly": {
+    "conservative": 450,
+    "base": 275,
+    "optimistic": 175
+   },
+   "annual_growth_pct": 0.05,
+   "notes": "Insureon bookkeeper medians: E&O $37/mo, cyber $47/mo [D, E-SYN006-S008] = floor. Base $275 for higher limits and the certified-payroll/surety-reliance risk class (E); coverage of SB1344 agent penalties MISSING."
+  },
+  {
+   "item": "Practice software: Claude Team seats, practice-management, document capture, e-sign",
+   "monthly": {
+    "conservative": 450,
+    "base": 300,
+    "optimistic": 250
+   },
+   "is_ai": true,
+   "notes": "Claude Team $25/seat/mo monthly [B, DB-S022]; QBO Accountant access normally free to firms (E); practice-management ~$50/user (E)."
+  },
+  {
+   "item": "Certified-payroll tooling (IDOL Excel template automation, secure client portal)",
+   "monthly": {
+    "conservative": 150,
+    "base": 75,
+    "optimistic": 50
+   },
+   "start_month": 4,
+   "is_ai": true,
+   "notes": "Stage E correction: LCPcertified is licensed per organization and lists no IDOL export [B, E-SYN006-S010], so no multi-client firm licence; IDOL's fixed-column Excel template is free [A, C5-S017]. Where a client needs software (e.g., WH-347), it is client-paid (PaidReady $49/mo [B, DB-S021])."
+  },
+  {
+   "item": "Accounting/legal, phone, website, co-working",
+   "monthly": {
+    "conservative": 700,
+    "base": 550,
+    "optimistic": 450
+   },
+   "notes": "Includes engagement-letter legal review, LLC annual report $75 [A, E-SYN006-S014], CPA tax prep for the firm, phone, website, co-working (E)."
+  }
+ ],
+ "capex": [
+  {
+   "item": "Laptops/monitors, secure file setup",
+   "month": 1,
+   "amount": {
+    "conservative": 4000,
+    "base": 3000,
+    "optimistic": 2500
+   },
+   "notes": "Equipment and secure file setup (E). LLC articles $150 + assumed name $120 (2026) [A, E-SYN006-S014] are expensed in month 1 overhead rounding."
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Specialty sub ($4M revenue, 25 employees, 2 public jobs): monthly close + job cost + quarterly WIP + certified payroll on 2 IDOL projects",
+   "revenue": 1250,
+   "lines": [
+    {
+     "item": "Bookkeeper time 9 h @ $34 loaded",
+     "amount": 306
+    },
+    {
+     "item": "Senior review 1.5 h @ $55 loaded",
+     "amount": 83
+    },
+    {
+     "item": "Compliance specialist 3 h (2 projects x 4-5 weekly payrolls) @ $33",
+     "amount": 99
+    },
+    {
+     "item": "Certified-payroll software share (2 projects)",
+     "amount": 58
+    },
+    {
+     "item": "WIP tool + document capture share",
+     "amount": 45
+    }
+   ],
+   "notes": "Price = $950 close/WIP + $300 certified payroll (E within D range [C5-S009]); certified-payroll software alternatives $145-$667/mo (LCPcertified [B, DB-S020]; Dapt on ADP $8,000/yr for 1-5 jobs [B, E-SYN006-S013]). Payment: monthly in advance by ACH (E).",
+   "evidence": "D/E"
+  },
+  {
+   "name": "Small sub ($1.2M, 8 employees, no public work): monthly close + job cost, WIP twice a year",
+   "revenue": 750,
+   "lines": [
+    {
+     "item": "Bookkeeper time 6 h @ $34",
+     "amount": 204
+    },
+    {
+     "item": "Senior review 0.75 h @ $55",
+     "amount": 41
+    },
+    {
+     "item": "Tools share",
+     "amount": 35
+    }
+   ],
+   "notes": "Low end of vertical list [D, C5-S009]; competes with Bench Complexity 2 $699 [B, C5-S003].",
+   "evidence": "D/E"
+  },
+  {
+   "name": "Onboarding / clean-up project (one-time): rebuild 6 months, set up cost codes and opening WIP",
+   "revenue": 2000,
+   "lines": [
+    {
+     "item": "Bookkeeper 20 h @ $34",
+     "amount": 680
+    },
+    {
+     "item": "Senior review 4 h @ $55",
+     "amount": 220
+    },
+    {
+     "item": "Setup software/data migration",
+     "amount": 60
+    }
+   ],
+   "notes": "Price unbenchmarked (E). Often triggered by a surety asking for a current interim + Work-on-Hand schedule [B, E-SYN006-S004/S005]. Paid 50% upfront, 50% on delivery (E).",
+   "evidence": "E"
+  },
+  {
+   "name": "Certified-payroll-only client (seasonal, 1 IDOL project, 9 months/yr)",
+   "revenue": 300,
+   "lines": [
+    {
+     "item": "Specialist 2.5 h @ $33",
+     "amount": 83
+    },
+    {
+     "item": "Software (LCPcertified $12/report x 4-5)",
+     "amount": 54
+    }
+   ],
+   "notes": "Stand-alone add-on is low-ticket; must lead into bookkeeping (Stage C finding).",
+   "evidence": "B/E"
+  }
+ ],
+ "review_changes": [
+  "arpc_monthly base 1000->950",
+  "bookkeeper clients-per-head 15->13 (all scenarios; reviewer cons 11 not representable)",
+  "bookkeeper loaded cost 5800/5800/5500 -> 7000/6200/5800 (cons/base/opt)",
+  "external reviewer 1200/600/400 -> 1500/1000/700",
+  "not modelled (reviewer 'missing line'): clean-up overruns/write-offs ~1-2% of revenue (E)"
+ ]
+}

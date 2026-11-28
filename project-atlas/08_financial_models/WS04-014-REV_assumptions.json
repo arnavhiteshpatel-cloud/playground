@@ -1,0 +1,361 @@
+{
+ "id": "WS04-014-REV",
+ "name": "Managed IT + HIPAA security compliance for independent dental & vet practices — Chicago North Side (post-review)",
+ "summary": "POST-REVIEW MODEL. Stage E assumptions with the Stage F adversarial reviewer's corrected drivers applied. Corrected base (review §1/§4): technician $7,500/mo loaded, ARPC $650, onboarding $500; every funnel rate as filed; first technician still triggered at 14 practices. Conservative = Stage E conservative + technician $8,000 + onboarding $300. Optimistic = Stage E optimistic + technician $7,100; NOT reviewer-endorsed. Reviewer's recommended hire-at-18 rule is reported as a variant. Original Stage E model: WS04-014_assumptions.json (unchanged).",
+ "evidence_notes": [
+  "STAGE F CORRECTIONS (07_review/WS04-014_review.md): arpc_monthly base 690->650; onetime_revenue_per_new_customer cons/base 500/1000 -> 300/500; field technician loaded cost 7000/6500/6200 -> 8000/7500/7100; hire trigger 14 kept (variant at 18 reported separately)",
+  "Published dental-MSP prices (re-verified 2026-11-28): Siotek $399/mo flat (~10 workstations, 4 on-site visits/yr) EXCLUDES Huntress EDR and Proofpoint email security (add-ons) and waives onboarding fees [B, E-WS04014-S004]; Darkhorse Silver $28.13/WS, Gold $49.93/WS ($422/$749 at 15 WS; $281/$499 at 10 WS), both incl. EDR/MDR, email security and 'HIPAA compliance'; no Chicago service area listed [B, E-WS04014-S005]. Chicago directory range $500-2,000/mo [D, DD-S019].",
+  "Correction (Stage E): veterinary practices are not HIPAA covered entities - HIPAA 'health care' relates to the health of an 'individual' (a person) [A, E-WS04014-S003]. The HIPAA compliance layer and the stand-alone HIPAA risk analysis are dental (and human-medical) products; vets get a cyber-insurance-readiness / PCI / client-data documentation layer instead. Blended ARPC lowered from $700 to $690 (75% dental at $700, 25% vet at ~$660).",
+  "Correction (Stage E): per-practice security stack re-priced with managed EDR at $7-12/endpoint and email security $5-10/mailbox (retail, vendor guide) [D, E-WS04014-S006]; MSP cost assumed at the low end -> ~$146/practice/month tools -> base recurring gross margin 0.79 (was 0.80).",
+  "Correction (Stage E): onboarding fee lowered to $1,000 base (was $1,500) because the main remote rival includes onboarding free and scopes remediation separately [B, E-WS04014-S004].",
+  "Insurance re-based on Insureon June-2026 medians for IT consultants (<5 employees): tech E&O $75/mo ($1M/$1M), cyber $128/mo, GL $31/mo [D, E-WS04014-S010]; an MSP with admin access to healthcare networks is riskier, so base $550/mo (~2.3x the $234 median sum), conservative $900, optimistic $400 (E). Was $700 base.",
+  "Chicago Personal Property Lease Transaction Tax on nonpossessory computer leases (cloud software) rose from 11% to 15% on 2026-01-01 [C, E-WS04014-S011]; applied to the RMM/PSA line in conservative/base (founder assumed Chicago-based). Whether bundled managed-service fees to Chicago clients carry PPLTT is UNCONFIRMED (tax counsel).",
+  "Tool costs: Syncro RMM/PSA $129-179 per technician/month, unlimited endpoints, AI features free until Jan 2027 then usage-based [B, DD-S017]; Backblaze B2 $6.95/TB-month [B, DD-S018]; Backblaze offers a BAA only to customers who are Covered Entities [B, E-WS04014-S013] -> practice-owned B2 accounts or a BAA-signing MSP backup vendor.",
+  "Technician cost: Illinois computer user support specialist median $59,860 (Chicago $60,730) [C, C6-S026], loaded x1.3 = ~$78k. One technician per ~28 practices (~300 endpoints) is an assumption (E).",
+  "Client loss: Illinois DSO affiliation +0.4 pts/yr (12.7% -> 13.9%, 2022-25) and dental establishment decline ~0.7%/yr [C, C6-S001..S004]; base churn 1%/month includes practice sales and switching (E).",
+  "Demand drivers: HIPAA Security Rule NPRM (Jan 2025) is still only proposed - Federal Register shows no final rule on 2026-11-28 [A, E-WS04014-S001]; the latest Unified Agenda moved it from 'Final Rule Stage' (target 05/2026) to 'Long-Term Actions' with final action 07/2027 [A, E-WS04014-S002]. OCR's Risk Analysis Initiative reached its 14th enforcement action by June 2026, incl. a $103k settlement with a small Illinois provider (1,980 patients) [C, E-WS04014-S008, S009]. Cyber-insurance MFA supplements (Travelers CYB-14306) require MFA for email, remote access and all admin access incl. third-party service providers, signed with the person in charge of IT security [B, E-WS04014-S007].",
+  "Long-term drivers: EV multiple applied to operating profit before owner pay (SDE-like). Sub-$1M-revenue MSPs with >=70% recurring revenue traded at ~5.4x SDE median (IQR 4.8-6.5x); <50% recurring ~3.4x [D, E-WS04014-S015]; smallest MSPs 3-4x EBITDA [C/D, E-WS04014-S014]. Base 3.5x, conservative 2.5x, optimistic 4.5x.",
+  "Funnel conversion rates and lead volumes are E. Standardized: founder draw $4,000/month from month 13, tax 30%, start capital = smallest amount keeping base cash >= 0."
+ ],
+ "drivers": {
+  "sales_start_delay_months": 1,
+  "sales_start_delay_months__evidence": "E",
+  "sales_start_delay_months__source": "No licence; entity, cyber/E&O insurance, tool accounts, BAA template.",
+  "sales_cycle_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "1-3 months, often triggered by outage, new office, practice sale (Stage A/C).",
+  "founder_ramp_months": 6,
+  "founder_leads_per_month": {
+   "conservative": 8,
+   "base": 12,
+   "optimistic": 16
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Qualified conversations with owner/office manager per month (walk-ins within the radius, equipment-dealer and broker referrals, study clubs) while founder also does technical work.",
+  "lead_to_proposal_pct": 0.35,
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Free network + HIPAA gap assessment -> written proposal.",
+  "proposal_to_win_pct": {
+   "conservative": 0.18,
+   "base": 0.25,
+   "optimistic": 0.32
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Newcomer vs incumbent IT provider; switching costs moderate (C6-S007 12-month terms).",
+  "rep_ramp_months": 3,
+  "rep_new_customers_per_month": 0,
+  "referral_new_per_100_active": {
+   "conservative": 0.5,
+   "base": 1.0,
+   "optimistic": 1.5
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Peer/study-club referrals common in dentistry (Stage C, E).",
+  "monthly_churn_pct": {
+   "conservative": 0.015,
+   "base": 0.01,
+   "optimistic": 0.007
+  },
+  "monthly_churn_pct__evidence": "C/E",
+  "monthly_churn_pct__source": "IL DSO drift ~0.4 pts/yr + establishment decline ~0.7%/yr (C6-S001..S004) + switching (E).",
+  "arpc_monthly": {
+   "conservative": 540,
+   "base": 650,
+   "optimistic": 860
+  },
+  "arpc_monthly__evidence": "B/D/E",
+  "arpc_monthly__source": "STAGE F CORRECTION: 07_review/WS04-014_review.md §2 F2-F3, §4: Siotek is active in Chicago (landing page, coordinated on-site technicians [D, F4-S002]) at $399 + add-ons with free onboarding incl. risk assessment [B, F4-S003]; $690 -> $650 base; conservative $540 unchanged; optimistic $860 unchanged (not reviewer-endorsed) | Stage E source: Remote rivals all-in for 10 WS: Siotek $399 + EDR/email add-ons (~$540-600) [B, E-WS04014-S004]; Darkhorse Gold $499 at 10 WS [B, E-WS04014-S005]; local $500-2,000 [D, DD-S019]. Base = dental 10 WS x $60 + $100 HIPAA layer ($700, 75% of mix) blended with vet ~$660 (25%, no HIPAA layer). Conservative = parity with remote all-in; optimistic = ~45% premium for on-site SLA.",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 300,
+   "base": 500,
+   "optimistic": 2000
+  },
+  "onetime_revenue_per_new_customer__evidence": "B/E",
+  "onetime_revenue_per_new_customer__source": "STAGE F CORRECTION: 07_review/WS04-014_review.md §4: Siotek charges $0 onboarding [B, F4-S003]: $1,000 -> $500 base / $500 -> $300 conservative; optimistic unchanged | Stage E source: Onboarding/remediation (firewall, backup target, documentation, first risk analysis). Siotek waives onboarding and scopes remediation separately [B, E-WS04014-S004], so base lowered from $1,500 to $1,000.",
+  "onetime_gross_margin_pct": 0.45,
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": {
+   "conservative": 0.73,
+   "base": 0.79,
+   "optimistic": 0.84
+  },
+  "gross_margin_pct__evidence": "D/B/E",
+  "gross_margin_pct__source": "Per-practice tools ~$146/mo: managed EDR 11 x $7, email security 8 x $3, DNS filter 11 x $1.50, B2 backup 2 TB x $6.95, compliance portal $15 (retail ranges D, E-WS04014-S006; B2 B, DD-S018; MSP cost E). Same tool cost on $540 = 0.73; volume pricing on $860 = 0.84.",
+  "variable_opex_pct_revenue": 0.02,
+  "cac_per_new_customer": {
+   "conservative": 250,
+   "base": 150,
+   "optimistic": 100
+  },
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Assessment time materials, lunch-and-learn, mileage.",
+  "fixed_marketing_per_month": 400,
+  "fixed_marketing_per_month__evidence": "E",
+  "fixed_marketing_per_month__source": "Website, local search, dental/vet society sponsorships.",
+  "dso_days": {
+   "conservative": 5,
+   "base": -10,
+   "optimistic": -15
+  },
+  "dso_days__evidence": "E",
+  "dso_days__source": "Billed monthly in advance on autopay (Stage A); negative = prepaid.",
+  "dpo_days": 20,
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": 69700,
+  "ev_multiple": {
+   "conservative": 2.5,
+   "base": 3.5,
+   "optimistic": 4.5
+  },
+  "tax_rate_pct__evidence": "E",
+  "tax_rate_pct__source": "Standardized cross-finalist convention.",
+  "founder_draw_per_month__evidence": "E",
+  "founder_draw_per_month__source": "Standardized cross-finalist convention ($4k/mo living stipend from month 13).",
+  "founder_draw_start_month__evidence": "E",
+  "founder_draw_start_month__source": "Standardized cross-finalist convention.",
+  "lt_growth_y6_pct": {
+   "conservative": 0.03,
+   "base": 0.1,
+   "optimistic": 0.15
+  },
+  "lt_growth_y6_pct__evidence": "E",
+  "lt_growth_y6_pct__source": "Base model adds ~12-14 net practices/yr on ~57 at end of year 5 (~20%/yr customer growth) but each technician hire steps costs; 10% op growth in year 6 is below customer growth. Conservative 3% reflects IL dental establishment decline (-0.7%/yr) and DSO drift (+0.4 pts/yr) [C, C6-S001..S004].",
+  "lt_growth_decay": {
+   "conservative": 0.7,
+   "base": 0.85,
+   "optimistic": 0.9
+  },
+  "lt_growth_decay__evidence": "E",
+  "lt_growth_decay__source": "Local route density saturates; a second radius (DuPage) is a new unit. Conservative decays fast.",
+  "incremental_roic_pct": {
+   "conservative": 0.6,
+   "base": 1.0,
+   "optimistic": 1.5
+  },
+  "incremental_roic_pct__evidence": "E",
+  "incremental_roic_pct__source": "Growth capital = ~6 months of an under-utilised technician (~$39k) + hire capex $3k per ~28-practice unit that adds ~$40-50k operating profit at maturity (model staff/ARPC drivers) -> ~1.0x pre-tax; conservative assumes slower fill.",
+  "maint_capex_pct_op": {
+   "conservative": 0.06,
+   "base": 0.04,
+   "optimistic": 0.03
+  },
+  "maint_capex_pct_op__evidence": "E",
+  "maint_capex_pct_op__source": "Laptops, bench spares, test imaging workstation, vehicle share; client hardware is billed to clients (Siotek practice, E-WS04014-S004).",
+  "reserve_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 2
+  },
+  "reserve_months__evidence": "E",
+  "reserve_months__source": "Two months of cash operating costs; three in conservative because a client ransomware incident or a DSO sale of 2-3 clients can hit in one month.",
+  "owner_comp_growth_pct": 0.03,
+  "owner_comp_growth_pct__evidence": "E",
+  "owner_comp_growth_pct__source": "Engine default; stipend grows with inflation.",
+  "ev_multiple__evidence": "D",
+  "ev_multiple__source": "Applied to op before owner pay (SDE-like). Sub-$1M MSPs: >=70% MRR ~5.4x SDE median, <50% MRR ~3.4x (BizBuySell/Host Broker via CT Acquisitions) [D, E-WS04014-S015]; smallest MSPs 3-4x EBITDA [C/D, E-WS04014-S014]. Dental-concentrated, founder-dependent book discounted to 3.5x.",
+  "start_capital_injection__evidence": "E",
+  "start_capital_injection__source": "Stage E standardization rule re-applied to the post-review base: smallest round injection keeping base cash >= 0 (REV base peak funding rounded up to $100). Does not change operating profit, FCF or peak funding."
+ },
+ "staff": [
+  {
+   "role": "Field/remote technician",
+   "trigger": "active_customers",
+   "threshold": 14,
+   "per": 28,
+   "capex_per_hire": 3000,
+   "monthly_cost": {
+    "conservative": 8000,
+    "base": 7500,
+    "optimistic": 7100
+   },
+   "notes": "STAGE F CORRECTION (07_review/WS04-014_review.md §2 F1, §4): the role is a solo field engineer, so the comparable occupation is Chicago computer network support specialist, median $73,340 (75th pct $88,550) [C, F4-S004], not help-desk $59,860: loaded $6,500 -> $7,500 base / $8,000 conservative / $7,100 optimistic (reviewer script: base - $400). Hire trigger kept at 14 practices (reviewer recommends 18 as an operating rule; reported as a variant, not built in). | Stage E: IL user-support median $59,860 x 1.3 (C6-S026); founder covers the first ~14 practices."
+  },
+  {
+   "role": "Senior systems/network engineer (imaging servers, firewalls, projects)",
+   "trigger": "active_customers",
+   "threshold": 70,
+   "per": 100,
+   "capex_per_hire": 3000,
+   "monthly_cost": {
+    "conservative": 9000,
+    "base": 8500,
+    "optimistic": 8000
+   },
+   "notes": "Founder handles L3/project engineering until ~70 practices. E."
+  },
+  {
+   "role": "Service coordinator / dispatcher (part-time then full-time)",
+   "trigger": "revenue",
+   "threshold": 40000,
+   "per": 80000,
+   "max_count": 2,
+   "monthly_cost": 4200,
+   "notes": "E."
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Insurance: cyber liability + tech E&O + GL",
+   "monthly": {
+    "conservative": 900,
+    "base": 550,
+    "optimistic": 400
+   },
+   "annual_growth_pct": 0.06,
+   "notes": "Insureon Jun-2026 IT-consultant medians: tech E&O $75, cyber $128, GL $31 per month [D, E-WS04014-S010]; MSP with healthcare admin access ~2.3x (E). Was $700 base."
+  },
+  {
+   "item": "RMM/PSA (Syncro Team, 2 seats)",
+   "monthly": {
+    "conservative": 412,
+    "base": 412,
+    "optimistic": 358
+   },
+   "is_ai": true,
+   "notes": "$179/tech/mo annual x 2 seats (DD-S017) + 15% Chicago PPLTT if founder is Chicago-based (E-WS04014-S011)."
+  },
+  {
+   "item": "Documentation/password vault, remote-access extras",
+   "monthly": 120,
+   "is_ai": true
+  },
+  {
+   "item": "AI tools (ticket triage, policy/risk-analysis drafting)",
+   "monthly": 100,
+   "is_ai": true
+  },
+  {
+   "item": "Vehicle/mileage/parking (city on-site work)",
+   "monthly": 600
+  },
+  {
+   "item": "Accounting/legal (BAA review)",
+   "monthly": 350
+  },
+  {
+   "item": "Phone, bench spares, misc",
+   "monthly": 250
+  }
+ ],
+ "capex": [
+  {
+   "item": "Bench equipment, spare firewall/NAS, laptop, test sensor/imaging workstation",
+   "month": 1,
+   "amount": {
+    "conservative": 7000,
+    "base": 5000,
+    "optimistic": 4000
+   }
+  }
+ ],
+ "transactions": [
+  {
+   "name": "10-workstation independent dental practice, monthly managed IT + HIPAA compliance layer",
+   "revenue": 700,
+   "lines": [
+    {
+     "item": "Managed EDR/MDR, 11 endpoints x ~$7 MSP cost (retail $7-12, D, E-WS04014-S006)",
+     "amount": 77
+    },
+    {
+     "item": "Email security, 8 mailboxes x ~$3 MSP cost (retail $5-10, D)",
+     "amount": 24
+    },
+    {
+     "item": "DNS filtering, 11 endpoints x ~$1.50 (E)",
+     "amount": 16.5
+    },
+    {
+     "item": "Cloud backup ~2 TB x $6.95 (B, DD-S018)",
+     "amount": 13.9
+    },
+    {
+     "item": "Compliance portal/training seats (E)",
+     "amount": 15
+    },
+    {
+     "item": "Technician time ~6 h/month x $37.40/h loaded (C6-S026)",
+     "amount": 224.4
+    }
+   ],
+   "notes": "Billed monthly in advance on autopay; contribution before RMM/PSA, vehicle and insurance overhead. M365 licences pass-through.",
+   "evidence": "B/C/D/E"
+  },
+  {
+   "name": "Stand-alone annual HIPAA Security Rule risk analysis + policy set for a 6-workstation dental practice (Correction: Stage D used a vet clinic; vets are not HIPAA covered entities)",
+   "revenue": 1500,
+   "lines": [
+    {
+     "item": "Analyst time 10 h x $37.40/h equivalent",
+     "amount": 374
+    },
+    {
+     "item": "HHS SRA Tool v3.7 (free) / templates and report production",
+     "amount": 25
+    }
+   ],
+   "notes": "Validation wedge; market anchors: $0 DIY SRA tool, ~$499/yr software, $2,000-6,000/yr advisor-led (D, E-WS04014-S012). Paid 50% upfront.",
+   "evidence": "D/E"
+  },
+  {
+   "name": "Server replacement / new-office network project",
+   "revenue": 6200,
+   "lines": [
+    {
+     "item": "Hardware at cost (server, firewall, switch, UPS) resold at $4,300",
+     "amount": 3800
+    },
+    {
+     "item": "Technician time 16 h x $37.40/h",
+     "amount": 598.4
+    },
+    {
+     "item": "Cabling by Chicago-licensed low-voltage electrical contractor (allowance, E; licence rule A, E-WS04014-S016)",
+     "amount": 400
+    }
+   ],
+   "notes": "Deposit 50% at order; hardware terms net-30 from distributor (assumed). Sales tax on hardware resale not shown (pass-through).",
+   "evidence": "A/E"
+  },
+  {
+   "name": "12-workstation veterinary hospital, monthly managed IT + cyber-insurance-readiness/PCI documentation (no HIPAA)",
+   "revenue": 720,
+   "lines": [
+    {
+     "item": "Managed EDR/MDR, 13 endpoints x ~$7",
+     "amount": 91
+    },
+    {
+     "item": "Email security, 10 mailboxes x ~$3",
+     "amount": 30
+    },
+    {
+     "item": "DNS filtering, 13 x $1.50",
+     "amount": 19.5
+    },
+    {
+     "item": "Cloud backup ~3 TB x $6.95 (radiology images)",
+     "amount": 20.85
+    },
+    {
+     "item": "Technician time ~7 h/month x $37.40/h",
+     "amount": 261.8
+    }
+   ],
+   "notes": "12 WS x $55 + $60 insurance-readiness layer; price E.",
+   "evidence": "B/C/D/E"
+  }
+ ],
+ "review_changes": [
+  "arpc_monthly base 690->650",
+  "onetime_revenue_per_new_customer cons/base 500/1000 -> 300/500",
+  "field technician loaded cost 7000/6500/6200 -> 8000/7500/7100",
+  "hire trigger 14 kept (variant at 18 reported separately)"
+ ]
+}

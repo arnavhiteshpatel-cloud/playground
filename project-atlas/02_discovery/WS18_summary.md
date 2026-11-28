@@ -11,7 +11,7 @@ Household services are easy to enter, pay at or before the job, and need little 
 - **Lawn fertilization.** Mature Weed Man units average **$2.04M** (median $1.69M) [B, WS18-S007].
 - **Senior home care.** Home Instead units average **$2.61M** (median $2.26M) at about $33 per client-hour [B, WS18-S005]. Younger A Place At Home outlets keep **42–64% gross profit after caregiver labor**. Their average revenue climbs from $510k (months 12–24) to $1.52M (months 37–48) [B, WS18-S006].
 
-Removing royalties (typically 5–8%, plus 1–5% brand and call-centre fees) improves an independent operator's margin by roughly that amount. An independent then has to replace the brand, lead flow and software out of its own pocket, so I assumed only part of the savings reaches profit.
+Dropping royalties (5–8%, plus 1–5% brand/call-centre fees) helps an independent, but it must then fund its own brand, leads and software, so I credited only part of the savings to profit.
 
 ## Strongest candidates (evidence-adjusted ranking)
 1. **WS18-002 Non-medical home care agency (IDPH Home Services licence).** Best ceiling and delegation in the workstream. Demand is driven by need and demographics: aide jobs are projected to grow 18% over 2025–35 [C, WS18-S021]. There is a public payer floor: Illinois CCP pays $30.80/hr from 1/1/2026 [A, WS18-S020]. The ramp is documented [B]. Risks are caregiver supply, payroll float and licensing lead time.
@@ -36,7 +36,7 @@ Possible combination for later stages: **home care + senior move/estate services
   - **Self-storage**, a **new laundromat**, a **child care centre** and **dog daycare/boarding** all need far more than $100k. Buying an existing laundromat or storage site is excluded by the mandate.
 - **Family child care home:** licence capacity is capped at 8–12 children, so it is structurally the founder's own job (G4/G7).
 - **Mobile grooming, party rentals and driver ed:** capital per unit or skilled-labor limits against low ceilings.
-- **Dog walking, carpet cleaning and senior tech support** were screened out and not recorded. Dog walking is commoditized by Rover/Wag platforms, carpet cleaning is in decline and commoditized, and senior tech support faces Geek Squad with a low ceiling.
+- **Dog walking, carpet cleaning and senior tech support** were screened out (Rover/Wag commoditization; a declining category; Geek Squad competition).
 
 ## Evidence gaps (largest first)
 1. **Operating margins** for most categories. Only Ace Handyman, Junk King and A Place At Home disclose costs. Cleaning, lawn and pest margins are assumptions (E).
@@ -54,11 +54,9 @@ Possible combination for later stages: **home care + senior move/estate services
 5. **Chicago-area local prices and wages.** BLS OEWS metro tables load only in a JavaScript app.
 
 ## Research limitations
-- The shared WebSearch budget ran out early in the run. After that I used only direct fetches of known primary URLs.
-- State FDD databases returned 403: Minnesota CARDS and Wisconsin DFI. California DFPI redirected to an entity list.
-- ilga.gov returned 503 throughout, so statute text came from the Attorney General's copy of PA 91-0230.
-- SEC EDGAR started rate-limiting after the Mister Car Wash filing, so the Rollins, Addus and KinderCare filings were not retrieved.
-- Item 19 excerpts came from a third-party PDF archive (genuine FDD pages, text extracted with pdftotext). They should be re-checked against the state database copies.
+- The shared WebSearch budget ran out early; afterwards I used only direct fetches of known primary URLs.
+- Minnesota CARDS and Wisconsin DFI returned 403; ilga.gov returned 503 (statute text came from the Attorney General's copy of PA 91-0230); EDGAR rate-limited, so Rollins, Addus and KinderCare were not retrieved.
+- Item 19 excerpts came from a third-party archive of genuine FDD pages (extracted with pdftotext); re-check them against state database copies.
 
 ## Cross-stream leads
 - **WS04:** Home care overlaps WS04's "home-care models". Dedupe with WS18-002. Medicaid CCP provider contracting also belongs there.

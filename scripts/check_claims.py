@@ -375,7 +375,7 @@ def main(paths=None) -> int:
             run = cid.split("_")[0] if re.match(r"S1H\d?_", cid) else None
             for a in anchors:
                 for m in re.finditer(a, text):
-                    if run and _run_context(text, m.start()) != run:
+                    if run and _run_context(text, m.end()) != run:
                         continue          # a number quoted for another held-out run (S1H3 vs S1H4)
                     window = text[m.end(): m.end() + 40]
                     n = (num_scaled if scale else num).search(window)

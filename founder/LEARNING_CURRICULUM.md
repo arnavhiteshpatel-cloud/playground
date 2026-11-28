@@ -124,18 +124,18 @@ graduate courses in biomedical imaging or bone mechanics — ask your faculty ad
 * **A1.** A number for every scan includes numbers the image cannot support; for overlapping materials those are
   plausible but unidentifiable, and nobody can tell which ones. We report what the scan supports, say why we refuse the
   rest, and give total mineral where the scan supports it. Be plain about how often that is: in the held-out
-  simulation S1H3 (SYNTHETIC), new-bone volume was never supported, total mineral volume supported in 10% of
-  held-out specimens (sharp imaging only), and no volume endpoint supported for 58% of held-out specimens. A wrong number
+  simulation S1H4 of the shipped advisor (SYNTHETIC), new-bone volume was never supported, total mineral volume
+  supported in 2% of held-out specimens (β-TCP at one imaging condition only), and no volume endpoint supported for
+  89% of held-out specimens. A wrong number
   in a study costs more than a missing one, but a buyer must know in advance that many scans get no volume at all.
 * **A2.** Smaller voxels reduce the partial-volume mixing per voxel, but blur is set by the scanner's PSF in µm; if the
   blur stays the same, the halo stays the same width in µm. You need sharper imaging (focal spot, reconstruction), a
   measured graft reference, or a different design (histology; a day-0 scan is a research option this software does
   not support).
 * **A3.** No. S1H3 tested advisor 1.4.1 frozen; a changed rule needs a new pre-registered held-out test on conditions no
-  version has seen. Re-running S1H3 is only a development check. (The shipped 1.4.3 differs from 1.4.1 in rules S1H3
-  does not exercise and in one it does, only in the stricter direction, which is why S1H3 is still quoted, with that
-  caveat. Note also that S1H3's 80 supported graft measurements come from only 9 phantom structures: the honest bound
-  on the supported-failure rate is 0.34, not 0.045.)
+  version has seen. Re-running S1H3 is only a development check. That is why 1.4.3 got its own test, S1H4, with more
+  structures. (Note also that S1H3's 80 supported graft measurements come from only 9 phantom structures: the honest
+  bound on the supported-failure rate is 0.34, not 0.045. S1H4's 69 come from 24 structures: 0.14.)
 * **A4.** Graft estimate = 0.54 × mineral instead of 0.60, so new bone = 0.46 instead of 0.40 of mineral: new bone is
   over-estimated by 15% (p/(1−p) = 1.5, times 10%). Illustrative arithmetic, not a result.
 * **A5.** No. It means that across many scans like the calibration scans, about 90% of intervals contain the true value.

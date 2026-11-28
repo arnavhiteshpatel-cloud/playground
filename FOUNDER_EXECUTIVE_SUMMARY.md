@@ -28,7 +28,7 @@ interviews or pilots, and no test on real graft materials.
 
 ## 2. What the evidence shows — including what failed
 All graft and new-bone evidence is **simulation** (computational phantoms with a known answer).
-* **The final held-out test.** In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens from 9 phantom structures; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.34 counting phantom structures as the unit; 0.045 if the 80 supported measurements were independent); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported; no volume endpoint supported for 58% of specimens.
+* **The final held-out test.** In the pre-registered held-out simulation S1H4 (advisor 1.4.3; 720 synthetic specimens from 36 phantom structures, knowledge-base and Unspecified material paths; a failure is a volume error above 20%): residual graft volume supported in 10% of specimens (HA only), every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.14 counting phantom structures as the unit; 0.052 if the 69 supported measurements were independent); supported graft volumes: median error 2.2%, maximum 11.4%; total mineral volume supported in 2% of specimens (β-TCP at PSF 40 µm only); supported mineral volumes: maximum error 16.9%; new-bone volume never supported; no volume endpoint supported for 89% of specimens. An earlier held-out test of advisor 1.4.1 (S1H3, 9 phantom structures) is recorded in the experiment registry.
   (`experiments/results/exp_S1H3_heldout.json`) The shipped advisor 1.4.3 differs from 1.4.1 in rules S1H3 does not exercise, and in one it does (the
   total-mineral rim gate), only in the stricter direction. The simulator and the advisor share attenuation physics, so this shows internal safety, not accuracy on
   real scans. No physical validation exists.
@@ -39,8 +39,9 @@ All graft and new-bone evidence is **simulation** (computational phantoms with a
 * **The honest consequence.** By intensity alone, residual graft volume can be supported only for dense calcium
   phosphates at low noise and early, known timepoints (`scripts/material_support_table.py`, run on the shipped
   advisor). New-bone volume was never supported in the held-out tests, for any material. Total mineral is not a safe
-  fallback: in S1H3, total mineral volume supported in 10% of held-out specimens (sharp imaging only), and no volume
-  endpoint supported for 58% of held-out specimens. A buyer must expect many scans with no volume reported.
+  fallback: in S1H4 (shipped advisor), total mineral volume supported in 2% of held-out specimens (β-TCP at one
+  imaging condition only), and no volume endpoint supported for 89% of held-out specimens. A buyer must expect many
+  scans with no volume reported.
 * **Day-0 scans are fragile.** In simulation, naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35 (`experiments/results/exp_L3_displacement.json`). No day-0 analysis is offered.
 * **Real data is two-class only.** Bone versus background on public dog scans: U-Net trained on 10 real scans Dice 0.826
   (`experiments/results/exp_H_I_real.json`); Tb.Th ICC(2,1) 0.983 against Scanco IPL on 8 public cubes, with a

@@ -94,11 +94,16 @@ by which mechanism, and under which conditions — and abstains otherwise.
   the new-bone halo model still uses assumed constants (C2-SCI-07).
 
 ## Validation status (Generation 2, simulation only)
-Three pre-registered held-out simulations were run, each on conditions unseen by the advisor version tested:
+Four pre-registered held-out simulations were run, each on conditions unseen by the advisor version tested:
 S1H (1.3.3: new-bone and some graft measurements failed while supported), S1H2 (1.4.0: graft passed, total mineral
-failed at heavy blur) and S1H3 (1.4.1, final): every failing measurement refused on every endpoint; residual graft
-0/80 supported failures from 9 phantom structures (95% upper bound 0.34 with structures as the pre-registered unit;
-0.045 only if rows were independent — the precision criterion is not demonstrated), total mineral 0/22, new bone never
-supported, no volume endpoint supported for 58% of specimens. Coverage is low
-(graft 37%, mineral 10%, new bone 0%). All of this is SYNTHETIC; the advisor and simulator share physics, and no
-physical or in-vivo validation exists (validation stages B–F). Results: EXPERIMENT_REGISTRY.md (S1H, S1H2, S1H3).
+failed at heavy blur), S1H3 (1.4.1): every failing measurement refused on every endpoint; residual graft 0/80
+supported failures from 9 phantom structures (95% upper bound 0.34 with structures as the pre-registered unit; 0.045
+only if rows were independent), total mineral 0/22, new bone never supported; and **S1H4 (1.4.3, the shipped
+version, on the application's material paths: knowledge-base HA, BCP, β-TCP, xenograft DBBM and Unspecified; 720
+specimens from 36 structures)**: every failing measurement refused on every endpoint (510 graft, 379 new-bone, 34
+mineral failures); residual graft 0/69 supported failures from 24 structures, all HA (95% upper bound 0.14 with
+structures as the unit; 0.052 if rows were independent); total mineral 0/12, all β-TCP at one imaging condition,
+with supported values 7–17% low; new bone never supported; nothing supported with the material Unspecified; no volume
+endpoint supported for 89% of specimens. The precision criterion (bound ≤ 0.10) is **not demonstrated** in S1H3 or
+S1H4. All of this is SYNTHETIC; the advisor and simulator share physics, and no physical or in-vivo validation exists
+(validation stages B–F). Results: EXPERIMENT_REGISTRY.md (S1H, S1H2, S1H3, S1H4).

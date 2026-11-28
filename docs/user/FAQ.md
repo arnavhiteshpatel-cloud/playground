@@ -26,8 +26,8 @@ told apart reliably. Hover over the value in the Results tab, or read the report
 the reason. This is expected for β-TCP, calcium sulfate, DBBM, composites, metals and any *Unspecified* material, and
 for noisy or blurred scans of any material. Bone-derived grafts (allograft, autograft, DBM) are refused by every
 mechanism, with or without a day-0 scan: use histology to separate them from new bone. The desktop application has no
-day-0 workflow. In the pre-registered held-out simulation S1H3 (SYNTHETIC), new-bone volume was never supported for
-any material. See [MATERIALS_AND_SUPPORT.md](MATERIALS_AND_SUPPORT.md).
+day-0 workflow. In the pre-registered held-out simulations S1H3 and S1H4 (SYNTHETIC), new-bone volume was never
+supported for any material. See [MATERIALS_AND_SUPPORT.md](MATERIALS_AND_SUPPORT.md).
 
 ### Can I see the value anyway?
 
@@ -39,9 +39,9 @@ decisions.
 
 No. Total mineral volume (new bone + graft) and mineralised fraction do not require telling graft from new bone, but
 they are reported only when the scan's noise and blur allow it and new bone can be separated from soft tissue. Under
-blur the ambiguous rim around graft makes them unreliable too. In the pre-registered held-out simulation S1H3
-(SYNTHETIC), total mineral volume supported in 10% of specimens (sharp imaging only), and no volume endpoint
-supported for 58% of specimens. Expect scans for which no volume is reported.
+blur the ambiguous rim around graft makes them unreliable too. In the pre-registered held-out simulation S1H4
+(SYNTHETIC, shipped advisor), total mineral volume supported in 2% of specimens (β-TCP at one imaging condition only),
+and no volume endpoint supported for 89% of specimens. Expect scans for which no volume is reported.
 
 ### Which graft materials does it know?
 

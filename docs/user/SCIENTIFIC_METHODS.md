@@ -180,9 +180,9 @@ automatic ROI requires review.
 
 ### 3.6 Evidence for the advisor
 
-[SYNTHETIC, pre-registered held-out tests] In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens from 9 phantom structures; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.34 counting phantom structures as the unit; 0.045 if the 80 supported measurements were independent); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported; no volume endpoint supported for 58% of specimens.
+[SYNTHETIC, pre-registered held-out tests] In the pre-registered held-out simulation S1H4 (advisor 1.4.3; 720 synthetic specimens from 36 phantom structures, knowledge-base and Unspecified material paths; a failure is a volume error above 20%): residual graft volume supported in 10% of specimens (HA only), every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.14 counting phantom structures as the unit; 0.052 if the 69 supported measurements were independent); supported graft volumes: median error 2.2%, maximum 11.4%; total mineral volume supported in 2% of specimens (β-TCP at PSF 40 µm only); supported mineral volumes: maximum error 16.9%; new-bone volume never supported; no volume endpoint supported for 89% of specimens. An earlier held-out test of advisor 1.4.1 (S1H3, 9 phantom structures) is recorded in the experiment registry.
 
-The shipped advisor 1.4.3 differs from 1.4.1 in rules this test does not exercise, and in one it does (the total-mineral rim gate), only in the stricter direction. The simulator and the advisor share attenuation physics, so this is evidence of internal safety, not of accuracy on real scans; no physical validation has been run. Two earlier held-out tests found supported measurements that failed: S1H (advisor 1.3.3: supported new-bone
+This test used the shipped advisor 1.4.3, frozen before the run. The simulator and the advisor share attenuation physics, so this is evidence of internal safety, not of accuracy on real scans; no physical validation has been run. Two earlier held-out tests found supported measurements that failed: S1H (advisor 1.3.3: supported new-bone
 volumes over-estimated by 20–50% and some supported graft volumes under-estimated by 21–28%, under wider blur) and S1H2 (advisor 1.4.0: supported total mineral over-estimated
 under heavy blur). Each failure led to a rule (scan-measured blur, new-bone error propagation, the blur-scaled
 ambiguous rim) that was then tested on new held-out data, not on the data that revealed it. The in-sample development
@@ -326,9 +326,9 @@ forests and NIfTI/NRRD/Zarr/TIFF/DICOM round-trips were bit-identical across run
 * No real three-class (new bone / residual graft / host bone) ground truth exists yet; separation on real graft
   material is unknown.
 * Material profiles are physics plus assumed porosity and granule size.
-* The advisor has been validated only in simulation (held-out test S1H3), where it refused every failing
-  measurement but supported residual graft in about a third of specimens, total mineral only with sharp imaging and
-  new bone never.
+* The advisor has been tested only in simulation (held-out tests S1H3 and S1H4), where it refused every failing
+  measurement; in S1H4 (shipped advisor, the application's material paths) it supported residual graft only for HA,
+  total mineral rarely and new bone never, and nothing with the material set to Unspecified.
 * The day-0 method degrades with tens of micrometres of granule motion, counts bone formed inside a resorbing
   footprint as graft, and has no desktop workflow.
 * **Biological limits.** In segmental and long-bone models the bone-diameter cylinder ROI excludes periosteal and

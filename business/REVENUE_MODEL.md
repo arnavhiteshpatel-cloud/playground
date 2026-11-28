@@ -62,10 +62,11 @@ The product is an **offline desktop application**. Scans stay on the analyst's o
 
 ### 2a-bis. Risk not in the model: refused or undeliverable studies (cycle-3 review C3-BIZ-02)
 The model assumes that every sold pilot, study and characterisation delivers usable results. The simulation evidence
-says many will not. In the pre-registered held-out simulation S1H3 (SYNTHETIC; advisor 1.4.1): new-bone volume was
-never supported; total mineral volume supported in 10% of held-out specimens (sharp imaging only); and no volume
-endpoint supported for 58% of held-out specimens (`experiments/results/exp_S1H3_heldout.json`; the shipped advisor
-1.4.3 is at least as strict on the one rule S1H3 exercises differently). Real scans have not been tested.
+says many will not. In the pre-registered held-out simulation S1H4 (SYNTHETIC; shipped advisor 1.4.3, the
+application's material paths): new-bone volume was never supported; residual graft volume supported in 10% of
+specimens (HA only); total mineral volume supported in 2% of held-out specimens (β-TCP at one imaging condition only);
+and no volume endpoint supported for 89% of held-out specimens (`experiments/results/exp_S1H4_heldout.json`). Real
+scans have not been tested.
 
 Consequences the numbers below do **not** carry:
 - There is no feasibility-pass rate: some studies would fail the pre-contract feasibility check (`templates/SOW.md` §7)

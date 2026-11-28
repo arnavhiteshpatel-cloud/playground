@@ -84,8 +84,9 @@ project folder, a customer scan or a result into the git repository.
 
 How to explain a refusal: "the graft and new bone cannot be told apart for this material, scan and timepoint, so the
 software says why it will not split them, and reports total mineral only if the scan's blur and noise allow it." In
-the held-out simulation S1H3 (SYNTHETIC), total mineral volume supported in 10% of held-out specimens (sharp imaging
-only) and no volume endpoint supported for 58% of held-out specimens, so expect many scans with no volume at all.
+the held-out simulation S1H4 of the shipped advisor (SYNTHETIC), total mineral volume supported in 2% of held-out
+specimens (β-TCP at one imaging condition only) and no volume endpoint supported for 89% of held-out specimens, so
+expect many scans with no volume at all.
 Per-material behaviour of the shipped advisor:
 `python3 scripts/material_support_table.py` (prints the table from the shipped code).
 

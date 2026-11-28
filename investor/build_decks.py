@@ -205,6 +205,8 @@ EP = [("total_mineral_volume", "Total mineral"), ("residual_graft_volume", "Resi
 EP_ROW = {"residual_graft_volume": ("err_graft", "status"), "new_bone_volume": ("err_new", "status_new"),
           "total_mineral_volume": ("err_mineral", "status_mineral")}
 SUP_ST = ("supported", "supported_with_conditions")
+ARM_LABEL = {"ha": "HA", "bcp": "BCP", "beta_tcp": "β-TCP", "xenograft_dbbm": "xenograft (DBBM)",
+             "unspecified": "Unspecified"}
 
 
 def cp_upper(x: int, n: int, a: float = 0.05):
@@ -811,8 +813,21 @@ def standard_phrase(F) -> str:
     if not t:
         return "Held-out validation of the shipped advisor: " + PENDING + "."
     g, m, nb = (t["eps"][k] for k in ("residual_graft_volume", "total_mineral_volume", "new_bone_volume"))
-    msup = sorted({r.get("psf_um") for r in t["rows"] if r.get("status_mineral") != "not_supported"} - {None})
-    sharp = " (sharp imaging only)" if t["psf"] and msup and len(msup) < len(t["psf"]) else ""
+    msup = sorted({r.get("psf_um") for r in t["rows"] if r.get("status_mineral") in SUP_ST} - {None})
+    psf_txt = ""
+    if t["psf"] and msup and len(msup) < len(t["psf"]):
+        psf_txt = ("sharp imaging" if msup == t["psf"][:len(msup)]
+                   else "PSF " + "/".join(f"{x:g}" for x in msup) + " µm")
+    arms = sorted({r.get("arm") for r in t["rows"]} - {None})
+    g_arms = sorted({r.get("arm") for r in t["rows"] if r.get("status") in SUP_ST} - {None})
+    arm_note = (" (" + ", ".join(ARM_LABEL.get(a_, a_) for a_ in g_arms) + " only)"
+                if arms and g_arms and len(g_arms) < len(arms) else "")
+    m_arms = sorted({r.get("arm") for r in t["rows"] if r.get("status_mineral") in SUP_ST} - {None})
+    arm_txt = (", ".join(ARM_LABEL.get(a_, a_) for a_ in m_arms) if arms and m_arms and len(m_arms) < len(arms)
+               else "")
+    sharp = (f" ({arm_txt} at {psf_txt} only)" if arm_txt and psf_txt else
+             f" ({arm_txt or psf_txt} only)" if (arm_txt or psf_txt) else "")
+    paths = ", knowledge-base and Unspecified material paths" if "unspecified" in arms else ""
     g_cov, g_ub, g_med, g_max = pct(g["cov"]), num(g["ub"], 3), pct(g["med"], 1), pct(g["mx"], 1)
     m_cov, m_max, fail = pct(m["cov"]), pct(m["mx"], 1), F["crit"]["fail_pct"]
     g_refused = "every failing measurement refused" if g["fr"] == g["nf"] else "not every failing measurement refused"
@@ -830,8 +845,8 @@ def standard_phrase(F) -> str:
     none_pct = pct(none / len(rows)) if rows else PENDING
     n_sup = len(sup_rows)
     return (f"In the pre-registered held-out simulation {t['id']} (advisor {t['advisor']}; {t['n']} synthetic "
-            f"specimens from {n_struct} phantom structures; a failure is a volume error above {fail}%): residual graft "
-            f"volume supported in {g_cov} of specimens, {g_refused} and {g_failed} (95% upper bound on the "
+            f"specimens from {n_struct} phantom structures{paths}; a failure is a volume error above {fail}%): residual "
+            f"graft volume supported in {g_cov} of specimens{arm_note}, {g_refused} and {g_failed} (95% upper bound on the "
             f"supported-failure rate {ub_struct} counting phantom structures as the unit; {g_ub} if the {n_sup} "
             f"supported measurements were independent); supported graft volumes: median error {g_med}, maximum "
             f"{g_max}; total mineral volume supported in {m_cov} of specimens{sharp}; supported mineral volumes: "
@@ -859,6 +874,23 @@ def reg_word(F, rid) -> str:
         if w in low:
             return w
     return st
+
+
+def mineral_where(t) -> str:
+    """Where total mineral was supported in a held-out test, from its rows (arm and imaging condition)."""
+    rows = t["rows"]
+    sup = [r for r in rows if r.get("status_mineral") in SUP_ST]
+    if not sup:
+        return "never"
+    psf = sorted({r.get("psf_um") for r in sup} - {None})
+    arms = sorted({r.get("arm") for r in rows} - {None})
+    sarms = sorted({r.get("arm") for r in sup} - {None})
+    where = []
+    if arms and len(sarms) < len(arms):
+        where.append(", ".join(ARM_LABEL.get(a, a) for a in sarms))
+    if t["psf"] and len(psf) < len(t["psf"]):
+        where.append("sharp imaging" if psf == t["psf"][:len(psf)] else "PSF " + "/".join(f"{x:g}" for x in psf) + " µm")
+    return ("only for " + " at ".join(where)) if where else "in some specimens"
 
 
 def coverage_facts(F) -> dict:
@@ -914,12 +946,12 @@ def s_summary(d: Deck):
                       for x in early) or PENDING
     cf = coverage_facts(F)
     if t and cf:
-        final = (f"Final {t['id']} (advisor {t['advisor']}): "
+        final = (f"Latest {t['id']} (advisor {t['advisor']}): "
                  + ("new-bone volume never supported; " if cf["nb_never"] else "")
-                 + f"total mineral only with sharp imaging; no volume endpoint supported for {cf['none_pct']} of "
+                 + f"total mineral {mineral_where(t)}; no volume endpoint supported for {cf['none_pct']} of "
                  "held-out specimens")
     else:
-        final = "Final test: " + PENDING
+        final = "Latest test: " + PENDING
     nv = F["l3"]["naive_footprint"]
     s = d.slide("Summary", "The short version",
                 ["experiments/results/exp_S1H*_heldout.json", "exp_L3_displacement.json", "packaging/dist/build-info.json",
@@ -1142,7 +1174,7 @@ def s_consequence(d: Deck):
              f"{', '.join(day0) or 'none'}."]
     if t:
         items.append(f"Total mineral is reported here for every non-metal material, but in {t['id']} it was "
-                     "supported only with sharp imaging: under blur the advisor refuses it too.")
+                     f"supported {mineral_where(t)}: in practice the advisor usually refuses it too.")
     text(s, 9.1, TOP, 3.65, 4.95, bullets(items, SKY), 12.5, space=6)
     sc = mst.get("scan", {})
     text(s, MX, TOP + 0.5 + 0.31 * len(rows) + 0.15, 8.2, 0.9,
@@ -1185,7 +1217,7 @@ def s_heldout(d: Deck):
          "phantom structures as the unit; with too few structures the result is 'not demonstrated'.", 11.5, MUTED)
     box(s, MX, yb + 0.8, CW, 2.05)
     text(s, MX + 0.25, yb + 0.9, CW - 0.5, 1.9, [
-        {"t": "Final result, in the standard wording", "bold": True, "size": 14, "space": 4},
+        {"t": "Latest result (shipped advisor), in the standard wording", "bold": True, "size": 14, "space": 4},
         {"t": standard_phrase(F), "size": 13, "space": 6},
         {"t": caveat(F), "size": 12, "color": MUTED}], 13, space=2)
 
@@ -1193,8 +1225,8 @@ def s_heldout(d: Deck):
 def s_failures(d: Deck):
     F = d.F
     s = d.slide("Held-out validation, including failures", "Each failure produced a rule change, tested on new data",
-                ["EXPERIMENT_REGISTRY.md (S1H, S1H2, S1H3 rows)", "docs/science/MEASUREMENT_SUPPORT.md rules 10–12",
-                 "docs/science/PREREGISTRATION.md §8–9"] + [t["file"] for t in F["held"]])
+                ["EXPERIMENT_REGISTRY.md (S1H–S1H4 rows)", "docs/science/MEASUREMENT_SUPPORT.md rules 10–16",
+                 "docs/science/PREREGISTRATION.md §8–10"] + [t["file"] for t in F["held"]])
     tests = F["held"]
     rows, styles = [], {}
     for i, t in enumerate(tests):
@@ -1642,7 +1674,7 @@ def s_evidence_compact(d: Deck):
                                                    "exp_G_morphometry.json"])
     box(s, MX, TOP, CW, 2.2)
     text(s, MX + 0.25, TOP + 0.12, CW - 0.5, 2.0, [
-        {"t": "Measurement support: final held-out test, in the standard wording", "bold": True, "size": 14,
+        {"t": "Measurement support: latest held-out test (shipped advisor), in the standard wording", "bold": True, "size": 14,
          "space": 4},
         {"t": standard_phrase(F), "space": 6},
         {"t": caveat(F), "size": 12, "color": MUTED}], 13, space=2)

@@ -90,8 +90,9 @@ Bone-derived grafts (allograft, autograft, DBM) are refused by every mechanism, 
 histology to separate them from new bone. The desktop application has no day-0 workflow.
 
 Total mineral volume is reported only when the scan's blur and noise allow it, so expect scans with no volume at all.
-In the pre-registered held-out simulation S1H3 (SYNTHETIC), new-bone volume was never supported, total mineral volume
-supported in 10% of specimens (sharp imaging only), and no volume endpoint supported for 58% of specimens. See
+In the pre-registered held-out simulation S1H4 (SYNTHETIC, shipped advisor), new-bone volume was never supported, total
+mineral volume supported in 2% of specimens (β-TCP at one imaging condition only), and no volume endpoint supported
+for 89% of specimens; with the material set to Unspecified nothing was supported. See
 [MATERIALS_AND_SUPPORT.md](MATERIALS_AND_SUPPORT.md).
 
 ## 8. Correct the segmentation

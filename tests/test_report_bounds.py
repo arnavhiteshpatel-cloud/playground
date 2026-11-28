@@ -203,3 +203,29 @@ def test_group_statistics_count_conditional_values(tmp_path):
     import re
     assert re.search(r"incl\.\s*3\s*c/f", text)
 
+
+
+def test_report_discloses_unmeasured_groups_partial_pooling_and_omitted_comparisons(tmp_path):
+    """C3-PRD-17: a group with no measured value says 'n/m (0 of N)'; an animal whose value comes from only some of
+    its scans is counted; comparisons that could not be computed are listed instead of dropped silently."""
+    import copy
+    import re
+    b = _supported_bundle()
+    # animal S3 gets a second scan at the same timepoint whose graft fraction is refused
+    extra = copy.deepcopy(b["specimens"][3])
+    extra["specimen_id"] = "S3b"
+    extra["metric_status"] = {"class_volumes.residual_graft_fraction": {"status": "not_supported",
+                                                                         "reasons": ["rim"]}}
+    b["specimens"].append(extra)
+    omitted = []
+    table, comps = group_stats(b, omitted)
+    tx = next(r for r in table if r["group"] == "Tx")
+    assert tx["class_volumes.residual_graft_fraction"]["n_partial"] == 1
+    assert tx["class_volumes.new_bone_volume_mm3"]["n"] == 0
+    assert {o["endpoint"] for o in omitted} == {"class_volumes.new_bone_volume_mm3", "class_volumes.new_bone_fraction"}
+    assert not [c for c in comps if c["endpoint"].startswith("class_volumes.new_bone")]
+    text = _pdf_text(build_pdf(b, tmp_path / "p.pdf")["pdf"])
+    assert re.search(r"n/m \(0\s+of\s+3\)", text)
+    assert re.search(r"\(1\s+from\s+part\s+of\s+their\s+scans\)", text)
+    assert tx["class_volumes.mineral_volume_mm3"]["n_conditional"] == 3      # animals, not scans (4 scans in Tx)
+    assert "Comparisons not computed" in text and "New bone volume (Tx @ Week 4)" in text.replace("\n", " ")

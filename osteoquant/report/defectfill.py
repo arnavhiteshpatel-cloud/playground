@@ -96,16 +96,21 @@ def _per_animal(specimens, eps):
         by.setdefault(key, []).append(s)
     out = []
     for (aid, g, tp), ss in by.items():
-        m = {}
+        m, partial, conditional = {}, {}, set()
         for k, _, _ in eps:
+            if any(_status(x, k) in ("supported_with_conditions", "flagged") and _value(x, k) is not None for x in ss):
+                conditional.add(k)
             vals = [_value(x, k) for x in ss]
             vals = [v for v in vals if isinstance(v, (int, float)) and np.isfinite(v)]
+            if 0 < len(vals) < len(ss):          # pooled from only some of the animal's scans (C3-PRD-17)
+                partial[k] = (len(vals), len(ss))
             node = m
             parts = k.split(".")
             for p_ in parts[:-1]:
                 node = node.setdefault(p_, {})
             node[parts[-1]] = float(np.mean(vals)) if vals else float("nan")
-        out.append({"specimen_id": aid, "group": g, "timepoint": tp, "metrics": m, "n_scans": len(ss)})
+        out.append({"specimen_id": aid, "group": g, "timepoint": tp, "metrics": m, "n_scans": len(ss),
+                    "partial": partial, "conditional": conditional})
     return out
 
 
@@ -152,7 +157,10 @@ def unassigned_specimens(bundle) -> list[str]:
     return [str(s["specimen_id"]) for s in bundle["specimens"] if _is_unassigned(s.get("group"))]
 
 
-def group_stats(bundle):
+def group_stats(bundle, omitted: list | None = None):
+    """Animal-level group statistics and comparisons against the reference group. When ``omitted`` is a list it
+    receives every comparison that could not be computed (fewer than two measured animals on either side), so the
+    report can list them instead of dropping them silently (C3-PRD-17)."""
     eps = bundle["endpoints"]
     groups = {}
     for s in _per_animal(bundle["specimens"], eps):
@@ -162,12 +170,12 @@ def group_stats(bundle):
     table = []
     for (g, tp), ss in sorted(groups.items(), key=lambda x: (str(x[0][1]), str(x[0][0]))):
         row = {"group": g, "timepoint": tp, "n": len(ss)}
-        raw = [s for s in bundle["specimens"] if s.get("group", "—") == g and s.get("timepoint", "—") == tp]
         for key, label, unit in eps:
             row[key] = bounded_describe([_value(s, key) for s in ss], key, unit)
-            # values that entered the statistic with conditions or a review flag are counted (cycle-3 C3-SCI-11)
-            row[key]["n_conditional"] = sum(1 for s in raw if _status(s, key) in ("supported_with_conditions", "flagged")
-                                            and _value(s, key) is not None)
+            # animals whose value includes a conditional or flagged scan are counted (cycle-3 C3-SCI-11)
+            row[key]["n_conditional"] = sum(1 for s in ss if key in s.get("conditional", ()))
+            # animals whose value comes from only some of their scans (the others refused) are counted (C3-PRD-17)
+            row[key]["n_partial"] = sum(1 for s in ss if key in s.get("partial", {}))
         table.append(row)
     comps = []
     ref = bundle.get("reference_group")
@@ -187,6 +195,9 @@ def group_stats(bundle):
                         c = compare_two_groups(a, b)
                         c["n_group"], c["n_reference"] = len(a), len(b)
                         comps.append({"timepoint": tp, "group": g, "reference": ref, "endpoint": key, **c})
+                    elif omitted is not None:
+                        omitted.append({"timepoint": tp, "group": g, "reference": ref, "endpoint": key,
+                                        "label": label, "n_group": len(a), "n_reference": len(b)})
         # Holm adjustment only over tests that produced a p-value; uncomputable tests show "n/a", never p = 1.000
         valid = [c for c in comps if _finite(c.get("welch_t", {}).get("p"))]
         if valid:
@@ -340,10 +351,12 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     flow.append(table([["Endpoint", "Unit", "Definition key"]] + [[l, u, k] for k, l, u in eps], [70 * mm, 25 * mm, 85 * mm]))
 
     # ----------------------------------------------------------- 3 group results
-    gt, comps = group_stats(bundle)
+    omitted = []
+    gt, comps = group_stats(bundle, omitted)
     flow.append(Paragraph("3. Group summaries (animal-level: repeated scans of an animal are averaged; mean ± SD [95% CI])", H2))
     any_clipped = False
     any_cond = False
+    any_partial = False
     for i0 in range(0, len(eps), 4):          # all endpoints, four per table (review CRO-02)
         chunk = eps[i0:i0 + 4]
         rows = [["Group", "Timepoint", "n"] + [f"{l} ({u})" for _, l, u in chunk]]
@@ -355,6 +368,9 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
                 if d.get("n_conditional"):
                     nnote += f"\n(incl. {d['n_conditional']} c/f)"
                     any_cond = True
+                if d.get("n_partial"):
+                    nnote += f"\n({d['n_partial']} from part of their scans)"
+                    any_partial = True
                 if d.get("n", 0) >= 2 and "ci95_low" in d:
                     clip = d.get("ci95_clipped", [])
                     any_clipped = any_clipped or bool(clip)
@@ -366,13 +382,19 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
                 elif d.get("n", 0) == 1:
                     cells.append(_fmt(d["mean"]) + nnote)
                 else:
-                    cells.append("—")
+                    cells.append(f"n/m (0 of {r['n']})")
             rows.append(cells)
         flow.append(table(rows))
         flow.append(Spacer(1, 3))
     if any_cond:
         flow.append(Paragraph("'incl. k c/f': k of the values in the statistic are supported with conditions (c) or "
                               "flagged for review (f); see section 4 and the support table.", SM))
+    if any_partial:
+        flow.append(Paragraph("'k from part of their scans': for k animals the value is the mean of only the scans whose "
+                              "measurement was reported; their other scans at that timepoint were not measured.", SM))
+    if any(r[k].get("n", 0) == 0 for r in gt for k, _, _ in eps):
+        flow.append(Paragraph("'n/m (0 of N)': the endpoint was not measured for any of the group's N animals (refused "
+                              "or not assessed); see the support table for the reasons.", SM))
     if any_clipped:
         flow.append(Paragraph(f"{CLIP_MARK} The t-interval extended beyond the physical range of the endpoint "
                               "(volumes ≥ 0, fractions 0–1) and is clipped to it. A clipped interval signals a small or "
@@ -392,6 +414,10 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
                               "Hedges g with approximate 95% CI). Reported for transparency; interpretation requires a "
                               "pre-specified analysis plan.", SM))
         crow = [["Timepoint", "Group vs ref", "Endpoint", "Mean diff", "Hedges g [95% CI]", "p (Welch)", "p (Holm)"]]
+        if len(comps) > 30:
+            crow_note = f"The first 30 of {len(comps)} computed comparisons are shown."
+        else:
+            crow_note = None
         for c in comps[:30]:
             hg = c["hedges_g"]
             crow.append([str(c["timepoint"]), f"{c['group']} vs {c['reference']}", c["endpoint"], _fmt(c["mean_diff"]),
@@ -399,6 +425,15 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
                          _fmt(c["welch_t"]["p"]) if _finite(c["welch_t"].get("p")) else "n/a",
                          _fmt(c["p_holm"]) if c.get("p_holm") is not None else "n/a"])
         flow.append(table(crow))
+        if crow_note:
+            flow.append(Paragraph(crow_note, SM))
+    if omitted and bundle.get("reference_group"):
+        labels = {}
+        for o in omitted:
+            labels.setdefault(o["label"], []).append(f"{o['group']} @ {o['timepoint']}")
+        txt = "; ".join(f"{lab} ({', '.join(sorted(set(v)))})" for lab, v in labels.items())
+        flow.append(Paragraph(esc(f"Comparisons not computed (fewer than two measured animals in the group or the "
+                                  f"reference): {txt}."), SM))
     for fig in bundle.get("group_figures", []):
         flow.append(Spacer(1, 4))
         flow.append(Image(fig, width=175 * mm, height=175 * mm * 0.42))

@@ -146,5 +146,57 @@
  "WS16-025": {
   "duplicate_of": "WS13-001",
   "note": "Cross-workstream duplicate of WS13-001; kept record has stronger/equal evidence. Stage C investigator of WS13-001 must also read WS16-025."
+ },
+ "WS18-007": {
+  "duplicate_of": "WS05-007",
+  "note": "Absorbed into Stage D concept WS05-007 (merged concept investigated as one business)."
+ },
+ "WS13-004": {
+  "duplicate_of": "WS05-001",
+  "note": "Absorbed into Stage D concept WS05-001 (merged concept investigated as one business)."
+ },
+ "WS02-028": {
+  "duplicate_of": "SYN-006",
+  "note": "Absorbed into Stage D concept SYN-006 (merged concept investigated as one business)."
+ },
+ "WS15-023": {
+  "duplicate_of": "SYN-006",
+  "note": "Absorbed into Stage D concept SYN-006 (merged concept investigated as one business)."
+ },
+ "WS02-026": {
+  "duplicate_of": "SYN-006",
+  "note": "Absorbed into Stage D concept SYN-006 (merged concept investigated as one business)."
+ },
+ "WS02-001": {
+  "duplicate_of": "SYN-001",
+  "note": "Absorbed into Stage D concept SYN-001 (merged concept investigated as one business)."
+ },
+ "WS17-001": {
+  "duplicate_of": "SYN-001",
+  "note": "Absorbed into Stage D concept SYN-001 (merged concept investigated as one business)."
+ },
+ "WS17-002": {
+  "duplicate_of": "SYN-001",
+  "note": "Absorbed into Stage D concept SYN-001 (merged concept investigated as one business)."
+ },
+ "WS17-031": {
+  "duplicate_of": "SYN-001",
+  "note": "Absorbed into Stage D concept SYN-001 (merged concept investigated as one business)."
+ },
+ "WS04-021": {
+  "duplicate_of": "WS04-014",
+  "note": "Absorbed into Stage D concept WS04-014 (merged concept investigated as one business)."
+ },
+ "WS11-007": {
+  "duplicate_of": "SYN-004",
+  "note": "Absorbed into Stage D concept SYN-004 (merged concept investigated as one business)."
+ },
+ "WS11-010": {
+  "duplicate_of": "SYN-004",
+  "note": "Absorbed into Stage D concept SYN-004 (merged concept investigated as one business)."
+ },
+ "WS11-008": {
+  "duplicate_of": "SYN-004",
+  "note": "Absorbed into Stage D concept SYN-004 (merged concept investigated as one business)."
  }
 }

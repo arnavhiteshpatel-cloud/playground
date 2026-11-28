@@ -1,0 +1,79 @@
+{
+ "WS12-014": {
+  "status": "PRIMARY",
+  "concept": "Employer-paid contingency recruiting desk, Illinois controls/automation/I&C engineers \u2014 2\u20133-yr cash engine; month-24 boutique-or-harvest decision",
+  "post_review_y3_y5_op": "~$81k / ~$114k",
+  "peak_funding": "\u2264$30k (\u2248$15k no draw)",
+  "decisive_test": "\u2248$600, 60 days: \u22655 of 30 hiring managers sign \u226518% fee agreements"
+ },
+ "SYN-006": {
+  "status": "ALTERNATIVE 1 (durable asset)",
+  "concept": "Construction subcontractor back office: surety-grade WIP bookkeeping + Illinois certified payroll",
+  "post_review_y3_y5_op": "~$50k / ~$83k",
+  "peak_funding": "\u2248$12k",
+  "decisive_test": "\u2248$1,000: surety-producer interviews; \u22653 paid $450 WIP checks in 60 days; paid skill gate"
+ },
+ "SYN-004": {
+  "status": "ALTERNATIVE 2 (high upside)",
+  "concept": "Energy cost management for >1,500 kW Illinois C&I users (statutory licence exemption)",
+  "post_review_y3_y5_op": "~$33k / ~$106k",
+  "peak_funding": "\u2248$122k with draw",
+  "decisive_test": "$0: written broker-fee terms from \u22652 of ENGIE/Constellation/NRG + counsel confirms exemption"
+ },
+ "WS04-014": {
+  "status": "RESERVE",
+  "concept": "Managed IT + HIPAA for independent dental practices",
+  "post_review_y3_y5_op": "~$37k / ~$95\u2013112k",
+  "peak_funding": "\u2248$70k",
+  "decisive_test": "\u2248$150: \u22653 paid risk-analysis deposits + 2 monthly LOIs \u2265$550"
+ },
+ "WS05-007": {
+  "status": "VALIDATION-ONLY",
+  "concept": "Commercial pest control for Chicago food facilities",
+  "post_review_y3_y5_op": "~$43k / ~$80k",
+  "peak_funding": "\u2248$79k",
+  "decisive_test": "\u2248$100: 30 owner interviews (price paid \u2265$70/mo; \u226510% ever switched)"
+ },
+ "SYN-001": {
+  "status": "VALIDATION-ONLY",
+  "concept": "Trucking compliance hub \u2192 insurance sub-producer",
+  "post_review_y3_y5_op": "~$33k / ~$102k",
+  "peak_funding": "\u2248$95k",
+  "decisive_test": "$0\u2013100: written sub-producer offer quoting \u22653 of 7 dominant carriers at \u226540% split"
+ },
+ "WS13-014": {
+  "status": "VALIDATION-ONLY",
+  "concept": "GPR scanning & private utility locating",
+  "post_review_y3_y5_op": "~$50k / ~$86k (founder-only)",
+  "peak_funding": "\u2248$110k",
+  "decisive_test": "$0\u2013200: 12+ PM interviews; median half-day \u2265$550 and \u22653 dated bookings"
+ },
+ "WS12-012": {
+  "status": "FAILED REVIEW",
+  "concept": "Offshore staff for CPA firms (Philippine entity)",
+  "post_review_y3_y5_op": "~$58k / ~$78k",
+  "peak_funding": "\u2248$63k",
+  "decisive_test": "keep only \u2264$600 tests"
+ },
+ "WS16-006": {
+  "status": "FAILED REVIEW",
+  "concept": "Branded workwear/promo for trade contractors",
+  "post_review_y3_y5_op": "~$47k / ~$86k",
+  "peak_funding": "\u2248$98k",
+  "decisive_test": "$0 incumbent-invoice price test could revive"
+ },
+ "WS18-035": {
+  "status": "FAILED REVIEW",
+  "concept": "Garage door repair & installation",
+  "post_review_y3_y5_op": "~$51k / ~$70k (\u2212$22k after tech wage)",
+  "peak_funding": "\u2248$110k",
+  "decisive_test": "$0 desk tests only"
+ },
+ "WS18-003": {
+  "status": "FAILED AS PRIMARY",
+  "concept": "Junk removal & cleanouts",
+  "post_review_y3_y5_op": "~$35k / ~$49k",
+  "peak_funding": "\u2248$136k (no draw)",
+  "decisive_test": "fallback only, <$3k tests"
+ }
+}

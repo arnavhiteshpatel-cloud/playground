@@ -7,7 +7,7 @@ Use this for every pilot or paid study. Tick each item, add the date, and file t
 - [ ] Mutual NDA signed
 - [ ] MSA/Terms + SOW or Pilot Proposal signed by authorized signatories
 - [ ] DPA signed, or written confirmation that no personal data will be shared (see `DPA_ISSUES_CHECKLIST.md`)
-- [ ] Quality Agreement signed (GLP-supporting work only; see `QUALITY_AGREEMENT_ISSUES.md`)
+- [ ] Confirm the work is non-GLP (GLP-related work is not offered; see `QUALITY_AGREEMENT_ISSUES.md`)
 - [ ] PO received / payment terms confirmed (paid work)
 - [ ] Customer vendor-qualification forms completed (security questionnaire, W-9/tax forms, insurance certificates if required)
 - [ ] Publication/anonymization consent recorded (pilots)
@@ -16,7 +16,7 @@ Use this for every pilot or paid study. Tick each item, add the date, and file t
 - [ ] Customer technical contact (role)
 - [ ] Customer approver for the analysis protocol (study director / R&D lead)
 - [ ] Customer QA contact (GLP)
-- [ ] OsteoQuant analyst + independent reviewer assigned
+- [ ] OsteoQuant analyst + a second person as scientific reviewer assigned (authors cannot approve their own work)
 
 ## C. Data intake
 - [ ] Secure transfer method agreed (encrypted upload, SFTP or customer-hosted share). No email attachments.

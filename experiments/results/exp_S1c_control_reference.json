@@ -24,22 +24,22 @@
   {
    "method": "control_reference",
    "n": 96,
-   "n_fail": 87,
-   "n_refused": 72,
-   "failures_refused": 68,
-   "sensitivity_refuse_given_fail": 0.7816091954022989,
-   "refused_but_ok": 4,
-   "supported_and_ok": 5,
-   "supported_but_failed": 19,
-   "abs_err_supported_median": 0.22712404576694822,
-   "abs_err_refused_median": 0.36707733412498145,
-   "p_fail_given_supported": 0.7916666666666666,
-   "p_fail_given_supported_upper95": 0.928681382801945,
-   "coverage_supported_fraction": 0.25,
-   "abs_err_new_supported_median": 0.09156414762741655,
-   "abs_err_new_supported_max": 0.13509080257762152,
-   "abs_err_mineral_supported_median": 0.013297876142046472,
-   "abs_err_mineral_supported_max": 0.035341860584579
+   "n_fail": 48,
+   "n_refused": 78,
+   "failures_refused": 48,
+   "sensitivity_refuse_given_fail": 1.0,
+   "refused_but_ok": 30,
+   "supported_and_ok": 18,
+   "supported_but_failed": 0,
+   "abs_err_supported_median": 0.08164079742237929,
+   "abs_err_refused_median": 0.24519353507654595,
+   "p_fail_given_supported": 0.0,
+   "p_fail_given_supported_upper95": 0.1853019681378522,
+   "coverage_supported_fraction": 0.1875,
+   "abs_err_new_supported_median": 0.01699034878090433,
+   "abs_err_new_supported_max": 0.04350712751415742,
+   "abs_err_mineral_supported_median": 0.01794394716200709,
+   "abs_err_mineral_supported_max": 0.03493090871731641
   }
  ],
  "rows": [
@@ -60,12 +60,12 @@
    "noise": 30,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.23044381772302214,
-   "err_graft": 0.23044381772302214,
-   "err_new": -0.09170083967975007,
-   "err_mineral": 0.01937101768213112,
+   "err": 0.08349413685616747,
+   "err_graft": 0.08349413685616747,
+   "err_new": -0.005897285686389364,
+   "err_mineral": 0.024923872156401128,
    "status": "supported",
-   "oracle": 0.9968457840749947
+   "oracle": 0.9440485280393655
   },
   {
    "graft_mgHA": 2200,
@@ -84,12 +84,12 @@
    "noise": 30,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2470597777597534,
-   "err_graft": 0.2470597777597534,
-   "err_new": -0.0843711562115621,
-   "err_mineral": 0.022193245533967954,
+   "err": 0.07705410008922065,
+   "err_graft": 0.07705410008922065,
+   "err_new": 0.005265990159901701,
+   "err_mineral": 0.02834789411918104,
    "status": "supported",
-   "oracle": 0.9967824448034465
+   "oracle": 0.9420372352133094
   },
   {
    "graft_mgHA": 2200,
@@ -108,12 +108,12 @@
    "noise": 30,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.2312838244137101,
-   "err_graft": 0.2312838244137101,
-   "err_new": -0.06636753804135775,
-   "err_mineral": 0.035341860584579,
+   "err": 0.08080276608538783,
+   "err_graft": 0.08080276608538783,
+   "err_new": 0.011119781506047532,
+   "err_mineral": 0.03493090871731641,
    "status": "supported",
-   "oracle": 0.996754398983088
+   "oracle": 0.9431582285780187
   },
   {
    "graft_mgHA": 2200,
@@ -132,12 +132,12 @@
    "noise": 80,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.2275493543120084,
-   "err_graft": 0.2275493543120084,
-   "err_new": -0.10747900800624877,
-   "err_mineral": 0.008035006013459967,
+   "err": 0.08200979664539121,
+   "err_graft": 0.08200979664539121,
+   "err_new": -0.02136301503612581,
+   "err_mineral": 0.014278768648122941,
    "status": "supported",
-   "oracle": 0.9902339892847815
+   "oracle": 0.9413532981679995
   },
   {
    "graft_mgHA": 2200,
@@ -156,12 +156,12 @@
    "noise": 80,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.24389650417714326,
-   "err_graft": 0.24389650417714326,
-   "err_new": -0.0888683886838868,
-   "err_mineral": 0.018124918503064302,
+   "err": 0.08127179819936736,
+   "err_graft": 0.08127179819936736,
+   "err_new": -0.014414206642066385,
+   "err_mineral": 0.016351545181901184,
    "status": "supported",
-   "oracle": 0.9898513290894669
+   "oracle": 0.938714385042673
   },
   {
    "graft_mgHA": 2200,
@@ -180,12 +180,12 @@
    "noise": 80,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.22669873722188805,
-   "err_graft": 0.22669873722188805,
-   "err_new": -0.08248146703082326,
-   "err_mineral": 0.02316741151692603,
+   "err": 0.08027660853878538,
+   "err_graft": 0.08027660853878538,
+   "err_new": 0.0026531408505656717,
+   "err_mineral": 0.029177582575640848,
    "status": "supported",
-   "oracle": 0.989744390650216
+   "oracle": 0.9406521058342862
   },
   {
    "graft_mgHA": 2200,
@@ -204,12 +204,12 @@
    "noise": 150,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.20446786403443662,
-   "err_graft": 0.20446786403443662,
-   "err_new": -0.10978324545987117,
-   "err_mineral": -0.0014329947030374823,
+   "err": 0.08445895799317205,
+   "err_graft": 0.08445895799317205,
+   "err_new": -0.03811755516500681,
+   "err_mineral": 0.004145448962358245,
    "status": "supported",
-   "oracle": 0.9753593039651477
+   "oracle": 0.9346739274433652
   },
   {
    "graft_mgHA": 2200,
@@ -228,12 +228,12 @@
    "noise": 150,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2118582204558359,
-   "err_graft": 0.2118582204558359,
-   "err_new": -0.09021371463714634,
-   "err_mineral": 0.006910940148650457,
+   "err": 0.07608078514072503,
+   "err_graft": 0.07608078514072503,
+   "err_new": -0.02609932349323496,
+   "err_mineral": 0.0067544660320773,
    "status": "supported",
-   "oracle": 0.9744125255089853
+   "oracle": 0.9327454474073626
   },
   {
    "graft_mgHA": 2200,
@@ -252,12 +252,12 @@
    "noise": 150,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.19482862297053516,
-   "err_graft": 0.19482862297053516,
-   "err_new": -0.08462738977760442,
-   "err_mineral": 0.010864539990753652,
+   "err": 0.07456404088995794,
+   "err_graft": 0.07456404088995794,
+   "err_new": -0.008388607101053491,
+   "err_mineral": 0.019956850053937325,
    "status": "supported",
-   "oracle": 0.9746072353963725
+   "oracle": 0.9355204354951664
   },
   {
    "graft_mgHA": 2200,
@@ -276,12 +276,12 @@
    "noise": 250,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.18279649695710254,
-   "err_graft": 0.18279649695710254,
-   "err_new": -0.09142745557508303,
-   "err_mineral": 0.0031218813173314874,
+   "err": 0.07755677601306221,
+   "err_graft": 0.07755677601306221,
+   "err_new": -0.019566490919742274,
+   "err_mineral": 0.013920519972363765,
    "status": "supported",
-   "oracle": 0.9475783327250925
+   "oracle": 0.9155480944890776
   },
   {
    "graft_mgHA": 2200,
@@ -300,12 +300,12 @@
    "noise": 250,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.17819774515370268,
-   "err_graft": 0.17819774515370268,
-   "err_new": -0.06196186961869621,
-   "err_mineral": 0.015256226365888637,
+   "err": 0.0607510747019222,
+   "err_graft": 0.0607510747019222,
+   "err_new": 0.012684501845018348,
+   "err_mineral": 0.028139261963750162,
    "status": "supported",
-   "oracle": 0.946558298772511
+   "oracle": 0.9137432683238507
   },
   {
    "graft_mgHA": 2200,
@@ -324,12 +324,12 @@
    "noise": 250,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.1649128081779916,
-   "err_graft": 0.1649128081779916,
-   "err_new": -0.059032383925087806,
-   "err_mineral": 0.017491138850362242,
+   "err": 0.06652134696331924,
+   "err_graft": 0.06652134696331924,
+   "err_new": -0.009051892313694854,
+   "err_mineral": 0.01677197308265277,
    "status": "supported",
-   "oracle": 0.9475793385751791
+   "oracle": 0.9149138962742133
   },
   {
    "graft_mgHA": 1600,
@@ -348,12 +348,12 @@
    "noise": 30,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.26339617040225627,
-   "err_graft": 0.26339617040225627,
-   "err_new": -0.11044717828549111,
-   "err_mineral": 0.018449806801607016,
+   "err": 0.11058334570283512,
+   "err_graft": 0.11058334570283512,
+   "err_new": -0.02335481351298574,
+   "err_mineral": 0.022825558484096398,
    "status": "supported",
-   "oracle": 0.9521919060680429
+   "oracle": 0.917243180615737
   },
   {
    "graft_mgHA": 1600,
@@ -372,12 +372,12 @@
    "noise": 30,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2586584475626572,
-   "err_graft": 0.2586584475626572,
-   "err_new": -0.10136070110701112,
-   "err_mineral": 0.014395618724736048,
+   "err": 0.10917349338956939,
+   "err_graft": 0.10917349338956939,
+   "err_new": -0.02356242312423129,
+   "err_mineral": 0.01911592124136141,
    "status": "supported",
-   "oracle": 0.9517711893424988
+   "oracle": 0.9128611471242223
   },
   {
    "graft_mgHA": 1600,
@@ -396,12 +396,12 @@
    "noise": 30,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.22542092603728192,
-   "err_graft": 0.22542092603728192,
-   "err_new": -0.07709715177526333,
-   "err_mineral": 0.02627523501309903,
+   "err": 0.10162357185808779,
+   "err_graft": 0.10162357185808779,
+   "err_new": -0.0048770971517753114,
+   "err_mineral": 0.031514871320696525,
    "status": "supported",
-   "oracle": 0.9526169482144878
+   "oracle": 0.9158292589895628
   },
   {
    "graft_mgHA": 1600,
@@ -420,12 +420,12 @@
    "noise": 80,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.23660382959774373,
-   "err_graft": 0.23660382959774373,
-   "err_new": -0.11376684241359114,
-   "err_mineral": 0.007037027559558817,
+   "err": 0.11659492355647916,
+   "err_graft": 0.11659492355647916,
+   "err_new": -0.04350712751415742,
+   "err_mineral": 0.011694260344430552,
    "status": "supported",
-   "oracle": 0.9419829868946497
+   "oracle": 0.9073839264035395
   },
   {
    "graft_mgHA": 1600,
@@ -444,12 +444,12 @@
    "noise": 80,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.24154432638494616,
-   "err_graft": 0.24154432638494616,
-   "err_new": -0.10858702337023374,
-   "err_mineral": 0.003990089972617072,
+   "err": 0.11079568497039505,
+   "err_graft": 0.11079568497039505,
+   "err_new": -0.03966789667896675,
+   "err_mineral": 0.008710392489242436,
    "status": "supported",
-   "oracle": 0.940342633382281
+   "oracle": 0.9047825458748736
   },
   {
    "graft_mgHA": 1600,
@@ -468,12 +468,12 @@
    "noise": 80,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.20602826217678905,
-   "err_graft": 0.20602826217678905,
-   "err_new": -0.088412017167382,
-   "err_mineral": 0.012200133559356896,
+   "err": 0.10072158749248339,
+   "err_graft": 0.10072158749248339,
+   "err_new": -0.028677331252438543,
+   "err_mineral": 0.015539117480865006,
    "status": "supported",
-   "oracle": 0.9416499761564139
+   "oracle": 0.9073294135635156
   },
   {
    "graft_mgHA": 1600,
@@ -492,12 +492,12 @@
    "noise": 150,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.2305922517440997,
-   "err_graft": 0.2305922517440997,
-   "err_new": -0.13509080257762152,
-   "err_mineral": -0.009007395276235286,
-   "status": "supported",
-   "oracle": 0.9148576501635716
+   "err": 0.1194893869674929,
+   "err_graft": 0.1194893869674929,
+   "err_new": -0.06822886155047847,
+   "err_mineral": -0.0035057191842166047,
+   "status": "not_supported",
+   "oracle": 0.8877834001445751
   },
   {
    "graft_mgHA": 1600,
@@ -516,12 +516,12 @@
    "noise": 150,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2230513423635332,
-   "err_graft": 0.2230513423635332,
-   "err_new": -0.11988776137761381,
-   "err_mineral": -0.009623158169252854,
-   "status": "supported",
-   "oracle": 0.9130784708249498
+   "err": 0.10552356233271154,
+   "err_graft": 0.10552356233271154,
+   "err_new": -0.05223708487084866,
+   "err_mineral": -0.0015125831268744117,
+   "status": "not_supported",
+   "oracle": 0.8825796013369193
   },
   {
    "graft_mgHA": 1600,
@@ -540,12 +540,12 @@
    "noise": 150,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.19212266987372217,
-   "err_graft": 0.19212266987372217,
-   "err_new": -0.09461568474444015,
-   "err_mineral": 0.0033646684132120352,
-   "status": "supported",
-   "oracle": 0.9150645787367476
+   "err": 0.10222489476849073,
+   "err_graft": 0.10222489476849073,
+   "err_new": -0.036285602809208006,
+   "err_mineral": 0.01104433143268091,
+   "status": "not_supported",
+   "oracle": 0.8843897798128717
   },
   {
    "graft_mgHA": 1600,
@@ -564,12 +564,12 @@
    "noise": 250,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.18836277274751367,
-   "err_graft": 0.18836277274751367,
-   "err_new": -0.11169693419254056,
-   "err_mineral": -0.008239719542465274,
+   "err": 0.10724358022858849,
+   "err_graft": 0.10724358022858849,
+   "err_new": -0.06459675844561608,
+   "err_mineral": -0.005348140945264701,
    "status": "not_supported",
-   "oracle": 0.8665968328301189
+   "oracle": 0.8421025281263803
   },
   {
    "graft_mgHA": 1600,
@@ -588,12 +588,12 @@
    "noise": 250,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.16968123935436785,
-   "err_graft": 0.16968123935436785,
-   "err_new": -0.07579950799507995,
-   "err_mineral": 0.0031294823314642617,
+   "err": 0.08427285262389494,
+   "err_graft": 0.08427285262389494,
+   "err_new": -0.018873001230012343,
+   "err_mineral": 0.014291302647020387,
    "status": "not_supported",
-   "oracle": 0.8593845499720975
+   "oracle": 0.8327388113782356
   },
   {
    "graft_mgHA": 1600,
@@ -612,12 +612,12 @@
    "noise": 250,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.1559681298857487,
-   "err_graft": 0.1559681298857487,
-   "err_new": -0.06917674600078039,
-   "err_mineral": 0.007756716494580651,
+   "err": 0.06727300060132291,
+   "err_graft": 0.06727300060132291,
+   "err_new": -0.02625829106515798,
+   "err_mineral": 0.005701957158267934,
    "status": "not_supported",
-   "oracle": 0.8631974522292993
+   "oracle": 0.8354978946792804
   },
   {
    "graft_mgHA": 1300,
@@ -636,12 +636,12 @@
    "noise": 30,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.283954282321508,
-   "err_graft": 0.283954282321508,
-   "err_new": -0.13095098613552036,
-   "err_mineral": 0.012103687402441166,
-   "status": "supported",
-   "oracle": 0.9014324752406315
+   "err": 0.1556330710998961,
+   "err_graft": 0.1556330710998961,
+   "err_new": -0.056902948642843176,
+   "err_mineral": 0.016377082320427894,
+   "status": "not_supported",
+   "oracle": 0.8794975529766313
   },
   {
    "graft_mgHA": 1300,
@@ -660,12 +660,12 @@
    "noise": 30,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2476275448130425,
-   "err_graft": 0.2476275448130425,
-   "err_new": -0.09590252152521528,
-   "err_mineral": 0.014552092841309205,
-   "status": "supported",
-   "oracle": 0.8962342569269521
+   "err": 0.140968448373753,
+   "err_graft": 0.140968448373753,
+   "err_new": -0.037707564575645725,
+   "err_mineral": 0.019741817707654263,
+   "status": "not_supported",
+   "oracle": 0.8743678176588464
   },
   {
    "graft_mgHA": 1300,
@@ -684,12 +684,12 @@
    "noise": 30,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.21797955502104638,
-   "err_graft": 0.21797955502104638,
-   "err_new": -0.07588763168162305,
-   "err_mineral": 0.024528689577233198,
-   "status": "supported",
-   "oracle": 0.899632780121661
+   "err": 0.12710463018641005,
+   "err_graft": 0.12710463018641005,
+   "err_new": -0.03000390167772138,
+   "err_mineral": 0.02368110135100432,
+   "status": "not_supported",
+   "oracle": 0.8758087861103584
   },
   {
    "graft_mgHA": 1300,
@@ -708,12 +708,12 @@
    "noise": 80,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.27794270446786395,
-   "err_graft": 0.27794270446786395,
-   "err_new": -0.13801991798476865,
-   "err_mineral": 0.005399319327516139,
+   "err": 0.17871456137746766,
+   "err_graft": 0.17871456137746766,
+   "err_new": -0.08611599297012307,
+   "err_mineral": 0.00519460579851061,
    "status": "not_supported",
-   "oracle": 0.8847446256333602
+   "oracle": 0.8613612893130965
   },
   {
    "graft_mgHA": 1300,
@@ -732,12 +732,12 @@
    "noise": 80,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.24981750344715703,
-   "err_graft": 0.24981750344715703,
-   "err_new": -0.11047047970479706,
-   "err_mineral": 0.005372278002347075,
+   "err": 0.15897477492091827,
+   "err_graft": 0.15897477492091827,
+   "err_new": -0.06768911439114389,
+   "err_mineral": 0.005189724866345058,
    "status": "not_supported",
-   "oracle": 0.8824637562453927
+   "oracle": 0.8547245431696217
   },
   {
    "graft_mgHA": 1300,
@@ -756,12 +756,12 @@
    "noise": 80,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.22046001202645815,
-   "err_graft": 0.22046001202645815,
-   "err_new": -0.09414748341786972,
-   "err_mineral": 0.013355935686032883,
+   "err": 0.13514732411304875,
+   "err_graft": 0.13514732411304875,
+   "err_new": -0.05005852516582132,
+   "err_mineral": 0.013227513227513255,
    "status": "not_supported",
-   "oracle": 0.883396142762137
+   "oracle": 0.8579774894750408
   },
   {
    "graft_mgHA": 1300,
@@ -780,12 +780,12 @@
    "noise": 150,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.26257978328632925,
-   "err_graft": 0.26257978328632925,
-   "err_new": -0.1641085725444249,
-   "err_mineral": -0.016991222907443926,
+   "err": 0.18465192222057292,
+   "err_graft": 0.18465192222057292,
+   "err_new": -0.12415543839093923,
+   "err_mineral": -0.017682131067836893,
    "status": "not_supported",
-   "oracle": 0.8453557141374898
+   "oracle": 0.8230145356237952
   },
   {
    "graft_mgHA": 1300,
@@ -804,12 +804,12 @@
    "noise": 150,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2230513423635332,
-   "err_graft": 0.2230513423635332,
-   "err_new": -0.1284209717097171,
-   "err_mineral": -0.015412700482461905,
+   "err": 0.148673858382675,
+   "err_graft": 0.148673858382675,
+   "err_new": -0.08010455104551051,
+   "err_mineral": -0.006545833876646201,
    "status": "not_supported",
-   "oracle": 0.8375479117925233
+   "oracle": 0.8148479898835556
   },
   {
    "graft_mgHA": 1300,
@@ -828,12 +828,12 @@
    "noise": 150,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.20527660853878538,
-   "err_graft": 0.20527660853878538,
-   "err_new": -0.11193913382754583,
-   "err_mineral": -0.0035444598551395146,
+   "err": 0.127480457005412,
+   "err_graft": 0.127480457005412,
+   "err_new": -0.07584861490440886,
+   "err_mineral": -0.006369753942569445,
    "status": "not_supported",
-   "oracle": 0.8429427078592364
+   "oracle": 0.8183951856849591
   },
   {
    "graft_mgHA": 1300,
@@ -852,12 +852,12 @@
    "noise": 250,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.22784622235416352,
-   "err_graft": 0.22784622235416352,
-   "err_new": -0.15555555555555556,
-   "err_mineral": -0.023362931497735384,
+   "err": 0.15110583345702833,
+   "err_graft": 0.15110583345702833,
+   "err_new": -0.09900410076156996,
+   "err_mineral": -0.012769006371708636,
    "status": "not_supported",
-   "oracle": 0.7812490955085124
+   "oracle": 0.7563814780742104
   },
   {
    "graft_mgHA": 1300,
@@ -876,12 +876,12 @@
    "noise": 250,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2167247951983129,
-   "err_graft": 0.2167247951983129,
-   "err_new": -0.10839483394833949,
-   "err_mineral": -0.0038596948754726634,
+   "err": 0.12198880687809233,
+   "err_graft": 0.12198880687809233,
+   "err_new": -0.06380688806888068,
+   "err_mineral": -0.004068327030903651,
    "status": "not_supported",
-   "oracle": 0.7690556740227499
+   "oracle": 0.7459098760648115
   },
   {
    "graft_mgHA": 1300,
@@ -900,12 +900,12 @@
    "noise": 250,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.16401082381238719,
-   "err_graft": 0.16401082381238719,
-   "err_new": -0.10288724151385098,
-   "err_mineral": -0.011686443725278717,
+   "err": 0.10989176187612748,
+   "err_graft": 0.10989176187612748,
+   "err_new": -0.06266094420600854,
+   "err_mineral": -0.0036985668053629572,
    "status": "not_supported",
-   "oracle": 0.7724981163512958
+   "oracle": 0.7522413060167884
   },
   {
    "graft_mgHA": 1150,
@@ -924,12 +924,12 @@
    "noise": 30,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.3011726287665133,
-   "err_graft": 0.3011726287665133,
-   "err_new": -0.1375512595196251,
-   "err_mineral": 0.013715806443358236,
+   "err": 0.20446786403443662,
+   "err_graft": 0.20446786403443662,
+   "err_new": -0.08791251708650649,
+   "err_mineral": 0.012896952327337008,
    "status": "not_supported",
-   "oracle": 0.8624558098361772
+   "oracle": 0.8446778283309655
   },
   {
    "graft_mgHA": 1150,
@@ -948,12 +948,12 @@
    "noise": 30,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2471408873387948,
-   "err_graft": 0.2471408873387948,
-   "err_new": -0.08867619926199266,
-   "err_mineral": 0.019298474377363428,
+   "err": 0.16489577419093204,
+   "err_graft": 0.16489577419093204,
+   "err_new": -0.05119926199261993,
+   "err_mineral": 0.01828139261963746,
    "status": "not_supported",
-   "oracle": 0.857632332528855
+   "oracle": 0.8372479788813727
   },
   {
    "graft_mgHA": 1150,
@@ -972,12 +972,12 @@
    "noise": 30,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.214371617558629,
-   "err_graft": 0.214371617558629,
-   "err_new": -0.0740148263753414,
-   "err_mineral": 0.024528689577233198,
+   "err": 0.1370264582080578,
+   "err_graft": 0.1370264582080578,
+   "err_new": -0.034607881388997286,
+   "err_mineral": 0.024040684234859055,
    "status": "not_supported",
-   "oracle": 0.8587423528477048
+   "oracle": 0.8389279878543031
   },
   {
    "graft_mgHA": 1150,
@@ -996,12 +996,12 @@
    "noise": 80,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.30102419474543574,
-   "err_graft": 0.30102419474543574,
-   "err_new": -0.1566100371021285,
-   "err_mineral": 0.0011771027917808485,
+   "err": 0.22458067389045566,
+   "err_graft": 0.22458067389045566,
+   "err_new": -0.1063854715875806,
+   "err_mineral": 0.007727935719951784,
    "status": "not_supported",
-   "oracle": 0.8390462251633001
+   "oracle": 0.8177137467181745
   },
   {
    "graft_mgHA": 1150,
@@ -1020,12 +1020,12 @@
    "noise": 80,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2728526238948821,
-   "err_graft": 0.2728526238948821,
-   "err_new": -0.12230934809348093,
+   "err": 0.19133749695839075,
+   "err_graft": 0.19133749695839075,
+   "err_new": -0.08367927429274291,
    "err_mineral": 0.004746381536054223,
    "status": "not_supported",
-   "oracle": 0.83226558664703
+   "oracle": 0.8088658906948554
   },
   {
    "graft_mgHA": 1150,
@@ -1044,12 +1044,12 @@
    "noise": 80,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.22489476849067946,
-   "err_graft": 0.22489476849067946,
-   "err_new": -0.09461568474444015,
-   "err_mineral": 0.014563106796116498,
+   "err": 0.16213168971737812,
+   "err_graft": 0.16213168971737812,
+   "err_new": -0.06199765899336718,
+   "err_mineral": 0.014588791287820424,
    "status": "not_supported",
-   "oracle": 0.8350917500529037
+   "oracle": 0.8112679646920111
   },
   {
    "graft_mgHA": 1150,
@@ -1068,12 +1068,12 @@
    "noise": 150,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.30755529167285145,
-   "err_graft": 0.30755529167285145,
-   "err_new": -0.19578207381370827,
-   "err_mineral": -0.022237007088205973,
+   "err": 0.22213151254267482,
+   "err_graft": 0.22213151254267482,
+   "err_new": -0.14008982620581922,
+   "err_mineral": -0.015199979528647045,
    "status": "not_supported",
-   "oracle": 0.7882673881690014
+   "oracle": 0.7661496148332887
   },
   {
    "graft_mgHA": 1150,
@@ -1092,12 +1092,12 @@
    "noise": 150,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.25508962608484054,
-   "err_graft": 0.25508962608484054,
-   "err_new": -0.14583333333333337,
-   "err_mineral": -0.016925283609336317,
+   "err": 0.1568659258658447,
+   "err_graft": 0.1568659258658447,
+   "err_new": -0.08464022140221406,
+   "err_mineral": -0.006989177206937036,
    "status": "not_supported",
-   "oracle": 0.7749206136367792
+   "oracle": 0.7520824060532841
   },
   {
    "graft_mgHA": 1150,
@@ -1116,12 +1116,12 @@
    "noise": 150,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.2085838845460013,
-   "err_graft": 0.2085838845460013,
-   "err_new": -0.1111587982832618,
-   "err_mineral": -0.0019006523860892743,
+   "err": 0.14431749849669262,
+   "err_graft": 0.14431749849669262,
+   "err_new": -0.07709715177526333,
+   "err_mineral": -0.0014383315354189463,
    "status": "not_supported",
-   "oracle": 0.7803890418485759
+   "oracle": 0.7550070504261452
   },
   {
    "graft_mgHA": 1150,
@@ -1140,12 +1140,12 @@
    "noise": 250,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.28499332046905157,
-   "err_graft": 0.28499332046905157,
-   "err_new": -0.20906073032610817,
-   "err_mineral": -0.03871644617313652,
+   "err": 0.20751076146652814,
+   "err_graft": 0.20751076146652814,
+   "err_new": -0.14887717242726028,
+   "err_mineral": -0.025998618183679212,
    "status": "not_supported",
-   "oracle": 0.7224330325772269
+   "oracle": 0.7058364105185176
   },
   {
    "graft_mgHA": 1150,
@@ -1164,12 +1164,12 @@
    "noise": 250,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2590639954578635,
-   "err_graft": 0.2590639954578635,
-   "err_new": -0.14683271832718325,
-   "err_mineral": -0.016325466162472324,
+   "err": 0.18939086706139996,
+   "err_graft": 0.18939086706139996,
+   "err_new": -0.11685116851168509,
+   "err_mineral": -0.01838570869735301,
    "status": "not_supported",
-   "oracle": 0.7076063699077598
+   "oracle": 0.6878960336128196
   },
   {
    "graft_mgHA": 1150,
@@ -1188,12 +1188,12 @@
    "noise": 250,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.2088093806374023,
-   "err_graft": 0.2088093806374023,
-   "err_new": -0.14728833398361296,
-   "err_mineral": -0.025607438228797408,
+   "err": 0.15003006614552006,
+   "err_graft": 0.15003006614552006,
+   "err_new": -0.10698400312134215,
+   "err_mineral": -0.019160630811116297,
    "status": "not_supported",
-   "oracle": 0.7152532872457201
+   "oracle": 0.6938439266092835
   },
   {
    "graft_mgHA": 1000,
@@ -1212,12 +1212,12 @@
    "noise": 30,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.33056256493988423,
-   "err_graft": 0.33056256493988423,
-   "err_new": -0.15032220269478613,
-   "err_mineral": 0.015481460631029398,
+   "err": 0.2809113848894167,
+   "err_graft": 0.2809113848894167,
+   "err_new": -0.12481937121655928,
+   "err_mineral": 0.015072033573018784,
    "status": "not_supported",
-   "oracle": 0.8027002690325324
+   "oracle": 0.7874292740126823
   },
   {
    "graft_mgHA": 1000,
@@ -1236,12 +1236,12 @@
    "noise": 30,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.25841511882553325,
-   "err_graft": 0.25841511882553325,
-   "err_new": -0.09198185731857322,
-   "err_mineral": 0.02068066240709343,
+   "err": 0.19587963338470282,
+   "err_graft": 0.19587963338470282,
+   "err_new": -0.06246156211562115,
+   "err_mineral": 0.020602425348806852,
    "status": "not_supported",
-   "oracle": 0.7912536016017971
+   "oracle": 0.7757320641903209
   },
   {
    "graft_mgHA": 1000,
@@ -1260,12 +1260,12 @@
    "noise": 30,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.21700240529164172,
-   "err_graft": 0.21700240529164172,
-   "err_new": -0.07097151775263366,
-   "err_mineral": 0.027431037139775016,
+   "err": 0.15363800360793745,
+   "err_graft": 0.15363800360793745,
+   "err_new": -0.038821693328131124,
+   "err_mineral": 0.02694303179740065,
    "status": "not_supported",
-   "oracle": 0.7962675145633372
+   "oracle": 0.7772426211735092
   },
   {
    "graft_mgHA": 1000,
@@ -1284,12 +1284,12 @@
    "noise": 80,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.36225322843995844,
-   "err_graft": 0.36225322843995844,
-   "err_new": -0.18597930091778947,
-   "err_mineral": 0.003045113743954664,
+   "err": 0.2937509277126318,
+   "err_graft": 0.2937509277126318,
+   "err_new": -0.15055653192735796,
+   "err_mineral": 0.0026356866859438277,
    "status": "not_supported",
-   "oracle": 0.7594850539375806
+   "oracle": 0.7429154016436381
   },
   {
    "graft_mgHA": 1000,
@@ -1308,12 +1308,12 @@
    "noise": 80,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.29377889528753354,
-   "err_graft": 0.29377889528753354,
-   "err_new": -0.1330719557195572,
-   "err_mineral": 0.00417264310861909,
+   "err": 0.23424446427123047,
+   "err_graft": 0.23424446427123047,
+   "err_new": -0.10505073800738007,
+   "err_mineral": 0.004042248011474792,
    "status": "not_supported",
-   "oracle": 0.7471395131364993
+   "oracle": 0.7262387094376092
   },
   {
    "graft_mgHA": 1000,
@@ -1332,12 +1332,12 @@
    "noise": 80,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.24744437763078775,
-   "err_graft": 0.24744437763078775,
-   "err_new": -0.10862270776433869,
-   "err_mineral": 0.013047721785585775,
+   "err": 0.1686710763680097,
+   "err_graft": 0.1686710763680097,
+   "err_new": -0.06788919235271162,
+   "err_mineral": 0.012944983818770295,
    "status": "not_supported",
-   "oracle": 0.7489536797554668
+   "oracle": 0.7283996971618153
   },
   {
    "graft_mgHA": 1000,
@@ -1356,12 +1356,12 @@
    "noise": 150,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.33256642422443217,
-   "err_graft": 0.33256642422443217,
-   "err_new": -0.2094903339191564,
-   "err_mineral": -0.02259525576396526,
+   "err": 0.24892385334718714,
+   "err_graft": 0.24892385334718714,
+   "err_new": -0.1723882054286272,
+   "err_mineral": -0.027124542593208623,
    "status": "not_supported",
-   "oracle": 0.7087600784484637
+   "oracle": 0.6871204424878654
   },
   {
    "graft_mgHA": 1000,
@@ -1380,12 +1380,12 @@
    "noise": 150,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2784491848487307,
-   "err_graft": 0.2784491848487307,
-   "err_new": -0.16332257072570722,
-   "err_mineral": -0.021280479853957535,
+   "err": 0.20585611160678075,
+   "err_graft": 0.20585611160678075,
+   "err_new": -0.11919587945879462,
+   "err_mineral": -0.014682487938453503,
    "status": "not_supported",
-   "oracle": 0.6921555547753631
+   "oracle": 0.6718801428728164
   },
   {
    "graft_mgHA": 1000,
@@ -1404,12 +1404,12 @@
    "noise": 150,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.24503908598917623,
-   "err_graft": 0.24503908598917623,
-   "err_new": -0.15602809207959423,
-   "err_mineral": -0.01898083936918893,
+   "err": 0.1737823211064342,
+   "err_graft": 0.1737823211064342,
+   "err_new": -0.11229028482247372,
+   "err_mineral": -0.014537422304412573,
    "status": "not_supported",
-   "oracle": 0.6991306524658064
+   "oracle": 0.6766314989971873
   },
   {
    "graft_mgHA": 1000,
@@ -1428,12 +1428,12 @@
    "noise": 250,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.6137004601454654,
-   "err_graft": 0.6137004601454654,
-   "err_new": -0.43335286076938095,
-   "err_mineral": -0.07234064331226486,
+   "err": 0.6103606946712186,
+   "err_graft": 0.6103606946712186,
+   "err_new": -0.4331966412809998,
+   "err_mineral": -0.07338980014841734,
    "status": "not_supported",
-   "oracle": 0.7017816946372063
+   "oracle": 0.6955379492479045
   },
   {
    "graft_mgHA": 1000,
@@ -1452,12 +1452,12 @@
    "noise": 250,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.594452104793576,
-   "err_graft": 0.594452104793576,
-   "err_new": -0.3596632841328413,
-   "err_mineral": -0.052888251401747244,
+   "err": 0.5718225322410577,
+   "err_graft": 0.5718225322410577,
+   "err_new": -0.36923431734317347,
+   "err_mineral": -0.06665797366019033,
    "status": "not_supported",
-   "oracle": 0.6868980218447789
+   "oracle": 0.6793220733160847
   },
   {
    "graft_mgHA": 1000,
@@ -1476,12 +1476,12 @@
    "noise": 250,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.5372820204449789,
-   "err_graft": 0.5372820204449789,
-   "err_new": -0.37171283651970344,
-   "err_mineral": -0.06110340576359996,
+   "err": 0.5176638604930848,
+   "err_graft": 0.5176638604930848,
+   "err_new": -0.36219274287943815,
+   "err_mineral": -0.06154004212256636,
    "status": "not_supported",
-   "oracle": 0.692590368680197
+   "oracle": 0.6795066294856791
   },
   {
    "graft_mgHA": 900,
@@ -1500,12 +1500,12 @@
    "noise": 30,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.37190143981000445,
-   "err_graft": 0.37190143981000445,
-   "err_new": -0.1718023823471978,
-   "err_mineral": 0.015660584968909097,
+   "err": 0.33791004898322696,
+   "err_graft": 0.33791004898322696,
+   "err_new": -0.14606522163639912,
+   "err_mineral": 0.02080401238516849,
    "status": "not_supported",
-   "oracle": 0.7345485585858149
+   "oracle": 0.7207871131667666
   },
   {
    "graft_mgHA": 900,
@@ -1524,12 +1524,12 @@
    "noise": 30,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.2707437748398085,
-   "err_graft": 0.2707437748398085,
-   "err_new": -0.09428813038130379,
-   "err_mineral": 0.023079932194549402,
+   "err": 0.24146321680590477,
+   "err_graft": 0.24146321680590477,
+   "err_new": -0.0804889298892989,
+   "err_mineral": 0.023027774155691683,
    "status": "not_supported",
-   "oracle": 0.7173079185786563
+   "oracle": 0.7009315385449681
   },
   {
    "graft_mgHA": 900,
@@ -1548,12 +1548,12 @@
    "noise": 30,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.2542092603728201,
-   "err_graft": 0.2542092603728201,
-   "err_new": -0.09555208739758092,
-   "err_mineral": 0.02396363075974728,
+   "err": 0.20557726999398684,
+   "err_graft": 0.20557726999398684,
+   "err_new": -0.06289504486929376,
+   "err_mineral": 0.028843684183490037,
    "status": "not_supported",
-   "oracle": 0.721200499052724
+   "oracle": 0.7048294614884436
   },
   {
    "graft_mgHA": 900,
@@ -1572,12 +1572,12 @@
    "noise": 80,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.39223690069763983,
-   "err_graft": 0.39223690069763983,
-   "err_new": -0.21054481546572934,
-   "err_mineral": -0.0027124542593208734,
+   "err": 0.3574291227549353,
+   "err_graft": 0.3574291227549353,
+   "err_new": -0.18937707479008004,
+   "err_mineral": -0.0008444433071470581,
    "status": "not_supported",
-   "oracle": 0.6895752405347333
+   "oracle": 0.6729013366181508
   },
   {
    "graft_mgHA": 900,
@@ -1596,12 +1596,12 @@
    "noise": 80,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.37229296779949705,
-   "err_graft": 0.37229296779949705,
-   "err_new": -0.17016451414514144,
-   "err_mineral": 0.004250880166905668,
+   "err": 0.3055397842485197,
+   "err_graft": 0.3055397842485197,
+   "err_new": -0.13983702337023374,
+   "err_mineral": 0.00336419350632422,
    "status": "not_supported",
-   "oracle": 0.6761428259273993
+   "oracle": 0.654900252635247
   },
   {
    "graft_mgHA": 900,
@@ -1620,12 +1620,12 @@
    "noise": 80,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.3072760072158749,
-   "err_graft": 0.3072760072158749,
-   "err_new": -0.14127975029262585,
-   "err_mineral": 0.011994657625725491,
+   "err": 0.23677089597113654,
+   "err_graft": 0.23677089597113654,
+   "err_new": -0.1059695669137729,
+   "err_mineral": 0.011147069399496612,
    "status": "not_supported",
-   "oracle": 0.6782640643961745
+   "oracle": 0.6547893742100808
   },
   {
    "graft_mgHA": 900,
@@ -1644,12 +1644,12 @@
    "noise": 150,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.6542229478996586,
-   "err_graft": 0.6542229478996586,
-   "err_new": -0.4101542667447764,
-   "err_mineral": -0.04316896542900284,
+   "err": 0.6456879916876948,
+   "err_graft": 0.6456879916876948,
+   "err_new": -0.4067174380003905,
+   "err_mineral": -0.043859873589395804,
    "status": "not_supported",
-   "oracle": 0.6949619767531929
+   "oracle": 0.6847780778222811
   },
   {
    "graft_mgHA": 900,
@@ -1668,12 +1668,12 @@
    "noise": 150,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.6575553572876958,
-   "err_graft": 0.6575553572876958,
-   "err_new": -0.37077183271832714,
-   "err_mineral": -0.04013561090103013,
+   "err": 0.6058074458593561,
+   "err_graft": 0.6058074458593561,
+   "err_new": -0.3503613161131611,
+   "err_mineral": -0.042926065979919104,
    "status": "not_supported",
-   "oracle": 0.6819757734567522
+   "oracle": 0.6661639980405528
   },
   {
    "graft_mgHA": 900,
@@ -1692,12 +1692,12 @@
    "noise": 150,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.6178592904389657,
-   "err_graft": 0.6178592904389657,
-   "err_new": -0.3769410846664065,
-   "err_mineral": -0.037011352545333165,
+   "err": 0.5798256163559832,
+   "err_graft": 0.5798256163559832,
+   "err_new": -0.3467030823253999,
+   "err_mineral": -0.030102224276981504,
    "status": "not_supported",
-   "oracle": 0.6885655271647056
+   "oracle": 0.6734877329053695
   },
   {
    "graft_mgHA": 900,
@@ -1716,12 +1716,12 @@
    "noise": 250,
    "specimen": 1,
    "method": "control_reference",
-   "err": 1.3634407006085794,
-   "err_graft": 1.3634407006085794,
-   "err_new": -0.9489162272993557,
-   "err_mineral": -0.1516415466107116,
+   "err": 1.4464153183909754,
+   "err_graft": 1.4464153183909754,
+   "err_new": -0.9897285686389377,
+   "err_mineral": -0.1497735356585378,
    "status": "not_supported",
-   "oracle": 0.767142643060521
+   "oracle": 0.7696375775578475
   },
   {
    "graft_mgHA": 900,
@@ -1740,12 +1740,12 @@
    "noise": 250,
    "specimen": 2,
    "method": "control_reference",
-   "err": 1.4365317544001948,
-   "err_graft": 1.4365317544001948,
-   "err_new": -0.8651983394833949,
-   "err_mineral": -0.12512713521971575,
+   "err": 1.5302133181928785,
+   "err_graft": 1.5302133181928785,
+   "err_new": -0.9286977244772447,
+   "err_mineral": -0.13808840787586385,
    "status": "not_supported",
-   "oracle": 0.7502682462982011
+   "oracle": 0.752091055556951
   },
   {
    "graft_mgHA": 900,
@@ -1764,12 +1764,12 @@
    "noise": 250,
    "specimen": 3,
    "method": "control_reference",
-   "err": 1.2892363199037882,
-   "err_graft": 1.2892363199037882,
-   "err_new": -0.8719859539602028,
-   "err_mineral": -0.13348230338521605,
+   "err": 1.3909350571256764,
+   "err_graft": 1.3909350571256764,
+   "err_new": -0.9397580959812719,
+   "err_mineral": -0.14334514819951716,
    "status": "not_supported",
-   "oracle": 0.7545809618642044
+   "oracle": 0.7554754703219856
   },
   {
    "graft_mgHA": 800,
@@ -1788,12 +1788,12 @@
    "noise": 30,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.7129286032358617,
-   "err_graft": 0.7129286032358617,
-   "err_new": -0.36000781097441903,
-   "err_mineral": 0.00992860615675939,
+   "err": 0.6755974469348374,
+   "err_graft": 0.6755974469348374,
+   "err_new": -0.34024604569420036,
+   "err_mineral": 0.010005373730136435,
    "status": "not_supported",
-   "oracle": 0.7087215024335001
+   "oracle": 0.7012170267280032
   },
   {
    "graft_mgHA": 800,
@@ -1812,12 +1812,12 @@
    "noise": 30,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.6922702571173656,
-   "err_graft": 0.6922702571173656,
-   "err_new": -0.30727244772447726,
+   "err": 0.6675318355097737,
+   "err_graft": 0.6675318355097737,
+   "err_new": -0.29554889298892983,
    "err_mineral": 0.01410874951101837,
    "status": "not_supported",
-   "oracle": 0.6897271507380349
+   "oracle": 0.678057675423786
   },
   {
    "graft_mgHA": 800,
@@ -1836,12 +1836,12 @@
    "noise": 30,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.6661906193625977,
-   "err_graft": 0.6661906193625977,
-   "err_new": -0.31806476785017557,
-   "err_mineral": 0.018261673601479345,
+   "err": 0.6311635598316296,
+   "err_graft": 0.6311635598316296,
+   "err_new": -0.3001170503316426,
+   "err_mineral": 0.018107566651256013,
    "status": "not_supported",
-   "oracle": 0.6964418401226498
+   "oracle": 0.6877555412093824
   },
   {
    "graft_mgHA": 800,
@@ -1860,12 +1860,12 @@
    "noise": 80,
    "specimen": 1,
    "method": "control_reference",
-   "err": 1.1256493988422145,
-   "err_graft": 1.1256493988422145,
-   "err_new": -0.624448349931654,
-   "err_mineral": -0.021034315105299517,
+   "err": 1.2091435356983822,
+   "err_graft": 1.2091435356983822,
+   "err_new": -0.6771333723882054,
+   "err_mineral": -0.026766293917449224,
    "status": "not_supported",
-   "oracle": 0.7408651292906777
+   "oracle": 0.7411286181946625
   },
   {
    "graft_mgHA": 800,
@@ -1884,12 +1884,12 @@
    "noise": 80,
    "specimen": 2,
    "method": "control_reference",
-   "err": 1.1107145753913539,
-   "err_graft": 1.1107145753913539,
-   "err_new": -0.5556964944649446,
-   "err_mineral": -0.01989829182422742,
+   "err": 1.160921404817909,
+   "err_graft": 1.160921404817909,
+   "err_new": -0.5797586100861009,
+   "err_mineral": -0.02008084496022955,
    "status": "not_supported",
-   "oracle": 0.7218293590195387
+   "oracle": 0.7162015390422197
   },
   {
    "graft_mgHA": 800,
@@ -1908,12 +1908,12 @@
    "noise": 80,
    "specimen": 3,
    "method": "control_reference",
-   "err": 1.067723992784125,
-   "err_graft": 1.067723992784125,
-   "err_new": -0.5694498634412797,
+   "err": 1.1313890559230306,
+   "err_graft": 1.1313890559230306,
+   "err_new": -0.6024970737417089,
    "err_mineral": -0.010016951764524551,
    "status": "not_supported",
-   "oracle": 0.730087423413167
+   "oracle": 0.7250239526173679
   },
   {
    "graft_mgHA": 800,
@@ -1932,12 +1932,12 @@
    "noise": 150,
    "specimen": 1,
    "method": "control_reference",
-   "err": 1.5633071099896094,
-   "err_graft": 1.5633071099896094,
+   "err": 1.540225619712038,
+   "err_graft": 1.540225619712038,
    "err_new": -1.0,
-   "err_mineral": -0.11620051690166078,
+   "err_mineral": -0.1241587553417437,
    "status": "not_supported",
-   "oracle": 0.7946007936559651
+   "oracle": 0.8180840946335691
   },
   {
    "graft_mgHA": 800,
@@ -1956,12 +1956,12 @@
    "noise": 150,
    "specimen": 2,
    "method": "control_reference",
-   "err": 1.7407737853840537,
-   "err_graft": 1.7407737853840537,
-   "err_new": -0.9883148831488315,
-   "err_mineral": -0.11083583257269525,
+   "err": 1.742233757806797,
+   "err_graft": 1.742233757806797,
+   "err_new": -1.0,
+   "err_mineral": -0.11829443212935198,
    "status": "not_supported",
-   "oracle": 0.7840476617450735
+   "oracle": 0.8020816134727002
   },
   {
    "graft_mgHA": 800,
@@ -1980,12 +1980,12 @@
    "noise": 150,
    "specimen": 3,
    "method": "control_reference",
-   "err": 1.6096662657847265,
-   "err_graft": 1.6096662657847265,
-   "err_new": -0.9856418259851736,
-   "err_mineral": -0.09880823958493856,
+   "err": 1.6078622970535177,
+   "err_graft": 1.6078622970535177,
+   "err_new": -1.0,
+   "err_mineral": -0.10887656033287096,
    "status": "not_supported",
-   "oracle": 0.7905787012714091
+   "oracle": 0.8071626300854453
   },
   {
    "graft_mgHA": 800,
@@ -2004,12 +2004,12 @@
    "noise": 250,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.8838503785067537,
-   "err_graft": 0.8838503785067537,
+   "err": 0.7625055662757905,
+   "err_graft": 0.7625055662757905,
    "err_new": -1.0,
-   "err_mineral": -0.35046956165715604,
+   "err_mineral": -0.39230788914762404,
    "status": "not_supported",
-   "oracle": 0.9008895959844937
+   "oracle": 0.9190867000489522
   },
   {
    "graft_mgHA": 800,
@@ -2028,12 +2028,12 @@
    "noise": 250,
    "specimen": 2,
    "method": "control_reference",
-   "err": 1.052153459323546,
-   "err_graft": 1.052153459323546,
+   "err": 0.9390867061399952,
+   "err_graft": 0.9390867061399952,
    "err_new": -1.0,
-   "err_mineral": -0.34017472943017346,
+   "err_mineral": -0.3765288825140175,
    "status": "not_supported",
-   "oracle": 0.8943682669590677
+   "oracle": 0.9123131189723026
   },
   {
    "graft_mgHA": 800,
@@ -2052,12 +2052,12 @@
    "noise": 250,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.9653487672880336,
-   "err_graft": 0.9653487672880336,
+   "err": 0.8001352976548406,
+   "err_graft": 0.8001352976548406,
    "err_new": -1.0,
-   "err_mineral": -0.3284275954178867,
+   "err_mineral": -0.3848821081830791,
    "status": "not_supported",
-   "oracle": 0.8913152574858448
+   "oracle": 0.9152595449413665
   },
   {
    "graft_mgHA": 650,
@@ -2076,12 +2076,12 @@
    "noise": 30,
    "specimen": 1,
    "method": "control_reference",
-   "err": 1.1305477215377766,
-   "err_graft": 1.1305477215377766,
-   "err_new": -0.6279632884202304,
-   "err_mineral": -0.02164845569231555,
+   "err": 1.1327000148434023,
+   "err_graft": 1.1327000148434023,
+   "err_new": -0.6299941417691857,
+   "err_mineral": -0.022237007088205973,
    "status": "not_supported",
-   "oracle": 0.8489409195291548
+   "oracle": 0.8460243073932582
   },
   {
    "graft_mgHA": 650,
@@ -2100,12 +2100,12 @@
    "noise": 30,
    "specimen": 2,
    "method": "control_reference",
-   "err": 1.3087841674101712,
-   "err_graft": 1.3087841674101712,
-   "err_new": -0.6607856703567035,
-   "err_mineral": -0.02751336549745731,
+   "err": 1.2866412523319002,
+   "err_graft": 1.2866412523319002,
+   "err_new": -0.6514452644526445,
+   "err_mineral": -0.02829573608032343,
    "status": "not_supported",
-   "oracle": 0.8578400533790869
+   "oracle": 0.853078097176291
   },
   {
    "graft_mgHA": 650,
@@ -2124,12 +2124,12 @@
    "noise": 30,
    "specimen": 3,
    "method": "control_reference",
-   "err": 1.1740078171978352,
-   "err_graft": 1.1740078171978352,
-   "err_new": -0.6328911431915724,
-   "err_mineral": -0.01546206400575334,
+   "err": 1.188965724594107,
+   "err_graft": 1.188965724594107,
+   "err_new": -0.6330862270776434,
+   "err_mineral": -0.01047927261519499,
    "status": "not_supported",
-   "oracle": 0.8532285362601293
+   "oracle": 0.8471951090085194
   },
   {
    "graft_mgHA": 650,
@@ -2148,12 +2148,12 @@
    "noise": 80,
    "specimen": 1,
    "method": "control_reference",
-   "err": 1.1917025382217603,
-   "err_graft": 1.1917025382217603,
-   "err_new": -0.7719976567076743,
-   "err_mineral": -0.09493589907623023,
+   "err": 1.2109989609618523,
+   "err_graft": 1.2109989609618523,
+   "err_new": -0.7824253075571177,
+   "err_mineral": -0.09511502341410993,
    "status": "not_supported",
-   "oracle": 0.85874736993114
+   "oracle": 0.8576754268427039
   },
   {
    "graft_mgHA": 650,
@@ -2172,12 +2172,12 @@
    "noise": 80,
    "specimen": 2,
    "method": "control_reference",
-   "err": 1.387298239922135,
-   "err_graft": 1.387298239922135,
-   "err_new": -0.7968557810578105,
-   "err_mineral": -0.09458860346850961,
+   "err": 1.3935436775083136,
+   "err_graft": 1.3935436775083136,
+   "err_new": -0.8000076875768758,
+   "err_mineral": -0.09471899856565391,
    "status": "not_supported",
-   "oracle": 0.8643764096194362
+   "oracle": 0.8618837328015005
   },
   {
    "graft_mgHA": 650,
@@ -2196,12 +2196,12 @@
    "noise": 80,
    "specimen": 3,
    "method": "control_reference",
-   "err": 1.2902134696331928,
-   "err_graft": 1.2902134696331928,
-   "err_new": -0.8009364026531408,
-   "err_mineral": -0.08637694560024656,
+   "err": 1.2922429344558028,
+   "err_graft": 1.2922429344558028,
+   "err_new": -0.8028092079594226,
+   "err_mineral": -0.08691631992602866,
    "status": "not_supported",
-   "oracle": 0.8672794357155125
+   "oracle": 0.8646425339901711
   },
   {
    "graft_mgHA": 650,
@@ -2220,12 +2220,12 @@
    "noise": 150,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.8204690515066053,
-   "err_graft": 0.8204690515066053,
-   "err_new": -0.8977543448545207,
-   "err_mineral": -0.30533022851147673,
+   "err": 0.8175745880955916,
+   "err_graft": 0.8175745880955916,
+   "err_new": -0.9020113259129077,
+   "err_mineral": -0.3091174287980757,
    "status": "not_supported",
-   "oracle": 0.8984876746601735
+   "oracle": 0.9066436068372763
   },
   {
    "graft_mgHA": 650,
@@ -2244,12 +2244,12 @@
    "noise": 150,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.9231081190688621,
-   "err_graft": 0.9231081190688621,
-   "err_new": -0.898639298892989,
-   "err_mineral": -0.312896075107576,
+   "err": 0.885229945656582,
+   "err_graft": 0.885229945656582,
+   "err_new": -0.9063653136531366,
+   "err_mineral": -0.33031686008606076,
    "status": "not_supported",
-   "oracle": 0.8991511699335455
+   "oracle": 0.909401172182984
   },
   {
    "graft_mgHA": 650,
@@ -2268,12 +2268,12 @@
    "noise": 150,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.8700390859891762,
-   "err_graft": 0.8700390859891762,
-   "err_new": -0.9039406944986345,
-   "err_mineral": -0.29776031232341915,
+   "err": 0.8354630186410101,
+   "err_graft": 0.8354630186410101,
+   "err_new": -0.9097932110807647,
+   "err_mineral": -0.3134278522628037,
    "status": "not_supported",
-   "oracle": 0.9007056620179927
+   "oracle": 0.9098395444849273
   },
   {
    "graft_mgHA": 650,
@@ -2292,12 +2292,12 @@
    "noise": 250,
    "specimen": 1,
    "method": "control_reference",
-   "err": 0.44300133590618973,
-   "err_graft": 0.44300133590618973,
-   "err_new": -0.8892013278656512,
-   "err_mineral": -0.42987282172010544,
+   "err": 0.4015140270149917,
+   "err_graft": 0.4015140270149917,
+   "err_new": -0.8941222417496583,
+   "err_mineral": -0.44740141764118835,
    "status": "not_supported",
-   "oracle": 0.8933600029175702
+   "oracle": 0.9018124665039418
   },
   {
    "graft_mgHA": 650,
@@ -2316,12 +2316,12 @@
    "noise": 250,
    "specimen": 2,
    "method": "control_reference",
-   "err": 0.5452996998945576,
-   "err_graft": 0.5452996998945576,
-   "err_new": -0.8986777367773677,
-   "err_mineral": -0.4343982266266788,
+   "err": 0.49306513099197025,
+   "err_graft": 0.49306513099197025,
+   "err_new": -0.8996771217712177,
+   "err_mineral": -0.4518711696440214,
    "status": "not_supported",
-   "oracle": 0.8984308457905952
+   "oracle": 0.9066731515359192
   },
   {
    "graft_mgHA": 650,
@@ -2340,15 +2340,15 @@
    "noise": 250,
    "specimen": 3,
    "method": "control_reference",
-   "err": 0.42167769092002416,
-   "err_graft": 0.42167769092002416,
-   "err_new": -0.8948107686305111,
-   "err_mineral": -0.4449581342785226,
+   "err": 0.38199037883343356,
+   "err_graft": 0.38199037883343356,
+   "err_new": -0.9018728053062817,
+   "err_mineral": -0.4631684388965942,
    "status": "not_supported",
-   "oracle": 0.8970081823903769
+   "oracle": 0.9055380359612725
   }
  ],
  "note": "control phantom = different animal (seed 777), same stage/imaging",
- "advisor_version": "1.3.0",
- "saved": "2026-11-27T22:40:01Z"
+ "advisor_version": "1.3.3",
+ "saved": "2026-11-28T00:01:47Z"
 }

@@ -19,12 +19,15 @@ import secrets
 import sqlite3
 import threading
 import time
+from contextlib import contextmanager
 from pathlib import Path
 
 from ..audit import AuditLog
 
-SCHEMA_VERSION = 2
-MIGRATIONS = {2: """
+SCHEMA_VERSION = 3
+MIGRATIONS = {3: """
+ALTER TABLE users ADD COLUMN must_change_password INTEGER NOT NULL DEFAULT 0;
+""", 2: """
 ALTER TABLE reports ADD COLUMN unblinded INTEGER DEFAULT 0;
 ALTER TABLE users ADD COLUMN locked_until REAL DEFAULT 0;
 ALTER TABLE reviews ADD COLUMN object_sha256 TEXT;
@@ -76,9 +79,10 @@ ROLES = {
     "admin": {"read", "write", "run", "review", "manage_users", "unblind", "delete", "export"},
     "analyst": {"read", "write", "run", "export"},
     "reviewer": {"read", "review", "export"},
-    # same permissions as a reviewer; the role is recorded so that report sign-off can be attributed
-    # to the study director (desktop signature rows)
-    "study_director": {"read", "review", "export"},
+    # reviewer permissions plus unblinding: the study director holds the allocation key of a blinded study
+    # and may unblind it (an audited, re-authenticated action). The role is also recorded so that report
+    # sign-off can be attributed to the study director (desktop signature rows).
+    "study_director": {"read", "review", "export", "unblind"},
     "viewer": {"read"},
 }
 
@@ -129,6 +133,9 @@ class Store:
         self.lock = threading.RLock()   # one shared connection: serialise all access (review S-10)
         self.migrate()
         self.audit = AuditLog(self.conn, self.lock)
+        # lookups of the audited state of one object (user role checks at sign-in); an index does not
+        # change the hash chain
+        self.conn.execute("CREATE INDEX IF NOT EXISTS audit_object ON audit_log(object_type, object_id)")
 
     # ------------------------------------------------------------------ infra
     def migrate(self):
@@ -153,6 +160,44 @@ class Store:
             cur = self.conn.execute(sql, args)
             return cur.lastrowid
 
+    @contextmanager
+    def transaction(self, immediate: bool = True):
+        """One SQLite transaction under the store lock. ``immediate`` takes the write lock at once
+        (``BEGIN IMMEDIATE``; also serialises against other processes); ``immediate=False`` gives a
+        consistent read snapshot. Nested use joins the outer transaction. Audit events recorded inside
+        commit or roll back with it."""
+        with self.lock:
+            if self.conn.in_transaction:
+                yield self.conn
+                return
+            self.conn.execute("BEGIN IMMEDIATE" if immediate else "BEGIN")
+            try:
+                yield self.conn
+            except BaseException:
+                self.conn.execute("ROLLBACK")
+                raise
+            self.conn.execute("COMMIT")
+
+    def snapshot(self):
+        """Consistent read snapshot (one read transaction) for multi-query reads such as a report bundle."""
+        return self.transaction(immediate=False)
+
+    def _next_version_insert(self, table: str, scan_id, insert_sql: str, args_fn, retries: int = 5):
+        """Allocate ``max(version)+1`` and insert in ONE write transaction; the UNIQUE(scan_id, version)
+        constraint is the backstop and a collision (another process) is retried (C2-PRD-11)."""
+        for attempt in range(retries):
+            try:
+                with self.transaction():
+                    v = (self.conn.execute(f"SELECT max(version) FROM {table} WHERE scan_id=?",
+                                           (scan_id,)).fetchone()[0] or 0) + 1
+                    rid = self.conn.execute(insert_sql, args_fn(v)).lastrowid
+                    return rid, v
+            except sqlite3.IntegrityError:
+                if attempt == retries - 1 or self.conn.in_transaction:
+                    raise
+                time.sleep(0.01 * (attempt + 1))
+        raise RuntimeError("version allocation failed")
+
     def backup(self, dest) -> dict:
         """Online consistent backup (SQLite backup API) + SHA-256 of the copy."""
         dst = sqlite3.connect(str(dest))
@@ -174,18 +219,85 @@ class Store:
         if actor is not None:
             self.require(actor, "manage_users", org_id)
         password_policy(password)
-        uid = self.exec("INSERT INTO users(org_id,username,full_name,pw_hash,role,created) VALUES (?,?,?,?,?,?)",
-                        (org_id, username, full_name, hash_password(password), role, now()))
+        # a password chosen by an administrator must be changed by its owner at first sign-in (C2-PRD-08)
+        uid = self.exec("INSERT INTO users(org_id,username,full_name,pw_hash,role,created,must_change_password) "
+                        "VALUES (?,?,?,?,?,?,?)",
+                        (org_id, username, full_name, hash_password(password), role, now(), int(actor is not None)))
         self.audit.record("user.create", actor and actor["id"], org_id, "user", uid, {"username": username, "role": role})
         return uid
+
+    def set_user_role(self, actor, user_id, role):
+        """Audited role change (administrators only; not one's own role). The audit event is the
+        reference the role is checked against at sign-in (C2-PRD-09)."""
+        if role not in ROLES:
+            raise ValueError(f"Unknown role {role}")
+        u = self.q1("SELECT * FROM users WHERE id=?", (user_id,))
+        if not u:
+            raise KeyError("user not found")
+        self.require(actor, "manage_users", u["org_id"])
+        if int(user_id) == int(actor["id"]):
+            raise ValueError("You cannot change your own role")
+        if u["role"] == role:
+            return
+        with self.transaction():
+            self.exec("UPDATE users SET role=? WHERE id=?", (role, user_id))
+            self.audit.record("user.role_change", actor["id"], u["org_id"], "user", user_id,
+                              {"username": u["username"], "old_role": u["role"], "new_role": role})
+
+    def change_password(self, user, old_password, new_password):
+        """Self-service password change: the current password is re-checked (failures count towards
+        the lockout), the policy applies, the new password must differ. Other sessions of the user end;
+        the calling session continues. Audited (C2-PRD-08)."""
+        if not self.reauthenticate(user, old_password):
+            raise PermissionError("Current password incorrect (5 failed attempts lock the account for 15 minutes)")
+        password_policy(new_password)
+        if new_password == old_password:
+            raise ValueError("The new password must differ from the current one")
+        with self.transaction():
+            self.exec("UPDATE users SET pw_hash=?, must_change_password=0 WHERE id=?",
+                      (hash_password(new_password), user["id"]))
+            self.audit.record("user.password_change", user["id"], user["org_id"], "user", user["id"],
+                              {"username": user["username"]})
+
+    def audited_user_state(self, user_id) -> dict | None:
+        """Role and active flag of a user as last recorded in the hash-chained audit trail
+        (user.create / user.role_change / user.activate / user.deactivate); None if never recorded."""
+        with self.lock:
+            rows = self.conn.execute(
+                "SELECT action, details FROM audit_log WHERE object_type='user' AND object_id=? AND action IN "
+                "('user.create','user.role_change','user.activate','user.deactivate') ORDER BY seq",
+                (str(user_id),)).fetchall()
+        st = None
+        for action, det in rows:
+            d = json.loads(det or "{}")
+            if action == "user.create":
+                st = {"role": d.get("role"), "active": True}
+            elif st is not None and action == "user.role_change":
+                st["role"] = d.get("new_role")
+            elif st is not None:
+                st["active"] = action == "user.activate"
+        return st
+
+    def user_record_problem(self, u: dict) -> str | None:
+        """Why the stored role / active flag of ``u`` does not match its audited state (None if it
+        matches). Detects role escalation by editing the database outside the application (C2-PRD-09)."""
+        st = self.audited_user_state(u["id"])
+        if st is None:
+            return "no audited creation event for this account"
+        if st["role"] != u["role"]:
+            return f"role '{u['role']}' differs from the last audited role '{st['role']}'"
+        if bool(st["active"]) != bool(u["active"]):
+            return "active flag differs from the last audited state"
+        return None
 
     def set_user_active(self, actor, user_id, active: bool):
         u = self.q1("SELECT * FROM users WHERE id=?", (user_id,))
         self.require(actor, "manage_users", u["org_id"])
-        self.exec("UPDATE users SET active=? WHERE id=?", (int(active), user_id))
-        if not active:   # S-20: deactivation ends existing sessions immediately
-            self.exec("DELETE FROM sessions WHERE user_id=?", (user_id,))
-        self.audit.record("user.activate" if active else "user.deactivate", actor["id"], u["org_id"], "user", user_id)
+        with self.transaction():
+            self.exec("UPDATE users SET active=? WHERE id=?", (int(active), user_id))
+            if not active:   # S-20: deactivation ends existing sessions immediately
+                self.exec("DELETE FROM sessions WHERE user_id=?", (user_id,))
+            self.audit.record("user.activate" if active else "user.deactivate", actor["id"], u["org_id"], "user", user_id)
 
     def reset_password(self, actor, user_id, new_password):
         """Administrator password reset: policy-checked, clears the lockout, ends sessions, audited."""
@@ -194,7 +306,7 @@ class Store:
             raise KeyError("user not found")
         self.require(actor, "manage_users", u["org_id"])
         password_policy(new_password)
-        self.exec("UPDATE users SET pw_hash=?, failed_logins=0, locked_until=0 WHERE id=?",
+        self.exec("UPDATE users SET pw_hash=?, failed_logins=0, locked_until=0, must_change_password=1 WHERE id=?",
                   (hash_password(new_password), user_id))
         self.exec("DELETE FROM sessions WHERE user_id=?", (user_id,))
         self.audit.record("user.password_reset", actor["id"], u["org_id"], "user", user_id, {"username": u["username"]})
@@ -221,6 +333,11 @@ class Store:
                               (time.time() + self.LOCK_SECONDS, u["id"]))
             self.audit.record("auth.login_failed", u["id"], u["org_id"], "user", u["id"],
                               {"reason": "bad password", "locked": n >= 5})
+            return None
+        problem = self.user_record_problem(u)
+        if problem:   # C2-PRD-09: role or active flag edited outside the audited API
+            self.audit.record("auth.user_record_mismatch", u["id"], u["org_id"], "user", u["id"],
+                              {"username": username, "reason": problem})
             return None
         self.exec("UPDATE users SET failed_logins=0, locked_until=0 WHERE id=?", (u["id"],))
         self.exec("DELETE FROM sessions WHERE expires < ?", (time.time(),))   # S-20: purge expired sessions
@@ -262,6 +379,28 @@ class Store:
             return None
         u = self.q1("SELECT id,org_id,username,full_name,role,active FROM users WHERE id=?", (s["user_id"],))
         return u if u and u["active"] else None
+
+    def validate_session(self, tok, sliding_ttl_s: float | None = None) -> dict | None:
+        """The session's user, re-read from the database (current role, active flag), or None when the
+        session has ended (signed out, expired, deactivated, password reset). With ``sliding_ttl_s`` an
+        active session's expiry is extended (desktop sessions stay open while in use)."""
+        if not tok:
+            return None
+        th = hashlib.sha256(tok.encode()).hexdigest()
+        s = self.q1("SELECT * FROM sessions WHERE token_hash=?", (th,))
+        if not s or s["expires"] < time.time():
+            return None
+        u = self.q1("SELECT id,org_id,username,full_name,role,active,must_change_password FROM users WHERE id=?",
+                    (s["user_id"],))
+        if not u or not u["active"]:
+            return None
+        if sliding_ttl_s and s["expires"] - time.time() < sliding_ttl_s / 2:
+            self.exec("UPDATE sessions SET expires=? WHERE token_hash=?", (time.time() + sliding_ttl_s, th))
+        return u
+
+    def end_other_sessions(self, user_id, keep_token=None):
+        keep = hashlib.sha256(keep_token.encode()).hexdigest() if keep_token else ""
+        self.exec("DELETE FROM sessions WHERE user_id=? AND token_hash<>?", (user_id, keep))
 
     def logout(self, tok):
         self.exec("DELETE FROM sessions WHERE token_hash=?", (hashlib.sha256(tok.encode()).hexdigest(),))
@@ -333,11 +472,12 @@ class Store:
                 r["description"] = "(blinded)"
         return rows
 
-    def unblind(self, user, sid, reason):
+    def unblind(self, user, sid, reason, details: dict | None = None):
         s = self.study(user, sid)
         self.require(user, "unblind", s["org_id"])
-        self.exec("UPDATE studies SET blinded=0 WHERE id=?", (sid,))
-        self.audit.record("study.unblind", user["id"], s["org_id"], "study", sid, {"reason": reason})
+        with self.transaction():
+            self.exec("UPDATE studies SET blinded=0 WHERE id=?", (sid,))
+            self.audit.record("study.unblind", user["id"], s["org_id"], "study", sid, {"reason": reason, **(details or {})})
 
     def add_specimen(self, user, sid, animal_id, group_id=None, sex=None, notes=""):
         s = self.study(user, sid)
@@ -417,12 +557,12 @@ class Store:
     def save_roi(self, user, scan_id, roi_dict, reason=""):
         sc = self.scan(user, scan_id)
         self.require(user, "write", sc["org_id"])
-        v = (self.q1("SELECT max(version) v FROM rois WHERE scan_id=?", (scan_id,))["v"] or 0) + 1
-        d = {k: v_ for k, v_ in roi_dict.items() if k != "params" or True}
-        rid = self.exec("INSERT INTO rois(scan_id,version,definition,def_sha256,method,confidence,created_by,reason,created)"
-                        " VALUES (?,?,?,?,?,?,?,?,?)",
-                        (scan_id, v, json.dumps(d, default=float), roi_dict.get("definition_sha256", ""),
-                         roi_dict.get("method"), roi_dict.get("confidence"), user["id"], reason, now()))
+        d = dict(roi_dict)
+        rid, v = self._next_version_insert(
+            "rois", scan_id, "INSERT INTO rois(scan_id,version,definition,def_sha256,method,confidence,created_by,reason,"
+            "created) VALUES (?,?,?,?,?,?,?,?,?)",
+            lambda v: (scan_id, v, json.dumps(d, default=float), roi_dict.get("definition_sha256", ""),
+                       roi_dict.get("method"), roi_dict.get("confidence"), user["id"], reason, now()))
         self.audit.record("roi.save", user["id"], sc["org_id"], "roi", rid,
                           {"scan": scan_id, "version": v, "def_sha256": roi_dict.get("definition_sha256"),
                            "method": roi_dict.get("method"), "reason": reason})
@@ -444,11 +584,12 @@ class Store:
                           model_sha256=None, roi_id=None, parent_id=None, edits=None):
         sc = self.scan(user, scan_id)
         self.require(user, "write", sc["org_id"])
-        v = (self.q1("SELECT max(version) v FROM segmentations WHERE scan_id=?", (scan_id,))["v"] or 0) + 1
-        sid = self.exec("INSERT INTO segmentations(scan_id,version,parent_id,kind,method,model_name,model_sha256,roi_id,"
-                        "labels_key,labels_sha256,edits,created_by,created) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                        (scan_id, v, parent_id, kind, method, model_name, model_sha256, roi_id, labels_key,
-                         labels_sha256, json.dumps(edits or {}), user["id"], now()))
+        sid, v = self._next_version_insert(
+            "segmentations", scan_id,
+            "INSERT INTO segmentations(scan_id,version,parent_id,kind,method,model_name,model_sha256,roi_id,"
+            "labels_key,labels_sha256,edits,created_by,created) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            lambda v: (scan_id, v, parent_id, kind, method, model_name, model_sha256, roi_id, labels_key,
+                       labels_sha256, json.dumps(edits or {}), user["id"], now()))
         self.audit.record("segmentation.save", user["id"], sc["org_id"], "segmentation", sid,
                           {"scan": scan_id, "version": v, "kind": kind, "model": model_name,
                            "model_sha256": model_sha256, "labels_sha256": labels_sha256, "parent": parent_id,
@@ -475,7 +616,8 @@ class Store:
     def latest_measurements(self, user, sid):
         self.study(user, sid)
         rows = self.q("""SELECT m.*, s.specimen_id, s.timepoint_id FROM measurements m JOIN scans s ON m.scan_id=s.id
-                         WHERE s.study_id=? AND m.id IN (SELECT max(id) FROM measurements GROUP BY scan_id)""", (sid,))
+                         WHERE s.study_id=? AND m.id IN (SELECT max(id) FROM measurements GROUP BY scan_id)
+                         ORDER BY m.scan_id""", (sid,))
         for r in rows:
             r["metrics"] = json.loads(r["metrics"])
         return rows

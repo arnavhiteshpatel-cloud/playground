@@ -211,9 +211,13 @@ CREATE TABLE desktop_blind_codes (object_type TEXT, object_id INTEGER, study_id 
 CREATE TABLE desktop_review_meta (review_id INTEGER PRIMARY KEY, signature_role TEXT);
   -- 'reviewer' | 'study_director' chosen when signing (also in the audit trail: review.signature_role)
 CREATE TABLE desktop_report_meta (report_id INTEGER PRIMARY KEY, blinded INTEGER, bundle_path TEXT,
-  signed_pdf TEXT, signed_sha256 TEXT);
-  -- stored bundle JSON (to render the signed copy), blinded flag, signed copy and its hash
+  signed_pdf TEXT, signed_sha256 TEXT, bundle_sha256 TEXT, review_status TEXT);
+  -- stored bundle JSON (to render the signed copy), blinded flag, signed copy and its hash;
+  -- bundle_sha256 / review_status recorded at generation (columns added on open of older projects)
 ```
+
+Store schema v3 adds `users.must_change_password` (set when an administrator chooses the password,
+cleared by *Change my password*).
 
 `desktop_settings` also holds `idle_lock_minutes` (default 15; changed by administrators,
 audited as `settings.idle_lock`).
@@ -224,4 +228,38 @@ audited as `settings.idle_lock`).
 |---|---|---|
 | ROI (`roi`) | reviewer / study director / admin, not its creator | `review.approved` with the ROI definition SHA-256; clears the "automatic ROI not yet accepted" flag |
 | Segmentation | reviewer / study director / admin, not its author | `review.*` with the labels SHA-256 |
-| Report | reviewer or study director (signature role chosen), not its author; *approve* only when every reported segmentation is approved and the report was generated after that | `review.*` + `review.signature_role`; a signed copy (`report{N}_signed.pdf`) is rendered from the stored bundle with the signature rows filled; the original PDF is unchanged |
+| Report | reviewer or study director (signature role chosen), not its author, not an author of any reported segmentation (or its parents) or ROI, at most one approval per person; *approve* only when every reported segmentation is approved, the report was generated after that (`review_status` stored at generation; fails closed) and the PDF and bundle still match their recorded hashes | `review.*` + `review.signature_role` (with `signature_role_key`, which the signed copy uses in preference to `desktop_review_meta`); a signed copy (`report{N}_signed.pdf`) is rendered from the integrity-verified bundle with the signature rows filled; the original PDF is unchanged |
+
+### Integrity and consistency (cycle-2 review)
+
+* **Report snapshot (C2-PRD-01).** `generate_report` reads the measurement rows once and builds the
+  bundle, the support rule and the blinding inside one read transaction (`Store.snapshot()`); each
+  bundle specimen carries `scan_id`, `segmentation_id`, `roi_id` and `measurement_id`, and all
+  post-processing joins by `(scan_id, segmentation_id)`, never by position. Figures are rendered
+  afterwards from each specimen's own segmentation and per-version ROI. `latest_measurements` is
+  ordered by scan. The UI refuses to generate a report while analysis, import or save jobs run.
+* **Report integrity (C2-PRD-04/05, `desktop/report_integrity.py`).** At generation the SHA-256 of
+  the exact bundle bytes is stored in `desktop_report_meta.bundle_sha256` and in the
+  `report.generate` audit event (with the PDF hash and `review_status`). `verify_report` re-hashes
+  bundle and PDF against both records before an approval and before a signed copy; any mismatch,
+  missing file or missing record raises `ReportIntegrityError` and records `report.integrity_failed`.
+* **Atomic writes (C2-PRD-10/11).** `Store.transaction()` (`BEGIN IMMEDIATE` under the store lock;
+  audit events inside commit or roll back with it). ROI and segmentation versions are allocated and
+  inserted in one transaction with the `UNIQUE(scan_id, version)` constraint as backstop and a
+  retry. A label revision writes its labels under a new key first; version, ROI mask, measurement
+  and audit events are committed together, and any failure removes what was written. Import and
+  report jobs roll back (scan row and data, report row and files) when cancelled or failed.
+* **Sessions and roles (C2-PRD-07/08/09).** `Project.require_user()` re-validates the session
+  (`Store.validate_session`, sliding 8 h expiry) before every service call; a deactivated account
+  or a reset password ends it. Role changes go through `Store.set_user_role` (`user.role_change`);
+  at sign-in, and whenever an open session's role changes, the role and active flag are compared
+  with the last audited state (`Store.user_record_problem`).
+* **Application-wide idle lock (C2-PRD-02).** `MainWindow.lock_session` rejects dialogs that run
+  their own event loop, hides every other top-level window (restored on unlock) and installs
+  `lock.LockInputFilter`, which drops keyboard, mouse and shortcut input to anything but the lock
+  page and the confirmation boxes it opens.
+* **Study-level blinding (C2-PRD-03).** `Project.study_forces_blinding` / `blinding_forced` enforce
+  blinding in `study_tree`, `results_view.build_rows`, `generate_report`, `export_report` and
+  `export_audit` for every role without `unblind` (the UI toggle is locked for them).
+  `services.unblind_study` (study director or administrator, re-authenticated, reason) is the only
+  way to unblind.

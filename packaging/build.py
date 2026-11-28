@@ -112,14 +112,16 @@ def write_notices():
             dist = md.distribution(name)
         except md.PackageNotFoundError:
             continue
-        files = [f for f in (dist.files or []) if any(k in f.name.upper() for k in ("LICEN", "COPYING", "NOTICE"))
+        # match on the whole path: licence files often sit in a dist-info/licenses/ folder under SPDX names
+        files = [f for f in (dist.files or []) if any(k in str(f).upper() for k in ("LICEN", "COPYING", "NOTICE"))
                  and not f.name.endswith((".py", ".pyc", ".so", ".dll", ".pyd", ".qml"))]
         meta_lic = dist.metadata.get("License-Expression") or dist.metadata.get("License") or ""
         written = []
         for f in files:
             src = Path(dist.locate_file(f))
             if src.is_file() and src.stat().st_size < 2_000_000:
-                dst = out / f"{dist.metadata['Name']}-{f.name}"
+                tail = str(f).split("/licenses/", 1)[-1].replace("/", "_") if "/licenses/" in str(f) else f.name
+                dst = out / f"{dist.metadata['Name']}-{tail}"
                 shutil.copyfile(src, dst)
                 written.append(dst.name)
         if dist.metadata["Name"].lower().startswith(("pyside6", "shiboken6")):
@@ -131,8 +133,13 @@ def write_notices():
     for e in index:
         lines.append(f"{e['name']} {e['version']}: {e['license'] or 'see licence file'}"
                      + (f"  [{', '.join(e['files'][:3])}]" if e["files"] else ""))
-    lines.append("\nPython runtime: Python Software Foundation License (see the Python distribution).")
     (root / "THIRD_PARTY_NOTICES.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    # system libraries, Python runtime (PSF), Qt third-party code, PDFium; SBOM of the built bundle (C2-BIZ-08/-10)
+    r = subprocess.run([sys.executable, str(PKG / "bundle_inventory.py"), str(root), "--sbom-dir",
+                        str(ROOT / "docs" / "security")], capture_output=True, text=True)
+    print(r.stdout, flush=True)
+    if r.returncode != 0:
+        raise SystemExit("bundle inventory FAILED: a bundled library has no mapped licence (see output above)")
     return index
 
 

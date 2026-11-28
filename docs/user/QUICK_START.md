@@ -36,8 +36,9 @@ User guide: [§2](../desktop/USER_GUIDE.md#2-create-or-open-a-project).
 
 ## 3. Create a study and groups
 
-*Study > New study*: name, species, defect model (condyle, calvarial or segmental), graft material(s), and whether
-the study is blinded. Then *Study > Add group* for each treatment arm. Animals and timepoints are created during
+*Study > New study*: name, species, defect model (condyle, calvarial or segmental), graft material(s), the **data
+class** (own research data, customer data, public dataset, or synthetic/demo data; printed on every report page), and
+whether the study is blinded. Then *Study > Add group* for each treatment arm. Animals and timepoints are created during
 import. User guide: [§3](../desktop/USER_GUIDE.md#3-organise-studies).
 
 ## 4. Import scans
@@ -71,6 +72,10 @@ Select the scan (or an animal, group or study) and choose **Analyse...**:
   reported. If you are unsure, *Unspecified* is the conservative choice: graft and new-bone endpoints will not be
   reported.
 * *Graft is brighter than new bone* is ticked by default; untick it only for a graft that is darker than new bone.
+* **Time since implantation:** by default taken from each scan's timepoint (its days, or a label such as "Week 4" or
+  "Day 14"). Give timepoints days when you import, or enter the weeks here. Resorbable materials (β-TCP, calcium
+  sulfate, bioactive glasses, composites) are separated by intensity only at a known timepoint of 4 weeks or less; an
+  unknown timepoint means those endpoints are not reported. The value used is printed in the report.
 
 The job runs in the background (**Jobs** panel). If the ROI cannot be found the scan is marked *needs ROI*: place the
 crosshair at the defect centre, use *Study > Define cylindrical ROI at crosshair*, and analyse again with *Use the

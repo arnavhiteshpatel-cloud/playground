@@ -1,7 +1,9 @@
 """Idle lock: the window locks after a configurable period without user input.
 
 While locked, the project content is hidden (the central area shows the lock page and the docks
-are hidden). Unlocking re-checks the signed-in user's password through ``Store.reauthenticate``,
+are hidden), and the lock covers the whole application (cycle-2 review C2-PRD-02): every other window
+and dialog is closed (dialogs running their own event loop are rejected) or hidden until unlock, and
+``LockInputFilter`` swallows keyboard, mouse and shortcut input to anything but the lock page. Unlocking re-checks the signed-in user's password through ``Store.reauthenticate``,
 so wrong passwords count towards the same temporary lockout as sign-in. Lock, unlock and failed
 unlock attempts are audited.
 """
@@ -15,6 +17,31 @@ from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QLineEdit, QPushButto
 from .panels import muted, set_banner
 
 _INPUT = {QEvent.MouseButtonPress, QEvent.MouseMove, QEvent.KeyPress, QEvent.Wheel, QEvent.TouchBegin}
+# input that can act on a widget while the application is locked
+_BLOCK = {QEvent.KeyPress, QEvent.KeyRelease, QEvent.ShortcutOverride, QEvent.Shortcut, QEvent.MouseButtonPress,
+          QEvent.MouseButtonRelease, QEvent.MouseButtonDblClick, QEvent.Wheel, QEvent.ContextMenu, QEvent.TouchBegin,
+          QEvent.TouchUpdate, QEvent.TouchEnd, QEvent.DragEnter, QEvent.DragMove, QEvent.Drop, QEvent.InputMethod}
+
+
+class LockInputFilter(QObject):
+    """Application-wide filter active while locked: input reaches only widgets for which ``allowed(widget)``
+    is true (the lock page and confirmation boxes it opens); everything else, including action shortcuts,
+    is swallowed."""
+
+    def __init__(self, allowed, parent=None):
+        super().__init__(parent)
+        self.allowed = allowed
+        self.blocked = 0
+
+    def eventFilter(self, obj, ev):
+        if ev.type() not in _BLOCK:
+            return False
+        if isinstance(obj, QWidget) and self.allowed(obj):
+            return False
+        if not isinstance(obj, QWidget) and ev.type() not in (QEvent.Shortcut, QEvent.ShortcutOverride):
+            return False       # window-level delivery (QWindow); the widget-level event is filtered
+        self.blocked += 1
+        return True
 
 
 class IdleWatcher(QObject):

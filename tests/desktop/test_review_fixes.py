@@ -131,7 +131,13 @@ def test_ux03_results_csv_and_report_have_no_number_for_not_supported(qtbot, ana
 
 
 def test_ux04_qc_review_is_never_green():
-    base = {"metrics": {"class_volumes": {"uncertain_fraction": 0.0}, "new_bone_architecture": {"Tb_Th_um": 100}}}
+    # a complete result: QC suitable and a supported advisor assessment for every graft / new-bone endpoint
+    # (missing QC or advisor output is never green: C2-PRD-12, tests/desktop/test_cycle2_fixes.py)
+    adv = {ep: {"status": "supported"} for ep in ("graft_fraction_of_defect", "new_bone_volume",
+                                                  "new_bone_fraction_of_defect", "new_bone_thickness",
+                                                  "mineral_fraction_of_defect")}
+    base = {"metrics": {"class_volumes": {"uncertain_fraction": 0.0}, "new_bone_architecture": {"Tb_Th_um": 100}},
+            "qc": {"verdict": "suitable"}, "measurement_support": {"endpoints": adv}}
     assert measurement_support(base)["overall"] == SUPPORTED
     rq = {**base, "qc": {"verdict": "review", "checks": [{"name": "Noise level", "status": "warn"}]}}
     sup = measurement_support(rq)

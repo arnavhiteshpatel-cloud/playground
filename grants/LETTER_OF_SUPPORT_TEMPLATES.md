@@ -49,7 +49,7 @@ Placeholders: `[WRITER NAME]`, `[TITLE]`, `[INSTITUTION/COMPANY]`, `[COMPANY NAM
 >
 > **Current practice and pain:** [WRITER: describe their actual workflow, e.g., approximate specimens per year, analysis time, how graft and new bone are separated, and any sponsor audit/re-analysis issues. Keep confidential details general.]
 >
-> **Interest:** If [COMPANY NAME] demonstrates [specific criteria: e.g., agreement with our analysts on our own retrospective data; audit-ready reports], we would be interested in:
+> **Interest:** If [COMPANY NAME] demonstrates [specific criteria: e.g., agreement with our analysts on our own retrospective data; reports with a tamper-evident audit trail], we would be interested in:
 > - [ ] Evaluating OsteoQuant in a pilot on [N] retrospective, de-identified scans under a data-use agreement
 > - [ ] Providing analyst time for a blinded comparison
 > - [ ] Discussing commercial terms after a successful pilot [non-binding]

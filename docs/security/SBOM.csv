@@ -1,33 +1,144 @@
 component,version,license,type,use
-numpy,2.5.3,BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0,python,runtime
-scipy,1.18.1,BSD License,python,runtime
-scikit-image,0.26.0,BSD License,python,runtime
-scikit-learn,1.9.1,BSD-3-Clause,python,runtime
-pandas,3.0.5,BSD License,python,runtime
-SimpleITK,2.5.8,Apache-2.0,python,runtime
-tifffile,2026.11.26,BSD-3-Clause,python,runtime
-pydicom,3.0.2,MIT License,python,runtime
-nibabel,5.5.0,MIT,python,runtime
-pynrrd,1.1.4,MIT License,python,runtime
-zarr,3.4.2,MIT,python,runtime
-olefile,0.47,BSD,python,runtime
-imagecodecs,2026.11.11,BSD-3-Clause,python,runtime
-matplotlib,3.11.2,Python Software Foundation License,python,runtime
-statsmodels,0.15.0,BSD-3-Clause,python,runtime
-fastapi,0.165.0,MIT,python,runtime
-uvicorn,0.54.0,BSD-3-Clause,python,runtime
-python-multipart,0.0.32,Apache-2.0,python,runtime
-reportlab,5.0.1,BSD License,python,runtime
-openpyxl,3.1.5,MIT,python,runtime
-PyYAML,6.0.3,MIT,python,runtime
-psutil,7.2.2,BSD-3-Clause,python,runtime
-torch,2.15.0+cpu,see package,python,runtime
-pillow,13.0.0.post1,MIT-CMU,python,runtime
-pytest,9.1.1,MIT,python,test
-httpx,0.29.0,BSD-3-Clause,python,test
-python-pptx,1.0.2,MIT,python,runtime
-starlette,1.7.0,BSD-3-Clause,python,runtime
-pydantic,2.13.5,MIT,python,runtime
-numcodecs,0.17.1,MIT,python,runtime
-three.js,0.160.0,MIT,javascript (vendored web/static/vendor),runtime (3D view)
-NIST XCOM attenuation tables,retrieved 2026-11-27,US Government work (public domain in the US),data,phantom physics
+OsteoQuant Desktop,0.1.0,proprietary (no licence chosen yet),application,-
+PySide6,6.12.0,LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only,python,bundled
+PySide6_Essentials,6.12.0,LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only,python,bundled
+PySide6_Addons,6.12.0,LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only,python,bundled
+shiboken6,6.12.0,LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only,python,bundled
+vtk,9.7.2,BSD,python,bundled
+numpy,2.5.3,BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0,python,bundled
+scipy,1.18.1,"Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",python,bundled
+scikit-image,0.26.0,Files: *,python,bundled
+scikit-learn,1.9.1,BSD-3-Clause,python,bundled
+zarr,3.4.2,MIT,python,bundled
+numcodecs,0.17.1,MIT,python,bundled
+simpleitk,2.5.8,Apache-2.0,python,bundled
+pydicom,3.0.2,see licence file,python,bundled
+nibabel,5.5.0,MIT,python,bundled
+pynrrd,1.1.4,Copyright (c) 2012 Maarten H. Everts and contributors. See AUTHORS for more,python,bundled
+tifffile,2026.11.26,BSD-3-Clause,python,bundled
+imagecodecs,2026.11.11,BSD-3-Clause,python,bundled
+olefile,0.47,BSD,python,bundled
+reportlab,5.0.1,"BSD license (see license.txt for details), Copyright (c) 2000-2025, ReportLab Inc.",python,bundled
+matplotlib,3.11.2,License agreement for matplotlib versions 1.3.0 and later,python,bundled
+pandas,3.0.5,BSD 3-Clause License,python,bundled
+statsmodels,0.15.0,BSD-3-Clause,python,bundled
+cryptography,50.0.1,Apache-2.0 OR BSD-3-Clause,python,bundled
+psutil,7.2.2,BSD-3-Clause,python,bundled
+pillow,13.0.0.post1,MIT-CMU,python,bundled
+fastapi,0.165.0,MIT,python,bundled
+starlette,1.7.0,BSD-3-Clause,python,bundled
+pydantic,2.13.5,MIT,python,bundled
+pydantic_core,2.46.5,MIT,python,bundled
+joblib,1.6.0,BSD-3-Clause,python,bundled
+threadpoolctl,3.8.0,BSD-3-Clause,python,bundled
+pypdfium2,5.14.0,"BSD-3-Clause, Apache-2.0, dependency licenses",python,bundled
+onnxruntime,1.29.0,MIT License,python,bundled
+PyYAML,6.0.3,MIT,python,bundled
+openpyxl,3.1.5,MIT,python,bundled
+networkx,3.7,BSD-3-Clause,python,bundled
+ImageIO,2.38.2,BSD-2-Clause,python,bundled
+lazy-loader,0.6,BSD-3-Clause,python,bundled
+packaging,26.3,Apache-2.0 OR BSD-2-Clause,python,bundled
+contourpy,1.4.0,BSD-3-Clause,python,bundled
+kiwisolver,1.5.1,=========================,python,bundled
+fonttools,4.69.1,MIT,python,bundled
+cycler,0.12.1,"Copyright (c) 2015, matplotlib project",python,bundled
+pyparsing,3.1.1,MIT,python,bundled
+python-dateutil,2.9.0.post0,Dual License,python,bundled
+six,1.17.0,MIT,python,bundled
+patsy,1.0.3,2-clause BSD,python,bundled
+cffi,2.1.1,MIT-0,python,bundled
+pycparser,3.0,BSD-3-Clause,python,bundled
+anyio,4.15.1,MIT,python,bundled
+sniffio,1.3.1,MIT OR Apache-2.0,python,bundled
+idna,3.20,BSD-3-Clause,python,bundled
+typing_extensions,4.16.0,PSF-2.0,python,bundled
+annotated-types,0.8.0,MIT,python,bundled
+donfig,0.8.1.post1,MIT,python,bundled
+google-crc32c,1.9.0,Apache-2.0,python,bundled
+MarkupSafe,3.0.3,BSD-3-Clause,python,bundled
+ast_serialize,0.11.2,MIT,python,bundled
+attrs,26.1.0,MIT,python,bundled
+certifi,2026.10.18,MPL-2.0,python,bundled
+charset-normalizer,3.5.1,MIT,python,bundled
+hypothesis,6.170.22,MPL-2.0,python,bundled
+librt,0.15.0,MIT,python,bundled
+lxml,6.1.3,BSD-3-Clause,python,bundled
+ml_dtypes,0.7.0,Apache-2.0,python,bundled
+msgpack,1.2.4,Apache-2.0,python,bundled
+msgspec,0.22.0,BSD-3-Clause,python,bundled
+mypy,2.3.1,MIT,python,bundled
+onnx,1.23.2,Apache-2.0,python,bundled
+opentelemetry-api,1.45.0,Apache-2.0,python,bundled
+protobuf,7.36.1,3-Clause BSD License,python,bundled
+setuptools,78.1.0,MIT License,python,bundled
+tomli,2.5.0,MIT,python,bundled
+wheel,0.42.0,MIT License,python,bundled
+wrapt,2.6.0.dev1,BSD-2-Clause,python,bundled
+Python runtime,3.13.18,PSF-2.0,runtime,bundled
+libbrotli1,1.1.0-2ubuntu0.1,see licenses/system/libbrotli1.copyright,system-library,bundled: libbrotlicommon.so.1 libbrotlidec.so.1
+libbsd0,0.12.1-1build1.1,see licenses/system/libbsd0.copyright,system-library,bundled: libbsd.so.0
+libbz2-1.0,1.0.8-5.1ubuntu0.1,see licenses/system/libbz2-1.0.copyright,system-library,bundled: libbz2.so.1.0
+libcap2,1:2.66-5ubuntu2.4,see licenses/system/libcap2.copyright,system-library,bundled: libcap.so.2
+libcom-err2,1.47.0-2.4~exp1ubuntu4.1,see licenses/system/libcom-err2.copyright,system-library,bundled: libcom_err.so.2
+libdbus-1-3,1.14.10-4ubuntu4.1,see licenses/system/libdbus-1-3.copyright,system-library,bundled: libdbus-1.so.3
+libexpat1,2.6.1-2ubuntu0.6,see licenses/system/libexpat1.copyright,system-library,bundled: libexpat.so.1
+libffi8,3.4.6-1build1,see licenses/system/libffi8.copyright,system-library,bundled: libffi.so.8
+libfontconfig1,2.15.0-1.1ubuntu2,see licenses/system/libfontconfig1.copyright,system-library,bundled: libfontconfig.so.1
+libfreetype6,2.13.2+dfsg-1ubuntu0.2,see licenses/system/libfreetype6.copyright,system-library,bundled: libfreetype.so.6
+libgcc-s1,14.2.0-4ubuntu2~24.04.1,see licenses/system/libgcc-s1.copyright,system-library,bundled: libgcc_s.so.1
+libgcrypt20,1.10.3-2ubuntu0.2,see licenses/system/libgcrypt20.copyright,system-library,bundled: libgcrypt.so.20
+libglib2.0-0t64,2.80.0-6ubuntu3.10,see licenses/system/libglib2.0-0t64.copyright,system-library,bundled: libglib-2.0.so.0 libgthread-2.0.so.0
+libgpg-error0,1.47-3build2.1,see licenses/system/libgpg-error0.copyright,system-library,bundled: libgpg-error.so.0
+libgssapi-krb5-2,1.20.1-6ubuntu2.10,see licenses/system/libgssapi-krb5-2.copyright,system-library,bundled: libgssapi_krb5.so.2
+libk5crypto3,1.20.1-6ubuntu2.10,see licenses/system/libk5crypto3.copyright,system-library,bundled: libk5crypto.so.3
+libkeyutils1,1.6.3-3build1,see licenses/system/libkeyutils1.copyright,system-library,bundled: libkeyutils.so.1
+libkrb5-3,1.20.1-6ubuntu2.10,see licenses/system/libkrb5-3.copyright,system-library,bundled: libkrb5.so.3
+libkrb5support0,1.20.1-6ubuntu2.10,see licenses/system/libkrb5support0.copyright,system-library,bundled: libkrb5support.so.0
+liblz4-1,1.9.4-1build1.1,see licenses/system/liblz4-1.copyright,system-library,bundled: liblz4.so.1
+liblzma5,5.6.1+really5.4.5-1ubuntu0.4,see licenses/system/liblzma5.copyright,system-library,bundled: liblzma.so.5
+libmd0,1.1.0-2build1.1,see licenses/system/libmd0.copyright,system-library,bundled: libmd.so.0
+libpcre2-8-0,10.42-4ubuntu2.2,see licenses/system/libpcre2-8-0.copyright,system-library,bundled: libpcre2-8.so.0
+libpng16-16t64,1.6.43-5ubuntu0.7,see licenses/system/libpng16-16t64.copyright,system-library,bundled: libpng16.so.16
+libssl3t64,3.0.13-0ubuntu3.16,see licenses/system/libssl3t64.copyright,system-library,bundled: libcrypto.so.3 libssl.so.3
+libstdc++6,14.2.0-4ubuntu2~24.04.1,see licenses/system/libstdc++6.copyright,system-library,bundled: libstdc++.so.6
+libsystemd0,255.4-1ubuntu8.18,see licenses/system/libsystemd0.copyright,system-library,bundled: libsystemd.so.0
+libx11-6,2:1.8.7-1ubuntu0.1,see licenses/system/libx11-6.copyright,system-library,bundled: libX11.so.6
+libx11-xcb1,2:1.8.7-1ubuntu0.1,see licenses/system/libx11-xcb1.copyright,system-library,bundled: libX11-xcb.so.1
+libxau6,1:1.0.9-1build6,see licenses/system/libxau6.copyright,system-library,bundled: libXau.so.6
+libxcb-cursor0,0.1.4-1build1,see licenses/system/libxcb-cursor0.copyright,system-library,bundled: libxcb-cursor.so.0
+libxcb-glx0,1.15-1ubuntu2,see licenses/system/libxcb-glx0.copyright,system-library,bundled: libxcb-glx.so.0
+libxcb-icccm4,0.4.1-1.1build3,see licenses/system/libxcb-icccm4.copyright,system-library,bundled: libxcb-icccm.so.4
+libxcb-image0,0.4.0-2build1,see licenses/system/libxcb-image0.copyright,system-library,bundled: libxcb-image.so.0
+libxcb-keysyms1,0.4.0-1build4,see licenses/system/libxcb-keysyms1.copyright,system-library,bundled: libxcb-keysyms.so.1
+libxcb-randr0,1.15-1ubuntu2,see licenses/system/libxcb-randr0.copyright,system-library,bundled: libxcb-randr.so.0
+libxcb-render-util0,0.3.9-1build4,see licenses/system/libxcb-render-util0.copyright,system-library,bundled: libxcb-render-util.so.0
+libxcb-render0,1.15-1ubuntu2,see licenses/system/libxcb-render0.copyright,system-library,bundled: libxcb-render.so.0
+libxcb-shape0,1.15-1ubuntu2,see licenses/system/libxcb-shape0.copyright,system-library,bundled: libxcb-shape.so.0
+libxcb-shm0,1.15-1ubuntu2,see licenses/system/libxcb-shm0.copyright,system-library,bundled: libxcb-shm.so.0
+libxcb-sync1,1.15-1ubuntu2,see licenses/system/libxcb-sync1.copyright,system-library,bundled: libxcb-sync.so.1
+libxcb-util1,0.4.0-1build3,see licenses/system/libxcb-util1.copyright,system-library,bundled: libxcb-util.so.1
+libxcb-xfixes0,1.15-1ubuntu2,see licenses/system/libxcb-xfixes0.copyright,system-library,bundled: libxcb-xfixes.so.0
+libxcb-xkb1,1.15-1ubuntu2,see licenses/system/libxcb-xkb1.copyright,system-library,bundled: libxcb-xkb.so.1
+libxdmcp6,1:1.1.3-0ubuntu6,see licenses/system/libxdmcp6.copyright,system-library,bundled: libXdmcp.so.6
+libxkbcommon-x11-0,1.6.0-1build1,see licenses/system/libxkbcommon-x11-0.copyright,system-library,bundled: libxkbcommon-x11.so.0
+libxkbcommon0,1.6.0-1build1,see licenses/system/libxkbcommon0.copyright,system-library,bundled: libxkbcommon.so.0
+libzstd1,1.5.5+dfsg2-2build1.1,see licenses/system/libzstd1.copyright,system-library,bundled: libzstd.so.1
+zlib1g,1:1.3.dfsg-3.1ubuntu2.3,see licenses/system/zlib1g.copyright,system-library,bundled: libz.so.1
+PCRE2 (Qt Core regular expressions),6.12.0,BSD-3-Clause WITH PCRE2-exception,compiled-into-Qt,bundled
+double-conversion (Qt Core),6.12.0,BSD-3-Clause,compiled-into-Qt,bundled
+zlib (Qt Core),6.12.0,Zlib,compiled-into-Qt,bundled
+forkfd (Qt Core),6.12.0,MIT,compiled-into-Qt,bundled
+tinycbor (Qt Core),6.12.0,MIT,compiled-into-Qt,bundled
+SHA-3 / Keccak and SHA-1 / RFC 6234 code (Qt Core),6.12.0,CC0-1.0 / BSD-3-Clause,compiled-into-Qt,bundled
+Easing equations by Robert Penner (Qt Core),6.12.0,BSD-3-Clause,compiled-into-Qt,bundled
+Unicode Character Database / CLDR data (Qt Core),6.12.0,Unicode-3.0,compiled-into-Qt,bundled
+HarfBuzz-NG (Qt Gui),6.12.0,MIT-Modern-Variant,compiled-into-Qt,bundled
+FreeType 2 (Qt Gui),6.12.0,FTL OR GPL-2.0-only (used under the FTL),compiled-into-Qt,bundled
+libpng (Qt Gui),6.12.0,libpng-2.0,compiled-into-Qt,bundled
+libjpeg-turbo (Qt Gui),6.12.0,IJG AND BSD-3-Clause AND Zlib,compiled-into-Qt,bundled
+md4c (Qt Gui markdown),6.12.0,MIT,compiled-into-Qt,bundled
+OpenGL / Vulkan / EGL headers (Khronos),6.12.0,MIT / Apache-2.0,compiled-into-Qt,bundled
+xcb-util family and xkbcommon headers (Qt XcbQpa),6.12.0,MIT / X11,compiled-into-Qt,bundled
+Wayland protocol files (Qt WaylandClient),6.12.0,MIT,compiled-into-Qt,bundled
+PDFium and its third-party code (Qt Pdf),6.12.0,BSD-3-Clause AND Apache-2.0 AND others (see Qt Pdf attributions),compiled-into-Qt,bundled

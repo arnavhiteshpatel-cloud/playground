@@ -178,3 +178,89 @@ need counsel or the university's technology-management office (OTM).
 | 14 | **Contract defaults**: data retention (90-day deletion vs return of a full archive package); turnaround commitment; the fee rule for refused endpoints (the percentage blank in SOW §7). | Before the first pilot template goes to counsel. | These are contract terms a CRO will negotiate. | CRO-09/10, SOW §7-8. |
 | 15 | **FTO opinion on the longitudinal module** (D-IP-4) before it is offered commercially. | Before a desktop day-0 workflow ships or day-0 analysis is sold. | Active third-party family flagged "Medium" in the landscape. | IP_STRATEGY D-IP-4. |
 | 16 | **Insurance** (professional/E&O, cyber) and a **lightweight QMS / document-control choice**. | Before the first paid pilot or any CRO vendor qualification. | Vendor qualification requires both. | CRO-07. |
+
+---
+
+## Response (2026-11-27)
+
+Status key: **Fixed** = the change is made and checked; **Partial** = part fixed, the remainder stated; **Founder** =
+needs a founder decision, now listed in `FOUNDER_DECISIONS.md`; **Disclosed** = limitation stated, not removed.
+Checks run after the changes: `python3 scripts/check_claims.py` (passes: L3 and financial-model figures checked,
+banned phrases and advisor-version consistency enforced), `python3 business/build_financial_model.py` (1,251
+formulas, no self-references, LibreOffice recalculation matches the Python mirror), `python3 packaging/bundle_inventory.py`
+and `packaging/check_bundle_licences.py` (both pass on the Linux bundle), `python3 -m pytest -q tests` with
+`QT_QPA_PLATFORM=offscreen`.
+
+### (a) Cycle-1 findings not verified in cycle 2
+
+| ID | Status | Evidence |
+|---|---|---|
+| QA-REG-01 (residual) | Fixed (footer) / Disclosed (per-endpoint stage) | Every PDF page footer prints "Research use only · not a medical device · not validated for GLP or 21 CFR Part 11" (`report/defectfill.py` `RUO_FOOTER`; test `test_pdf_banner_and_bounds`). The evidence stage stays one global sentence. |
+| INV-01 / INV-02 | Partial / Founder (#8) | Hard-coded claims in `investor/build_decks.py` corrected (web workbench, tenant isolation, 61 tests, independent review, $0.9/2.1/4.3M, GLP-readiness, day-0, named faculty member, gate). Decks not regenerated: retire or rebuild is founder decision #8. |
+| IP-01 | Disclosed | Windows/macOS bundles still not built (`BLOCKERS.md` B-013). |
+| IP-06 | Partial / Founder (#2) | `docs/ip/IP_STRATEGY.md` §1, §2, §4, §5 rewritten for a public code base; `INVENTION_REGISTER.md` §0 records PUBLIC and the 2027-11-27 bar date; bar date added to `FOUNDER_HANDOFF.md` §22 and `BLOCKERS.md` B-015. No `LICENSE` added: licence choice is founder decision #2. |
+| BIO-03 | Disclosed | Callus exclusion stated on the science page ("Biological limits"), in `SCIENTIFIC_METHODS.md` §10, `MATERIALS_AND_SUPPORT.md`, and in the report limitations for segmental studies (`api/bundle.py` `biological_limitations`). No callus-envelope ROI. |
+| BIO-04 | Partial | The desktop now passes the timepoint (C2-BIZ-04), so the ≤4-week branch is reachable. `NEW_BONE_REL_RANGE_EARLY` is still unused and the "≈1075" anchor remains (advisor code out of scope); the documents now say the early range is defined but not applied. Calcified cartilage added as a confounder (site, user docs, report limitations). |
+| CRO-02 | Fixed | All eight endpoints printed (group tables in chunks of four, per-specimen in chunks of five); `SCIENTIFIC_METHODS.md` §2 states that `*_of_certain` and architecture endpoints are not printed. |
+| CRO-03 | Fixed | SOW §7 adds a pre-contract feasibility gate with expected support statuses in Annex A. |
+| CRO-04/05 | Fixed (statement) / Founder (#13) | Services page "What we do not sell" lists metal-hardware segmental, osseointegration/BIC, day-0/longitudinal incl. large-animal day-0, physical-phantom characterisation. |
+| CRO-06 | Partial | Multi-Otsu thresholds now printed (read from `thresholds`); acquisition/reconstruction table added (prints "not recorded" when import has none); figure cap is stated. Import does not yet capture kVp etc. |
+| CRO-09 / CRO-10 | Founder (#14) | Quote, SOW and pilot proposal carry one placeholder for turnaround and retention pointing to decision #14 instead of conflicting figures. |
+| CRO-11 | Fixed | Group CIs clipped to the physical range and marked "†", withheld for n<3; unassigned specimens excluded from group stats (`bounded_describe`, `tests/test_report_bounds.py`). |
+| CRO-13 | Fixed | Sign-off role renamed "Customer approver" (report and `SIGNATURE_ROLES`; test updated). |
+| QA-REG-02 (residual) | Fixed | Dossier baseline now advisor 1.3.3. |
+| QA-REG-03 | Fixed | Grant drafts rewritten in aims form (NSF pitch, commercialisation plan, Cozad package, specific aims, letter template); banned-phrase check covers `grants/`. |
+| QA-REG-04 | Fixed | "Evidence pack" replaced by "engineering verification records (no IQ/OQ/PQ executed)" on the site and in O5. |
+| QA-REG-05 | Fixed | Quote is non-GLP only; SOW §8 no GLP archiving; GLP rows read "not offered"; pricing experiment M3 is a need question only; checker bans "GLP-supporting". |
+| QA-REG-06 | Fixed | `build_decks.py` cites 888.3045 special controls. |
+| QA-REG-07 | Fixed | "Audit-ready" removed (one-pager, About page, letter template, final-report builder); banned by the checker. |
+| QA-REG-08 | Fixed | All customer-facing documents cite advisor 1.3.3; version check in `check_claims.py`. |
+| QA-REG-10 | Fixed | RUO footer; CSV starts with a comment block (data class, review status, RUO line, units per column). |
+| QA-REG-11 | Fixed | New samples from current code: `reports_samples/DefectFill_SAMPLE4_gen2_synthetic_betatcp_refused.*` (refused endpoints with reasons, unassigned specimen) and `SAMPLE5_gen2_synthetic_ha_supported.*`; Gen-1 samples marked superseded in `deliverables/README.md`; demo script updated. |
+| QA-REG-12 | Fixed | `SCIENTIFIC_METHODS.md` §2 lists the PQ-01 NBV ±10% as a proposed PQ criterion to align with stage B. |
+| QA-REG-13 | Fixed / ledger entry | One-pager uses the collected test count; `FOUNDER_HANDOFF.md` §22 entry corrects "58 tests". |
+| QA-REG-14 | Fixed | `build_decks.py` pool $0.8M / $1.9M / $3.9M. |
+| QA-REG-15 | Fixed | `research` no longer mapped to `customer`; studies carry a data class chosen at creation; demo/self-test studies are `synthetic`; SYNTHETIC/RESEARCH banners (`tests/desktop/test_timepoint_dataclass.py`). |
+| QA-REG-16 | Disclosed | `glp` column remains in the schema (never set or shown). |
+| INV-03 | Fixed | One-pager rewritten from the ledgers; one gate (PRICING_VALIDATION_PLAN §7). |
+| INV-04 / -05 / -06 / -10 | Fixed (model) / Founder (#8 approval) | No revenue before incorporation and a first signed pilot; grants conditional and restricted, no-grant cash is the lead case; academic licences capped (Venture Optimistic 24, was 49); capacity statement rewritten. `business/REVENUE_MODEL.md` §4–6 regenerated from the outputs. |
+| INV-07 | Founder (#2) | Revenue without licence revenue reported ($114K Base 2031); risk added to FUNDING_STRATEGY §6. |
+| INV-08 | Fixed | "Independent review" removed (one-pager, decks builder, About page explains automated reviewers). |
+| INV-13 | Fixed | Workbook saved after LibreOffice recalculation; `data_only=True` shows the values. |
+| IP-02 / IP-03 | Partial / Founder (#12) | `packaging/bundle_inventory.py` maps every bundled library (751) to a licence source, copies PSF, ICU and 49 system-package copyright files, completes pypdfium2/PDFium, lists Qt third-party code, and fails on unmapped libraries; build and licence check call it. Server packages still bundled (desktop imports `api/app.py`); EULA and LGPL source arrangement are decision #12. Archive must be rebuilt (B-016). |
+| IP-04 | Fixed | `docs/security/SBOM.csv` and `sbom.cdx.json` regenerated from the bundle (purls); IP_PROVENANCE corrected (LGPL-3 Qt, GPL-2 fonts). |
+| IP-05 | Disclosed | GPL-2 font still bundled with licence and source; stated in legal page and IP_PROVENANCE. |
+| IP-07 / IP-13 / IP-15 | Founder (#3) | Not removed. The deck builder no longer names a faculty member. |
+| IP-10 | Fixed | ATTRIBUTION and the legal page carry creators, titles and changes; registry entries of the three SPROUT-derived models carry DOI, SPDX id, creators and attribution text; stale model names explained. |
+| IP-11 / IP-16 | Founder (#6, #10) | Listed. |
+| IP-12 | Fixed (site) / Founder (#5, #7) | Site states that paid engagements start only after incorporation and IP clearance. |
+
+### (b) Cycle-2 findings
+
+| ID | Status | Evidence |
+|---|---|---|
+| C2-BIZ-01 | Fixed | Science page and `MATERIALS_AND_SUPPORT.md` tables regenerated from advisor 1.3.3 by `scripts/material_support_table.py` (45S5 not intensity-supported without a measured reference; S53P4 only at known ≤4 weeks); 1.3.x rules documented in `SCIENTIFIC_METHODS.md` §3.3–3.4 and on the site; version check in `check_claims.py`. |
+| C2-BIZ-02 | Fixed | No S1/S1b/S1c numbers in customer-facing text ("validation under advisor 1.3.3 in progress — see EXPERIMENT_REGISTRY.md"); the checker bans "n of m failures refused" and P(fail\|supported); L3 figures quoted from the result file and checked (`L3_dice_*`); registry entry added correcting the S1/S1c labels. |
+| C2-BIZ-03 | Fixed (by removal) | The "54/54" card replaced; the registry entry requires coverage and per-endpoint errors when 1.3.3 results are quoted. |
+| C2-BIZ-04 | Fixed | Analysis dialog field "Time since implantation" (from timepoint / weeks / unknown); `services.resolve_healing_weeks` passes `healing_weeks` and its source; report prints both; tests in `tests/desktop/test_timepoint_dataclass.py`. |
+| C2-BIZ-05 | Fixed | See QA-REG-15. |
+| C2-BIZ-06 | Fixed / Partial | Bounded CIs, no CI for n<3, unassigned excluded, "—" for missing values, all endpoints, thresholds, acquisition table, RUO footer, "Customer approver". Acquisition values are only as good as the import metadata. |
+| C2-BIZ-07 | Fixed | See QA-REG-11. |
+| C2-BIZ-08 | Partial | Notices completed in the built folder and generated by the build; the website wording corrected (`licenses/`, `THIRD_PARTY_NOTICES.txt`); archive not rebuilt (B-016); server packages remain. |
+| C2-BIZ-09 | Founder (#12) | Counsel question recorded; written offer for the LGPL-2.1 system libraries added to the notices. |
+| C2-BIZ-10 | Fixed | SBOM regenerated; IP_PROVENANCE and IP_STRATEGY state LGPL-3 Qt (dynamically linked) and GPL-2 fonts. |
+| C2-BIZ-11 | Fixed | One-pager rewritten (test count, IPL agreement wording, internal automated review, tamper-evident audit trail, simulation-based assessment, day-0 only without motion, one gate). |
+| C2-BIZ-12 | Fixed / Founder (#8) | Model rebuilt (see INV-04…); FUNDING_STRATEGY §1 leads with cash without grants; four risks added; "day-0 is unproven under granule motion; histology is the fallback". |
+| C2-BIZ-13 | Fixed / Founder (#13) | Product description drops day-0; O3 and the services card describe simulation-based assessment now and physical phantoms after stage B; price floor left to the founder. |
+| C2-BIZ-14 | Fixed | Banned-phrase check in `check_claims.py` over website/, docs/user/, investor/, grants/, business/. |
+| C2-BIZ-15 | Fixed | See QA-REG-03. |
+| C2-BIZ-16 | Fixed (statement) | Day-0 column regenerated with 1.3.3 at 0 and 50 µm (same answer) and captioned: support depends on tracking values the simulation has not achieved; bone-derived grafts now refused. The 200 µm policy tolerance is unchanged (advisor out of scope). |
+| C2-BIZ-17 | Fixed (disclosure) | "Biological limits" on the science page, in SCIENTIFIC_METHODS §10, MATERIALS_AND_SUPPORT and the report limitations. Advisor conditions for segmental/early endochondral cases not added (advisor out of scope). |
+| C2-BIZ-18 | Fixed | Autograft/allograft not supported with day-0 (advisor 1.3.3, documented); "creeping substitution" replaced for ceramics; 45S5 appearance marked [ASSUMPTION] with the 0.93 vs 1.57 disagreement. |
+| C2-BIZ-19 | Partial | ONNX/PyTorch, user-management and 800–1000 statements corrected (site, FAQ, release notes, PACKAGING). Report screenshot not regenerated; relative repository links left for the publication step (founder decision #7). |
+| C2-BIZ-20 | Fixed | `docs/reviews/` excluded; CLAIMS extended (L3, financial outputs); checker passes. `.pptx` text not scanned (decks not regenerated). |
+| C2-BIZ-21 | Fixed | See IP-10. |
+| C2-BIZ-22 | Fixed / Founder (#1, #2) | See IP-06; `FOUNDER_DECISIONS.md` key dates lead with the 2027-11-27 bar date and the 2027-09 practical date. |
+| C2-BIZ-23 | Partial / Founder (#6, #7) | Footer reads "© 2026 [founder name] (no company exists yet…) … Unpublished draft"; About/Contact still need the founder's details; trademark knockout pending. |
+| C2-BIZ-24 | Fixed | Services and home pages: "Paid engagements start only after incorporation and IP clearance (no date set yet). Until then we can discuss free retrospective evaluations under a mutual NDA." |
+| (c) 1–16 | Founder | All sixteen listed in `FOUNDER_DECISIONS.md` with deadline, options, consequences and who to ask, earliest deadline first. |

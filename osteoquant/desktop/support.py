@@ -11,7 +11,12 @@ documented there.
 from __future__ import annotations
 
 SUPPORTED, FLAGGED, NOT_SUPPORTED = "supported", "flagged", "not supported"
-_RANK = {SUPPORTED: 0, FLAGGED: 1, NOT_SUPPORTED: 2}
+# no measurement-support assessment exists for the endpoint (advisor output missing or unreadable): never
+# shown as supported and, like "not supported", reported without a number (C2-PRD-12)
+NOT_ASSESSED = "not assessed"
+_RANK = {SUPPORTED: 0, FLAGGED: 1, NOT_ASSESSED: 2, NOT_SUPPORTED: 3}
+NO_NUMBER = (NOT_SUPPORTED, NOT_ASSESSED)
+NO_ASSESSMENT_REASON = "no measurement-support assessment (advisor output missing or not recognised)"
 
 # endpoint key -> (label, unit, path inside result["metrics"], scale for display)
 ENDPOINTS = [
@@ -52,6 +57,8 @@ ADVISOR_ENDPOINT_MAP = {
     "mineral_fraction_of_defect": ["mineralized_fraction"],
 }
 ADVISOR_STATUS = {"supported": SUPPORTED, "supported_with_conditions": FLAGGED, "not_supported": NOT_SUPPORTED}
+# desktop endpoints whose support depends on graft / new-bone separability (assessed by the advisor)
+ADVISOR_KEYS = sorted({k for keys in ADVISOR_ENDPOINT_MAP.values() for k in keys})
 
 
 def _separability_assessment(result: dict) -> list[dict]:
@@ -67,13 +74,21 @@ def _separability_assessment(result: dict) -> list[dict]:
     except ImportError:   # library without the advisor
         endpoints = ((result or {}).get("measurement_support") or {}).get("endpoints") or {}
     out = []
+    covered: set = set()
+    if not isinstance(endpoints, dict):
+        endpoints = {}
     for ep, info in endpoints.items():
         keys = ADVISOR_ENDPOINT_MAP.get(ep)
-        st = ADVISOR_STATUS.get(str((info or {}).get("status")))
+        st = ADVISOR_STATUS.get(str((info or {}).get("status") if isinstance(info, dict) else None))
         if not keys or not st:
-            continue
+            continue           # unknown endpoint or status: not an assessment (handled below, fail closed)
+        covered.update(keys)
         reason = (info or {}).get("reason") or ep.replace("_", " ")
         out.append({"status": st, "reason": f"advisor: {reason}", "endpoints": keys})
+    # fail closed: graft / new-bone endpoints without a recognised assessment are "not assessed" (C2-PRD-12)
+    missing = [k for k in ADVISOR_KEYS if k not in covered]
+    if missing:
+        out.append({"status": NOT_ASSESSED, "reason": NO_ASSESSMENT_REASON, "endpoints": missing})
     return out
 
 
@@ -86,7 +101,7 @@ def roi_requires_review(result: dict) -> bool:
     return bool((roi.get("diagnostics") or {}).get("requires_review"))
 
 
-def measurement_support(result: dict, roi_accepted: bool = False) -> dict:
+def measurement_support(result: dict, roi_accepted: bool = False, manual_roi_pending: bool = False) -> dict:
     """Return ``{"overall": status, "endpoints": {key: {"status", "reasons"}}, "reasons": [...]}``.
 
     ``overall`` is *supported* when every endpoint is supported, *not supported* when none is
@@ -124,8 +139,8 @@ def measurement_support(result: dict, roi_accepted: bool = False) -> dict:
     elif verdict == "review":
         warned = _qc_problem_names(qc, ("warn", "fail"))
         flag(all_keys, FLAGGED, "QC verdict 'review'" + (": " + ", ".join(warned[:3]) if warned else ""))
-    elif verdict is None:
-        general.append("QC not run")
+    elif verdict != "suitable":       # QC missing or unknown verdict: never green (C2-PRD-12)
+        flag(all_keys, FLAGGED, "QC not run" if verdict is None else f"QC verdict {verdict!r} not recognised")
 
     for p in result.get("plausibility") or []:
         if not p.get("ok", True):
@@ -136,6 +151,9 @@ def measurement_support(result: dict, roi_accepted: bool = False) -> dict:
             general.append("automatic ROI accepted by a reviewer")
         else:
             flag(all_keys, FLAGGED, "automatic ROI not yet accepted (review the ROI outline, then Accept ROI)")
+
+    if manual_roi_pending:
+        flag(all_keys, FLAGGED, "manual ROI not yet accepted by a second person (Accept ROI)")
 
     unc = get_path(metrics, "class_volumes.uncertain_fraction", 0.0) or 0.0
     if unc > 0.25:
@@ -169,7 +187,9 @@ def measurement_support(result: dict, roi_accepted: bool = False) -> dict:
     else:
         overall = FLAGGED
     n_ns = sum(s == NOT_SUPPORTED for s in sts)
+    n_na = sum(s == NOT_ASSESSED for s in sts)
     reasons = general + ([f"{n_ns} of {len(sts)} endpoints not supported"] if n_ns and overall != NOT_SUPPORTED else []) \
+        + ([f"{n_na} of {len(sts)} endpoints not assessed"] if n_na else []) \
         + sorted({r for e in eps.values() for r in e["reasons"]})
     return {"overall": overall, "endpoints": eps, "reasons": reasons}
 
@@ -185,8 +205,8 @@ ENDPOINT_BY_KEY = {k: (label, unit, path, scale) for k, label, unit, path, scale
 def endpoint_value(result: dict, support: dict, key: str) -> tuple:
     """(display value or None, status, reasons) for one endpoint.
 
-    The single rule used by every view and export: an endpoint whose status is *not supported*
-    never yields a number, whatever the stored value; the reasons say why. Reasons are de-duplicated
+    The single rule used by every view and export: an endpoint whose status is *not supported* or
+    *not assessed* never yields a number, whatever the stored value; the reasons say why. Reasons are de-duplicated
     (advisor reasons appear once, with or without the "advisor:" prefix)."""
     _, _, path, scale = ENDPOINT_BY_KEY[key]
     e = (support or {}).get("endpoints", {}).get(key) or {"status": NOT_SUPPORTED, "reasons": []}
@@ -198,6 +218,8 @@ def endpoint_value(result: dict, support: dict, key: str) -> tuple:
         if n and n not in seen:
             seen.add(n)
             reasons.append(r)
+    if e["status"] == NOT_ASSESSED:
+        return None, NOT_ASSESSED, reasons or [NO_ASSESSMENT_REASON]
     if e["status"] == NOT_SUPPORTED or not isinstance(v, (int, float)) or isinstance(v, bool):
         return None, NOT_SUPPORTED, reasons or ["not computed"]
     return float(v) * scale, e["status"], reasons

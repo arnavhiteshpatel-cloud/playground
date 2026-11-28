@@ -12,6 +12,20 @@ Structures: 'Bootstrapped' (founder-led services + desktop licences) and 'Ventur
 same prices and conversion rates, more conversations and expansion modules from year 3).
 Scenarios: Conservative / Base / Optimistic.
 
+Timing and grants (cycle-2 review C2-BIZ-12, INV-04/05/06/07):
+  * No revenue before incorporation and a first signed pilot. Paid pilots (and everything that follows from them)
+    are scaled by the share of each year in which selling is possible (after M0 entity + IP clearance + insurance +
+    counsel-reviewed contracts, and M3 first signed pilot): 2027 = 0 / 0.25 / 0.5 (Conservative / Base /
+    Optimistic), later years 1. Licences need a licence/EULA and a production signing key and start only after the
+    first signed pilot: 0 in 2027 in every scenario.
+  * Grants are NOT operating cash. The lead case is cash WITHOUT grants. Grant awards are conditional (eligibility
+    unresolved; nothing applied for); an award is restricted to its project (incl. the >=30% research-institution
+    subaward of an STTR) and only its fee share plus the planned costs the project legitimately pays (e.g. the
+    phantom study) improve operating cash. Both cash paths are reported; the equity requirement headline is the
+    no-grant one.
+  * Licence revenue has no enforceable basis while the source is public with no licence/EULA (founder decision):
+    2031 revenue without licence revenue is reported alongside.
+
 Reproducibility:
   python business/build_financial_model.py
   * writes the workbook (all outputs are Excel formulas that reference the 'Inputs' sheet);
@@ -68,6 +82,12 @@ add("conv", "Qualified industry discovery conversations (distinct buying units)"
     "[AE] founder capacity; capped by ~200 US-visible industry buying units (MARKET_MODEL_INPUTS.md §1b, §2)",
     {"Bootstrapped": S([12, 20, 25, 25, 25], [20, 30, 35, 35, 35], [25, 40, 45, 50, 50]),
      "Venture": S([20, 30, 40, 45, 45], [30, 45, 55, 60, 60], [35, 55, 70, 80, 80])})
+add("sell", "Share of year in which paid work can be sold (after M0 entity/IP/insurance/contracts and M3 first signed pilot)",
+    "%", "[AE] FUNDING_STRATEGY.md §3 milestones: M0 Dec 2026-Feb 2027, M3 first paid pilot mid-2027 at the earliest",
+    same(S([0.0, 1, 1, 1, 1], [0.25, 1, 1, 1, 1], [0.5, 1, 1, 1, 1])))
+add("lic_avail", "Share of year in which licences can be sold (EULA + production signing key, after the first signed pilot)",
+    "%", "[AE] no production key or EULA exists (PACKAGING.md); founder decision on the code licence",
+    same(S([0.0, 0.5, 1, 1, 1], [0.0, 1, 1, 1, 1], [0.0, 1, 1, 1, 1])))
 add("r_pilot", "Conversation -> paid pilot rate", "%", "[HYP] untested; decision threshold in PRICING_VALIDATION_PLAN.md",
     same(S(0.08, 0.15, 0.22)))
 add("r_cust", "Paid pilot -> recurring study customer rate", "%", "[HYP] untested", same(S(0.25, 0.40, 0.50)))
@@ -80,9 +100,10 @@ add("r_char", "Material characterisations per paid pilot (attach rate)", "%", "[
 add("p_char", "Price: material characterisation", "$", "[HYP] founder range $5-15K", same(S(5000, 9000, 15000)))
 # Academic ---------------------------------------------------------------------------------------------------------
 add("evals", "Academic labs/cores starting a licence evaluation", "#",
-    "[AE] vs 45-49 orgs with NIH micro-CT bone-repair projects (MARKET_MODEL_INPUTS.md §3)",
-    {"Bootstrapped": S([2, 4, 6, 8, 8], [4, 8, 12, 15, 18], [6, 12, 18, 22, 25]),
-     "Venture": S([4, 8, 12, 16, 20], [6, 12, 18, 24, 28], [10, 18, 28, 36, 42])})
+    "[AE] vs 45-49 orgs with NIH micro-CT bone-repair projects (MARKET_MODEL_INPUTS.md §3); capped so that active "
+    "licences stay well below the 49 [V] organisations (review INV-06)",
+    {"Bootstrapped": S([2, 4, 6, 8, 8], [4, 8, 10, 12, 12], [6, 10, 12, 14, 14]),
+     "Venture": S([4, 8, 10, 12, 12], [6, 10, 12, 14, 16], [8, 12, 16, 18, 20])})
 add("r_acad", "Evaluation -> academic licence rate", "%", "[HYP] untested", same(S(0.20, 0.35, 0.45)))
 add("ret_acad", "Academic licence annual retention", "%", "[HYP] grant-cycle dependent", same(S(0.70, 0.80, 0.85)))
 add("p_acad", "Price: academic desktop licence per year", "$", "[HYP] founder range $4-10K/yr", same(S(4000, 6000, 10000)))
@@ -131,11 +152,18 @@ add("opex", "Other opex (legal, insurance, software, code signing, travel)", "$"
                   [80000, 150000, 220000, 290000, 360000])})
 add("sm", "Sales & marketing cost per conversation / evaluation", "$", "[AE] travel, conference share, demo media",
     {"Bootstrapped": S(200, 150, 120), "Venture": S(400, 350, 300)})
-add("grant", "Non-dilutive grants & prizes received (conditional on eligibility)", "$",
-    "[HYP] Phase I up to $305K NSF [V]; PI-eligibility unresolved (grants/NSF_vs_NIH_ELIGIBILITY.md)",
+add("grant", "Grant / prize AWARDS - CONDITIONAL (none applied for; eligibility unresolved)", "$",
+    "[HYP] Phase I up to $305K NSF [V]; PI-eligibility unresolved (grants/NSF_vs_NIH_ELIGIBILITY.md); "
+    "restricted to the funded project",
     {"Bootstrapped": S([0, 0, 0, 0, 0], [20000, 150000, 155000, 0, 0], [40000, 150000, 155000, 0, 0]),
      "Venture": S([0, 150000, 155000, 0, 0], [20000, 150000, 155000, 500000, 750000],
                   [40000, 150000, 155000, 500000, 750000])})
+
+add("g_fee", "Grant share that is unrestricted (SBIR/STTR fee / profit)", "%",
+    "[AE] up to ~7% fee on SBIR/STTR awards; prizes treated the same way for prudence", same(S(0.0, 0.07, 0.07)))
+add("g_offset", "Share of restricted grant spend that pays costs already in this plan (e.g. phantom study, stipend)",
+    "%", "[AE] the rest is new project work (incl. STTR subaward >=30%) that would not otherwise be done",
+    same(S(0.10, 0.25, 0.40)))
 
 KEYS = list(P.keys())
 
@@ -152,8 +180,8 @@ def val(key, st, sc, j):
 # ---------------------------------------------------------------------------------------------------------------
 LINES = [
     ("Industry conversations", "0", False, lambda c, j: c.i("conv", j), lambda x, j: x.i("conv", j)),
-    ("Paid pilots", "0.0", False, lambda c, j: c.i("conv", j) * c.i("r_pilot", j),
-     lambda x, j: f"{x.i('conv', j)}*{x.i('r_pilot', j)}"),
+    ("Paid pilots", "0.0", False, lambda c, j: c.i("conv", j) * c.i("r_pilot", j) * c.i("sell", j),
+     lambda x, j: f"{x.i('conv', j)}*{x.i('r_pilot', j)}*{x.i('sell', j)}"),
     ("New study customers", "0.0", False, lambda c, j: c.l("Paid pilots", j) * c.i("r_cust", j),
      lambda x, j: f"{x.l('Paid pilots', j)}*{x.i('r_cust', j)}"),
     ("Active study customers (year end)", "0.0", False,
@@ -167,14 +195,14 @@ LINES = [
     ("Material characterisations", "0.0", False, lambda c, j: c.l("Paid pilots", j) * c.i("r_char", j),
      lambda x, j: f"{x.l('Paid pilots', j)}*{x.i('r_char', j)}"),
     ("Academic evaluations", "0", False, lambda c, j: c.i("evals", j), lambda x, j: x.i("evals", j)),
-    ("New academic licences", "0.0", False, lambda c, j: c.i("evals", j) * c.i("r_acad", j),
-     lambda x, j: f"{x.i('evals', j)}*{x.i('r_acad', j)}"),
+    ("New academic licences", "0.0", False, lambda c, j: c.i("evals", j) * c.i("r_acad", j) * c.i("lic_avail", j),
+     lambda x, j: f"{x.i('evals', j)}*{x.i('r_acad', j)}*{x.i('lic_avail', j)}"),
     ("Active academic licences", "0.0", False,
      lambda c, j: c.l("Active academic licences", j - 1) * c.i("ret_acad", j) + c.l("New academic licences", j),
      lambda x, j: f"{x.l('Active academic licences', j - 1)}*{x.i('ret_acad', j)}+{x.l('New academic licences', j)}"),
     ("Active enterprise licences", "0.0", False,
-     lambda c, j: c.l("Active enterprise licences", j - 1) * c.i("ret_ent", j) + c.i("ent_new", j),
-     lambda x, j: f"{x.l('Active enterprise licences', j - 1)}*{x.i('ret_ent', j)}+{x.i('ent_new', j)}"),
+     lambda c, j: c.l("Active enterprise licences", j - 1) * c.i("ret_ent", j) + c.i("ent_new", j) * c.i("lic_avail", j),
+     lambda x, j: f"{x.l('Active enterprise licences', j - 1)}*{x.i('ret_ent', j)}+{x.i('ent_new', j)}*{x.i('lic_avail', j)}"),
     ("Pilot revenue", "#,##0", False, lambda c, j: c.l("Paid pilots", j) * c.i("p_pilot", j),
      lambda x, j: f"{x.l('Paid pilots', j)}*{x.i('p_pilot', j)}"),
     ("Study analysis revenue", "#,##0", False, lambda c, j: c.l("Non-GLP studies analysed", j) * c.i("p_study", j),
@@ -237,18 +265,26 @@ OPEX = ["Salaries", "Validation & QA", "Other opex", "Sales & marketing"]
 LINES += [
     ("EBITDA", "#,##0", True, lambda c, j: c.l("Gross profit", j) - sum(c.l(n, j) for n in OPEX),
      lambda x, j: f"{x.l('Gross profit', j)}-" + "-".join(x.l(n, j) for n in OPEX)),
-    ("Grants & prizes (non-dilutive)", "#,##0", False, lambda c, j: c.i("grant", j), lambda x, j: x.i("grant", j)),
-    ("Net cash flow before equity", "#,##0", True, lambda c, j: c.l("EBITDA", j) + c.l("Grants & prizes (non-dilutive)", j),
-     lambda x, j: f"{x.l('EBITDA', j)}+{x.l('Grants & prizes (non-dilutive)', j)}"),
-    ("Cumulative cash before equity", "#,##0", True,
-     lambda c, j: c.l("Cumulative cash before equity", j - 1) + c.l("Net cash flow before equity", j),
-     lambda x, j: (x.l("Net cash flow before equity", j) if j == 0
-                   else f"{x.l('Cumulative cash before equity', j - 1)}+{x.l('Net cash flow before equity', j)}")),
-]
-LINES += [
-    ("Cumulative cash if no grants are won", "#,##0", False,
-     lambda c, j: c.l("Cumulative cash if no grants are won", j - 1) + c.l("EBITDA", j),
-     lambda x, j: (x.l("EBITDA", j) if j == 0 else f"{x.l('Cumulative cash if no grants are won', j - 1)}+{x.l('EBITDA', j)}")),
+    ("Cumulative cash - NO grants (lead case)", "#,##0", True,
+     lambda c, j: c.l("Cumulative cash - NO grants (lead case)", j - 1) + c.l("EBITDA", j),
+     lambda x, j: (x.l("EBITDA", j) if j == 0
+                   else f"{x.l('Cumulative cash - NO grants (lead case)', j - 1)}+{x.l('EBITDA', j)}")),
+    ("Grant awards - CONDITIONAL, not operating cash", "#,##0", False, lambda c, j: c.i("grant", j),
+     lambda x, j: x.i("grant", j)),
+    ("Restricted grant project spend (incl. STTR subaward)", "#,##0", False,
+     lambda c, j: c.l("Grant awards - CONDITIONAL, not operating cash", j) * (1 - c.i("g_fee", j)),
+     lambda x, j: f"{x.l('Grant awards - CONDITIONAL, not operating cash', j)}*(1-{x.i('g_fee', j)})"),
+    ("Grant effect on operating cash IF awarded", "#,##0", False,
+     lambda c, j: c.l("Grant awards - CONDITIONAL, not operating cash", j) * c.i("g_fee", j)
+     + c.l("Restricted grant project spend (incl. STTR subaward)", j) * c.i("g_offset", j),
+     lambda x, j: f"{x.l('Grant awards - CONDITIONAL, not operating cash', j)}*{x.i('g_fee', j)}"
+                  f"+{x.l('Restricted grant project spend (incl. STTR subaward)', j)}*{x.i('g_offset', j)}"),
+    ("Cumulative cash - WITH grants IF awarded (conditional)", "#,##0", False,
+     lambda c, j: c.l("Cumulative cash - WITH grants IF awarded (conditional)", j - 1) + c.l("EBITDA", j)
+     + c.l("Grant effect on operating cash IF awarded", j),
+     lambda x, j: (f"{x.l('EBITDA', j)}+{x.l('Grant effect on operating cash IF awarded', j)}" if j == 0
+                   else f"{x.l('Cumulative cash - WITH grants IF awarded (conditional)', j - 1)}+{x.l('EBITDA', j)}"
+                        f"+{x.l('Grant effect on operating cash IF awarded', j)}")),
 ]
 LINE_NAMES = [n for n, *_ in LINES]
 
@@ -277,8 +313,13 @@ def compute(st, sc, override=None):
         for name, _fmt, _b, pf, _xf in LINES:
             c.v[(name, j)] = pf(c, j)
     out = {n: [c.v[(n, j)] for j in range(5)] for n in LINE_NAMES}
-    out["Equity funding requirement (max cumulative deficit)"] = -min(0.0, min(out["Cumulative cash before equity"]))
-    out["Equity requirement if no grants are won"] = -min(0.0, min(out["Cumulative cash if no grants are won"]))
+    # headline equity requirement = NO-grant lead case (grants are conditional and restricted)
+    out["Equity funding requirement (max cumulative deficit)"] = -min(0.0, min(out["Cumulative cash - NO grants (lead case)"]))
+    out["Equity requirement WITH grants IF awarded (conditional)"] = -min(
+        0.0, min(out["Cumulative cash - WITH grants IF awarded (conditional)"]))
+    lic = [out["Academic licence revenue"][j] + out["Enterprise licence revenue"][j] for j in range(5)]
+    out["Total revenue without licence revenue"] = [
+        out["Total revenue"][j] - lic[j] * (1 + (c.i("exp", j) if j < 5 else 0)) for j in range(5)]
     return out
 
 
@@ -304,7 +345,14 @@ def build_workbook(path):
         "for the full year in which they are active.",
         "Structures: 'Bootstrapped' = founder-led services + desktop licences; 'Venture' = pre-seed funded team with the same "
         "prices and conversion rates, more conversations, and hypothetical expansion modules from 2029.",
-        "Grants are conditional: SBIR/STTR PI-eligibility for a full-time student is unresolved (grants/NSF_vs_NIH_ELIGIBILITY.md).",
+        "No revenue before incorporation and a first signed pilot: paid work is scaled by the share of each year in which it "
+        "can be sold (2027: 0 / 25% / 50%); licences start only after the first signed pilot (none in 2027).",
+        "Grants are NOT operating cash. The lead case is 'Cumulative cash - NO grants'. Grant awards are conditional (none "
+        "applied for; SBIR/STTR PI-eligibility for a full-time student is unresolved, grants/NSF_vs_NIH_ELIGIBILITY.md) and "
+        "restricted to the funded project (an STTR needs a >=30% research-institution subaward); only the fee share and the "
+        "planned costs the project legitimately pays reach operating cash ('WITH grants IF awarded').",
+        "Licence revenue needs an enforceable licence/EULA and a production signing key (neither exists); the JSON output "
+        "also reports total revenue without licence revenue.",
         "Rationale for every input: business/REVENUE_MODEL.md. Rebuild: python business/build_financial_model.py",
     ]
     for i, n in enumerate(notes, 1):
@@ -375,18 +423,18 @@ def build_workbook(path):
                     if bold:
                         c.font = Font(bold=True)
                 line_cells[(st, sc, name)] = rr
-            sh.cell(row, 1, "Equity funding requirement (max cumulative deficit)").font = Font(bold=True, color="8B1E1E")
-            cr = rows["Cumulative cash before equity"]
+            sh.cell(row, 1, "Equity funding requirement (max cumulative deficit) - NO grants").font = Font(bold=True, color="8B1E1E")
+            cr = rows["Cumulative cash - NO grants (lead case)"]
             c = sh.cell(row, 2, f"=-MIN(0,MIN(B{cr}:F{cr}))")
             c.number_format = "#,##0"
             c.font = Font(bold=True, color="8B1E1E")
             line_cells[(st, sc, "Equity funding requirement (max cumulative deficit)")] = row
             row += 1
-            sh.cell(row, 1, "Equity requirement if no grants are won")
-            nr = rows["Cumulative cash if no grants are won"]
+            sh.cell(row, 1, "Equity requirement WITH grants IF awarded (conditional)")
+            nr = rows["Cumulative cash - WITH grants IF awarded (conditional)"]
             c = sh.cell(row, 2, f"=-MIN(0,MIN(B{nr}:F{nr}))")
             c.number_format = "#,##0"
-            line_cells[(st, sc, "Equity requirement if no grants are won")] = row
+            line_cells[(st, sc, "Equity requirement WITH grants IF awarded (conditional)")] = row
             row += 2
         sh.column_dimensions["A"].width = 52
         for j in range(5):
@@ -548,7 +596,7 @@ def sensitivity(st="Bootstrapped"):
                                 for rc in grid["cols_r_cust"]])
     # break-even: lowest study price at which Base cumulative 5-yr EBITDA + grants >= 0 (bisection)
     def cum_cash(p):
-        return compute(st, "Base", {"p_study": p})["Cumulative cash if no grants are won"][4]
+        return compute(st, "Base", {"p_study": p})["Cumulative cash - NO grants (lead case)"][4]
     lo, hi = 0.0, 200000.0
     be = None
     if cum_cash(hi) >= 0:
@@ -657,7 +705,11 @@ def libreoffice_check(path, results, line_cells):
                 worst = max(worst, abs(got - e) / max(1.0, abs(e)))
         if worst > 1e-9:
             raise AssertionError(f"Excel/LibreOffice and Python mirror disagree (max rel diff {worst})")
-        return f"LibreOffice recalculation matches the Python mirror on {len(line_cells)} lines (max rel diff {worst:.1e})"
+        # keep the recalculated copy (formulas + cached values) so that readers without a calculation engine
+        # (openpyxl data_only=True, previewers) see the numbers (review INV-13)
+        shutil.copy(outdir / "in.xlsx", path)
+        return (f"LibreOffice recalculation matches the Python mirror on {len(line_cells)} lines (max rel diff {worst:.1e}); "
+                "workbook saved with cached values")
 
 
 def main(path=HERE / "FINANCIAL_MODEL.xlsx"):
@@ -674,8 +726,12 @@ def main(path=HERE / "FINANCIAL_MODEL.xlsx"):
                                              "Material characterisations", "Active study customers (year end)",
                                              "Active academic licences", "Active enterprise licences",
                                              "Implied delivery FTE", "Gross margin %", "EBITDA",
-                                             "Grants & prizes (non-dilutive)", "Cumulative cash before equity",
-                                             "Cumulative cash if no grants are won"]
+                                             "Cumulative cash - NO grants (lead case)",
+                                             "Grant awards - CONDITIONAL, not operating cash",
+                                             "Restricted grant project spend (incl. STTR subaward)",
+                                             "Grant effect on operating cash IF awarded",
+                                             "Cumulative cash - WITH grants IF awarded (conditional)",
+                                             "Total revenue without licence revenue"]
     out = {}
     for k, v in results.items():
         d = {}
@@ -689,8 +745,8 @@ def main(path=HERE / "FINANCIAL_MODEL.xlsx"):
                 d[n] = [round(x) for x in v[n]]
         d["Equity funding requirement (max cumulative deficit)"] = [
             round(v["Equity funding requirement (max cumulative deficit)"]), None, None, None, None]
-        d["Equity requirement if no grants are won"] = [round(v["Equity requirement if no grants are won"]), None, None, None,
-                                                        None]
+        d["Equity requirement WITH grants IF awarded (conditional)"] = [
+            round(v["Equity requirement WITH grants IF awarded (conditional)"]), None, None, None, None]
         out[k] = d
     (HERE / "financial_model_outputs.json").write_text(json.dumps(out, indent=1, ensure_ascii=True) + "\n")
     (HERE / "revenue_model_sensitivity.json").write_text(
@@ -698,7 +754,9 @@ def main(path=HERE / "FINANCIAL_MODEL.xlsx"):
     print("saved", path, "and JSON outputs")
     for k, v in out.items():
         print(f"{k:28s} rev {v['Total revenue']}  GM31 {v['Gross margin %'][4]:.0%}  "
-              f"cum {v['Cumulative cash before equity'][4]:,}  equity {v['Equity funding requirement (max cumulative deficit)'][0]:,}")
+              f"cash31 no-grants {v['Cumulative cash - NO grants (lead case)'][4]:,}  "
+              f"with-grants {v['Cumulative cash - WITH grants IF awarded (conditional)'][4]:,}  "
+              f"equity(no grants) {v['Equity funding requirement (max cumulative deficit)'][0]:,}  rev27 {v['Total revenue'][0]:,}")
 
 
 if __name__ == "__main__":

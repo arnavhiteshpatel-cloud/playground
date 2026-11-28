@@ -104,7 +104,8 @@ def test_reopen_is_idempotent_and_chain_survives(tmp_path):
     head = st.audit.anchor()
     st.conn.close()
     st2 = Store(tmp_path / "a.db", tmp_path / "d")
-    assert st2.q1("SELECT max(v) v FROM schema_version")["v"] == 2
+    from osteoquant.study.db import SCHEMA_VERSION
+    assert st2.q1("SELECT max(v) v FROM schema_version")["v"] == SCHEMA_VERSION == 3   # v3: must_change_password
     assert st2.audit.verify_chain(head)["ok"]
     st2.conn.close()
 

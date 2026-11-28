@@ -143,3 +143,13 @@ accounts, not university computing (already the case).
 ## 21. Honest bottom line
 The software is far ahead of the evidence. The next bottleneck is not code: it is (a) one physical phantom study and
 (b) fifteen conversations with buyers. Both are achievable by February 2027.
+
+## 22. Cycle-2 entry (2026-11-27): dates and corrections
+* **US bar date 2027-11-27.** Every invention in the repository was made public on 2026-11-27; the US one-year grace
+  period for the founder's own disclosure ends on **2027-11-27**. Apply for the spring 2027 IP Clinic intake and treat
+  **2027-09** as the practical decision date for a provisional. Foreign rights are likely already lost. Details and
+  every other open founder decision, earliest deadline first: `FOUNDER_DECISIONS.md`.
+* Corrections to earlier sections of this handoff: the "58 automated tests" figure is out of date (use the count from
+  the current test run); the decision gate is the single combined gate in `business/PRICING_VALIDATION_PLAN.md` §7
+  (the "≥3/15 buyers at ≥$10K" gate is retired); the financial model now books no revenue before incorporation and a
+  first signed pilot and treats grants as conditional, restricted funds (`business/REVENUE_MODEL.md` §5).

@@ -516,8 +516,8 @@ class AddUserDialog(_Dialog):
         super().__init__("Add user", parent, 460)
         from .project import ROLE_LABELS
         self.lay.addWidget(muted("Each person signs in with their own account; every action and signature is "
-                                 "attributed to it. The new user should change the initial password by asking an "
-                                 "administrator for a reset after first use."))
+                                 "attributed to it. The new user must replace this initial password with their own "
+                                 "at first sign-in, so that only they know their signing password."))
         f = QFormLayout()
         self.user, self.full = QLineEdit(), QLineEdit()
         self.role = QComboBox()
@@ -592,7 +592,9 @@ class UserAdminDialog(_Dialog):
         self.toggle_btn.clicked.connect(self.toggle_active)
         self.reset_btn = QPushButton("Reset password...")
         self.reset_btn.clicked.connect(self.reset_password)
-        for b in (self.add_btn, self.toggle_btn, self.reset_btn):
+        self.role_btn = QPushButton("Change role...")
+        self.role_btn.clicked.connect(lambda: self.change_role())
+        for b in (self.add_btn, self.toggle_btn, self.reset_btn, self.role_btn):
             row.addWidget(b)
         row.addStretch(1)
         close = QPushButton("Close")
@@ -631,6 +633,9 @@ class UserAdminDialog(_Dialog):
         self.toggle_btn.setToolTip("You cannot deactivate your own account" if u is not None and u["id"] == me else "")
         self.toggle_btn.setText("Reactivate" if u is not None and not u["active"] else "Deactivate")
         self.reset_btn.setEnabled(u is not None)
+        self.role_btn.setEnabled(u is not None and u["id"] != me)
+        self.role_btn.setToolTip("You cannot change your own role" if u is not None and u["id"] == me else
+                                 "Change the selected user's role (audited)")
 
     def add_user(self, values=None):
         if values is None:
@@ -676,6 +681,85 @@ class UserAdminDialog(_Dialog):
             self.project.reset_password(u["id"], new_password)
         self.refresh()
         return True
+
+    def change_role(self, role=None):
+        """Audited role change (user.role_change); takes effect at the user's next action."""
+        from PySide6.QtWidgets import QInputDialog
+        from .project import ROLE_LABELS
+        u = self.selected()
+        if not u:
+            return False
+        if role is None:
+            keys = ["analyst", "reviewer", "study_director", "admin", "viewer"]
+            labels = [ROLE_LABELS[k] for k in keys]
+            cur = keys.index(u["role"]) if u["role"] in keys else 0
+            text, ok = QInputDialog.getItem(self, "Change role", f"New role for '{u['username']}':", labels, cur, False)
+            if not ok:
+                return False
+            role = keys[labels.index(text)]
+        try:
+            self.project.set_user_role(u["id"], role)
+        except (ValueError, PermissionError, KeyError) as e:
+            self.show_error(str(e))
+            return False
+        self.refresh()
+        return True
+
+
+class ChangePasswordDialog(_Dialog):
+    """Project > Change my password: self-service change (current password re-checked, audited)."""
+
+    def __init__(self, username: str, parent=None, required: bool = False):
+        super().__init__("Change my password", parent, 440)
+        self.lay.addWidget(muted(
+            (f"The password of '{username}' was set by an administrator. Choose your own password now: it is your "
+             "electronic-signature password and nobody else should know it." if required else
+             f"Change the password of '{username}'. Other open sessions of this account are signed out.")))
+        f = QFormLayout()
+        self.old, self.pw1, self.pw2 = QLineEdit(), QLineEdit(), QLineEdit()
+        for p in (self.old, self.pw1, self.pw2):
+            p.setEchoMode(QLineEdit.Password)
+        f.addRow("Current password", self.old)
+        f.addRow("New password", self.pw1)
+        f.addRow("Repeat new password", self.pw2)
+        self.lay.addLayout(f)
+        self.lay.addWidget(muted("Password: at least 10 characters with an upper-case letter and a digit."))
+        self.lay.addWidget(self.error)
+        self.lay.addWidget(_buttons(self, "Change password"))
+
+    def accept(self):
+        if self.pw1.text() != self.pw2.text():
+            return self.show_error("The new passwords do not match.")
+        super().accept()
+
+
+class UnblindDialog(_Dialog):
+    """Study > Unblind study: a signed action (password, reason) of a study director or administrator."""
+
+    def __init__(self, studies: list[dict], user: dict, parent=None):
+        super().__init__("Unblind study", parent, 480)
+        self.lay.addWidget(muted("Unblinding reveals group allocation, animal IDs and file names of the study to every "
+                                 "user. It cannot be undone and is recorded with your signature and reason in the "
+                                 "audit trail."))
+        f = QFormLayout()
+        self.study = QComboBox()
+        for st in studies:
+            self.study.addItem(st["name"], st["id"])
+        self.reason = QLineEdit()
+        self.reason.setPlaceholderText("e.g. analysis locked; statistics plan executed")
+        self.pw = QLineEdit()
+        self.pw.setEchoMode(QLineEdit.Password)
+        f.addRow("Study", self.study)
+        f.addRow("Reason", self.reason)
+        f.addRow(f"Password ({user.get('username', '')})", self.pw)
+        self.lay.addLayout(f)
+        self.lay.addWidget(self.error)
+        self.lay.addWidget(_buttons(self, "Sign and unblind"))
+
+    def accept(self):
+        if len(self.reason.text().strip()) < 5:
+            return self.show_error("State the reason for unblinding (at least 5 characters).")
+        super().accept()
 
 
 class IdleLockDialog(_Dialog):

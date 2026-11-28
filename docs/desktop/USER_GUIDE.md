@@ -37,33 +37,45 @@ reports and the audit trail. Keep it on a local or backed-up drive.
 recorded in the audit trail under the signed-in user.
 
 **More users** (*Project > Users...*, administrators only): **Add user...** (user name, full
-name, role, initial password), **Deactivate** / **Reactivate**, and **Reset password...** (also
-clears a temporary lockout and ends the user's sessions). Every action is recorded in the audit
-trail. Roles:
+name, role, initial password), **Deactivate** / **Reactivate**, **Reset password...** (also
+clears a temporary lockout and ends the user's sessions) and **Change role...** (not your own).
+Every action is recorded in the audit trail. A password set by an administrator (new user or
+reset) must be replaced by its owner at the next sign-in, so only the owner knows their signing
+password; *Project > Change my password...* changes it at any time (current password required;
+other open sessions of the account are signed out).
+
+Account changes reach open sessions at their next action: a deactivated user, or one whose password
+was reset, is signed out with a message (unsaved label edits are discarded); a role change takes
+effect immediately. Roles are checked at sign-in against the last role change recorded in the audit
+trail: a role edited directly in the database is refused (`auth.user_record_mismatch`). Roles:
 
 | Role | Can |
 |---|---|
 | Analyst | import, analyse, define ROIs, edit labels, generate and export reports |
 | Reviewer | view, sign reviews (ROI acceptance, segmentations, reports) as *Scientific reviewer* |
-| Study director | as reviewer; signs reports as *Study director / sponsor representative* |
-| Administrator | everything, including user administration and unblinding |
+| Study director | as reviewer; signs reports as approver; sees allocation of blinded studies and can unblind them (signed) |
+| Administrator | everything, including user administration and unblinding (signed) |
 
-At least two people are needed: an author cannot approve their own ROI, segmentation or report
-(separation of duties). Actions your role cannot perform are disabled; hover over them to see why
+At least two people are needed: an author cannot approve their own ROI, segmentation or report,
+nobody who authored a reported segmentation or its ROI can approve the report, and each person
+approves a report at most once (separation of duties). Actions your role cannot perform are disabled; hover over them to see why
 and which role is required. A reviewer opening a scan sees **READ ONLY** in the Segmentation panel.
 
 **Idle lock**: after 15 minutes without keyboard or mouse input (administrators can change this
 in *Project > Idle lock...*; 0 turns it off) the window hides the project and asks for your
-password. *Project > Lock now* (Ctrl+L) locks it immediately. Five wrong passwords lock the account
-for 15 minutes, as at sign-in. Unsaved label edits are kept while locked. Lock, unlock and failed
-attempts are audited.
+password. *Project > Lock now* (Ctrl+L) locks it immediately. The lock covers the whole
+application: open dialogs are cancelled (for example *Users*, a signature dialog), other windows
+such as the import wizard are hidden until you unlock, and no keyboard, mouse or shortcut input
+reaches anything but the lock page. Five wrong passwords lock the account for 15 minutes, as at
+sign-in. Unsaved label edits are kept while locked. Lock, unlock and failed attempts are audited.
 
 ## 3. Organise studies
 
 The **Project** panel (left) shows *Study > Group > Animal > Timepoint > Scan*.
 
 * *Study > New study*: name, species, defect model (condyle, calvarial, segmental), graft
-  material(s), and whether the study is blinded.
+  material(s), data class (own research, customer, public dataset, synthetic/demo; printed on
+  every report page) and whether the study is blinded.
 * *Study > Add group* (or right-click a study): treatment arms.
 * Animals and timepoints are created while importing scans.
 * Scans show a coloured dot for their QC verdict (green suitable, amber review, red unsuitable)
@@ -159,12 +171,21 @@ Select scans, an animal, a group or a whole study in the tree and choose **Analy
 * **Graft material**: used by the measurement-support advisor to decide which endpoints can
   be separated reliably for this material and scan. Choose *Unspecified* if unknown, or *No graft
   (empty defect)* for empty-defect controls.
+* **Time since implantation**: from each scan's timepoint (days, or a label such as "Week 4"),
+  a number of weeks for all selected scans, or *Unknown*. Resorbable materials are separated by
+  intensity only at a known timepoint of 4 weeks or less. The resolved weeks and their source are
+  recorded with the analysis and printed in the report.
 
 Each scan runs as a background job (**Jobs** panel; progress also in the status bar). You can
 keep working, and **Cancel** stops a job at its next stage. Failed jobs show a plain-language
 message; double-click for the technical details. Closing the project or the application with
 jobs running cancels them and waits at most 3 seconds; a library step that is still running
 finishes in the background and the project closes when it has.
+
+A cancelled job leaves nothing half-done: a cancelled import removes the partly imported scan (the
+same source can be imported again), a cancelled label revision stores no new version, and a
+cancelled report leaves no report entry. Version numbers are allocated atomically, so two jobs on
+the same scan never collide.
 
 If the ROI cannot be detected the scan is marked *needs ROI*: place the crosshair at the defect
 centre and use *Study > Define cylindrical ROI at crosshair* (or **Edit ROI...** in the Review
@@ -215,7 +236,11 @@ The **Support** column combines every state honestly:
 * **✖ not supported**: no endpoint can be reported (or the analysis failed);
 * **not analysed**: the scan has not been analysed yet.
 
-An endpoint that is not supported is shown as *not measured* (italic) and **never with a
+Per endpoint, **✖ not assessed** means that no measurement-support assessment exists for a graft
+or new-bone endpoint (advisor output missing or not recognised); it is never shown as supported.
+A scan without a QC result is *flagged* ("QC not run").
+
+An endpoint that is not supported or not assessed is shown as *not measured* (italic) and **never with a
 number**, whatever was stored; this is the same in the CSV export and the PDF report. Select a
 row: the pane below the table lists every endpoint with its status, value and the reasons, each
 reason once. Double-click a row to open the scan. **Export CSV** writes the table with the
@@ -230,8 +255,10 @@ The **Review** panel works on the open scan:
    *accepted by ... at ...*, ...). Check the yellow outline on the slices and in 3D, then
    **Accept ROI...** (reviewer, study director or administrator; not the person who created the
    ROI or ran the analysis that created it). This is an electronic signature with your password;
-   it records the ROI definition hash in the audit trail and clears the *automatic ROI not yet
-   accepted* caution from the results. **Edit ROI...** defines a new manual ROI instead.
+   it records the ROI definition hash in the audit trail and clears the *ROI not yet accepted*
+   caution from the results. **Edit ROI...** defines a new manual ROI instead; it needs a typed
+   reason and, like an automatic ROI, must be accepted by a second person before results measured
+   in it are free of the caution.
 2. **Segmentation versions**: version, kind, method, author and latest decision.
 3. **What changed in the selected version**: parent version, editor, time, the **reason for the
    edit**, the operations, the **voxel and volume (mm³) change per class**, and every endpoint
@@ -248,8 +275,15 @@ names and acquisition metadata everywhere, for every role: in the tree, Results,
 Review, the **Audit trail** (details are masked) and the **report preview**. Scans and animals
 are shown with random codes (for example *Scan S-7K3Q*, *Animal A-P7BK*) that are stored per study
 in the project, stay the same across sessions and do not follow import or database order; the
-tree is sorted by code. Studies created as *blinded* additionally hide group allocation from
-non-administrators.
+tree and the Results table and CSV are sorted by code, job titles use the codes, and database
+IDs of segmentations, ROIs and measurements are masked in the audit view.
+
+**Study-level blinding.** For a study created as *blinded*, blinded review mode is always on for
+every role that may not see allocation (analyst, reviewer, viewer): the toggle is locked, reports
+they generate are blinded, unblinded reports cannot be exported by them and the audit export is
+masked. Only the study director or an administrator can unblind the study, with *Study > Unblind
+study...*: a signed action (reason and password) recorded as `study.unblind` in the audit trail;
+it unblinds the study for everyone.
 
 ## 10. Reports
 
@@ -260,13 +294,24 @@ the reason. **Export...** copies PDF, CSV and, when present, the signed copy to 
 
 A report generated while **blinded review mode** is on is a *blinded report*: animal IDs, file
 names, groups, acquisition metadata and database IDs are replaced by the blinded codes (figures
-included). In blinded mode the preview of a report that was not generated blinded is hidden.
+included; the source-file hash is omitted and no unblinded figure is written). In blinded mode the
+preview of a report that was not generated blinded is hidden, and *Approve* and *Export* are
+disabled for it (nobody approves content they cannot see).
+
+Before any report is approved, and before its signed copy is rendered, the PDF and the stored
+report bundle are re-hashed and compared with the SHA-256 values recorded at generation (in the
+project database and in the audit trail). A modified or missing file refuses the signature
+(`report.integrity_failed`); generate a new report. Reports generated by earlier versions have no
+bundle hash and must be regenerated before approval. Generating a report waits until running
+analysis, import and save jobs have finished; the report is built from one consistent snapshot,
+each specimen matched to its own scan and segmentation.
 
 **Sign-off**: **Approve...**, **Request changes...** and **Reject...**. When signing choose the
 signature role your role allows (*Scientific reviewer* or *Study director / sponsor
 representative*). *Approve* is disabled, with the reason, when you generated the report, when a
 reported segmentation is not yet approved, or when the report was generated before all
-segmentations were approved (generate a new one). Each signature produces a **signed copy** of
+segmentations were approved (generate a new one). Approval is also refused when you authored a
+reported segmentation or its ROI, or when you have already approved the report in another role. Each signature produces a **signed copy** of
 the report: the same content with the signature rows filled from the recorded approvals (role,
 name, meaning, decision, time) and a note naming the SHA-256 of the original PDF, which is never
 modified. Tick *Preview the signed copy* to view it. The *Analyst* row names the report author.
@@ -281,8 +326,11 @@ user, action and object; filter by text or object type; select an event to see i
 **Verify chain** recomputes every hash and reports whether the trail is intact or the first
 altered event. **Export...** (also *Tools > Export audit trail*) writes every event to CSV or JSON
 (by file extension) together with the chain-verification result (OK, or the first broken event),
-the head hash, who exported it and when; the export is itself audited. In blinded review mode
-the export is masked like the view.
+the head hash, who exported it and when. The CSV includes `org_id` and `prev_hash`, and the
+details in canonical form, so every row can be re-verified from the file alone. The export is
+itself audited, with the SHA-256 of the exported file. In blinded review mode the export is masked
+like the view; masked rows are marked (`masked`) because their hashes cannot be reproduced from the
+masked content.
 
 ## 12. Workflow timing (optional)
 

@@ -48,7 +48,8 @@ class ReviewPanel(QWidget):
         self.blind.toggled.connect(self.blinded_toggled)
         lay.addWidget(self.blind)
         lay.addWidget(muted("Blinded mode hides allocation and identity for everyone, including administrators. "
-                            "Study-level blinding stored in the project additionally applies to non-administrators."))
+                            "For a study flagged blinded it is always on for users who may not unblind; only the study "
+                            "director or an administrator can unblind the study (Study > Unblind study, signed)."))
 
         lay.addWidget(section("Analysis ROI"))
         self.roi_label = QLabel("")

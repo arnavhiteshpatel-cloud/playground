@@ -222,7 +222,7 @@ def main():
         "builder (its free academic licence excludes fee-for-service); Bruker CTAn and Scanco IPL own standard morphometry; CROs "
         "(Charles River, Inotiv) advertise Part 11 algorithm development and residual-implant histology endpoints. No vendor was found "
         "selling a validated three-class micro-CT model. Narrowest credible differentiation: known-truth, material-specific "
-        "separability assessment; the day-0 longitudinal protocol; audit-ready per-study reports for firms without imaging staff. "
+        "separability assessment; abstention where graft and new bone cannot be separated; reports with a tamper-evident audit trail (research prototype; not validated) for firms without imaging staff. "
         "Details: COMPETITOR_INTELLIGENCE.md and docs/research/."),
         P("6. Market and financial model", H1)]
     rows = [["Scenario", "Revenue 2027", "Revenue 2031", "GM 2031", "Equity requirement"]]

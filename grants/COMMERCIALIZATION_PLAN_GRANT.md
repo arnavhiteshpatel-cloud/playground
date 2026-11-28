@@ -9,8 +9,8 @@
 ---
 
 ## 1. Value of the SBIR/STTR project, expected outcomes and impact
-- **Product:** OsteoQuant, a three-class micro-CT quantification tool (new bone / residual graft / host bone) with calibrated uncertainty and audited reports.
-- **Phase I outcome:** physical ground-truth benchmark, validated model and expert-agreement study [PENDING RESULT for each].
+- **Product:** OsteoQuant, a three-class micro-CT quantification tool (new bone / residual graft / host bone) that abstains when graft and new bone cannot be separated, aims to report calibrated uncertainty, and writes reports with a tamper-evident audit trail (research prototype; not validated).
+- **Phase I aims:** physical ground-truth benchmark, a model with measured accuracy against that benchmark, and an expert-agreement study [PENDING RESULT for each].
 - **Impact hypotheses [HYP]:**
   - Shorter analysis time per specimen.
   - Lower inter-operator variability.
@@ -51,7 +51,7 @@ Optionally cross-check top-down with cited reports on the bone-graft-substitute 
 - Scanner-vendor analysis software and commercial micro-CT analysis packages (threshold/ROI-based morphometry).
 - General image-analysis and open-source tools, plus in-house scripts.
 - Manual analysis by trained staff (often the status quo).
-- **Differentiators [HYP until validated]:** physically benchmarked graft/new-bone separation; calibrated uncertainty; audit trail; low-label adaptation to new materials.
+- **Differentiators [HYP until validated]:** physically benchmarked graft/new-bone separation (aim); calibrated uncertainty (aim; not achieved yet: temperature scaling did not improve calibration in simulation); audit trail; low-label adaptation to new materials.
 
 ### 3.4 Customer-discovery plan (Dec 2026 – Mar 2027)
 - **Target:** ≥30 interviews by Feb 2027 and ≥60 by Jun 2027. Mix: ≥10 CRO, ≥10 industry, ≥10 academic.
@@ -71,7 +71,7 @@ Optionally cross-check top-down with cited reports on the bone-graft-substitute 
 
 ## 4. Go-to-market and revenue model [HYP]
 1. **Design-partner phase (2027):** free or low-cost pilots with 2–3 academic labs plus 1 CRO, in exchange for data and feedback.
-2. **Validated service (2027–28):** OsteoQuant-run analyses with audited reports (cash flow before a full SaaS product).
+2. **Analysis service with a documented verification status (2027–28, after incorporation and a first signed pilot):** OsteoQuant-run non-GLP analyses with reports carrying a tamper-evident audit trail (cash flow before a full software product).
 3. **Software licenses (2028+):** per-study and annual CRO/company licenses; academic tier.
 4. **Partnerships (Phase II+):** scanner vendors and imaging cores.
 
@@ -82,7 +82,7 @@ Optionally cross-check top-down with cited reports on the bone-graft-substitute 
 - **Open vs. closed:** consider releasing the **benchmark** openly to build credibility and adoption, while keeping models and reporting proprietary [HYP].
 - **Trademark:** "OsteoQuant" clearance search before branding spend (IP Clinic trademark track [V]).
 
-## 6. Finance plan (sequenced; amounts verified where marked)
+## 6. Finance plan (sequenced; amounts checked against sources where marked)
 
 | Stage | Source | Amount | Status |
 |---|---|---|---|

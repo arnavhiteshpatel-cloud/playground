@@ -7,7 +7,7 @@
 ## 1. Questions to answer
 1. Which **pricing unit** matches how each segment budgets: scan, study, year, or seat?
 2. What is the **acceptable price range** per segment, and does it sit above the cost to serve?
-3. Is **GLP-readiness** worth a premium, and how large?
+3. Do buyers need GLP-related work at all (a need question only; GLP work is not offered and is not priced)?
 4. Do CROs prefer to **resell or white-label** (enterprise licence) or to **subcontract** (per-study service)?
 5. Does a **vendor partnership** or **algorithm licence** offer a faster route to revenue than direct sales?
 
@@ -16,7 +16,7 @@
 |---|---|---|---|---|---|
 | M1 | Per-scan | Each analysed scan | $150–$600/scan | Academic labs, ad-hoc users | Hard to recover setup/QC cost on small jobs |
 | M2 | Per-study report (non-GLP) | Study (≤40 scans, ≤2 time points) | ~$12K | SME manufacturers | Scope creep (extra ROIs, time points) |
-| M3 | Per-study report (GLP-supporting) | Study | ~$25K | Manufacturers, CROs running GLP | Validation and QA burden on OsteoQuant |
+| M3 | **Not offered:** GLP-related study work. Do not show as a priced card; ask only whether the buyer needs GLP work (a need question) | — | — | Manufacturers, CROs running GLP | No validation report, quality system or Quality Agreement exists; no GLP or Part 11 claim can be made |
 | M4 | Annual subscription (self-serve software) | Org/year, seat-limited | Academic ~$4K/yr; Industry $15–30K/yr | Cores, labs, high-volume SMEs | Support load; customer validation burden |
 | M5 | CRO enterprise licence | CRO/year, unlimited internal studies | ~$40K/yr | Device CROs | Long sales cycle; CRO captures the margin |
 | M6 | Full analysis service (OsteoQuant analysts + human review) | Study, priced on time & materials or fixed | $8–20K/study | Sponsors without in-house expertise | Founder-time bound; doesn't scale |

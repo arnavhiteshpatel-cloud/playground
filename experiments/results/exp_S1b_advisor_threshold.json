@@ -5,20 +5,20 @@
    "method": "advisor_threshold",
    "n": 56,
    "n_fail": 43,
-   "n_refused": 49,
-   "failures_refused": 41,
-   "sensitivity_refuse_given_fail": 0.9534883720930233,
-   "refused_but_ok": 8,
-   "supported_and_ok": 5,
-   "supported_but_failed": 2,
-   "abs_err_supported_median": 0.13415293164009723,
-   "abs_err_refused_median": 0.8878048780487805,
-   "p_fail_given_supported": 0.2857142857142857,
-   "p_fail_given_supported_upper95": 0.7095791362626572,
-   "coverage_supported_fraction": 0.125,
-   "abs_err_new_supported_median": 0.12073498567250596,
-   "abs_err_new_supported_max": 0.5333200517979879,
-   "abs_err_mineral_supported_median": 0.01888348488052438,
+   "n_refused": 54,
+   "failures_refused": 43,
+   "sensitivity_refuse_given_fail": 1.0,
+   "refused_but_ok": 11,
+   "supported_and_ok": 2,
+   "supported_but_failed": 0,
+   "abs_err_supported_median": 0.09414973557720424,
+   "abs_err_refused_median": 0.5888012814031975,
+   "p_fail_given_supported": 0.0,
+   "p_fail_given_supported_upper95": 0.841886116991581,
+   "coverage_supported_fraction": 0.03571428571428571,
+   "abs_err_new_supported_median": 0.32304332928255597,
+   "abs_err_new_supported_max": 0.48131818861156783,
+   "abs_err_mineral_supported_median": 0.09564281703602029,
    "abs_err_mineral_supported_max": 0.175149990323205
   },
   {
@@ -96,7 +96,7 @@
    "err": -0.13415293164009723,
    "advisor_oracle_dice": 0.907027421262819,
    "true_oracle_dice": 0.9605814739688979,
-   "status": "supported",
+   "status": "not_supported",
    "graft_vox": 14804
   },
   {
@@ -110,7 +110,7 @@
    "err": -0.41867540369763634,
    "advisor_oracle_dice": 0.8926956322628656,
    "true_oracle_dice": 0.9380799533119346,
-   "status": "supported",
+   "status": "not_supported",
    "graft_vox": 8546
   },
   {
@@ -124,7 +124,7 @@
    "err": -0.4907069366080319,
    "advisor_oracle_dice": 0.9117368123241709,
    "true_oracle_dice": 0.9406453216253158,
-   "status": "supported",
+   "status": "not_supported",
    "graft_vox": 12052
   },
   {
@@ -166,7 +166,7 @@
    "err": -0.0761402738121385,
    "advisor_oracle_dice": 0.9252477929693724,
    "true_oracle_dice": 0.9639708840850068,
-   "status": "supported",
+   "status": "not_supported",
    "graft_vox": 13659
   },
   {
@@ -264,7 +264,7 @@
    "err": -0.19709936041798037,
    "advisor_oracle_dice": 0.8845954479053767,
    "true_oracle_dice": 0.9391508158298025,
-   "status": "supported",
+   "status": "not_supported",
    "graft_vox": 11101
   },
   {
@@ -2460,7 +2460,7 @@
    "graft_vox": 13304
   }
  ],
- "seconds": 102.94523644447327,
- "advisor_version": "1.3.0",
- "saved": "2026-11-27T22:38:55Z"
+ "seconds": 104.23449325561523,
+ "advisor_version": "1.3.3",
+ "saved": "2026-11-28T00:00:35Z"
 }

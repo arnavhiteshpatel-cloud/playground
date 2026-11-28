@@ -110,3 +110,46 @@
   2. The idle lock leaves open dialogs usable; an admin account was created while the window was locked (C2-PRD-02).
   3. Blinding is opt-in per reviewer and can be switched off by the reviewer (C2-PRD-03).
   4. The signed PDF is regenerated from an unprotected JSON bundle (C2-PRD-04). Together with C2-PRD-05 and C2-PRD-06, report sign-off can be manipulated or self-approved in practice.
+
+## Response (desktop / security engineering)
+
+Regression tests are in `tests/desktop/test_cycle2_fixes.py` (named `test_c2_NN_*` after the finding) unless stated otherwise. Two existing assertions that encoded the fail-open support rule (a result with no QC and no advisor output counted as *supported*) were changed to use a complete result: `test_review_fixes.py::test_ux04_*` and `test_services.py::test_measurement_support_statuses`.
+
+### New findings
+
+| ID | Status | Change | Test |
+|---|---|---|---|
+| C2-PRD-01 | fixed | Each bundle specimen carries `scan_id`, `segmentation_id`, `roi_id` and `measurement_id` (`api/bundle.py`). Support enforcement and blinding join by `(scan_id, segmentation_id)`; an unmatched specimen stops the report. The bundle, the measurement rows, the support rule and the blinded codes come from one read transaction (`Store.snapshot()`). `latest_measurements` has `ORDER BY`. Figures are rendered per specimen from its own segmentation and per-version ROI. The UI refuses report generation while analysis, import or save jobs run. | `test_c2_01_report_specimens_joined_by_scan_and_segmentation_id`, `test_c2_01_bundle_built_from_one_snapshot` |
+| C2-PRD-02 | fixed | The lock is application-wide. Dialogs in their own event loop are rejected. Every other top-level window is hidden and restored on unlock. `LockInputFilter` drops key, mouse, wheel and shortcut input to everything except the lock page and its confirmation boxes. | `test_c2_02_idle_lock_blocks_every_window_and_dialog` |
+| C2-PRD-03 | fixed | Blinding is enforced at study level for every role without `unblind`: tree, Results/CSV, report generation (always blinded), report export (identifying reports refused) and audit export (masked). The View/Review toggle is locked, and attempts are audited (`ui.blinded_mode_denied`). The study director role now has `unblind`. *Study > Unblind study...* is a re-authenticated action with a reason, recorded as `study.unblind` with signer details. Reviewers cannot unblind. | `test_c2_03_study_blinding_enforced_for_reviewer`, `test_c2_03_reviewer_cannot_switch_blinded_mode_off` |
+| C2-PRD-04 | fixed | At generation, the bundle SHA-256 is stored in `desktop_report_meta.bundle_sha256` and in the `report.generate` audit event (with the PDF hash). `report_integrity.verify_report` re-hashes the bundle and the PDF against both records before an approval and before any signed copy is rendered. On a mismatch nothing is signed and `report.integrity_failed` is recorded. | `test_c2_04_signed_copy_refused_for_edited_bundle`, `test_c2_04_05_approval_rechecks_pdf_and_fails_closed` |
+| C2-PRD-05 | fixed | Approval re-hashes the PDF. `review_status` is stored in the database at generation. A missing bundle, PDF or integrity record fails closed. | `test_c2_04_05_*`, `test_c2_05_unreviewed_report_refused_even_without_bundle` |
+| C2-PRD-06 | fixed | Report approval is refused for the author of any reported segmentation (including the versions it derives from) or of its ROI. A person can approve a report only once, so the reviewer and approver rows always show two different people. The signature role in the signed copy is taken from the audit trail (`signature_role_key`). | `test_c2_06_segmentation_author_cannot_approve_and_one_approval_per_person` |
+| C2-PRD-07 | fixed | `Project.require_user()` re-validates the session before every service call (sliding 8 h expiry). Deactivation or a password reset ends the session at the next action (`session.ended`). The window signs the user out with a message (5 s check, and on unlock). Role changes take effect at once. | `test_c2_07_deactivated_user_session_ends_at_next_action`, `test_c2_07_window_signs_out_deactivated_user` |
+| C2-PRD-08 | fixed | *Project > Change my password...* asks for the current password, applies the policy, requires a different new password, is audited (`user.password_change`) and ends the account's other sessions. A password set by an administrator (create or reset) sets `must_change_password`, and the interactive sign-in requires the change. The Users dialog has an audited *Change role...*, and the Add-user text has been corrected. | `test_c2_08_self_service_password_change` |
+| C2-PRD-09 | fixed | `Store.set_user_role` is audited (`user.role_change`) and refuses changes to one's own role. At sign-in, and whenever an open session's role changes, the role and active flag are checked against the last audited state; a mismatch refuses or ends the session (`auth.user_record_mismatch`). The `desktop_review_meta` signature roles are cross-checked against the audit trail for signed copies. | `test_c2_09_role_change_audited_and_database_edit_detected` |
+| C2-PRD-10 | fixed | A label revision writes its data first. The version, ROI mask, measurement and audit events then commit in one transaction, and a failure removes everything written. A cancelled or failed import deletes the scan row and its data (`scan.import_rolled_back`), so re-import works. A cancelled report leaves no row or files (`report.cancelled`); a failed report is marked `failed`. No cancellation check runs after a commit point. | `test_c2_10_*` (3 tests) |
+| C2-PRD-11 | fixed | Version select and insert run in one `BEGIN IMMEDIATE` transaction, with `UNIQUE(scan_id, version)` and a retry. | `test_c2_11_version_allocation_is_atomic_under_concurrency` (3 threads, including a second connection, 120 + 42 inserts, no errors, contiguous versions) |
+| C2-PRD-12 | fixed | Missing, unknown or unreadable advisor output gives the new status **not assessed** (no number, red ✖) for every graft and new-bone endpoint. A missing or unknown QC verdict gives *flagged*. | `test_c2_12_missing_or_unknown_advisor_output_is_not_assessed` |
+| C2-PRD-13 | open (library) | Forged validation records live in `ml/validation_records.py`, which is outside the desktop scope. Left for the library owner. | - |
+| C2-PRD-14 | fixed (except event order) | Job titles use blinded codes. The masked audit hides segmentation, ROI and measurement IDs. Short identifiers are masked by exact value. Results rows and CSV are in code order. Blinded reports drop the source-file hash and never write unblinded figures. **Not changed:** the order of `scan.import` events in the masked audit trail, which is the chain order. | `test_c2_14_16_blinded_outputs_and_verifiable_audit_export`, `test_c2_03_reviewer_cannot_switch_blinded_mode_off` |
+| C2-PRD-15 | fixed | *Approve...* and *Export...* are disabled, with a reason, while the preview of an unblinded report is hidden. | `test_c2_15_approve_disabled_while_preview_hidden` |
+| C2-PRD-16 | fixed | The CSV export adds `org_id` and `prev_hash`, writes details in canonical form, and every row re-verifies from the file. The `audit.export` event records the file's SHA-256. Blinded exports mark masked rows and say in the header that they cannot be re-verified. | `test_c2_14_16_*` |
+| C2-PRD-17 | fixed | A manual ROI needs a typed reason (no default) and shows *awaiting acceptance* until someone other than its creator accepts it. Until then its results are flagged. | `test_c2_17_manual_roi_needs_reason_and_second_person` |
+| C2-PRD-18 | fixed | Envelope fields are type-checked and the payload must be an object. `verify_file`, `current_status` and `install_licence` never raise. A malformed file starts the application in evaluation mode; the start page states the reason (also in the status-bar tooltip). | `test_c2_18_malformed_licence_starts_in_evaluation_mode` |
+| C2-PRD-19 | open (Low) | Licence feature enforcement and clock-rollback detection are not changed in this cycle. | - |
+| C2-PRD-20 | open (Low) | Safe-mode import is not changed in this cycle. | - |
+| C2-PRD-21 | open (Low) | The stale Windows skips are in `tests/test_ml_phantom.py` (ML scope), not changed here. | - |
+
+### Partially fixed cycle-1 items
+
+| ID | Status now | Remaining gap closed by |
+|---|---|---|
+| UX-02 | fixed | A manual ROI requires acceptance by a second person (C2-PRD-17). |
+| UX-07 | fixed | Integrity-checked signed copy (C2-PRD-04), fail-closed gate (C2-PRD-05), separation of duties for reports (C2-PRD-06). |
+| UX-09 | fixed except audit event order | C2-PRD-03, C2-PRD-14, C2-PRD-15. |
+| D-2 | fixed | Change my password, forced change of administrator-set passwords, audited role change, sessions ended at the next action (C2-PRD-07/08/09). |
+| D-4 | fixed | Re-verifiable CSV, export file hash audited, honest blinded header (C2-PRD-16). |
+| D-6 | open (library) | `ml/validation_records.py`, see C2-PRD-13. |
+| D-8 | fixed | Application-wide lock (C2-PRD-02). |
+| S-20 | fixed | Deactivated or reset sessions end at the next action (C2-PRD-07). |

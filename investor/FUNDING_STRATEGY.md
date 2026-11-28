@@ -3,8 +3,8 @@
 **Status:** research prototype; pre-revenue; unincorporated; no customers, interviews, pilots or letters of intent. Nothing in this document has been applied for, submitted or signed, and no investor or programme has been contacted.
 
 **Labels:**
-- [V] verified on the sponsor's own page (URL and access date given)
-- [V-repo] verified in an earlier pass on 2026-11-27 and recorded in `grants/FUNDING_OPPORTUNITIES.md` or `grants/NSF_vs_NIH_ELIGIBILITY.md` (re-check before acting)
+- [V] checked on the sponsor's own page (URL and access date given)
+- [V-repo] checked in an earlier pass on 2026-11-27 and recorded in `grants/FUNDING_OPPORTUNITIES.md` or `grants/NSF_vs_NIH_ELIGIBILITY.md` (re-check before acting)
 - [INF] inference
 - [HYP] hypothesis
 - [UNR] unresolved
@@ -14,8 +14,8 @@
 ---
 
 ## 1. Bottom line [INF from `business/REVENUE_MODEL.md`]
-1. **Bootstrapping with non-dilutive money is the base path.** In the Bootstrapped Base scenario (hypothetical), revenue reaches $288K by 2031 and cumulative cash stays positive **only with ~$325K of grants**. Without grants, the largest cumulative deficit is about **$60K**: a founder-scale need that student awards, I-Corps and early pilot revenue could plausibly cover.
-2. **Venture capital is not justified on today's evidence.** The Venture Base scenario (hypothetical) needs about **$2.4M of equity with grants, or $4.0M without**, to reach $0.71M revenue in 2031. That revenue equals 38% of the mid serviceable pool, and reaching it needs hypothetical expansion modules. No plausible study price closes the gap: the no-grant break-even study price in that structure is about $116K.
+1. **Cash without grants is the lead case.** Grants are not operating cash: none has been applied for, eligibility is unresolved, and an award is restricted to its project (an NIH STTR also needs a ≥30% research-institution subaward). In the Bootstrapped Base scenario (hypothetical), with no revenue before incorporation and a first signed pilot, revenue reaches $259K by 2031; **without grants the largest cumulative deficit is about $96K** and cumulative cash is still about −$35K in 2031. **If** the assumed awards ($325K) were won, only their fee share and the planned costs the funded project legitimately pays reach operating cash, and the deficit would fall to about $45K. Bootstrapping with customer revenue is the base path; grants are an upside that funds specific project work.
+2. **Venture capital is not justified on today's evidence.** The Venture Base scenario (hypothetical) needs about **$4.2M of equity without grants** (about $3.7M if the assumed awards were won) to reach $0.63M revenue in 2031. That revenue equals about a third of the mid serviceable pool, and reaching it needs hypothetical expansion modules. No plausible study price closes the gap: the no-grant break-even study price in that structure is about $140K.
 3. **Pre-seed equity becomes rational only after specific evidence exists** (§3): a separable path on real graft materials, paid pilots converting, and evidence of a larger market (non-US sponsors, adjacent modules, CRO licences). Raising before then would sell equity at the point of maximum uncertainty [INF].
 4. **Valuation:** this document gives **no valuation figures**. No source the founder could cite and defend was verified for comparable pre-revenue research-software companies. SAFE terms (valuation cap, discount) for programmes such as Cozad are not stated on the pages checked (§6). Compare real term sheets with counsel when they exist.
 
@@ -28,7 +28,7 @@
 | Dilution | None |
 | Preconditions | A legal entity to contract and invoice (founder decision with counsel); a reviewed pilot template; OTM clarity on who owns the software |
 | Strength | Revenue is also the best validation evidence for every later funder [INF] |
-| Limit | Founder bandwidth as a full-time student. Base-case delivery is only ~0.5 FTE, but sales and validation compete for the same hours |
+| Limit | Founder bandwidth as a full-time student. Base-case delivery is ~0.4 FTE in 2031 (costed as paid analyst time), and sales and validation compete for the same hours. No revenue is possible before M0 (entity, IP clearance, insurance, counsel-reviewed contracts) and a first signed pilot (M3) |
 
 ### 2b. Non-dilutive
 | Programme | Amount | Eligibility fact relevant to a student founder | Source | Fit |
@@ -42,7 +42,7 @@
 | Illinois DCEO SBIR/STTR Match | Phase I ≤ $75,000; Phase II ≤ $250,000 | Only after a federal Phase I award; Illinois-based for-profit; IRS "regarded entity" (a disregarded single-member LLC is ineligible [INF]) | `grants/FUNDING_OPPORTUNITIES.md` §3.8 [V-repo] | Conditional follow-on |
 | Illinois Innovation Award; NIBIB DEBUT; UIUC undergraduate research grant | $20K; $10–20K prizes; [UNR] | Faculty nomination (IIA); team of 3–8 undergraduates (DEBUT) | `grants/FUNDING_OPPORTUNITIES.md` §§3.4, 3.11 [V-repo] | Small amounts, but they can fund the phantom study ($10–20K, `validation/BILL_OF_MATERIALS.csv`) |
 
-### 2c. University venture programmes (verified existence and eligibility)
+### 2c. University venture programmes (existence and eligibility checked on their pages)
 | Programme | Form | Eligibility fact | Source (accessed 2026-11-27) | Fit |
 |---|---|---|---|---|
 | **Cozad New Venture Challenge** (Landuyt Center) | Competition. "All of the top cash prizes in Cozad are awarded in the form of SAFE funding" | "All teams must include at least one full-time, degree-seeking student". The FAQ does not make incorporation a condition of entry. "Registration for 2027 will open in Fall 2026". SAFE cap and discount are **not stated** on the FAQ | https://landuyt.illinois.edu/programs/cozad/faq [V] | **High.** Mentoring and visibility. But a SAFE is equity-linked and needs an entity to receive it: read the SAFE document with counsel before accepting |
@@ -67,7 +67,7 @@
 |---|---|---|---|
 | M0 | OTM ownership determination requested; founder decision on entity type with counsel | Everything below. Required before any SAFE, grant award or paid contract | Dec 2026 – Feb 2027 |
 | M1 | ≥20 discovery interviews logged and coded (`business/INTERVIEW_GUIDE.md`) | I-Corps Boost eligibility (≥20 interviews [V-repo]); stronger Cozad, NSF Pitch and iVenture applications | By Feb 2027 |
-| M2 | Physical phantom study: a separable path for ≥1 commercial material class, single-scan or day-0 (`validation/PHANTOM_EXPERIMENT_PROTOCOL.md`) | Credible SBIR/STTR technical aims; the first real-data claim in any pitch | Spring 2027 |
+| M2 | Physical phantom study: a separable path for ≥1 commercial material class, single-scan (or day-0, which is unproven under granule motion) (`validation/PHANTOM_EXPERIMENT_PROTOCOL.md`) | Credible SBIR/STTR technical aims; the first real-data claim in any pitch | Spring 2027 |
 | M3 | First **paid** pilot ($2.5–5K [HYP]) under a reviewed template | Behavioural price evidence (`business/PRICING_VALIDATION_PLAN.md` §7); a commercial letter of support for an SBIR/STTR | Mid 2027 |
 | M4 | ≥3 paid pilots or studies **and** ≥1 licence; measured analyst hours per study | Illinois Ventures pre-seed or angel conversations; NSF/NIH Phase I commercialisation plan | Late 2027 – 2028 |
 | M5 | Phase I award, or ≥$100K trailing revenue, plus a published validation (e.g. an ORS abstract or manuscript) | Phase II (NSF up to $1.25M [V-repo]); DCEO match; a seed round **only if** expansion or non-US demand is evidenced | 2028+ |
@@ -104,9 +104,13 @@
 | **PI eligibility** | NSF SBIR/STTR and NIH SBIR need a PI >50% employed by the company at award [V]. The founder is a full-time student | NIH STTR with a faculty PD/PI; graduation timing; a hired PI. Get program-officer answers in writing |
 | **IP ownership** | Use of university resources may bring the software within university ownership rules [RF/INF] | OTM determination before any investment, award or paid pilot (M0) |
 | **Market ceiling** | Serviceable pool ≈ $0.8–3.9M per year at Base prices [V counts × AE volumes × HYP prices] | Treat venture scale as conditional on adjacent modules and non-US demand. Test before raising |
-| **Separability** | Graft and new bone may be inseparable for some materials (`SCIENTIFIC_EVIDENCE.md` §1 #5, R3) | Material characterisation states "not separable" honestly. The day-0 protocol is the fallback |
+| **Separability** | Graft and new bone may be inseparable for some materials (`SCIENTIFIC_EVIDENCE.md` §1 #5, R3) | Material characterisation states "not separable" honestly; total mineral is still reported. **Day-0 is unproven under granule motion** (simulation, naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35; the advisor refuses those cases); **histology is the fallback** |
 | **Free substitutes** | The Dragonfly academic licence is free; general platforms add deep learning [V] | Graft-specific value, abstention and audit trail. Test academic willingness to pay early (H4) |
-| **Grant dependence** | Base cash is positive only with ~$325K of grants | Plan the no-grant path (max deficit ~$60K) as the default |
+| **Grant dependence** | Grants are conditional and restricted; the model's lead case counts none | The no-grant path (max deficit ~$96K, Bootstrapped Base) is the default plan; treat any award as project funding |
+| **No licence on a public code base** | Licences are 56% of Bootstrapped Base 2031 revenue, but the full source is public with no LICENSE file, evaluation mode is fully functional, and no EULA or production signing key exists | Founder decision on the code licence (`FOUNDER_DECISIONS.md`); without licence revenue Base 2031 revenue is $114K |
+| **Third-party licence compliance of the desktop bundle** | The bundle ships LGPL Qt, LGPL-2.1 system libraries and many other components; notices were incomplete until cycle 2 and the archive packed before that must not be distributed | `packaging/bundle_inventory.py` now fails the build on any unmapped library; counsel to confirm the LGPL source arrangement and draft the EULA |
+| **US patent bar date 2027-11-27** | Every invention in the repository became public on 2026-11-27; the founder's own disclosure becomes US prior art after one year, and foreign rights are likely already lost | Decide on a provisional application well before the bar date (practical decision date 2027-09; spring 2027 IP Clinic intake) — `FOUNDER_DECISIONS.md` |
+| **Copyright and inventorship of AI-assisted code** | How much protectable authorship and inventorship AI-assisted work carries is an open question (cycle-1 IP-08) | Inventorship analysis with counsel before any filing; keep records of human contributions |
 | **Early dilution / SAFE stacking** | Several small SAFEs (competitions, accelerators) compound before a priced round [INF] | Track every instrument in a cap table with counsel. Read SAFE terms before accepting prizes |
 | **Founder bandwidth** | Student workload versus sales, delivery and validation | Wave-based discovery (10 conversations at a time); summer accelerator |
 | **Compliance claims** | Any GLP, Part 11 or regulatory-acceptance claim would be false today | Language rules in `business/outreach_drafts/README.md`; validation-status line in every report |

@@ -14,7 +14,7 @@ OsteoQuant Desktop is distributed as a PyInstaller *one-folder* build per operat
 |---|---|
 | `OsteoQuant` (`OsteoQuant.exe` on Windows; `OsteoQuant.app` on macOS) | The application (no console window) |
 | `osteoquant-desktop-console` | The same program with a console, for `--selftest`, `--version` and support |
-| `THIRD_PARTY_LICENSES/` | Licence texts and an `INDEX.json` of every bundled distribution |
+| `THIRD_PARTY_NOTICES.txt`, `licenses/` | Third-party notices; licence texts of the bundled Python distributions, the Python runtime (PSF), ICU and the system libraries (`licenses/system/`); `INDEX.json` and `BUNDLE_INVENTORY.json` |
 | `_internal/` | Python runtime, Qt, VTK, NumPy/SciPy and the analysis library |
 
 Nothing in the build needs a network connection at run time. The default build contains ONNX Runtime but not

@@ -80,17 +80,17 @@
 <div class="wrap">
 <div class="section-head">
 <h2>Third-party data attribution</h2>
-<p>Real-data experiments used the following public datasets. Exact creator names and citations are on each Zenodo record and in the project’s dataset registry; they are copied verbatim into any shipped model notice.</p>
+<p>Real-data experiments used the following public datasets, each under the Creative Commons Attribution 4.0 licence (<a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>). Creators and titles are copied from each Zenodo record; changes made are stated in the last column.</p>
 </div>
 <div class="table-wrap">
 <table class="data min-760 stack">
-<thead><tr><th>Dataset</th><th>Record</th><th>Licence</th><th>Used for</th><th>Changes</th></tr></thead>
+<thead><tr><th>Dataset</th><th>Creators</th><th>Record</th><th>Used for</th><th>Changes made</th></tr></thead>
 <tbody>
-<tr><th>SPROUT dog forelimb micro-CT (forelimb subset)</th><td class="mono" data-label="Record">10.5281/zenodo.24047383</td><td data-label="Licence">CC-BY-4.0</td><td data-label="Used for">Real-data segmentation, transfer and few-shot experiments</td><td data-label="Changes">×2 downsampling, binary bone label, evaluation band</td></tr>
-<tr><th>Ovine metatarsal distraction callus (Zeiss TXM)</th><td class="mono" data-label="Record">10.5281/zenodo.17255310</td><td data-label="Licence">CC-BY-4.0</td><td data-label="Used for">Ingestion, ROI detection, performance, a sample report</td><td data-label="Changes">As described in the experiment registry</td></tr>
-<tr><th>Scanco IPL trabecular cubes</th><td class="mono" data-label="Record">10.5281/zenodo.11061947</td><td data-label="Licence">CC-BY-4.0</td><td data-label="Used for">Morphometry agreement (Experiment G)</td><td data-label="Changes">–</td></tr>
-<tr><th>Mouse OA knee (DICOM)</th><td class="mono" data-label="Record">10.5281/zenodo.3909552</td><td data-label="Licence">CC-BY-4.0</td><td data-label="Used for">DICOM ingestion; unlabelled pretraining</td><td data-label="Changes">–</td></tr>
-<tr><th>NuInsSeg H&amp;E nuclei</th><td class="mono" data-label="Record">10.5281/zenodo.10518968</td><td data-label="Licence">See record</td><td data-label="Used for">Histology nuclei evaluation only; no shipped model</td><td data-label="Changes">–</td></tr>
+<tr><th>Data for: SPROUT: A User-friendly, Scalable Toolkit for Multi-class Segmentation of Volumetric Images (2026), dog forelimb subset</th><td data-label="Creators">He, Yichen</td><td class="mono" data-label="Record">10.5281/zenodo.24047383</td><td data-label="Used for">Real-data segmentation, transfer and few-shot experiments</td><td data-label="Changes made">Volumes downsampled ×2; per-bone labels merged into one bone label; evaluation on a central band of slices</td></tr>
+<tr><th>PID2020-113790RB-I00 data set: micro-ct of bone lengthening experiments on ovine metatarsus (2025)</th><td data-label="Creators">Blázquez-Carmona, Pablo; Mora-Macías, Juan; Pajares, Antonia; Mármol, Álvaro; Reina-Romo, Esther</td><td class="mono" data-label="Record">10.5281/zenodo.17255311</td><td data-label="Used for">Ingestion, ROI detection, performance</td><td data-label="Changes made">Converted from TXM to a chunked store; out-of-field padding and metal masked before thresholding; image content unchanged</td></tr>
+<tr><th>MicroCT Trabecular Bone Samples for Trabecular Thickness and Separation Measures (2024)</th><td data-label="Creators">Kuczynski, Michael</td><td class="mono" data-label="Record">10.5281/zenodo.11061947</td><td data-label="Used for">Morphometry agreement (Experiment G)</td><td data-label="Changes made">None to the data</td></tr>
+<tr><th>MicroCT Data of Mice for Osteoarthritis Biomarkers Project (2020)</th><td data-label="Creators">Livingston, Eric; Zukić, Dženan; Paniagua, Beatriz; McCormick, Matthew; Cole, Jacqueline</td><td class="mono" data-label="Record">10.5281/zenodo.3909552</td><td data-label="Used for">DICOM ingestion and performance</td><td data-label="Changes made">None</td></tr>
+<tr><th>NuInsSeg: A fully annotated dataset for nuclei instance segmentation in H&amp;E-stained histological images (2024)</th><td data-label="Creators">Mahbod, Amirreza; Polak, Christine; Feldmann, Katharina; Khan, Rumsha; Gelles, Katharina; Dorffner, Georg; Woitek, Ramona; Hatamikia, Sepideh; Ellinger, Isabella</td><td class="mono" data-label="Record">10.5281/zenodo.10518968</td><td data-label="Used for">Histology nuclei evaluation only; no shipped model</td><td data-label="Changes made">Tiles used as distributed</td></tr>
 </tbody>
 </table>
 </div>
@@ -100,7 +100,7 @@
 <section class="section" id="software">
 <div class="wrap measure">
 <h2>Third-party software</h2>
-<p>The desktop application uses Qt through PySide6 (LGPL, dynamically linked; licence notices are shipped and relinking is possible), VTK (BSD) and the scientific Python stack (NumPy, SciPy, scikit-image, scikit-learn and others under permissive licences). Each build includes a <code>THIRD_PARTY_LICENSES/</code> folder with the licence texts of every bundled distribution. A software bill of materials is kept in <a href="../docs/security/SBOM.csv"><code>docs/security/SBOM.csv</code></a>.</p>
+<p>The desktop application uses Qt through PySide6 (LGPL-3.0, dynamically linked; relinking is possible), VTK (BSD), the Python runtime (PSF licence), the scientific Python stack (NumPy, SciPy, scikit-image, scikit-learn and others under permissive licences), PDFium through pypdfium2 (BSD-3-Clause / Apache-2.0) and system libraries copied from the build machine (some under the LGPL-2.1). It also ships GPL-2 font files with their licence and source. Each build includes <code>THIRD_PARTY_NOTICES.txt</code> and a <code>licenses/</code> folder with the licence texts of the bundled Python distributions, the Python runtime, ICU, the system libraries (<code>licenses/system/</code>) and a list of the third-party code compiled into Qt; the build fails if any bundled library has no mapped licence. The software bill of materials of the current Linux build is in <a href="../docs/security/SBOM.csv"><code>docs/security/SBOM.csv</code></a> (CycloneDX: <code>sbom.cdx.json</code>). Windows and macOS builds have not been made. No build is distributed yet.</p>
 </div>
 </section>
 <section class="section alt" id="marks">
@@ -152,7 +152,7 @@
       </div>
     </div>
     <div class="foot-base">
-      <span>&copy; 2026 OsteoQuant. Application screenshots show synthetic phantom data.</span>
+      <span>&copy; 2026 [founder name] (no company exists yet; "OsteoQuant" is a working name). Application screenshots show synthetic phantom data. Unpublished draft.</span>
       <span>This site sets no cookies and loads nothing from other servers.</span>
     </div>
   </div>

@@ -160,6 +160,11 @@ class ReportsView(QWidget):
         lay.addWidget(split)
 
     blinded = False
+    blinding_forced = False
+
+    def preview_hidden(self, r=None) -> bool:
+        r = r if r is not None else self.current_report()
+        return bool(r and self.blinded and not r.get("blinded"))
 
     def set_blinded(self, on: bool):
         self.blinded = bool(on)
@@ -217,8 +222,18 @@ class ReportsView(QWidget):
             b.setEnabled(not why and r is not None and r.get("status") == "ready")
             b.setToolTip(why or ("" if r else "Select a report"))
         note = why or "Signing requires your password. The signed copy fills the PDF signature rows."
+        hidden = self.preview_hidden(r)
+        self.export.setEnabled(r is not None and not hidden)
+        self.export.setToolTip("This report is not blinded: its preview and export are hidden in blinded review mode"
+                               if hidden else "")
         if not why and r is not None:
-            if r.get("created_by") == p.user["id"]:
+            if hidden:
+                # nobody approves what they cannot see (C2-PRD-15)
+                self.approve.setEnabled(False)
+                self.approve.setToolTip("This report is not blinded and its preview is hidden in blinded review mode: "
+                                        "you cannot approve content you have not seen. Generate a blinded report.")
+                note = self.approve.toolTip()
+            elif r.get("created_by") == p.user["id"]:
                 self.approve.setEnabled(False)
                 self.approve.setToolTip("You generated this report. Separation of duties: another reviewer or the "
                                         "study director must approve it.")
@@ -269,8 +284,9 @@ class ReportsView(QWidget):
             return
         from .services import export_report
         if self.blinded and not r.get("blinded"):
-            QMessageBox.information(self, "Export", "This report is not blinded. Turn off blinded review mode to "
-                                                    "export it.")
+            QMessageBox.information(self, "Export", "This report is not blinded. Generate a blinded report to export"
+                                    + (" (the study is blinded for your role)." if self.blinding_forced else
+                                       ", or turn off blinded review mode."))
             return
         try:
             files = export_report(self.project, r["id"], d)

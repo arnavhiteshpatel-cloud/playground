@@ -37,7 +37,7 @@ TOKENS = {
 
 STATUS_TOKEN = {"suitable": "ok", "imported": "ok", "supported": "ok", "done": "ok", "approved": "ok",
                 "review": "warn", "flagged": "warn", "needs_changes": "warn", "running": "info", "queued": "info",
-                "unsuitable": "bad", "rejected": "bad", "not supported": "bad", "failed": "bad",
+                "unsuitable": "bad", "rejected": "bad", "not supported": "bad", "not assessed": "bad", "failed": "bad",
                 "cancelled": "text_muted"}
 
 _current = "light"
@@ -60,7 +60,7 @@ def status_color(status: str | None) -> QColor:
 
 
 # Non-hue cue for each support status (UX-29: never rely on colour alone)
-STATUS_PREFIX = {"supported": "", "flagged": "\u26a0 ", "not supported": "\u2716 "}
+STATUS_PREFIX = {"supported": "", "flagged": "\u26a0 ", "not supported": "\u2716 ", "not assessed": "\u2716 "}
 
 
 def _lum(hexcol: str) -> float:

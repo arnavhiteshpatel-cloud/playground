@@ -135,8 +135,8 @@
 </div>
 <div>
 <figure class="shot">
-<div class="frame"><img alt="Audit trail tab showing a verified chain of 61 events with sequence numbers, UTC times, user, action, object and row hash." height="1000" loading="lazy" src="assets/img/09_audit_trail.png" width="1600"/></div>
-<figcaption><b>Audit trail.</b> “Chain verified: 61 events, every hash recomputed and linked.”</figcaption>
+<div class="frame"><img alt="Audit trail tab after an integrity check of a chain of 61 events, with sequence numbers, UTC times, user, action, object and row hash." height="1000" loading="lazy" src="assets/img/09_audit_trail.png" width="1600"/></div>
+<figcaption><b>Audit trail.</b> The integrity check recomputes every hash and its link to the previous event (61 events in this synthetic demo project). A technical control, not Part 11 compliance.</figcaption>
 </figure>
 <figure class="shot mt24">
 <div class="frame"><img alt="Viewer in blinded review mode: groups appear as coded identifiers and the review panel offers Approve, Needs changes and Reject." height="1000" loading="lazy" src="assets/img/10_review_blinded.png" width="1600"/></div>
@@ -195,7 +195,7 @@
 <ul class="checklist no card">
 <li>The day-0 (longitudinal) graft-footprint method exists in the analysis library but has no desktop workflow yet.</li>
 <li>Material characterisation (measuring a new material’s intensity profile) is a library function, not a desktop feature.</li>
-<li>Locked U-Net models are not offered in the default bundle: the ONNX runtime path still imports PyTorch. Classical multi-Otsu is the default segmentation.</li>
+<li>No locked U-Net model is installed in the default bundle (models are installed separately; ONNX inference no longer needs PyTorch). Classical multi-Otsu is the default segmentation.</li>
 <li>The histology module is experimental and is not part of the desktop application or of reports.</li>
 </ul>
 <ul class="checklist no card">
@@ -243,7 +243,7 @@
       </div>
     </div>
     <div class="foot-base">
-      <span>&copy; 2026 OsteoQuant. Application screenshots show synthetic phantom data.</span>
+      <span>&copy; 2026 [founder name] (no company exists yet; "OsteoQuant" is a working name). Application screenshots show synthetic phantom data. Unpublished draft.</span>
       <span>This site sets no cookies and loads nothing from other servers.</span>
     </div>
   </div>

@@ -1,8 +1,8 @@
 {
  "Bootstrapped": {
   "structure": "Bootstrapped",
-  "base_rev2031": 287555,
-  "base_cum_ebitda": 57331,
+  "base_rev2031": 259088,
+  "base_cum_ebitda": -34926,
   "one_way": [
    {
     "parameter": "Conversation -> paid pilot rate",
@@ -10,53 +10,11 @@
     "low_value": 0.08,
     "base_value": 0.15,
     "high_value": 0.22,
-    "rev2031_low": 232081,
-    "rev2031_high": 343029,
-    "cum_ebitda_low": -76173,
-    "cum_ebitda_high": 190835,
-    "rev2031_swing": 110948
-   },
-   {
-    "parameter": "Price: academic desktop licence per year",
-    "key": "p_acad",
-    "low_value": 4000,
-    "base_value": 6000,
-    "high_value": 10000,
-    "rev2031_low": 257165,
-    "rev2031_high": 348336,
-    "cum_ebitda_low": -20609,
-    "cum_ebitda_high": 213210,
-    "rev2031_swing": 91170
-   },
-   {
-    "parameter": "Academic labs/cores starting a licence evaluation",
-    "key": "evals",
-    "low_value": [
-     2,
-     4,
-     6,
-     8,
-     8
-    ],
-    "base_value": [
-     4,
-     8,
-     12,
-     15,
-     18
-    ],
-    "high_value": [
-     6,
-     12,
-     18,
-     22,
-     25
-    ],
-    "rev2031_low": 240710,
-    "rev2031_high": 328101,
-    "cum_ebitda_low": -43726,
-    "cum_ebitda_high": 153169,
-    "rev2031_swing": 87390
+    "rev2031_low": 205807,
+    "rev2031_high": 312369,
+    "cum_ebitda_low": -150825,
+    "cum_ebitda_high": 80973,
+    "rev2031_swing": 106562
    },
    {
     "parameter": "Qualified industry discovery conversations (distinct buying units)",
@@ -82,11 +40,11 @@
      50,
      50
     ],
-    "rev2031_low": 252279,
-    "rev2031_high": 333404,
-    "cum_ebitda_low": -26303,
-    "cum_ebitda_high": 145712,
-    "rev2031_swing": 81125
+    "rev2031_low": 225691,
+    "rev2031_high": 303762,
+    "cum_ebitda_low": -103470,
+    "cum_ebitda_high": 44024,
+    "rev2031_swing": 78071
    },
    {
     "parameter": "Price: enterprise desktop licence per year",
@@ -94,10 +52,10 @@
     "low_value": 30000,
     "base_value": 45000,
     "high_value": 75000,
-    "rev2031_low": 261718,
-    "rev2031_high": 339230,
-    "cum_ebitda_low": 3744,
-    "cum_ebitda_high": 164506,
+    "rev2031_low": 233251,
+    "rev2031_high": 310763,
+    "cum_ebitda_low": -88513,
+    "cum_ebitda_high": 72249,
     "rev2031_swing": 77512
    },
    {
@@ -124,23 +82,23 @@
      1,
      1
     ],
-    "rev2031_low": 255043,
-    "rev2031_high": 325805,
-    "cum_ebitda_low": -46083,
-    "cum_ebitda_high": 131701,
+    "rev2031_low": 226576,
+    "rev2031_high": 297338,
+    "cum_ebitda_low": -138340,
+    "cum_ebitda_high": 39444,
     "rev2031_swing": 70762
    },
    {
-    "parameter": "Evaluation -> academic licence rate",
-    "key": "r_acad",
-    "low_value": 0.2,
-    "base_value": 0.35,
-    "high_value": 0.45,
-    "rev2031_low": 248482,
-    "rev2031_high": 313604,
-    "cum_ebitda_low": -32856,
-    "cum_ebitda_high": 117456,
-    "rev2031_swing": 65122
+    "parameter": "Price: academic desktop licence per year",
+    "key": "p_acad",
+    "low_value": 4000,
+    "base_value": 6000,
+    "high_value": 10000,
+    "rev2031_low": 236621,
+    "rev2031_high": 304023,
+    "cum_ebitda_low": -92057,
+    "cum_ebitda_high": 79337,
+    "rev2031_swing": 67402
    },
    {
     "parameter": "Price: non-GLP study analysis",
@@ -148,11 +106,23 @@
     "low_value": 8000,
     "base_value": 11000,
     "high_value": 15000,
-    "rev2031_low": 265301,
-    "rev2031_high": 317227,
-    "cum_ebitda_low": -8207,
-    "cum_ebitda_high": 144715,
-    "rev2031_swing": 51926
+    "rev2031_low": 238116,
+    "rev2031_high": 287051,
+    "cum_ebitda_low": -90133,
+    "cum_ebitda_high": 38684,
+    "rev2031_swing": 48936
+   },
+   {
+    "parameter": "Evaluation -> academic licence rate",
+    "key": "r_acad",
+    "low_value": 0.2,
+    "base_value": 0.35,
+    "high_value": 0.45,
+    "rev2031_low": 230202,
+    "rev2031_high": 278346,
+    "cum_ebitda_low": -101035,
+    "cum_ebitda_high": 9147,
+    "rev2031_swing": 48144
    },
    {
     "parameter": "Paid pilot -> recurring study customer rate",
@@ -160,11 +130,11 @@
     "low_value": 0.25,
     "base_value": 0.4,
     "high_value": 0.5,
-    "rev2031_low": 256956,
-    "rev2031_high": 307955,
-    "cum_ebitda_low": -13469,
-    "cum_ebitda_high": 104531,
-    "rev2031_swing": 50999
+    "rev2031_low": 230251,
+    "rev2031_high": 278313,
+    "cum_ebitda_low": -95110,
+    "cum_ebitda_high": 5197,
+    "rev2031_swing": 48062
    },
    {
     "parameter": "Non-GLP studies per active study customer per year",
@@ -172,11 +142,41 @@
     "low_value": 1.0,
     "base_value": 1.5,
     "high_value": 1.8,
-    "rev2031_low": 260356,
-    "rev2031_high": 303875,
-    "cum_ebitda_low": -5603,
-    "cum_ebitda_high": 95091,
-    "rev2031_swing": 43519
+    "rev2031_low": 233455,
+    "rev2031_high": 274468,
+    "cum_ebitda_low": -88423,
+    "cum_ebitda_high": -2827,
+    "rev2031_swing": 41013
+   },
+   {
+    "parameter": "Academic labs/cores starting a licence evaluation",
+    "key": "evals",
+    "low_value": [
+     2,
+     4,
+     6,
+     8,
+     8
+    ],
+    "base_value": [
+     4,
+     8,
+     10,
+     12,
+     12
+    ],
+    "high_value": [
+     6,
+     10,
+     12,
+     14,
+     14
+    ],
+    "rev2031_low": 234291,
+    "rev2031_high": 271487,
+    "cum_ebitda_low": -94157,
+    "cum_ebitda_high": -5460,
+    "rev2031_swing": 37195
    },
    {
     "parameter": "Study customer annual retention",
@@ -184,11 +184,11 @@
     "low_value": 0.6,
     "base_value": 0.75,
     "high_value": 0.85,
-    "rev2031_low": 265528,
-    "rev2031_high": 306345,
-    "cum_ebitda_low": 18354,
-    "cum_ebitda_high": 88534,
-    "rev2031_swing": 40817
+    "rev2031_low": 239835,
+    "rev2031_high": 274825,
+    "cum_ebitda_low": -65258,
+    "cum_ebitda_high": -11414,
+    "rev2031_swing": 34990
    },
    {
     "parameter": "Price: material characterisation",
@@ -196,10 +196,10 @@
     "low_value": 5000,
     "base_value": 9000,
     "high_value": 15000,
-    "rev2031_low": 279155,
-    "rev2031_high": 300155,
-    "cum_ebitda_low": 20131,
-    "cum_ebitda_high": 113131,
+    "rev2031_low": 250688,
+    "rev2031_high": 271688,
+    "cum_ebitda_low": -68526,
+    "cum_ebitda_high": 15474,
     "rev2031_swing": 21000
    },
    {
@@ -208,10 +208,10 @@
     "low_value": 0.2,
     "base_value": 0.4,
     "high_value": 0.5,
-    "rev2031_low": 278105,
-    "rev2031_high": 292280,
-    "cum_ebitda_low": 31477,
-    "cum_ebitda_high": 70258,
+    "rev2031_low": 249638,
+    "rev2031_high": 263813,
+    "cum_ebitda_low": -58278,
+    "cum_ebitda_high": -23250,
     "rev2031_swing": 14175
    },
    {
@@ -220,10 +220,10 @@
     "low_value": 2500,
     "base_value": 3500,
     "high_value": 5000,
-    "rev2031_low": 282305,
-    "rev2031_high": 295430,
-    "cum_ebitda_low": 34081,
-    "cum_ebitda_high": 92206,
+    "rev2031_low": 253838,
+    "rev2031_high": 266963,
+    "cum_ebitda_low": -55926,
+    "cum_ebitda_high": -3426,
     "rev2031_swing": 13125
    },
    {
@@ -250,10 +250,10 @@
      25,
      22
     ],
-    "rev2031_low": 287555,
-    "rev2031_high": 287555,
-    "cum_ebitda_low": 23915,
-    "cum_ebitda_high": 72283,
+    "rev2031_low": 259088,
+    "rev2031_high": 259088,
+    "cum_ebitda_low": -62619,
+    "cum_ebitda_high": -22611,
     "rev2031_swing": 0
    },
    {
@@ -262,10 +262,10 @@
     "low_value": 65,
     "base_value": 60,
     "high_value": 55,
-    "rev2031_low": 287555,
-    "rev2031_high": 287555,
-    "cum_ebitda_low": 44968,
-    "cum_ebitda_high": 69694,
+    "rev2031_low": 259088,
+    "rev2031_high": 259088,
+    "cum_ebitda_low": -45521,
+    "cum_ebitda_high": -24330,
     "rev2031_swing": 0
    }
   ],
@@ -282,28 +282,28 @@
    ],
    "rev2031": [
     [
-     243048,
-     265301,
-     280137
+     217143,
+     238116,
+     252097
     ],
     [
-     256956,
-     287555,
-     307955
+     230251,
+     259088,
+     278313
     ],
     [
-     275501,
-     317227,
-     345045
+     247728,
+     287051,
+     313267
     ]
    ]
   },
-  "breakeven_study_price_no_grants_cum_cash_2031": 8376
+  "breakeven_study_price_no_grants_cum_cash_2031": 12898
  },
  "Venture": {
   "structure": "Venture",
-  "base_rev2031": 706242,
-  "base_cum_ebitda": -3959831,
+  "base_rev2031": 625713,
+  "base_cum_ebitda": -4159626,
   "one_way": [
    {
     "parameter": "Price: enterprise desktop licence per year",
@@ -311,10 +311,10 @@
     "low_value": 30000,
     "base_value": 45000,
     "high_value": 75000,
-    "rev2031_low": 611805,
-    "rev2031_high": 895115,
-    "cum_ebitda_low": -4151537,
-    "cum_ebitda_high": -3576419,
+    "rev2031_low": 531276,
+    "rev2031_high": 814586,
+    "cum_ebitda_low": -4351332,
+    "cum_ebitda_high": -3776214,
     "rev2031_swing": 283310
    },
    {
@@ -323,83 +323,11 @@
     "low_value": 0.08,
     "base_value": 0.15,
     "high_value": 0.22,
-    "rev2031_low": 591343,
-    "rev2031_high": 821141,
-    "cum_ebitda_low": -4206145,
-    "cum_ebitda_high": -3713516,
-    "rev2031_swing": 229798
-   },
-   {
-    "parameter": "Price: academic desktop licence per year",
-    "key": "p_acad",
-    "low_value": 4000,
-    "base_value": 6000,
-    "high_value": 10000,
-    "rev2031_low": 647335,
-    "rev2031_high": 824055,
-    "cum_ebitda_low": -4091960,
-    "cum_ebitda_high": -3695572,
-    "rev2031_swing": 176719
-   },
-   {
-    "parameter": "Academic labs/cores starting a licence evaluation",
-    "key": "evals",
-    "low_value": [
-     4,
-     8,
-     12,
-     16,
-     20
-    ],
-    "base_value": [
-     6,
-     12,
-     18,
-     24,
-     28
-    ],
-    "high_value": [
-     10,
-     18,
-     28,
-     36,
-     42
-    ],
-    "rev2031_low": 650835,
-    "rev2031_high": 797357,
-    "cum_ebitda_low": -4067200,
-    "cum_ebitda_high": -3783901,
-    "rev2031_swing": 146521
-   },
-   {
-    "parameter": "Qualified industry discovery conversations (distinct buying units)",
-    "key": "conv",
-    "low_value": [
-     20,
-     30,
-     40,
-     45,
-     45
-    ],
-    "base_value": [
-     30,
-     45,
-     55,
-     60,
-     60
-    ],
-    "high_value": [
-     35,
-     55,
-     70,
-     80,
-     80
-    ],
-    "rev2031_low": 640882,
-    "rev2031_high": 781424,
-    "cum_ebitda_low": -4086826,
-    "cum_ebitda_high": -3842951,
-    "rev2031_swing": 140542
+    "rev2031_low": 514925,
+    "rev2031_high": 736500,
+    "cum_ebitda_low": -4377221,
+    "cum_ebitda_high": -3942031,
+    "rev2031_swing": 221576
    },
    {
     "parameter": "New enterprise licences signed (CROs / high-volume manufacturers)",
@@ -425,23 +353,53 @@
      2,
      2
     ],
-    "rev2031_low": 567635,
-    "rev2031_high": 706242,
-    "cum_ebitda_low": -4231386,
-    "cum_ebitda_high": -3959831,
+    "rev2031_low": 487106,
+    "rev2031_high": 625713,
+    "cum_ebitda_low": -4431181,
+    "cum_ebitda_high": -4159626,
     "rev2031_swing": 138607
    },
    {
-    "parameter": "Evaluation -> academic licence rate",
-    "key": "r_acad",
-    "low_value": 0.2,
-    "base_value": 0.35,
-    "high_value": 0.45,
-    "rev2031_low": 630505,
-    "rev2031_high": 756733,
-    "cum_ebitda_low": -4114347,
-    "cum_ebitda_high": -3856820,
-    "rev2031_swing": 126228
+    "parameter": "Qualified industry discovery conversations (distinct buying units)",
+    "key": "conv",
+    "low_value": [
+     20,
+     30,
+     40,
+     45,
+     45
+    ],
+    "base_value": [
+     30,
+     45,
+     55,
+     60,
+     60
+    ],
+    "high_value": [
+     35,
+     55,
+     70,
+     80,
+     80
+    ],
+    "rev2031_low": 563289,
+    "rev2031_high": 699427,
+    "cum_ebitda_low": -4266107,
+    "cum_ebitda_high": -4053002,
+    "rev2031_swing": 136137
+   },
+   {
+    "parameter": "Price: academic desktop licence per year",
+    "key": "p_acad",
+    "low_value": 4000,
+    "base_value": 6000,
+    "high_value": 10000,
+    "rev2031_low": 590713,
+    "rev2031_high": 695713,
+    "cum_ebitda_low": -4237221,
+    "cum_ebitda_high": -4004436,
+    "rev2031_swing": 105000
    },
    {
     "parameter": "Price: non-GLP study analysis",
@@ -449,11 +407,11 @@
     "low_value": 8000,
     "base_value": 11000,
     "high_value": 15000,
-    "rev2031_low": 660877,
-    "rev2031_high": 766728,
-    "cum_ebitda_low": -4073091,
-    "cum_ebitda_high": -3808817,
-    "rev2031_swing": 105851
+    "rev2031_low": 582751,
+    "rev2031_high": 682995,
+    "cum_ebitda_low": -4256665,
+    "cum_ebitda_high": -4030240,
+    "rev2031_swing": 100245
    },
    {
     "parameter": "Paid pilot -> recurring study customer rate",
@@ -461,11 +419,11 @@
     "low_value": 0.25,
     "base_value": 0.4,
     "high_value": 0.5,
-    "rev2031_low": 643865,
-    "rev2031_high": 747826,
-    "cum_ebitda_low": -4091446,
-    "cum_ebitda_high": -3872087,
-    "rev2031_swing": 103961
+    "rev2031_low": 566640,
+    "rev2031_high": 665094,
+    "cum_ebitda_low": -4273458,
+    "cum_ebitda_high": -4083737,
+    "rev2031_swing": 98455
    },
    {
     "parameter": "Non-GLP studies per active study customer per year",
@@ -473,11 +431,23 @@
     "low_value": 1.0,
     "base_value": 1.5,
     "high_value": 1.8,
-    "rev2031_low": 650796,
-    "rev2031_high": 739509,
-    "cum_ebitda_low": -4076822,
-    "cum_ebitda_high": -3889636,
-    "rev2031_swing": 88713
+    "rev2031_low": 573203,
+    "rev2031_high": 657218,
+    "cum_ebitda_low": -4260810,
+    "cum_ebitda_high": -4098915,
+    "rev2031_swing": 84015
+   },
+   {
+    "parameter": "Evaluation -> academic licence rate",
+    "key": "r_acad",
+    "low_value": 0.2,
+    "base_value": 0.35,
+    "high_value": 0.45,
+    "rev2031_low": 580713,
+    "rev2031_high": 655713,
+    "cum_ebitda_low": -4250391,
+    "cum_ebitda_high": -4099116,
+    "rev2031_swing": 75000
    },
    {
     "parameter": "Study customer annual retention",
@@ -485,11 +455,41 @@
     "low_value": 0.6,
     "base_value": 0.75,
     "high_value": 0.85,
-    "rev2031_low": 662922,
-    "rev2031_high": 742896,
-    "cum_ebitda_low": -4032154,
-    "cum_ebitda_high": -3901911,
-    "rev2031_swing": 79974
+    "rev2031_low": 587594,
+    "rev2031_high": 656642,
+    "cum_ebitda_low": -4216890,
+    "cum_ebitda_high": -4115257,
+    "rev2031_swing": 69048
+   },
+   {
+    "parameter": "Academic labs/cores starting a licence evaluation",
+    "key": "evals",
+    "low_value": [
+     4,
+     8,
+     10,
+     12,
+     12
+    ],
+    "base_value": [
+     6,
+     10,
+     12,
+     14,
+     16
+    ],
+    "high_value": [
+     8,
+     12,
+     16,
+     18,
+     20
+    ],
+    "rev2031_low": 604965,
+    "rev2031_high": 654021,
+    "cum_ebitda_low": -4194417,
+    "cum_ebitda_high": -4108208,
+    "rev2031_swing": 49056
    },
    {
     "parameter": "Price: material characterisation",
@@ -497,10 +497,10 @@
     "low_value": 5000,
     "base_value": 9000,
     "high_value": 15000,
-    "rev2031_low": 688242,
-    "rev2031_high": 733242,
-    "cum_ebitda_low": -4024325,
-    "cum_ebitda_high": -3863090,
+    "rev2031_low": 607713,
+    "rev2031_high": 652713,
+    "cum_ebitda_low": -4218720,
+    "cum_ebitda_high": -4070985,
     "rev2031_swing": 45000
    },
    {
@@ -509,10 +509,10 @@
     "low_value": 0.2,
     "base_value": 0.4,
     "high_value": 0.5,
-    "rev2031_low": 685992,
-    "rev2031_high": 716367,
-    "cum_ebitda_low": -4006587,
-    "cum_ebitda_high": -3936453,
+    "rev2031_low": 605463,
+    "rev2031_high": 635838,
+    "cum_ebitda_low": -4202628,
+    "cum_ebitda_high": -4138124,
     "rev2031_swing": 30375
    },
    {
@@ -521,10 +521,10 @@
     "low_value": 2500,
     "base_value": 3500,
     "high_value": 5000,
-    "rev2031_low": 694992,
-    "rev2031_high": 723117,
-    "cum_ebitda_low": -4000140,
-    "cum_ebitda_high": -3899368,
+    "rev2031_low": 614463,
+    "rev2031_high": 642588,
+    "cum_ebitda_low": -4196559,
+    "cum_ebitda_high": -4104225,
     "rev2031_swing": 28125
    },
    {
@@ -551,10 +551,10 @@
      20,
      16
     ],
-    "rev2031_low": 706242,
-    "rev2031_high": 706242,
-    "cum_ebitda_low": -3997944,
-    "cum_ebitda_high": -3940956,
+    "rev2031_low": 625713,
+    "rev2031_high": 625713,
+    "cum_ebitda_low": -4191202,
+    "cum_ebitda_high": -4144157,
     "rev2031_swing": 0
    },
    {
@@ -563,10 +563,10 @@
     "low_value": 65,
     "base_value": 60,
     "high_value": 55,
-    "rev2031_low": 706242,
-    "rev2031_high": 706242,
-    "cum_ebitda_low": -3980334,
-    "cum_ebitda_high": -3939327,
+    "rev2031_low": 625713,
+    "rev2031_high": 625713,
+    "cum_ebitda_low": -4177212,
+    "cum_ebitda_high": -4142039,
     "rev2031_swing": 0
    }
   ],
@@ -583,22 +583,22 @@
    ],
    "rev2031": [
     [
-     615512,
-     660877,
-     691120
+     539789,
+     582751,
+     611392
     ],
     [
-     643865,
-     706242,
-     747826
+     566640,
+     625713,
+     665094
     ],
     [
-     681669,
-     766728,
-     823434
+     602442,
+     682995,
+     736698
     ]
    ]
   },
-  "breakeven_study_price_no_grants_cum_cash_2031": 115887
+  "breakeven_study_price_no_grants_cum_cash_2031": 139596
  }
 }

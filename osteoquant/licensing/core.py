@@ -180,6 +180,8 @@ def verify_envelope(envelope: dict, keys: dict[str, tuple[str, bool]] | None = N
     sig_b64 = envelope.get("signature")
     if not isinstance(payload_text, str) or not isinstance(sig_b64, str):
         return bad("licence file is incomplete")
+    if not isinstance(kid, str):     # a list/dict key id must not raise before the signature check (C2-PRD-18)
+        return bad("licence file is malformed (key id is not text)")
     if kid not in keys:
         if kid in TEST_KEYS:
             return bad("signed with the public TEST key; test licences are not accepted by this build")
@@ -192,10 +194,14 @@ def verify_envelope(envelope: dict, keys: dict[str, tuple[str, bool]] | None = N
         return bad("signature does not match (file altered or signed with a different key)")
     try:
         p = json.loads(payload_text)
+        if not isinstance(p, dict):
+            return bad("payload is not a licence record")
         issued = _parse_date(p.get("issued"))
         expiry = _parse_date(p.get("expiry"))
     except (json.JSONDecodeError, LicenceError) as e:
         return bad(f"payload unreadable: {e}")
+    if not isinstance(p.get("features", []), list) or not all(isinstance(f, str) for f in p.get("features", [])):
+        return bad("payload field 'features' is malformed")
     if p.get("product") != PRODUCT:
         return bad(f"licence is for a different product ({p.get('product')!r})")
     if p.get("edition") not in EDITIONS:
@@ -219,12 +225,16 @@ def verify_envelope(envelope: dict, keys: dict[str, tuple[str, bool]] | None = N
 
 
 def verify_file(path, keys=None, today=None, machine=None) -> LicenceStatus:
+    """Total: any problem with the file gives an ``invalid`` status (evaluation mode), never an exception."""
     path = Path(path)
     try:
         env = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as e:
+    except (OSError, UnicodeDecodeError, ValueError, RecursionError) as e:
         return evaluation_status(f"cannot read licence file: {e}", "invalid", str(path))
-    return verify_envelope(env, keys=keys, today=today, machine=machine, source=str(path))
+    try:
+        return verify_envelope(env, keys=keys, today=today, machine=machine, source=str(path))
+    except Exception as e:  # noqa: BLE001 - a malformed or hostile file must never stop the application
+        return evaluation_status(f"licence file is malformed ({type(e).__name__})", "invalid", str(path))
 
 
 # ----------------------------------------------------------------------------- installation
@@ -245,10 +255,13 @@ def default_licence_path() -> Path:
 
 def current_status(keys=None) -> LicenceStatus:
     """Status of the installed licence, or evaluation mode when none is installed."""
-    p = default_licence_path()
-    if not p.exists():
-        return evaluation_status()
-    return verify_file(p, keys=keys)
+    try:
+        p = default_licence_path()
+        if not p.exists():
+            return evaluation_status()
+        return verify_file(p, keys=keys)
+    except Exception as e:  # noqa: BLE001 - start in evaluation mode with a clear message (C2-PRD-18)
+        return evaluation_status(f"licence could not be checked ({type(e).__name__}: {e})", "invalid")
 
 
 def install_licence(src, keys=None) -> LicenceStatus:
@@ -256,7 +269,11 @@ def install_licence(src, keys=None) -> LicenceStatus:
     st = verify_file(src, keys=keys)
     if st.state != "valid":
         return st
-    dest = default_licence_path()
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(src, dest)
+    try:
+        dest = default_licence_path()
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dest)
+    except OSError as e:
+        return evaluation_status(f"licence could not be installed: {e}", "invalid", str(src))
     return verify_file(dest, keys=keys)
+

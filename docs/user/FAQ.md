@@ -100,7 +100,7 @@ Production licences cannot be issued yet. See [LICENSING_AND_ADMIN.md](LICENSING
 ### Why can't I approve my own segmentation?
 
 Separation of duties: an author cannot approve their own work. A second user with the reviewer or administrator role
-must sign. User management is not in the desktop yet; see
+must sign. Administrators add users under *Project > Users...*; see
 [LICENSING_AND_ADMIN.md](LICENSING_AND_ADMIN.md#adding-users).
 
 ### Are the trained models usable on my scans?

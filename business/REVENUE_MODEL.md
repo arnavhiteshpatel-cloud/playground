@@ -8,8 +8,8 @@ Evidence labels follow `PROSPECTS.md`: [V] verified primary source, [RF] reporte
 | Artefact | What it holds |
 |---|---|
 | `FINANCIAL_MODEL.xlsx` | Formula-driven model. Sheets: Inputs, P&L Bootstrapped, P&L Venture, Unit economics, Market check, Sensitivity |
-| `build_financial_model.py` | Rebuilds the workbook and both JSON files. It checks that no formula references itself, then recalculates the workbook in LibreOffice and checks it against a Python copy of the same model (last run: 1,221 formulas, no self-references, max relative difference 4×10⁻¹⁵) |
-| `financial_model_outputs.json` | Per structure and scenario: revenue by offering, volumes, gross margin, EBITDA, cash with and without grants, equity requirement |
+| `build_financial_model.py` | Rebuilds the workbook and both JSON files. It checks that no formula references itself, then recalculates the workbook in LibreOffice and checks it against a Python copy of the same model (last run 2026-11-27: 1,251 formulas, no self-references, max relative difference 5×10⁻¹⁵). The saved workbook carries cached values, so viewers without a calculation engine see the numbers |
+| `financial_model_outputs.json` | Per structure and scenario: revenue by offering, volumes, gross margin, EBITDA, cash **without grants (lead case)** and **with grants if awarded (conditional)**, equity requirement (no-grant), revenue without licence revenue |
 | `revenue_model_sensitivity.json` | One-way and two-way sensitivity, plus the break-even study price |
 | `PRICING_VALIDATION_PLAN.md` | How each price hypothesis gets tested, with the decision thresholds |
 
@@ -17,15 +17,15 @@ Evidence labels follow `PROSPECTS.md`: [V] verified primary source, [RF] reporte
 
 ## 1. Offerings and price hypotheses
 
-The product is an **offline desktop application**. Scans stay on the analyst's or customer's machine, and the application separates new bone, residual graft and host bone, reports morphometry, registers later time points to a day-0 scan, abstains when a measurement is not supported, and writes an audit trail and a study report. Around it sit three services. The price ranges were set by the founder as hypotheses to test.
+The product is an **offline desktop application**. Scans stay on the analyst's or customer's machine, and the application separates new bone, residual graft and host bone where the measurement-support advisor allows it, reports morphometry, abstains when a measurement is not supported, and writes an audit trail and a study report. (Day-0 registration exists only in the analysis library; there is no desktop day-0 workflow, and the method is fragile under granule motion in simulation, so it is not part of the product description.) Around it sit three services. The price ranges were set by the founder as hypotheses to test.
 
 | # | Offering | Unit and scope [AE] | Price range [HYP] | Base value in model | Likely buyer [INF] | What it is *not* |
 |---|---|---|---|---|---|---|
 | O1 | **Paid pilot** | 10–20 retrospective scans from a completed study; blinded comparison with the customer's own analysis (`templates/PILOT_PROPOSAL.md`) | $2,500–5,000 | $3,500 | Manufacturer R&D, CRO study director | Not a validation of the customer's material |
 | O2 | **Non-GLP study analysis** | ≤40 scans, ≤2 time points, one defect model; reviewed three-class segmentation, morphometry, report | $8,000–15,000 per study | $11,000 | SME orthobiologic and dental manufacturers | Not GLP. Not for regulatory submission without the customer's own QA review |
-| O3 | **Material characterisation** | Can new bone and this graft material be told apart at the customer's scanner settings? Covers the known-truth phantom and simulator assessment, a scan-protocol recommendation and a day-0 protocol design | $5,000–15,000 | $9,000 | Manufacturers before a study, CROs designing one | Not a claim that separation will work. The answer may be "not separable by micro-CT alone" |
+| O3 | **Material characterisation** | Can new bone and this graft material be told apart at the customer's scanner settings? Today: a **simulation-based separability assessment** using scans the customer supplies (e.g. the material alone) and a scan-protocol recommendation. **Physical phantom characterisation only after validation stage B** (not started). Price floor (≥$7.5K or a narrower scope) is a founder decision (`FOUNDER_DECISIONS.md`) | $5,000–15,000 | $9,000 | Manufacturers before a study, CROs designing one | Not a claim that separation will work. The answer may be "not separable by micro-CT alone" |
 | O4 | **Academic desktop licence** | One lab or core per year, local install, updates, email support | $4,000–10,000 per year | $6,000 | NIH-funded bone-repair labs, micro-CT cores | Not a fee-for-service licence for third parties |
-| O5 | **Enterprise desktop licence** | One organisation per year, multi-seat, onboarding, a validation-evidence pack (documents what was tested, not a GLP validation) | $30,000–75,000 per year | $45,000 | Preclinical CROs, high-volume manufacturers | No GLP validation, no Part 11 compliance, no claim of regulatory acceptance |
+| O5 | **Enterprise desktop licence** | One organisation per year, multi-seat, onboarding, the engineering verification records (what was tested and how; no IQ/OQ/PQ executed; not a GLP validation) | $30,000–75,000 per year | $45,000 | Preclinical CROs, high-volume manufacturers | No GLP validation, no Part 11 compliance, no claim of regulatory acceptance |
 
 **What changed from v1 (playbook prices in `MARKET_MODEL_INPUTS.md` §5 and `SCIENTIFIC_EVIDENCE.md` §6):**
 - The **$25K GLP-study offering is removed.** It cannot be sold until a validation report and a Quality Agreement exist.
@@ -87,6 +87,8 @@ No published conversion benchmark for this niche was verified, so every rate is 
 
 | Input | Cons / Base / Opt (Bootstrapped) | Rationale |
 |---|---|---|
+| Share of the year in which paid work can be sold | 2027: 0% / 25% / 50%, then 100% | [AE] **No revenue before incorporation and a first signed pilot.** M0 (entity, OTM/IP clearance, insurance, counsel-reviewed NDA/SOW/DPA) is planned for Dec 2026–Feb 2027 and M3 (first paid pilot) for mid-2027 at the earliest (`investor/FUNDING_STRATEGY.md` §3). Paid pilots, and everything that follows from them, are scaled by this share |
+| Share of the year in which licences can be sold | 2027: 0% in every scenario; 2028: 50% / 100% / 100% | [AE] No production signing key and no licence/EULA exist (`docs/desktop/PACKAGING.md`); licences start after the first signed pilot. The code licence is a founder decision; while the source is public with no licence, licence revenue has no enforceable basis (see the "without licence revenue" column in §5a) |
 | Qualified industry conversations per year (distinct buying units) | 12–25 / 20–35 / 25–50 | [AE] Founder capacity alongside full-time study. Capped by ~200 US-visible industry buying units: 41 bone-void-filler and 24 dental applicants active in 2023–26, 117 spine applicants and 10–25 CROs (`MARKET_MODEL_INPUTS.md` §1b, §2). For scale, NSF I-Corps Teams expects ≥100 customer and partner interviews over its curriculum ([V] NSF 25-549, accessed 2026-11-27); those are learning interviews, not qualified buyers |
 | Conversation → paid pilot | 8% / 15% / 22% | [HYP] A paid pilot requires the customer to share retrospective scans. Confidentiality and sponsor consent are the expected blockers (`INTERVIEW_CODING_SCHEME.md` §6) |
 | Paid pilot → recurring study customer | 25% / 40% / 50% | [HYP] Conditional on the pilot meeting its pre-specified agreement criteria |
@@ -94,39 +96,47 @@ No published conversion benchmark for this niche was verified, so every rate is 
 | Studies per active customer per year | 1.0 / 1.5 / 1.8 | [AE] `MARKET_MODEL_INPUTS.md` §4 (bone-void-filler firms 0.5 / 1.5 / 3) |
 | New customers' first-year studies | 50% of a full year | [AE] Timing convention |
 | Material characterisations per paid pilot | 20% / 40% / 50% | [HYP] Sold where the pilot shows graft and new bone overlapping in density |
-| Academic evaluations per year | 2–8 / 4–18 / 6–25 | [AE] Against 45–49 organisations with NIH micro-CT bone-repair projects (lower bound, `MARKET_MODEL_INPUTS.md` §3) |
+| Academic evaluations per year | 2–8 / 4–12 / 6–14 (Venture 4–12 / 6–16 / 8–20) | [AE] Against 45–49 organisations with NIH micro-CT bone-repair projects (lower bound, `MARKET_MODEL_INPUTS.md` §3). Lowered in cycle 2 so that active licences stay well below that count (Venture Optimistic previously reached 49 licences, 100% of the organisations) |
 | Evaluation → academic licence | 20% / 35% / 45% | [HYP] Free general-purpose tools exist (Dragonfly academic, BoneJ) |
 | Academic retention | 70% / 80% / 85% | [HYP] Tied to grant cycles |
 | New enterprise licences per year | 0,0,0,0,1 / 0,0,1,0,1 / 0,0,1,1,1 | [HYP] Long CRO procurement and vendor qualification (`INTERVIEW_GUIDE.md` §8) |
 | Enterprise retention | 80% / 85% / 90% | [HYP] |
-| Grants (Bootstrapped) | $0 / $325K / $345K | [HYP] One NSF or NIH Phase I (up to $305K NSF [V]) plus small student awards. **Conditional:** PI eligibility for a full-time student is unresolved (`grants/NSF_vs_NIH_ELIGIBILITY.md`) |
+| Grant awards (Bootstrapped) | $0 / $325K / $345K | [HYP] One NSF or NIH Phase I (up to $305K NSF [V]) plus small student awards. **Conditional and not operating cash:** nothing has been applied for, PI eligibility for a full-time student is unresolved (`grants/NSF_vs_NIH_ELIGIBILITY.md`), and an award is restricted to its project (an NIH STTR needs a ≥30% research-institution subaward) |
+| Grant share that reaches operating cash | fee 0% / 7% / 7%; plus 10% / 25% / 40% of the restricted spend that pays costs already in the plan (e.g. the phantom study) | [AE] The rest of an award is new project work. These shares only affect the "with grants if awarded" path |
 
 ## 5. Scenarios (hypothetical; 2027–2031)
 
 ### 5a. Total revenue, $ (`financial_model_outputs.json`)
-| Structure / scenario | 2027 | 2028 | 2029 | 2030 | 2031 | Gross margin 2031 |
-|---|---|---|---|---|---|---|
-| Bootstrapped: Conservative | 5,920 | 12,672 | 19,435 | 24,844 | 58,494 | 63% |
-| **Bootstrapped: Base** | **39,600** | **85,170** | **177,028** | **210,610** | **287,555** | **84%** |
-| Bootstrapped: Optimistic | 132,875 | 309,462 | 566,608 | 822,731 | 1,051,934 | 93% |
-| Venture: Conservative | 10,400 | 21,360 | 64,080 | 105,223 | 143,113 | 66% |
-| Venture: Base | 59,400 | 172,755 | 299,452 | 501,410 | 706,242 | 82% |
-| Venture: Optimistic | 193,225 | 515,532 | 968,290 | 1,663,602 | 2,431,719 | 89% |
+Revenue starts only after incorporation and a first signed pilot (§4): none in 2027 in the Conservative scenarios,
+one quarter of a year of selling in Base, half a year in Optimistic; no licence revenue in 2027.
 
-### 5b. Cash, $
-| Structure / scenario | Cumulative cash 2031, with grants | Without grants | Equity needed (max deficit), with grants | Without grants |
-|---|---|---|---|---|
-| Bootstrapped: Conservative | −251,661 | −251,661 | 251,661 | 251,661 |
-| Bootstrapped: Base | 382,331 | 57,331 | 0 | 60,076 |
-| Bootstrapped: Optimistic | 2,138,148 | 1,793,148 | 0 | 0 |
-| Venture: Conservative | −3,820,595 | −4,125,595 | 3,820,595 | 4,125,595 |
-| Venture: Base | −2,384,831 | −3,959,831 | 2,384,831 | 3,959,831 |
-| Venture: Optimistic | 283,433 | −1,311,567 | 839,059 | 1,420,266 |
+| Structure / scenario | 2027 | 2028 | 2029 | 2030 | 2031 | Gross margin 2031 | 2031 without licence revenue |
+|---|---|---|---|---|---|---|---|
+| Bootstrapped: Conservative | 0 | 8,800 | 16,840 | 23,096 | 57,312 | 63% | 13,531 |
+| **Bootstrapped: Base** | **7,800** | **67,312** | **159,099** | **190,384** | **259,088** | **83%** | 114,174 |
+| Bootstrapped: Optimistic | 52,938 | 245,956 | 485,628 | 717,897 | 913,325 | 93% | 526,875 |
+| Venture: Conservative | 0 | 14,000 | 57,520 | 97,163 | 130,238 | 65% | 26,247 |
+| Venture: Base | 11,700 | 141,769 | 261,071 | 444,351 | 625,713 | 82% | 237,402 |
+| Venture: Optimistic | 74,112 | 406,104 | 806,574 | 1,406,149 | 2,048,024 | 88% | 1,145,783 |
+
+### 5b. Cash, $ — lead case WITHOUT grants
+Grants are **not** operating cash. The lead case counts none. The right-hand columns show the same plan **if** the
+assumed awards were won, counting only the fee share and the planned costs the restricted project legitimately pays
+(§4); they are conditional on eligibility and on awards that have not been applied for.
+
+| Structure / scenario | **Cumulative cash 2031, NO grants (lead case)** | **Equity needed (max deficit), NO grants** | Grant awards assumed (conditional) | Cumulative cash 2031 WITH grants IF awarded | Equity needed WITH grants IF awarded |
+|---|---|---|---|---|---|
+| Bootstrapped: Conservative | −259,273 | 259,273 | 0 | −259,273 | 259,273 |
+| Bootstrapped: Base | −34,926 | 96,126 | 325,000 | 63,387 | 44,700 |
+| Bootstrapped: Optimistic | 1,358,255 | 23,204 | 345,000 | 1,510,745 | 5,524 |
+| Venture: Conservative | −4,147,703 | 4,147,703 | 305,000 | −4,117,203 | 4,117,203 |
+| Venture: Base | −4,159,626 | 4,159,626 | 1,575,000 | −3,683,188 | 3,683,188 |
+| Venture: Optimistic | −2,236,229 | 2,236,229 | 1,595,000 | −1,531,239 | 1,631,535 |
 
 ### 5c. What drives Bootstrapped Base in 2031
-- **Volumes:** 5.2 paid pilots, 7.4 studies, 2.1 characterisations, 15.2 academic licences and 1.7 enterprise licences (fractional values are expected values).
-- **Revenue mix:** studies $81.6K (28%), academic licences $91.2K (32%), enterprise licences $77.5K (27%), pilots $18.4K, characterisations $18.9K. **Licences make up 59% of 2031 revenue**, so the desktop product, not the service, carries the Base case.
-- **Capacity:** 0.5 delivery FTE. The founder alone could deliver the Base case; the Optimistic case needs about 0.8 FTE.
+- **Volumes:** 5.2 paid pilots, 7.0 studies, 2.1 characterisations, 11.2 academic licences and 1.7 enterprise licences (fractional values are expected values). 2027: 0.8 pilots and no licences.
+- **Revenue mix:** studies $76.9K (30%), enterprise licences $77.5K (30%), academic licences $67.4K (26%), pilots $18.4K (7%), characterisations $18.9K (7%). **Licences make up 56% of 2031 revenue**, so the desktop product carries the Base case — and licence revenue needs an enforceable licence that does not yet exist. Without licence revenue, 2031 Base revenue is $114K.
+- **Capacity:** 0.4 delivery FTE in 2031 (Optimistic 0.7), costed at the loaded analyst rate whether or not the founder does the work. It excludes selling, validation, QA and administration, which fall on a founder who is a full-time student. Whether one person can carry both is untested; the model does not assume the founder delivers unpaid.
 
 ### 5d. Market check (`Market check` sheet)
 Recomputed at the Base price hypotheses ($11K per study, $6K academic licence), the serviceable pool is:
@@ -143,47 +153,48 @@ Modelled 2031 revenue as a share of the **mid** total pool:
 
 | Structure | Conservative | Base | Optimistic |
 |---|---|---|---|
-| Bootstrapped | 3% | 15% | 56% |
-| Venture | 8% | 38% | 130% |
+| Bootstrapped | 3% | 14% | 49% |
+| Venture | 7% | 34% | 110% |
 
-The Bootstrapped Optimistic and both Venture Base and Optimistic exceed what US graft-defect work alone can plausibly supply, so they **require** non-US sponsors, higher study volumes than assumed, or expansion modules. This repeats the v1 conclusion: graft-defect analysis alone supports a founder-scale business, not a venture-scale one.
+The Bootstrapped Optimistic and both Venture Base and Optimistic exceed (or approach) what US graft-defect work alone can plausibly supply, so they **require** non-US sponsors, higher study volumes than assumed, or expansion modules. This repeats the v1 conclusion: graft-defect analysis alone supports a founder-scale business, not a venture-scale one.
 
 ## 6. Sensitivity (Bootstrapped Base; `Sensitivity` sheet, `revenue_model_sensitivity.json`)
-Base outputs: 2031 revenue **$287,555**; cumulative 2027–31 EBITDA **$57,331**, with no grants counted. Each row moves one input to its Conservative and Optimistic value while every other input stays at Base.
+Base outputs: 2031 revenue **$259,088**; cumulative 2027–31 EBITDA **−$34,926**, with no grants counted. Each row moves one input to its Conservative and Optimistic value while every other input stays at Base.
 
 | Input (low → high) | 2031 revenue low / high | Swing | Cum. EBITDA low / high |
 |---|---|---|---|
-| Conversation → paid pilot (8% → 22%) | 232,081 / 343,029 | 110,948 | −76,173 / 190,835 |
-| Academic licence price ($4K → $10K) | 257,165 / 348,336 | 91,170 | −20,609 / 213,210 |
-| Academic evaluations per year | 240,710 / 328,101 | 87,390 | −43,726 / 153,169 |
-| Industry conversations per year | 252,279 / 333,404 | 81,125 | −26,303 / 145,712 |
-| Enterprise licence price ($30K → $75K) | 261,718 / 339,230 | 77,512 | 3,744 / 164,506 |
-| New enterprise licences | 255,043 / 325,805 | 70,762 | −46,083 / 131,701 |
-| Evaluation → academic licence (20% → 45%) | 248,482 / 313,604 | 65,122 | −32,856 / 117,456 |
-| Study price ($8K → $15K) | 265,301 / 317,227 | 51,926 | −8,207 / 144,715 |
-| Pilot → study customer (25% → 50%) | 256,956 / 307,955 | 50,999 | −13,469 / 104,531 |
-| Studies per customer (1.0 → 1.8) | 260,356 / 303,875 | 43,519 | −5,603 / 95,091 |
-| Study-customer retention (60% → 85%) | 265,528 / 306,345 | 40,817 | 18,354 / 88,534 |
-| Characterisation price ($5K → $15K) | 279,155 / 300,155 | 21,000 | 20,131 / 113,131 |
-| Characterisation attach (20% → 50%) | 278,105 / 292,280 | 14,175 | 31,477 / 70,258 |
-| Pilot price ($2.5K → $5K) | 282,305 / 295,430 | 13,125 | 34,081 / 92,206 |
-| Analyst hours per study | no revenue effect | 0 | 23,915 / 72,283 |
-| Loaded analyst rate ($65 → $55) | no revenue effect | 0 | 44,968 / 69,694 |
+| Conversation → paid pilot (8% → 22%) | 205,807 / 312,369 | 106,562 | −150,825 / 80,973 |
+| Industry conversations per year | 225,691 / 303,762 | 78,071 | −103,470 / 44,024 |
+| Enterprise licence price ($30K → $75K) | 233,251 / 310,763 | 77,512 | −88,513 / 72,249 |
+| New enterprise licences | 226,576 / 297,338 | 70,762 | −138,340 / 39,444 |
+| Academic licence price ($4K → $10K) | 236,621 / 304,023 | 67,402 | −92,057 / 79,337 |
+| Study price ($8K → $15K) | 238,116 / 287,051 | 48,936 | −90,133 / 38,684 |
+| Evaluation → academic licence (20% → 45%) | 230,202 / 278,346 | 48,144 | −101,035 / 9,147 |
+| Pilot → study customer (25% → 50%) | 230,251 / 278,313 | 48,062 | −95,110 / 5,197 |
+| Studies per customer (1.0 → 1.8) | 233,455 / 274,468 | 41,013 | −88,423 / −2,827 |
+| Academic evaluations per year | 234,291 / 271,487 | 37,195 | −94,157 / −5,460 |
+| Study-customer retention (60% → 85%) | 239,835 / 274,825 | 34,990 | −65,258 / −11,414 |
+| Characterisation price ($5K → $15K) | 250,688 / 271,688 | 21,000 | −68,526 / 15,474 |
+| Characterisation attach (20% → 50%) | 249,638 / 263,813 | 14,175 | −58,278 / −23,250 |
+| Pilot price ($2.5K → $5K) | 253,838 / 266,963 | 13,125 | −55,926 / −3,426 |
+| Analyst hours per study | no revenue effect | 0 | −62,619 / −22,611 |
+| Loaded analyst rate ($65 → $55) | no revenue effect | 0 | −45,521 / −24,330 |
 
 **Two-way grid** (2031 revenue): study price × pilot-to-customer rate.
 
 | Study price | 25% | 40% | 50% |
 |---|---|---|---|
-| $8K | 243,048 | 265,301 | 280,137 |
-| $11K | 256,956 | 287,555 | 307,955 |
-| $15K | 275,501 | 317,227 | 345,045 |
+| $8K | 217,143 | 238,116 | 252,097 |
+| $11K | 230,251 | 259,088 | 278,313 |
+| $15K | 247,728 | 287,051 | 313,267 |
 
-**Break-even study price.** With everything else at Base and no grants, cumulative cash reaches zero by 2031 at a study price of **$8,376**, inside the hypothesis range. In the Venture structure the equivalent figure is **$115,887**: no plausible study price funds the venture cost base.
+**Break-even study price.** With everything else at Base and no grants, cumulative cash reaches zero by 2031 at a study price of **$12,898**, inside the hypothesis range but above the $11K Base value. In the Venture structure the equivalent figure is **$139,596**: no plausible study price funds the venture cost base.
 
 **What the sensitivity says [INF]:**
 1. The two inputs that most often decide whether Base makes or loses money are the **share of conversations that become paid pilots** and **academic willingness to pay** (price and conversion). Both are untested.
-2. The study price matters less than expected. Study volume in Base is small (7 per year by 2031), so the price per study moves revenue less than the funnel does.
-3. Analyst hours do not change revenue. They change cash by up to $48K over five years at these volumes, but the stress test in §2a shows they could erase the margin on low-priced studies.
+2. The study price matters less than expected for revenue. Study volume in Base is small (7 per year by 2031), so the price per study moves revenue less than the funnel does; it does decide whether Base cash turns positive without grants (break-even $12.9K).
+3. Analyst hours do not change revenue. They change cash by about $40K over five years at these volumes, but the stress test in §2a shows they could erase the margin on low-priced studies.
+4. With no grants, Bootstrapped Base needs about $96K of outside money (or founder funds) at its deepest point and is still slightly negative in 2031. Grants, **if** awarded, reduce that to about $45K; they do not make the plan.
 
 ## 7. Evidence needed to move each hypothesis to "validated"
 "Validated" means the stated evidence exists in `interview_log_template.csv` rows or signed documents, not that the hypothesis was discussed. Thresholds and methods are detailed in `PRICING_VALIDATION_PLAN.md`.

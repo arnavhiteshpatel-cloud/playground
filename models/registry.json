@@ -375,7 +375,13 @@
    "seed": 0,
    "fg_prob": 0.6
   },
-  "previous_sha256": "3f6af60a4ca1a41bb753fe1b3f35b4fe6af4fbd9143e03267277f2f25e69e2c6"
+  "previous_sha256": "3f6af60a4ca1a41bb753fe1b3f35b4fe6af4fbd9143e03267277f2f25e69e2c6",
+  "dataset_doi": "10.5281/zenodo.24047383",
+  "dataset_licence_spdx": "CC-BY-4.0",
+  "dataset_creators": [
+   "He, Yichen"
+  ],
+  "attribution": "Trained on the dog forelimb subset of 'Data for: SPROUT: A User-friendly, Scalable Toolkit for Multi-class Segmentation of Volumetric Images' by Yichen He (2026), doi:10.5281/zenodo.24047383, CC-BY-4.0 (https://creativecommons.org/licenses/by/4.0/). Changes: volumes downsampled x2; per-bone labels merged into one bone label; evaluation on a central band of slices."
  },
  "unet_synth_ft_dog_k1": {
   "sha256": "2cf92340c66f2d6b2a231c2201fa0ec6d32fbd097dfd016b8a773c09783a24c5",
@@ -410,7 +416,13 @@
    "seed": 7
   },
   "parent": "unet_noctx_s0",
-  "provenance_note": "parent recorded retrospectively (cycle-2 review ARC-01): fine-tuned from unet_noctx_s0 (synthetic, commercial_eligible) on CC-BY-4.0 SPROUT data; checkpoint predates parent recording"
+  "provenance_note": "parent recorded retrospectively (cycle-2 review ARC-01): fine-tuned from unet_noctx_s0 (synthetic, commercial_eligible) on CC-BY-4.0 SPROUT data; checkpoint predates parent recording",
+  "dataset_doi": "10.5281/zenodo.24047383",
+  "dataset_licence_spdx": "CC-BY-4.0",
+  "dataset_creators": [
+   "He, Yichen"
+  ],
+  "attribution": "Trained on the dog forelimb subset of 'Data for: SPROUT: A User-friendly, Scalable Toolkit for Multi-class Segmentation of Volumetric Images' by Yichen He (2026), doi:10.5281/zenodo.24047383, CC-BY-4.0 (https://creativecommons.org/licenses/by/4.0/). Changes: volumes downsampled x2; per-bone labels merged into one bone label; evaluation on a central band of slices."
  },
  "unet_synth_ft_dog_k3": {
   "sha256": "651add372dbfef2ecdf8cfd20d85277f5b0428c2857d399b40d7cdbcb686d0c4",
@@ -445,6 +457,12 @@
    "seed": 7
   },
   "parent": "unet_noctx_s0",
-  "provenance_note": "parent recorded retrospectively (cycle-2 review ARC-01): fine-tuned from unet_noctx_s0 (synthetic, commercial_eligible) on CC-BY-4.0 SPROUT data; checkpoint predates parent recording"
+  "provenance_note": "parent recorded retrospectively (cycle-2 review ARC-01): fine-tuned from unet_noctx_s0 (synthetic, commercial_eligible) on CC-BY-4.0 SPROUT data; checkpoint predates parent recording",
+  "dataset_doi": "10.5281/zenodo.24047383",
+  "dataset_licence_spdx": "CC-BY-4.0",
+  "dataset_creators": [
+   "He, Yichen"
+  ],
+  "attribution": "Trained on the dog forelimb subset of 'Data for: SPROUT: A User-friendly, Scalable Toolkit for Multi-class Segmentation of Volumetric Images' by Yichen He (2026), doi:10.5281/zenodo.24047383, CC-BY-4.0 (https://creativecommons.org/licenses/by/4.0/). Changes: volumes downsampled x2; per-bone labels merged into one bone label; evaluation on a central band of slices."
  }
 }

@@ -6,7 +6,7 @@ Terms as used in OsteoQuant documents, the application and its reports. Endpoint
 | Term | Meaning |
 |---|---|
 | **Abstention** | Declining to report. At voxel level, labelling a voxel *uncertain*; at endpoint level, reporting *not measured* because the advisor does not support the endpoint |
-| **Advisor** (measurement-support advisor) | The component (`osteoquant/advisor/`, version 1.2.1) that decides, before reporting, whether each endpoint is supported for the material and scan |
+| **Advisor** (measurement-support advisor) | The component (`osteoquant/advisor/`, version 1.3.3) that decides, before reporting, whether each endpoint is supported for the material and scan |
 | **Allograft** | Bone from another individual of the same species; bone-derived, so never separable from new bone by intensity |
 | **Anchor** | The sequence number and head hash of the audit trail, recorded outside the project so that truncation of recent events can be detected |
 | **Audit trail** | Append-only, SHA-256 hash-chained log of every action in a project |
@@ -19,8 +19,8 @@ Terms as used in OsteoQuant documents, the application and its reports. Endpoint
 | **Bridging** | Fraction of ROI cross-sections, along the defect axis, containing a connected mineral path from host to host |
 | **BV/TV** | Bone volume fraction: new-bone volume divided by ROI volume |
 | **Conn.D** | Connectivity density, (1 − Euler characteristic) / TV, per mm³ |
-| **Creeping substitution** | Replacement of resorbing graft by new bone in the same place; the day-0 footprint counts this bone as graft |
-| **Data class** | Whether a result comes from synthetic phantoms (SYNTHETIC), real public data (REAL) or is an assumption or hypothesis. Every quantitative claim names it |
+| **Bone ingrowth and replacement within the footprint** | New bone forming inside the volume of a resorbing ceramic or glass graft; the day-0 footprint counts this bone as graft. (Not "creeping substitution", which describes revascularisation and remodelling of bone grafts) |
+| **Data class** | Whether a result comes from synthetic phantoms (SYNTHETIC), real public data (REAL) or is an assumption or hypothesis. Every quantitative claim names it. A study also has a data class (synthetic, public, own research, customer), chosen when the study is created and printed on every report page |
 | **Day-0 scan** | A scan taken at implantation, before new bone forms, used to locate the original graft |
 | **Day-0 footprint** | The graft mineral on the day-0 scan, propagated by registration to later scans |
 | **DBBM** | Deproteinised bovine bone mineral (a xenograft) |
@@ -40,7 +40,8 @@ Terms as used in OsteoQuant documents, the application and its reports. Endpoint
 | **Host bone** | Pre-existing bone around the defect (label 3) |
 | **ICC(2,1)** | Intraclass correlation, two-way random effects, absolute agreement, single measurement |
 | **Intensity-only oracle** | The best possible voxel-wise intensity rule for given class distributions; an upper bound for every threshold workflow |
-| **Mineral rule** | The advisor's check (since 1.2.0) that new bone can be separated from soft tissue including partial-volume halos; it gates mineral and new-bone endpoints |
+| **Mineral rule** | The advisor's check that new bone can be separated from soft tissue including partial-volume halos; it gates mineral and new-bone endpoints |
+| **Timepoint (time since implantation)** | Weeks since the graft was implanted. The desktop reads it from the scan's timepoint (days, or a label such as "Week 4"); resorbable materials are intensity-supported only at a known timepoint ≤4 weeks |
 | **Multi-Otsu** | Classical multi-level automatic thresholding; the desktop's default segmentation |
 | **New bone** | Bone formed after implantation inside the defect ROI (label 1) |
 | **Noise (relative)** | Noise standard deviation divided by the host-bone minus soft-tissue grey-level contrast; mineral endpoints need <0.35 |

@@ -35,6 +35,9 @@ CREATE TABLE IF NOT EXISTS desktop_review_meta (review_id INTEGER PRIMARY KEY, s
 CREATE TABLE IF NOT EXISTS desktop_report_meta (report_id INTEGER PRIMARY KEY, blinded INTEGER NOT NULL DEFAULT 0,
   bundle_path TEXT, signed_pdf TEXT, signed_sha256 TEXT);
 """
+# columns added after the first desktop release (C2-PRD-04/05): SHA-256 of the report bundle recorded at
+# generation, and the review status of the reported segmentations at generation
+DESKTOP_COLUMNS = {"desktop_report_meta": [("bundle_sha256", "TEXT"), ("review_status", "TEXT")]}
 
 # Roles offered in the desktop user administration (Store role id -> label shown to people).
 ROLE_LABELS = {"analyst": "Analyst", "reviewer": "Reviewer", "study_director": "Study director", "admin": "Administrator",
@@ -69,8 +72,14 @@ class Project:
         self.meta = json.loads((self.folder / MARKER).read_text(encoding="utf-8"))
         self.store = Store(self.folder / DB_NAME, self.folder / "data")
         self.store.conn.executescript(DESKTOP_SCHEMA)
+        for table, cols in DESKTOP_COLUMNS.items():
+            have = {r[1] for r in self.store.conn.execute(f"PRAGMA table_info({table})")}
+            for name, typ in cols:
+                if name not in have:
+                    self.store.conn.execute(f"ALTER TABLE {table} ADD COLUMN {name} {typ}")
         self.user: dict | None = None
         self._token: str | None = None
+        self.session_end_reason: str | None = None
 
     # ------------------------------------------------------------------ lifecycle
     @classmethod
@@ -121,12 +130,52 @@ class Project:
             pass
 
     # ------------------------------------------------------------------ auth
+    SESSION_TTL_S = 8 * 3600
+
     def login(self, username: str, password: str) -> bool:
-        tok = self.store.login(username, password)
+        tok = self.store.login(username, password, ttl_s=self.SESSION_TTL_S)
         if not tok:
             return False
         self._token = tok
-        self.user = self.store.user_for_token(tok)
+        self.user = self.store.validate_session(tok)
+        self.session_end_reason = None
+        return self.user is not None
+
+    @property
+    def password_change_required(self) -> bool:
+        return bool(self.user and self.user.get("must_change_password"))
+
+    def check_session(self) -> bool:
+        """Re-validate the session against the database (C2-PRD-07): a deactivated user, a password
+        reset or a sign-out elsewhere ends it; a role change takes effect. Returns False (and drops the
+        signed-in user) when the session has ended."""
+        if not self.user:
+            return False
+        u = self.store.validate_session(self._token, sliding_ttl_s=self.SESSION_TTL_S)
+        if u is None:
+            row = self.store.q1("SELECT active FROM users WHERE id=?", (self.user["id"],))
+            reason = ("your account was deactivated by an administrator" if row and not row["active"] else
+                      "your session was ended (password reset by an administrator, or signed out)")
+            try:
+                self.store.audit.record("session.ended", self.user["id"], self.user["org_id"], "user", self.user["id"],
+                                        {"reason": reason})
+            except Exception:  # noqa: BLE001 - ending a session must not fail
+                pass
+            self.session_end_reason = reason
+            self.user = None
+            self._token = None
+            return False
+        if u["role"] != self.user["role"]:
+            problem = self.store.user_record_problem(u)
+            if problem:      # role edited outside the audited API: end the session (C2-PRD-09)
+                self.store.audit.record("auth.user_record_mismatch", u["id"], u["org_id"], "user", u["id"],
+                                        {"reason": problem})
+                self.session_end_reason = "your account record failed its integrity check: " + problem
+                self.store.logout(self._token)
+                self.user = None
+                self._token = None
+                return False
+        self.user.update(u)
         return True
 
     def reauthenticate(self, password: str, object_type=None, object_id=None) -> bool:
@@ -139,8 +188,11 @@ class Project:
         return ok
 
     def require_user(self) -> dict:
+        """The signed-in user, re-validated against the database before every action (C2-PRD-07)."""
         if not self.user:
-            raise ProjectError("Not signed in")
+            raise ProjectError("Not signed in" + (f": {self.session_end_reason}" if self.session_end_reason else ""))
+        if not self.check_session():
+            raise ProjectError(f"Session ended: {self.session_end_reason}. Sign in again.")
         return self.user
 
     def can(self, perm: str) -> bool:
@@ -207,6 +259,37 @@ class Project:
     def reset_password(self, user_id: int, new_password: str):
         self.store.reset_password(self.require_user(), user_id, new_password)
 
+    def set_user_role(self, user_id: int, role: str):
+        self.store.set_user_role(self.require_user(), user_id, role)
+
+    def change_password(self, old_password: str, new_password: str):
+        """Self-service password change; this session continues, other sessions of the user end."""
+        u = self.require_user()
+        self.store.change_password(u, old_password, new_password)
+        self.store.end_other_sessions(u["id"], self._token)
+        self.user["must_change_password"] = 0
+
+    # ------------------------------------------------------------------ study-level blinding (C2-PRD-03)
+    def study_forces_blinding(self, study_id) -> bool:
+        """True when ``study_id`` is flagged blinded and the signed-in role may not see allocation."""
+        if study_id is None or not self.user:
+            return False
+        r = self.store.q1("SELECT blinded, org_id FROM studies WHERE id=?", (study_id,))
+        return bool(r and r["blinded"]) and not self.can("unblind")
+
+    def blinding_forced(self) -> bool:
+        """True when any open study of the project is blinded and the signed-in role may not unblind:
+        the whole desktop then stays in blinded review mode (the toggle is locked)."""
+        if not self.user or self.can("unblind"):
+            return False
+        return bool(self.store.q1("SELECT 1 FROM studies WHERE org_id=? AND blinded=1 AND COALESCE(status,'')<>'deleted' "
+                                  "LIMIT 1", (self.user["org_id"],)))
+
+    def blinded_studies(self) -> list[dict]:
+        u = self.require_user()
+        return self.store.q("SELECT id, name FROM studies WHERE org_id=? AND blinded=1 AND COALESCE(status,'')<>'deleted' "
+                            "ORDER BY id", (u["org_id"],))
+
     # ------------------------------------------------------------------ blinding
     def blind_code(self, kind: str, object_id, study_id=None) -> str:
         """Random, non-sequential code for a scan or animal, stored in the project (stable across
@@ -245,7 +328,7 @@ class Project:
             study_id = r["study_id"] if r else None
         return "Animal " + self.blind_code("animal", specimen_id, study_id)
 
-    def identifying_strings(self) -> list[str]:
+    def identifying_strings(self, min_len: int = 2) -> list[str]:
         """Strings that identify animals or allocation (file names and stems, paths, animal IDs, group
         names), longest first. Used to mask free text (audit details) in blinded mode."""
         out: set[str] = set()
@@ -265,7 +348,7 @@ class Project:
             out.add(str(r["animal_id"]))
         for r in self.store.q("SELECT name FROM groups_"):
             out.add(str(r["name"]))
-        return sorted((s for s in out if len(s) >= 2), key=len, reverse=True)
+        return sorted((s for s in out if len(s) >= min_len), key=len, reverse=True)
 
     # ------------------------------------------------------------------ convenience
     def default_store_project(self) -> int:
@@ -327,6 +410,8 @@ class Project:
             qc = {r["id"]: (json.loads(r["qc"]) if r["qc"] else None)
                   for r in self.store.q("SELECT id, qc FROM scans WHERE study_id=?", (sid,))}
             hidden = blinded_view or bool(st["blinded"]) and not self.can("unblind")
+            # study-level blinding is enforced here, whatever the caller asks (C2-PRD-03)
+            blinded_view = bool(blinded_view or (st["blinded"] and not self.can("unblind")))
 
             def scan_node(s):
                 q = qc.get(s["id"]) or {}

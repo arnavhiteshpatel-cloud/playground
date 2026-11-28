@@ -23,9 +23,12 @@ _Status: prepared 2026-11-27 for review with UIUC OTM and the Landuyt IP Clinic.
 | `web/static/vendor/three.module.min.js`, `OrbitControls.js` | three.js r160 (npm) | MIT (licence file vendored) |
 | `osteoquant/phantom/data/nist_xcom.json` | NIST XCOM web tables | US Government work |
 | Trained models in `models/` | trained here on synthetic data (project-generated) and CC-BY-4.0 SPROUT data | weights proprietary; CC-BY attribution for SPROUT-derived models |
-| Python dependencies | PyPI | permissive (BSD/MIT/Apache/PSF/MIT-CMU) — see SBOM.csv; no GPL dependency linked |
+| Python dependencies | PyPI | mostly permissive (BSD/MIT/Apache/PSF/MIT-CMU); **Qt / PySide6 / shiboken6 are LGPL-3.0, dynamically linked** in the desktop application (relinking possible; `docs/desktop/PACKAGING.md`) — see SBOM.csv |
+| Desktop bundle: Python runtime, system libraries, fonts | build interpreter and build-host packages | PSF-2.0 for Python; system libraries under their own licences, some LGPL-2.1+ (libgcrypt, libsystemd), dynamically linked; GPL-2 font files (DarkGarden) shipped with their licence and source. Inventory and notices: `packaging/bundle_inventory.py`, `licenses/BUNDLE_INVENTORY.json` |
 
-GPL tools (ITK-SNAP, QuPath) are **not** linked; if used, run them as separate programs.
+Standalone GPL tools (ITK-SNAP, QuPath) are **not** linked; if used, run them as separate programs. The software bill
+of materials (`SBOM.csv`, CycloneDX `sbom.cdx.json`) is regenerated from the built desktop bundle by
+`packaging/bundle_inventory.py`; the earlier hand-written SBOM (2026-11-27 07:52) is superseded.
 
 ## 3. Dependency vulnerability scan (pip-audit, 2026-11-27)
 Raw output: `docs/security/pip_audit_output.txt`.

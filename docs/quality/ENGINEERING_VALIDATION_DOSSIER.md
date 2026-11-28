@@ -5,7 +5,7 @@
 | Document ID | OQ-QMS-EVD-001 |
 | Version | 0.1 (DRAFT) |
 | Date | 2026-11-27 |
-| Software baseline | `osteoquant` 0.1.0 (Generation-2 desktop), measurement-support advisor 1.3.0, working tree of 2026-11-27 (not a tagged release) |
+| Software baseline | `osteoquant` 0.1.0 (Generation-2 desktop), measurement-support advisor 1.3.3, working tree of 2026-11-27 (not a tagged release) |
 | Owner | Quality / Engineering (TBD) |
 | Related | URS.md v0.2, FUNCTIONAL_SPEC.md v0.2, RISK_ASSESSMENT.md v0.2, traceability_matrix.csv, IQ/OQ/PQ v0.2, PART11_GLP_GAP_ANALYSIS.md v0.2 |
 

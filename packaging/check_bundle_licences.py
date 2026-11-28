@@ -10,7 +10,9 @@
        Qt HTTP Server, Qt Lottie, Qt Shader Tools, Qt Wayland Compositor, Qt CoAP/MQTT/OPC UA;
      * FAIL for any Qt module not on the reviewed LGPL allow-list (unknown = not shipped until
        reviewed);
-3. FAIL if the required notices are missing (THIRD_PARTY_NOTICES.txt, licenses/LGPL-3.0.txt).
+3. FAIL if the required notices are missing (THIRD_PARTY_NOTICES.txt, licenses/LGPL-3.0.txt, the PSF licence,
+   licenses/BUNDLE_INVENTORY.json), if the inventory lists any library or distribution without a mapped licence,
+   or if a bundled system-library package has no copyright file in licenses/system/.
 4. Lists non-Python system libraries copied from the build host (informational; review list).
 
 Exit code 0 = pass, 1 = violations. The module classification follows Qt's licensing table
@@ -69,9 +71,17 @@ def scan(root: Path) -> dict:
             violations += [f"GPL-only Qt module {mod}: {p}" for p in files]
         elif mod not in LGPL_ALLOW:
             violations += [f"Qt module {mod} not on the reviewed LGPL allow-list: {p}" for p in files]
-    for need in ("THIRD_PARTY_NOTICES.txt", "licenses/LGPL-3.0.txt", "licenses/GPL-3.0.txt"):
+    for need in ("THIRD_PARTY_NOTICES.txt", "licenses/LGPL-3.0.txt", "licenses/GPL-3.0.txt",
+                 "licenses/Python-PSF-LICENSE.txt", "licenses/BUNDLE_INVENTORY.json"):
         if not (root / need).exists():
             violations.append(f"missing notice file: {need}")
+    inv_p = root / "licenses" / "BUNDLE_INVENTORY.json"
+    if inv_p.exists():                       # written by packaging/bundle_inventory.py (review C2-BIZ-08)
+        inv = json.loads(inv_p.read_text())
+        violations += [f"library or distribution without a mapped licence: {u}" for u in inv.get("unmapped", [])]
+        for pkg, info in inv.get("system_packages", {}).items():
+            if not info.get("licence_file") or not (root / "licenses" / info["licence_file"]).exists():
+                violations.append(f"system library package {pkg} has no licence file in licenses/system/")
     return {"root": str(root), "n_libraries": len(libs), "library_bytes": sum(x["bytes"] for x in libs),
             "qt_modules": sorted(qt_mods), "host_libraries_top_level": host_libs, "violations": violations,
             "libraries": libs}

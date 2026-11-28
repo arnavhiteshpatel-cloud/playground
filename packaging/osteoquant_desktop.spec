@@ -72,7 +72,10 @@ excludes = [
     "PySide6.QtDesigner", "PySide6.QtHelp", "PySide6.QtQuickWidgets", "PySide6.QtQuickControls2",
     "PySide6.QtWebView", "PySide6.QtNetworkAuth",
     "uvicorn", "uvloop", "httptools", "watchfiles", "websockets",     # the desktop never serves HTTP
+    "mypy", "hypothesis", "wheel", "pip",     # development tools pulled in by hooks (bundle inventory, C2-BIZ-08)
 ]
+# fastapi / starlette / pydantic / anyio are still bundled: the desktop imports the shared job handlers from
+# osteoquant/api/app.py, which defines the FastAPI app. Moving the handlers out of that module removes them.
 if not BUNDLE_SITK:
     excludes += ["SimpleITK"]
 if not BUNDLE_TORCH:

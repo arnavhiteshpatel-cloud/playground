@@ -3,17 +3,90 @@
  "specVersion": "1.5",
  "version": 1,
  "metadata": {
+  "timestamp": "2026-11-27T23:43Z",
   "component": {
    "type": "application",
-   "name": "osteoquant",
+   "name": "osteoquant-desktop",
    "version": "0.1.0"
-  }
+  },
+  "properties": [
+   {
+    "name": "build-platform",
+    "value": "linux"
+   }
+  ]
  },
  "components": [
   {
    "type": "library",
+   "name": "PySide6",
+   "version": "6.12.0",
+   "purl": "pkg:pypi/pyside6@6.12.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "PySide6_Essentials",
+   "version": "6.12.0",
+   "purl": "pkg:pypi/pyside6_essentials@6.12.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "PySide6_Addons",
+   "version": "6.12.0",
+   "purl": "pkg:pypi/pyside6_addons@6.12.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "shiboken6",
+   "version": "6.12.0",
+   "purl": "pkg:pypi/shiboken6@6.12.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "vtk",
+   "version": "9.7.2",
+   "purl": "pkg:pypi/vtk@9.7.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
    "name": "numpy",
    "version": "2.5.3",
+   "purl": "pkg:pypi/numpy@2.5.3",
    "licenses": [
     {
      "license": {
@@ -26,10 +99,11 @@
    "type": "library",
    "name": "scipy",
    "version": "1.18.1",
+   "purl": "pkg:pypi/scipy@1.18.1",
    "licenses": [
     {
      "license": {
-      "name": "BSD License"
+      "name": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers."
      }
     }
    ]
@@ -38,10 +112,11 @@
    "type": "library",
    "name": "scikit-image",
    "version": "0.26.0",
+   "purl": "pkg:pypi/scikit-image@0.26.0",
    "licenses": [
     {
      "license": {
-      "name": "BSD License"
+      "name": "Files: *"
      }
     }
    ]
@@ -50,82 +125,11 @@
    "type": "library",
    "name": "scikit-learn",
    "version": "1.9.1",
+   "purl": "pkg:pypi/scikit-learn@1.9.1",
    "licenses": [
     {
      "license": {
       "name": "BSD-3-Clause"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "pandas",
-   "version": "3.0.5",
-   "licenses": [
-    {
-     "license": {
-      "name": "BSD License"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "SimpleITK",
-   "version": "2.5.8",
-   "licenses": [
-    {
-     "license": {
-      "name": "Apache-2.0"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "tifffile",
-   "version": "2026.11.26",
-   "licenses": [
-    {
-     "license": {
-      "name": "BSD-3-Clause"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "pydicom",
-   "version": "3.0.2",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT License"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "nibabel",
-   "version": "5.5.0",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "pynrrd",
-   "version": "1.1.4",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT License"
      }
     }
    ]
@@ -134,222 +138,7 @@
    "type": "library",
    "name": "zarr",
    "version": "3.4.2",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "olefile",
-   "version": "0.47",
-   "licenses": [
-    {
-     "license": {
-      "name": "BSD"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "imagecodecs",
-   "version": "2026.11.11",
-   "licenses": [
-    {
-     "license": {
-      "name": "BSD-3-Clause"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "matplotlib",
-   "version": "3.11.2",
-   "licenses": [
-    {
-     "license": {
-      "name": "Python Software Foundation License"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "statsmodels",
-   "version": "0.15.0",
-   "licenses": [
-    {
-     "license": {
-      "name": "BSD-3-Clause"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "fastapi",
-   "version": "0.165.0",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "uvicorn",
-   "version": "0.54.0",
-   "licenses": [
-    {
-     "license": {
-      "name": "BSD-3-Clause"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "python-multipart",
-   "version": "0.0.32",
-   "licenses": [
-    {
-     "license": {
-      "name": "Apache-2.0"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "reportlab",
-   "version": "5.0.1",
-   "licenses": [
-    {
-     "license": {
-      "name": "BSD License"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "openpyxl",
-   "version": "3.1.5",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "PyYAML",
-   "version": "6.0.3",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "psutil",
-   "version": "7.2.2",
-   "licenses": [
-    {
-     "license": {
-      "name": "BSD-3-Clause"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "torch",
-   "version": "2.15.0+cpu",
-   "licenses": [
-    {
-     "license": {
-      "name": "see package"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "pillow",
-   "version": "13.0.0.post1",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT-CMU"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "pytest",
-   "version": "9.1.1",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "httpx",
-   "version": "0.29.0",
-   "licenses": [
-    {
-     "license": {
-      "name": "BSD-3-Clause"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "python-pptx",
-   "version": "1.0.2",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "starlette",
-   "version": "1.7.0",
-   "licenses": [
-    {
-     "license": {
-      "name": "BSD-3-Clause"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "pydantic",
-   "version": "2.13.5",
+   "purl": "pkg:pypi/zarr@3.4.2",
    "licenses": [
     {
      "license": {
@@ -362,6 +151,7 @@
    "type": "library",
    "name": "numcodecs",
    "version": "0.17.1",
+   "purl": "pkg:pypi/numcodecs@0.17.1",
    "licenses": [
     {
      "license": {
@@ -372,8 +162,35 @@
   },
   {
    "type": "library",
-   "name": "three.js",
-   "version": "0.160.0",
+   "name": "simpleitk",
+   "version": "2.5.8",
+   "purl": "pkg:pypi/simpleitk@2.5.8",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "pydicom",
+   "version": "3.0.2",
+   "purl": "pkg:pypi/pydicom@3.0.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "see licence file"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "nibabel",
+   "version": "5.5.0",
+   "purl": "pkg:pypi/nibabel@5.5.0",
    "licenses": [
     {
      "license": {
@@ -384,12 +201,1443 @@
   },
   {
    "type": "library",
-   "name": "NIST XCOM attenuation tables",
-   "version": "retrieved 2026-11-27",
+   "name": "pynrrd",
+   "version": "1.1.4",
+   "purl": "pkg:pypi/pynrrd@1.1.4",
    "licenses": [
     {
      "license": {
-      "name": "US Government work (public domain in the US)"
+      "name": "Copyright (c) 2012 Maarten H. Everts and contributors. See AUTHORS for more"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "tifffile",
+   "version": "2026.11.26",
+   "purl": "pkg:pypi/tifffile@2026.11.26",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "imagecodecs",
+   "version": "2026.11.11",
+   "purl": "pkg:pypi/imagecodecs@2026.11.11",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "olefile",
+   "version": "0.47",
+   "purl": "pkg:pypi/olefile@0.47",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "reportlab",
+   "version": "5.0.1",
+   "purl": "pkg:pypi/reportlab@5.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD license (see license.txt for details), Copyright (c) 2000-2025, ReportLab Inc."
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "matplotlib",
+   "version": "3.11.2",
+   "purl": "pkg:pypi/matplotlib@3.11.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "License agreement for matplotlib versions 1.3.0 and later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "pandas",
+   "version": "3.0.5",
+   "purl": "pkg:pypi/pandas@3.0.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD 3-Clause License"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "statsmodels",
+   "version": "0.15.0",
+   "purl": "pkg:pypi/statsmodels@0.15.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "cryptography",
+   "version": "50.0.1",
+   "purl": "pkg:pypi/cryptography@50.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0 OR BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "psutil",
+   "version": "7.2.2",
+   "purl": "pkg:pypi/psutil@7.2.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "pillow",
+   "version": "13.0.0.post1",
+   "purl": "pkg:pypi/pillow@13.0.0.post1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT-CMU"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "fastapi",
+   "version": "0.165.0",
+   "purl": "pkg:pypi/fastapi@0.165.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "starlette",
+   "version": "1.7.0",
+   "purl": "pkg:pypi/starlette@1.7.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "pydantic",
+   "version": "2.13.5",
+   "purl": "pkg:pypi/pydantic@2.13.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "pydantic_core",
+   "version": "2.46.5",
+   "purl": "pkg:pypi/pydantic_core@2.46.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "joblib",
+   "version": "1.6.0",
+   "purl": "pkg:pypi/joblib@1.6.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "threadpoolctl",
+   "version": "3.8.0",
+   "purl": "pkg:pypi/threadpoolctl@3.8.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "pypdfium2",
+   "version": "5.14.0",
+   "purl": "pkg:pypi/pypdfium2@5.14.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause, Apache-2.0, dependency licenses"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "onnxruntime",
+   "version": "1.29.0",
+   "purl": "pkg:pypi/onnxruntime@1.29.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT License"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "PyYAML",
+   "version": "6.0.3",
+   "purl": "pkg:pypi/pyyaml@6.0.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "openpyxl",
+   "version": "3.1.5",
+   "purl": "pkg:pypi/openpyxl@3.1.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "networkx",
+   "version": "3.7",
+   "purl": "pkg:pypi/networkx@3.7",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "ImageIO",
+   "version": "2.38.2",
+   "purl": "pkg:pypi/imageio@2.38.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-2-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "lazy-loader",
+   "version": "0.6",
+   "purl": "pkg:pypi/lazy-loader@0.6",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "packaging",
+   "version": "26.3",
+   "purl": "pkg:pypi/packaging@26.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0 OR BSD-2-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "contourpy",
+   "version": "1.4.0",
+   "purl": "pkg:pypi/contourpy@1.4.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "kiwisolver",
+   "version": "1.5.1",
+   "purl": "pkg:pypi/kiwisolver@1.5.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "========================="
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "fonttools",
+   "version": "4.69.1",
+   "purl": "pkg:pypi/fonttools@4.69.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "cycler",
+   "version": "0.12.1",
+   "purl": "pkg:pypi/cycler@0.12.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "Copyright (c) 2015, matplotlib project"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "pyparsing",
+   "version": "3.1.1",
+   "purl": "pkg:pypi/pyparsing@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "python-dateutil",
+   "version": "2.9.0.post0",
+   "purl": "pkg:pypi/python-dateutil@2.9.0.post0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Dual License"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "six",
+   "version": "1.17.0",
+   "purl": "pkg:pypi/six@1.17.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "patsy",
+   "version": "1.0.3",
+   "purl": "pkg:pypi/patsy@1.0.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "2-clause BSD"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "cffi",
+   "version": "2.1.1",
+   "purl": "pkg:pypi/cffi@2.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT-0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "pycparser",
+   "version": "3.0",
+   "purl": "pkg:pypi/pycparser@3.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "anyio",
+   "version": "4.15.1",
+   "purl": "pkg:pypi/anyio@4.15.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "sniffio",
+   "version": "1.3.1",
+   "purl": "pkg:pypi/sniffio@1.3.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT OR Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "idna",
+   "version": "3.20",
+   "purl": "pkg:pypi/idna@3.20",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "typing_extensions",
+   "version": "4.16.0",
+   "purl": "pkg:pypi/typing_extensions@4.16.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "PSF-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "annotated-types",
+   "version": "0.8.0",
+   "purl": "pkg:pypi/annotated-types@0.8.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "donfig",
+   "version": "0.8.1.post1",
+   "purl": "pkg:pypi/donfig@0.8.1.post1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "google-crc32c",
+   "version": "1.9.0",
+   "purl": "pkg:pypi/google-crc32c@1.9.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "MarkupSafe",
+   "version": "3.0.3",
+   "purl": "pkg:pypi/markupsafe@3.0.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "ast_serialize",
+   "version": "0.11.2",
+   "purl": "pkg:pypi/ast_serialize@0.11.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "attrs",
+   "version": "26.1.0",
+   "purl": "pkg:pypi/attrs@26.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "certifi",
+   "version": "2026.10.18",
+   "purl": "pkg:pypi/certifi@2026.10.18",
+   "licenses": [
+    {
+     "license": {
+      "name": "MPL-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "charset-normalizer",
+   "version": "3.5.1",
+   "purl": "pkg:pypi/charset-normalizer@3.5.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "hypothesis",
+   "version": "6.170.22",
+   "purl": "pkg:pypi/hypothesis@6.170.22",
+   "licenses": [
+    {
+     "license": {
+      "name": "MPL-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "librt",
+   "version": "0.15.0",
+   "purl": "pkg:pypi/librt@0.15.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "lxml",
+   "version": "6.1.3",
+   "purl": "pkg:pypi/lxml@6.1.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "ml_dtypes",
+   "version": "0.7.0",
+   "purl": "pkg:pypi/ml_dtypes@0.7.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "msgpack",
+   "version": "1.2.4",
+   "purl": "pkg:pypi/msgpack@1.2.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "msgspec",
+   "version": "0.22.0",
+   "purl": "pkg:pypi/msgspec@0.22.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "mypy",
+   "version": "2.3.1",
+   "purl": "pkg:pypi/mypy@2.3.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "onnx",
+   "version": "1.23.2",
+   "purl": "pkg:pypi/onnx@1.23.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "opentelemetry-api",
+   "version": "1.45.0",
+   "purl": "pkg:pypi/opentelemetry-api@1.45.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "protobuf",
+   "version": "7.36.1",
+   "purl": "pkg:pypi/protobuf@7.36.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "3-Clause BSD License"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "setuptools",
+   "version": "78.1.0",
+   "purl": "pkg:pypi/setuptools@78.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT License"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "tomli",
+   "version": "2.5.0",
+   "purl": "pkg:pypi/tomli@2.5.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "wheel",
+   "version": "0.42.0",
+   "purl": "pkg:pypi/wheel@0.42.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT License"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "wrapt",
+   "version": "2.6.0.dev1",
+   "purl": "pkg:pypi/wrapt@2.6.0.dev1",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-2-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "platform",
+   "name": "python",
+   "version": "3.13.18",
+   "purl": "pkg:generic/python@3.13.18",
+   "licenses": [
+    {
+     "license": {
+      "id": "PSF-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libbrotli1",
+   "version": "1.1.0-2ubuntu0.1",
+   "purl": "pkg:deb/ubuntu/libbrotli1@1.1.0-2ubuntu0.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libbrotli1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libbsd0",
+   "version": "0.12.1-1build1.1",
+   "purl": "pkg:deb/ubuntu/libbsd0@0.12.1-1build1.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libbsd0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libbz2-1.0",
+   "version": "1.0.8-5.1ubuntu0.1",
+   "purl": "pkg:deb/ubuntu/libbz2-1.0@1.0.8-5.1ubuntu0.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libbz2-1.0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libcap2",
+   "version": "1:2.66-5ubuntu2.4",
+   "purl": "pkg:deb/ubuntu/libcap2@1:2.66-5ubuntu2.4?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libcap2.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libcom-err2",
+   "version": "1.47.0-2.4~exp1ubuntu4.1",
+   "purl": "pkg:deb/ubuntu/libcom-err2@1.47.0-2.4~exp1ubuntu4.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libcom-err2.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libdbus-1-3",
+   "version": "1.14.10-4ubuntu4.1",
+   "purl": "pkg:deb/ubuntu/libdbus-1-3@1.14.10-4ubuntu4.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libdbus-1-3.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libexpat1",
+   "version": "2.6.1-2ubuntu0.6",
+   "purl": "pkg:deb/ubuntu/libexpat1@2.6.1-2ubuntu0.6?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libexpat1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libffi8",
+   "version": "3.4.6-1build1",
+   "purl": "pkg:deb/ubuntu/libffi8@3.4.6-1build1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libffi8.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libfontconfig1",
+   "version": "2.15.0-1.1ubuntu2",
+   "purl": "pkg:deb/ubuntu/libfontconfig1@2.15.0-1.1ubuntu2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libfontconfig1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libfreetype6",
+   "version": "2.13.2+dfsg-1ubuntu0.2",
+   "purl": "pkg:deb/ubuntu/libfreetype6@2.13.2+dfsg-1ubuntu0.2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libfreetype6.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libgcc-s1",
+   "version": "14.2.0-4ubuntu2~24.04.1",
+   "purl": "pkg:deb/ubuntu/libgcc-s1@14.2.0-4ubuntu2~24.04.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libgcc-s1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libgcrypt20",
+   "version": "1.10.3-2ubuntu0.2",
+   "purl": "pkg:deb/ubuntu/libgcrypt20@1.10.3-2ubuntu0.2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libgcrypt20.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libglib2.0-0t64",
+   "version": "2.80.0-6ubuntu3.10",
+   "purl": "pkg:deb/ubuntu/libglib2.0-0t64@2.80.0-6ubuntu3.10?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libglib2.0-0t64.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libgpg-error0",
+   "version": "1.47-3build2.1",
+   "purl": "pkg:deb/ubuntu/libgpg-error0@1.47-3build2.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libgpg-error0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libgssapi-krb5-2",
+   "version": "1.20.1-6ubuntu2.10",
+   "purl": "pkg:deb/ubuntu/libgssapi-krb5-2@1.20.1-6ubuntu2.10?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libgssapi-krb5-2.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libk5crypto3",
+   "version": "1.20.1-6ubuntu2.10",
+   "purl": "pkg:deb/ubuntu/libk5crypto3@1.20.1-6ubuntu2.10?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libk5crypto3.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libkeyutils1",
+   "version": "1.6.3-3build1",
+   "purl": "pkg:deb/ubuntu/libkeyutils1@1.6.3-3build1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libkeyutils1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libkrb5-3",
+   "version": "1.20.1-6ubuntu2.10",
+   "purl": "pkg:deb/ubuntu/libkrb5-3@1.20.1-6ubuntu2.10?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libkrb5-3.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libkrb5support0",
+   "version": "1.20.1-6ubuntu2.10",
+   "purl": "pkg:deb/ubuntu/libkrb5support0@1.20.1-6ubuntu2.10?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libkrb5support0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "liblz4-1",
+   "version": "1.9.4-1build1.1",
+   "purl": "pkg:deb/ubuntu/liblz4-1@1.9.4-1build1.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/liblz4-1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "liblzma5",
+   "version": "5.6.1+really5.4.5-1ubuntu0.4",
+   "purl": "pkg:deb/ubuntu/liblzma5@5.6.1+really5.4.5-1ubuntu0.4?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/liblzma5.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libmd0",
+   "version": "1.1.0-2build1.1",
+   "purl": "pkg:deb/ubuntu/libmd0@1.1.0-2build1.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libmd0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libpcre2-8-0",
+   "version": "10.42-4ubuntu2.2",
+   "purl": "pkg:deb/ubuntu/libpcre2-8-0@10.42-4ubuntu2.2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libpcre2-8-0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libpng16-16t64",
+   "version": "1.6.43-5ubuntu0.7",
+   "purl": "pkg:deb/ubuntu/libpng16-16t64@1.6.43-5ubuntu0.7?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libpng16-16t64.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libssl3t64",
+   "version": "3.0.13-0ubuntu3.16",
+   "purl": "pkg:deb/ubuntu/libssl3t64@3.0.13-0ubuntu3.16?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libssl3t64.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libstdc++6",
+   "version": "14.2.0-4ubuntu2~24.04.1",
+   "purl": "pkg:deb/ubuntu/libstdc++6@14.2.0-4ubuntu2~24.04.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libstdc++6.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libsystemd0",
+   "version": "255.4-1ubuntu8.18",
+   "purl": "pkg:deb/ubuntu/libsystemd0@255.4-1ubuntu8.18?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libsystemd0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libx11-6",
+   "version": "2:1.8.7-1ubuntu0.1",
+   "purl": "pkg:deb/ubuntu/libx11-6@2:1.8.7-1ubuntu0.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libx11-6.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libx11-xcb1",
+   "version": "2:1.8.7-1ubuntu0.1",
+   "purl": "pkg:deb/ubuntu/libx11-xcb1@2:1.8.7-1ubuntu0.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libx11-xcb1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxau6",
+   "version": "1:1.0.9-1build6",
+   "purl": "pkg:deb/ubuntu/libxau6@1:1.0.9-1build6?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxau6.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-cursor0",
+   "version": "0.1.4-1build1",
+   "purl": "pkg:deb/ubuntu/libxcb-cursor0@0.1.4-1build1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-cursor0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-glx0",
+   "version": "1.15-1ubuntu2",
+   "purl": "pkg:deb/ubuntu/libxcb-glx0@1.15-1ubuntu2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-glx0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-icccm4",
+   "version": "0.4.1-1.1build3",
+   "purl": "pkg:deb/ubuntu/libxcb-icccm4@0.4.1-1.1build3?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-icccm4.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-image0",
+   "version": "0.4.0-2build1",
+   "purl": "pkg:deb/ubuntu/libxcb-image0@0.4.0-2build1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-image0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-keysyms1",
+   "version": "0.4.0-1build4",
+   "purl": "pkg:deb/ubuntu/libxcb-keysyms1@0.4.0-1build4?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-keysyms1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-randr0",
+   "version": "1.15-1ubuntu2",
+   "purl": "pkg:deb/ubuntu/libxcb-randr0@1.15-1ubuntu2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-randr0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-render-util0",
+   "version": "0.3.9-1build4",
+   "purl": "pkg:deb/ubuntu/libxcb-render-util0@0.3.9-1build4?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-render-util0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-render0",
+   "version": "1.15-1ubuntu2",
+   "purl": "pkg:deb/ubuntu/libxcb-render0@1.15-1ubuntu2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-render0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-shape0",
+   "version": "1.15-1ubuntu2",
+   "purl": "pkg:deb/ubuntu/libxcb-shape0@1.15-1ubuntu2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-shape0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-shm0",
+   "version": "1.15-1ubuntu2",
+   "purl": "pkg:deb/ubuntu/libxcb-shm0@1.15-1ubuntu2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-shm0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-sync1",
+   "version": "1.15-1ubuntu2",
+   "purl": "pkg:deb/ubuntu/libxcb-sync1@1.15-1ubuntu2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-sync1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-util1",
+   "version": "0.4.0-1build3",
+   "purl": "pkg:deb/ubuntu/libxcb-util1@0.4.0-1build3?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-util1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-xfixes0",
+   "version": "1.15-1ubuntu2",
+   "purl": "pkg:deb/ubuntu/libxcb-xfixes0@1.15-1ubuntu2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-xfixes0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxcb-xkb1",
+   "version": "1.15-1ubuntu2",
+   "purl": "pkg:deb/ubuntu/libxcb-xkb1@1.15-1ubuntu2?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxcb-xkb1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxdmcp6",
+   "version": "1:1.1.3-0ubuntu6",
+   "purl": "pkg:deb/ubuntu/libxdmcp6@1:1.1.3-0ubuntu6?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxdmcp6.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxkbcommon-x11-0",
+   "version": "1.6.0-1build1",
+   "purl": "pkg:deb/ubuntu/libxkbcommon-x11-0@1.6.0-1build1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxkbcommon-x11-0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libxkbcommon0",
+   "version": "1.6.0-1build1",
+   "purl": "pkg:deb/ubuntu/libxkbcommon0@1.6.0-1build1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libxkbcommon0.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "libzstd1",
+   "version": "1.5.5+dfsg2-2build1.1",
+   "purl": "pkg:deb/ubuntu/libzstd1@1.5.5+dfsg2-2build1.1?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/libzstd1.copyright"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "zlib1g",
+   "version": "1:1.3.dfsg-3.1ubuntu2.3",
+   "purl": "pkg:deb/ubuntu/zlib1g@1:1.3.dfsg-3.1ubuntu2.3?arch=amd64",
+   "licenses": [
+    {
+     "license": {
+      "name": "see system/zlib1g.copyright"
      }
     }
    ]

@@ -67,7 +67,7 @@
 <p><strong>Question.</strong> Are the algorithms correct, and where can separation work in principle?</p>
 <p><strong>Truth.</strong> Exact synthetic labels; Scanco IPL reference maps; manual bone labels on public scans.</p>
 <p><strong>Exit criteria.</strong> Morphometry exact on analytic objects; advisor refuses ≥95% of failing measurements; ROI propagation, tracking and registration QC behave.</p>
-<p><strong>Open items.</strong> The advisor results (S1–S1c) predate the current advisor version and need re-running; in S1c and L3 the advisor supported measurements that failed; ensemble/conformal (U1) and synthetic-to-real (S2) experiments have not completed.</p>
+<p><strong>Open items.</strong> Validation under advisor 1.3.3 in progress — see <a href="../EXPERIMENT_REGISTRY.md">EXPERIMENT_REGISTRY.md</a> (S1, S1b, S1c re-runs); earlier advisor versions supported some measurements that failed, which led to the 1.3.x rules. The day-0 method is fragile under granule motion (L3). Ensemble/conformal (U1) and synthetic-to-real (S2) experiments have not completed.</p>
 </div>
 <div class="stage-status"><span class="st st-cond">Run, items open</span><div aria-hidden="true" class="progress"><i class="on"></i><i class="on"></i><i class="part"></i></div></div>
 </li>
@@ -164,7 +164,7 @@
 <li>Trabecular thickness agrees with Scanco IPL on 8 public cubes, with a convention chosen post hoc. <span class="dc dc-real">Real public</span></li>
 <li>Real vendor files (2.1 GB Zeiss TXM, 829-slice DICOM) are read within bounded memory. <span class="dc dc-real">Real public</span></li>
 <li>Intensity-only separation fails once graft density overlaps new bone. <span class="dc dc-syn">Synthetic</span></li>
-<li>In a density × noise sweep the advisor refused every failing measurement (advisor 1.1.0). <span class="dc dc-syn">Synthetic</span></li>
+<li>The day-0 footprint works in simulation only without granule motion. <span class="dc dc-syn">Synthetic</span></li>
 <li>Results are bit-identical across runs. <span class="dc dc-syn">Synthetic</span></li>
 </ul>
 <p class="small"><a href="science.html#evidence">All results with their sources</a></p>
@@ -174,6 +174,7 @@
 <h2>What has not been demonstrated</h2>
 <ul class="checklist no">
 <li>Accuracy of residual-graft or new-bone measurements on any real graft material.</li>
+<li>That the current advisor (1.3.3) refuses the measurements that fail, even in simulation: validation under advisor 1.3.3 in progress.</li>
 <li>That the advisor’s decisions match real separability (its material profiles are assumptions).</li>
 <li>Volume bias and limits of agreement against physical truth.</li>
 <li>Agreement with expert analysts on in vivo scans, and any analyst time saving.</li>
@@ -213,7 +214,7 @@
 </tbody>
 </table>
 </div>
-<p class="src-list mt24">Source: <a href="../BENCHMARK_SCORECARD.md"><code>BENCHMARK_SCORECARD.md</code></a>. Experiment L3 already indicates that B8 is not met for the naive day-0 footprint (graft Dice 0.24 at 200 µm displacement).</p>
+<p class="src-list mt24">Source: <a href="../BENCHMARK_SCORECARD.md"><code>BENCHMARK_SCORECARD.md</code></a>. Experiment L3 already indicates that B8 is not met for the day-0 footprint under granule motion (naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35).</p>
 </div>
 </section>
 </main>
@@ -252,7 +253,7 @@
       </div>
     </div>
     <div class="foot-base">
-      <span>&copy; 2026 OsteoQuant. Application screenshots show synthetic phantom data.</span>
+      <span>&copy; 2026 [founder name] (no company exists yet; "OsteoQuant" is a working name). Application screenshots show synthetic phantom data. Unpublished draft.</span>
       <span>This site sets no cookies and loads nothing from other servers.</span>
     </div>
   </div>

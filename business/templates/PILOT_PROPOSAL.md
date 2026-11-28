@@ -26,7 +26,7 @@ Compare OsteoQuant's DefectFill workflow (automated ROI and three-class segmenta
 | Bias and limits of agreement | Bland–Altman: mean difference, 95% LoA, check for proportional bias (regression of difference on mean) | |bias| ≤ 2 percentage points BV/TV; LoA judged acceptable by the customer's study director *before* unblinding |
 | Segmentation overlap (if customer masks available) | Dice coefficient per class | Median Dice ≥ 0.80 for bone, ≥ 0.75 for graft |
 | Analyst time saved | Time-stamped hands-on minutes per scan (OsteoQuant reviewer) vs customer-reported minutes | ≥ 50% reduction in hands-on time |
-| Turnaround | Data Acceptance → report | ≤ 10 business days for 30 scans |
+| Turnaround | Data Acceptance → report | [founder decision #14; same figure as the quote and SOW] business days for 30 scans |
 | Reviewer correction rate | % of scans needing manual correction; median edited volume | Reported descriptively |
 
 **Interpreting disagreement (cycle-1 review CRO-01).** Agreement with the customer's own analysis is *not* proof

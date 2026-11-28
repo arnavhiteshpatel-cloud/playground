@@ -20,7 +20,7 @@ Customer has run a preclinical bone-defect study and holds reconstructed micro-C
 | Morphometry per ASBMR nomenclature (Bouxsein et al., JBMR 2010): e.g., TV, BV, BV/TV within defect ROI, residual graft volume fraction, Tb.Th/Tb.Sp/Tb.N where applicable | Yes (parameter list in Annex A) |
 | Audit-trailed PDF report + CSV data tables + segmentation masks | Yes |
 | Statistical comparison between groups | [Optional — Annex B] |
-| GLP-supporting package | **Not offered** (no validation report exists; no GLP or Part 11 claim can be made) |
+| GLP-related work | **Not offered** (no validation report exists; no GLP or Part 11 claim can be made) |
 
 **Out of scope unless added by change order:** scanning or reconstruction; histology or histomorphometry; additional ROIs, time points or parameters beyond Annex A; re-analysis after Customer protocol changes; regulatory submission writing; any clinical or diagnostic use.
 
@@ -38,7 +38,7 @@ Customer has run a preclinical bone-defect study and holds reconstructed micro-C
 | D3 | Final report (one round of comments included) | PDF + CSV + masks + audit log | Deemed accepted [10] business days after delivery unless a written non-conformance is raised |
 
 ## 5. Timeline
-Data Acceptance (T0) → D1 at T0 + [5] bd → D2 at T0 + [15–25] bd depending on scan count → D3 within [5] bd of comments.
+Data Acceptance (T0) → D1 at T0 + [5] bd → D2 at T0 + [turnaround: founder decision #14; same figure as the quote and the pilot proposal] bd depending on scan count → D3 within [5] bd of comments.
 
 ## 6. Fees [HYP — placeholders]
 | Item | Basis | Amount |
@@ -46,17 +46,17 @@ Data Acceptance (T0) → D1 at T0 + [5] bd → D2 at T0 + [15–25] bd depending
 | Non-GLP study report (≤[40] scans, ≤[2] time points) | Fixed | $[8,000–15,000] [HYP] |
 | Material characterisation (optional) | Fixed | $[5,000–15,000] [HYP] |
 | Additional scans beyond allowance | Per scan | $[___] [HYP] |
-| GLP-supporting option | Not offered | Not offered until a validation report and a Quality Agreement exist |
+| GLP-related work | Not offered | Not offered: no validation report, quality system or Quality Agreement exists |
 | Statistical analysis (optional) | Fixed | $[___] [HYP] |
 | Change orders | Hourly | $[___]/h [HYP] |
 
 Payment terms: [50% on SOW signature, 50% on D3] / [Net 30]. Prices exclude taxes.
 
 ## 7. Assumptions
-Scans are reconstructed, artifact-free and consistent within the study. Whether graft and new bone can be separated is assessed by OsteoQuant's measurement-support advisor during D1 (material, scanner protocol, noise, availability of day-0 scans or empty-defect controls). **If an endpoint is assessed as not supported** — in D1 or, exceptionally, after analysis (e.g. unexpected artefacts, metal hardware) — Provider reports it as "not measured" with the reason and reports total mineral volume instead; Customer may (a) accept the reduced endpoint set at a [__]% fee reduction for the affected endpoints, (b) commission a material characterisation or histology-referenced extension by change order, or (c) terminate the affected part of the study with fees limited to work performed. Provider will not deliver a numeric value for an endpoint it has assessed as not supported.
+Scans are reconstructed, artifact-free and consistent within the study. **Pre-contract feasibility gate:** before this SOW is signed, Provider runs the measurement-support advisor on representative scans or the scan protocol supplied by the Customer (material, timepoints, scanner protocol, noise, availability of empty-defect controls) and states in Annex A which endpoints are expected to be supported, conditional or not supported. Whether graft and new bone can be separated is confirmed per scan during D1 (material, scanner protocol, noise, availability of day-0 scans or empty-defect controls). **If an endpoint is assessed as not supported** — in D1 or, exceptionally, after analysis (e.g. unexpected artefacts, metal hardware) — Provider reports it as "not measured" with the reason and reports total mineral volume instead; Customer may (a) accept the reduced endpoint set at a [__]% fee reduction for the affected endpoints, (b) commission a material characterisation or histology-referenced extension by change order, or (c) terminate the affected part of the study with fees limited to work performed. Provider will not deliver a numeric value for an endpoint it has assessed as not supported.
 
 ## 8. Data handling
-Covered by [DPA/Confidentiality terms]. Retention: [90] days after D3, then deletion with certificate, unless the Customer requests archiving under GLP terms.
+Covered by [DPA/Confidentiality terms]. Retention: [founder decision #14 in `FOUNDER_DECISIONS.md`: either deletion [90] days after D3 with a certificate, or return of a full archive package (scans, masks, report, audit-trail export) and deletion; must match `docs/quality/DATA_RETENTION_POLICY.md`]. GLP archiving is not offered.
 
 ## 9. Limitations
 Results are for preclinical research use. Provider does not guarantee any regulatory outcome. Software version [x.y.z] and its validation status will be stated in the report.

@@ -17,7 +17,7 @@
 | 8 | Collaborator outreach package | `outreach/` — collaborators (verified), draft emails (unsent), OTM/IP questions |
 | 9 | Publication manuscript package | `publications/` — Manuscript 1 (separability), 2 (border-convention technical note), 3 (adaptation & uncertainty scaffold) |
 | 10 | Investor presentation (+ research & pilot decks, one-page overview, founder intro template) | `investor/OsteoQuant_Investor_Deck.pptx`, `..._Research_Collaboration_Deck.pptx`, `..._Commercial_Pilot_Deck.pptx`; screenshots `investor/screenshots/` |
-| 11 | Reproducible product demonstration | `founder/DEMO_SCRIPT.md`, `scripts/demo_seed.py`, `scripts/screenshot_demo.js`; sample reports `reports_samples/` |
+| 11 | Reproducible product demonstration | `founder/DEMO_SCRIPT.md`, `scripts/demo_seed.py`, `scripts/screenshot_demo.js`; sample reports `reports_samples/`: **current** (cycle 2, desktop report code with advisor 1.3.3): `DefectFill_SAMPLE4_gen2_synthetic_betatcp_refused.*` (graft and new-bone endpoints refused, reasons printed; one unassigned specimen) and `DefectFill_SAMPLE5_gen2_synthetic_ha_supported.*` (supported endpoints with some per-scan refusals). **Superseded** (Gen-1, before every cycle-1 fix; no support table, "16 phantoms", "Study director" role): `DefectFill_SAMPLE1/2/3_*` and `reports_samples/fig/` — do not show them to prospects |
 | 12 | Prioritised remaining-work checklist | `REMAINING_WORK.md` |
 
 Also: `FOUNDER_HANDOFF.md` (start here), `EXPERIMENT_REGISTRY.md`, `SCIENTIFIC_EVIDENCE.md`, `DECISIONS.md`,

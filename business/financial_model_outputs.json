@@ -1,39 +1,39 @@
 {
  "Bootstrapped \u2014 Conservative": {
   "Total revenue": [
-   5920,
-   12672,
-   19435,
-   24844,
-   58494
+   0,
+   8800,
+   16840,
+   23096,
+   57312
   ],
   "Pilot revenue": [
-   2400,
+   0,
    4000,
    5000,
    5000,
    5000
   ],
   "Study analysis revenue": [
-   960,
-   2752,
-   4611,
-   5967,
-   6780
+   0,
+   1600,
+   3920,
+   5552,
+   6531
   ],
   "Material characterisation revenue": [
-   960,
+   0,
    1600,
    2000,
    2000,
    2000
   ],
   "Academic licence revenue": [
+   0,
    1600,
-   4320,
-   7824,
-   11877,
-   14714
+   5920,
+   10544,
+   13781
   ],
   "Enterprise licence revenue": [
    0,
@@ -50,39 +50,39 @@
    0
   ],
   "Paid pilots": [
-   1.0,
+   0.0,
    1.6,
    2.0,
    2.0,
    2.0
   ],
   "Non-GLP studies analysed": [
-   0.1,
-   0.3,
-   0.6,
+   0.0,
+   0.2,
+   0.5,
    0.7,
    0.8
   ],
   "Material characterisations": [
-   0.2,
+   0.0,
    0.3,
    0.4,
    0.4,
    0.4
   ],
   "Active study customers (year end)": [
-   0.2,
-   0.5,
-   0.8,
-   1.0,
+   0.0,
+   0.4,
+   0.7,
+   0.9,
    1.1
   ],
   "Active academic licences": [
+   0.0,
    0.4,
-   1.1,
-   2.0,
-   3.0,
-   3.7
+   1.5,
+   2.6,
+   3.4
   ],
   "Active enterprise licences": [
    0.0,
@@ -99,49 +99,70 @@
    0.2
   ],
   "Gross margin %": [
-   0.25,
-   0.33,
-   0.4,
-   0.48,
+   0,
+   0.21,
+   0.36,
+   0.46,
    0.63
   ],
   "EBITDA": [
-   -28314,
-   -47578,
-   -55355,
-   -65699,
-   -54715
+   -29800,
+   -49983,
+   -57055,
+   -66894,
+   -55541
   ],
-  "Grants & prizes (non-dilutive)": [
+  "Cumulative cash - NO grants (lead case)": [
+   -29800,
+   -79783,
+   -136838,
+   -203733,
+   -259273
+  ],
+  "Grant awards - CONDITIONAL, not operating cash": [
    0,
    0,
    0,
    0,
    0
   ],
-  "Cumulative cash before equity": [
-   -28314,
-   -75892,
-   -131247,
-   -196946,
-   -251661
+  "Restricted grant project spend (incl. STTR subaward)": [
+   0,
+   0,
+   0,
+   0,
+   0
   ],
-  "Cumulative cash if no grants are won": [
-   -28314,
-   -75892,
-   -131247,
-   -196946,
-   -251661
+  "Grant effect on operating cash IF awarded": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "Cumulative cash - WITH grants IF awarded (conditional)": [
+   -29800,
+   -79783,
+   -136838,
+   -203733,
+   -259273
+  ],
+  "Total revenue without licence revenue": [
+   0,
+   7200,
+   10920,
+   12552,
+   13531
   ],
   "Equity funding requirement (max cumulative deficit)": [
-   251661,
+   259273,
    null,
    null,
    null,
    null
   ],
-  "Equity requirement if no grants are won": [
-   251661,
+  "Equity requirement WITH grants IF awarded (conditional)": [
+   259273,
    null,
    null,
    null,
@@ -150,39 +171,39 @@
  },
  "Bootstrapped \u2014 Base": {
   "Total revenue": [
-   39600,
-   85170,
-   177028,
-   210610,
-   287555
+   7800,
+   67312,
+   159099,
+   190384,
+   259088
   ],
   "Pilot revenue": [
-   10500,
+   2625,
    15750,
    18375,
    18375,
    18375
   ],
   "Study analysis revenue": [
-   9900,
-   29700,
-   50738,
-   68372,
-   81598
+   2475,
+   18562,
+   42384,
+   62107,
+   76899
   ],
   "Material characterisation revenue": [
-   10800,
+   2700,
    16200,
    18900,
    18900,
    18900
   ],
   "Academic licence revenue": [
-   8400,
-   23520,
-   44016,
-   66713,
-   91170
+   0,
+   16800,
+   34440,
+   52752,
+   67402
   ],
   "Enterprise licence revenue": [
    0,
@@ -199,39 +220,39 @@
    0
   ],
   "Paid pilots": [
-   3.0,
+   0.8,
    4.5,
    5.2,
    5.2,
    5.2
   ],
   "Non-GLP studies analysed": [
-   0.9,
-   2.7,
-   4.6,
-   6.2,
-   7.4
+   0.2,
+   1.7,
+   3.9,
+   5.6,
+   7.0
   ],
   "Material characterisations": [
-   1.2,
+   0.3,
    1.8,
    2.1,
    2.1,
    2.1
   ],
   "Active study customers (year end)": [
-   1.2,
-   2.7,
-   4.1,
-   5.2,
-   6.0
+   0.3,
+   2.0,
+   3.6,
+   4.8,
+   5.7
   ],
   "Active academic licences": [
-   1.4,
-   3.9,
-   7.3,
-   11.1,
-   15.2
+   0.0,
+   2.8,
+   5.7,
+   8.8,
+   11.2
   ],
   "Active enterprise licences": [
    0.0,
@@ -241,56 +262,77 @@
    1.7
   ],
   "Implied delivery FTE": [
-   0.1,
+   0.0,
    0.2,
+   0.3,
    0.4,
-   0.4,
-   0.5
+   0.4
   ],
   "Gross margin %": [
-   0.68,
-   0.72,
+   0.61,
+   0.7,
    0.79,
    0.81,
-   0.84
+   0.83
   ],
   "EBITDA": [
-   -18864,
-   -41212,
-   15660,
-   29375,
-   72372
+   -40806,
+   -55320,
+   932,
+   12248,
+   48019
   ],
-  "Grants & prizes (non-dilutive)": [
+  "Cumulative cash - NO grants (lead case)": [
+   -40806,
+   -96126,
+   -95193,
+   -82945,
+   -34926
+  ],
+  "Grant awards - CONDITIONAL, not operating cash": [
    20000,
    150000,
    155000,
    0,
    0
   ],
-  "Cumulative cash before equity": [
-   1136,
-   109924,
-   280584,
-   309959,
-   382331
+  "Restricted grant project spend (incl. STTR subaward)": [
+   18600,
+   139500,
+   144150,
+   0,
+   0
   ],
-  "Cumulative cash if no grants are won": [
-   -18864,
-   -60076,
-   -44416,
-   -15041,
-   57331
+  "Grant effect on operating cash IF awarded": [
+   6050,
+   45375,
+   46888,
+   0,
+   0
+  ],
+  "Cumulative cash - WITH grants IF awarded (conditional)": [
+   -34756,
+   -44700,
+   3119,
+   15368,
+   63387
+  ],
+  "Total revenue without licence revenue": [
+   7800,
+   50512,
+   79659,
+   99382,
+   114174
   ],
   "Equity funding requirement (max cumulative deficit)": [
-   0,
+   96126,
    null,
    null,
    null,
    null
   ],
-  "Equity requirement if no grants are won": [
-   60076,
+  "Equity requirement WITH grants IF awarded (conditional)": [
+   44700,
    null,
    null,
    null,
@@ -299,39 +341,39 @@
  },
  "Bootstrapped \u2014 Optimistic": {
   "Total revenue": [
-   132875,
-   309462,
-   566608,
-   822731,
-   1051934
+   52938,
+   245956,
+   485628,
+   717897,
+   913325
   ],
   "Pilot revenue": [
-   27500,
+   13750,
    44000,
    49500,
    55000,
    55000
   ],
   "Study analysis revenue": [
-   37125,
-   122512,
-   221451,
-   319284,
-   408754
+   18562,
+   90956,
+   194628,
+   296485,
+   389375
   ],
   "Material characterisation revenue": [
-   41250,
+   20625,
    66000,
    74250,
    82500,
    82500
   ],
   "Academic licence revenue": [
-   27000,
-   76950,
-   146408,
-   223446,
-   302429
+   0,
+   45000,
+   92250,
+   141412,
+   183201
   ],
   "Enterprise licence revenue": [
    0,
@@ -348,39 +390,39 @@
    0
   ],
   "Paid pilots": [
-   5.5,
+   2.8,
    8.8,
    9.9,
    11.0,
    11.0
   ],
   "Non-GLP studies analysed": [
-   2.5,
-   8.2,
-   14.8,
-   21.3,
-   27.3
+   1.2,
+   6.1,
+   13.0,
+   19.8,
+   26.0
   ],
   "Material characterisations": [
-   2.8,
+   1.4,
    4.4,
    5.0,
    5.5,
    5.5
   ],
   "Active study customers (year end)": [
-   2.8,
-   6.7,
-   10.7,
-   14.6,
-   17.9
+   1.4,
+   5.6,
+   9.7,
+   13.7,
+   17.2
   ],
   "Active academic licences": [
-   2.7,
-   7.7,
-   14.6,
-   22.3,
-   30.2
+   0.0,
+   4.5,
+   9.2,
+   14.1,
+   18.3
   ],
   "Active enterprise licences": [
    0.0,
@@ -390,56 +432,77 @@
    2.7
   ],
   "Implied delivery FTE": [
-   0.2,
-   0.4,
+   0.1,
+   0.3,
    0.5,
-   0.7,
-   0.8
+   0.6,
+   0.7
   ],
   "Gross margin %": [
-   0.87,
+   0.84,
    0.88,
-   0.91,
+   0.9,
    0.92,
    0.93
   ],
   "EBITDA": [
-   47420,
-   127257,
-   337557,
-   550380,
-   730534
+   -23204,
+   69263,
+   262079,
+   451341,
+   598776
   ],
-  "Grants & prizes (non-dilutive)": [
+  "Cumulative cash - NO grants (lead case)": [
+   -23204,
+   46059,
+   308138,
+   759479,
+   1358255
+  ],
+  "Grant awards - CONDITIONAL, not operating cash": [
    40000,
    150000,
    155000,
    0,
    0
   ],
-  "Cumulative cash before equity": [
-   87420,
-   364678,
-   857234,
-   1407614,
-   2138148
+  "Restricted grant project spend (incl. STTR subaward)": [
+   37200,
+   139500,
+   144150,
+   0,
+   0
   ],
-  "Cumulative cash if no grants are won": [
-   47420,
-   174678,
-   512234,
-   1062614,
-   1793148
+  "Grant effect on operating cash IF awarded": [
+   17680,
+   66300,
+   68510,
+   0,
+   0
+  ],
+  "Cumulative cash - WITH grants IF awarded (conditional)": [
+   -5524,
+   130039,
+   460628,
+   911969,
+   1510745
+  ],
+  "Total revenue without licence revenue": [
+   52938,
+   200956,
+   318378,
+   433985,
+   526875
   ],
   "Equity funding requirement (max cumulative deficit)": [
-   0,
+   23204,
    null,
    null,
    null,
    null
   ],
-  "Equity requirement if no grants are won": [
-   0,
+  "Equity requirement WITH grants IF awarded (conditional)": [
+   5524,
    null,
    null,
    null,
@@ -448,39 +511,39 @@
  },
  "Venture \u2014 Conservative": {
   "Total revenue": [
-   10400,
-   21360,
-   64080,
-   105223,
-   143113
+   0,
+   14000,
+   57520,
+   97163,
+   130238
   ],
   "Pilot revenue": [
-   4000,
+   0,
    6000,
    8000,
    9000,
    9000
   ],
   "Study analysis revenue": [
-   1600,
-   4320,
-   7232,
-   9859,
-   11676
+   0,
+   2400,
+   6080,
+   9168,
+   11261
   ],
   "Material characterisation revenue": [
-   1600,
+   0,
    2400,
    3200,
    3600,
    3600
   ],
   "Academic licence revenue": [
+   0,
    3200,
-   8640,
-   15648,
-   23754,
-   32628
+   10240,
+   16768,
+   21338
   ],
   "Enterprise licence revenue": [
    0,
@@ -493,43 +556,43 @@
    0,
    0,
    0,
-   5011,
-   13010
+   4627,
+   11840
   ],
   "Paid pilots": [
-   1.6,
+   0.0,
    2.4,
    3.2,
    3.6,
    3.6
   ],
   "Non-GLP studies analysed": [
-   0.2,
-   0.5,
-   0.9,
-   1.2,
-   1.5
+   0.0,
+   0.3,
+   0.8,
+   1.1,
+   1.4
   ],
   "Material characterisations": [
-   0.3,
+   0.0,
    0.5,
    0.6,
    0.7,
    0.7
   ],
   "Active study customers (year end)": [
-   0.4,
-   0.8,
-   1.3,
-   1.7,
+   0.0,
+   0.6,
+   1.2,
+   1.6,
    1.9
   ],
   "Active academic licences": [
+   0.0,
    0.8,
-   2.2,
-   3.9,
-   5.9,
-   8.2
+   2.6,
+   4.2,
+   5.3
   ],
   "Active enterprise licences": [
    0.0,
@@ -539,56 +602,77 @@
    2.4
   ],
   "Implied delivery FTE": [
-   0.1,
+   0.0,
    0.1,
    0.2,
    0.3,
    0.4
   ],
   "Gross margin %": [
-   0.29,
-   0.4,
-   0.59,
-   0.64,
-   0.66
+   0,
+   0.26,
+   0.58,
+   0.63,
+   0.65
   ],
   "EBITDA": [
-   -236599,
-   -606676,
-   -902912,
-   -1107496,
-   -1271912
+   -239600,
+   -611590,
+   -906740,
+   -1111728,
+   -1278045
   ],
-  "Grants & prizes (non-dilutive)": [
+  "Cumulative cash - NO grants (lead case)": [
+   -239600,
+   -851190,
+   -1757930,
+   -2869658,
+   -4147703
+  ],
+  "Grant awards - CONDITIONAL, not operating cash": [
    0,
    150000,
    155000,
    0,
    0
   ],
-  "Cumulative cash before equity": [
-   -236599,
-   -693275,
-   -1441187,
-   -2548683,
-   -3820595
+  "Restricted grant project spend (incl. STTR subaward)": [
+   0,
+   150000,
+   155000,
+   0,
+   0
   ],
-  "Cumulative cash if no grants are won": [
-   -236599,
-   -843275,
-   -1746187,
-   -2853683,
-   -4125595
+  "Grant effect on operating cash IF awarded": [
+   0,
+   15000,
+   15500,
+   0,
+   0
+  ],
+  "Cumulative cash - WITH grants IF awarded (conditional)": [
+   -239600,
+   -836190,
+   -1727430,
+   -2839158,
+   -4117203
+  ],
+  "Total revenue without licence revenue": [
+   0,
+   10800,
+   17280,
+   22856,
+   26247
   ],
   "Equity funding requirement (max cumulative deficit)": [
-   3820595,
+   4147703,
    null,
    null,
    null,
    null
   ],
-  "Equity requirement if no grants are won": [
-   4125595,
+  "Equity requirement WITH grants IF awarded (conditional)": [
+   4117203,
    null,
    null,
    null,
@@ -597,39 +681,39 @@
  },
  "Venture \u2014 Base": {
   "Total revenue": [
-   59400,
-   172755,
-   299452,
-   501410,
-   706242
+   11700,
+   141769,
+   261071,
+   444351,
+   625713
   ],
   "Pilot revenue": [
-   15750,
+   3938,
    23625,
    28875,
    31500,
    31500
   ],
   "Study analysis revenue": [
-   14850,
-   44550,
-   77344,
-   108127,
-   133070
+   3713,
+   27844,
+   64814,
+   98729,
+   126022
   ],
   "Material characterisation revenue": [
-   16200,
+   4050,
    24300,
    29700,
    32400,
    32400
   ],
   "Academic licence revenue": [
-   12600,
-   35280,
-   66024,
-   103219,
-   141375
+   0,
+   21000,
+   42000,
+   63000,
+   84000
   ],
   "Enterprise licence revenue": [
    0,
@@ -641,44 +725,44 @@
   "Expansion-module revenue": [
    0,
    0,
-   14260,
-   65401,
-   141248
+   12432,
+   57959,
+   125143
   ],
   "Paid pilots": [
-   4.5,
+   1.1,
    6.8,
    8.2,
    9.0,
    9.0
   ],
   "Non-GLP studies analysed": [
-   1.4,
-   4.1,
-   7.0,
-   9.8,
-   12.1
+   0.3,
+   2.5,
+   5.9,
+   9.0,
+   11.5
   ],
   "Material characterisations": [
-   1.8,
+   0.5,
    2.7,
    3.3,
    3.6,
    3.6
   ],
   "Active study customers (year end)": [
-   1.8,
-   4.1,
-   6.3,
-   8.4,
-   9.9
+   0.5,
+   3.0,
+   5.6,
+   7.8,
+   9.4
   ],
   "Active academic licences": [
-   2.1,
-   5.9,
-   11.0,
-   17.2,
-   23.6
+   0.0,
+   3.5,
+   7.0,
+   10.5,
+   14.0
   ],
   "Active enterprise licences": [
    0.0,
@@ -688,56 +772,77 @@
    5.0
   ],
   "Implied delivery FTE": [
-   0.2,
-   0.4,
+   0.0,
+   0.3,
    0.5,
-   0.7,
-   0.8
+   0.6,
+   0.7
   ],
   "Gross margin %": [
-   0.68,
-   0.78,
+   0.62,
+   0.77,
    0.8,
-   0.82,
+   0.81,
    0.82
   ],
   "EBITDA": [
-   -272091,
-   -625574,
-   -914540,
-   -1028232,
-   -1119394
+   -305308,
+   -650544,
+   -945501,
+   -1074067,
+   -1184206
   ],
-  "Grants & prizes (non-dilutive)": [
+  "Cumulative cash - NO grants (lead case)": [
+   -305308,
+   -955852,
+   -1901353,
+   -2975420,
+   -4159626
+  ],
+  "Grant awards - CONDITIONAL, not operating cash": [
    20000,
    150000,
    155000,
    500000,
    750000
   ],
-  "Cumulative cash before equity": [
-   -252091,
-   -727665,
-   -1487205,
-   -2015437,
-   -2384831
+  "Restricted grant project spend (incl. STTR subaward)": [
+   18600,
+   139500,
+   144150,
+   465000,
+   697500
   ],
-  "Cumulative cash if no grants are won": [
-   -272091,
-   -897665,
-   -1812205,
-   -2840437,
-   -3959831
+  "Grant effect on operating cash IF awarded": [
+   6050,
+   45375,
+   46888,
+   151250,
+   226875
+  ],
+  "Cumulative cash - WITH grants IF awarded (conditional)": [
+   -299258,
+   -904427,
+   -1803041,
+   -2725858,
+   -3683188
+  ],
+  "Total revenue without licence revenue": [
+   11700,
+   75769,
+   129559,
+   187024,
+   237402
   ],
   "Equity funding requirement (max cumulative deficit)": [
-   2384831,
+   4159626,
    null,
    null,
    null,
    null
   ],
-  "Equity requirement if no grants are won": [
-   3959831,
+  "Equity requirement WITH grants IF awarded (conditional)": [
+   3683188,
    null,
    null,
    null,
@@ -746,39 +851,39 @@
  },
  "Venture \u2014 Optimistic": {
   "Total revenue": [
-   193225,
-   515532,
-   968290,
-   1663602,
-   2431719
+   74112,
+   406104,
+   806574,
+   1406149,
+   2048024
   ],
   "Pilot revenue": [
-   38500,
+   19250,
    60500,
    77000,
    88000,
    88000
   ],
   "Study analysis revenue": [
-   51975,
-   170032,
-   317901,
-   477374,
-   625548
+   25988,
+   125854,
+   280349,
+   445455,
+   598416
   ],
   "Material characterisation revenue": [
-   57750,
+   28875,
    90750,
    115500,
    132000,
    132000
   ],
   "Academic licence revenue": [
-   45000,
-   119250,
-   227362,
-   355258,
-   490969
+   0,
+   54000,
+   117900,
+   181215,
+   244033
   ],
   "Enterprise licence revenue": [
    0,
@@ -790,44 +895,44 @@
   "Expansion-module revenue": [
    0,
    0,
-   88026,
-   332720,
-   694777
+   73325,
+   281230,
+   585150
   ],
   "Paid pilots": [
-   7.7,
+   3.9,
    12.1,
    15.4,
    17.6,
    17.6
   ],
   "Non-GLP studies analysed": [
-   3.5,
-   11.3,
-   21.2,
-   31.8,
-   41.7
+   1.7,
+   8.4,
+   18.7,
+   29.7,
+   39.9
   ],
   "Material characterisations": [
-   3.9,
+   1.9,
    6.0,
    7.7,
    8.8,
    8.8
   ],
   "Active study customers (year end)": [
-   3.9,
-   9.3,
-   15.6,
-   22.1,
-   27.6
+   1.9,
+   7.7,
+   14.2,
+   20.9,
+   26.6
   ],
   "Active academic licences": [
-   4.5,
-   11.9,
-   22.7,
-   35.5,
-   49.1
+   0.0,
+   5.4,
+   11.8,
+   18.1,
+   24.4
   ],
   "Active enterprise licences": [
    0.0,
@@ -837,56 +942,77 @@
    5.3
   ],
   "Implied delivery FTE": [
-   0.2,
-   0.5,
-   0.8,
-   1.0,
-   1.1
+   0.1,
+   0.4,
+   0.7,
+   0.9,
+   1.0
   ],
   "Gross margin %": [
-   0.88,
+   0.85,
    0.9,
    0.9,
    0.89,
-   0.89
+   0.88
   ],
   "EBITDA": [
-   -224388,
-   -455483,
-   -504187,
-   -236207,
-   108699
+   -330102,
+   -556026,
+   -651648,
+   -467250,
+   -231203
   ],
-  "Grants & prizes (non-dilutive)": [
+  "Cumulative cash - NO grants (lead case)": [
+   -330102,
+   -886127,
+   -1537775,
+   -2005025,
+   -2236229
+  ],
+  "Grant awards - CONDITIONAL, not operating cash": [
    40000,
    150000,
    155000,
    500000,
    750000
   ],
-  "Cumulative cash before equity": [
-   -184388,
-   -489872,
-   -839059,
-   -575266,
-   283433
+  "Restricted grant project spend (incl. STTR subaward)": [
+   37200,
+   139500,
+   144150,
+   465000,
+   697500
   ],
-  "Cumulative cash if no grants are won": [
-   -224388,
-   -679872,
-   -1184059,
-   -1420266,
-   -1311567
+  "Grant effect on operating cash IF awarded": [
+   17680,
+   66300,
+   68510,
+   221000,
+   331500
+  ],
+  "Cumulative cash - WITH grants IF awarded (conditional)": [
+   -312422,
+   -802147,
+   -1385285,
+   -1631535,
+   -1531239
+  ],
+  "Total revenue without licence revenue": [
+   74112,
+   277104,
+   520134,
+   831818,
+   1145783
   ],
   "Equity funding requirement (max cumulative deficit)": [
-   839059,
+   2236229,
    null,
    null,
    null,
    null
   ],
-  "Equity requirement if no grants are won": [
-   1420266,
+  "Equity requirement WITH grants IF awarded (conditional)": [
+   1631535,
    null,
    null,
    null,

@@ -111,7 +111,7 @@ def s_title(d, subtitle):
 
 def s_problem(d):
     d.slide("The measurement bone-graft companies must make is still drawn by hand", [
-        "FDA special controls for resorbable calcium-salt bone void fillers require animal data characterising resorption and replacement by new bone [V: 21 CFR 888.3046].",
+        "FDA special controls for resorbable calcium-salt bone void fillers require animal data characterising resorption and replacement by new bone [V: 21 CFR 888.3045 special controls].",
         "Separating new bone, residual graft and host bone in micro-CT is done with manual ROIs and global thresholds; labs build their own methods study by study [RF: Sci Rep 2024; PMC10947128].",
         "Thresholds only work when graft and bone differ in density; many resorbable ceramics converge toward bone density as they remodel [RF; docs/science].",
         "Small orthobiologic firms (5–200 staff) run 1–4 animal studies a year without in-house imaging analysts [HYP, playbook].",
@@ -119,13 +119,13 @@ def s_problem(d):
 
 
 def s_built(d):
-    d.slide("What exists today (built and tested, 27 Nov 2026)", [
-        "Ingestion of TIFF/DICOM/NIfTI/NRRD/OME-TIFF/Zarr/Zeiss TXM with SHA-256 provenance; QC engine",
-        "Automatic defect ROI (plate & segmental), 3-class segmentation (classical, RF, 3D U-Net), uncertainty & abstention",
-        "Morphometry verified vs analytic truth and vs Scanco IPL on public data",
-        "Web workbench: orthogonal viewer, brush correction with versioning, 3D surfaces, re-authenticated sign-off",
-        "Hash-chained audit trail, RBAC, tenant isolation, blinding; DefectFill PDF/CSV reports",
-        "61 automated tests; 16 computational experiments; independent security + science review; 3 sample reports",
+    d.slide("What exists today (research prototype, 27 Nov 2026)", [
+        "Offline desktop application; ingestion of TIFF/DICOM/NIfTI/NRRD/OME-TIFF/Zarr/Zeiss TXM with SHA-256 provenance; QC",
+        "Automatic defect ROI, classical 3-class segmentation, measurement-support advisor 1.3.3 that abstains when graft and new bone cannot be separated",
+        "Morphometry exact on analytic objects; agrees with Scanco IPL on 8 public cubes (convention chosen post hoc)",
+        "Desktop viewer with correction and versioning, 3D surfaces, re-authenticated sign-off, blinding",
+        "Hash-chained audit trail (tamper-evident; research prototype, not validated); DefectFill PDF/CSV reports",
+        "Automated test suite (count from CI); computational experiments; internal automated review (reviewer agents, not independent)",
     ], image=SHOT / "04_viewer_edit_measure_3d.png", img_w=6.4, kicker="Product")
 
 
@@ -150,7 +150,7 @@ def s_insight(d):
         "If graft density stays well above new bone: thresholds suffice.",
         "If densities overlap: the best possible intensity-only rule drops to graft Dice 0.52–0.77 (0.36 when granules resemble new bone).",
         "Shape/texture features recover it only when granules look different from new bone (0.86–0.88 compact vs 0.65–0.70 strut-like).",
-        "A registered day-0 scan keeps graft Dice ≥0.8 in both cases → study-design advice is part of the product.",
+        "A registered day-0 scan helps only without granule motion: naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35 (the advisor refuses those cases).",
         "All of this is simulation; the physical phantom study decides where real materials fall.",
     ], image=FIG / "exp_C_separability.png", img_w=7.0, kicker="Science")
 
@@ -172,7 +172,7 @@ def s_market(d):
         ["Dental graft & membrane applicants active", "24", "[V] openFDA"],
         ["NIH bone-repair projects mentioning micro-CT (FY2026)", "67 (lower bound)", "[V] NIH RePORTER"],
         ["CROs with bone/orthopaedic scope confirmed", "6 of 9 identified", "[V] fetched pages"],
-        ["Serviceable pool for graft-defect reports at playbook prices", "$0.9M / $2.1M / $4.3M per year", "[HYP] low/mid/high"],
+        ["Serviceable pool for graft-defect reports at the Base price hypotheses", "$0.8M / $1.9M / $3.9M per year", "[HYP] low/mid/high (business/REVENUE_MODEL.md §5d)"],
         ["Implication", "Graft reports alone support a services lab, not a venture-scale company", "[INF]"],
     ], kicker="Market", col_w=[6.0, 3.8, 2.3], note="business/MARKET_MODEL_INPUTS.md")
 
@@ -186,7 +186,7 @@ def s_model(d):
                      f"${v.get('Equity funding requirement (max cumulative deficit)', [0])[0]:,.0f}"])
     d.table("Two ways to build it (all drivers are hypotheses)", ["Scenario", "Revenue 2027", "Revenue 2031", "GM 2031", "Equity need"],
             rows, kicker="Business model", col_w=[4.2, 2.0, 2.0, 1.6, 2.3],
-            note="business/FINANCIAL_MODEL.xlsx — Bootstrapped Base assumes $325K grants; Venture Base assumes NSF Phase II")
+            note="business/FINANCIAL_MODEL.xlsx — equity need WITHOUT grants (lead case); grants are conditional and restricted")
 
 
 def s_pricing(d):
@@ -203,7 +203,7 @@ def s_milestones(d):
         ["Dec 2026", "OTM disclosure & IP clinic; 15 discovery interviews started", "clean title; demand signal"],
         ["Jan–Feb 2027", "Beckman Versa access; pilot phantom scans (3 materials)", "first real separability data"],
         ["Feb 2027", "Cozad registration (window Dec 1 – Feb 2) ; NSF Project Pitch", "prize money; SBIR invitation"],
-        ["Mar–May 2027", "Full phantom study; retrospective pilot with 1 company/CRO", "validation evidence; LOI"],
+        ["Mar–May 2027", "Full phantom study; free retrospective evaluation under NDA (paid pilots only after incorporation)", "first real-data evidence; LOI"],
         ["Jul 2027", "NSF SBIR Phase I (if eligible PI) or NIH STTR with UIUC PI", "$305K–$336K non-dilutive"],
         ["H2 2027", "First paid non-GLP study; ORS/TERMIS abstract; manuscript", "revenue; credibility"],
     ], kicker="Plan", col_w=[1.8, 6.2, 4.1])
@@ -211,7 +211,7 @@ def s_milestones(d):
 
 def s_risks(d):
     d.table("Biggest risks and how we test them", ["Risk", "Test / mitigation"], [
-        ["Real graft and new bone inseparable on micro-CT", "phantom study (E2); fall back to day-0 protocol or histology-first"],
+        ["Real graft and new bone inseparable on micro-CT", "phantom study (E2); report total mineral; histology is the fallback (day-0 is unproven under granule motion)"],
         ["Buyers won't pay ≥$10K", "15 interviews + price ladder; pivot to CRO licences / academic recharge"],
         ["CROs already satisfied in-house", "CRO interviews (U4); position as partner"],
         ["Dragonfly/Bruker add graft presets", "own material reference library + validation data + study design service"],
@@ -225,7 +225,7 @@ def s_team(d):
         "Founder: UIUC undergraduate; orthopaedic imaging, fracture detection, regenerative-medicine research experience",
         "Built with AI-assisted development; needs domain validation, not more code",
         "Recruit: bone-biology/histomorphometry scientist (adjudication), micro-CT imaging scientist (phantoms),",
-        "   faculty advisor (e.g. Mariana Kersh — Versa-experienced bone biomechanics), fractional GxP/CSV consultant,",
+        "   a faculty advisor (to be named only with their written consent), fractional quality/CSV consultant,",
         "   later a commercial co-founder from CRO/orthobiologic industry",
     ], kicker="Team")
 
@@ -235,7 +235,7 @@ def s_funds(d):
         ["Phantom validation study (materials, scanner, calibration)", "$10–20K", "first real separability evidence"],
         ["Founder/early-hire stipends (12 months)", "$60–150K", "interviews, pilots, engineering"],
         ["Cloud GPU for nnU-Net-scale training", "$3–8K", "replace CPU prototype models"],
-        ["CSV/QA consultant scoping + Part 11 gap work", "$15–40K", "GLP-readiness"],
+        ["Quality/CSV consultant: gap assessment and a lightweight QMS", "$15–40K", "vendor qualification (no GLP or Part 11 claim)"],
         ["Legal (incorporation, IP, MSA/DPA templates)", "$10–25K", "contracts with first customers"],
         ["Conferences, travel, pilots", "$10–20K", "ORS/TERMIS; on-site pilots"],
     ], kicker="Funding", col_w=[6.0, 2.0, 4.1], note="ranges from validation/BILL_OF_MATERIALS.csv and business/FINANCIAL_MODEL.xlsx")
@@ -260,7 +260,7 @@ def s_pilot(d):
         "You share 20–30 completed micro-CT scans under a data-processing agreement",
         "We run DefectFill alongside your own analysis; you keep using your results",
         "Deliverables: per-specimen comparison, ICC and Bland–Altman vs your analyst, hands-on time per scan",
-        "Material-specific separability assessment for your graft (incl. whether a day-0 scan would help)",
+        "Simulation-based separability assessment for your graft at your scanner settings (physical phantom work not started)",
         "Price: free or discounted pilot; success = LOI or paid next study (pricing to be agreed)",
     ], image=ROOT / "reports_samples" / "fig" / "r1_groups.png", img_w=5.6, kicker="Pilot")
 
@@ -272,7 +272,7 @@ def main():
         f(d)
     s_ask(d, ["Not raising equity before the phantom result and first pilot (Feb–May 2027).",
               "Seeking: advisors (bone biology, CRO operations), pilot partners, and non-dilutive funding (Cozad, I-Corps, SBIR/STTR).",
-              "Decision gate (~25 Feb 2027): ≥3/15 buyers at ≥$10K/study AND phantom shows a separable path (single-scan or day-0)."])
+              "Decision gate (~25 Feb 2027): the combined gate in business/PRICING_VALIDATION_PLAN.md §7 (H2 signal AND a separable path in the phantom study)."])
     d.save(out / "OsteoQuant_Investor_Deck.pptx")
     d = Deck(); s_title(d, "Research collaboration proposal")
     for f in (s_problem, s_insight, s_evidence, s_collab_project, s_built, s_team):

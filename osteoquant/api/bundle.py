@@ -35,6 +35,20 @@ def report_data_class(value) -> str:
     return v if v in DATA_CLASSES else "research"
 
 
+def biological_limitations(st: dict) -> list[str]:
+    """Report limitations, including the biological confounders that change headline numbers (review C2-BIZ-17)."""
+    lim = ["Research prototype; methods not validated for regulatory use.",
+           "Graft vs new-bone separation has not been validated on physical ground truth for this material.",
+           "Density values are uncalibrated grey values unless an HA calibration is recorded.",
+           "Calcified cartilage (endochondral healing, roughly 1-4 weeks) is mineralised and is counted as mineral or new "
+           "bone. Ectopic bone (e.g. from rhBMP-2 collagen carriers), mineralised debris and mineralised haematoma inside "
+           "the ROI are counted as new bone; outside the ROI they are ignored."]
+    if str(st.get("defect_model") or "").lower() == "segmental":
+        lim.append("Segmental model: the ROI is a cylinder of the bone diameter. Periosteal and external callus outside it "
+                   "is not counted, so bridging and new bone are under-estimated, and external callus is labelled host bone.")
+    return lim
+
+
 def git_commit():
     try:
         return subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True,
@@ -43,7 +57,12 @@ def git_commit():
         return "unknown"
 
 
-def bundle_from_store(store, user, sid, ctx=None) -> dict:
+def bundle_from_store(store, user, sid, ctx=None, measurements=None, figures=True) -> dict:
+    """``measurements``: the rows of ``store.latest_measurements`` to report (callers that post-process
+    the bundle pass the same snapshot they use themselves); ``figures=False`` skips figure rendering
+    (e.g. blinded reports, which render their own coded figures). Each specimen carries its
+    ``scan_id`` / ``segmentation_id`` / ``roi_id`` / ``measurement_id`` so that post-processing joins
+    by key, never by list position (desktop review C2-PRD-01)."""
     import zarr
     from ..report.figures import specimen_panel
     st = store.study(user, sid)
@@ -53,7 +72,7 @@ def bundle_from_store(store, user, sid, ctx=None) -> dict:
     figdir = store.data_dir / f"org{user['org_id']}" / "reports" / "fig"
     figdir.mkdir(parents=True, exist_ok=True)
     reviewed_all = True
-    meas = store.latest_measurements(user, sid)
+    meas = store.latest_measurements(user, sid) if measurements is None else measurements
     for i, m in enumerate(meas):
         if ctx:
             ctx.progress(0.1 + 0.7 * i / max(1, len(meas)), f"specimen {i+1}/{len(meas)}")
@@ -69,6 +88,8 @@ def bundle_from_store(store, user, sid, ctx=None) -> dict:
                 for s in store.segmentations(user, m["scan_id"]) if s["kind"] == "corrected"]
         fig = None
         try:
+            if not figures:
+                raise LookupError("figures not requested")
             g = zarr.open_group(sc["store_path"], mode="r")
             img = np.asarray(g["image"][:])
             lab = np.asarray(g[f"labels/{seg['labels_key']}"][:])
@@ -80,6 +101,8 @@ def bundle_from_store(store, user, sid, ctx=None) -> dict:
         roi_row = store.q1("SELECT * FROM rois WHERE id=?", (m["roi_id"],)) if m["roi_id"] else None
         roi_def = json.loads(roi_row["definition"]) if roi_row else {}
         out_specs.append({
+            "scan_id": m["scan_id"], "segmentation_id": m["segmentation_id"], "roi_id": m.get("roi_id"),
+            "measurement_id": m.get("id"),
             "specimen_id": sp.get("animal_id", f"scan{m['scan_id']}"), "animal_id": sp.get("animal_id"),
             "group": sp.get("group_name", "—"),
             "timepoint": tps.get(sc["timepoint_id"], "—"),
@@ -116,9 +139,7 @@ def bundle_from_store(store, user, sid, ctx=None) -> dict:
                          "geometric definition. Segmentation assigned voxels to new bone, residual graft, host bone or background; "
                          "voxels with insufficient confidence were labelled uncertain. Volumes are voxel counts × voxel volume within "
                          "the ROI. Statistics are computed at the specimen level."),
-        "limitations": ["Research prototype; methods not validated for regulatory use.",
-                        "Graft vs new-bone separation has not been validated on physical ground truth for this material.",
-                        "Density values are uncalibrated grey values unless an HA calibration is recorded."],
+        "limitations": biological_limitations(st),
         "reproducibility": {"software_version": __version__, "git_commit": git_commit()},
         "reviewers": [{"role": "Scientific reviewer", "name": r["full_name"] or r["username"], "meaning": r["meaning"],
                        "decision": r["decision"], "time": r["created"]} for s in out_specs for r in s["reviews"]][:6],

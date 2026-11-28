@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QComboBox, QFileDialog, QHBoxL
 
 from . import theme
 from .panels import muted
-from .support import ENDPOINTS, FLAGGED, NOT_SUPPORTED, SUPPORTED, endpoint_value, measurement_support
+from .support import ENDPOINTS, FLAGGED, NOT_ASSESSED, NOT_SUPPORTED, SUPPORTED, endpoint_value, measurement_support
 
 NOT_ANALYSED = "not analysed"
 NOT_MEASURED = "not measured"
@@ -38,6 +38,7 @@ def build_rows(project, study_id, blinded_view=False) -> list[dict]:
     (never green). ROI acceptance, QC, method and review state are separate columns."""
     from . import services as S
     store, user = project.store, project.require_user()
+    blinded_view = bool(blinded_view or project.study_forces_blinding(study_id))   # study-level blinding (C2-PRD-03)
     specs = {s["id"]: s for s in store.specimens(user, study_id)}
     tps = {t["id"]: t["label"] for t in project.timepoints(study_id)}
     meas = {m["scan_id"]: m for m in store.latest_measurements(user, study_id)}
@@ -49,7 +50,8 @@ def build_rows(project, study_id, blinded_view=False) -> list[dict]:
         if m and not res.get("qc"):
             res = {**res, "qc": full.get("qc")}
         roi = S.roi_state(project, m["roi_id"]) if m else None
-        sup = measurement_support(res, roi_accepted=bool(roi and roi["accepted"]))
+        sup = measurement_support(res, roi_accepted=bool(roi and roi["accepted"]),
+                                  manual_roi_pending=bool(roi and roi.get("manual_pending")))
         sp = specs.get(sc["specimen_id"], {})
         seg = store.q1("SELECT * FROM segmentations WHERE id=?", (m["segmentation_id"],)) if m else None
         revs = store.reviews(user, "segmentation", seg["id"]) if seg else []
@@ -85,6 +87,8 @@ def build_rows(project, study_id, blinded_view=False) -> list[dict]:
                 v, st, reasons = None, NOT_SUPPORTED, ["analysis not run"]
             row["values"][key] = {"value": v, "status": st, "reasons": reasons, "tip": "; ".join(reasons)}
         rows.append(row)
+    if blinded_view:      # code order: the row (and CSV) order must not reveal import or allocation order
+        rows.sort(key=lambda r: str(r["scan"]))
     return rows
 
 
@@ -169,8 +173,8 @@ class ResultsModel(QAbstractTableModel):
                 return theme.qcolor("text_muted")       # >= 4.5:1 in both themes (UX-28)
             if cell["status"] == FLAGGED:
                 return theme.status_color("flagged")
-            if cell["status"] == NOT_SUPPORTED:
-                return theme.status_color("not supported")
+            if cell["status"] in (NOT_SUPPORTED, NOT_ASSESSED):
+                return theme.status_color(cell["status"])
         if role == Qt.FontRole and cell["value"] is None:
             f = QFont()
             f.setItalic(True)

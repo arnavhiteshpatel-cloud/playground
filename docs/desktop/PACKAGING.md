@@ -9,6 +9,7 @@ Nothing in the build needs a network connection at run time.
 | `packaging/launcher.py` | entry script (`osteoquant.desktop.app.main`) |
 | `packaging/build.py` | build, write licence notices, run the licence check, run the packaged self-test, write `build-info.json`, archive |
 | `packaging/check_bundle_licences.py` | lists every shared library; fails on GPL-only or unreviewed Qt modules and missing notices; `--ldd` lists libraries expected from the target OS |
+| `packaging/bundle_inventory.py` | maps **every** bundled shared library to an owner and a licence source (wheel, Python runtime, or the host package's copyright file), copies the PSF, ICU and system-library licence texts, completes PDFium/pypdfium2 and other wheels, writes `licenses/BUNDLE_INVENTORY.json` and regenerates `docs/security/SBOM.csv` and `sbom.cdx.json`; fails on any unmapped library |
 | `packaging/licenses/` | LGPL-3.0 and GPL-3.0 texts shipped in every build |
 | `packaging/make_icons.py` | renders `packaging/icons/osteoquant.{png,ico,icns}` and the in-app window icon |
 | `packaging/macos/entitlements.plist` | hardened-runtime exceptions needed by the embedded Python (for signing) |
@@ -27,7 +28,9 @@ Output folder `packaging/dist/OsteoQuant/`:
 OsteoQuant                       windowed application (OsteoQuant.exe on Windows)
 osteoquant-desktop-console       same program with a console: --selftest, --version, support
 THIRD_PARTY_NOTICES.txt         notices: Qt/PySide6 LGPL statement and relinking instructions, component list
-licenses/                        LGPL-3.0.txt, GPL-3.0.txt, licence files of bundled distributions, INDEX.json
+licenses/                        LGPL-3.0.txt, GPL-3.0.txt, Python-PSF-LICENSE.txt, ICU-LICENSE.txt, licence files of
+                                 bundled distributions, INDEX.json, BUNDLE_INVENTORY.json, system/ (host-library
+                                 copyright files)
 _internal/                       Python runtime, Qt, VTK, NumPy/SciPy, ... (shared libraries, replaceable)
 ```
 
@@ -82,8 +85,22 @@ Qt and PySide6 are used under the **LGPL-3.0**. Requirements and how the build m
   Qt module, on any Qt module not on the reviewed LGPL allow-list, and on missing notices. The
   allow-list follows Qt's licensing table; re-check it when upgrading Qt.
 * **Notices shipped.** `THIRD_PARTY_NOTICES.txt` (Qt/PySide6 statement, source locations,
-  relinking instructions, component list with versions and declared licences) and `licenses/`
-  (LGPL-3.0, GPL-3.0 and the licence files of 60+ bundled distributions, `INDEX.json`).
+  relinking instructions, component list with versions and declared licences, then the sections
+  written by `bundle_inventory.py`) and `licenses/`:
+  * LGPL-3.0, GPL-3.0 and the licence files of the 75 bundled Python distributions (`INDEX.json`;
+    licence files in `dist-info/licenses/` sub-folders, e.g. PDFium's under pypdfium2, are now
+    collected; distributions without a licence file get a written note);
+  * **Python runtime:** `Python-PSF-LICENSE.txt` (PSF-2.0, copied from the build interpreter);
+  * **ICU** (bundled inside the PySide6 wheel): `ICU-LICENSE.txt`;
+  * **Qt's own third-party code** (PCRE2, double-conversion, zlib, HarfBuzz, FreeType, libpng,
+    libjpeg, md4c, PDFium in Qt Pdf, ...): listed with licences and the exact Qt version in
+    `THIRD_PARTY_NOTICES.txt`; the texts are in the Qt source archive of that version;
+  * **Libraries copied from the build host** (52 files from 49 packages on the current Linux build:
+    libgcrypt/libgpg-error and libsystemd (LGPL-2.1+), libdbus-1 (AFL-2.1/GPL-2), krb5/GSSAPI (MIT),
+    OpenSSL 3 (Apache-2.0), fontconfig, FreeType, xkbcommon, the xcb utility libraries, zstd, ...):
+    the owning package's `copyright` file in `licenses/system/`, and a written offer of the source
+    code of the LGPL libraries in the notices;
+  * FreeType, HarfBuzz and the image libraries vendored by Pillow: Pillow's licence file.
 * **Replaceable libraries (relinking).** The one-folder build keeps Qt and PySide6 as separate
   shared libraries under `_internal/` (Linux `_internal/PySide6/Qt/lib/libQt6*.so.6`; Windows
   `_internal\PySide6\Qt6*.dll`; macOS `Contents/Frameworks/...`). A user can replace them with
@@ -91,6 +108,12 @@ Qt and PySide6 are used under the **LGPL-3.0**. Requirements and how the build m
   dialog and the notices state that the OsteoQuant licence terms do not restrict modification of
   the LGPL libraries or reverse engineering for debugging such modifications. A future EULA must
   keep that carve-out.
+* **Inventory check.** `bundle_inventory.py` fails the build if any shared library or bundled
+  Python distribution has no mapped licence, and `check_bundle_licences.py` fails if
+  `BUNDLE_INVENTORY.json`, the PSF text or any `licenses/system/` file is missing.
+* **Still bundled although not needed** (to remove): fastapi, starlette, pydantic and anyio are
+  pulled in because the desktop imports the shared job handlers from `osteoquant/api/app.py`;
+  mypy, hypothesis and wheel were pulled in by hooks and are excluded from the next build.
 * **No unneeded build-host files.** Only the two application executables are executable files in
   the folder (no compilers, Qt tools or `libexec` helpers). Dropping the GTK platform theme removed
   the host GTK/cairo/pango/ATK/ICU stack (183 -> 149 top-level library entries, most of them links
@@ -124,7 +147,7 @@ LICENCE CHECK FAILED (8 violations):
     missing notice file: THIRD_PARTY_NOTICES.txt, licenses/LGPL-3.0.txt, licenses/GPL-3.0.txt
 ```
 
-Not verified here: the Windows and macOS bundles (their plugin sets differ, e.g. `styles` on
+Not checked here: the Windows and macOS bundles (their plugin sets differ, e.g. `styles` on
 Windows, `platforms/darwin` on macOS); the CI build runs the same check on each platform.
 
 ## Models
@@ -142,13 +165,11 @@ Copy `registry.json` and the `<name>.onnx` files there. The analysis dialog list
 if its ONNX file exists, the registry has its `onnx_sha256` (the library verifies the hash
 before loading) and the runtime imports.
 
-**Current limitation:** `osteoquant/ml/runtime.py` (ONNX inference) imports helpers from
-`osteoquant/ml/train.py`, which imports PyTorch at module level. In the default (torch-free)
-bundle the ONNX models are therefore not offered. Once those helpers (`MODEL_DIR`, `Case`,
-`build_input`, `_gauss_window`) move to a torch-free module, ONNX inference works in the
-default bundle with no packaging change. Until then build with `OQ_BUNDLE_TORCH=1` if model
-inference is needed. An `OQ_MODEL_DIR` override in the library would also make the model
-location independent of the install layout.
+ONNX inference (`osteoquant/ml/runtime.py`) imports its helpers from the torch-free
+`osteoquant/ml/core.py`; PyTorch is needed only to export a model (`export_onnx`). The default
+bundle can therefore run ONNX models when `onnxruntime` is bundled (`OQ_BUNDLE_ONNX`) and the
+model files are installed as above. An `OQ_MODEL_DIR` override in the library would make the
+model location independent of the install layout.
 
 ## Code signing and notarisation (requires the publisher's credentials)
 
@@ -205,3 +226,14 @@ They are accepted only when `OSTEOQUANT_ACCEPT_TEST_LICENCES=1` and are labelled
   exercised through `xvfb` and the off-screen Qt platform.
 * Volumes of several GB: the slab-import and lazy-display paths are unit-tested with small
   data and artificially low thresholds, not with real multi-GB scans.
+
+## Distribution status of the Linux archive
+
+`packaging/dist/OsteoQuant-desktop-linux-x86_64.tar.gz` was packed **before** the system-library,
+PSF, ICU and PDFium notices were added (they were written into the built folder afterwards by
+`packaging/bundle_inventory.py`). Do not distribute that archive. Re-run `python packaging/build.py`
+(which now runs the inventory and fails on any unmapped library) to produce an archive with the
+complete notices. Two items remain counsel tasks before any distribution: whether pointing to the
+upstream Qt / PySide6 source of the exact version (6.12.0) is enough for the LGPL-3.0 source
+requirement or a mirrored source archive / written offer is needed (review C2-BIZ-09), and the
+EULA with the LGPL carve-out (see `FOUNDER_DECISIONS.md`).

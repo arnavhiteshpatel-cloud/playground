@@ -1,6 +1,6 @@
-# Quality Agreement Issues Checklist (GLP-supporting analysis)
+# Quality Agreement Issues Checklist (future GLP-related work — not offered)
 
-> Issue list to agree with the customer's QA and to review with a GLP/QA consultant and counsel. **OsteoQuant software is not currently validated, and OsteoQuant has no quality system.** Do not offer GLP-supporting work until the items marked ★ are in place. The regulatory references are named for orientation. Confirm their current versions before relying on them [UNR].
+> Issue list to agree with the customer's QA and to review with a GLP/QA consultant and counsel. **OsteoQuant software is not currently validated, and OsteoQuant has no quality system.** GLP-related work is not offered; it cannot be considered until the items marked ★ are in place. The regulatory references are named for orientation. Confirm their current versions before relying on them [UNR].
 
 ## 1. Regulatory frame
 - [ ] Which regime applies: US FDA GLP (21 CFR Part 58), OECD GLP Principles, or both? Is the study GLP or non-GLP?

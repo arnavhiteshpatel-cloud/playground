@@ -323,7 +323,7 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
                     hi = _fmt(d["ci95_high"]) + (CLIP_MARK if "high" in clip else "")
                     cells.append(f"{_fmt(d['mean'])} ± {_fmt(d['sd'])}\n[{lo}, {hi}]")
                 elif d.get("n", 0) >= 2:
-                    cells.append(f"{_fmt(d['mean'])} ± {_fmt(d['sd'])}\n[CI not shown, n<{MIN_N_CI}]")
+                    cells.append(f"{_fmt(d['mean'])} ± {_fmt(d['sd'])}\n[CI not shown, n={d['n']}]")
                 elif d.get("n", 0) == 1:
                     cells.append(_fmt(d["mean"]))
                 else:
@@ -390,7 +390,11 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
         flow.append(Paragraph("5. Representative images", H2))
         flow.append(Paragraph("Orthogonal mid-ROI slices with segmentation overlay (orange new bone, blue residual graft, "
                               "pink host bone, yellow uncertain) and ROI outline. Scale bar shown in each panel.", SM))
-        for s in figs[: bundle.get("max_figures", 4)]:
+        nmax = bundle.get("max_figures", 4)
+        if len(figs) > nmax:
+            flow.append(Paragraph(f"Images of the first {nmax} of {len(figs)} specimens are shown; every specimen's "
+                                  "segmentation is stored with the analysis and can be exported.", SM))
+        for s in figs[:nmax]:
             flow.append(KeepTogether([Paragraph(esc(f"Specimen {s['specimen_id']} — {s.get('group')} · {s.get('timepoint')}"), SM),
                                       Image(s["figure"], width=175 * mm, height=175 * mm * 0.36)]))
 
@@ -406,6 +410,17 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
                      _get(s, "qc.verdict", "—"), "; ".join(warns[:4])])
     flow.append(table(rows, [22 * mm, 45 * mm, 16 * mm, 24 * mm, 18 * mm, 55 * mm]))
     flow.append(Paragraph("QC checks marked 'heuristic' use developer-chosen thresholds and are not established standards.", SM))
+    acq_keys = ("scanner", "kvp", "ua", "filter", "exposure_ms", "frames", "rotation_step_deg", "reconstruction",
+                "beam_hardening_correction", "calibration")
+    rows = [["Specimen", "Acquisition and reconstruction parameters (as recorded at import)"]]
+    for s in bundle["specimens"]:
+        acq = _get(s, "scan.acquisition", None)
+        acq = acq if isinstance(acq, dict) else {}
+        txt = "; ".join(f"{k}={acq[k]}" for k in acq_keys if acq.get(k) not in (None, "")) or \
+              "; ".join(f"{k}={v}" for k, v in list(acq.items())[:8] if v not in (None, ""))
+        rows.append([str(s["specimen_id"]), txt or "not recorded (kVp, filter, voxel size, reconstruction and "
+                                                   "beam-hardening correction should be recorded for every scan)"])
+    flow.append(table(rows, [22 * mm, 158 * mm]))
     rows = [["Specimen", "ROI type / method", "Parameters (µm)", "Confidence", "Definition SHA-256 (first 16)"]]
     for s in bundle["specimens"]:
         r = s.get("roi", {})

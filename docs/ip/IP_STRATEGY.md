@@ -1,4 +1,4 @@
-# OsteoQuant: IP Strategy (trade secret vs patent vs publish)
+# OsteoQuant: IP Strategy (public code base: patent vs publish)
 
 **Prepared:** 2026-11-27.
 **Inputs:**
@@ -10,34 +10,56 @@
 
 > **PRELIMINARY: NOT LEGAL ADVICE.** Everything here is a decision-support draft for the founder to take to UIUC OTM and a registered patent attorney (or the Landuyt IP Clinic, which `IP_AND_OTM_QUESTIONS.md` records as Spring-semester only). Statements of general patent law are marked INF and must be confirmed by counsel.
 
+> **Cycle-2 rewrite (2026-11-27).** The repository is **public**, and the founder decided to keep it public and push
+> all work (Addendum). Sections 1, 2, 4 and 5 are rewritten for a public code base: the gating rules, thresholds,
+> advisor code, phantom-generator parameters, experiment results and manuscripts are **public**, so none of them can be
+> a trade secret. Only material that has never been pushed (future measured reference data, customer data, physical
+> phantom calibration, any future weights kept off the repository) can still be kept confidential.
+
 ## 1. Bottom line (preliminary)
 
-1. **Settle ownership and inventorship before spending on patents.**
+1. **One date governs everything: the US bar date 2027-11-27.** Every invention in the repository (Generation 1 and
+   Generation 2: separability oracle, material/timepoint endpoint gating in the advisor, day-0 footprint, granule
+   tracking, ROI propagation, characterisation) was publicly disclosed on 2026-11-27. Under 35 U.S.C. 102(b)(1)(A)
+   the founder's own disclosure becomes US prior art one year later (INF; counsel to confirm). Foreign rights are
+   likely already lost (absolute novelty). Each further push of **new** inventive work starts its own one-year clock.
+   The file-or-forgo decision is listed with its deadlines in `FOUNDER_DECISIONS.md` (practical decision date
+   2027-09; spring 2027 IP Clinic intake).
+2. **Settle ownership and inventorship first.**
    - The code was written with an AI coding tool on the founder's directive (`IP_PROVENANCE.md` §1).
-   - The USPTO's revised guidance (2025-11-26) states that only natural persons can be inventors, AI tools are tools, and the touchstone is **conception** [V: uspto.gov notice, accessed 2026-11-27].
-   - The founder must document which ideas they conceived (dated directive or playbook, notes).
-   - Ownership: the founder is a UIUC undergraduate and OTM has not made a determination. Do not assume ownership either way.
-2. **The moat is data, validation and process, not algorithms.** The landscape shows that the closest algorithmic ideas have dense prior art: baseline registration, uncertainty gating, hash-chained audit. Most value sits in material-specific reference data, physical-phantom calibration, trained weights, a validation dossier and know-how. Those are **trade secrets** and need active protection.
-3. **At most one provisional is worth considering now**, and only if publication is imminent. Candidate scope: the **material/timepoint-aware endpoint gating** (INV-03) combined with the **separability-oracle feasibility advisor** (INV-02) and the **day-0 footprint protocol** (INV-01) as embodiments.
-   - These are mostly Concept today. A provisional must enable what it describes (INF), so a filing **after** the physical-phantom data exist will be stronger.
-   - If the founder intends to submit Manuscript 1 or a preprint first, a provisional filed beforehand preserves options (INF).
-4. **Publish deliberately** (defensive publications and credibility): the audit design (INV-05), the border-convention note (INV-07) and the benchmark protocol/metrics (INV-06 protocol only). Hold back the gating rules, material thresholds, phantom calibration data and trained weights.
-5. **Clear FTO on one active family before shipping the longitudinal module:** Nobel Biocare **US9036899B2 / EP2579778B1** (expiry shown 2032-02-06). Also brief the attorney on GE **US11972593B2** before adding auto-placed measurements with uncertainty prompts. Both are preliminary **Medium** flags.
+   - The USPTO's revised guidance (2025-11-26) states that only natural persons can be inventors, AI tools are tools,
+     and the touchstone is **conception** [V: uspto.gov notice, accessed 2026-11-27].
+   - How much protectable copyright authorship AI-assisted code carries is an open question for counsel.
+   - Ownership: the founder is a UIUC undergraduate and OTM has not made a determination. Do not assume ownership
+     either way.
+3. **The moat is data, validation and service, not algorithms or code.** The algorithms are public and the closest
+   ideas have dense prior art (baseline registration, uncertainty gating, hash-chained audit). What competitors cannot
+   copy from the repository: measured material reference data and physical-phantom results (once they exist and if
+   they are kept off the public repository), validation evidence, customer relationships, study-design know-how and
+   the analysis service.
+4. **The code licence is undecided and matters for revenue.** There is no `LICENSE` file and no licence field in
+   `pyproject.toml`. Public code without a licence is "all rights reserved" by default (INF), but licence revenue
+   (56% of the Base 2031 model) has no practical enforcement basis while a fully functional evaluation mode is public.
+   Options (proprietary, source-available such as PolyForm Noncommercial or BSL, or open source) are a founder
+   decision with counsel (`FOUNDER_DECISIONS.md`).
+5. **Clear FTO on one active family before offering the longitudinal module:** Nobel Biocare **US9036899B2 /
+   EP2579778B1** (expiry shown 2032-02-06). Also brief the attorney on GE **US11972593B2** before adding auto-placed
+   measurements with uncertainty prompts. Both are preliminary **Medium** flags.
 
-## 2. Asset-by-asset recommendation
+## 2. Asset-by-asset recommendation (public code base)
 
-| Asset | Protection route (preliminary) | Why | Actions |
+| Asset | Status | Protection route (preliminary) | Actions |
 |---|---|---|---|
-| Material/timepoint endpoint-gating rules + separability thresholds (INV-02/03) | **Keep confidential.** Provisional candidate (decision D-IP-3) | Most distinctive. Not yet reduced to practice in product. §101 and obviousness risk | Implement in code with dated commits; attorney consult before any publication |
-| Per-material reference library, physical-phantom calibration, scanner personalities | **Trade secret** | Not visible in output. Hard to reverse-engineer. Grows over time | Keep out of any public repo. Access control. NDAs with collaborators. Mark "Confidential" |
-| Trained model weights | **Trade secret** + licence terms | Licence-aware provenance already enforced (D-006). CC-BY attribution obligations for SPROUT-derived models (`IP_PROVENANCE.md` §2) | Encrypt or obfuscate model-weight distribution. EULA may restrict reverse engineering of OsteoQuant's own code and weights only — it must expressly permit modification and reverse engineering of the LGPL-licensed Qt/PySide6 libraries for debugging such modifications (LGPL-3.0 §4) (counsel to draft) |
-| Day-0 protocol parameters and failure-mode know-how (INV-01) | **Trade secret / know-how.** Possibly publish the general method later | Weak novelty vs Schulte 2011, Wehrle 2019, US9036899B2 | FTO review first |
-| ROI detectors (INV-04) | **Trade secret / know-how** | Low patentability; invisible in output | None beyond confidentiality |
-| Audit trail + review binding (INV-05) | **Publish**; copyright on code | Old prior art; publishing builds QA trust | Write a short design note for customers |
-| Border-convention cross-walk (INV-07) | **Publish** | Credibility; low patent value | Fix post-hoc caveat (Q-10) before submission |
-| Benchmark protocol & metrics (INV-06 protocol) | **Publish** (after D-IP-3 decision) | Establishes scientific standing. Sets the evaluation standard competitors must meet | Publish protocol, not calibration data |
-| Source code | **Copyright** (automatic); keep proprietary | Permissive dependencies only; GPL tools not linked (`IP_PROVENANCE.md` §2) | Add licence headers/EULA later. Keep SBOM current |
-| Name "OsteoQuant" | **Trademark** knockout search before wider outreach | Already used on landing page and decks | Clearance search (USPTO search system) via counsel or clinic |
+| Material/timepoint endpoint-gating rules, separability thresholds, advisor code (INV-02/03) | **Public** since 2026-11-27 | Patent only (US, before 2027-11-27) or nothing; no trade secret possible | Founder decision on a provisional with counsel (D-IP-3) |
+| Day-0 protocol and footprint method, granule tracking (INV-01) | **Public** | As above; weak novelty vs Schulte 2011, Wehrle 2019, US9036899B2 | FTO review (D-IP-4) before offering it |
+| ROI detectors and ROI propagation (INV-04) | **Public** | Low patentability; copyright in the code only | None |
+| Phantom-generator parameters (`docs/science/phantom_parameters.json`), knowledge-base material profiles, experiment results, manuscripts | **Public** | Copyright only; publication value (credibility) | Publish deliberately; cite the repository |
+| Trained model weights in `models/` | Registry and any weights pushed are **public**; the desktop bundle ships none | Licence terms (once a licence exists) + CC-BY attribution for models derived from CC-BY data (`ATTRIBUTION.md`) | Decide whether future weights stay off the public repository |
+| Future measured material references, physical-phantom calibration, scanner-specific parameters | **Not yet created** | Can be kept confidential **only if never pushed** | Store in a private location with access logging from day one; NDAs with collaborators |
+| Customer data and customer-specific adapted weights | Not yet existing | Confidentiality under the DPA; never public | Already required by `business/templates/DPA_ISSUES_CHECKLIST.md` |
+| Audit trail + review binding (INV-05), border-convention cross-walk (INV-07), benchmark protocol (INV-06) | Public | Publish (credibility) | Write short design notes |
+| Source code | **Public, no licence chosen** | Copyright (automatic; extent for AI-assisted code unclear); licence choice pending | The product **links LGPL-3.0 Qt/PySide6 dynamically** and ships GPL-2 font files with their licence and source; whichever licence is chosen must be compatible with those and keep the LGPL relinking carve-out. Keep the SBOM current (`docs/security/SBOM.csv`, regenerated by `packaging/bundle_inventory.py`) |
+| Name "OsteoQuant" (and "DefectFill") | Used on the site, reports and app | **Trademark** knockout before publishing the website or wider outreach | Clearance search via counsel or the IP Clinic (D-IP-5) |
 
 ## 3. Provisional filing considerations (INF unless marked V)
 
@@ -64,39 +86,46 @@
 - **Subject-matter eligibility (INF):** image-analysis software claims face U.S. §101 (Alice) scrutiny. Claims tied to specific imaging acquisition (day-0 scan protocol), specific data transformations and changes to the analysis output are generally more defensible than abstract decision rules. The attorney must assess.
 - **Cost reality (INF):** a provisional drafted by counsel typically costs far more than the filing fee. The Landuyt IP Clinic (Spring only; students pay USPTO fees, per `IP_AND_OTM_QUESTIONS.md`, not re-verified this session) is the low-cost route if timing fits.
 
-## 4. What NOT to publish or send yet
+## 4. Publication and disclosure from now on
 
-Until decisions D-IP-1 to D-IP-4 are made:
-1. `publications/MANUSCRIPT_1_separability.md`: do not submit or preprint. It discloses the Dice-optimal oracle (INV-02) and the day-0 footprint results (INV-01).
-2. Any description of **endpoint gating rules** by material and timepoint (INV-03), including the EASY/HARD/UNDERDETERMINED table thresholds in `docs/science/SEPARABILITY_ANALYSIS.md`, in posters, talks, grant abstracts that become public, or emails without an NDA.
-3. Physical-phantom calibration data, per-material histograms, scanner-personality parameters (`docs/science/phantom_parameters.json`) and trained weights.
-4. Specific algorithm details in outreach emails (already advised in `IP_AND_OTM_QUESTIONS.md` §C4).
-5. Hosting `web/landing/index.html` publicly is lower risk (it names a "Separability check" and "day-0 baseline scan" benefit without method detail). Still, decide **after** D-IP-1.
+Everything already pushed is public; withholding it achieves nothing. What still matters:
+1. **New inventive work** (e.g. a new advisor mechanism, a tracking method that works under motion, phantom-derived
+   calibration): decide **before pushing** whether it goes to a private store first (founder decision 2 in
+   `FOUNDER_DECISIONS.md`). Each push of new inventive work opens its own one-year US clock and ends any
+   confidentiality.
+2. **Manuscripts and preprints** of material already public do not change the bar date for that material, but they
+   can disclose new detail; check against the provisional decision (D-IP-3) first.
+3. **Physical-phantom and measured material data:** keep off the public repository until a decision on their use is
+   made; they are the only technical assets that can still be confidential.
+4. **Third-party material in the repository** (non-privileged FTO triage `PATENT_LANDSCAPE.md` / `patents.csv`,
+   prospect lists, a named faculty member without recorded consent, runtime logs): whether to remove them, and whether
+   to rewrite history, is a founder decision with counsel (`FOUNDER_DECISIONS.md`); history rewriting does not cure
+   copies already taken.
 
-**OK to share now:** audit-trail design (INV-05), general product description, morphometry border-convention note (after Q-10 fix), competitor/market analyses.
+## 5. Hygiene (actions; INF)
 
-## 5. Trade-secret hygiene (actions; INF)
-
-1. **Repository visibility:** confirm today whether the GitHub repository is private. If it is or was public, record when, and tell the attorney; trade-secret status of anything pushed may be lost.
-2. Move calibration data, weights and phantom parameters to a **separate private store** with access logging. Keep only placeholders in the code repository.
-3. Use **NDAs** before technical discussions with collaborators and CROs. Use **invention-assignment** and confidentiality agreements with any contributor or advisor (counsel or the clinic for templates).
-4. Keep a **dated invention log**: who conceived what and when, and which parts were tool-generated. Given the AI-assisted development, this is central to inventorship.
-5. Label confidential documents. Keep the trade-secret inventory (Section 2) current.
+1. **Private store** for anything that should stay confidential (future calibration data, measured references,
+   customer data), with access logging. Keep only placeholders in the public repository.
+2. **NDAs** before technical discussions about unpublished work; **invention-assignment** and confidentiality
+   agreements with any contributor or advisor (counsel or the clinic for templates).
+3. **Dated invention log**: who conceived what and when, and which parts were tool-generated. Given the AI-assisted
+   development, this is central to inventorship (D-IP-2).
+4. Record the push date of every new inventive change, so each one-year clock is known.
 
 ## 6. Decisions required (founder + OTM + attorney)
 
 | ID | Decision | Who | Inputs | Suggested timing |
 |---|---|---|---|---|
-| **D-IP-0** | Confirm GitHub repository visibility and history of any public exposure | Founder | GitHub settings | Immediately |
+| **D-IP-0** | Confirm GitHub repository visibility and history of any public exposure | Founder | GitHub settings | **Done**: public; founder decided to keep it public (Addendum) |
 | **D-IP-1** | Obtain OTM ownership determination (file software/invention disclosure as OTM advises) | Founder + OTM | `IP_AND_OTM_QUESTIONS.md` A1–A4, this register | Before any filing, publication or external collaboration |
 | **D-IP-2** | Inventorship analysis for AI-assisted work: which conceptions are the founder's | Founder + attorney | Directive/playbook, invention log, USPTO 2025-11-26 guidance | Before D-IP-3 |
-| **D-IP-3** | File or skip a provisional covering INV-03 (+ INV-02, INV-01 embodiments) | Founder + attorney/clinic | Register, landscape, physical-phantom timeline, publication plan | Before Manuscript 1 or any preprint; ideally after phantom data |
+| **D-IP-3** | File or skip a US provisional covering the publicly disclosed inventions (INV-03 + INV-02, INV-01 and the Gen-2 advisor, tracking and ROI-propagation embodiments) | Founder + attorney/clinic | Register, landscape, physical-phantom timeline | **Hard deadline: US bar date 2027-11-27**; practical decision date 2027-09; apply for the spring 2027 IP Clinic intake |
 | **D-IP-4** | FTO opinion on US9036899B2 / EP2579778B1 for the longitudinal module; brief on US11972593B2 | Attorney | `patents.csv`, design notes | Before commercial use of the longitudinal module |
 | **D-IP-5** | Trademark clearance for "OsteoQuant" | Founder + counsel/clinic | Knockout search | Before wider outreach or incorporation |
 | **D-IP-6** | Incorporation and IP assignment from founder to company (after OTM) | Founder + counsel | OTM outcome | With entity formation |
 | **D-IP-7** | Publication plan: what to publish (INV-05, INV-07, benchmark protocol) and when | Founder | Sections 2 and 4 | After D-IP-3 |
 
-## Addendum (2026-11-27) — repository visibility verified: PUBLIC
+## Addendum (2026-11-27) — repository visibility checked: PUBLIC
 The GitHub repository `arnavhiteshpatel-cloud/playground` was checked through the GitHub search API and is
 **public** (`"visibility": "public"`). Commits pushed between 2026-11-27 06:58 UTC (`deab961`) and 09:30 UTC
 (`ee09a70`) are therefore publicly accessible. This publicly discloses the Generation-1 material: the day-0 graft

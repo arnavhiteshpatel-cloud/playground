@@ -13,7 +13,7 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
 
 * A native **desktop application** replaces the local server and browser as the primary interface.
 * The software now **refuses to report** graft and new-bone endpoints it cannot support, through a
-  **measurement-support advisor** (version 1.2.1), and reports say why.
+  **measurement-support advisor** (version 1.3.3), and reports say why.
 * Endpoints, analysis conventions and acceptance criteria are written down and pre-registered.
 * New longitudinal tools (granule tracking, registration QC, ROI propagation) and an ONNX runtime path.
 * Offline licensing, packaging for three operating systems, a second security review and a larger test suite.
@@ -44,7 +44,18 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
 * Version history: 1.1.0 (single-threshold decision rule; support at the estimated graft share and half of it;
   metals refused; ≥500-voxel reference samples; bone-derived rule cannot be bypassed; computed day-0 fields required),
   1.2.0 (new bone versus soft tissue with partial-volume halos gates mineral and new-bone endpoints), 1.2.1 (DBM
-  new-bone endpoints refused).
+  new-bone endpoints refused), 1.3.0 (knowledge-base material profiles cross-checked against the physics model; a
+  >25% disagreement requires a measured reference; resorbable materials intensity-supported only at a known
+  timepoint ≤4 weeks), 1.3.1 (scan-versus-profile consistency check, >15%), 1.3.2 (graft-adjacent partial-volume
+  mixing for measured control references), 1.3.3 (bone-derived grafts not supported by the day-0 mechanism).
+* The desktop passes each scan's time since implantation to the advisor (from the timepoint's days or a label such as
+  "Week 4"; or entered in the analysis dialog; otherwise unknown) and the report prints it with its source.
+* Studies carry a data class (synthetic, public, own research, customer) chosen at creation; synthetic demo studies
+  are labelled SYNTHETIC DATA in reports (previously printed as customer data).
+* Report fixes: group confidence intervals clipped to the physical range and marked; no interval for n <3; specimens
+  without a group excluded from group statistics; all endpoints printed; multi-Otsu thresholds printed; research-use
+  line in every page footer; CSV header comment with data class and units; approving signature role renamed
+  "Customer approver".
 * Machine-readable materials knowledge base (`osteoquant/knowledge/materials.json`, 16 materials, with evidence tags
   and an unsupported-material workflow) (T1.2).
 * Material characterisation from a material-only or day-0 scan (`osteoquant/advisor/characterize.py`), library only.
@@ -111,9 +122,9 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
 
 | ID | Data | Status | Key result |
 |---|---|---|---|
-| S1, S1b, S1c | Synthetic | Done with advisor 1.1.0; not yet re-run with 1.2.1 | Sweep: all failing measurements refused; with a measured control-animal reference (S1c) 18 of 24 supported conditions failed |
+| S1, S1b, S1c | Synthetic | Validation under advisor 1.3.3 in progress — see [EXPERIMENT_REGISTRY.md](../../EXPERIMENT_REGISTRY.md) | Earlier runs used older advisor versions and are not quoted |
 | F2 | Synthetic | Done | Propagated segmental ROI Dice 0.995; the Gen-1 failure mode was not reproduced |
-| L3 | Synthetic | Done with advisor 1.2.0 | Day-0 footprint graft Dice 0.80 → 0.535 at 50 µm granule motion; advisor supported failing tracked-footprint measurements |
+| L3 | Synthetic | Done | Day-0 is fragile under granule motion: naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35. The advisor refuses these cases |
 | L4 | Synthetic | Done | Registration QC flagged all harmful misalignments |
 | S2, U1, O2 | Real (S2), synthetic | Not completed | — |
 
@@ -124,8 +135,8 @@ Details: [SCIENTIFIC_METHODS.md](SCIENTIFIC_METHODS.md), [EXPERIMENT_REGISTRY.md
 * **No real three-class validation** (FA-01) and a large synthetic-to-real gap (FA-02) remain open.
 * Out-of-distribution detection is still weak (FA-03); ensembles and conformal intervals not complete.
 * Segmental ROI after bridging remains an open defect (DF-004).
-* Day-0 method fails under small granule motion in simulation; creeping substitution is counted as graft.
-* Desktop: no user-management screen; no day-0 or characterisation workflow; ONNX models not offered in the default
-  (PyTorch-free) bundle; histology not included.
+* Day-0 method fails under small granule motion in simulation; bone formed inside a resorbing footprint is counted as graft.
+* Desktop: no day-0 or characterisation workflow; no locked model installed by default (ONNX inference no longer
+  needs PyTorch); histology not included. Users are managed under *Project > Users...*.
 * Windows and macOS builds untested; no build is signed or notarised.
 * Traceability matrix not regenerated (FA-20); test coverage targets not yet confirmed met.

@@ -93,9 +93,9 @@ with `"test": false`; keys rotate by adding a new ID and keeping old IDs until t
 
 ## Adding users
 
-Authors cannot approve their own segmentations, so review needs at least a second account. **The desktop application
-has no user-management screen yet.** Until it has one, an administrator can add users from a source install, with the
-application closed:
+Authors cannot approve their own segmentations, so review needs at least a second account. An administrator adds
+users, sets roles, deactivates accounts and resets passwords under *Project > Users...*. From a source install, with
+the application closed, users can also be added in Python:
 
 ```python
 from osteoquant.desktop.project import Project
@@ -118,6 +118,6 @@ account; never share accounts.
 | Version | `osteoquant-desktop-console --version`, or *Help > About* |
 | Verify a project's audit trail | *Audit trail > Verify chain* (reviewers and administrators) |
 | Back up a project | Close it and copy the folder; see [DATA_PROTECTION.md](DATA_PROTECTION.md#backups) |
-| Third-party licences | *Help > About > Third-party licences*, and `THIRD_PARTY_LICENSES/` in the install folder |
+| Third-party licences | *Help > About > Third-party licences*, and `THIRD_PARTY_NOTICES.txt` and the `licenses/` folder in the install folder |
 | Workflow timing | *Tools > Record workflow timing for this project* (off by default; stored only in the project) |
 | Memory limits for large data | Environment variables `OQ_SLAB_IMPORT_BYTES`, `OQ_QC_FULL_RES_BYTES`, `OQ_3D_SURFACE_VOXELS`, `OQ_3D_VOLUME_VOXELS`, `OQ_OBLIQUE_VOXELS` (see [docs/desktop/ARCHITECTURE.md](../desktop/ARCHITECTURE.md#performance-and-memory)) |

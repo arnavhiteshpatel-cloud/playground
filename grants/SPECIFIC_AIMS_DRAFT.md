@@ -23,7 +23,7 @@ Bone-graft substitutes and orthobiologics are evaluated in animal defect models 
 
 **Expected outcomes and impact.** Phase I will deliver:
 - the first (to our knowledge [verify]) physical ground-truth benchmark for graft/new-bone separability;
-- a validated 3-class pipeline with uncertainty-aware morphometry;
+- a 3-class pipeline with uncertainty-aware morphometry and documented accuracy against physical ground truth;
 - audited reports that make each number traceable.
 
 These outcomes will reduce analysis time and inter-operator variability in orthobiologic development, and may reduce the number of animals needed by tightening measurement error [HYP]. Phase II will extend to multi-site, multi-scanner validation and production software for CROs and orthobiologic developers.

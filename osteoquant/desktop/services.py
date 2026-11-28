@@ -44,6 +44,16 @@ class NullContext:
         pass
 
 
+def _progress_after_commit(ctx, frac: float, msg: str = ""):
+    """Progress report once the work is committed: a late cancellation request is ignored (the job
+    either rolls back completely before its commit point or completes)."""
+    from ..study.jobs import JobCancelled
+    try:
+        ctx.progress(frac, msg)
+    except JobCancelled:
+        pass
+
+
 # ============================================================================ import: probing
 @dataclass
 class SourceProbe:
@@ -406,13 +416,19 @@ def import_scan(project, req: ImportRequest, ctx=None, probe: SourceProbe | None
         except ValueError as e:
             return reject(str(e), file_sha256=file_sha)
         dest = _scan_store_path(store, st["org_id"], scan_id)
-        if dest.exists():
-            shutil.rmtree(dest)
-        shutil.move(str(tmp), str(dest))
-        store.exec("UPDATE scans SET store_path=? WHERE id=?", (str(dest), scan_id))
-        ctx.check()
-        qc = run_scan_qc(project, scan_id, ctx)
-        ctx.progress(1.0, "done")
+        try:
+            if dest.exists():
+                shutil.rmtree(dest)
+            shutil.move(str(tmp), str(dest))
+            store.exec("UPDATE scans SET store_path=? WHERE id=?", (str(dest), scan_id))
+            ctx.check()
+            qc = run_scan_qc(project, scan_id, ctx)
+        except BaseException as e:
+            # cancelled or failed after registration: remove the partial scan so that the source can be
+            # imported again (C2-PRD-10); the audit trail keeps scan.import and the rollback event
+            _rollback_import(project, req.study_id, src, scan_id, dest, e)
+            raise
+        _progress_after_commit(ctx, 1.0, "done")
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     if qc["verdict"] == "suitable":
@@ -423,6 +439,26 @@ def import_scan(project, req: ImportRequest, ctx=None, probe: SourceProbe | None
         reason = f"QC {qc['verdict']}: " + "; ".join(bad[:6])
     project.log_import(req.study_id, src, status, reason, scan_id=scan_id, details={"verdict": qc["verdict"]})
     return ImportOutcome(str(src), status, reason, scan_id, qc, list(ingest.get("warnings", [])))
+
+
+def _rollback_import(project, study_id, src: Path, scan_id: int, dest: Path, err: BaseException):
+    from ..study.jobs import JobCancelled
+    store, user = project.store, project.user or {}
+    cancelled = isinstance(err, JobCancelled)
+    reason = "cancelled by user" if cancelled else f"{type(err).__name__}: {err}"
+    try:
+        with store.transaction():
+            store.exec("DELETE FROM scans WHERE id=?", (scan_id,))
+            store.exec("DELETE FROM desktop_blind_codes WHERE object_type='scan' AND object_id=?", (scan_id,))
+            store.audit.record("scan.import_rolled_back", user.get("id"), user.get("org_id"), "scan", scan_id,
+                               {"reason": reason})
+        shutil.rmtree(dest, ignore_errors=True)
+        if user:
+            project.log_import(study_id, src, "cancelled" if cancelled else "rejected",
+                               f"Import {'cancelled' if cancelled else 'failed'} before completion; nothing was kept "
+                               f"({reason})")
+    except Exception:  # noqa: BLE001 - never mask the original error
+        pass
 
 
 def get_or_create_specimen(project, study_id, animal_id: str, group_id=None) -> int:
@@ -517,7 +553,7 @@ def available_models() -> list[dict]:
     if not reg_p.exists() or importlib.util.find_spec("onnxruntime") is None:
         return []
     try:
-        # osteoquant.ml.runtime currently imports helpers from ml.train, which needs PyTorch
+        # osteoquant.ml.runtime imports torch-free helpers (ml.core); the import still fails if onnxruntime is absent
         import osteoquant.ml.runtime  # noqa: F401
     except Exception:  # noqa: BLE001
         return []
@@ -617,8 +653,11 @@ def save_cylinder_roi(project, scan_id, center_vox, radius_um, extent_um, axis=(
     sp = sc["spacing_um"]
     c = [float(i) * float(s) for i, s in zip(center_vox, sp)]
     roi = cylinder_roi(c, axis, radius_um, extent_um, method="manual-desktop")
+    if not reason or len(reason.strip()) < 3:     # dossier D-5 / C2-PRD-17: a typed reason, never a default
+        raise ValueError("A reason (at least 3 characters) is required for a manual ROI; it is recorded in the "
+                         "audit trail")
     roi.to_mask(tuple(sc["shape"]), tuple(sp))
-    rid, _ = store.save_roi(user, scan_id, roi.to_dict(), reason or "manual ROI (desktop)")
+    rid, _ = store.save_roi(user, scan_id, roi.to_dict(), reason.strip())
     return rid
 
 
@@ -660,23 +699,14 @@ def save_label_revision(project, scan_id: int, base_segmentation_id: int, labels
     changed = {LABELS[c]: after[c] - before[c] for c in LABELS if after[c] != before[c]}
     edits = {"base_version": base["version"], "voxel_count_change": changed, "reason": reason.strip(),
              "operations": operations or {}, "editor": f"OsteoQuant Desktop {__version__}"}
-    sid, v = store.save_segmentation(user, scan_id, "corrected", "", labels_hash(labels), method=base["method"],
-                                     model_name=base["model_name"], model_sha256=base["model_sha256"],
-                                     roi_id=base["roi_id"], parent_id=base["id"], edits=edits)
-    key = f"seg_v{v}"
-    store.exec("UPDATE segmentations SET labels_key=? WHERE id=?", (key, sid))
-    ctx.progress(0.3, "writing labels")
-    write_labels_zarr(sc["store_path"], key, labels)
-    g = zarr.open_group(sc["store_path"], mode="r")
     rk = f"labels/roi_v{base['version']}"
     rk = rk if rk in g else ("labels/roi_current" if "labels/roi_current" in g else None)
     roi = np.asarray(g[rk][:]).astype(bool) if rk else np.ones(labels.shape, bool)
     base_m = store.q1("SELECT metrics FROM measurements WHERE segmentation_id=? ORDER BY id DESC LIMIT 1", (base["id"],))
     thick = json.loads(base_m["metrics"]).get("config", {}).get("thickness_metrics", True) if base_m else True
-    ctx.progress(0.5, "recomputing endpoints")
+    ctx.progress(0.3, "recomputing endpoints")
     vol = Volume(np.asarray(g["image"][:]), tuple(sc["spacing_um"]))
     met = defect_report_metrics(labels, roi, vol, thickness=thick)
-    write_labels_zarr(sc["store_path"], f"roi_v{v}", roi.astype(np.uint8))
     prev = json.loads(base_m["metrics"]) if base_m else {}
     record = {"metrics": met, "corrected_from": base["version"], "config": prev.get("config", {"thickness_metrics": thick}),
               "qc": prev.get("qc"), "plausibility": prev.get("plausibility"), "uncertainty": prev.get("uncertainty"),
@@ -690,12 +720,41 @@ def save_label_revision(project, scan_id: int, base_segmentation_id: int, labels
             record["reported_metrics"], record["suppressed_metrics"] = apply_support(met, prev["measurement_support"])
         except ImportError:
             pass
-    store.save_measurement(user, scan_id, sid, base["roi_id"], record, __version__)
-    store.audit.record("segmentation.edit", user["id"], user["org_id"], "segmentation", sid,
-                       {"scan": scan_id, "version": v, "base_version": base["version"], "reason": reason.strip(),
-                        "voxel_count_change": changed, "operations": operations or {}})
-    ctx.progress(1.0, "saved")
+    # data first, rows last (C2-PRD-10): the labels are written under a new unique key; the version, the
+    # measurement, the per-version ROI mask and the audit events are then committed in ONE transaction.
+    # Cancellation is honoured only up to here; any failure afterwards removes everything written.
+    ctx.progress(0.6, "writing labels")
+    key = f"seg_r{uuid.uuid4().hex[:12]}"
+    written = [key]
+    try:
+        write_labels_zarr(sc["store_path"], key, labels)
+        ctx.progress(0.9, "saving revision")          # last cancellation point
+        with store.transaction():
+            sid, v = store.save_segmentation(user, scan_id, "corrected", key, labels_hash(labels), method=base["method"],
+                                             model_name=base["model_name"], model_sha256=base["model_sha256"],
+                                             roi_id=base["roi_id"], parent_id=base["id"], edits=edits)
+            written.append(f"roi_v{v}")
+            write_labels_zarr(sc["store_path"], f"roi_v{v}", roi.astype(np.uint8))
+            store.save_measurement(user, scan_id, sid, base["roi_id"], record, __version__)
+            store.audit.record("segmentation.edit", user["id"], user["org_id"], "segmentation", sid,
+                               {"scan": scan_id, "version": v, "base_version": base["version"], "reason": reason.strip(),
+                                "voxel_count_change": changed, "operations": operations or {}})
+    except BaseException:
+        _remove_label_arrays(sc["store_path"], written)
+        raise
+    _progress_after_commit(ctx, 1.0, "saved")
     return {"segmentation_id": sid, "version": v, "voxel_count_change": changed, "class_volumes": met["class_volumes"]}
+
+
+def _remove_label_arrays(store_path, names):
+    import zarr
+    try:
+        g = zarr.open_group(str(store_path), mode="a")
+        for n in names:
+            if f"labels/{n}" in g:
+                del g[f"labels/{n}"]
+    except Exception:  # noqa: BLE001 - cleanup is best-effort; the database rows were rolled back
+        pass
 
 
 # ============================================================================ review / sign-off
@@ -742,20 +801,25 @@ def sign_review(project, password: str, object_type: str, object_id: int, decisi
     if signature_role not in allowed:
         raise PermissionError(f"Your role cannot sign as {SIGNATURE_ROLES.get(signature_role, signature_role)}")
     if object_type == "report" and decision == "approved":
-        r = project.store.q1("SELECT study_id, created_by FROM reports WHERE id=?", (object_id,))
-        if r and r["created_by"] == user["id"]:
+        r = project.store.q1("SELECT study_id, created_by, org_id FROM reports WHERE id=?", (object_id,))
+        if not r or int(r["org_id"]) != int(user["org_id"]):
+            raise KeyError("report not found")
+        if r["created_by"] == user["id"]:
             project.store.audit.record("review.self_approval_denied", user["id"], user["org_id"], "report", object_id)
             from ..study.db import SELF_APPROVAL_MESSAGES
             raise PermissionError(SELF_APPROVAL_MESSAGES["report"])
-        pending = unreviewed_segmentations(project, r["study_id"]) if r else []
+        # the PDF and its bundle must be exactly what was generated (C2-PRD-04/05); fails closed when a
+        # file or the integrity record is missing
+        from .report_integrity import review_status, verify_report
+        bundle = verify_report(project, object_id, check_pdf=True)
+        _check_report_duties(project, user, object_id, bundle, signature_role)
+        pending = unreviewed_segmentations(project, r["study_id"])
         if pending:
             raise PermissionError(f"{len(pending)} reported segmentation(s) of this study are not approved yet. "
                                   "Approve the segmentations first (Review panel), or choose 'Request changes'.")
-        bp = report_meta(project, object_id).get("bundle_path")
-        if bp and Path(bp).exists():
-            if json.loads(Path(bp).read_text(encoding="utf-8")).get("review_status") != "reviewed":
-                raise PermissionError("This report was generated before all segmentations were approved and is marked "
-                                      "UNREVIEWED. Generate a new report, then approve it (or request changes).")
+        if review_status(project, object_id, bundle) != "reviewed":
+            raise PermissionError("This report was generated before all segmentations were approved and is marked "
+                                  "UNREVIEWED. Generate a new report, then approve it (or request changes).")
     if not project.reauthenticate(password, object_type, object_id):
         raise PermissionError("Re-authentication failed: password incorrect (5 failed attempts lock the account "
                               "for 15 minutes)")
@@ -763,7 +827,8 @@ def sign_review(project, password: str, object_type: str, object_id: int, decisi
     project.store.exec("INSERT OR REPLACE INTO desktop_review_meta(review_id, signature_role) VALUES (?,?)",
                        (rid, signature_role))
     project.store.audit.record("review.signature_role", user["id"], user["org_id"], object_type, object_id,
-                               {"review_id": rid, "signature_role": SIGNATURE_ROLES.get(signature_role, signature_role)})
+                               {"review_id": rid, "signature_role": SIGNATURE_ROLES.get(signature_role, signature_role),
+                                "signature_role_key": signature_role})
     if object_type == "report":
         try:
             render_signed_report(project, object_id)
@@ -771,6 +836,26 @@ def sign_review(project, password: str, object_type: str, object_id: int, decisi
             project.store.audit.record("report.signed_copy_failed", user["id"], user["org_id"], "report", object_id,
                                        {"error": f"{type(e).__name__}: {e}"})
     return rid
+
+
+def _check_report_duties(project, user, report_id, bundle, signature_role):
+    """Separation of duties for report approval (C2-PRD-06): nobody who authored a reported segmentation
+    (or a version it derives from) or its ROI may approve, and each person approves a report at most
+    once, so the reviewer and approver signature rows always carry two different people."""
+    from .report_integrity import report_author_ids
+    store = project.store
+    if int(user["id"]) in report_author_ids(project, bundle):
+        store.audit.record("review.self_approval_denied", user["id"], user["org_id"], "report", report_id,
+                           {"reason": "author of a reported segmentation or ROI"})
+        raise PermissionError("Separation of duties: you authored a segmentation or ROI included in this report, so "
+                              "you cannot approve it. Another reviewer or the approver must sign.")
+    for rv in store.reviews(user, "report", report_id):
+        if int(rv["reviewer_id"]) == int(user["id"]) and rv["decision"] == "approved":
+            prev = SIGNATURE_ROLES.get(signature_role_of(project, rv["id"]) or "", "a signer")
+            store.audit.record("review.duplicate_approval_denied", user["id"], user["org_id"], "report", report_id,
+                               {"previous_review": rv["id"], "requested_role": signature_role})
+            raise PermissionError(f"You have already approved this report ({prev}). The second signature must come "
+                                  "from a different person.")
 
 
 def signature_role_of(project, review_id) -> str | None:
@@ -804,19 +889,21 @@ def roi_state(project, roi_id) -> dict:
         status = "accepted"
     elif last and last["decision"] != "approved":
         status = last["decision"]
-    elif req:
+    elif req or manual:
+        # a manual ROI is accepted by someone other than its creator, like a flagged automatic one (C2-PRD-17)
         status = "awaiting acceptance"
     else:
-        status = "not required" if manual else "not reviewed"
+        status = "not reviewed"
     return {"roi": r, "definition": d, "requires_review": req, "accepted": accepted, "review": last,
-            "manual": manual, "status": status}
+            "manual": manual, "status": status, "manual_pending": bool(manual and not accepted)}
 
 
 def measurement_support_for(project, metrics: dict, roi_id=None) -> dict:
     """Desktop support status of a stored measurement, honouring an accepted ROI."""
     from .support import measurement_support
-    accepted = bool(roi_id is not None and roi_state(project, roi_id)["accepted"])
-    return measurement_support(metrics, roi_accepted=accepted)
+    rs = roi_state(project, roi_id) if roi_id is not None else {}
+    return measurement_support(metrics, roi_accepted=bool(rs.get("accepted")),
+                               manual_roi_pending=bool(rs.get("manual_pending")))
 
 
 # ============================================================================ revision details
@@ -875,23 +962,39 @@ def _enforce_support(project, bundle: dict, meas_rows: list[dict]):
     """Apply the desktop support rule to the report bundle: an endpoint that is *not supported*
     (desktop rule: uncertain fraction, missing thickness, no-graft, advisor) is reported without a
     number, with its reason, exactly as in the Results table."""
-    from .support import ENDPOINTS, NOT_SUPPORTED
+    from .support import ENDPOINTS, NO_NUMBER, NOT_ASSESSED
     by_path = {path: (key, label) for key, label, _u, path, _s in ENDPOINTS}
-    for spec, m in zip(bundle["specimens"], meas_rows):
+    for spec, m in _specimen_rows(bundle, meas_rows):
         sup = measurement_support_for(project, m["metrics"], m["roi_id"])
         sup_paths = {d.get("metric") for d in spec.get("suppressed_metrics") or []}
         for path, (key, label) in by_path.items():
             e = sup["endpoints"][key]
-            if e["status"] != NOT_SUPPORTED:
+            if e["status"] not in NO_NUMBER:
                 continue
             _set_path(spec["metrics"], path, None)
             if key == "mineralized_fraction":
                 _set_path(spec["metrics"], "class_volumes.mineral_volume_mm3", None)
             if path not in sup_paths:
-                reason = "; ".join(e["reasons"]) or "not supported"
+                reason = "; ".join(e["reasons"]) or e["status"]
+                status = "not_assessed" if e["status"] == NOT_ASSESSED else "not_supported"
                 spec.setdefault("suppressed_metrics", []).append({"metric": path, "reason": reason})
-                spec.setdefault("measurement_support", {})[label] = {"status": "not_supported", "reason": reason,
+                spec.setdefault("measurement_support", {})[label] = {"status": status, "reason": reason,
                                                                       "conditions": []}
+
+
+def _specimen_rows(bundle: dict, meas_rows: list[dict]):
+    """Pair each report specimen with ITS measurement row by stable keys (scan id, segmentation id),
+    never by list position (C2-PRD-01). A specimen without a matching row stops the report."""
+    by_key = {(int(m["scan_id"]), int(m["segmentation_id"])): m for m in meas_rows if m.get("segmentation_id") is not None}
+    for spec in bundle["specimens"]:
+        try:
+            key = (int(spec["scan_id"]), int(spec["segmentation_id"]))
+        except (KeyError, TypeError, ValueError) as e:
+            raise RuntimeError("report specimen without scan/segmentation id; cannot attribute its data") from e
+        m = by_key.get(key)
+        if m is None:
+            raise RuntimeError(f"report specimen for scan {key[0]} has no matching measurement in the snapshot")
+        yield spec, m
 
 
 def _blind_bundle(project, bundle: dict, meas_rows: list[dict]):
@@ -902,29 +1005,17 @@ def _blind_bundle(project, bundle: dict, meas_rows: list[dict]):
     store, user = project.store, project.require_user()
     bundle["study"]["blinded"] = True
     bundle["title"] = bundle["title"] + " (blinded)"
-    for spec, m in zip(bundle["specimens"], meas_rows):
+    for spec, m in _specimen_rows(bundle, meas_rows):
         sc = store.scan(user, m["scan_id"])
         scode = project.scan_code(sc["id"], sc["study_id"])
         acode = project.animal_code(sc["specimen_id"], sc["study_id"]) if sc["specimen_id"] else scode
         spec["specimen_id"] = acode
         spec["animal_id"] = acode
         spec["group"] = MASK_GROUP
-        spec["scan"] = {**spec.get("scan", {}), "source": scode, "acquisition": {}}
+        # the source-file hash identifies the file (C2-PRD-14); the content hash stays in the audit trail
+        spec["scan"] = {**spec.get("scan", {}), "source": scode, "acquisition": {}, "sha256": MASK_GROUP}
         spec.pop("truth", None)
-        if spec.get("figure"):
-            try:
-                import zarr
-                from ..report.figures import specimen_panel
-                seg = store.q1("SELECT labels_key, version FROM segmentations WHERE id=?", (m["segmentation_id"],))
-                g = zarr.open_group(sc["store_path"], mode="r")
-                rk = roi_mask_key(g, seg)
-                roi = np.asarray(g[rk][:]).astype(bool) if rk else None
-                fig = Path(spec["figure"]).with_name(f"blinded_{uuid.uuid4().hex[:12]}.png")
-                specimen_panel(np.asarray(g["image"][:]), np.asarray(g[f"labels/{seg['labels_key']}"][:]), roi,
-                               sc["spacing_um"], str(fig), title=scode)
-                spec["figure"] = str(fig)
-            except Exception:  # noqa: BLE001 - never ship an unblinded figure
-                spec["figure"] = None
+        spec["figure_title"] = scode
     ex = []
     for e in bundle.get("audit_excerpt") or []:
         me = masker.event(e)
@@ -932,6 +1023,38 @@ def _blind_bundle(project, bundle: dict, meas_rows: list[dict]):
             me["object_id"] = me["object_label"]
         ex.append(me)
     bundle["audit_excerpt"] = ex
+
+
+def _render_figures(project, bundle: dict, blinded: bool, ctx=None):
+    """Render one figure per specimen from ITS segmentation and per-version ROI (joined by key). Blinded
+    reports get randomly named figures titled with the scan code; no unblinded figure is written for
+    them (C2-PRD-14)."""
+    import zarr
+    from ..report.figures import specimen_panel
+    store, user = project.store, project.require_user()
+    figdir = store.data_dir / f"org{user['org_id']}" / "reports" / "fig"
+    figdir.mkdir(parents=True, exist_ok=True)
+    n = len(bundle["specimens"])
+    for i, spec in enumerate(bundle["specimens"]):
+        if ctx is not None:
+            ctx.progress(0.6 + 0.2 * i / max(1, n), f"figure {i + 1}/{n}")
+        spec["figure"] = None
+        try:
+            sc = store.scan(user, spec["scan_id"])
+            seg = store.q1("SELECT id, labels_key, version FROM segmentations WHERE id=?", (spec["segmentation_id"],))
+            g = zarr.open_group(sc["store_path"], mode="r")
+            rk = roi_mask_key(g, seg)
+            roi = np.asarray(g[rk][:]).astype(bool) if rk else None
+            if blinded:
+                fig, title = figdir / f"blinded_{uuid.uuid4().hex[:12]}.png", spec.get("figure_title") or "(blinded)"
+            else:
+                fig, title = figdir / f"scan{sc['id']}_seg{seg['id']}.png", f"scan {sc['id']}"
+            specimen_panel(np.asarray(g["image"][:]), np.asarray(g[f"labels/{seg['labels_key']}"][:]), roi,
+                           sc["spacing_um"], str(fig), title=title)
+            spec["figure"] = str(fig)
+        except Exception:  # noqa: BLE001 - a missing figure is shown as such; never an unblinded one
+            spec["figure"] = None
+        spec.pop("figure_title", None)
 
 
 MASK_GROUP = "(blinded)"
@@ -949,8 +1072,11 @@ def _report_signature_rows(project, report_id: int, bundle: dict) -> list[dict]:
                      "meaning": "Prepared the analysis and generated this report (author)", "decision": "authored",
                      "time": rep["created"]})
     rows += [r for r in bundle.get("segmentation_reviewers", bundle.get("reviewers", [])) if r.get("role") != "Analyst"][:6]
+    from .report_integrity import audited_signature_roles
+    audited = audited_signature_roles(store, report_id)
     for rv in store.reviews(user, "report", report_id):
-        sr = signature_role_of(project, rv["id"])
+        # the signature role recorded in the hash-chained audit trail wins over the editable table (C2-PRD-09)
+        sr = audited.get(int(rv["id"])) or signature_role_of(project, rv["id"])
         if sr is None:
             ru = store.q1("SELECT role FROM users WHERE id=?", (rv["reviewer_id"],)) or {}
             sr = "study_director" if ru.get("role") == "study_director" else "reviewer"
@@ -973,42 +1099,66 @@ def generate_report(project, study_id: int, watermark: str | None = None, ctx=No
     replace identity with the study's blinded codes."""
     from ..api.bundle import bundle_from_store
     from ..report import build_pdf
+    from ..study.jobs import JobCancelled
+    from .report_integrity import sha256_bytes
     ctx = ctx or NullContext()
     store, user = project.store, project.require_user()
     st = store.study(user, study_id)
     store.require(user, "read", st["org_id"])
-    bundle = bundle_from_store(store, user, study_id, ctx)
-    if not bundle["specimens"]:
-        raise ValueError("This study has no analysed scans yet; run the analysis first")
-    meas_rows = store.latest_measurements(user, study_id)
-    _enforce_support(project, bundle, meas_rows)
-    if blinded:
-        _blind_bundle(project, bundle, meas_rows)
+    # study-level blinding: users who may not unblind always get a blinded report (C2-PRD-03)
+    blinded = bool(blinded or project.study_forces_blinding(study_id))
+    # ONE read snapshot for the bundle, the measurement rows, the support rule and the blinding codes:
+    # an analysis finishing meanwhile cannot mix two states into one report (C2-PRD-01)
+    with store.snapshot():
+        meas_rows = store.latest_measurements(user, study_id)
+        bundle = bundle_from_store(store, user, study_id, ctx, measurements=meas_rows, figures=False)
+        if not bundle["specimens"]:
+            raise ValueError("This study has no analysed scans yet; run the analysis first")
+        _enforce_support(project, bundle, meas_rows)
+        if blinded:
+            _blind_bundle(project, bundle, meas_rows)
+    _render_figures(project, bundle, blinded, ctx)
     bundle["segmentation_reviewers"] = list(bundle.get("reviewers", []))
     out = store.data_dir / f"org{user['org_id']}" / "reports"
     out.mkdir(parents=True, exist_ok=True)
     unblinded = int(bool(st["blinded"]) and store.can(user, "unblind") and not blinded)
+    ctx.progress(0.85, "rendering PDF")      # last cancellation point: no row exists yet
     rid = store.exec("INSERT INTO reports(org_id,study_id,status,created_by,created,unblinded) VALUES (?,?,?,?,datetime('now'),?)",
                      (user["org_id"], study_id, "building", user["id"], unblinded))
-    bundle["reviewers"] = _report_signature_rows(project, rid, bundle)
-    bundle["_watermark"] = watermark
     pdf, csvp = out / f"report{rid}.pdf", out / f"report{rid}.csv"
-    ctx.progress(0.85, "rendering PDF")
-    try:
-        r = build_pdf(bundle, pdf, csvp, watermark=watermark)
-    except Exception:
-        store.exec("UPDATE reports SET status='failed' WHERE id=?", (rid,))
-        raise
     bp = _bundle_path(project, rid)
-    bp.write_text(json.dumps(bundle, default=str), encoding="utf-8")
-    store.exec("UPDATE reports SET pdf_path=?, csv_path=?, sha256=?, status='ready' WHERE id=?",
-               (str(pdf), str(csvp), r["pdf_sha256"], rid))
-    store.exec("INSERT OR REPLACE INTO desktop_report_meta(report_id, blinded, bundle_path) VALUES (?,?,?)",
-               (rid, int(bool(blinded)), str(bp)))
-    store.audit.record("report.generate", user["id"], user["org_id"], "report", rid,
-                       {"study": study_id, "sha256": r["pdf_sha256"], "watermark": watermark or "",
-                        "blinded": bool(blinded)})
-    ctx.progress(1.0, "done")
+    try:
+        bundle["reviewers"] = _report_signature_rows(project, rid, bundle)
+        bundle["_watermark"] = watermark
+        r = build_pdf(bundle, pdf, csvp, watermark=watermark)
+        # integrity record (C2-PRD-04/05): hash of the exact bundle bytes, stored with the review status
+        data = json.dumps(bundle, default=str).encode("utf-8")
+        bundle_sha = sha256_bytes(data)
+        bp.write_bytes(data)
+        with store.transaction():
+            store.exec("UPDATE reports SET pdf_path=?, csv_path=?, sha256=?, status='ready' WHERE id=?",
+                       (str(pdf), str(csvp), r["pdf_sha256"], rid))
+            store.exec("INSERT OR REPLACE INTO desktop_report_meta(report_id, blinded, bundle_path, bundle_sha256, "
+                       "review_status) VALUES (?,?,?,?,?)",
+                       (rid, int(bool(blinded)), str(bp), bundle_sha, bundle.get("review_status")))
+            store.audit.record("report.generate", user["id"], user["org_id"], "report", rid,
+                               {"study": study_id, "sha256": r["pdf_sha256"], "bundle_sha256": bundle_sha,
+                                "review_status": bundle.get("review_status"), "watermark": watermark or "",
+                                "blinded": bool(blinded)})
+    except BaseException as e:
+        # nothing half-built remains: a cancelled report disappears, a failed one is marked failed (C2-PRD-10)
+        for f in (pdf, csvp, bp):
+            try:
+                Path(f).unlink(missing_ok=True)
+            except OSError:
+                pass
+        if isinstance(e, JobCancelled):
+            store.exec("DELETE FROM reports WHERE id=?", (rid,))
+            store.audit.record("report.cancelled", user["id"], user["org_id"], "report", rid, {"study": study_id})
+        else:
+            store.exec("UPDATE reports SET status='failed' WHERE id=?", (rid,))
+        raise
+    _progress_after_commit(ctx, 1.0, "done")
     return {"report_id": rid, "pdf": str(pdf), "csv": str(csvp), "sha256": r["pdf_sha256"], "blinded": bool(blinded)}
 
 
@@ -1020,14 +1170,17 @@ def report_meta(project, report_id: int) -> dict:
 def render_signed_report(project, report_id: int) -> dict | None:
     """Render the signed copy of a report: the same stored content with the signature rows filled
     from the recorded approvals (name, signature role, time, meaning) and a note naming the
-    original PDF's SHA-256. The original PDF is never modified (its hash is what was signed)."""
+    original PDF's SHA-256. The original PDF is never modified (its hash is what was signed).
+
+    The bundle is re-hashed and compared with the hash recorded at generation (database and audit
+    trail) before anything is rendered; a mismatch raises ``ReportIntegrityError`` (C2-PRD-04)."""
     from ..report import build_pdf
+    from .report_integrity import verify_report
     store, user = project.store, project.require_user()
     rep = store.q1("SELECT * FROM reports WHERE id=?", (report_id,))
-    meta = report_meta(project, report_id)
-    if not rep or not meta.get("bundle_path") or not Path(meta["bundle_path"]).exists():
+    if not rep:
         return None
-    bundle = json.loads(Path(meta["bundle_path"]).read_text(encoding="utf-8"))
+    bundle = verify_report(project, report_id, check_pdf=True)
     bundle["reviewers"] = _report_signature_rows(project, report_id, bundle)
     bundle["signature_note"] = (f"Signed copy of report {report_id}. Signatures apply to the original report PDF "
                                 f"(SHA-256 {rep['sha256']}); each is recorded with its meaning in the hash-chained "
@@ -1039,6 +1192,25 @@ def render_signed_report(project, report_id: int) -> dict | None:
     store.audit.record("report.signed_copy", user["id"], user["org_id"], "report", report_id,
                        {"sha256": r["pdf_sha256"], "original_sha256": rep["sha256"]})
     return {"pdf": str(out), "sha256": r["pdf_sha256"]}
+
+
+def unblind_study(project, password: str, study_id: int, reason: str) -> None:
+    """Unblind a study for everyone: a signed action of a study director or administrator (permission
+    ``unblind``), with re-authentication and a stated reason, recorded in the audit trail (C2-PRD-03).
+    Reviewers and analysts cannot switch blinding off."""
+    user = project.require_user()
+    st = project.store.study(user, study_id)
+    project.store.require(user, "unblind", st["org_id"])
+    if not st["blinded"]:
+        raise ValueError("This study is not blinded")
+    if not reason or len(reason.strip()) < 5:
+        raise ValueError("State the reason for unblinding (at least 5 characters)")
+    if not project.reauthenticate(password, "study", study_id):
+        raise PermissionError("Re-authentication failed: password incorrect (5 failed attempts lock the account "
+                              "for 15 minutes)")
+    project.store.unblind(user, study_id, reason.strip(),
+                          {"signed": True, "signer": user["username"], "signer_role": user["role"],
+                           "meaning": "I authorise unblinding of this study for all users"})
 
 
 def study_has_analysis(project, study_id) -> bool:
@@ -1063,6 +1235,12 @@ def export_report(project, report_id: int, dest_dir, kinds=("pdf", "csv")) -> li
     if r.get("unblinded") and not store.can(user, "unblind"):
         store.audit.record("report.blinded_download_denied", user["id"], user["org_id"], "report", report_id)
         raise PermissionError("This report contains unblinded group allocation")
+    if not report_meta(project, report_id).get("blinded") and project.study_forces_blinding(r["study_id"]):
+        # study-level blinding (C2-PRD-03): an identifying report of a blinded study stays inside the project
+        store.audit.record("report.blinded_download_denied", user["id"], user["org_id"], "report", report_id,
+                           {"reason": "blinded study, report not blinded"})
+        raise PermissionError("This study is blinded and this report shows animal IDs and file names. Generate a "
+                              "blinded report to export, or ask the study director to unblind the study.")
     out = []
     for k in kinds:
         src = r["pdf_path"] if k == "pdf" else r["csv_path"]
@@ -1090,14 +1268,26 @@ def export_audit(project, path, blinded: bool = False) -> dict:
     if not (store.can(user, "review") or store.can(user, "manage_users")):
         store.audit.record("authz.denied", user["id"], user["org_id"], details={"perm": "audit.export"})
         raise PermissionError("Exporting the audit trail requires the reviewer, study director or administrator role")
+    blinded = bool(blinded or project.blinding_forced())      # study-level blinding (C2-PRD-03)
     ver = store.audit.verify_chain()
     events = store.audit.events(org_id=None, limit=10_000_000)     # a project is one organisation: whole chain
     events = sorted(events, key=lambda e: int(e["seq"]))
+    # org_id and prev_hash are inputs of row_hash: exported so that every row can be re-verified (D-4 / C2-PRD-16)
+    prev = {int(r["seq"]): r["prev_hash"] for r in store.q("SELECT seq, prev_hash FROM audit_log")}
+    for e in events:
+        e["prev_hash"] = prev.get(int(e["seq"]), "")
     users = {str(u["id"]): u["username"] for u in store.q("SELECT id, username FROM users")}
+    n_masked = 0
     if blinded:
         from .blinding import Masker
         mk = Masker(project)
-        events = [mk.event(e) for e in events]
+        masked = []
+        for e in events:
+            me = mk.event(e)
+            me["masked"] = (me.get("details") != e.get("details") or str(me.get("object_id")) != str(e.get("object_id")))
+            n_masked += bool(me["masked"])
+            masked.append(me)
+        events = masked
     path = Path(path)
     from ..study.db import now
     head = {"exported_by": user["username"], "exported_utc": now(), "blinded": bool(blinded),
@@ -1105,6 +1295,10 @@ def export_audit(project, path, blinded: bool = False) -> dict:
                                    "head_hash": ver.get("head"), "first_bad_seq": ver.get("first_bad_seq"),
                                    "reason": ver.get("reason")},
             "n_events_exported": len(events)}
+    if blinded:
+        head["masked_rows"] = n_masked
+        head["masking_note"] = ("blinded export: rows marked masked=true had identifying content replaced; their "
+                                "row_hash is not reproducible from the masked content (verify with an unblinded export)")
     if path.suffix.lower() == ".json":
         path.write_text(json.dumps({**head, "events": [{**e, "username": users.get(str(e.get("user_id")), "")}
                                                        for e in events]}, indent=1, default=str), encoding="utf-8")
@@ -1114,17 +1308,23 @@ def export_audit(project, path, blinded: bool = False) -> dict:
                     f"{'OK' if ver.get('ok') else 'BROKEN at event ' + str(ver.get('first_bad_seq'))}; "
                     f"events verified: {ver.get('n')}; head hash: {ver.get('head') or '-'}; "
                     f"exported by {user['username']} at {head['exported_utc']}"
-                    + ("; blinded" if blinded else "") + "\n")
+                    + (f"; blinded: {n_masked} masked rows (masked=1) cannot be re-verified from this file"
+                       if blinded else "") + "\n")
             w = csv.writer(f)
-            w.writerow(["seq", "ts_utc", "user_id", "username", "action", "object_type", "object_id", "details", "row_hash"])
+            # details are written in the canonical form hashed by the audit log, so rows re-verify
+            w.writerow(["seq", "ts_utc", "user_id", "username", "org_id", "action", "object_type", "object_id",
+                        "details", "prev_hash", "row_hash"] + (["masked"] if blinded else []))
             for e in events:
-                w.writerow([e["seq"], e["ts"], e.get("user_id") or "", users.get(str(e.get("user_id")), ""), e["action"],
-                            e.get("object_type") or "", e.get("object_label") or e.get("object_id") or "",
-                            json.dumps(e.get("details") or {}, sort_keys=True, default=str), e["row_hash"]])
+                w.writerow([e["seq"], e["ts"], e.get("user_id") or "", users.get(str(e.get("user_id")), ""),
+                            e.get("org_id") or "", e["action"], e.get("object_type") or "",
+                            (e.get("object_label") if blinded else None) or e.get("object_id") or "",
+                            json.dumps(e.get("details") or {}, sort_keys=True, separators=(",", ":"), default=str),
+                            e.get("prev_hash", ""), e["row_hash"]] + ([int(bool(e.get("masked")))] if blinded else []))
+    file_sha = hashlib.sha256(path.read_bytes()).hexdigest()    # write, hash, then record (C2-PRD-16)
     store.audit.record("audit.export", user["id"], user["org_id"],
-                       details={"path": str(path), "events": len(events), "chain_ok": bool(ver.get("ok")),
-                                "blinded": bool(blinded)})
-    return {"path": str(path), "events": len(events), "verification": head["chain_verification"]}
+                       details={"path": str(path), "sha256": file_sha, "events": len(events),
+                                "chain_ok": bool(ver.get("ok")), "blinded": bool(blinded)})
+    return {"path": str(path), "events": len(events), "verification": head["chain_verification"], "sha256": file_sha}
 
 
 # ============================================================================ label loading (worker thread)

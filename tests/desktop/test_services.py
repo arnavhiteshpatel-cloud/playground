@@ -120,8 +120,14 @@ def test_measurement_support_statuses(analysed):
         v, why = reported_value(m, "class_volumes.new_bone_volume_mm3")
         assert v is None and why
     assert measurement_support({"status": "needs_manual_roi"})["overall"] == NOT_SUPPORTED
+    # complete result (QC suitable, advisor assessment for every graft / new-bone endpoint); missing parts are
+    # never green (C2-PRD-12)
+    adv = {ep: {"status": "supported"} for ep in ("graft_fraction_of_defect", "new_bone_volume",
+                                                  "new_bone_fraction_of_defect", "new_bone_thickness",
+                                                  "mineral_fraction_of_defect")}
     ok = measurement_support({"metrics": {"class_volumes": {"uncertain_fraction": 0.0},
-                                          "new_bone_architecture": {"Tb_Th_um": 100}}})
+                                          "new_bone_architecture": {"Tb_Th_um": 100}},
+                              "qc": {"verdict": "suitable"}, "measurement_support": {"endpoints": adv}})
     assert ok["overall"] == SUPPORTED
     hi = measurement_support({"metrics": {"class_volumes": {"uncertain_fraction": 0.5},
                                           "new_bone_architecture": {"Tb_Th_um": 100}}})

@@ -34,7 +34,7 @@
 
 ## 4. Data and quality schedules
 - DPA / data-handling schedule (see `DPA_ISSUES_CHECKLIST.md`)
-- Quality Agreement for GLP-supporting work (see `QUALITY_AGREEMENT_ISSUES.md`)
+- Quality Agreement, only if GLP-related work is ever offered (not offered now; see `QUALITY_AGREEMENT_ISSUES.md`)
 - Record retention and the escrow/transfer plan if the business ceases
 
 ## 5. Regulatory and compliance positioning

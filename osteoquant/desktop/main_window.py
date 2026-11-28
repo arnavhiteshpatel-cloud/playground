@@ -7,17 +7,19 @@ import concurrent.futures
 
 from PySide6.QtCore import QEventLoop, QSize, Qt, QTimer
 from PySide6.QtGui import QAction, QActionGroup, QKeySequence
-from PySide6.QtWidgets import (QApplication, QDockWidget, QFileDialog, QFrame, QGridLayout, QHBoxLayout, QInputDialog,
-                               QLabel, QListWidget, QListWidgetItem, QMainWindow, QMessageBox, QProgressBar, QScrollArea,
+from PySide6.QtWidgets import (QApplication, QDialog, QDockWidget, QFileDialog, QFrame, QGridLayout, QHBoxLayout,
+                               QInputDialog, QLabel, QListWidget, QListWidgetItem, QMainWindow, QMenu, QMessageBox,
+                               QProgressBar, QScrollArea,
                                QPushButton, QSlider, QStackedWidget, QTabWidget, QVBoxLayout, QWidget)
 
 from .. import __version__
 from ..licensing import LicenceStatus, current_status, install_licence
 from . import services as S
 from . import theme
-from .dialogs import (AboutDialog, AnalysisDialog, IdleLockDialog, LicenceDialog, LoginDialog, NewProjectDialog,
-                      NewStudyDialog, RoiDialog, SaveRevisionDialog, ShortcutsDialog, SignDialog, UserAdminDialog)
-from .lock import IdleWatcher, LockPage
+from .dialogs import (AboutDialog, AnalysisDialog, ChangePasswordDialog, IdleLockDialog, LicenceDialog, LoginDialog,
+                      NewProjectDialog, NewStudyDialog, RoiDialog, SaveRevisionDialog, ShortcutsDialog, SignDialog,
+                      UnblindDialog, UserAdminDialog)
+from .lock import IdleWatcher, LockInputFilter, LockPage
 from .messages import friendly, show_error
 from .import_wizard import ImportWizard
 from .jobs import JobManager
@@ -234,6 +236,13 @@ class MainWindow(QMainWindow):
         self.idle = IdleWatcher(self)
         QApplication.instance().installEventFilter(self.idle)
         self.idle.idle.connect(lambda: self.lock_session(idle=True))
+        self._lock_filter = LockInputFilter(self._lock_allows, self)
+        self._lock_hidden = []
+        # the session is re-validated before every service call; this timer also ends it in the UI when an
+        # administrator deactivates the account or resets its password (C2-PRD-07)
+        self._session_timer = QTimer(self)
+        self._session_timer.timeout.connect(self._check_session)
+        self._session_timer.start(5000)
 
         # ---------------- docks
         self.tree = ProjectTree()
@@ -384,7 +393,11 @@ class MainWindow(QMainWindow):
         self.a_analyze = self._act("Analyse selected scans...", lambda: self.analyze_selected(), "Ctrl+R")
         self.a_cancel = self._act("Cancel all jobs", self.jobs.cancel_all)
         self.a_report = self._act("Generate report for current study", lambda: self.generate_report(self.tree.current_study_id()))
-        for a in (self.a_new_study, self.a_add_group, None, self.a_roi, self.a_analyze, self.a_cancel, None, self.a_report):
+        self.a_unblind = self._act("Unblind study...", lambda: self.unblind_study(),
+                                   tip="Signed action of the study director or an administrator: reveals allocation "
+                                       "of a blinded study to every user")
+        for a in (self.a_new_study, self.a_add_group, None, self.a_roi, self.a_analyze, self.a_cancel, None, self.a_report,
+                  None, self.a_unblind):
             st.addSeparator() if a is None else st.addAction(a)
         st.setToolTipsVisible(True)
         e.setToolTipsVisible(True)
@@ -393,7 +406,9 @@ class MainWindow(QMainWindow):
         self.a_users = self._act("Users...", self.manage_users, tip="Add users, set roles, deactivate, reset passwords")
         self.a_idle = self._act("Idle lock...", self.configure_idle_lock, tip="Minutes without input before the window locks")
         self.a_lock = self._act("Lock now", lambda: self.lock_session(), "Ctrl+L")
-        for a in (self.a_users, self.a_idle, None, self.a_lock):
+        self.a_password = self._act("Change my password...", lambda: self.change_password(),
+                                    tip="Replace your password (also your electronic-signature password)")
+        for a in (self.a_users, self.a_idle, None, self.a_password, self.a_lock):
             pm.addSeparator() if a is None else pm.addAction(a)
         pm.setToolTipsVisible(True)
 
@@ -503,7 +518,8 @@ class MainWindow(QMainWindow):
             d.setVisible(on)
         for a in (self.a_close, self.a_import, self.a_new_study, self.a_add_group, self.a_roi, self.a_analyze,
                   self.a_report, self.a_save_rev, self.a_shot, self.a_timing, self.a_timing_export, self.a_users,
-                  self.a_idle, self.a_lock, self.a_audit_export, *self.tool_actions.values()):
+                  self.a_idle, self.a_lock, self.a_audit_export, self.a_password, self.a_unblind,
+                  *self.tool_actions.values()):
             a.setEnabled(on)
         self.d_oblique.hide()
         if on:
@@ -525,13 +541,16 @@ class MainWindow(QMainWindow):
                           (self.btn_import, "Import scans into the selected study"),
                           (self.btn_analyse, "Analyse the selected scans")],
                 "manage_users": [(self.a_users, "Add users, set roles, deactivate, reset passwords"),
-                                 (self.a_idle, "Minutes without input before the window locks")]}
+                                 (self.a_idle, "Minutes without input before the window locks")],
+                "unblind": [(self.a_unblind, "Signed action of the study director or an administrator: reveals "
+                                             "allocation of a blinded study to every user")]}
 
     def apply_role_gating(self):
         """Disable what the signed-in role cannot do, with a tooltip that says why (UX-10)."""
         p = self.project
         if not p or not p.user:
             return
+        self._gated_role = p.user["role"]
         for perm, items in self._gated().items():
             why = p.why_not(perm)
             for w, tip in items:
@@ -543,6 +562,24 @@ class MainWindow(QMainWindow):
         self.a_audit_export.setEnabled(allowed_audit)
         self.a_audit_export.setToolTip("" if allowed_audit else "Requires the reviewer, study director or administrator role")
         self.state.set_read_only(p.why_not("write"))
+        self.apply_blinding_policy()
+
+    def apply_blinding_policy(self):
+        """Study-level blinding (C2-PRD-03): while a study of the project is blinded, users who may not
+        unblind stay in blinded review mode and cannot switch it off."""
+        p = self.project
+        forced = bool(p and p.user and p.blinding_forced())
+        tip = ("A study in this project is blinded: blinded review mode stays on for your role. Only the study "
+               "director or an administrator can unblind the study (Study > Unblind study, signed)." if forced else
+               "Hide group names, animal IDs, file names and acquisition metadata in every view, including the audit "
+               "trail and report preview; random codes replace IDs")
+        for w in (self.a_blind, self.review.blind):
+            w.setEnabled(not forced)
+            w.setToolTip(tip)
+        self.a_blind.setStatusTip(tip)
+        self.reports.blinding_forced = forced
+        if forced and not self.blinded_view:
+            self.set_blinded(True)
 
     def _update_title(self):
         t = APP_TITLE
@@ -603,7 +640,68 @@ class MainWindow(QMainWindow):
                 dlg.show_error("Sign-in failed: wrong user name or password, inactive or temporarily locked account.")
                 dlg.pw.clear()
             self.settings.set_last_user(folder, p.user["username"])
+            # a password set by an administrator is replaced by its owner before work starts (C2-PRD-08)
+            if p.password_change_required and not self._forced_password_change(p):
+                p.close()
+                return False
         self._after_open(p)
+        return True
+
+    def _forced_password_change(self, p: Project) -> bool:
+        dlg = self._own(ChangePasswordDialog(p.user["username"], self, required=True))
+        while dlg.exec():
+            try:
+                p.change_password(dlg.old.text(), dlg.pw1.text())
+                return True
+            except (PermissionError, ValueError) as e:
+                dlg.show_error(str(e))
+        return False
+
+    def change_password(self, old=None, new=None) -> bool:
+        if not self.project:
+            return False
+        if old is None:
+            dlg = self._own(ChangePasswordDialog(self.project.user["username"], self))
+            while dlg.exec():
+                try:
+                    self.project.change_password(dlg.old.text(), dlg.pw1.text())
+                    break
+                except (PermissionError, ValueError) as e:
+                    dlg.show_error(str(e))
+            else:
+                return False
+        else:
+            self.project.change_password(old, new)
+        self.statusBar().showMessage("Password changed.", 6000)
+        return True
+
+    def unblind_study(self, study_id=None, password=None, reason=None) -> bool:
+        """Signed unblinding by a study director or administrator (C2-PRD-03)."""
+        p = self.project
+        if not p or self._denied("unblind", "Unblind study"):
+            return False
+        studies = p.blinded_studies()
+        if not studies:
+            QMessageBox.information(self, "Unblind study", "No study of this project is blinded.")
+            return False
+        if password is None:
+            dlg = self._own(UnblindDialog(studies, p.user, self))
+            while dlg.exec():
+                try:
+                    S.unblind_study(p, dlg.pw.text(), dlg.study.currentData(), dlg.reason.text())
+                    break
+                except (PermissionError, ValueError, KeyError) as e:
+                    dlg.show_error(friendly(e))
+                    dlg.pw.clear()
+            else:
+                return False
+        else:
+            S.unblind_study(p, password, study_id, reason or "")
+        self.apply_blinding_policy()
+        self.refresh_tree()
+        self.results.refresh()
+        self.reports.refresh()
+        self.statusBar().showMessage("Study unblinded (signature recorded).", 8000)
         return True
 
     def _after_open(self, p: Project):
@@ -627,11 +725,14 @@ class MainWindow(QMainWindow):
 
     CLOSE_WAIT_MS = 3000
 
-    def close_project(self, ask: bool = True) -> bool:
+    def close_project(self, ask: bool = True, discard: bool = False) -> bool:
         if self.project is None:
             return True
         if self._loading:
             return False
+        if discard and self.state.editor is not None:
+            self.state.history.clear()
+            self.state.editor.base_counts = dict(self.state.editor.counts)
         if not self._locked and not self._confirm_discard_edits():
             return False
         if self.jobs.active_jobs():
@@ -693,6 +794,7 @@ class MainWindow(QMainWindow):
             except PermissionError as e:
                 QMessageBox.warning(self, "Not permitted", str(e))
                 return None
+            self.apply_blinding_policy()
             self.refresh_tree()
             self.results.set_project(self.project, sid)
             self.reports.set_project(self.project, sid, self.licence.watermark)
@@ -706,7 +808,7 @@ class MainWindow(QMainWindow):
         name, ok = QInputDialog.getText(self, "Add group", "Group name (e.g. treatment arm):")
         if ok and name.strip():
             try:
-                self.project.store.add_group(self.project.user, sid, name.strip())
+                self.project.store.add_group(self.project.require_user(), sid, name.strip())
             except PermissionError as e:
                 QMessageBox.warning(self, "Not permitted", str(e))
             self.refresh_tree()
@@ -901,7 +1003,7 @@ class MainWindow(QMainWindow):
             elif job.status == "failed":
                 show_error(self, "Revision not saved", job.error, QMessageBox.Critical)
 
-        job = self.jobs.submit("save_labels", f"Save label revision (scan {scan_id})",
+        job = self.jobs.submit("save_labels", f"Save label revision ({self._job_scan(scan_id)})",
                                lambda ctx: S.save_label_revision(project, scan_id, base, labels, reason, ops, ctx),
                                on_done=done)
         if wait:
@@ -928,11 +1030,18 @@ class MainWindow(QMainWindow):
         out = []
         for scan_id in ids:
             out.append(self.jobs.submit(
-                "analyze", f"Analyse scan {scan_id}",
+                "analyze", f"Analyse {self._job_scan(scan_id)}",
                 lambda ctx, s=scan_id: S.analyze_scan(project, s, config, ctx, use_saved_roi is not False),
                 on_done=lambda job, s=scan_id: self._analysis_done(job, s)))
         self.d_jobs.raise_()
         return out
+
+    def _job_scan(self, scan_id) -> str:
+        """Scan reference for job titles (shown in the Jobs panel and audited): the blinded code in blinded
+        mode, never the database ID (C2-PRD-14)."""
+        if self.project and (self.blinded_view or self.project.blinding_forced()):
+            return self.project.scan_code(scan_id)
+        return f"scan {scan_id}"
 
     def _analysis_done(self, job, scan_id):
         self.refresh_tree()
@@ -952,6 +1061,11 @@ class MainWindow(QMainWindow):
         if not S.study_has_analysis(project, study_id):
             QMessageBox.information(self, "Report", friendly("ValueError: This study has no analysed scans yet"))
             return None
+        busy = [j for j in self.jobs.active_jobs() if j.kind in ("analyze", "save_labels", "import")]
+        if busy:      # a report is a snapshot of finished work (C2-PRD-01)
+            QMessageBox.information(self, "Report", f"{len(busy)} analysis, import or save job(s) are still running. "
+                                                    "Generate the report when they have finished.")
+            return None
 
         def done(job):
             if job.status == "done":
@@ -960,6 +1074,7 @@ class MainWindow(QMainWindow):
                 self.reports.refresh(job.result["report_id"])
             elif job.status == "failed":
                 show_error(self, "Report not generated", job.error)
+        blinded = bool(blinded or project.study_forces_blinding(study_id))
         job = self.jobs.submit("report", f"Defect-fill report (study {study_id})" + (", blinded" if blinded else ""),
                                lambda ctx: S.generate_report(project, study_id, wm, ctx, blinded=blinded), on_done=done)
         self.d_jobs.raise_()
@@ -1014,6 +1129,19 @@ class MainWindow(QMainWindow):
 
     # ================================================================== misc
     def set_blinded(self, on: bool):
+        if not on and self.project and self.project.blinding_forced():
+            # reviewers cannot switch study-level blinding off (C2-PRD-03)
+            u = self.project.user
+            self.project.store.audit.record("ui.blinded_mode_denied", u["id"], u["org_id"], details={"on": False})
+            self.statusBar().showMessage("Blinded review mode stays on: a study is blinded and your role cannot "
+                                         "unblind it.", 8000)
+            on = True
+            if self.blinded_view:
+                for w in (self.a_blind, self.review.blind):
+                    w.blockSignals(True)
+                    w.setChecked(True)
+                    w.blockSignals(False)
+                return
         self.blinded_view = bool(on)
         for w in (self.a_blind, self.review.blind):
             w.blockSignals(True)
@@ -1215,8 +1343,49 @@ class MainWindow(QMainWindow):
         self.idle.set_timeout_minutes(self.project.idle_lock_minutes)
         self.statusBar().showMessage(f"Idle lock: {minutes} min" if minutes else "Idle lock off", 6000)
 
+    def _check_session(self):
+        """End the project in the UI once its session has ended (deactivated account, password reset)."""
+        p = self.project
+        if p is None or p.user is None and p.session_end_reason is None:
+            return
+        if p.user is not None and p.check_session():
+            if not self._locked:
+                if p.user["role"] != getattr(self, "_gated_role", None):
+                    self.apply_role_gating()     # a role change takes effect at once
+                else:
+                    self.apply_blinding_policy()   # a study blinded or unblinded in another session
+            return
+        reason = p.session_end_reason or "the session has ended"
+        self._unlock_ui()
+        self.jobs.cancel_all()
+        self.close_project(ask=False, discard=True)
+        QMessageBox.warning(self, "Signed out", f"You were signed out: {reason}. Unsaved label edits were discarded.")
+
+    def _lock_allows(self, w) -> bool:
+        """Widgets that may receive input while locked: the lock page and confirmation boxes it opens."""
+        win = w.window()
+        if win is self:
+            return w is self.lock_page or self.lock_page.isAncestorOf(w)
+        return isinstance(win, QMessageBox) and win not in self._lock_hidden
+
+    def _lock_other_windows(self):
+        """Close or hide every other window so that nothing stays usable over the lock (C2-PRD-02)."""
+        self._lock_hidden = []
+        for w in QApplication.topLevelWidgets():
+            if w is self or isinstance(w, QDockWidget) or not w.isVisible():
+                continue
+            if isinstance(w, QDialog) and w.windowModality() == Qt.ApplicationModal:
+                w.reject()          # a dialog running its own event loop (exec) is cancelled
+                if w.isVisible():
+                    w.hide()
+                continue
+            w.hide()
+            if not isinstance(w, QMenu):
+                self._lock_hidden.append(w)
+
     def lock_session(self, idle: bool = False):
-        """Hide the project and require the signed-in user's password (idle lock, Ctrl+L)."""
+        """Hide the project and require the signed-in user's password (idle lock, Ctrl+L). The lock is
+        application-wide: other windows and dialogs are closed or hidden and input to them is blocked."""
         if self.project is None or self._locked:
             return
         self._locked = True
@@ -1225,6 +1394,8 @@ class MainWindow(QMainWindow):
                               "docks": [d for d in self.findChildren(QDockWidget) if d.isVisible()]}
         for d in self._lock_restore["docks"]:
             d.hide()
+        self._lock_other_windows()
+        QApplication.instance().installEventFilter(self._lock_filter)
         for a in self.menuBar().actions():
             a.setEnabled(False)
         self.toolbar.setEnabled(False)
@@ -1238,6 +1409,10 @@ class MainWindow(QMainWindow):
         if not self._locked or self.project is None:
             return False
         p = self.project
+        if not p.check_session():          # deactivated or reset meanwhile: say so, then sign out (C2-PRD-07)
+            self.lock_page.show_error(f"Session ended: {p.session_end_reason}.")
+            QTimer.singleShot(0, self._check_session)
+            return False
         if not p.store.reauthenticate(p.user, password):      # lockout policy applies
             u = p.store.q1("SELECT locked_until FROM users WHERE id=?", (p.user["id"],)) or {}
             import time as _t
@@ -1254,6 +1429,7 @@ class MainWindow(QMainWindow):
         if not self._locked:
             return
         self._locked = False
+        QApplication.instance().removeEventFilter(self._lock_filter)
         self.idle.paused = False
         self.idle.last_input = self.idle.clock()
         for a in self.menuBar().actions():
@@ -1264,6 +1440,11 @@ class MainWindow(QMainWindow):
         if self.project is not None:
             for d in rs.get("docks", []):
                 d.show()
+            import shiboken6
+            for w in self._lock_hidden:
+                if shiboken6.isValid(w) and not w.isVisible():
+                    w.show()
+        self._lock_hidden = []
 
     def _close_from_lock(self):
         # unsaved edits cannot be confirmed without unlocking: they are discarded (the lock page says so)

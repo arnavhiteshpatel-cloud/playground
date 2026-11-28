@@ -48,8 +48,18 @@ decision, `docs/ip/IP_STRATEGY.md`).
   one seed); with 1–3 real labelled scans, training from scratch (0.805 / 0.816) was as good as or better than any synthetic pretraining (S2 part c) — synthetic data did not help the real bone task, and neither did self-supervised pretraining on unlabelled real scans (S3: 0.782 / 0.794); in simulation a 5-model ensemble flags its own failures (volume-CV failure-detection score 0.95, U1) and its 90% graft-volume intervals hold in distribution (15/16) but not for a new material (25/40) (U1); runtime: §3a.
 * **Morphometry** agrees with Scanco IPL on public cubes; graft-specific endpoints have no real reference yet.
 
-### 3a. ML campaign (filled from the result files when the runs finish)
-See `EXPERIMENT_REGISTRY.md` rows S2, S3, U1 and O2.
+### 3a. ML campaign (finished 28 Nov; rows S2, S3, U1, O2 in `EXPERIMENT_REGISTRY.md`)
+| Question | Result | Data |
+|---|---|---|
+| Does a synthetic-trained model work on real scans? | Gen-0 model 0.377 Dice zero-shot, 0.513 with 2× test-time zoom; domain-randomised pretraining worse on every test scan (0.353 / 0.457) | REAL dog forelimb, 5 test scans (bone only) |
+| Does synthetic or self-supervised pretraining help with 1–3 real scans? | No: from scratch 0.805 (1 scan) / 0.816 (3 scans); Gen-0 pretraining 0.774 / 0.802; domain-randomised 0.787 / 0.814; self-supervised 0.782 / 0.794 | same |
+| Can an ensemble flag its own failures? | In simulation yes: volume-spread failure-detection score 0.95 (only 5 failures in 56 scans; wide interval) | SYNTHETIC |
+| Do conformal 90% graft-volume intervals hold? | In distribution 15/16; on a held-out material 25/40 — they do not transfer to a new material | SYNTHETIC |
+| Is ONNX Runtime fast enough without PyTorch? | Yes (688k voxels/s vs PyTorch 769k on 4 busy threads); int8 slower, not adopted; an earlier "8× faster" spot check was wrong and is corrected | SYNTHETIC |
+
+What this means: real labelled scans, not synthetic data, drive the learned-model route; even one labelled scan beats
+every pretraining variant tried on the real bone task. The real three-class (graft / new bone / host) task has no
+labelled data at all yet — that, again, is the physical-phantom and histology work.
 
 ## 4. Assumptions that failed
 * "Intensity can separate graft from new bone for common materials" — only for dense ceramics, and never for new bone next

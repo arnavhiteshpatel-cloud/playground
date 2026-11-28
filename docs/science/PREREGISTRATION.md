@@ -44,6 +44,23 @@ data are seen must be logged below as deviations with justification. Addresses F
 * **Acceptance (B7):** conformal 90% interval coverage 0.87–0.93 in distribution; under distribution shift coverage
   is reported, and the product must gate (abstain) rather than claim coverage.
 
+## 7. Held-out advisor validation S1H (registered 2026-11-28, before running; advisor 1.3.3 frozen)
+Motivation: advisor rules were refined after inspecting S1/S1b/S1c on the same simulator (deviations log). S1H uses
+conditions that played no role in tuning:
+* **Phantoms:** new seeds (2000–2002 condyle, 2100–2102 calvarial, 2200–2202 segmental; none used before), all three
+  defect models; calvarial specimens use strut-like granules (120–250 µm, roughness 0.6), the others compact
+  (300–600 µm); healing stage 0.45; graft material modelled as HA-like mineral of density X.
+* **Densities X:** 950, 1450, 1850, 2600 mgHA/cm³ (the tuning sweep used 650, 800, 900, 1000, 1150, 1300, 1600, 2200).
+* **Imaging:** PSF σ 30 µm (tuning: 20 µm); **spatially correlated noise** (white noise smoothed with a 0.8-voxel
+  Gaussian, rescaled to σ ∈ {60, 120, 200}; tuning used white noise at 30/80/150/250).
+* **Advisor:** version 1.3.3, material profile given as a characterised material (rel_mean = X / 1075,
+  rel_sd = 0.04·rel_mean, struct 450 µm), as in the tuning sweep. Method: advisor threshold segmentation.
+* **Outcome per endpoint** (residual graft, new bone, total mineral): failure = |relative volume error| > 20%.
+* **Acceptance:** ≥95% of failures refused for every endpoint; P(fail | supported) Clopper–Pearson 95% upper bound
+  ≤ 0.10 for endpoints with ≥30 supported specimens (descriptive otherwise). 108 specimens (9 structures × 4 densities ×
+  3 noise levels); structures are the unit of replication for any CI (bootstrap over the 9 structures).
+* No rule, threshold or parameter of the advisor may be changed in response to S1H; failures are reported as found.
+
 ## Deviations log
 | Date | Item | Deviation | Justification |
 |---|---|---|---|

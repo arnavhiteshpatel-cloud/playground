@@ -60,9 +60,16 @@ CLAIMS = [
     # Percent claims carry a scale (6th field); a callable path computes the value.
     ("S1H3_graft_cov", "exp_S1H3_heldout.json", lambda d: _cov(d, "residual_graft_volume"), 0,
      [r"residual graft volume supported in\s*"], 100),
+    # C3-SCI-05: rows from one phantom structure are correlated, so the structure-level bound leads
+    ("S1H3_graft_bound_struct", "exp_S1H3_heldout.json", lambda d: _struct_bound(d), 2,
+     [r"upper bound on the supported-failure rate\s*"]),
     ("S1H3_graft_bound", "exp_S1H3_heldout.json",
      "summary.0.per_endpoint.residual_graft_volume.p_fail_given_supported_upper95", 3,
-     [r"upper bound on the supported-failure rate\s*"]),
+     [r"counting phantom structures as the unit;\s*"]),
+    ("S1H3_n_struct", "exp_S1H3_heldout.json", lambda d: len({r["structure"] for r in d["rows"]}), 0,
+     [r"synthetic specimens from\s*"], 1),
+    ("S1H3_no_endpoint", "exp_S1H3_heldout.json", lambda d: _none_share(d), 0,
+     [r"no volume endpoint supported for\s*"], 100),
     ("S1H3_graft_median", "exp_S1H3_heldout.json",
      "summary.0.per_endpoint.residual_graft_volume.abs_err_supported_median", 1,
      [r"supported graft volumes: median error\s*"], 100),
@@ -78,6 +85,20 @@ CLAIMS = [
 ]
 # guard: S1H3 claims must come from the pre-registered, frozen run
 S1H3_REQUIRED = {"preregistered": "docs/science/PREREGISTRATION.md §9", "advisor_version": "1.4.1"}
+
+
+_SUP = ("supported", "supported_with_conditions")
+
+
+def _struct_bound(d):
+    """Clopper-Pearson 95% upper bound with phantom structures as the unit (0 failing structures)."""
+    k = len({r["structure"] for r in d["rows"] if r["status"] in _SUP})
+    return 1 - 0.025 ** (1 / k)
+
+
+def _none_share(d):
+    rows = d["rows"]
+    return sum(1 for r in rows if all(r[k] not in _SUP for k in ("status", "status_new", "status_mineral"))) / len(rows)
 
 
 def _cov(d, ep):
@@ -138,12 +159,15 @@ BANNED = [
     (r"\d+\s*(?:of|/)\s*\d+ failures refused", "advisor-validation numbers: use the standard S1H3 phrase (CLAIMS)"),
     (r"P\(fail\s*\\?\|\s*supported\)\s*\d", "advisor-validation numbers: use the standard S1H3 phrase (CLAIMS)"),
     (r"automated tests", "use the CI-generated test count, not a hard-coded one"),
+    (r"proven (?:to be )?safe|proves? (?:that )?(?:the advisor|it|OsteoQuant) is safe|guarantee[sd]? (?:that )?(?:no|every)",
+     "overclaim: simulation evidence shows internal safety only (C3-SCI-13)"),
 ]
 # bare 'verified' as a quality claim is banned on the website and in the investor one-pager
 BANNED_STRICT = {"website/*.html": [r"(?<![Uu]n)(?<!not )\bverified\b"], "investor/ONE_PAGE_OVERVIEW.md": [r"\bverified\b"]}
 ALLOW_LINE = re.compile(r"[Nn]ot offered|not sold|[Nn]o GLP|do not|Do not|banned|retired", re.I)
 
-VERSION_GLOBS = ["website/*.html", "docs/user/*.md", "docs/quality/*.md"]
+VERSION_GLOBS = ["website/*.html", "docs/user/*.md", "docs/quality/*.md", "investor/*.md", "founder/*.md", "business/*.md",
+                 "grants/*.md", "FOUNDER_EXECUTIVE_SUMMARY.md", "deliverables/README.md"]   # scope widened (C3-BIZ)
 VERSION_RE = re.compile(r"(?:[Aa]dvisor(?: version)?|ADVISOR_VERSION = \")\s*\**(\d+\.\d+\.\d+)")
 VERSION_ALLOW = re.compile(r"history|histor|changelog|earlier|previous|superseded|since|until|before|motivated", re.I)
 
@@ -267,7 +291,8 @@ def main(paths=None) -> int:
                     got = float(n.group(1))
                     qd = len(n.group(1).split(".")[1]) if "." in n.group(1) else 0
                     if qd < dec:     # quoted with fewer decimals: compare at that precision
-                        ok = round(raw, qd) == got
+                        # ...but a non-zero quantity may not be quoted as zero ("0.0" for 0.045, C3-SCI-13)
+                        ok = round(raw, qd) == got and not (got == 0 and round(raw, dec) != 0)
                     else:
                         ok = round(got, dec) == want
                     found[cid] += 1

@@ -122,8 +122,10 @@ graduate courses in biomedical imaging or bone mechanics — ask your faculty ad
   blur stays the same, the halo stays the same width in µm. You need sharper imaging (focal spot, reconstruction), a
   measured graft reference, or a different design (day-0 scan, histology).
 * **A3.** No. S1H3 tested advisor 1.4.1 frozen; a changed rule needs a new pre-registered held-out test on conditions no
-  version has seen. Re-running S1H3 is only a development check. (The shipped 1.4.2 differs from 1.4.1 only in rules
-  S1H3 does not exercise, which is why S1H3 is still quoted, with that caveat.)
+  version has seen. Re-running S1H3 is only a development check. (The shipped 1.4.3 differs from 1.4.1 in rules S1H3
+  does not exercise and in one it does, only in the stricter direction, which is why S1H3 is still quoted, with that
+  caveat. Note also that S1H3's 80 supported graft measurements come from only 9 phantom structures: the honest bound
+  on the supported-failure rate is 0.34, not 0.045.)
 * **A4.** Graft estimate = 0.54 × mineral instead of 0.60, so new bone = 0.46 instead of 0.40 of mineral: new bone is
   over-estimated by 15% (p/(1−p) = 1.5, times 10%). Illustrative arithmetic, not a result.
 * **A5.** No. It means that across many scans like the calibration scans, about 90% of intervals contain the true value.

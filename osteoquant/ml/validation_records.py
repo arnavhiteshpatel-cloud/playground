@@ -72,19 +72,31 @@ def load_records(keys: dict | None = None) -> dict:
     p = _path()
     if not p.exists():
         return {}
-    env = json.loads(p.read_text())
+    try:
+        env = json.loads(p.read_text())
+    except (OSError, ValueError) as e:            # a corrupt file must not abort analyses (C3-PRD-15)
+        raise RuntimeError("validation_records.json is unreadable") from e
     if not isinstance(env, dict) or env.get("format") != FORMAT:
         raise RuntimeError("validation_records.json is not a signed record file")
     keys = trusted_keys() if keys is None else keys
-    if env.get("key_id") not in keys:
-        raise RuntimeError(f"validation records signed with an untrusted key ({env.get('key_id')})")
-    pub_hex, _is_test = keys[env["key_id"]]
+    kid = env.get("key_id")
+    if not isinstance(kid, str) or kid not in keys:
+        # never echo unsigned envelope fields: they are attacker-controlled (C3-PRD-02)
+        raise RuntimeError("validation records signed with an untrusted key")
+    pub_hex, is_test = keys[kid]
     try:
         Ed25519PublicKey.from_public_bytes(bytes.fromhex(pub_hex)).verify(
             base64.b64decode(env["signature"]), env["payload"].encode("utf-8"))
+        records = json.loads(env["payload"])
     except Exception as e:
         raise RuntimeError("validation records signature is invalid: records were modified") from e
-    return json.loads(env["payload"])
+    if not isinstance(records, dict):
+        raise RuntimeError("validation records payload is not a record table")
+    if is_test:
+        # records signed with a development/test key are labelled and never qualify unless the caller explicitly
+        # accepts test evidence (unit tests only) — C3-PRD-05
+        records = {m: [dict(r, _test_signed=True) for r in rs] for m, rs in records.items() if isinstance(rs, list)}
+    return records
 
 
 def add_record(rec: ValidationRecord, private_key, key_id: str, audit=None, user_id=None, org_id=None,
@@ -102,20 +114,31 @@ def add_record(rec: ValidationRecord, private_key, key_id: str, audit=None, user
 
 
 def validated_for(model_name: str, model_sha256: str, material: str, voxel_um: float,
-                  keys: dict | None = None) -> tuple[bool, str]:
-    """True only if a record for this exact model version (SHA-256) and material qualifies at this voxel size."""
+                  keys: dict | None = None, accept_test_signed: bool = False) -> tuple[bool, str]:
+    """True only if a record for this exact model artefact (SHA-256 of the bytes that run: the ONNX file under ONNX
+    Runtime, the checkpoint under PyTorch) and material qualifies at this voxel size. Records signed with a test key
+    never qualify unless ``accept_test_signed`` (unit tests)."""
     reasons = []
     try:
         records = load_records(keys)
     except RuntimeError as e:
         return False, str(e)
     for d in records.get(model_name, []):
-        if d.get("model_sha256") != model_sha256 or d.get("material") != material:
+        if not isinstance(d, dict) or d.get("model_sha256") != model_sha256 or d.get("material") != material:
             continue
         d = dict(d)
-        d["voxel_um_range"] = tuple(d["voxel_um_range"])
-        ok, why = ValidationRecord(**d).qualifies(voxel_um)
+        test_signed = bool(d.pop("_test_signed", False))
+        if test_signed and not accept_test_signed:
+            reasons.append("record signed with a development/test key (never qualifies)")
+            continue
+        try:
+            d["voxel_um_range"] = tuple(d["voxel_um_range"])
+            ok, why = ValidationRecord(**d).qualifies(voxel_um)
+        except (TypeError, ValueError, KeyError):
+            reasons.append("malformed validation record")
+            continue
         if ok:
-            return True, f"{why}: {d['data_class']}, n={d['n_specimens']}, {d['evidence_location']}"
+            label = " [TEST-SIGNED]" if test_signed else ""
+            return True, f"{why}{label}: {d['data_class']}, n={d['n_specimens']}, {d['evidence_location']}"
         reasons.append(why)
     return False, "; ".join(reasons) or f"no validation record for model {model_name} and material {material}"

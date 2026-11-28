@@ -43,7 +43,7 @@ notes:
 * Display never loads the whole image: slices are read from a chunked store with a 256 MiB cache.
 * Volumes over 1 GiB are imported slab by slab for slab-capable formats (TIFF/PNG stacks, DICOM, Zarr, TXM). This
   path is unit-tested with small data and lowered thresholds, not yet with real multi-GB scans.
-* There is no GPU inference. Classical multi-Otsu segmentation is the default.
+* There is no GPU inference. The default segmentation is the advisor's own threshold (`advisor_threshold`).
 
 ## Linux (x86_64)
 

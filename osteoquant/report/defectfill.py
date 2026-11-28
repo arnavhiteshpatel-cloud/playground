@@ -200,7 +200,7 @@ def _support(s: dict, key: str) -> str | None:
 
 
 def _fmt_support(v, status):
-    if status == "not_supported":
+    if status in ("not_supported", "not_assessed"):
         return "n/m"
     t = _fmt(v)
     return t + " (c)" if status == "supported_with_conditions" else t
@@ -548,6 +548,11 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     flow.append(table(rows, [38 * mm, 35 * mm, 60 * mm, 20 * mm, 27 * mm]))
     if bundle.get("signature_note"):     # signed copy: rows filled from the recorded approvals
         flow.append(Paragraph(esc(str(bundle["signature_note"])), SM))
+    if isinstance(bundle.get("audit_anchor"), dict):
+        an = bundle["audit_anchor"]
+        flow.append(Paragraph(esc(f"Audit trail at generation: event {an.get('seq')}, chain hash "
+                                  f"{str(an.get('row_hash', ''))[:16]}… Keep this page: it lets QA detect a later "
+                                  "rewrite of the project's audit trail."), SM))
     flow.append(Paragraph("Blank fields indicate the report has not been signed. Electronic signatures in OsteoQuant are "
                           "recorded in the hash-chained audit trail; this prototype has not been validated as a "
                           "Part 11 electronic-signature system.", SM))

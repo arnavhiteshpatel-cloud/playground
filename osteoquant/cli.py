@@ -4,7 +4,7 @@
   osteoquant serve [--host 127.0.0.1 --port 8765]              start web app (local only by default)
   osteoquant ingest PATH [--spacing 10] [--out scan.zarr]       import a volume, print provenance
   osteoquant qc PATH [--spacing 10]                             run QC and print checks
-  osteoquant analyze PATH --model condyle [--seg multiotsu]     run DefectFill pipeline, write JSON
+  osteoquant analyze PATH --model condyle [--seg advisor_threshold]  run DefectFill pipeline, write JSON
   osteoquant phantom --model condyle --material beta_tcp --out case.nii.gz
   osteoquant audit-verify                                        verify the audit hash chain
   osteoquant backup DEST                                         consistent DB backup with SHA-256
@@ -33,7 +33,7 @@ def main(argv=None):
         if name == "ingest":
             p.add_argument("--out", default=None)
         if name == "analyze":
-            p.add_argument("--model", default="condyle"); p.add_argument("--seg", default="multiotsu")
+            p.add_argument("--model", default="condyle"); p.add_argument("--seg", default="advisor_threshold")
             p.add_argument("--diameter", type=float, default=None); p.add_argument("--json", default="analysis.json")
     ph = sub.add_parser("phantom"); ph.add_argument("--model", default="condyle"); ph.add_argument("--material", default="beta_tcp")
     ph.add_argument("--stage", type=float, default=0.5); ph.add_argument("--seed", type=int, default=0); ph.add_argument("--out", required=True)

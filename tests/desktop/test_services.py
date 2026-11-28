@@ -125,9 +125,10 @@ def test_measurement_support_statuses(analysed):
     adv = {ep: {"status": "supported"} for ep in ("graft_fraction_of_defect", "new_bone_volume",
                                                   "new_bone_fraction_of_defect", "new_bone_thickness",
                                                   "mineral_fraction_of_defect")}
+    from desktop_helpers import current_assessment
     ok = measurement_support({"metrics": {"class_volumes": {"uncertain_fraction": 0.0},
                                           "new_bone_architecture": {"Tb_Th_um": 100}},
-                              "qc": {"verdict": "suitable"}, "measurement_support": {"endpoints": adv}})
+                              "qc": {"verdict": "suitable"}, **current_assessment(adv)})
     assert ok["overall"] == SUPPORTED
     hi = measurement_support({"metrics": {"class_volumes": {"uncertain_fraction": 0.5},
                                           "new_bone_architecture": {"Tb_Th_um": 100}}})

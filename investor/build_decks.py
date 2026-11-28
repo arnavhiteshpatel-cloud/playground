@@ -766,17 +766,32 @@ def standard_phrase(F) -> str:
     g_refused = "every failing measurement refused" if g["fr"] == g["nf"] else "not every failing measurement refused"
     g_failed = "none of the supported ones failed" if g["sbf"] == 0 else "some supported ones failed"
     nb_text = "never supported" if nb["sup"] == 0 else "supported in some specimens"
+    # cycle-3 review C3-SCI-05: rows from one phantom structure are correlated, so the bound is also given with
+    # structures as the unit (Clopper-Pearson, 0 failures among the structures with supported measurements)
+    rows = t["rows"]
+    sup_rows = [r for r in rows if r.get("status") in ("supported", "supported_with_conditions")]
+    n_struct = len({r.get("structure") for r in rows})
+    k_struct = len({r.get("structure") for r in sup_rows})
+    ub_struct = num(1 - 0.025 ** (1 / k_struct), 2) if k_struct and g["sbf"] == 0 else "n/a"
+    none = sum(1 for r in rows if all(r.get(k) not in ("supported", "supported_with_conditions")
+                                      for k in ("status", "status_new", "status_mineral")))
+    none_pct = pct(none / len(rows)) if rows else PENDING
+    n_sup = len(sup_rows)
     return (f"In the pre-registered held-out simulation {t['id']} (advisor {t['advisor']}; {t['n']} synthetic "
-            f"specimens; a failure is a volume error above {fail}%): residual graft volume supported in {g_cov} of "
-            f"specimens, {g_refused} and {g_failed} (95% upper bound on the supported-failure rate {g_ub}); "
-            f"supported graft volumes: median error {g_med}, maximum {g_max}; total mineral volume supported in "
-            f"{m_cov} of specimens{sharp}; supported mineral volumes: maximum error {m_max}; new-bone volume {nb_text}.")
+            f"specimens from {n_struct} phantom structures; a failure is a volume error above {fail}%): residual graft "
+            f"volume supported in {g_cov} of specimens, {g_refused} and {g_failed} (95% upper bound on the "
+            f"supported-failure rate {ub_struct} counting phantom structures as the unit; {g_ub} if the {n_sup} "
+            f"supported measurements were independent); supported graft volumes: median error {g_med}, maximum "
+            f"{g_max}; total mineral volume supported in {m_cov} of specimens{sharp}; supported mineral volumes: "
+            f"maximum error {m_max}; new-bone volume {nb_text}; no volume endpoint supported for {none_pct} of "
+            f"specimens.")
 
 
 def caveat(F) -> str:
     t = final_test(F)
     tid = t["id"] if t else PENDING
-    first = (f"The shipped advisor {F['adv']} differs only in rules {tid} does not exercise. " if t and t["advisor"]
+    first = (f"The shipped advisor {F['adv']} differs from {t['advisor']} in rules {tid} does not exercise, and in one "
+             "it does (the total-mineral rim gate), only in the stricter direction. " if t and t["advisor"]
              != F["adv"] else "")
     return (first + "The simulator and the advisor share attenuation physics, so this shows internal safety, not "
                     "accuracy on real scans. No physical validation exists.")
@@ -982,16 +997,17 @@ MAT_ABBR = {"ha": "HA", "bcp": "BCP", "s53p4": "S53P4 glass", "beta_tcp": "β-TC
 
 
 def _support_cell(c):
-    g, nb = c.get("graft"), c.get("new_bone")
+    """Graft / new-bone status in one cell (cycle-3 review C3-BIZ-01: never merge them into one 'supported')."""
     if not c:
-        return PENDING, ST_NONE
-    if g == "supported" and nb == "supported":
-        return "supported", ST_OK
-    if g == "not_supported" and nb in ("supported", "supported_with_conditions"):
-        return "new bone*", ST_COND
-    if g == "not_supported" or nb == "not_supported":
-        return "refused", ST_FAIL
-    return "conditional", ST_WARN
+        return "not simulated", ST_NONE
+    w = {"supported": "yes", "supported_with_conditions": "cond.", "not_supported": "no"}
+    g, nb = w.get(c.get("graft"), "?"), w.get(c.get("new_bone"), "?")
+    word = f"G {g} · NB {nb}"
+    if g == "yes" and nb == "yes":
+        return word, ST_OK
+    if g == "no" and nb == "no":
+        return word, ST_FAIL
+    return word, ST_WARN
 
 
 def s_consequence(d: Deck):
@@ -1003,7 +1019,7 @@ def s_consequence(d: Deck):
     order = ["ha", "bcp", "s53p4", "beta_tcp", "calcium_sulfate", "bioglass_45s5", "xenograft_dbbm", "allograft",
              "autograft", "dbm", "collagen_sponge"]
     cols = [("unknown", "Single scan,\nweek unknown"), ("2 wk", "Single scan,\nweek 2"), ("8 wk", "Single scan,\nweek 8"),
-            ("day-0, 0 µm, unknown wk", "Day-0 scan,\nno motion")]
+            ("day-0 scan, 4 wk", "Day-0 scan,\nweek 4")]
     by = {r["material"]: r for r in mst.get("rows", [])}
     rows, styles = [], {}
     for i, mid in enumerate([m for m in order if m in by]):
@@ -1018,34 +1034,34 @@ def s_consequence(d: Deck):
         rows.append(row)
     if not rows:
         rows = [[PENDING] * (len(cols) + 2)]
-    table(s, MX, TOP, 8.2, ["Material (graft and new-bone volumes)"] + [c[1] for c in cols] + ["Total\nmineral"], rows,
+    table(s, MX, TOP, 8.2, ["Material"] + [c[1] for c in cols] + ["Total\nmineral"], rows,
           col_w=[2.5, 1.22, 1.12, 1.12, 1.22, 1.02], size=11, head_size=11, row_h=0.31, head_h=0.5, styles=styles)
-    single = [MAT_ABBR.get(m, m) for m in order if m in by and _support_cell(by[m]["cells"].get("unknown", {}))[0]
-              == "supported"]
-    early = [MAT_ABBR.get(m, m) for m in order if m in by and m not in single
-             and _support_cell(by[m]["cells"].get("2 wk", {}))[0] == "supported"
-             and _support_cell(by[m]["cells"].get("unknown", {}))[0] != "supported"]
-    day0 = [MAT_ABBR.get(m, MAT_SHORT.get(m, m)) for m in order if m in by and m not in single and m not in early
-            and _support_cell(by[m]["cells"].get("day-0, 0 µm, unknown wk", {}))[0] == "conditional"]
-    never = [MAT_SHORT.get(m, m).lower() if m != "dbm" else "DBM" for m in order if m in by
-             and all(_support_cell(c)[0] == "refused" for c in by[m]["cells"].values())]
+    def gst(m, col):
+        return (by[m]["cells"].get(col) or {}).get("graft")
+
+    def nbs(m, col):
+        return (by[m]["cells"].get(col) or {}).get("new_bone")
+    sim = [m for m in order if m in by and by[m]["cells"]]
+    single = [MAT_ABBR.get(m, m) for m in sim if gst(m, "unknown") == "supported"]
+    day0 = [MAT_ABBR.get(m, MAT_SHORT.get(m, m)) for m in sim if gst(m, "unknown") != "supported"
+            and gst(m, "day-0 scan, 4 wk") == "supported_with_conditions"]
+    nb_any = [MAT_ABBR.get(m, m) for m in sim if any(nbs(m, c) == "supported" for c, _ in cols)]
     t = final_test(F)
-    items = [f"Single scan, any timepoint: **{', '.join(single) or 'none'}** (dense calcium phosphate), at low noise.",
-             f"Only at a known early timepoint: **{', '.join(early) or 'none'}**.",
-             f"Only with a day-0 scan, conditionally (fragile under motion): {', '.join(day0) or 'none'}.",
-             f"Never: {', '.join(never) or 'none'}."]
+    items = [f"Residual graft volume, single scan: **{', '.join(single) or 'none'}** (dense calcium phosphate).",
+             f"**New-bone volume: supported for {', '.join(nb_any) or 'no material'}** on this scan"
+             + (f", and never in the held-out test {t['id']}." if t else "."),
+             f"Graft only with a day-0 scan, conditionally (fragile under motion; no desktop workflow): "
+             f"{', '.join(day0) or 'none'}."]
     if t:
-        items.append("**Total mineral is the robust endpoint**: reported for every material here and the most "
-                     f"accurate when supported, but under blur the advisor now refuses it too (see {t['id']}).")
+        items.append(f"Total mineral is reported here for every non-metal material, but in {t['id']} it was "
+                     "supported only with sharp imaging: under blur the advisor refuses it too.")
     text(s, 9.1, TOP, 3.65, 4.95, bullets(items, SKY), 12.5, space=6)
-    st = mst.get("setting", {})
-    vox = st.get("voxel_um")
+    sc = mst.get("scan", {})
     text(s, MX, TOP + 0.5 + 0.31 * len(rows) + 0.15, 8.2, 0.9,
-         f"Decisions of the shipped advisor {mst.get('advisor_version', PENDING)} at one illustrative low-noise "
-         f"setting: noise {st.get('noise_rel', PENDING)} of the bone–soft-tissue contrast, "
-         f"{f'{vox:g}' if ok(vox) else PENDING} µm voxels, graft {pct(st.get('graft_prior'))} of mineral, no measured "
-         "references. Higher noise refuses more. * new bone only, with conditions (the graft itself is invisible). "
-         "“Conditional” day-0 support is fragile under granule motion.", 11, MUTED)
+         f"Full per-scan decisions of the shipped advisor {mst.get('advisor_version', PENDING)} on one SYNTHETIC "
+         f"{sc.get('model', PENDING)} phantom per material ({sc.get('voxel_um', PENDING)} µm voxels, PSF "
+         f"{sc.get('psf_um', PENDING)} µm), including the scan-measured blur and ambiguous-rim checks. G = residual graft volume, NB = new-bone "
+         "volume. Noisier or blurrier scans refuse more. “Conditional” day-0 support is fragile under granule motion.", 11, MUTED)
 
 
 def held_table(d: Deck, s, y, size=12, row_h=0.62):

@@ -8,12 +8,20 @@ from osteoquant.phantom import PhantomConfig, generate_phantom
 SP = (40.0, 40.0, 40.0)
 
 
-def _scene(seed=0, shape=(40, 48, 48)):
+def _scene(seed=0, shape=(40, 48, 48), textured=True):
+    """Tube-shaped host around a defect. ``textured`` adds pores to the host wall so that every direction, including
+    the tube axis, is constrained (a featureless tube cannot verify axial alignment: C3-SCI-04)."""
     rng = np.random.default_rng(seed)
     img = rng.normal(100, 8, shape).astype(np.float32)
     zz, yy, xx = np.indices(shape)
     host = ((yy - 24) ** 2 + (xx - 24) ** 2 > 18 ** 2)
     img[host] += 900
+    if textured:
+        prng = np.random.default_rng(1000 + seed)
+        hz, hy, hx = np.nonzero(host)
+        for i in prng.choice(hz.size, 90, replace=False):
+            pore = (zz - hz[i]) ** 2 + (yy - hy[i]) ** 2 + (xx - hx[i]) ** 2 <= 4
+            img[pore & host] = 100.0
     granules = np.zeros(shape, bool)
     for c in ((12, 20, 20), (20, 28, 22), (28, 20, 28)):
         granules |= ((zz - c[0]) ** 2 + (yy - c[1]) ** 2 + (xx - c[2]) ** 2) <= 9
@@ -31,6 +39,18 @@ def test_registration_qc_passes_aligned_and_flags_shift():
     bad = registration_qc(img, shifted, exclude=roi, spacing_um=SP)
     assert bad["residual_shift_um_max"] == pytest.approx(np.hypot(200, 200), rel=0.15)
     assert not bad["pass"]
+
+
+def test_registration_qc_fails_closed_on_featureless_tube_axis():
+    """C3-SCI-04: along the axis of a featureless tube no block can measure a shift; QC must not pass, even when the
+    true misalignment is large, and must name the unverifiable direction."""
+    img, _, roi = _scene(textured=False)
+    noisy = img + np.random.default_rng(1).normal(0, 8, img.shape).astype(np.float32)
+    shifted = ndi.shift(noisy, (6, 0, 0), order=0, mode="nearest")          # 240 µm along the tube axis
+    for moved in (noisy, shifted):
+        q = registration_qc(img, moved, exclude=roi, spacing_um=SP)
+        assert not q["pass"] and "cannot be verified" in q["reason"]
+        assert abs(q["unverifiable_direction"][0]) > 0.9                       # the z (tube) axis
 
 
 def test_registration_qc_exact_tolerance_shift_passes():

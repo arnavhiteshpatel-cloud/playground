@@ -21,12 +21,20 @@ def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+class MultipleGenerateEvents(ValueError):
+    """More than one ``report.generate`` event for one report: the trail was extended after generation."""
+
+
 def generate_event(store, report_id: int) -> dict | None:
-    """The hash-chained ``report.generate`` audit event of a report (None if absent)."""
-    for e in store.audit.events(object_type="report", object_id=report_id, limit=10000):
-        if e["action"] == "report.generate":
-            return e
-    return None
+    """The hash-chained ``report.generate`` audit event of a report (None if absent).
+
+    Exactly one is written per report. A second one can only come from appending to the trail, so it is refused
+    rather than letting the newest event win (cycle-3 review C3-PRD-03)."""
+    evs = [e for e in store.audit.events(object_type="report", object_id=report_id, limit=10000)
+           if e["action"] == "report.generate"]
+    if len(evs) > 1:
+        raise MultipleGenerateEvents(f"{len(evs)} report.generate events")
+    return evs[0] if evs else None
 
 
 def _fail(project, report_id, reason: str):
@@ -51,9 +59,14 @@ def verify_report(project, report_id: int, check_pdf: bool = True) -> dict:
     if not rep:
         raise KeyError("report not found")
     meta = store.q1("SELECT * FROM desktop_report_meta WHERE report_id=?", (report_id,)) or {}
-    ev = generate_event(store, report_id)
+    try:
+        ev = generate_event(store, report_id)
+    except MultipleGenerateEvents as e:
+        _fail(project, report_id, f"the audit trail holds more than one generation record ({e})")
     if ev is None:
         _fail(project, report_id, "no report.generate event in the audit trail")
+    if rep.get("created_by") is not None and str(ev.get("user_id")) != str(rep["created_by"]):
+        _fail(project, report_id, "the generation record was not written by the report's creator")
     det = ev.get("details") or {}
     rec, aud = meta.get("bundle_sha256"), det.get("bundle_sha256")
     if not rec or not aud:
@@ -115,9 +128,10 @@ def report_author_ids(project, bundle: dict) -> set[int]:
 def audited_signature_roles(store, report_id: int) -> dict[int, str]:
     """review id -> signature role key, as recorded in the hash-chained audit trail."""
     out = {}
-    for e in store.audit.events(object_type="report", object_id=report_id, limit=10000):
+    # oldest first, first record per review wins: an appended record cannot re-label a signature (C3-PRD-03)
+    for e in reversed(store.audit.events(object_type="report", object_id=report_id, limit=10000)):
         if e["action"] == "review.signature_role":
             d = e.get("details") or {}
-            if d.get("review_id") is not None and d.get("signature_role_key"):
+            if d.get("review_id") is not None and d.get("signature_role_key") and int(d["review_id"]) not in out:
                 out[int(d["review_id"])] = d["signature_role_key"]
     return out

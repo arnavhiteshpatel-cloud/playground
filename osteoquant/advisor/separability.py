@@ -47,9 +47,12 @@ MIN_STRUCT_VOXELS = 3.0         # thickness endpoints need structures ≥3 voxel
 HOST_REL_MATURE = 1.0
 MIN_REFERENCE_SAMPLES = 500     # measured reference distributions need at least this many voxels
 MIN_GRAFT_FRACTION = 0.05       # below this share of mineral, relative graft-volume error is unbounded
-ADVISOR_VERSION = "1.4.2"
+ADVISOR_VERSION = "1.4.3"
 PROFILE_SCAN_MISMATCH_TOL = 0.15   # observed bright-mode vs profile graft level (relative)
-RIM_TOL = 0.10                     # ≥1.4.0: max ambiguous graft-rim share of new bone / half-rim share of mineral
+RIM_TOL = 0.10                     # ≥1.4.0: max ambiguous graft-rim share of the would-be new bone
+# 1.4.3 (C3-SCI-10): total mineral is refused when the WORST-CASE error from the rim — all of it graft halo,
+# rim / (mineral − rim) — could exceed the failure threshold (the 1.4.1 gate on half the rim admitted up to 25%)
+RIM_MINERAL_MAX = 0.20
 # Resorbable materials whose granules become microporous/fragmented and enter the bone intensity range as they
 # resorb (knowledge base: beta-TCP almost fully resorbed by 8 weeks in minipig; CaSO4 and glasses similar or faster).
 RESORBABLE_EARLY_ONLY = {"beta_tcp", "bcp", "calcium_sulfate", "bioglass_45s5", "s53p4", "polymer_ceramic_composite"}
@@ -58,6 +61,10 @@ RESORBABLE_EARLY_ONLY = {"beta_tcp", "bcp", "calcium_sulfate", "bioglass_45s5", 
 # slowly, so it is not in this set (1.4.2, C2-SCI-10)
 REMODELLING_BONE_GRAFTS = {"autograft", "allograft", "dbm"}
 EARLY_WEEKS_MAX = 4.0
+# 1.4.3 (C2-SCI-11 remainder): the day-0 footprint of a resorbing material becomes new bone by creeping substitution;
+# beyond this time since implantation (or when the time is unknown) day-0 support is refused for resorbable materials.
+# Policy constant (ASSUMPTION), not derived from data; to be revisited with species-specific resorption kinetics.
+DAY0_RESORBABLE_WEEKS_MAX = 12.0
 # Changelog: 1.0.x (pre-review, used by S1/S1b runs before cycle-1 review) → 1.1.0: decision uses the single-
 # threshold rule actually applied (union oracle kept as upper bound); support must hold at the estimated graft
 # share and at half of it (review IMG-01); metals refused (IMG-02); measured samples need ≥500 voxels and cannot
@@ -82,6 +89,15 @@ EARLY_WEEKS_MAX = 4.0
 # 1.4.2 (cycle-2 science review; paths NOT exercised by S1H3: metals, day-0, BCP, measured references): metals refuse
 # mineral endpoints; DBBM allowed the day-0 mechanism (non-remodelling); BCP resorbable; measured references broadened
 # by the analysis scan's noise. Support is bound to the validated method in pipeline.bind_support_to_method.
+# 1.4.3 (cycle-3 science review; paths NOT exercised by S1H3, which used characterised profiles only): the ambiguous-
+# rim gate also applies when no graft threshold exists (unspecified/unknown material: voxels brighter than host bone
+# are the graft proxy, C3-SCI-01); measured graft samples get the analysis scan's partial-volume mixing (blur-aware
+# with measured granule thickness) and measured new-bone samples the scan's noise in the mineral rule (C3-SCI-07);
+# BCP and polymer-ceramic composites join the day-0 resorbable list and day-0 support for resorbable materials needs a
+# known time since implantation ≤ DAY0_RESORBABLE_WEEKS_MAX; knowledge-base profiles without a physics cross-check
+# (S53P4, polymer-ceramic composite) are treated as uncertain (C2-SCI-11 remainder). The total-mineral rim gate uses the
+# worst case rim/(mineral − rim) ≤ 0.20 instead of half the rim ≤ 0.10 of mineral (C3-SCI-10): this one change also
+# touches the S1H3 path, in the stricter direction only (anything 1.4.3 supports there, 1.4.1 supported too).
 
 # Assumed new-bone maturity range in relative units. Early/mid healing: woven 650–1000 mgHA/cm³ vs
 # mature host ≈1075 → (0.60, 0.93) (SCIENTIFIC_EVIDENCE row 4, assumption anchored to a published callus
@@ -322,6 +338,10 @@ def material_profile(material: str | dict | MaterialProfile, energy_keV: float =
                     prof.uncertain = True
                     prof.source += (f" | physics model (NIST, assumed porosity) gives {phys.rel_mean:.2f} vs knowledge "
                                     f"base {prof.rel_mean:.2f}: profile uncertain")
+            elif phys is None and not prof.radiolucent:
+                # 1.4.3: no physics model to cross-check the knowledge-base level → appearance uncertain (C2-SCI-11)
+                prof.uncertain = True
+                prof.source += " | no physics model to cross-check the knowledge-base level: profile uncertain"
             return prof
     except Exception:
         pass
@@ -469,7 +489,13 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
 
     # --- intensity mechanism
     if graft_samples_rel is not None:
-        gm = ClassModel("samples", samples=np.asarray(graft_samples_rel, float), surface_fraction=0.0)
+        # 1.4.3: measured samples come from granule interiors (characterisation) or another scan; THIS scan's
+        # partial volume (measured granule thickness and blur when available) is added (C3-SCI-07)
+        st_um = graft_struct_um if graft_struct_um else 400.0
+        gm = ClassModel("samples", samples=np.asarray(graft_samples_rel, float),
+                        surface_fraction=surface_fraction(st_um, voxel_um),
+                        blur_sigma_vox=blur_sigma_vox if (blur_sigma_vox and graft_struct_um) else None,
+                        thickness_vox=(graft_struct_um / max(voxel_um, 1e-6)) if (blur_sigma_vox and graft_struct_um) else None)
     else:
         # ≥1.4.0: the scan's own deep graft-like level (if consistent with the profile, checked below) and measured
         # granule thickness replace the profile's assumed values; blur from the scan drives partial volume
@@ -535,7 +561,8 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
     required = ("registered", "qc_pass", "untracked_fraction", "max_displacement_um")
     day0_complete = bool(day0) and all(k in day0 and day0[k] is not None for k in required)
     day0_ok = day0_complete and bool(day0.get("registered") and day0.get("qc_pass"))
-    resorbable = prof is not None and prof.id in ("calcium_sulfate", "beta_tcp", "bioglass_45s5", "s53p4", "dbm")
+    resorbable = prof is not None and prof.id in (RESORBABLE_EARLY_ONLY | {"dbm"})
+    day0_late = resorbable and (healing_weeks is None or healing_weeks > DAY0_RESORBABLE_WEEKS_MAX)
     for e in GRAFT_ENDPOINTS:
         rule = intensity.get("dice_graft_threshold_rule", intensity["dice_graft"])
         if intensity_ok and not (scarce and e.startswith(("residual_graft", "graft_fraction"))):
@@ -570,6 +597,12 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
             elif day0["max_displacement_um"] > day0.get("tolerance_um", 200):
                 ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
                                         f"graft displacement {day0['max_displacement_um']:.0f} µm exceeds tolerance")
+            elif day0_late:
+                ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
+                                        "resorbable material: the day-0 footprint is replaced by new bone over time; "
+                                        f"day-0 support needs a known time since implantation ≤ "
+                                        f"{DAY0_RESORBABLE_WEEKS_MAX:.0f} weeks (timepoint: "
+                                        f"{'unknown' if healing_weeks is None else f'{healing_weeks:g} weeks'})")
             else:
                 ep[e] = EndpointSupport(e, CONDITIONAL, "day0_registration",
                                         f"intensity alone insufficient (threshold-rule Dice {rule:.2f}); "
@@ -671,7 +704,8 @@ def mineral_rule(material, *, noise_rel: float, voxel_um: float, graft_samples_r
     soft[halo] = rng.uniform(0.0, 0.5, int(halo.sum())) * nbr       # minority (<50%) mineral phase in the voxel
     soft = soft + rng.normal(0, noise_rel, n_soft)
     if new_samples_rel is not None and np.size(new_samples_rel) >= MIN_REFERENCE_SAMPLES:
-        nb_vals = rng.choice(np.asarray(new_samples_rel, float), 40_000)
+        # 1.4.3: the analysis scan's noise is added to measured samples here too (C3-SCI-07)
+        nb_vals = rng.choice(np.asarray(new_samples_rel, float), 40_000) + rng.normal(0, noise_rel, 40_000)
     else:
         nbm = ClassModel("uniform", *nb_range, surface_fraction=surface_fraction(150.0, voxel_um))
         nb_vals = nbm.draw(40_000, rng, neighbors=((0.0, 1.0),)) + rng.normal(0, noise_rel, 40_000)
@@ -728,8 +762,8 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
     # half the rim as a share of total mineral, lies in the one-voxel rim around graft-like voxels, the endpoint is not
     # identifiable (coating vs halo)
     if rim_fraction_new is not None and not no_graft:
-        a.intensity["ambiguous_rim"] = {"fraction_of_new_bone": rim_fraction_new, "half_rim_fraction_of_mineral": rim_fraction_mineral,
-                                        "width_vox": rim_width_vox}
+        a.intensity["ambiguous_rim"] = {"fraction_of_new_bone": rim_fraction_new,
+                                        "worst_case_mineral_error": rim_fraction_mineral, "width_vox": rim_width_vox}
         if rim_fraction_new > RIM_TOL:
             why = (f"{rim_fraction_new:.0%} of the would-be new bone is a one-voxel rim touching graft-like voxels: new-bone "
                    "coating cannot be told from graft partial-volume halo at this resolution")
@@ -737,9 +771,9 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
                 if e in a.endpoints and a.endpoints[e].status != NOT_SUPPORTED:
                     a.endpoints[e] = EndpointSupport(e, NOT_SUPPORTED, None, why)
             _thickness_endpoint(a.endpoints, voxel_um)
-        if rim_fraction_mineral is not None and rim_fraction_mineral > RIM_TOL:
-            why = (f"the graft partial-volume rim makes ≈{rim_fraction_mineral:.0%} of total mineral ambiguous "
-                   f"(limit {RIM_TOL:.0%})")
+        if rim_fraction_mineral is not None and rim_fraction_mineral > RIM_MINERAL_MAX:
+            why = (f"the graft partial-volume rim could bias total mineral by up to {rim_fraction_mineral:.0%} "
+                   f"(worst case: the whole rim is graft halo; limit {RIM_MINERAL_MAX:.0%})")
             for e in MINERAL_ENDPOINTS:
                 if a.endpoints[e].status != NOT_SUPPORTED:
                     a.endpoints[e] = EndpointSupport(e, NOT_SUPPORTED, None, why)

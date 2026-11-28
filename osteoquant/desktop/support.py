@@ -56,7 +56,8 @@ ADVISOR_ENDPOINT_MAP = {
     "new_bone_thickness": ["Tb_Th_um", "Tb_Sp_um", "Tb_N_per_mm"],
     "mineral_fraction_of_defect": ["mineralized_fraction"],
 }
-ADVISOR_STATUS = {"supported": SUPPORTED, "supported_with_conditions": FLAGGED, "not_supported": NOT_SUPPORTED}
+ADVISOR_STATUS = {"supported": SUPPORTED, "supported_with_conditions": FLAGGED, "not_supported": NOT_SUPPORTED,
+                  "not_assessed": NOT_ASSESSED}
 # desktop endpoints whose support depends on graft / new-bone separability (assessed by the advisor)
 ADVISOR_KEYS = sorted({k for keys in ADVISOR_ENDPOINT_MAP.values() for k in keys})
 
@@ -225,15 +226,29 @@ def endpoint_value(result: dict, support: dict, key: str) -> tuple:
     return float(v) * scale, e["status"], reasons
 
 
+def _reported(result: dict):
+    """(reported metrics or None, suppressed list) evaluated at read time: the stored ``reported_metrics`` reflect the
+    rules in force when the scan was analysed, so they are recomputed from the raw metrics with the current
+    measurement-support view (cycle-3 review C3-PRD-01)."""
+    try:
+        from ..advisor.integration import effective_support, reported_view
+        if effective_support(result or {}):
+            rep, sup, _ = reported_view(result)
+            return rep, sup
+    except ImportError:          # library without the advisor
+        pass
+    return (result or {}).get("reported_metrics"), (result or {}).get("suppressed_metrics") or []
+
+
 def suppressed_reasons(result: dict) -> dict:
     """metric path -> reason for metrics the advisor suppressed (reported value is None)."""
-    return {d.get("metric"): d.get("reason", "") for d in (result or {}).get("suppressed_metrics") or []}
+    return {d.get("metric"): d.get("reason", "") for d in _reported(result)[1]}
 
 
 def reported_value(result: dict, path: str):
-    """(value, reason). Uses ``reported_metrics`` (unsupported endpoints are None) when the
-    pipeline produced it, else the raw metrics. ``reason`` explains a None value."""
-    rep = (result or {}).get("reported_metrics")
+    """(value, reason). Uses the reported view (unsupported endpoints are None, evaluated now) when the
+    pipeline produced an assessment, else the raw metrics. ``reason`` explains a None value."""
+    rep = _reported(result)[0]
     src = rep if isinstance(rep, dict) else (result or {}).get("metrics") or {}
     v = get_path(src, path)
     if v is not None:

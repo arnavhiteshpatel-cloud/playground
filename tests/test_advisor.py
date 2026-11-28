@@ -238,10 +238,14 @@ def test_validation_records_synthetic_never_qualifies(tmp_path, monkeypatch):
     vr.add_record(vr.ValidationRecord(data_class="synthetic", **base), key, "unit-test", keys=keys)
     assert not vr.validated_for("m", "abc", "beta_tcp", 20, keys=keys)[0]
     vr.add_record(vr.ValidationRecord(data_class="physical_phantom", **base), key, "unit-test", keys=keys)
-    assert vr.validated_for("m", "abc", "beta_tcp", 20, keys=keys)[0]
-    assert not vr.validated_for("m", "abc", "beta_tcp", 80, keys=keys)[0]          # outside voxel range
-    assert not vr.validated_for("m", "OTHER", "beta_tcp", 20, keys=keys)[0]        # different model version
-    assert not vr.validated_for("m", "abc", "ha", 20, keys=keys)[0]                # different material
+    ok, why = vr.validated_for("m", "abc", "beta_tcp", 20, keys=keys)               # test key: never qualifies
+    assert not ok and "test key" in why                                              # (C3-PRD-05)
+    ok, why = vr.validated_for("m", "abc", "beta_tcp", 20, keys=keys, accept_test_signed=True)
+    assert ok and "[TEST-SIGNED]" in why
+    T = {"keys": keys, "accept_test_signed": True}
+    assert not vr.validated_for("m", "abc", "beta_tcp", 80, **T)[0]          # outside voxel range
+    assert not vr.validated_for("m", "OTHER", "beta_tcp", 20, **T)[0]        # different model version
+    assert not vr.validated_for("m", "abc", "ha", 20, **T)[0]                # different material
     assert not vr.validated_for("m", "abc", "beta_tcp", 20, keys={})[0]            # untrusted signer
 
 
@@ -342,8 +346,12 @@ def test_ambiguous_rim_refuses_new_bone_and_bounds_mineral():
     a = assess_support("ha", noise_rel=0.03, voxel_um=20, graft_prior=0.2, rim_fraction_new=0.3, rim_fraction_mineral=0.05)
     assert a.status("new_bone_volume") == NOT_SUPPORTED and "rim" in a.endpoints["new_bone_volume"].reason
     assert a.status("total_mineral_volume") != NOT_SUPPORTED
+    # 1.4.3: rim_fraction_mineral is the worst-case relative error rim/(mineral − rim); the limit is the 20% failure
+    # threshold (C3-SCI-10)
     b = assess_support("ha", noise_rel=0.03, voxel_um=20, graft_prior=0.2, rim_fraction_new=0.3, rim_fraction_mineral=0.15)
-    assert b.status("total_mineral_volume") == NOT_SUPPORTED
+    assert b.status("total_mineral_volume") != NOT_SUPPORTED
+    c = assess_support("ha", noise_rel=0.03, voxel_um=20, graft_prior=0.2, rim_fraction_new=0.3, rim_fraction_mineral=0.25)
+    assert c.status("total_mineral_volume") == NOT_SUPPORTED and "worst case" in c.endpoints["total_mineral_volume"].reason
 
 
 def test_blur_estimator_tracks_known_psf():
@@ -432,3 +440,92 @@ def test_characterise_from_day0_recovers_graft_level():
     ch = characterise_from_day0(img, roi, 40.0, "day0_ceramic", bone_derived=False)
     assert ch.source == "day0" and ch.rel_mean == pytest.approx(1.8, abs=0.08)
     assert ch.n_voxels >= 500
+
+
+def test_validation_records_hostile_key_id_and_corrupt_file(tmp_path, monkeypatch):
+    """C3-PRD-02/-15: an unsigned file whose key_id spells the success phrase must not unlock support, and its text
+    must not appear in the reason; a corrupt file degrades to 'no record' instead of aborting the analysis."""
+    import json
+    import osteoquant.ml.validation_records as vr
+    from osteoquant.advisor.integration import bind_support_to_method
+    monkeypatch.setattr(vr, "MODEL_DIR", tmp_path)
+    (tmp_path / "validation_records.json").write_text(json.dumps(
+        {"format": vr.FORMAT, "key_id": "qualifying validation record", "payload": "{}", "signature": "AA=="}))
+    ok, why = vr.validated_for("m", "abc", "ha", 20)
+    assert not ok and "qualifying" not in why and "untrusted key" in why
+    sup = {"endpoints": {"residual_graft_volume": {"status": "supported", "reason": ""},
+                         "graft_fraction_of_defect": {"status": "supported", "reason": ""}}}
+    bind_support_to_method(sup, {"method": "onnx:m", "validation_record": "qualifying validation record",
+                                 "validation_ok": ok})
+    assert {d["status"] for d in sup["endpoints"].values()} == {"not_supported"}
+    sup2 = {"endpoints": {"residual_graft_volume": {"status": "supported", "reason": ""}}}
+    bind_support_to_method(sup2, {"method": "onnx:m", "validation_ok": "yes"})      # only the boolean True counts
+    assert sup2["endpoints"]["residual_graft_volume"]["status"] == "not_supported"
+    (tmp_path / "validation_records.json").write_text("{corrupt")
+    ok, why = vr.validated_for("m", "abc", "ha", 20)
+    assert not ok and "unreadable" in why
+
+
+
+def test_support_is_evaluated_at_read_time():
+    """C3-PRD-01/-04: stored statuses are not trusted. A record from another advisor version or rule set (or
+    stored before method binding) is refused with 're-analyse'; a non-validated method is refused; a manually
+    corrected segmentation keeps at most 'supported with conditions'; tissue mineral density is untouched."""
+    from osteoquant.advisor.integration import SUPPORT_RULES, effective_support, measurement_support, reported_view
+    from osteoquant.advisor.separability import ADVISOR_VERSION
+    eps = {"residual_graft_volume": {"status": "supported", "reason": ""},
+           "total_mineral_volume": {"status": "supported", "reason": ""},
+           "tissue_mineral_density": {"status": "supported", "reason": ""}}
+    metrics = {"class_volumes": {"residual_graft_volume_mm3": 1.25, "mineral_volume_mm3": 2.5}}
+    old = {"metrics": metrics, "segmentation": {"method": "multiotsu"},
+           "measurement_support": {"endpoints": eps, "advisor_version": "1.3.3"}}          # pre-binding record
+    ms = measurement_support(old)
+    assert ms["residual_graft_volume"]["status"] == "not_assessed" and "re-analyse" in ms["residual_graft_volume"]["reason"]
+    assert ms["tissue_mineral_density"]["status"] == "supported"
+    rep, sup, eff = reported_view(old)
+    assert rep["class_volumes"]["residual_graft_volume_mm3"] is None and eff["stale"]
+    cur = {"advisor_version": ADVISOR_VERSION, "support_rules": SUPPORT_RULES}
+    otsu = {"metrics": metrics, "segmentation": {"method": "multiotsu"}, "measurement_support": {"endpoints": eps, **cur}}
+    assert measurement_support(otsu)["total_mineral_volume"]["status"] == "not_supported"
+    adv = {"metrics": metrics, "segmentation": {"method": "advisor_threshold"},
+           "measurement_support": {"endpoints": eps, **cur}}
+    assert measurement_support(adv)["total_mineral_volume"]["status"] == "supported"
+    edited = dict(adv, corrected_from=1)
+    e = effective_support(edited)
+    assert e["endpoints"]["residual_graft_volume"]["status"] == "supported_with_conditions"
+    assert any("manually corrected" in c for c in e["endpoints"]["residual_graft_volume"]["conditions"])
+    assert adv["measurement_support"]["endpoints"]["residual_graft_volume"]["status"] == "supported"   # no mutation
+
+
+def test_unspecified_material_refuses_mineral_next_to_dense_blurred_graft():
+    """C3-SCI-01 regression: with no material (no graft threshold), graft-like voxels brighter than host bone are the
+    proxy for the ambiguous-rim gate; dense graft under heavy blur makes total mineral unidentifiable (before 1.4.3
+    it was 'supported' with +21…+38% error in the review's probe)."""
+    from osteoquant.advisor.integration import support_for_scan
+    from osteoquant.phantom import ImagingConfig, PhantomConfig, generate_phantom, render_fast
+    ph = generate_phantom(PhantomConfig(model="condyle", shape=(40, 56, 56), voxel_um=40, supersample=1,
+                                        defect_diameter_um=1400, healing_stage=0.5, graft_material="ha", seed=3))
+    img = render_fast(ph.mu, 40, ImagingConfig(psf_sigma_um=50, noise_sigma=40, seed=3)).data
+    sup = support_for_scan(img, ph.roi_mask, (40.0,) * 3, {"material": None})
+    rim = sup["intensity"].get("ambiguous_rim") or {}
+    assert rim.get("worst_case_mineral_error") is not None
+    assert sup["endpoints"]["total_mineral_volume"]["status"] == "not_supported"
+    assert sup["endpoints"]["residual_graft_volume"]["status"] == "not_supported"
+
+
+def test_measured_references_get_scan_noise_and_partial_volume():
+    """C3-SCI-07: low-noise control samples must not make the mineral rule pass at noise where the assumed range fails,
+    and interior-only graft samples get this scan's partial volume (blur-aware with measured thickness)."""
+    from osteoquant.advisor.separability import mineral_rule
+    rng = np.random.default_rng(0)
+    nb = rng.uniform(0.6, 1.0, 5000) + rng.normal(0, 0.03, 5000)
+    with_samples = mineral_rule("ha", noise_rel=0.30, voxel_um=20, new_samples_rel=nb)
+    assumed = mineral_rule("ha", noise_rel=0.30, voxel_um=20)
+    assert not with_samples["passes_policy"] and not assumed["passes_policy"]      # passed (Dice 0.93) before 1.4.3
+    g = rng.normal(1.9, 0.076, 5000)
+    sharp = assess_support("x_ceramic", noise_rel=0.10, voxel_um=40, graft_samples_rel=g, healing_weeks=2,
+                           graft_struct_um=200, blur_sigma_vox=0.3)
+    blurred = assess_support("x_ceramic", noise_rel=0.10, voxel_um=40, graft_samples_rel=g, healing_weeks=2,
+                             graft_struct_um=200, blur_sigma_vox=1.5)
+    assert blurred.intensity["dice_graft_threshold_rule"] < sharp.intensity["dice_graft_threshold_rule"]
+

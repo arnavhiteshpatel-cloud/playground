@@ -66,7 +66,7 @@ an HA calibration was recorded. User guide: [§5](../desktop/USER_GUIDE.md#5-vie
 Select the scan (or an animal, group or study) and choose **Analyse...**:
 
 * **Defect model** and, if you know it, the **nominal defect diameter** (helps automatic ROI detection).
-* **Segmentation:** Multi-Otsu (classical) is the default.
+* **Segmentation:** the advisor threshold is the default and the only method that carries measurement support; with multi-Otsu or a model, graft and new-bone values are reported as not measured.
 * **Graft material:** choose the material actually implanted, *Unspecified* if unknown, or *No graft (empty
   defect)* for empty-defect controls. The measurement-support advisor uses this to decide which endpoints can be
   reported. If you are unsure, *Unspecified* is the conservative choice: graft and new-bone endpoints will not be

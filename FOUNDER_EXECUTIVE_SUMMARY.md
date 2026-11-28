@@ -23,9 +23,9 @@ interviews or pilots, and no test on real graft materials.
 
 ## 2. What the evidence shows — including what failed
 All graft and new-bone evidence is **simulation** (computational phantoms with a known answer).
-* **The final held-out test.** In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.045); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported.
-  (`experiments/results/exp_S1H3_heldout.json`) The shipped advisor 1.4.2 differs only in rules S1H3 does not
-  exercise. The simulator and the advisor share attenuation physics, so this shows internal safety, not accuracy on
+* **The final held-out test.** In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens from 9 phantom structures; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.34 counting phantom structures as the unit; 0.045 if the 80 supported measurements were independent); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported; no volume endpoint supported for 58% of specimens.
+  (`experiments/results/exp_S1H3_heldout.json`) The shipped advisor 1.4.3 differs from 1.4.1 in rules S1H3 does not exercise, and in one it does (the
+  total-mineral rim gate), only in the stricter direction. The simulator and the advisor share attenuation physics, so this shows internal safety, not accuracy on
   real scans. No physical validation exists.
 * **The failures that came first.** S1H (advisor 1.3.3) failed on new bone: wider scanner blur pushed graft edges into
   the new-bone range. S1H2 (advisor 1.4.0) failed on total mineral: the ambiguous rim around graft was too narrow under

@@ -713,7 +713,9 @@ def save_label_revision(project, scan_id: int, base_segmentation_id: int, labels
     prev = json.loads(base_m["metrics"]) if base_m else {}
     record = {"metrics": met, "corrected_from": base["version"], "config": prev.get("config", {"thickness_metrics": thick}),
               "qc": prev.get("qc"), "plausibility": prev.get("plausibility"), "uncertainty": prev.get("uncertainty"),
-              "roi": prev.get("roi"), "status": "corrected_unreviewed"}
+              "roi": prev.get("roi"), "status": "corrected_unreviewed",
+              # the method that produced the base labels: read-time support binding needs it (C3-PRD-01/-04)
+              "segmentation": prev.get("segmentation")}
     if prev.get("measurement_support"):
         # support depends on image, ROI and config (not on the labels): carry it over and
         # rebuild the reported view of the recomputed metrics
@@ -796,6 +798,10 @@ def sign_review(project, password: str, object_type: str, object_id: int, decisi
     of the study is not approved; "needs changes" and "rejected" are always possible."""
     if not meaning or len(meaning.strip()) < 5:
         raise ValueError("State the meaning of the signature (at least 5 characters)")
+    if getattr(project, "integrity_problems", None):
+        raise PermissionError("Electronic signatures are disabled for this project: its audit trail no longer matches "
+                              "an anchor recorded earlier (" + project.integrity_problems[0] + "). An administrator "
+                              "must investigate before anything is signed.")
     user = project.require_user()
     project.store.require(user, "review")
     allowed = signature_roles_for(user)
@@ -838,6 +844,8 @@ def sign_review(project, password: str, object_type: str, object_id: int, decisi
         except Exception as e:  # noqa: BLE001 - the signature is recorded; the signed copy can be re-rendered
             project.store.audit.record("report.signed_copy_failed", user["id"], user["org_id"], "report", object_id,
                                        {"error": f"{type(e).__name__}: {e}"})
+    from .anchors import record_anchor
+    record_anchor(project, f"review.{decision}")
     return rid
 
 
@@ -1133,6 +1141,9 @@ def generate_report(project, study_id: int, watermark: str | None = None, ctx=No
     try:
         bundle["reviewers"] = _report_signature_rows(project, rid, bundle)
         bundle["_watermark"] = watermark
+        # the audit chain head at generation is printed on the report: a copy held by others is an anchor the
+        # project's users cannot change (C3-PRD-03)
+        bundle["audit_anchor"] = store.audit.anchor()
         r = build_pdf(bundle, pdf, csvp, watermark=watermark)
         # integrity record (C2-PRD-04/05): hash of the exact bundle bytes, stored with the review status
         data = json.dumps(bundle, default=str).encode("utf-8")
@@ -1161,6 +1172,8 @@ def generate_report(project, study_id: int, watermark: str | None = None, ctx=No
         else:
             store.exec("UPDATE reports SET status='failed' WHERE id=?", (rid,))
         raise
+    from .anchors import record_anchor
+    record_anchor(project, "report.generate")
     _progress_after_commit(ctx, 1.0, "done")
     return {"report_id": rid, "pdf": str(pdf), "csv": str(csvp), "sha256": r["pdf_sha256"], "blinded": bool(blinded)}
 
@@ -1327,6 +1340,8 @@ def export_audit(project, path, blinded: bool = False) -> dict:
     store.audit.record("audit.export", user["id"], user["org_id"],
                        details={"path": str(path), "sha256": file_sha, "events": len(events),
                                 "chain_ok": bool(ver.get("ok")), "blinded": bool(blinded)})
+    from .anchors import record_anchor
+    record_anchor(project, "audit.export")
     return {"path": str(path), "events": len(events), "verification": head["chain_verification"], "sha256": file_sha}
 
 

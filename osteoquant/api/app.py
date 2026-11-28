@@ -130,7 +130,9 @@ class AnalyzeConfig(BaseModel):
     model_config = {"extra": "forbid"}
     defect_model: str = Field(default="condyle", pattern=r"^(condyle|calvarial|segmental)$")
     nominal_diameter_um: float | None = Field(default=None, gt=0, lt=1e5)
-    segmentation: str = Field(default="multiotsu", pattern=r"^(multiotsu|ctan_style|unet:[A-Za-z0-9_\-]{1,64})$")
+    # default and validated method: the advisor's own threshold (the only method carrying measurement support)
+    segmentation: str = Field(default="advisor_threshold",
+                              pattern=r"^(advisor_threshold|multiotsu|ctan_style|unet:[A-Za-z0-9_\-]{1,64}|onnx:[A-Za-z0-9_\-]{1,64})$")
     graft_brighter: bool = True
     abstain_tau: float = Field(default=0.6, ge=0, le=1)
     tta: bool = True
@@ -457,8 +459,16 @@ def create_app(db_path: str | None = None, data_dir: str | None = None, workers:
         vol = Volume(np.asarray(g["image"][:]), tuple(sc["spacing_um"]))
         met = defect_report_metrics(lab, roi, vol, thickness=thick)   # same ROI and endpoint set as the base version
         write_labels_zarr(sc["store_path"], f"roi_v{v}", roi.astype(np.uint8))
-        store.save_measurement(u, scan_id, sid, base["roi_id"], {"metrics": met, "corrected_from": b.base_version,
-                                                                "config": {"thickness_metrics": thick}}, __version__)
+        prev = json.loads(base_m["metrics"]) if base_m else {}
+        record = {"metrics": met, "corrected_from": b.base_version, "config": {"thickness_metrics": thick},
+                  "segmentation": prev.get("segmentation")}
+        if prev.get("measurement_support"):
+            # carry the base assessment over; read time downgrades it for the manual edit (C3-SCI-02, C3-PRD-04).
+            # Without it the record has no assessment and reports fail closed.
+            from ..advisor.integration import apply_support
+            record["measurement_support"] = prev["measurement_support"]
+            record["reported_metrics"], record["suppressed_metrics"] = apply_support(met, prev["measurement_support"])
+        store.save_measurement(u, scan_id, sid, base["roi_id"], record, __version__)
         return {"segmentation_id": sid, "version": v, "voxel_count_change": changed,
                 "class_volumes": met["class_volumes"]}
 

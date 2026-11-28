@@ -182,10 +182,13 @@ def analyze(vol: Volume, cfg: dict | None = None, roi_dict: dict | None = None, 
         if info.get("model_name") and c.get("material"):
             # a learned model may support graft endpoints only with qualifying (non-synthetic) validation evidence
             from .ml.validation_records import validated_for
-            ok, why = validated_for(info["model_name"], info.get("model_sha256", ""), str(c["material"]),
+            # the record must name the bytes that ran: the ONNX file under ONNX Runtime (C3-PRD-06)
+            art_sha = info.get("onnx_sha256") if info.get("runtime") == "onnxruntime" else info.get("model_sha256")
+            ok, why = validated_for(info["model_name"], art_sha or "", str(c["material"]),
                                     float(np.mean(vol.spacing)))
             c = dict(c, validated_texture_model=ok)
             info["validation_record"] = why
+            info["validation_ok"] = bool(ok)          # the binding uses this boolean only (C3-PRD-02)
         c_sup = dict(c)
         if c_sup.get("day0"):
             # The day-0 mechanism is a longitudinal analysis; a single-scan pipeline run never applies the day-0
@@ -202,27 +205,8 @@ def analyze(vol: Volume, cfg: dict | None = None, roi_dict: dict | None = None, 
     return out
 
 
-ADVISOR_VALIDATED_METHODS = ("advisor_threshold",)
-
-
-def bind_support_to_method(support: dict, seg_info: dict) -> None:
-    """Measurement support was validated for the advisor's own threshold method (S1b/S1c/S1H*). Results produced by
-    any other method inherit no support for tissue endpoints unless a learned model carries a qualifying validation
-    record (cycle-2 review C2-SCI-02: with multi-Otsu, 'supported' total mineral was wrong by 21–25% in 4/50)."""
-    method = str(seg_info.get("method", ""))
-    if method in ADVISOR_VALIDATED_METHODS:
-        return
-    validated = "qualifying validation record" in str(seg_info.get("validation_record", ""))
-    for ep, d in (support.get("endpoints") or {}).items():
-        if ep == "tissue_mineral_density" or d.get("status") == "not_supported":
-            continue
-        if validated and ep in ("residual_graft_volume", "graft_fraction_of_defect"):
-            continue
-        d["status"] = "not_supported"
-        d["mechanism"] = None
-        d["reason"] = (f"segmentation method '{method}' is not covered by the measurement-support validation; use the "
-                       "advisor threshold method or a model with a qualifying validation record")
-    support["method_binding"] = {"method": method, "validated_methods": list(ADVISOR_VALIDATED_METHODS)}
+# method binding lives with the advisor (read-time re-evaluation, C3-PRD-01); re-exported for callers and tests
+from .advisor.integration import ADVISOR_VALIDATED_METHODS, bind_support_to_method  # noqa: E402,F401
 
 
 def public(result: dict) -> dict:

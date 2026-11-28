@@ -1,0 +1,276 @@
+{
+ "experiment": "L5",
+ "summary": {
+  "n": 20,
+  "misregistrations_passed": 0,
+  "n_misregistrations": 18,
+  "aligned_passed": {
+   "segmental_generic": false,
+   "segmental_bridged_F2": false
+  }
+ },
+ "rows": [
+  {
+   "phantom": "segmental_generic",
+   "shift_um": 0,
+   "axis": 0,
+   "pass": false,
+   "residual_shift_um_max": 0.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, 0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999993702114166,
+    0.000417527938057497,
+    -0.001041751981641218
+   ]
+  },
+  {
+   "phantom": "segmental_generic",
+   "shift_um": 160,
+   "axis": 0,
+   "pass": false,
+   "residual_shift_um_max": 0.813,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, 0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999993702114166,
+    0.000417527938057497,
+    -0.001041751981641218
+   ]
+  },
+  {
+   "phantom": "segmental_generic",
+   "shift_um": 160,
+   "axis": 1,
+   "pass": false,
+   "residual_shift_um_max": 160.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, 0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999993702114166,
+    0.000417527938057497,
+    -0.001041751981641218
+   ]
+  },
+  {
+   "phantom": "segmental_generic",
+   "shift_um": 160,
+   "axis": 2,
+   "pass": false,
+   "residual_shift_um_max": 160.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, 0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999993702114166,
+    0.000417527938057497,
+    -0.001041751981641218
+   ]
+  },
+  {
+   "phantom": "segmental_generic",
+   "shift_um": 240,
+   "axis": 0,
+   "pass": false,
+   "residual_shift_um_max": 1.219,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, 0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999993702114166,
+    0.000417527938057497,
+    -0.001041751981641218
+   ]
+  },
+  {
+   "phantom": "segmental_generic",
+   "shift_um": 240,
+   "axis": 1,
+   "pass": false,
+   "residual_shift_um_max": 240.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, 0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999993702114166,
+    0.000417527938057497,
+    -0.001041751981641218
+   ]
+  },
+  {
+   "phantom": "segmental_generic",
+   "shift_um": 240,
+   "axis": 2,
+   "pass": false,
+   "residual_shift_um_max": 240.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, 0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999993702114166,
+    0.000417527938057497,
+    -0.001041751981641218
+   ]
+  },
+  {
+   "phantom": "segmental_generic",
+   "shift_um": 400,
+   "axis": 0,
+   "pass": false,
+   "residual_shift_um_max": 2.032,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, 0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999993702114166,
+    0.000417527938057497,
+    -0.001041751981641218
+   ]
+  },
+  {
+   "phantom": "segmental_generic",
+   "shift_um": 400,
+   "axis": 1,
+   "pass": false,
+   "residual_shift_um_max": 400.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, 0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999993702114166,
+    0.000417527938057497,
+    -0.001041751981641218
+   ]
+  },
+  {
+   "phantom": "segmental_generic",
+   "shift_um": 400,
+   "axis": 2,
+   "pass": false,
+   "residual_shift_um_max": 400.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, 0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999993702114166,
+    0.000417527938057497,
+    -0.001041751981641218
+   ]
+  },
+  {
+   "phantom": "segmental_bridged_F2",
+   "shift_um": 0,
+   "axis": 0,
+   "pass": false,
+   "residual_shift_um_max": 0.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, -0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999998428772681,
+    -0.0005448583662731285,
+    -0.00013181350354035735
+   ]
+  },
+  {
+   "phantom": "segmental_bridged_F2",
+   "shift_um": 160,
+   "axis": 0,
+   "pass": false,
+   "residual_shift_um_max": 0.628,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, -0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999998428772681,
+    -0.0005448583662731285,
+    -0.00013181350354035735
+   ]
+  },
+  {
+   "phantom": "segmental_bridged_F2",
+   "shift_um": 160,
+   "axis": 1,
+   "pass": false,
+   "residual_shift_um_max": 160.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, -0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999998428772681,
+    -0.0005448583662731285,
+    -0.00013181350354035735
+   ]
+  },
+  {
+   "phantom": "segmental_bridged_F2",
+   "shift_um": 160,
+   "axis": 2,
+   "pass": false,
+   "residual_shift_um_max": 160.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, -0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999998428772681,
+    -0.0005448583662731285,
+    -0.00013181350354035735
+   ]
+  },
+  {
+   "phantom": "segmental_bridged_F2",
+   "shift_um": 240,
+   "axis": 0,
+   "pass": false,
+   "residual_shift_um_max": 0.942,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, -0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999998428772681,
+    -0.0005448583662731285,
+    -0.00013181350354035735
+   ]
+  },
+  {
+   "phantom": "segmental_bridged_F2",
+   "shift_um": 240,
+   "axis": 1,
+   "pass": false,
+   "residual_shift_um_max": 240.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, -0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999998428772681,
+    -0.0005448583662731285,
+    -0.00013181350354035735
+   ]
+  },
+  {
+   "phantom": "segmental_bridged_F2",
+   "shift_um": 240,
+   "axis": 2,
+   "pass": false,
+   "residual_shift_um_max": 240.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, -0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999998428772681,
+    -0.0005448583662731285,
+    -0.00013181350354035735
+   ]
+  },
+  {
+   "phantom": "segmental_bridged_F2",
+   "shift_um": 400,
+   "axis": 0,
+   "pass": false,
+   "residual_shift_um_max": 1.57,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, -0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999998428772681,
+    -0.0005448583662731285,
+    -0.00013181350354035735
+   ]
+  },
+  {
+   "phantom": "segmental_bridged_F2",
+   "shift_um": 400,
+   "axis": 1,
+   "pass": false,
+   "residual_shift_um_max": 400.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, -0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999998428772681,
+    -0.0005448583662731285,
+    -0.00013181350354035735
+   ]
+  },
+  {
+   "phantom": "segmental_bridged_F2",
+   "shift_um": 400,
+   "axis": 2,
+   "pass": false,
+   "residual_shift_um_max": 400.0,
+   "reason": "alignment along direction (z, y, x) \u2248 1.00, -0.00, -0.00 cannot be verified (no structure constrains it)",
+   "unverifiable_direction": [
+    0.9999998428772681,
+    -0.0005448583662731285,
+    -0.00013181350354035735
+   ]
+  }
+ ],
+ "seconds": 27.60963010787964,
+ "saved": "2026-11-28T01:35:21Z"
+}

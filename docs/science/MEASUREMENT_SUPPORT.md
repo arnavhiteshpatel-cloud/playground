@@ -18,7 +18,7 @@ by which mechanism, and under which conditions — and abstains otherwise.
 | Grey-scale reference | soft-tissue and host-bone levels outside the defect (relative units r = (x − soft)/(host − soft)) | HA calibration phantom |
 | Day-0 registration | registration result + QC | — |
 
-## Decision rules (advisor 1.4.2; history: changelog in `osteoquant/advisor/separability.py` and the PREREGISTRATION deviations log)
+## Decision rules (advisor 1.4.3; history: changelog in `osteoquant/advisor/separability.py` and the PREREGISTRATION deviations log)
 1. **Mineral endpoints** (total mineral volume, mineralised fraction): supported when noise < 0.35 of the bone–soft
    contrast.
 2. **Radiolucent grafts** (collagen, PLGA/PCL, DBM: mean < 0.15 of host): graft endpoints not supported (invisible);
@@ -58,7 +58,17 @@ by which mechanism, and under which conditions — and abstains otherwise.
     |new-bone/soft ratio − 1| + (p/(1−p))·max(|graft ratio − 1|, 0.20) ≤ 10%, p = the scan's graft share of mineral.
 12. **Ambiguous graft rim** (1.4.0; width max(1, ⌈2σ⌉) voxels from 1.4.1): mineral that is not graft-like but lies within the blur shell of graft-like voxels may be new-bone coating
     or graft halo. New-bone endpoints are refused if this rim exceeds 10% of the would-be new bone; total mineral is
-    refused if the worst-case rim error (rim / mineral) could exceed 20%.
+    refused if the worst-case rim error could exceed 20%: from 1.4.3 that is rim / (mineral − rim), the error if the whole
+    rim is graft halo (the 1.4.1 gate on half the rim admitted up to 25%; C3-SCI-10). With no graft threshold
+    (unspecified or unknown material), voxels brighter than host bone are the graft proxy for this gate (1.4.3, C3-SCI-01).
+14. **Measured references** (1.4.3, C3-SCI-07): measured graft samples get the analysis scan's partial-volume mixing
+    (blur-aware with the measured granule thickness); measured new-bone samples get the scan's noise in the mineral rule.
+15. **Day-0 for resorbable materials** (1.4.3): needs a known time since implantation ≤12 weeks (policy constant);
+    BCP and polymer–ceramic composites are resorbable here too. Knowledge-base profiles without a physics cross-check
+    (S53P4, polymer–ceramic composite) are uncertain and need a measured reference.
+16. **Read-time evaluation** (C3-PRD-01): stored statuses are re-evaluated whenever a result is shown or reported; an
+    assessment made by another advisor version or support-rule set is *not assessed* ("re-analyse"), and a manually
+    corrected segmentation keeps at most *supported with conditions*.
 13. **Method binding** (pipeline, 1.4.2, C2-SCI-02): support statuses apply to the method they were validated with,
     `advisor_threshold`. For any other segmentation method, tissue endpoints are set to not supported, except graft
     endpoints of a learned model whose vendor-signed validation record qualifies (none exists). Tissue mineral density
@@ -87,6 +97,8 @@ by which mechanism, and under which conditions — and abstains otherwise.
 Three pre-registered held-out simulations were run, each on conditions unseen by the advisor version tested:
 S1H (1.3.3: new-bone and some graft measurements failed while supported), S1H2 (1.4.0: graft passed, total mineral
 failed at heavy blur) and S1H3 (1.4.1, final): every failing measurement refused on every endpoint; residual graft
-0/80 supported failures (95% upper bound 0.045), total mineral 0/22, new bone never supported. Coverage is low
+0/80 supported failures from 9 phantom structures (95% upper bound 0.34 with structures as the pre-registered unit;
+0.045 only if rows were independent — the precision criterion is not demonstrated), total mineral 0/22, new bone never
+supported, no volume endpoint supported for 58% of specimens. Coverage is low
 (graft 37%, mineral 10%, new bone 0%). All of this is SYNTHETIC; the advisor and simulator share physics, and no
 physical or in-vivo validation exists (validation stages B–F). Results: EXPERIMENT_REGISTRY.md (S1H, S1H2, S1H3).

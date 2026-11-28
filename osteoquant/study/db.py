@@ -261,22 +261,37 @@ class Store:
 
     def audited_user_state(self, user_id) -> dict | None:
         """Role and active flag of a user as last recorded in the hash-chained audit trail
-        (user.create / user.role_change / user.activate / user.deactivate); None if never recorded."""
+        (user.create / user.role_change / user.activate / user.deactivate); None if never recorded.
+        A role or active-flag change counts only when its recorded actor was, at that point of the trail, an active
+        administrator of the same organisation other than the subject (cycle-3 review C3-PRD-03: an appended
+        self-promotion event used to be accepted). The chain is unkeyed, so a determined writer can still forge the
+        actor field; external anchors (``desktop/anchors.py``) are the control for that."""
         with self.lock:
             rows = self.conn.execute(
-                "SELECT action, details FROM audit_log WHERE object_type='user' AND object_id=? AND action IN "
-                "('user.create','user.role_change','user.activate','user.deactivate') ORDER BY seq",
-                (str(user_id),)).fetchall()
-        st = None
-        for action, det in rows:
-            d = json.loads(det or "{}")
+                "SELECT user_id, org_id, action, object_id, details FROM audit_log WHERE object_type='user' AND action IN "
+                "('user.create','user.role_change','user.activate','user.deactivate') ORDER BY seq").fetchall()
+        states: dict[int, dict] = {}
+        for actor, org, action, oid, det in rows:
+            try:
+                subj = int(oid)
+                a = int(actor) if actor not in (None, "") else None
+                d = json.loads(det or "{}")
+            except (TypeError, ValueError):
+                continue
             if action == "user.create":
-                st = {"role": d.get("role"), "active": True}
-            elif st is not None and action == "user.role_change":
-                st["role"] = d.get("new_role")
-            elif st is not None:
-                st["active"] = action == "user.activate"
-        return st
+                if subj not in states:
+                    states[subj] = {"role": d.get("role"), "active": True, "org": org}
+                continue
+            sa = states.get(a) if a is not None else None
+            if subj not in states or sa is None or a == subj or not sa["active"] or sa["role"] != "admin" \
+                    or str(sa["org"]) != str(states[subj]["org"]):
+                continue                     # unauthorised or self-recorded change: ignored
+            if action == "user.role_change":
+                states[subj]["role"] = d.get("new_role")
+            else:
+                states[subj]["active"] = action == "user.activate"
+        st = states.get(int(user_id))
+        return {"role": st["role"], "active": st["active"]} if st else None
 
     def user_record_problem(self, u: dict) -> str | None:
         """Why the stored role / active flag of ``u`` does not match its audited state (None if it

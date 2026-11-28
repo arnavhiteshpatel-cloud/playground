@@ -6,6 +6,7 @@ Advisor 1.4.1 frozen.
 """
 from __future__ import annotations
 
+import os
 import time
 
 import numpy as np
@@ -37,7 +38,10 @@ def correlated_noise(shape, sigma, seed):
 
 
 def main():
-    assert ADVISOR_VERSION == "1.4.1", "S1H3 is pre-registered for advisor 1.4.1"
+    rerun = os.environ.get("OQ_S1H3_RERUN") == "1"
+    # The pre-registered run is advisor 1.4.1 only. OQ_S1H3_RERUN=1 re-runs the SAME conditions under the shipped advisor
+    # as a consistency check (not a held-out validation: S1H3 has been seen) and writes a separately named file.
+    assert rerun or ADVISOR_VERSION == "1.4.1", "S1H3 is pre-registered for advisor 1.4.1"
     t0 = time.time()
     rows = []
     for model, seed, kw in STRUCTS:
@@ -76,6 +80,12 @@ def main():
                 vals.append(np.mean([abs(r[ek]) > 0.2 for r in sup_]))
         boot[ep_] = {"fail_rate_among_supported_boot95": [float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))] if vals else None}
     print(summ)
+    if rerun:
+        save_result(f"exp_S1H3_rerun_advisor_{ADVISOR_VERSION.replace('.', '_')}",
+                    {"experiment": "S1H3 re-run (consistency check, NOT a held-out validation)",
+                     "preregistered": None, "advisor_version": ADVISOR_VERSION, "summary": [summ],
+                     "bootstrap_by_structure": boot, "rows": rows, "seconds": time.time() - t0})
+        return
     save_result("exp_S1H3_heldout", {"experiment": "S1H3", "preregistered": "docs/science/PREREGISTRATION.md §9",
                                      "advisor_version": ADVISOR_VERSION, "summary": [summ], "bootstrap_by_structure": boot,
                                      "rows": rows, "seconds": time.time() - t0})

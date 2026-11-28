@@ -14,9 +14,9 @@ ceramics approach bone density.
 
 **What exists:** working desktop software (7 input formats incl. Zeiss TXM; QC; automatic defect ROI; classical
 three-class segmentation with an optional locked model; morphometry that agrees with Scanco IPL on 8 public cubes
-(border convention chosen post hoc); measurement-support advisor 1.3.3; viewer with correction and re-authenticated
-sign-off; hash-chained audit trail; reports); an automated test suite (556 tests in the full run of 2026-11-28); 16+
-experiments; internal automated review (reviewer agents, not independent reviewers — `REVIEW_REGISTRY.md`).
+(border convention chosen post hoc); measurement-support advisor 1.4.3; viewer with correction and re-authenticated
+sign-off; hash-chained audit trail with external anchors; reports); a test suite run in CI on Windows, macOS and Linux
+(counts in `docs/qa/test_summary.json`); 16+ experiments; internal automated review (reviewer agents, not independent reviewers — `REVIEW_REGISTRY.md`).
 
 **Evidence:**
 * REAL public data: Tb.Th ICC(2,1) 0.983 against Scanco IPL on 8 cubes (convention chosen post hoc); real micro-CT
@@ -24,8 +24,8 @@ experiments; internal automated review (reviewer agents, not independent reviewe
   fine-tuned on 1 real scan 0.787 (a two-class task, not graft separation).
 * SYNTHETIC: when graft density overlaps new bone, intensity-only rules fail. The day-0 method works in simulation only
   without granule motion: naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion:
-  0.35, and the advisor refuses those cases. Validation of the advisor under version 1.3.3 is in progress
-  (`EXPERIMENT_REGISTRY.md`).
+  0.35, and the advisor refuses those cases.
+* SYNTHETIC, advisor safety: In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens from 9 phantom structures; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.34 counting phantom structures as the unit; 0.045 if the 80 supported measurements were independent); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported; no volume endpoint supported for 58% of specimens. The shipped advisor 1.4.3 differs from 1.4.1 in rules this test does not exercise, and in one it does (the total-mineral rim gate), only in the stricter direction. The simulator and the advisor share attenuation physics, so this is evidence of internal safety, not of accuracy on real scans; no physical validation has been run.
 
 **Differentiation:** simulation-based, material-specific separability assessment (physical phantoms planned, not
 started); abstention instead of a plausible but unidentifiable number; reports with a tamper-evident audit trail

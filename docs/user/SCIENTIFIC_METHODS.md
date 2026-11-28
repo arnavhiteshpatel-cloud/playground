@@ -31,7 +31,7 @@ QC -> defect ROI -> segmentation -> uncertainty -> plausibility checks -> morpho
 |---|---|---|
 | **QC** | Deterministic checks (spacing, isotropy, missing slices, ingest errors, non-finite or saturated voxels, metadata completeness) and heuristic checks (bone/soft-tissue CNR, ring and cupping indices, slice-to-slice jumps, truncated anatomy, long-axis alignment) | Heuristic thresholds are developer choices, not standards. Verdict: suitable / review / unsuitable |
 | **ROI** | Automatic cylindrical defect detection for plate-like defects (condyle, calvarial), helped by the nominal diameter; a segmental-gap detector; or a manual cylinder | [SYNTHETIC] Plate defects: ROI Dice 0.971/0.976 with the nominal diameter, 0.881/0.904 fully automatic. The segmental detector raises an explicit exception rather than guess when healing bridges the gap. [REAL] Ovine day-18 scan: regenerate found with confidence 0.56 and flagged for review; day-161 scan returned as an exception |
-| **Segmentation** | Labels inside the ROI: 1 new bone, 2 residual graft, 3 host bone, 0 non-mineral, 255 uncertain | Methods: `multiotsu` (default in the desktop), `ctan_style` (two fixed thresholds), `advisor_threshold` (the threshold implied by the advisor), random forest, locked U-Net (PyTorch or ONNX Runtime). Out-of-field padding and metal are excluded before thresholds are computed ([REAL] without this, new-bone fraction read 1.00 on an ovine scan; with it 0.21) |
+| **Segmentation** | Labels inside the ROI: 1 new bone, 2 residual graft, 3 host bone, 0 non-mineral, 255 uncertain | Methods: `advisor_threshold` (default; the threshold implied by the advisor, the only method carrying measurement support), `multiotsu`, `ctan_style` (two fixed thresholds), random forest, locked U-Net (PyTorch or ONNX Runtime). Out-of-field padding and metal are excluded before thresholds are computed ([REAL] without this, new-bone fraction read 1.00 on an ovine scan; with it 0.21) |
 | **Uncertainty** | For probabilistic methods: test-time augmentation, predictive entropy and voxel abstention at max-softmax τ = 0.6 | Classical methods produce no probabilities and therefore no *uncertain* voxels |
 | **Plausibility** | Sanity checks on the label map; failures flag every endpoint | |
 | **Morphometry** | Endpoints of §2 | |
@@ -75,9 +75,9 @@ n <3 per group no interval is printed. Specimens without a group are listed but 
 
 ---
 
-## 3. Measurement-support advisor (1.4.2)
+## 3. Measurement-support advisor (1.4.3)
 
-Implementation: `osteoquant/advisor/separability.py` (`ADVISOR_VERSION = "1.4.2"`) and `integration.py`. Every
+Implementation: `osteoquant/advisor/separability.py` (`ADVISOR_VERSION = "1.4.3"`) and `integration.py`. Every
 assessment records the advisor version, and the PDF report prints it. Policy:
 [MEASUREMENT_SUPPORT.md](../science/MEASUREMENT_SUPPORT.md). Evidence: §3.6.
 
@@ -129,7 +129,8 @@ host bone ≈ 1 without HA calibration. Noise is expressed the same way (`noise_
    where p is the scan's graft share of mineral; new-bone endpoints need the propagated error ≤10%.
 8. **Ambiguous rim.** Mineral that is not graft-like but lies within max(1, ⌈2σ⌉) voxels of graft-like voxels may be
    new-bone coating or graft halo. New-bone endpoints are refused if this rim exceeds 10% of the would-be new bone;
-   total mineral is refused if it exceeds 20% of the mineral.
+   total mineral is refused if the worst-case error, rim / (mineral − rim), could exceed 20%. With no material model
+   (unspecified material), voxels brighter than host bone stand in for the graft in this check (since 1.4.3).
 
 ### 3.4 Decision rules
 
@@ -150,7 +151,10 @@ host bone ≈ 1 without HA calibration. Noise is expressed the same way (`noise_
 | 7b | Measured new-bone reference (empty-defect controls) | Used, with graft-adjacent partial-volume mixing and the analysis scan's noise added, because control new bone lacks the blur of new bone next to dense graft |
 | 7a | Metals (magnesium, titanium) | Never supported, including total mineral (streak and beam-hardening artefacts are not modelled) |
 | 9 | Propagated new-bone error >10% (step 7) | New-bone endpoints **not supported** |
-| 10 | Ambiguous rim >10% of new bone, or >20% of mineral (step 8) | New-bone, or total-mineral, endpoints **not supported** |
+| 10 | Ambiguous rim >10% of new bone, or worst-case mineral error rim/(mineral − rim) >20% (step 8) | New-bone, or total-mineral, endpoints **not supported** |
+| 12 | Resorbable material with a day-0 scan, time since implantation unknown or >12 weeks (policy constant) | Day-0 mechanism **not supported**: the footprint is replaced by bone |
+| 13 | Knowledge-base profile without a physics cross-check (S53P4, polymer–ceramic composite) | Treated as uncertain: intensity support needs a measured reference |
+| 14 | Stored result analysed by another advisor version or support-rule set, or before method binding | Shown as **not assessed** ("re-analyse"); a manually corrected segmentation keeps at most *supported with conditions* |
 | 11 | Segmentation method other than the advisor's own threshold (`advisor_threshold`) | Tissue endpoints **not supported**; graft endpoints of a learned model only with a qualifying signed validation record (none exists). Tissue mineral density is unaffected |
 | 8 | Density endpoints | Only with HA calibration |
 | — | New-bone thickness endpoints | Need structures ≥3 voxels (about 150 µm woven trabeculae) and supported new bone |
@@ -176,9 +180,9 @@ automatic ROI requires review.
 
 ### 3.6 Evidence for the advisor
 
-[SYNTHETIC, pre-registered held-out tests] In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.045); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported.
+[SYNTHETIC, pre-registered held-out tests] In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens from 9 phantom structures; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.34 counting phantom structures as the unit; 0.045 if the 80 supported measurements were independent); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported; no volume endpoint supported for 58% of specimens.
 
-The shipped advisor 1.4.2 differs from 1.4.1 only in rules this test does not exercise. The simulator and the advisor share attenuation physics, so this is evidence of internal safety, not of accuracy on real scans; no physical validation has been run. Two earlier held-out tests found supported measurements that failed: S1H (advisor 1.3.3: supported new-bone
+The shipped advisor 1.4.3 differs from 1.4.1 in rules this test does not exercise, and in one it does (the total-mineral rim gate), only in the stricter direction. The simulator and the advisor share attenuation physics, so this is evidence of internal safety, not of accuracy on real scans; no physical validation has been run. Two earlier held-out tests found supported measurements that failed: S1H (advisor 1.3.3: supported new-bone
 volumes over-estimated by 20–50% and some supported graft volumes under-estimated by 21–28%, under wider blur) and S1H2 (advisor 1.4.0: supported total mineral over-estimated
 under heavy blur). Each failure led to a rule (scan-measured blur, new-bone error propagation, the blur-scaled
 ambiguous rim) that was then tested on new held-out data, not on the data that revealed it. The in-sample development
@@ -222,9 +226,10 @@ slowly resorbing, bone-like materials (DBBM, HA).
 1. **Registration.** Rigid (also affine/B-spline available) with SimpleITK, masked to exclude the defect so that
    healing does not drive the alignment.
 2. **Registration QC.** Residual displacement measured by masked normalised cross-correlation in eight blocks of a
-   shell around the defect; each block's shift is projected onto the directions its structure constrains (along the
-   axis of a diaphyseal tube a shift cannot be seen, and is reported as unverifiable instead of passed); pass if every
-   block is within 2 voxels. This replaced a host-mineral Dice criterion that rejected 56% of harmless misalignments
+   shell around the defect; each block's shift is projected onto the directions its structure constrains; pass if every
+   block is within 2 voxels **and** every direction is constrained by at least one block. Along the axis of a featureless
+   diaphyseal tube a shift cannot be measured: the QC then fails closed and names the unverifiable direction
+   (cycle-3 review; Experiment L5: 0/18 misregistrations passed, aligned specimens reported as not verifiable). This replaced a host-mineral Dice criterion that rejected 56% of harmless misalignments
    (Experiment L4). [SYNTHETIC] L4: all 6 harmful misalignments flagged; 78% of harmless ones passed (the others were
    4–8° rotations beyond the tolerance that had not yet lowered graft Dice by 0.10).
 3. **Footprint.** Mineral inside the ROI on day 0.
@@ -255,7 +260,7 @@ cell; result file `exp_L3_displacement.json`]:
   bone under-estimated. The generator models resorption as shrinkage and translation, not replacement, so simulation
   cannot reveal this bias.
 * **Remodelling bone-derived grafts** (autograft, allograft, DBM) are never supported by the day-0 mechanism: the
-  footprint is remodelled into bone. Slowly resorbing DBBM may be (advisor 1.4.2).
+  footprint is remodelled into bone. Slowly resorbing DBBM may be (since advisor 1.4.2).
 * **Study design.** The method needs an in vivo post-operative scan with the same protocol, which not every study
   has.
 

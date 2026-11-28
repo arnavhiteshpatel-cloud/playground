@@ -186,6 +186,7 @@ def registration_qc(fixed: np.ndarray, moved_back: np.ndarray, exclude: np.ndarr
     # primary: block-wise residual displacement, projected onto directions the block can constrain (aperture problem:
     # a diaphyseal tube is nearly translation-invariant along its axis — cycle-2 review C2-SCI-04)
     shifts, blocks = [], []
+    cover = np.zeros((3, 3))          # sum of projectors onto the directions each block can verify
     if region.any():
         zz, yy, xx = np.nonzero(region)
         lo = np.array([zz.min(), yy.min(), xx.min()])
@@ -215,6 +216,7 @@ def registration_qc(fixed: np.ndarray, moved_back: np.ndarray, exclude: np.ndarr
                     w, V = np.linalg.eigh(J)
                     ok_dir = w >= aperture_ratio * max(float(w.max()), 1e-12)
                     proj = V[:, ok_dir] @ (V[:, ok_dir].T @ (sh * sp)) if ok_dir.any() else np.zeros(3)
+                    cover += V[:, ok_dir] @ V[:, ok_dir].T
                     # the eigen-projection reintroduces floating-point noise (an exact 2-voxel shift came out as
                     # 80.00000000000001 µm and failed an 80 µm tolerance): round to 1 nm before comparing
                     mag = round(float(np.linalg.norm(proj)), 3)
@@ -223,10 +225,18 @@ def registration_qc(fixed: np.ndarray, moved_back: np.ndarray, exclude: np.ndarr
                                    "n_unconstrained_directions": int((~ok_dir).sum())})
     max_shift = float(max(shifts)) if shifts else float("nan")
     unverifiable = bool(blocks) and all(b_["n_unconstrained_directions"] > 0 for b_ in blocks)
-    ok = bool(shifts) and max_shift <= round(float(tolerance_um), 3)
+    # fail closed (cycle-3 review C3-SCI-04): if no block constrains some direction (e.g. the axis of a diaphyseal
+    # tube), a shift along it cannot be measured, so the registration is NOT verified — it must not pass
+    w_c, V_c = np.linalg.eigh(cover)
+    blind = bool(blocks) and float(w_c.min()) < 0.5
+    blind_dir = [float(x) for x in V_c[:, int(np.argmin(w_c))]] if blind else None
+    ok = bool(shifts) and max_shift <= round(float(tolerance_um), 3) and not blind
     return {"residual_shift_um_max": max_shift, "residual_shift_um_blocks": shifts, "blocks": blocks,
             "tolerance_um": tolerance_um, "host_dice": float(dice), "host_ncc": ncc, "pass": ok,
-            "partially_unverifiable": unverifiable,
+            "partially_unverifiable": unverifiable, "unverifiable_direction": blind_dir,
+            "reason": ("alignment along direction (z, y, x) ≈ " + ", ".join(f"{x:.2f}" for x in blind_dir)
+                       + " cannot be verified (no structure constrains it)") if blind else
+                      ("ok" if ok else "residual displacement exceeds tolerance"),
             "policy": {"criterion": "max block residual displacement along constrained directions ≤ tolerance",
                        "tolerance_um": tolerance_um, "aperture_ratio": aperture_ratio,
                        "secondary_min_host_dice": min_host_dice, "secondary_min_ncc": min_ncc}}

@@ -6,7 +6,7 @@ Terms as used in OsteoQuant documents, the application and its reports. Endpoint
 | Term | Meaning |
 |---|---|
 | **Abstention** | Declining to report. At voxel level, labelling a voxel *uncertain*; at endpoint level, reporting *not measured* because the advisor does not support the endpoint |
-| **Advisor** (measurement-support advisor) | The component (`osteoquant/advisor/`, version 1.4.2) that decides, before reporting, whether each endpoint is supported for the material and scan |
+| **Advisor** (measurement-support advisor) | The component (`osteoquant/advisor/`, version 1.4.3) that decides, before reporting, whether each endpoint is supported for the material and scan |
 | **Allograft** | Bone from another individual of the same species; bone-derived, so never separable from new bone by intensity |
 | **Anchor** | The sequence number and head hash of the audit trail, recorded outside the project so that truncation of recent events can be detected |
 | **Audit trail** | Append-only, SHA-256 hash-chained log of every action in a project |
@@ -42,7 +42,7 @@ Terms as used in OsteoQuant documents, the application and its reports. Endpoint
 | **Intensity-only oracle** | The best possible voxel-wise intensity rule for given class distributions; an upper bound for every threshold workflow |
 | **Mineral rule** | The advisor's check that new bone can be separated from soft tissue including partial-volume halos; it gates mineral and new-bone endpoints |
 | **Timepoint (time since implantation)** | Weeks since the graft was implanted. The desktop reads it from the scan's timepoint (days, or a label such as "Week 4"); resorbable materials are intensity-supported only at a known timepoint ≤4 weeks |
-| **Multi-Otsu** | Classical multi-level automatic thresholding; the desktop's default segmentation |
+| **Multi-Otsu** | Classical multi-level automatic thresholding; selectable, but its graft and new-bone values carry no measurement support (the default is `advisor_threshold`) |
 | **New bone** | Bone formed after implantation inside the defect ROI (label 1) |
 | **Noise (relative)** | Noise standard deviation divided by the host-bone minus soft-tissue grey-level contrast; mineral endpoints need <0.35 |
 | **Not measured** | How an unsupported endpoint appears in results and reports |

@@ -7,7 +7,7 @@ import pytest
 from osteoquant.desktop import services as S
 from osteoquant.desktop.support import FLAGGED, NOT_SUPPORTED, SUPPORTED, endpoint_value, measurement_support
 
-from desktop_helpers import DIR_PW, PW, REV_PW, login_as
+from desktop_helpers import DIR_PW, PW, REV_PW, current_assessment, login_as
 
 
 def _pdf_text(path) -> str:
@@ -98,8 +98,7 @@ def test_ux03_not_supported_never_yields_a_number():
     res2 = {"metrics": {"class_volumes": {"TV_mm3": 3.0, "uncertain_fraction": 0.0}},
             "reported_metrics": {"class_volumes": {"TV_mm3": 3.0, "new_bone_volume_mm3": None}},
             "suppressed_metrics": [{"metric": "class_volumes.new_bone_volume_mm3", "reason": "graft overlaps bone"}],
-            "measurement_support": {"endpoints": {"new_bone_volume": {"status": "not_supported",
-                                                                      "reason": "graft overlaps bone"}}}}
+            **current_assessment({"new_bone_volume": {"status": "not_supported", "reason": "graft overlaps bone"}})}
     v, st, reasons = endpoint_value(res2, measurement_support(res2), "new_bone_volume_mm3")
     assert v is None and sum("graft overlaps bone" in r for r in reasons) == 1
 
@@ -137,7 +136,7 @@ def test_ux04_qc_review_is_never_green():
                                                   "new_bone_fraction_of_defect", "new_bone_thickness",
                                                   "mineral_fraction_of_defect")}
     base = {"metrics": {"class_volumes": {"uncertain_fraction": 0.0}, "new_bone_architecture": {"Tb_Th_um": 100}},
-            "qc": {"verdict": "suitable"}, "measurement_support": {"endpoints": adv}}
+            "qc": {"verdict": "suitable"}, **current_assessment(adv)}
     assert measurement_support(base)["overall"] == SUPPORTED
     rq = {**base, "qc": {"verdict": "review", "checks": [{"name": "Noise level", "status": "warn"}]}}
     sup = measurement_support(rq)

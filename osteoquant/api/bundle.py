@@ -8,6 +8,7 @@ from pathlib import Path
 import numpy as np
 
 from .. import __version__
+from ..advisor.integration import apply_support, reported_view, unassessed_support
 
 ENDPOINTS = [
     ("class_volumes.TV_mm3", "Defect TV", "mm³"),
@@ -84,6 +85,12 @@ def bundle_from_store(store, user, sid, ctx=None, measurements=None, figures=Tru
             reviewed_all = False
         sp = specs.get(sc["specimen_id"], {})
         res = m["metrics"]
+        rep_metrics, rep_suppressed, eff_support = reported_view(res)
+        if not eff_support:
+            # no assessment stored (e.g. a label edit saved without re-analysis): fail closed — graft, new-bone and
+            # mineral endpoints are reported as not assessed, never as plain numbers (cycle-3 review C3-SCI-02)
+            eff_support = unassessed_support()
+            rep_metrics, rep_suppressed = apply_support(res.get("metrics") or {}, eff_support)
         corr = [{"version": s["version"], "user": s["created_by"], "time": s["created"], "summary": s["edits"].get("voxel_count_change")}
                 for s in store.segmentations(user, m["scan_id"]) if s["kind"] == "corrected"]
         fig = None
@@ -113,12 +120,14 @@ def bundle_from_store(store, user, sid, ctx=None, measurements=None, figures=Tru
                              "model_provenance": res.get("segmentation", {}).get("model_provenance")},
             # Reports use the measurement-support view: endpoints the advisor refused are None (shown as "not
             # measured") and listed with their reason (cycle-1 review STAT-01). Raw values stay in the audit record.
-            "corrections": corr, "metrics": res.get("reported_metrics", res.get("metrics", {})),
-            "suppressed_metrics": res.get("suppressed_metrics", []),
+            # support evaluated at READ time (method binding, stale advisor/rule versions, manual edits): the stored
+            # statuses reflect the rules in force when the scan was analysed (cycle-3 review C3-PRD-01)
+            "corrections": corr, "metrics": rep_metrics, "suppressed_metrics": rep_suppressed,
             "measurement_support": {k: {"status": v.get("status"), "reason": v.get("reason"),
                                         "mechanism": v.get("mechanism"), "conditions": v.get("conditions", [])}
-                                    for k, v in (res.get("measurement_support") or {}).get("endpoints", {}).items()},
-            "advisor_version": (res.get("measurement_support") or {}).get("advisor_version"),
+                                    for k, v in eff_support.get("endpoints", {}).items()},
+            "advisor_version": eff_support.get("advisor_version"),
+            "support_rules": eff_support.get("support_rules"), "support_stale": bool(eff_support.get("stale")),
             "analysis_parameters": {k: v for k, v in (res.get("segmentation") or {}).items()
                                     if k in ("method", "t_mineral", "t_graft", "t_graft_rel", "thresholds",
                                              "estimated_graft_share", "advisor_version", "runtime", "onnx_sha256",

@@ -10,6 +10,12 @@ import pytest  # noqa: E402
 PW = "Correct-Horse-9"
 
 
+@pytest.fixture(autouse=True)
+def _isolated_anchor_dir(tmp_path, monkeypatch):
+    """Audit-chain anchors go to a per-test directory, never to the user's configuration folder."""
+    monkeypatch.setenv("OSTEOQUANT_ANCHOR_DIR", str(tmp_path / "anchors"))
+
+
 @pytest.fixture(scope="session")
 def phantom_file(tmp_path_factory):
     from osteoquant.desktop.demo import write_phantom

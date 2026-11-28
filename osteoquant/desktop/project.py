@@ -66,6 +66,7 @@ def is_project_folder(folder) -> bool:
 
 class Project:
     def __init__(self, folder):
+        self.integrity_problems: list[str] = []
         self.folder = Path(folder).resolve()
         if not is_project_folder(self.folder):
             raise ProjectError(f"{self.folder} is not an OsteoQuant project folder")
@@ -139,6 +140,15 @@ class Project:
         self._token = tok
         self.user = self.store.validate_session(tok)
         self.session_end_reason = None
+        # external anchors (C3-PRD-03): a mismatch disables electronic signatures and is recorded
+        from .anchors import verify_anchors
+        self.integrity_problems = verify_anchors(self.store)
+        if self.integrity_problems and self.user:
+            try:
+                self.store.audit.record("audit.anchor_mismatch", self.user["id"], self.user["org_id"], "project", None,
+                                        {"problems": self.integrity_problems[:5]})
+            except Exception:  # noqa: BLE001 - recording must not block sign-in
+                pass
         return self.user is not None
 
     @property

@@ -65,11 +65,18 @@ def _assess_scan(image: np.ndarray, roi_mask: np.ndarray, spacing, cfg: dict):
         # one-voxel rim under-covered the graft halo at σ ≈ 1 voxel and total mineral was over-counted by 20–25%)
         blur_pre = estimate_blur(image, roi, est["soft"], est["host"])
         rim_w = int(max(1, np.ceil(2.0 * (blur_pre.get("sigma_vox") or 0.5))))
+        if not g.any() and t is None:
+            # 1.4.3 (C3-SCI-01): no graft model (unspecified or unknown material) but graft-like voxels brighter than
+            # host bone may still be present; they are the graft proxy for the ambiguous-rim gate on total mineral
+            proxy = ndi.binary_erosion(roi, iterations=1) & (rel_img > 1.1)
+            if proxy.sum() >= 200:
+                g = proxy & mineral
         if g.any():
             nb_like = mineral & ~g
             rim = nb_like & ndi.binary_dilation(g, iterations=rim_w)
             kw["rim_fraction_new"] = float(rim.sum() / max(1, nb_like.sum()))
-            kw["rim_fraction_mineral"] = float(0.5 * rim.sum() / max(1, mineral.sum()))
+            # worst-case relative total-mineral error if the whole rim is graft halo (1.4.3, C3-SCI-10)
+            kw["rim_fraction_mineral"] = float(rim.sum() / max(1, mineral.sum() - rim.sum()))
             kw["rim_width_vox"] = rim_w
         # partial-volume halo and new-bone share measured from the scan (advisor ≥1.2.0)
         # surface shell of mineral structures (any phase), estimated with a conservative core threshold so that
@@ -161,7 +168,7 @@ def apply_support(metrics: dict, support: dict) -> dict:
     eps = support.get("endpoints", {})
     for ep, paths in ENDPOINT_METRICS.items():
         st = eps.get(ep, {}).get("status", NOT_SUPPORTED)
-        if st == NOT_SUPPORTED:
+        if st not in (SUPPORTED, CONDITIONAL):          # fail closed: not supported, not assessed, unknown
             for p in paths:
                 _, ok = _get(rep, p)
                 if ok:
@@ -171,13 +178,110 @@ def apply_support(metrics: dict, support: dict) -> dict:
     return rep, suppressed
 
 
+# Version of the read-time support policy (method binding, stale-record rule, edited-revision rule). Bump it whenever
+# that policy changes: every stored assessment carries the value it was produced under, and an assessment produced
+# under another advisor version or rule set is treated as not assessed at read time (cycle-3 review C3-PRD-01).
+SUPPORT_RULES = "binding-2"
+NOT_ASSESSED = "not_assessed"                  # stale or missing assessment: re-analyse (no number is reported)
+ADVISOR_VALIDATED_METHODS = ("advisor_threshold",)
+VALIDATED_MODEL_ENDPOINTS = ("residual_graft_volume", "graft_fraction_of_defect")
+_KEEP = ("tissue_mineral_density",)            # calibration-based; not an intensity-separability decision
+
+
+def _refuse(d: dict, reason: str) -> None:
+    d["status"] = NOT_SUPPORTED
+    d["mechanism"] = None
+    d["reason"] = reason
+
+
+def bind_support_to_method(support: dict, seg_info: dict) -> None:
+    """Measurement support was validated for the advisor's own threshold method (S1b/S1c/S1H*). Results produced by
+    any other method inherit no support for tissue endpoints, except graft endpoints of a learned model whose
+    signature-verified validation record qualifies (``seg_info["validation_ok"] is True`` — a boolean set by the
+    pipeline from ``validated_for``; never inferred from message text, cycle-3 review C3-PRD-02)."""
+    method = str((seg_info or {}).get("method", ""))
+    validated = (seg_info or {}).get("validation_ok") is True
+    if method not in ADVISOR_VALIDATED_METHODS:
+        for ep, d in (support.get("endpoints") or {}).items():
+            if ep in _KEEP or d.get("status") == NOT_SUPPORTED:
+                continue
+            if validated and ep in VALIDATED_MODEL_ENDPOINTS:
+                continue
+            _refuse(d, f"segmentation method '{method}' is not covered by the measurement-support validation; use the "
+                       "advisor threshold method or a model with a qualifying validation record")
+    support["method_binding"] = {"method": method, "validated_methods": list(ADVISOR_VALIDATED_METHODS),
+                                 "validated_model_record": bool(validated)}
+    support["support_rules"] = SUPPORT_RULES
+
+
+def effective_support(result: dict) -> dict:
+    """The measurement support to SHOW for a stored result, evaluated at read time from stored facts.
+
+    * An assessment made by another advisor version or under another support-rule set is not trusted: every tissue
+      endpoint becomes *not supported* ("re-analyse"). Earlier versions supported measurements that later held-out
+      tests showed to fail (S1H, S1H2), and results analysed before method binding carry unbound statuses.
+    * Otherwise the method binding is re-applied (idempotent).
+    * A manually corrected segmentation keeps at most *supported with conditions*: support was assessed for the
+      automatic segmentation, not for the edited one (C3-PRD-04).
+    Returns a deep copy; ``{}`` when the result has no assessment.
+    """
+    from .separability import ADVISOR_VERSION
+    ms = (result or {}).get("measurement_support")
+    if not isinstance(ms, dict) or not ms:
+        return {}
+    s = copy.deepcopy(ms)
+    ver, rules = s.get("advisor_version"), s.get("support_rules")
+    if ver != ADVISOR_VERSION or rules != SUPPORT_RULES:
+        why = (f"no measurement-support assessment under the current rules: assessed by advisor {ver or 'unknown'} "
+               f"under support rules {rules or 'from before method binding'}; the current advisor is {ADVISOR_VERSION} "
+               f"({SUPPORT_RULES}) — re-analyse this scan")
+        eps = s.get("endpoints") if isinstance(s.get("endpoints"), dict) else {}
+        s["endpoints"] = eps
+        for ep, d in eps.items():
+            if ep not in _KEEP and isinstance(d, dict) and d.get("status") != NOT_SUPPORTED:
+                _refuse(d, why)
+                d["status"] = NOT_ASSESSED
+        s["stale"] = True
+        return s
+    bind_support_to_method(s, (result or {}).get("segmentation") or {})
+    if (result or {}).get("corrected_from") is not None:
+        note = (f"segmentation manually corrected (from version {result['corrected_from']}); support was assessed for "
+                "the automatic segmentation, and the edit is recorded in the audit trail")
+        for ep, d in (s.get("endpoints") or {}).items():
+            if ep not in _KEEP and d.get("status") == SUPPORTED:
+                d["status"] = CONDITIONAL
+                d.setdefault("conditions", [])
+                d["conditions"] = list(d["conditions"]) + [note]
+        s["manually_corrected"] = True
+    return s
+
+
 def measurement_support(result: dict) -> dict:
-    """Desktop/report hook: endpoint → {status, mechanism, reason, conditions} for a pipeline result."""
-    return (result.get("measurement_support") or {}).get("endpoints", {})
+    """Desktop/report hook: endpoint → {status, mechanism, reason, conditions} for a stored pipeline result, as
+    evaluated now (``effective_support``), never the raw stored statuses."""
+    return effective_support(result).get("endpoints", {})
 
 
-__all__ = ["support_for_scan", "apply_support", "measurement_support", "SUPPORTED", "CONDITIONAL", "NOT_SUPPORTED",
-           "to_relative"]
+def unassessed_support() -> dict:
+    """Support record for a result that carries no assessment: every endpoint not supported (fail closed)."""
+    why = "no measurement-support assessment stored for this result; re-analyse the scan"
+    return {"endpoints": {ep: {"status": NOT_SUPPORTED, "mechanism": None, "reason": why, "conditions": []}
+                          for ep in ENDPOINT_METRICS}, "advisor_version": None, "support_rules": None,
+            "unassessed": True}
+
+
+def reported_view(result: dict) -> tuple[dict, list, dict]:
+    """(reported metrics, suppressed list, effective support) for a stored result, recomputed at read time."""
+    eff = effective_support(result)
+    if not eff:
+        return dict((result or {}).get("reported_metrics") or (result or {}).get("metrics") or {}), \
+            list((result or {}).get("suppressed_metrics") or []), {}
+    rep, sup = apply_support((result or {}).get("metrics") or {}, eff)
+    return rep, sup, eff
+
+
+__all__ = ["support_for_scan", "apply_support", "measurement_support", "effective_support", "reported_view",
+           "bind_support_to_method", "unassessed_support", "SUPPORT_RULES", "SUPPORTED", "CONDITIONAL", "NOT_SUPPORTED", "to_relative"]
 
 
 def advisor_threshold_segmentation(image: np.ndarray, roi_mask: np.ndarray, spacing, cfg: dict):

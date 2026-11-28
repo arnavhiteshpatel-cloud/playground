@@ -5,7 +5,6 @@ import csv
 import hashlib
 import json
 import threading
-import time
 from pathlib import Path
 
 import pytest

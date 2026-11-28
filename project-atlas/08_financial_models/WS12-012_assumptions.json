@@ -137,7 +137,7 @@
   "tax_rate_pct": 0.3,
   "founder_draw_per_month": 4000,
   "founder_draw_start_month": 13,
-  "start_capital_injection": 20000,
+  "start_capital_injection": 24000,
   "start_capital_injection__evidence": "E",
   "start_capital_injection__source": "Standardization rule: smallest round amount that keeps the base-case cash balance >= 0 in every month (set by iteration on the rebuilt model).",
   "lt_growth_y6_pct": {

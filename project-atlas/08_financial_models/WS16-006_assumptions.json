@@ -4,113 +4,370 @@
  "summary": "Founder-sold promotional-products distributorship focused on commercial trade contractors (electrical, plumbing, HVAC/mechanical, mid-size GCs) in Cook/DuPage/Kane/Lake/McHenry. Revenue = first 'crew kit' order per new account plus recurring reorders (new-hire kits, seasonal hi-vis/cold-weather gear, Safety Week/stand-down recognition, online company stores). No inventory; suppliers and contract decorators produce to order. Operating profit is before founder pay.",
  "evidence_notes": [
   "Gross margin anchored on 4imprint H1-2026 gross margin 31.5% (B, C9-S015) and ASI's claimed 37% distributor average (C, WS16-S026); new-entrant base set at 31% because a newcomer has no volume rebates and prices against 4imprint's published end-buyer prices (B, DH-S025).",
- "Repeat behaviour anchored on 4imprint: ~81% of H1-2026 orders came from existing customers (838k of 1,040k, our calc; B, DH-S026). Contractor-account annual spend ($7.8k base) and churn are analyst estimates (E).",
- "Small distributors (<$1M sales) were roughly flat in Q2 2026 while >$1M firms grew ~4% (C, C9-S013); 4imprint new-customer orders fell 12% in 2025 (A, C9-S014). These argue against aggressive acquisition assumptions.",
- "Membership/software costs are published: PPAI Standard Base $595/yr incl. 1 SAGE Workplace licence (B, DH-S020); commonsku $129/user/month, minimum 2 users (B, DH-S021). ASI membership price is not published (MISSING; D-level stale figures only, DH-S022).",
- "Supplier credit: SanMar's credit application offers Net 30 or credit card, with credit report, trade references and a personal guaranty (B, DH-S024). New accounts are modelled as mostly card-prepaid (DPO 15 days base).",
- "Customer terms: ASI 2023 survey reports corporate payment terms stretching to 'sometimes 120 days' (C, DH-S028). DSO 40 days base.",
- "Rep economics: ASI 2023 median rep/manager compensation $75k; traditional 50/50 gross-profit split under pressure (C, DH-S028); commonsku estimates outside reps take ~40% of GP (D, DH-S029).",
- "All funnel and volume drivers are E (no contact or test performed). Buyer universe: 1,266 contractors with >=5 Chicago permits of >=$100k reported cost in 2025-26 (A, DH-S031)."
+  "Repeat behaviour anchored on 4imprint: ~81% of H1-2026 orders came from existing customers (838k of 1,040k, our calc; B, DH-S026). Contractor-account annual spend ($7.8k base) and churn are analyst estimates (E).",
+  "Small distributors (<$1M sales) were roughly flat in Q2 2026 while >$1M firms grew ~4% (C, C9-S013); 4imprint new-customer orders fell 12% in 2025 (A, C9-S014). These argue against aggressive acquisition assumptions.",
+  "Membership/software costs are published: PPAI Standard Base $595/yr incl. 1 SAGE Workplace licence (B, DH-S020); commonsku $129/user/month, minimum 2 users (B, DH-S021). ASI membership price is not published (MISSING; D-level stale figures only, DH-S022).",
+  "Supplier credit: SanMar's credit application offers Net 30 or credit card, with credit report, trade references and a personal guaranty (B, DH-S024). New accounts are modelled as mostly card-prepaid (DPO 15 days base).",
+  "Customer terms: ASI 2023 survey reports corporate payment terms stretching to 'sometimes 120 days' (C, DH-S028). DSO 40 days base.",
+  "Rep economics: ASI 2023 median rep/manager compensation $75k; traditional 50/50 gross-profit split under pressure (C, DH-S028); commonsku estimates outside reps take ~40% of GP (D, DH-S029).",
+  "All funnel and volume drivers are E (no contact or test performed). Buyer universe: 1,266 contractors with >=5 Chicago permits of >=$100k reported cost in 2025-26 (A, DH-S031).",
+  "STAGE E (2026-11-28) corrections: (1) Stage D transaction prices were not all 'at or below 4imprint': 4imprint's CornerStone ANSI Class 2 tee with back embroidery is $22.50 at 48 / $20.95 at 72 [B, E-WS16006-S001], and its 18-oz laser-engraved tumbler is $12.29 at 144 + $45 setup [B, E-WS16006-S003]; the $19.25-$32.75 and $12.85-$21.35 ranges in DH-S025 were mis-read from search-page layout. (2) Public blank prices (ShirtSpace, 2026-11-28: CS401 ANSI tee $17.54, Gildan G500 colours $2.71, G18500 hoodie $12.30-$13.83, Richardson 112 $9.75) [B as e-tailer price; D as proxy for distributor net, E-WS16006-S004] plus contract decoration [B, DH-S030; C, E-WS16006-S006] imply only ~10-25% gross margin on commodity decorated apparel at 4imprint price parity; ~30% needs prices ~10-20% above 4imprint (still below supplier 'retail' list, e.g. All-Secure G18500 embroidered $33.54 at 48 (R)) [B, E-WS16006-S006]. Base GM cut 31%->30% recurring and 30%->28% first orders; conservative 25%/23%.",
+  "STAGE E: industry distributor GM benchmarks are higher than the newcomer base: PPAI reports 2025 GM 34-36% by size band (2024: <$3M firms 34%) [C, E-WS16006-S009, search extract]; Counselor 2026 average 'profit margin' 37.1% (37.8% prior) [C, E-WS16006-S010]; ~90% of distributors raised prices in 2025 by ~11% avg [C, E-WS16006-S011]. These are established-firm averages with rebates and hard-goods mix (incumbent economics).",
+  "STAGE E: tariffs - IEEPA duties ended 2026-02-20 [A, WS16-S022]; Section 122 10% (raised to 15% per one firm) global duty 2026-02-24 to 2026-07-24, CAFTA-DR textiles exempt [C, E-WS16006-S013]; Section 301 'forced-labor' tariffs of 10% or 12.5% on 60 economies (99.4% of imports) from July 2026 [A, E-WS16006-S012]. MFN duties: man-made-fibre knit tees 32%, cotton tees 16.5%, CAFTA-DR origin free [A, E-WS16006-S014]. Pass-through risk is captured by the GM -5/-10 pt stress tests.",
+  "STAGE E: recurring demand - BLS JOLTS construction hires rate averaged ~4.2%/month Jan-Sep 2026 (~50%/yr) [A, E-WS16006-S015], supporting new-hire kit recurrence; OSHA requires employer-paid PPE but not everyday/weather clothing [A, E-WS16006-S016], so branded hoodies/jackets are discretionary.",
+  "STAGE E: sales rep now hired only when monthly revenue >= $60k (policy gate from the playbook), not unconditionally in month 25; the Stage D month-25 hire made the conservative case lose money for 3 years (peak funding $329k), which the playbook explicitly forbids. The ungated hire is kept as a pre-mortem case.",
+  "STAGE E standardization: founder draw $4,000/month from month 13 in all scenarios; tax 30%; start capital = smallest injection keeping base cash >= 0; long-term drivers evidenced below."
  ],
  "drivers": {
-  "sales_start_delay_months": {"conservative": 2, "base": 1, "optimistic": 1},
+  "sales_start_delay_months": {
+   "conservative": 2,
+   "base": 1,
+   "optimistic": 1
+  },
   "sales_start_delay_months__evidence": "B",
   "sales_start_delay_months__source": "LLC + IDOR REG-1 registration (A, WS16-S036); PPAI join is online at $595/yr (B, DH-S020); supplier accounts need an industry number + resale certificate/credit app (C, DH-S023). 2-6 weeks (E).",
-  "sales_cycle_months": {"conservative": 2, "base": 1, "optimistic": 1},
+  "sales_cycle_months": {
+   "conservative": 2,
+   "base": 1,
+   "optimistic": 1
+  },
   "sales_cycle_months__evidence": "E",
   "sales_cycle_months__source": "Stage A/C: orders 1-4 weeks, programs 1-3 months (E). First order usually follows a mockup/quote.",
   "founder_ramp_months": 6,
   "founder_ramp_months__evidence": "E",
   "founder_ramp_months__source": "Analyst estimate: list-building from permit data, sample kit, first referrals.",
-  "founder_leads_per_month": {"conservative": 20, "base": 30, "optimistic": 40},
+  "founder_leads_per_month": {
+   "conservative": 20,
+   "base": 30,
+   "optimistic": 40
+  },
   "founder_leads_per_month__evidence": "E",
   "founder_leads_per_month__source": "Qualified conversations with contractor ops/safety/office managers from ~15-20 hrs/week outbound + association events (MCA Chicago, ECA Chicago, Chicagoland AGC). Universe 1,266 permit-active contractors in Chicago alone (A, DH-S031).",
   "lead_to_proposal_pct": 0.4,
   "lead_to_proposal_pct__evidence": "E",
   "lead_to_proposal_pct__source": "Analyst estimate: share of qualified conversations that request a quote/mockup.",
-  "proposal_to_win_pct": {"conservative": 0.2, "base": 0.25, "optimistic": 0.3},
+  "proposal_to_win_pct": {
+   "conservative": 0.2,
+   "base": 0.25,
+   "optimistic": 0.3
+  },
   "proposal_to_win_pct__evidence": "E",
   "proposal_to_win_pct__source": "Analyst estimate; incumbents (local shops, 4imprint, contractor's existing supplier) are entrenched; to be tested in validation experiment V2.",
   "rep_ramp_months": 4,
-  "rep_new_customers_per_month": {"conservative": 1, "base": 1.5, "optimistic": 2},
+  "rep_new_customers_per_month": {
+   "conservative": 1,
+   "base": 1.5,
+   "optimistic": 2
+  },
   "rep_new_customers_per_month__evidence": "E",
   "rep_new_customers_per_month__source": "Analyst estimate for one experienced industry rep; ASI 2023 notes 35% of reps on straight commission (C, DH-S028).",
   "referral_new_per_100_active": 1.0,
   "referral_new_per_100_active__evidence": "E",
   "referral_new_per_100_active__source": "Analyst estimate: GC-to-sub and union-local word of mouth.",
-  "monthly_churn_pct": {"conservative": 0.035, "base": 0.025, "optimistic": 0.018},
+  "monthly_churn_pct": {
+   "conservative": 0.035,
+   "base": 0.025,
+   "optimistic": 0.018
+  },
   "monthly_churn_pct__evidence": "E",
   "monthly_churn_pct__source": "26%/yr base account loss; 4imprint reports ~81% of orders from existing customers and 'strong and consistent retention' (B, DH-S026; C9-S014) - incumbent, so new-entrant churn set higher.",
-  "arpc_monthly": {"conservative": 450, "base": 650, "optimistic": 850},
+  "arpc_monthly": {
+   "conservative": 450,
+   "base": 650,
+   "optimistic": 850
+  },
   "arpc_monthly__evidence": "E",
   "arpc_monthly__source": "Active account reorders 4-8x/yr at ~$1,000-1,500 (=$5.4k-10.2k/yr). 4imprint AOV ~$654 (A, C9-S014, our calc) is a small-order floor; contractor orders are larger (crew quantities).",
-  "onetime_revenue_per_new_customer": {"conservative": 1800, "base": 2500, "optimistic": 3500},
+  "onetime_revenue_per_new_customer": {
+   "conservative": 1800,
+   "base": 2500,
+   "optimistic": 3500
+  },
   "onetime_revenue_per_new_customer__evidence": "E",
   "onetime_revenue_per_new_customer__source": "First 'crew kit' order - see transaction T1 ($3,285) priced inside 4imprint published ranges (B, DH-S025); conservative assumes smaller trial orders.",
   "arpc_annual_growth_pct": 0.03,
   "arpc_annual_growth_pct__evidence": "C",
   "arpc_annual_growth_pct__source": "4imprint AOV +3% in H1-2026 via price adjustments (B, DH-S026); tariff pass-through.",
-  "gross_margin_pct": {"conservative": 0.27, "base": 0.31, "optimistic": 0.35},
-  "gross_margin_pct__evidence": "B",
-  "gross_margin_pct__source": "4imprint H1-2026 GM 31.5% (B, C9-S015); ASI claims 37% (C, WS16-S026); tariffs compressing (B, C9-S015). Conservative -4 pts for newcomer pricing.",
-  "onetime_gross_margin_pct": {"conservative": 0.26, "base": 0.30, "optimistic": 0.34},
-  "onetime_gross_margin_pct__evidence": "B",
-  "onetime_gross_margin_pct__source": "As above, first orders priced to win.",
-  "variable_opex_pct_revenue": 0.035,
+  "gross_margin_pct": {
+   "conservative": 0.25,
+   "base": 0.3,
+   "optimistic": 0.34
+  },
+  "gross_margin_pct__evidence": "C",
+  "gross_margin_pct__source": "Newcomer blended GM on contractor reorders. Incumbent anchors: 4imprint H1-2026 31.5% (B, C9-S015); PPAI 2025 34-36% by size band (C, E-WS16006-S009); Counselor 37.1% avg (C, E-WS16006-S010). Newcomer basket test at public blank/decoration prices: ~10-25% at 4imprint price parity, ~30% at +10-20% (B/D, E-WS16006-S001..S006). Conservative = 4imprint-parity pricing with tariff pass-through lag.",
+  "onetime_gross_margin_pct": {
+   "conservative": 0.23,
+   "base": 0.28,
+   "optimistic": 0.32
+  },
+  "onetime_gross_margin_pct__evidence": "C",
+  "onetime_gross_margin_pct__source": "First 'crew kit' orders priced to win against the incumbent local shop / 4imprint (see T1 basket: 24.8% at near-4imprint prices, 30% at ~+10%) (B/D/E, E-WS16006-S001..S006).",
+  "variable_opex_pct_revenue": {
+   "conservative": 0.045,
+   "base": 0.035,
+   "optimistic": 0.03
+  },
   "variable_opex_pct_revenue__evidence": "E",
-  "variable_opex_pct_revenue__source": "Card processing on ~half of revenue (~1.5%), unrecovered freight, reprints/misprints (~1-2%); commonsku shop fee 2.5%->1% on store sales (B, DH-S021).",
+  "variable_opex_pct_revenue__source": "Card processing on ~half of revenue (~1.5%), unrecovered freight, reprints/misprints (~1-2%; contract decorators disclaim errors on customer files/defective goods, E-WS16006-S006); commonsku shop fee 2.5%->1% (B, DH-S021). Conservative adds a higher reprint rate.",
   "cac_per_new_customer": 150,
   "cac_per_new_customer__evidence": "E",
   "cac_per_new_customer__source": "Spec samples, mockups, site visits, lunch-and-learns.",
   "fixed_marketing_per_month": 350,
   "fixed_marketing_per_month__evidence": "E",
   "fixed_marketing_per_month__source": "LinkedIn/CRM data, website, sample library refresh, association event fees.",
-  "dso_days": {"conservative": 50, "base": 40, "optimistic": 30},
+  "dso_days": {
+   "conservative": 50,
+   "base": 40,
+   "optimistic": 30
+  },
   "dso_days__evidence": "C",
   "dso_days__source": "Net-30 contractor AP with slow payers; ASI 2023 reports terms 'sometimes 120 days' (C, DH-S028); deposits on first orders offset.",
-  "inventory_days_cogs": {"conservative": 5, "base": 3, "optimistic": 0},
+  "inventory_days_cogs": {
+   "conservative": 5,
+   "base": 3,
+   "optimistic": 0
+  },
   "inventory_days_cogs__evidence": "C",
   "inventory_days_cogs__source": "Made to order, no inventory (C, WS16-S026); small sample and company-store buffer stock.",
-  "dpo_days": {"conservative": 0, "base": 15, "optimistic": 25},
+  "dpo_days": {
+   "conservative": 0,
+   "base": 15,
+   "optimistic": 25
+  },
   "dpo_days__evidence": "B",
   "dpo_days__source": "SanMar Net 30 only after credit approval incl. personal guaranty, else credit card (B, DH-S024); many suppliers prepay until credit established.",
   "tax_rate_pct": 0.3,
-  "founder_draw_per_month": 3000,
+  "founder_draw_per_month": 4000,
   "founder_draw_start_month": 13,
-  "start_capital_injection": 10000,
+  "start_capital_injection": 39200,
   "start_capital_injection__evidence": "E",
-  "start_capital_injection__source": "Covers samples, PPAI, laptop, insurance and receivable float.",
-  "ev_multiple": 2.5,
-  "ev_multiple__evidence": "D",
-  "ev_multiple__source": "Small founder-dependent distributors; SDE-type multiple (D, not researched in detail).",
-  "incremental_roic_pct": 0.6
+  "start_capital_injection__source": "Stage E rule: smallest injection (rounded up to $100) keeping base-case cash >= 0 = base peak funding need incl. $4k/month draw from m13 ($39,105).",
+  "ev_multiple": {
+   "conservative": 1.5,
+   "base": 2.5,
+   "optimistic": 3.0
+  },
+  "ev_multiple__evidence": "E",
+  "ev_multiple__source": "Founder-relationship promo book sold on earn-out; no completed-transaction multiple found (MISSING; BizBuySell/IBBA pages not retrievable 2026-11-28). Adjacent Atlas anchor: small insurance books 5-7x profit (C, C5-S021) are far stickier, so promo is set well below. Applied to operating profit before owner pay (SDE-like).",
+  "incremental_roic_pct": {
+   "conservative": 0.35,
+   "base": 0.6,
+   "optimistic": 0.9
+  },
+  "founder_draw_per_month__evidence": "E",
+  "founder_draw_per_month__source": "Stage E standardization rule: $4,000/month living stipend from month 13 in all scenarios.",
+  "tax_rate_pct__evidence": "E",
+  "tax_rate_pct__source": "Stage E standardization rule (simplified pass-through).",
+  "lt_growth_y6_pct": {
+   "conservative": 0.03,
+   "base": 0.08,
+   "optimistic": 0.12
+  },
+  "lt_growth_y6_pct__evidence": "C",
+  "lt_growth_y6_pct__source": "Industry sales growth +1.3% (PPAI 2025, C, E-WS16006-S008), +4.2% (ASI 2025, C, C9-S012), +2.5% Q2-2026 (C, C9-S013); small (<$1M) distributors flat (C, C9-S013). Base 8% assumes continued rep/account additions in year 6; conservative ~ nominal industry growth.",
+  "lt_growth_decay": {
+   "conservative": 0.7,
+   "base": 0.85,
+   "optimistic": 0.9
+  },
+  "lt_growth_decay__evidence": "E",
+  "lt_growth_decay__source": "Growth fades as the Chicago trade-contractor cluster saturates (1,266 permit-active contractors, A, DH-S031); conservative fades fastest.",
+  "incremental_roic_pct__evidence": "E",
+  "incremental_roic_pct__source": "Growth capital is mostly receivables (DSO 40 d vs DPO 15 d => NWC ~8% of revenue, model) plus rep ramp losses; at ~10-12% operating margin the pre-tax return on incremental NWC is ~1.2-1.4x before rep ramp costs; base haircut to 0.6, conservative 0.35 (slow-paying GCs, ASI terms 'sometimes 120 days', C, DH-S028).",
+  "maint_capex_pct_op": {
+   "conservative": 0.05,
+   "base": 0.03,
+   "optimistic": 0.02
+  },
+  "maint_capex_pct_op__evidence": "E",
+  "maint_capex_pct_op__source": "Asset-light: laptops, sample library, vehicle share; no production equipment (suppliers/contract decorators produce).",
+  "reserve_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1.5
+  },
+  "reserve_months__evidence": "E",
+  "reserve_months__source": "Cash reserve vs cyclical construction customers and slow receivables (recession stress takes base y3 op to ~0 in Stage D); conservative holds 3 months of cash costs."
  },
  "staff": [
-  {"role": "Account coordinator (order entry, proofs, supplier follow-up, store admin)", "trigger": "revenue", "threshold": 35000, "per": 70000, "max_count": 3, "start_month": 1, "monthly_cost": {"conservative": 5200, "base": 4800, "optimistic": 4500}, "notes": "~$48k salary + burden (E). One coordinator per ~$70k/month of sales (E)."},
-  {"role": "Outside sales rep (base + commission draw)", "trigger": "month", "start_month": 25, "count": 1, "is_sales_rep": true, "monthly_cost": {"conservative": 5500, "base": 5000, "optimistic": 4500}, "notes": "ASI 2023 median comp $75k (C, DH-S028); modelled as fixed loaded cost (E)."}
+  {
+   "role": "Account coordinator (order entry, proofs, supplier follow-up, store admin)",
+   "trigger": "revenue",
+   "threshold": 35000,
+   "per": 70000,
+   "max_count": 6,
+   "start_month": 1,
+   "monthly_cost": {
+    "conservative": 5200,
+    "base": 4800,
+    "optimistic": 4500
+   },
+   "notes": "~$48k salary + burden (E). One coordinator per ~$70k/month of sales (E). Stage E: max_count raised 3->6 so optimistic-case staffing scales with revenue (1 per ~$70k/month)."
+  },
+  {
+   "role": "Outside sales rep (base + commission draw)",
+   "trigger": "revenue",
+   "is_sales_rep": true,
+   "monthly_cost": {
+    "conservative": 5500,
+    "base": 5000,
+    "optimistic": 4500
+   },
+   "notes": "Hired only once monthly revenue >= $60k (founder + coordinators at capacity; playbook gate: founder sustains >=3 new accounts/month at >=30% GM). ASI 2023 median rep/manager comp $75k (C, DH-S028); reps commonly take ~40-50% of GP (D, DH-S029) - modelled as fixed loaded cost (conservative for downside). Stage D hired one unconditionally in month 25 (Correction).",
+   "threshold": 60000,
+   "per": 60000,
+   "max_count": 2,
+   "start_month": 13
+  }
  ],
  "overhead": [
-  {"item": "PPAI Standard Base membership incl. 1 SAGE Workplace licence", "monthly": 50, "is_ai": true, "notes": "$595/yr (B, DH-S020)."},
-  {"item": "commonsku Essentials (2 users) once coordinator hired", "monthly": 258, "start_month": 13, "is_ai": true, "notes": "$129/user/month, min 2 users (B, DH-S021)."},
-  {"item": "AI assistants + mockup tools (ordinary post-Dec-2026 pricing)", "monthly": 60, "is_ai": true, "notes": "E."},
-  {"item": "Accounting software, e-sign, phone, website", "monthly": 120, "is_ai": true, "notes": "E."},
-  {"item": "General + product liability insurance", "monthly": {"conservative": 125, "base": 90, "optimistic": 70}, "annual_growth_pct": 0.05, "notes": "E - no quote obtained."},
-  {"item": "Sample library, local trade events", "monthly": 150, "notes": "E."},
-  {"item": "Vehicle / mileage for site visits and deliveries", "monthly": 300, "notes": "E."},
-  {"item": "Accounting / legal", "monthly": 150, "notes": "E."}
+  {
+   "item": "PPAI Standard Base membership incl. 1 SAGE Workplace licence",
+   "monthly": 50,
+   "is_ai": true,
+   "notes": "$595/yr (B, DH-S020)."
+  },
+  {
+   "item": "commonsku Essentials (2 users) once coordinator hired",
+   "monthly": 258,
+   "start_month": 13,
+   "is_ai": true,
+   "notes": "$129/user/month, min 2 users (B, DH-S021)."
+  },
+  {
+   "item": "AI assistants + mockup tools (ordinary post-Dec-2026 pricing)",
+   "monthly": 60,
+   "is_ai": true,
+   "notes": "E."
+  },
+  {
+   "item": "Accounting software, e-sign, phone, website",
+   "monthly": 120,
+   "is_ai": true,
+   "notes": "E."
+  },
+  {
+   "item": "General + product liability insurance",
+   "monthly": {
+    "conservative": 125,
+    "base": 90,
+    "optimistic": 70
+   },
+   "annual_growth_pct": 0.05,
+   "notes": "E - no quote obtained."
+  },
+  {
+   "item": "Sample library, local trade events",
+   "monthly": 150,
+   "notes": "E."
+  },
+  {
+   "item": "Vehicle / mileage for site visits and deliveries",
+   "monthly": 300,
+   "notes": "E."
+  },
+  {
+   "item": "Accounting / legal",
+   "monthly": 150,
+   "notes": "E."
+  }
  ],
  "capex": [
-  {"item": "Laptop, sample display kit, LLC filing and REG-1 setup", "month": 1, "amount": {"conservative": 2500, "base": 2000, "optimistic": 1500}, "notes": "E."}
+  {
+   "item": "Laptop, sample display kit, LLC filing and REG-1 setup",
+   "month": 1,
+   "amount": {
+    "conservative": 2500,
+    "base": 2000,
+    "optimistic": 1500
+   },
+   "notes": "E."
+  }
  ],
  "transactions": [
-  {"name": "T1 - New-account crew kit, 40-person electrical subcontractor (60 hi-vis tees, 30 embroidered hoodies, 60 embroidered caps)", "revenue": 3285,
-   "lines": [{"item": "Blanks + decoration from supplier/contract decorator (~67% of sell)", "amount": 2200}, {"item": "Freight not recovered", "amount": 60}, {"item": "Card processing (3%)", "amount": 99}],
-   "notes": "Sell prices: hi-vis tee $18 (4imprint range $19.25-$32.75), hoodie $38, cap $16 (4imprint embroidered caps $6.75-$39.75) + $60 screens + $45 freight billed. Contract decoration benchmark $3.33/pc at 12 pcs, $20/screen (B, DH-S030). Contribution ~$926 (28%). Paid 50% deposit, balance net-30.", "evidence": "E (prices anchored B)"},
-  {"name": "T2 - Construction Safety Week recognition order (150 laser-engraved 18-oz tumblers + 150 safety tees)", "revenue": 3900,
-   "lines": [{"item": "Supplier product + engraving/print (~65%)", "amount": 2535}, {"item": "Freight", "amount": 90}, {"item": "Card processing / ACH", "amount": 60}],
-   "notes": "Tumbler $14 (4imprint laser-engraved 18-oz $12.85-$21.35), tee $12. Contribution ~$1,215 (31%). Net-30 invoice; supplier paid by card at order -> ~45-day float gap.", "evidence": "E (prices anchored B)"},
-  {"name": "T3 - Monthly company-store replenishment, 120-employee mechanical contractor", "revenue": 2000,
-   "lines": [{"item": "Product + decoration (~69%)", "amount": 1380}, {"item": "commonsku shop transaction fee (2.5%)", "amount": 50}, {"item": "Kitting/shipping to jobsites", "amount": 70}],
-   "notes": "Recurring program; contribution ~$500/month (25%). Store fee schedule (B, DH-S021).", "evidence": "E"}
+  {
+   "name": "T1 - New-account crew kit, ~40-person electrical sub (96 safety-green tees 1-colour, 40 embroidered heavy-blend hoodies, 40 embroidered trucker caps)",
+   "revenue": 2592.0,
+   "lines": [
+    {
+     "item": "96 Gildan G500 safety-colour tees: blank $2.95 avg (ShirtSpace $2.71 S-XL, 2XL+ higher) + 1-colour print ~$1.60 + screen $20 + freight $0.35",
+     "amount": 490.56
+    },
+    {
+     "item": "40 Gildan G18500 hoodies: blank $14.60 avg ($13.83 M-XL; 2XL $17.44) + left-chest embroidery ~$5.50 + digitizing $35 + freight $0.60",
+     "amount": 863.0
+    },
+    {
+     "item": "40 Richardson 112 caps: blank $9.75 + cap embroidery ~$4.75 + freight $0.40",
+     "amount": 596.0
+    },
+    {
+     "item": "Card processing on 50% deposit (3%)",
+     "amount": 38.88
+    }
+   ],
+   "notes": "Sell: tee $8.25 (4imprint $7.25 at 72 / $6.25 at 144), hoodie $26.50 (4imprint $25.75 at 24 / $22.50 at 48), cap $18.50 (4imprint $18.95 at 24 / $15.50 at 48) [B, E-WS16006-S001/S002]. Contribution ~$604 (23%); at hoodie $29 / cap $21 (local-shop level) GM reaches ~30%. Decoration costs interpolated between Hightech Grafix B points (E).",
+   "evidence": "E (sell prices B; blank prices B as e-tailer list / D as distributor-net proxy; decoration E interpolated from B)"
+  },
+  {
+   "name": "T2 - Construction Safety Week (May 3-7, 2027) recognition order: 150 laser-engraved 18-oz vacuum tumblers + 150 'Safety Week' tees",
+   "revenue": 3157.5,
+   "lines": [
+    {
+     "item": "150 tumblers: supplier net incl. engraving assumed $9.25 (~75% of 4imprint $12.29 at 144) + $36 setup (net) + $75 freight",
+     "amount": 1498.5
+    },
+    {
+     "item": "150 Gildan G500 tees: blank $2.95 + print ~$1.25 + screen $20 + freight $0.35",
+     "amount": 702.5
+    },
+    {
+     "item": "ACH/card processing",
+     "amount": 47.0
+    }
+   ],
+   "notes": "Sell: tumbler $13.50 + $45 setup passed through (4imprint $12.29 at 144 + $45) and tee $7.25 (4imprint $6.25 at 144) [B, E-WS16006-S001/S003]. Contribution ~$910 (29%). Tumbler supplier net is MISSING (E). Net-30 invoice; supplier card-paid at PO -> ~45-day float.",
+   "evidence": "E (sell prices B; tumbler cost E)"
+  },
+  {
+   "name": "T3 - Monthly company-store replenishment, 120-employee mechanical contractor",
+   "revenue": 2000,
+   "lines": [
+    {
+     "item": "Product + decoration (~70% blended)",
+     "amount": 1400
+    },
+    {
+     "item": "commonsku shop transaction fee (2.5%)",
+     "amount": 50
+    },
+    {
+     "item": "Kitting/shipping to jobsites",
+     "amount": 70
+    }
+   ],
+   "notes": "Recurring program; contribution ~$480/month (24%). Store fee schedule (B, DH-S021); OMG/BrightStores company-store hosting reported at $119/month Standard (D, E-WS16006-S017) as alternative.",
+   "evidence": "E"
+  },
+  {
+   "name": "T4 - Annual gear-allowance program (redemption store), 150 field/service employees x $150/yr allowance",
+   "revenue": 22500,
+   "lines": [
+    {
+     "item": "Product + decoration (~72% blended; employees choose higher-ticket brand items)",
+     "amount": 16200
+    },
+    {
+     "item": "Store fee 2.5% (commonsku) or OMG redemption $0.99/order",
+     "amount": 563
+    },
+    {
+     "item": "Individual pick/pack/ship to ~300 orders @ ~$4",
+     "amount": 1200
+    }
+   ],
+   "notes": "Annual allowance funded by employer; contribution ~$4,537/yr (20%) - lower % but highly predictable and sticky; allowance size is an analyst assumption (E).",
+   "evidence": "E"
+  }
  ]
 }

@@ -9,7 +9,7 @@
   "Technician pay: BLS/O*NET 2025 Mechanical Door Repairers, Chicago MSA median $65,090; 25th pct $51,300 [C, DF-S006]; PayScale Chicago garage-door technician avg base ~$49.6k [D, E-WS18035-S013]. Loaded +25% = E.",
   "Lead cost (Stage E re-fetch of DF-S008, Aug 2026): Searchlight LSA average $49/lead entering 2026, Q1 2026 $45, April $59; non-branded search $173/lead; branded $66; blended $145 (11 contractors, Jan-Apr 2026); commercial overhead-door search CPL $300-600 [D, E-WS18035-S006]. CORRECTION: the '38% LSA book rate / $198 per paying customer' figure Stage D attributed to this source is not on the page.",
   "Channel access: garage-door LSA advertisers in the US must pass Google Advanced Verification (video call; typically 6-8 weeks) plus service-professional background checks [B, E-WS18035-S001/S002] — first LSA lead realistically month 3.",
-  "Gross margin CORRECTION: Stage D's 65% base margin is inconsistent with its own $575 ticket (70/15/15 repair/opener/door mix). Re-derived: repairs ~28-33% parts (DDM public springs median $52 [B, DF-S012]), openers ~55-75% (DDM public $456-880 [B]), doors ~50% (Access COGS 46-47% [B, DF-S001]) => blended parts cost ~42% at $575 (GM 58%); 48% at $450 with public-price parts (GM 52%); ~38% at $700 with dealer pricing (GM 62%).",
+  "Gross margin CORRECTION: Stage D's 65% base margin implicitly assumed dealer-level parts pricing that is not yet available (SSC/Clopay dealer prices MISSING). Re-derived from the ticket mix (~78/13/9 repairs/openers/doors by count): repairs ~30% parts at DDM public prices [B, DF-S012], openers ~60% [B, DF-S012], doors ~50% (Access COGS 46-47% [B, DF-S001]) => ~41% parts cost at $575 (GM ~59-60% once a dealer account trims spring/opener cost); ~48% with public prices and discounting (GM 52%, conservative); ~36% with full dealer pricing (GM 64%, optimistic).",
   "Chicago price band: Raynor Door Co. (Northfield) June 2026 guide — torsion pair $250-400, single $200-300, extension pair $150-300 [D, E-WS18035-S009, directly fetched; Stage D had only a search summary].",
   "Not modelled: light-commercial / HOA preventive-maintenance contracts and NFPA 80 fire-door drop tests (recurring; see playbook side calculation, E), seasonality (installs slower Jan-Feb; spring failures peak in cold snaps, E).",
   "Churn-based stress tests and the churn tornado bar are not meaningful here (churn is structurally 100% in a job-based model); read CAC, ticket, margin, labour, hiring-threshold and demand tests."
@@ -76,7 +76,7 @@
    "optimistic": 700
   },
   "onetime_revenue_per_new_customer__evidence": "D",
-  "onetime_revenue_per_new_customer__source": "Average ticket. Precision system avg $706 (CY2024) and $1,213 (CY2025) incl. upsell-heavy premium brand [B, C8-S019/S020]; Raynor Door (Northfield) June 2026 Chicago guide: torsion pair $250-400 [D, E-WS18035-S009]; A1 quotes $350-750 single spring [D, DF-S037]; mix assumed 70% repairs / 15% openers / 15% doors by count (E).",
+  "onetime_revenue_per_new_customer__source": "Average ticket. Precision system avg $706 (CY2024) and $1,213 (CY2025) incl. upsell-heavy premium brand [B, C8-S019/S020]; Raynor Door (Northfield) June 2026 Chicago guide: torsion pair $250-400 [D, E-WS18035-S009]; A1 quotes $350-750 single spring [D, DF-S037]. Base mix ~78% repairs (avg ~$390) / 13% openers (~$800) / 9% doors (~$2,000) by count => ~$585 (E).",
   "arpc_annual_growth_pct": 0.03,
   "arpc_annual_growth_pct__evidence": "E",
   "arpc_annual_growth_pct__source": "Inflation pass-through.",
@@ -89,7 +89,7 @@
    "optimistic": 0.64
   },
   "onetime_gross_margin_pct__evidence": "C",
-  "onetime_gross_margin_pct__source": "Gross margin after parts/doors only (labour is staff). CORRECTION from Stage D (0.55/0.65/0.70): re-derived from the ticket mix — repairs 28-33% parts at DDM public prices [B, DF-S012], openers 55-75% [B, DF-S012], doors ~50% (Access COGS 46-47% [B, DF-S001]); cons assumes public-price parts (no dealer account), opt assumes SSC/Clopay dealer pricing (MISSING). Component prices B; mix E => C overall.",
+  "onetime_gross_margin_pct__source": "Gross margin after parts/doors only (labour is staff). CORRECTION from Stage D (0.55/0.65/0.70): re-derived from the base ticket mix — repairs ~30% parts at DDM public prices (springs median $52 [B, DF-S012]), openers ~60% (DDM public $456-880 [B, DF-S012]), doors ~50% (Access COGS 46-47% [B, DF-S001]) => ~41% parts cost (GM ~59%); all-public-price with discounting ~46-48% (GM 52-54%) = conservative; full dealer pricing (SSC/Clopay, MISSING) ~35% (GM ~65%). Base 0.60 assumes a dealer account by month ~4-6; opt 0.64. Component prices B; mix and dealer discount E => C overall.",
   "variable_opex_pct_revenue": 0.06,
   "variable_opex_pct_revenue__evidence": "E",
   "variable_opex_pct_revenue__source": "Card processing ~3% + fuel ~3% of revenue (Junk King fuel 3.3% of sales as truck-trade analogue [B, WS18-S001]).",
@@ -99,7 +99,7 @@
    "optimistic": 75
   },
   "cac_per_new_customer__evidence": "D",
-  "cac_per_new_customer__source": "Per paid job (applied to all jobs incl. referrals). Re-derived with 2026 data [D, E-WS18035-S006]: ~60% LSA at $45-59/lead, ~20% non-branded search at $173/lead, ~20% referral/B2B/GBP organic at $0 => ~$64/lead; at ~55% lead-to-paid-job => ~$115/job (~20% of ticket). Stage D base $100 (Correction: LSA CPL now $45-59, not $15-49). Angi shared leads are worse (vendor says each lead is resold to 3-5 pros [D, E-WS18035-S007]; FTC 2023 order on HomeAdvisor lead-quality claims [A, E-WS18035-S003]) and are not in the base mix.",
+  "cac_per_new_customer__source": "Per paid job (applied to all jobs incl. referrals). Re-derived with 2026 data [D, E-WS18035-S006]: years 1-2 mix ~60% LSA at $45-59/lead, ~20% non-branded search at $173/lead, ~20% referral/B2B/GBP organic at $0 => ~$64/lead; at ~55% lead-to-paid-job => ~$115/job; as the free share rises to ~35% by year 3 => ~$90/job; five-year blend ~$105 base (~18% of ticket). Stage D base $100 (Correction: LSA CPL is now $45-59, not $15-49). Conservative $160 = paid-only mix with weaker conversion; optimistic $75 = strong referral/B2B share. Angi shared leads are worse (vendor says each lead is resold to 3-5 pros [D, E-WS18035-S007]; FTC 2023 order on HomeAdvisor lead-quality claims [A, E-WS18035-S003]) and are not in the base mix.",
   "fixed_marketing_per_month": 600,
   "fixed_marketing_per_month__evidence": "E",
   "fixed_marketing_per_month__source": "Website, Google Business Profile tools, review software, van wrap amortisation, BNI/association dues.",

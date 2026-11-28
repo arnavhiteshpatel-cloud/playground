@@ -19,7 +19,7 @@ three-class segmentation with an optional locked model; morphometry that agrees 
 sign-off; hash-chained audit trail with external anchors; reports). Default segmentation: the advisor's own threshold
 (`advisor_threshold`), the only method carrying measurement support. Builds: the only packaged build is a local Linux
 build of 27 Nov 2026 that predates advisor 1.3.1–1.4.3 and the cycle-2/3 fixes and must be rebuilt before any use;
-Windows and macOS builds have never been run. Tests: 597 passed, 1 skipped; 90.8% line+branch coverage, desktop UI
+Windows and macOS builds have never been run. Tests: 611 passed, 1 skipped; 93.4% line+branch coverage (99% on critical modules), desktop UI
 excluded (single source `docs/qa/test_summary.json`); CI on Windows, macOS and Linux passed for the first time on
 28 Nov 2026. 16+ experiments; internal automated review (reviewer agents, not independent reviewers — `REVIEW_REGISTRY.md`).
 

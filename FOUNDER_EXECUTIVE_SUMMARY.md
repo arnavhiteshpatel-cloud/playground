@@ -19,8 +19,9 @@ interviews or pilots, and no test on real graft materials.
   If not, the report says "not measured" and why. It is the default segmentation method (`advisor_threshold`), the
   only one carrying measurement support. Total mineral is reported only when the scan's blur and noise allow it, which
   in held-out simulation was rare (§2).
-* **Supporting work:** tests and coverage from one file, `docs/qa/test_summary.json`: 597 passed, 1 skipped; 90.8%
-  line+branch coverage of the `osteoquant` package, desktop UI excluded (local full run, 28 Nov). CI passed for the
+* **Supporting work:** tests and coverage from one file, `docs/qa/test_summary.json`: 611 passed, 1 skipped; 93.4%
+  line+branch coverage of the `osteoquant` package (99% on critical modules), desktop UI excluded (local full run,
+  28 Nov). CI passed for the
   first time on 28 Nov. Review cycles by automated reviewer agents — not human experts — with cycle 3 under
   way (`REVIEW_REGISTRY.md`); a financial model, pricing
   hypotheses and a competitor matrix (`business/`, `docs/research/`); three rebuilt decks whose every figure is read

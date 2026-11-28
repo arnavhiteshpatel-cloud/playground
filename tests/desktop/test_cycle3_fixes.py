@@ -97,3 +97,11 @@ def test_stale_and_unbound_records_show_not_assessed_in_report(team):
     for key in ("class_volumes.residual_graft_fraction", "class_volumes.mineral_volume_mm3"):
         assert row[key + "__support"] in ("not_assessed", "not_supported"), row[key + "__support"]
         assert row[key] in ("", "None", "nan")
+
+
+def test_memory_preflight_refuses_before_loading(analysed):
+    """C3-PRD-20: an analysis that cannot fit in memory is refused with a clear message, not killed by the OS."""
+    project, sid, scan = analysed
+    with pytest.raises(MemoryError, match="needs about"):
+        S._memory_preflight(project, scan, available=1024)
+    S._memory_preflight(project, scan, available=10 ** 12)          # plenty: no error

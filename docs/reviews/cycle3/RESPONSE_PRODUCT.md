@@ -26,7 +26,7 @@ limitation documented), **open** (planned; reason given).
 | C3-PRD-17 | Low | partly fixed | Identical refusal reasons are grouped with the specimens they apply to ("all 6"), test in `test_report_bounds.py`. Open: "not measured, 0 of n" in group tables, overlay colours for refused splits, comparison-omission notice. |
 | C3-PRD-18 | Low | fixed | See C3-PRD-13. |
 | C3-PRD-19 | Low | open | Timing-dependent tests to be converted to event-based waits. |
-| C3-PRD-20 | Low | open | Memory pre-flight and serialisation of large analyses. |
+| C3-PRD-20 | Low | partly fixed | Analyses are refused before loading when the estimated peak (≈8 × the float32 volume) exceeds available memory, with a clear message (test `test_memory_preflight_refuses_before_loading`). Open: serialising large jobs and finer-grained cancellation. |
 | C3-PRD-21 | Low | partly fixed | The store refuses a database with a newer schema version (test `test_newer_schema_database_is_refused`). Not done: deferring the desktop's own schema additions until after sign-in. |
 | C3-PRD-22 | Low | open | The mkdir lock fallback is reached only without both `fcntl` and `msvcrt`; existing-name overwrite protection planned. |
 

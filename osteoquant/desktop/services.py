@@ -625,6 +625,30 @@ def resolve_healing_weeks(project, scan_id, value=HEALING_AUTO) -> tuple[float |
     return w, "entered by the user"
 
 
+ANALYSIS_MEMORY_FACTOR = 8      # peak bytes ≈ 8 × float32 volume (image, labels, probabilities, morphometry buffers)
+
+
+def _memory_preflight(project, scan_id, available: int | None = None) -> None:
+    """Refuse an analysis that would not fit in memory, before loading anything (cycle-3 review C3-PRD-20: on Linux a
+    too-large analysis is killed by the OS instead of raising MemoryError, and unsaved work is lost)."""
+    sc = project.store.scan(project.require_user(), scan_id)
+    shape = sc.get("shape") or []
+    try:
+        n = int(np.prod([int(x) for x in shape])) if shape else 0
+    except (TypeError, ValueError):
+        return
+    need = n * 4 * ANALYSIS_MEMORY_FACTOR
+    if available is None:
+        try:
+            import psutil
+            available = int(psutil.virtual_memory().available)
+        except Exception:  # noqa: BLE001 - without psutil the check is skipped
+            return
+    if need > available:
+        raise MemoryError(f"This analysis needs about {need / 2**30:.1f} GB of memory and {available / 2**30:.1f} GB is "
+                          "available. Close other analyses or applications, or analyse a cropped or decimated copy.")
+
+
 def analyze_scan(project, scan_id, config: dict | None = None, ctx=None, use_saved_roi=True) -> dict:
     """Run the DefectFill pipeline on a stored scan via the shared job handler.
 
@@ -633,6 +657,7 @@ def analyze_scan(project, scan_id, config: dict | None = None, ctx=None, use_sav
     from ..study.handlers import job_analyze
     ctx = ctx or NullContext()
     config = dict(config or {})
+    _memory_preflight(project, scan_id)
     weeks, source = resolve_healing_weeks(project, scan_id, config.pop("healing_weeks", HEALING_AUTO))
     config["healing_weeks"] = weeks
     config["healing_weeks_source"] = source

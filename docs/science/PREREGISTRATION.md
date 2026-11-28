@@ -86,6 +86,27 @@ rule changes are made before human expert review and physical data.
 * **Imaging:** PSF σ 15, 35 and 50 µm (every specimen); noise smoothed with a 1.0-voxel Gaussian at σ ∈ {70, 140}.
 * **Advisor/method/outcome/acceptance:** as §7–§8. 216 specimens (9 structures × 4 densities × 3 PSF × 2 noise).
 
+## 10. Held-out validation S1H4 of advisor 1.4.3 on the product's material paths (registered 2026-11-28, before running)
+* **Why:** cycle-3 reviews C2-SCI-18 / C3-SCI-05 / C3-SCI-06: no held-out run had used the knowledge-base material path or
+  "Unspecified" (the two paths the desktop uses), S1H3 had too few structures to bound the supported-failure rate, and
+  1.4.3 changed rules after S1H3.
+* **Advisor:** 1.4.3 frozen (the script asserts the version). Method: `advisor_threshold`. Failure: |relative volume error|
+  > 20% per endpoint (residual graft, new bone, total mineral).
+* **Structures (unseen seeds):** 36 — condyle seeds 6000–6011, segmental 6100–6111, calvarial 6200–6211 (granule sizes and
+  defect geometry as S1H3 per model); healing stage 0.5.
+* **Material arms:** knowledge-base ids `ha`, `bcp`, `beta_tcp` (phantoms rendered by the generator with that material;
+  time since implantation given as 2 weeks for the resorbable `bcp` and `beta_tcp`), `xenograft_dbbm` (refusal arm), and
+  **Unspecified** (`material=None`) on the `ha` phantoms.
+* **Imaging:** 40 µm voxels; PSF 20 and 40 µm; correlated noise (σ over 1.0 voxel) 60 and 120.
+* **Size:** 36 structures × 5 arms × 2 PSF × 2 noise = 720 specimens.
+* **Primary analysis (structures are the unit):** per endpoint, a structure *fails* if any of its supported measurements
+  fails; k = structures with ≥1 supported measurement; Clopper–Pearson 95% upper bound on the structure failure rate.
+  Row-level counts, coverage and errors are reported descriptively.
+* **Acceptance per endpoint:** (a) ≥95% of failing measurements refused; (b) structure-level upper bound ≤ 0.10, which
+  requires k ≥ 36 with no failing structure — otherwise "not demonstrated" (not "fail") unless a supported failure occurs;
+  (c) any supported failure is reported with its structure, arm and imaging condition.
+* **No tuning:** the results will not be used to change 1.4.3; any later rule change needs another held-out test.
+
 ## Deviations log
 | Date | Item | Deviation | Justification |
 |---|---|---|---|

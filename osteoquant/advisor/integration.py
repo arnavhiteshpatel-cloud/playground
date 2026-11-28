@@ -117,6 +117,10 @@ def _assess_scan(image: np.ndarray, roi_mask: np.ndarray, spacing, cfg: dict):
         if blur.get("sigma_vox"):
             kw["blur_sigma_vox"] = float(blur["sigma_vox"])
         a = assess_support(material, graft_prior=prior, **kw)
+        # scan-measured inputs recorded with every assessment (metadata only; C3-SCI-08: S1H3 rows had no blur)
+        a.inputs["scan_measured"] = {k: kw.get(k) for k in ("blur_sigma_vox", "graft_struct_um", "graft_level_deep",
+                                                            "rim_fraction_new", "rim_fraction_mineral", "rim_width_vox",
+                                                            "halo_graft_fraction", "soft_halo_fraction")}
     return a, est, prior, material
 
 

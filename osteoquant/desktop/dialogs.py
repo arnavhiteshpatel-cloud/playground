@@ -172,7 +172,8 @@ class AnalysisDialog(_Dialog):
         self.diam.setSuffix(" µm")
         self.diam.setSpecialValueText("not specified")
         self.seg = QComboBox()
-        self.seg.addItem("Multi-Otsu (classical, material-aware)", "multiotsu")
+        self.seg.addItem("Advisor threshold (validated with measurement support) — recommended", "advisor_threshold")
+        self.seg.addItem("Multi-Otsu (classical; no measurement support)", "multiotsu")
         from .services import SYNTHETIC_CHIP, available_models
         self._synthetic = {}
         for m in available_models():

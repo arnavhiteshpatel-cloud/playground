@@ -72,7 +72,7 @@ def summarize(rows, method):
     n_sup = int((~refused).sum())
     k_f = int((~refused & fail).sum())
     out["p_fail_given_supported"] = (k_f / n_sup) if n_sup else None
-    out["p_fail_given_supported_upper95"] = float(_beta.ppf(0.975, k_f + 1, n_sup - k_f)) if n_sup else None
+    out["p_fail_given_supported_upper95"] = (1.0 if k_f == n_sup else float(_beta.ppf(0.975, k_f + 1, n_sup - k_f))) if n_sup else None
     out["coverage_supported_fraction"] = float((~refused).mean()) if len(r) else None
     # Per-endpoint evaluation: each endpoint judged by ITS OWN advisor status (graft, new bone, total mineral).
     out["per_endpoint"] = {}
@@ -87,7 +87,7 @@ def summarize(rows, method):
         out["per_endpoint"][ep] = {
             "n": len(rr), "n_fail": int(fl.sum()), "failures_refused": int((fl & rf).sum()),
             "supported_but_failed": kf, "supported_and_ok": int((~rf & ~fl).sum()), "refused_but_ok": int((rf & ~fl).sum()),
-            "p_fail_given_supported_upper95": float(_beta.ppf(0.975, kf + 1, ns - kf)) if ns else None,
+            "p_fail_given_supported_upper95": (1.0 if kf == ns else float(_beta.ppf(0.975, kf + 1, ns - kf))) if ns else None,
             "abs_err_supported_median": float(np.median([abs(x[ek]) for x, g in zip(rr, rf) if not g])) if ns else None,
             "abs_err_supported_max": float(np.max([abs(x[ek]) for x, g in zip(rr, rf) if not g])) if ns else None}
     for ep in ("new", "mineral"):

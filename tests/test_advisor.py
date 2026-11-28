@@ -304,9 +304,30 @@ def test_scan_profile_mismatch_refuses():
 
 def test_bone_derived_not_supported_by_day0():
     full = {"registered": True, "qc_pass": True, "untracked_fraction": 0.0, "max_displacement_um": 10.0}
-    for m in ("autograft", "allograft", "xenograft_dbbm"):
+    for m in ("autograft", "allograft"):                     # remodelling bone grafts
         a = assess_support(m, noise_rel=0.05, voxel_um=20, day0=full)
         assert a.status("residual_graft_volume") == NOT_SUPPORTED
+    # DBBM is deproteinised and resorbs very slowly: the day-0 footprint mechanism applies (C2-SCI-10)
+    d = assess_support("xenograft_dbbm", noise_rel=0.05, voxel_um=20, day0=full)
+    assert d.status("residual_graft_volume") == CONDITIONAL
+
+
+def test_metals_refuse_mineral_and_bcp_is_resorbable():
+    m = assess_support("titanium", noise_rel=0.02, voxel_um=20)
+    assert m.status("total_mineral_volume") == NOT_SUPPORTED
+    b = assess_support("bcp", noise_rel=0.02, voxel_um=20)
+    assert "resorbable_timepoint_rule" in b.intensity
+
+
+def test_pipeline_binds_support_to_method():
+    from osteoquant.pipeline import bind_support_to_method
+    sup = assess_support("ha", noise_rel=0.03, voxel_um=20).to_dict()
+    bind_support_to_method(sup, {"method": "multiotsu"})
+    assert sup["endpoints"]["total_mineral_volume"]["status"] == NOT_SUPPORTED
+    assert "not covered" in sup["endpoints"]["residual_graft_volume"]["reason"]
+    sup2 = assess_support("ha", noise_rel=0.03, voxel_um=20).to_dict()
+    bind_support_to_method(sup2, {"method": "advisor_threshold"})
+    assert sup2["endpoints"]["residual_graft_volume"]["status"] == SUPPORTED
 
 
 def test_new_bone_error_propagation_refuses_when_graft_dominates():

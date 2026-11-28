@@ -1,6 +1,6 @@
 # Measurement Support (Identifiability) Policy
 
-Implementation: `osteoquant/advisor/` (version **1.4.1**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
+Implementation: `osteoquant/advisor/` (version **1.4.2**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
 
 ## Why
 Graft and new bone are both mineral. For many materials their X-ray attenuation overlaps (Experiments C, C2; the
@@ -73,3 +73,11 @@ by which mechanism, and under which conditions — and abstains otherwise.
 * The oracle is an upper bound: a supported endpoint can still be mis-measured by a poor method (see S1:
   multi-Otsu errors on supported HA specimens). The pipeline must use a method that approaches the oracle.
 * Thresholds (0.85, ±10%, 0.35, 200 µm) are policy choices, to be revisited with real data.
+
+## Validation status (Generation 2, simulation only)
+Three pre-registered held-out simulations were run, each on conditions unseen by the advisor version tested:
+S1H (1.3.3: new-bone and some graft measurements failed while supported), S1H2 (1.4.0: graft passed, total mineral
+failed at heavy blur) and S1H3 (1.4.1, final): every failing measurement refused on every endpoint; residual graft
+0/80 supported failures (95% upper bound 0.045), total mineral 0/22, new bone never supported. Coverage is low
+(graft 37%, mineral 10%, new bone 0%). All of this is SYNTHETIC; the advisor and simulator share physics, and no
+physical or in-vivo validation exists (validation stages B–F). Results: EXPERIMENT_REGISTRY.md (S1H, S1H2, S1H3).

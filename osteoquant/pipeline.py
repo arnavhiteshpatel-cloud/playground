@@ -24,7 +24,7 @@ from .volume import Volume
 DEFAULT_CONFIG = {
     "defect_model": "condyle",            # condyle | calvarial | segmental | manual
     "nominal_diameter_um": None,
-    "segmentation": "multiotsu",
+    "segmentation": "advisor_threshold",   # the method the measurement-support advisor validates (C2-SCI-02)
     "graft_brighter": True,
     "abstain_tau": 0.6,                   # max-softmax below which voxels are marked uncertain
     "tta": True,
@@ -186,13 +186,43 @@ def analyze(vol: Volume, cfg: dict | None = None, roi_dict: dict | None = None, 
                                     float(np.mean(vol.spacing)))
             c = dict(c, validated_texture_model=ok)
             info["validation_record"] = why
-        out["measurement_support"] = support_for_scan(vol.data, roi_mask, vol.spacing, c)
+        c_sup = dict(c)
+        if c_sup.get("day0"):
+            # The day-0 mechanism is a longitudinal analysis; a single-scan pipeline run never applies the day-0
+            # footprint, so a config-supplied day-0 record must not unlock support (cycle-2 review IMG-04).
+            c_sup["day0"] = None
+            info["day0_note"] = "day-0 record ignored: single-scan analysis does not apply the day-0 footprint"
+        out["measurement_support"] = support_for_scan(vol.data, roi_mask, vol.spacing, c_sup)
+        bind_support_to_method(out["measurement_support"], info)
         out["reported_metrics"], out["suppressed_metrics"] = apply_support(out["metrics"], out["measurement_support"])
         out["timings"]["support_s"] = round(time.time() - t, 2)
     out["timings"]["total_s"] = round(time.time() - t0, 2)
     out["status"] = "complete_unreviewed"
     progress(1.0, "done")
     return out
+
+
+ADVISOR_VALIDATED_METHODS = ("advisor_threshold",)
+
+
+def bind_support_to_method(support: dict, seg_info: dict) -> None:
+    """Measurement support was validated for the advisor's own threshold method (S1b/S1c/S1H*). Results produced by
+    any other method inherit no support for tissue endpoints unless a learned model carries a qualifying validation
+    record (cycle-2 review C2-SCI-02: with multi-Otsu, 'supported' total mineral was wrong by 21–25% in 4/50)."""
+    method = str(seg_info.get("method", ""))
+    if method in ADVISOR_VALIDATED_METHODS:
+        return
+    validated = "qualifying validation record" in str(seg_info.get("validation_record", ""))
+    for ep, d in (support.get("endpoints") or {}).items():
+        if ep == "tissue_mineral_density" or d.get("status") == "not_supported":
+            continue
+        if validated and ep in ("residual_graft_volume", "graft_fraction_of_defect"):
+            continue
+        d["status"] = "not_supported"
+        d["mechanism"] = None
+        d["reason"] = (f"segmentation method '{method}' is not covered by the measurement-support validation; use the "
+                       "advisor threshold method or a model with a qualifying validation record")
+    support["method_binding"] = {"method": method, "validated_methods": list(ADVISOR_VALIDATED_METHODS)}
 
 
 def public(result: dict) -> dict:

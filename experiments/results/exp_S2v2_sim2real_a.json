@@ -1,0 +1,554 @@
+{
+ "experiment": "S2v2",
+ "rows": [
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "241035_FB.tif",
+   "zoom": 0.5,
+   "dice": 0.34137394494136875,
+   "hd95_vox": 5.830951894845301,
+   "vol_err": 3.8464704985516085
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "247854_WHWT.tif",
+   "zoom": 0.5,
+   "dice": 0.39429811733193765,
+   "hd95_vox": 6.4031242374328485,
+   "vol_err": 3.064592835145987
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "248812_WHWT.tif",
+   "zoom": 0.5,
+   "dice": 0.27594162072901235,
+   "hd95_vox": 6.0,
+   "vol_err": 5.247909882953445
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "250482_WHWT.tif",
+   "zoom": 0.5,
+   "dice": 0.3214099982034626,
+   "hd95_vox": 5.744562646538029,
+   "vol_err": 4.222581783949164
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "250882_BordeCollie.tif",
+   "zoom": 0.5,
+   "dice": 0.2896233825649348,
+   "hd95_vox": 5.916079783099616,
+   "vol_err": 4.9055197901764425
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "251908_GD.tif",
+   "zoom": 0.5,
+   "dice": 0.3665228929699958,
+   "hd95_vox": 6.0,
+   "vol_err": 3.451084167308186
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "254861_Beagle.tif",
+   "zoom": 0.5,
+   "dice": 0.2986829928098526,
+   "hd95_vox": 6.0,
+   "vol_err": 4.693509959020299
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "257593_Dachshund.tif",
+   "zoom": 0.5,
+   "dice": 0.2651707317073171,
+   "hd95_vox": 5.830951894845301,
+   "vol_err": 5.536764705882353
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "258467_Dachshund.tif",
+   "zoom": 0.5,
+   "dice": 0.28162152498435683,
+   "hd95_vox": 6.0,
+   "vol_err": 5.1017298841453735
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "259056_WHWT.tif",
+   "zoom": 0.5,
+   "dice": 0.32176739040243396,
+   "hd95_vox": 6.0,
+   "vol_err": 4.2044703762495175
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "241035_FB.tif",
+   "zoom": 0.75,
+   "dice": 0.39106818341549615,
+   "hd95_vox": 5.477225575051661,
+   "vol_err": 3.0616963968084567
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "247854_WHWT.tif",
+   "zoom": 0.75,
+   "dice": 0.422854020400053,
+   "hd95_vox": 5.477225575051661,
+   "vol_err": 2.7083771878532725
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "248812_WHWT.tif",
+   "zoom": 0.75,
+   "dice": 0.297178880184151,
+   "hd95_vox": 5.477225575051661,
+   "vol_err": 4.728768811053419
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "250482_WHWT.tif",
+   "zoom": 0.75,
+   "dice": 0.34752810482922286,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 3.751882795951989
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "250882_BordeCollie.tif",
+   "zoom": 0.75,
+   "dice": 0.32866132162389977,
+   "hd95_vox": 5.477225575051661,
+   "vol_err": 4.0816642823080596
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "251908_GD.tif",
+   "zoom": 0.75,
+   "dice": 0.3722871754097472,
+   "hd95_vox": 6.0,
+   "vol_err": 3.3251539645881447
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "254861_Beagle.tif",
+   "zoom": 0.75,
+   "dice": 0.29695942062306013,
+   "hd95_vox": 6.0,
+   "vol_err": 4.6322310111502905
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "257593_Dachshund.tif",
+   "zoom": 0.75,
+   "dice": 0.26619690741828145,
+   "hd95_vox": 5.744562646538029,
+   "vol_err": 5.5132352941176475
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "258467_Dachshund.tif",
+   "zoom": 0.75,
+   "dice": 0.27655018653009866,
+   "hd95_vox": 6.0,
+   "vol_err": 5.189493731153785
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "259056_WHWT.tif",
+   "zoom": 0.75,
+   "dice": 0.34778961245187484,
+   "hd95_vox": 5.477225575051661,
+   "vol_err": 3.7276588442232614
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "241035_FB.tif",
+   "zoom": 1.0,
+   "dice": 0.4539753426609972,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 2.278802663007572
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "247854_WHWT.tif",
+   "zoom": 1.0,
+   "dice": 0.4890624392897385,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 2.0130978832885043
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "248812_WHWT.tif",
+   "zoom": 1.0,
+   "dice": 0.33915696891734226,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 3.883481474962598
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "250482_WHWT.tif",
+   "zoom": 1.0,
+   "dice": 0.3947788962894703,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 3.0440691927512358
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "250882_BordeCollie.tif",
+   "zoom": 1.0,
+   "dice": 0.3876017460372596,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 3.148247496423462
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "251908_GD.tif",
+   "zoom": 1.0,
+   "dice": 0.39572328050797717,
+   "hd95_vox": 5.744562646538029,
+   "vol_err": 2.8090839107005388
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "254861_Beagle.tif",
+   "zoom": 1.0,
+   "dice": 0.30760967974588366,
+   "hd95_vox": 5.744562646538029,
+   "vol_err": 4.2105212999142285
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "257593_Dachshund.tif",
+   "zoom": 1.0,
+   "dice": 0.27891964470150793,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 5.1191176470588236
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "258467_Dachshund.tif",
+   "zoom": 1.0,
+   "dice": 0.2785377682207073,
+   "hd95_vox": 5.830951894845301,
+   "vol_err": 4.937628947786066
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "259056_WHWT.tif",
+   "zoom": 1.0,
+   "dice": 0.4096938409693841,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 2.7868205414217684
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "241035_FB.tif",
+   "zoom": 1.5,
+   "dice": 0.5568967739164054,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 1.5491690806525384
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "247854_WHWT.tif",
+   "zoom": 1.5,
+   "dice": 0.5872927665092155,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 1.367091568237633
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "248812_WHWT.tif",
+   "zoom": 1.5,
+   "dice": 0.4222792149866191,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 2.735369180674118
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "250482_WHWT.tif",
+   "zoom": 1.5,
+   "dice": 0.45642618058636125,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 2.3769710520122382
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "250882_BordeCollie.tif",
+   "zoom": 1.5,
+   "dice": 0.4421338393821987,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 2.523247496423462
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "251908_GD.tif",
+   "zoom": 1.5,
+   "dice": 0.4822658388302639,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 1.9728316653836284
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "254861_Beagle.tif",
+   "zoom": 1.5,
+   "dice": 0.36701679903378104,
+   "hd95_vox": 5.477225575051661,
+   "vol_err": 3.207852854283808
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "257593_Dachshund.tif",
+   "zoom": 1.5,
+   "dice": 0.3170575195426438,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 4.302205882352941
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "258467_Dachshund.tif",
+   "zoom": 1.5,
+   "dice": 0.30908858494183816,
+   "hd95_vox": 5.477225575051661,
+   "vol_err": 4.207744802412315
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "259056_WHWT.tif",
+   "zoom": 1.5,
+   "dice": 0.4748039154818816,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 2.1461238148354713
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "241035_FB.tif",
+   "zoom": 2.0,
+   "dice": 0.6473079047348073,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 1.036489302231031
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "247854_WHWT.tif",
+   "zoom": 2.0,
+   "dice": 0.6740615470657949,
+   "hd95_vox": 5.0990195135927845,
+   "vol_err": 0.9274158967762055
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "248812_WHWT.tif",
+   "zoom": 2.0,
+   "dice": 0.51590924575867,
+   "hd95_vox": 5.0990195135927845,
+   "vol_err": 1.8749449969198275
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "250482_WHWT.tif",
+   "zoom": 2.0,
+   "dice": 0.5145628125473557,
+   "hd95_vox": 5.0990195135927845,
+   "vol_err": 1.882678277241704
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "250882_BordeCollie.tif",
+   "zoom": 2.0,
+   "dice": 0.50670375017005,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 1.943550309966619
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "251908_GD.tif",
+   "zoom": 2.0,
+   "dice": 0.5540286498477272,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 1.4124967924044136
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "254861_Beagle.tif",
+   "zoom": 2.0,
+   "dice": 0.4092595935888949,
+   "hd95_vox": 5.477225575051661,
+   "vol_err": 2.750881540074335
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "257593_Dachshund.tif",
+   "zoom": 2.0,
+   "dice": 0.36712199080335406,
+   "hd95_vox": 5.0990195135927845,
+   "vol_err": 3.4367647058823527
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "258467_Dachshund.tif",
+   "zoom": 2.0,
+   "dice": 0.366185394433982,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 3.3091572766227584
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "train_diag",
+   "case": "259056_WHWT.tif",
+   "zoom": 2.0,
+   "dice": 0.5607292136337603,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 1.5205714530867904
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "test",
+   "case": "228420_Dachshund.tif",
+   "zoom": 1.0,
+   "dice": 0.2538333641234066,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 5.854413542926239
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "test",
+   "case": "232558_Beagle.tif",
+   "zoom": 1.0,
+   "dice": 0.23496391339214115,
+   "hd95_vox": 5.477225575051661,
+   "vol_err": 6.414620431115276
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "test",
+   "case": "238046_WH.tif",
+   "zoom": 1.0,
+   "dice": 0.5387201358381338,
+   "hd95_vox": 5.477225575051661,
+   "vol_err": 1.349933193357511
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "test",
+   "case": "239179_Yorkie.tif",
+   "zoom": 1.0,
+   "dice": 0.4099165439371625,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 2.515795307592832
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "test",
+   "case": "244195_Lab.tif",
+   "zoom": 1.0,
+   "dice": 0.44794835274161343,
+   "hd95_vox": 5.477225575051661,
+   "vol_err": 2.4495859872611465
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "test",
+   "case": "228420_Dachshund.tif",
+   "zoom": 2.0,
+   "dice": 0.33172729462780054,
+   "hd95_vox": 5.0990195135927845,
+   "vol_err": 4.023216444981863
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "test",
+   "case": "232558_Beagle.tif",
+   "zoom": 2.0,
+   "dice": 0.3150193999348399,
+   "hd95_vox": 5.385164807134504,
+   "vol_err": 4.328584817244611
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "test",
+   "case": "238046_WH.tif",
+   "zoom": 2.0,
+   "dice": 0.6660384541448834,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 0.5320003817522428
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "test",
+   "case": "239179_Yorkie.tif",
+   "zoom": 2.0,
+   "dice": 0.6383352035091299,
+   "hd95_vox": 5.0990195135927845,
+   "vol_err": 1.0183508836751032
+  },
+  {
+   "method": "gen0_synth_zeroshot",
+   "split": "test",
+   "case": "244195_Lab.tif",
+   "zoom": 2.0,
+   "dice": 0.6119882441391565,
+   "hd95_vox": 5.196152422706632,
+   "vol_err": 1.261687898089172
+  }
+ ],
+ "gen0_train_zoom_curve": {
+  "0.5": 0.3156412596644672,
+  "0.75": 0.3347073812885885,
+  "1.0": 0.3735059607340268,
+  "1.5": 0.44152614332112083,
+  "2.0": 0.5115870102584397
+ },
+ "seconds": 6131.455956935883,
+ "saved": "2026-11-28T00:34:12Z"
+}

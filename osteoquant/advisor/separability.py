@@ -47,12 +47,16 @@ MIN_STRUCT_VOXELS = 3.0         # thickness endpoints need structures ≥3 voxel
 HOST_REL_MATURE = 1.0
 MIN_REFERENCE_SAMPLES = 500     # measured reference distributions need at least this many voxels
 MIN_GRAFT_FRACTION = 0.05       # below this share of mineral, relative graft-volume error is unbounded
-ADVISOR_VERSION = "1.4.1"
+ADVISOR_VERSION = "1.4.2"
 PROFILE_SCAN_MISMATCH_TOL = 0.15   # observed bright-mode vs profile graft level (relative)
 RIM_TOL = 0.10                     # ≥1.4.0: max ambiguous graft-rim share of new bone / half-rim share of mineral
 # Resorbable materials whose granules become microporous/fragmented and enter the bone intensity range as they
 # resorb (knowledge base: beta-TCP almost fully resorbed by 8 weeks in minipig; CaSO4 and glasses similar or faster).
-RESORBABLE_EARLY_ONLY = {"beta_tcp", "calcium_sulfate", "bioglass_45s5", "s53p4", "polymer_ceramic_composite"}
+RESORBABLE_EARLY_ONLY = {"beta_tcp", "bcp", "calcium_sulfate", "bioglass_45s5", "s53p4", "polymer_ceramic_composite"}
+# BCP added in 1.4.2 (C2-SCI-11): its beta-TCP phase resorbs and fragments the granules
+# Bone-derived grafts that REMODEL into bone (day-0 footprint becomes bone); DBBM is deproteinised and resorbs very
+# slowly, so it is not in this set (1.4.2, C2-SCI-10)
+REMODELLING_BONE_GRAFTS = {"autograft", "allograft", "dbm"}
 EARLY_WEEKS_MAX = 4.0
 # Changelog: 1.0.x (pre-review, used by S1/S1b runs before cycle-1 review) → 1.1.0: decision uses the single-
 # threshold rule actually applied (union oracle kept as upper bound); support must hold at the estimated graft
@@ -74,7 +78,10 @@ EARLY_WEEKS_MAX = 4.0
 # (S1H held-out failure: wider PSF + small granules → graft −21…−28%, new bone +20…+50% while supported); new-bone
 # endpoints gated by propagation of graft-volume error (new bone = mineral − graft).
 # 1.4.1: ambiguous-rim width = max(1, ceil(2σ_blur)) voxels (S1H2 held-out: one-voxel rim under-covered heavy-blur halo).
-# Final advisor change of Generation 2; validated once on S1H3 (PREREGISTRATION §9).
+# Final rule change of Generation 2 for the characterised-material intensity path; validated once on S1H3 (§9).
+# 1.4.2 (cycle-2 science review; paths NOT exercised by S1H3: metals, day-0, BCP, measured references): metals refuse
+# mineral endpoints; DBBM allowed the day-0 mechanism (non-remodelling); BCP resorbable; measured references broadened
+# by the analysis scan's noise. Support is bound to the validated method in pipeline.bind_support_to_method.
 
 # Assumed new-bone maturity range in relative units. Early/mid healing: woven 650–1000 mgHA/cm³ vs
 # mature host ≈1075 → (0.60, 0.93) (SCIENTIFIC_EVIDENCE row 4, assumption anchored to a published callus
@@ -243,10 +250,10 @@ def intensity_separability(graft: ClassModel, new: ClassModel, noise_rel: float,
     g = graft.draw(ng, rng, neighbors=((0.0, 0.6), (n_level, 0.4)))
     v = new.draw(nn, rng, neighbors=((g_level, 1.0),) if new.kind == "samples"
                  else ((0.0, 0.5), (g_level, 0.2), (HOST_REL_MATURE, 0.3)))
-    if graft.kind != "samples":
-        g = g + rng.normal(0, noise_rel, g.size)
-    if new.kind != "samples":
-        v = v + rng.normal(0, noise_rel, v.size)
+    # 1.4.2: measured reference samples carry the REFERENCE scan's noise, which may be lower than this scan's; the
+    # analysis scan's noise is added on top (conservative: over-broadens the reference) — cycle-2 review
+    g = g + rng.normal(0, noise_rel, g.size)
+    v = v + rng.normal(0, noise_rel, v.size)
     r = dice_oracle_samples(g, v)
     r["graft_mean_rel"] = float(np.mean(g))
     r["new_mean_rel"] = float(np.mean(v))
@@ -441,7 +448,7 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
 
     # --- metals: streak/beam-hardening artefacts are not modelled → never supported (review IMG-02)
     if prof is not None and prof.morphology == "metal":
-        for e in GRAFT_ENDPOINTS:
+        for e in GRAFT_ENDPOINTS + MINERAL_ENDPOINTS:      # 1.4.2: mineral too (streaks/halo; C2-SCI-09)
             ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
                                     f"{prof.id} is metallic: streak and beam-hardening artefacts are not modelled; use a "
                                     "metal-artefact-reduction protocol and material-specific validation")
@@ -539,11 +546,11 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
             ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
                                     f"residual graft is scarce (≈{graft_prior:.0%} of mineral): relative graft-volume "
                                     "error is unbounded; report as 'trace residual graft'")
-        elif day0_ok and bone_like:
+        elif day0_ok and prof is not None and prof.id in REMODELLING_BONE_GRAFTS:
             # bone-derived grafts (autograft, allograft, DBBM, DBM) are remodelled into bone: bone inside the day-0
             # footprint cannot be attributed to residual graft (cycle-2 review C2-BIZ biology finding; 1.3.3)
             ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,
-                                    "graft is bone-derived: the day-0 footprint becomes remodelled bone, so residual "
+                                    "graft remodels into bone: the day-0 footprint becomes remodelled bone, so residual "
                                     "graft cannot be separated from new bone by registration either; use histology")
         elif day0 and not day0_complete:
             ep[e] = EndpointSupport(e, NOT_SUPPORTED, None,

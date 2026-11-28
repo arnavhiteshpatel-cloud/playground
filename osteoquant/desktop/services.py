@@ -478,7 +478,7 @@ def get_or_create_timepoint(project, study_id, label: str, days=None) -> int:
 
 
 # ============================================================================ analysis
-ANALYSIS_DEFAULTS = {"defect_model": "condyle", "segmentation": "multiotsu", "graft_brighter": True,
+ANALYSIS_DEFAULTS = {"defect_model": "condyle", "segmentation": "advisor_threshold", "graft_brighter": True,
                      "thickness_metrics": True, "no_graft": False, "nominal_diameter_um": None}
 # graft material ids understood by the measurement-support advisor (pipeline config "material")
 GRAFT_MATERIALS = [("ha", "Hydroxyapatite (HA)"), ("beta_tcp", "beta-TCP"), ("bcp", "Biphasic calcium phosphate"),
@@ -538,6 +538,9 @@ def segmentation_method_info(seg: dict | None, result: dict | None = None) -> di
         synth = is_synthetic_trained(prov)
         text = f"U-Net {name}" + (f" ({SYNTHETIC_CHIP})" if synth else "")
         return {"text": text, "short": f"U-Net {name}", "synthetic": synth, "provenance": provenance_words(prov)}
+    if method == "advisor_threshold":
+        return {"text": "Advisor threshold (measurement-support validated)", "short": "Advisor threshold",
+                "synthetic": False, "provenance": "thresholds from the measurement-support advisor (no trained model)"}
     if method in ("multiotsu", ""):
         return {"text": "Multi-Otsu (classical)" if method else "-", "short": "Multi-Otsu" if method else "-",
                 "synthetic": False, "provenance": "classical thresholding (no trained model)"}

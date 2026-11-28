@@ -32,4 +32,7 @@ ledger `SCIENTIFIC_EVIDENCE.md` (rows 1–7, R1–R12, which remain valid with t
 
 | G2-011 | On a second pre-registered held-out simulation (216 specimens, unseen seeds/densities/blur), advisor 1.4.0 kept every supported residual-graft measurement within 20% (0/68 failed; 95% upper bound on failure rate 0.053) but let 10 of 141 supported total-mineral measurements fail at heavy blur | E4 | exp_S1H2_heldout.json; PREREGISTRATION §8 |
 
+| G2-012 | On the final pre-registered held-out simulation (216 specimens, unseen seeds/densities/blur/noise), advisor 1.4.1 refused every failing measurement on every endpoint; no supported residual-graft (0/80; 95% upper bound 0.045) or total-mineral (0/22) measurement failed; new bone was never supported | E4 | exp_S1H3_heldout.json; PREREGISTRATION §9 |
+| G2-013 | The advisor's safety was reached by sacrificing coverage: residual graft supported in 37%, total mineral in 10% and new bone in 0% of the final held-out specimens | E4 | exp_S1H3_heldout.json |
+
 (Entries are appended as Generation-2 experiments complete.)

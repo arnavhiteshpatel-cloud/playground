@@ -237,3 +237,17 @@ def test_support_table_uses_report_endpoint_labels(tmp_path):
     sect = text[text.find("Reason / conditions") - 200:]
     assert "New bone volume" in sect and "new bone volume " not in sect
     assert "Total mineral volume" in sect and "total mineral volume" not in sect
+
+
+def test_overlay_greys_classes_whose_split_is_refused():
+    """C3-PRD-17: new bone and graft are not coloured as separate classes where that split is refused."""
+    import numpy as np
+
+    from osteoquant.report.figures import COLORS, NOT_REPORTED, overlay_rgb, refused_classes
+    assert refused_classes("not_supported", "supported") == (1,)
+    assert refused_classes("supported_with_conditions", "not_assessed") == (2,)
+    assert refused_classes(None, None) == (1, 2)                    # unassessed fails closed
+    img = np.zeros((2, 2))
+    lab = np.array([[1, 2], [3, 0]])
+    rgb = overlay_rgb(img, lab, alpha=1.0, window=(0, 1), grey=(1,))
+    assert tuple(rgb[0, 0]) == NOT_REPORTED and tuple(rgb[0, 1]) == COLORS[2] and tuple(rgb[1, 0]) == COLORS[3]

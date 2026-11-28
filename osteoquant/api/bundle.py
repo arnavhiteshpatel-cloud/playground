@@ -78,7 +78,7 @@ def bundle_from_store(store, user, sid, ctx=None, measurements=None, figures=Tru
     ``scan_id`` / ``segmentation_id`` / ``roi_id`` / ``measurement_id`` so that post-processing joins
     by key, never by list position (desktop review C2-PRD-01)."""
     import zarr
-    from ..report.figures import specimen_panel
+    from ..report.figures import refused_classes, specimen_panel
     st = store.study(user, sid)
     specs = {s["id"]: s for s in store.specimens(user, sid)}
     tps = {t["id"]: t["label"] for t in store.q("SELECT * FROM timepoints WHERE study_id=?", (sid,))}
@@ -115,7 +115,10 @@ def bundle_from_store(store, user, sid, ctx=None, measurements=None, figures=Tru
             lab = np.asarray(g[f"labels/{seg['labels_key']}"][:])
             roi = np.asarray(g["labels/roi_current"][:]).astype(bool) if "labels/roi_current" in g else None
             fig = str(figdir / f"scan{m['scan_id']}_seg{seg['id']}.png")
-            specimen_panel(img, lab, roi, sc["spacing_um"], fig, title=f"scan {m['scan_id']}")
+            ep = eff_support.get("endpoints") or {}
+            grey = refused_classes((ep.get("new_bone_volume") or {}).get("status"),
+                                   (ep.get("residual_graft_volume") or {}).get("status"))
+            specimen_panel(img, lab, roi, sc["spacing_um"], fig, title=f"scan {m['scan_id']}", grey_classes=grey)
         except Exception:
             fig = None
         roi_row = store.q1("SELECT * FROM rois WHERE id=?", (m["roi_id"],)) if m["roi_id"] else None

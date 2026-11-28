@@ -1073,7 +1073,8 @@ def _render_figures(project, bundle: dict, blinded: bool, ctx=None):
     reports get randomly named figures titled with the scan code; no unblinded figure is written for
     them (C2-PRD-14)."""
     import zarr
-    from ..report.figures import specimen_panel
+    from ..report.defectfill import _status
+    from ..report.figures import refused_classes, specimen_panel
     store, user = project.store, project.require_user()
     figdir = store.data_dir / f"org{user['org_id']}" / "reports" / "fig"
     figdir.mkdir(parents=True, exist_ok=True)
@@ -1092,8 +1093,10 @@ def _render_figures(project, bundle: dict, blinded: bool, ctx=None):
                 fig, title = figdir / f"blinded_{uuid.uuid4().hex[:12]}.png", spec.get("figure_title") or "(blinded)"
             else:
                 fig, title = figdir / f"scan{sc['id']}_seg{seg['id']}.png", f"scan {sc['id']}"
+            grey = refused_classes(_status(spec, "class_volumes.new_bone_volume_mm3"),
+                                   _status(spec, "class_volumes.residual_graft_volume_mm3"))
             specimen_panel(np.asarray(g["image"][:]), np.asarray(g[f"labels/{seg['labels_key']}"][:]), roi,
-                           sc["spacing_um"], str(fig), title=title)
+                           sc["spacing_um"], str(fig), title=title, grey_classes=grey)
             spec["figure"] = str(fig)
         except Exception:  # noqa: BLE001 - a missing figure is shown as such; never an unblinded one
             spec["figure"] = None

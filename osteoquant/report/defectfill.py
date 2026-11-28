@@ -480,7 +480,8 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     if figs:
         flow.append(Paragraph("5. Representative images", H2))
         flow.append(Paragraph("Orthogonal mid-ROI slices with segmentation overlay (orange new bone, blue residual graft, "
-                              "pink host bone, yellow uncertain) and ROI outline. Scale bar shown in each panel.", SM))
+                              "pink host bone, yellow uncertain) and ROI outline; grey marks mineral whose class (new bone or graft) is not "
+                              "reported for that specimen because the split is not supported. Scale bar shown in each panel.", SM))
         nmax = bundle.get("max_figures", 4)
         if len(figs) > nmax:
             flow.append(Paragraph(f"Images of the first {nmax} of {len(figs)} specimens are shown; every specimen's "

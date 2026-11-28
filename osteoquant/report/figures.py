@@ -4,19 +4,32 @@ from __future__ import annotations
 import numpy as np
 
 COLORS = {1: (0.902, 0.624, 0.0), 2: (0.337, 0.706, 0.914), 3: (0.8, 0.475, 0.655), 255: (0.94, 0.89, 0.26)}
+NOT_REPORTED = (0.62, 0.62, 0.62)      # mineral whose class (new bone / graft) is not reported for this specimen
+SUPPORTED_STATUSES = ("supported", "supported_with_conditions", "flagged")
 
 
-def overlay_rgb(img2d, lab2d, alpha=0.45, window=None):
+def refused_classes(new_bone_status, graft_status) -> tuple[int, ...]:
+    """Label values drawn grey because their endpoint is refused or not assessed (cycle-3 review C3-PRD-17: overlays
+    coloured new bone and graft separately where that split was refused)."""
+    out = []
+    if new_bone_status not in SUPPORTED_STATUSES:
+        out.append(1)
+    if graft_status not in SUPPORTED_STATUSES:
+        out.append(2)
+    return tuple(out)
+
+
+def overlay_rgb(img2d, lab2d, alpha=0.45, window=None, grey=()):
     lo, hi = window or (np.percentile(img2d, 1), np.percentile(img2d, 99.5))
     g = np.clip((img2d - lo) / max(hi - lo, 1e-6), 0, 1)
     rgb = np.stack([g, g, g], -1)
     for c, col in COLORS.items():
         m = lab2d == c
-        rgb[m] = (1 - alpha) * rgb[m] + alpha * np.array(col)
+        rgb[m] = (1 - alpha) * rgb[m] + alpha * np.array(NOT_REPORTED if c in grey else col)
     return rgb
 
 
-def specimen_panel(img, lab, roi, spacing, path, title="", center=None):
+def specimen_panel(img, lab, roi, spacing, path, title="", center=None, grey_classes=()):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -33,7 +46,7 @@ def specimen_panel(img, lab, roi, spacing, path, title="", center=None):
         a0, a1 = axs[2 * i], axs[2 * i + 1]
         ext = [0, im.shape[1] * sp[1] / 1000, im.shape[0] * sp[0] / 1000, 0]
         a0.imshow(im, cmap="gray", vmin=win[0], vmax=win[1], extent=ext)
-        a1.imshow(overlay_rgb(im, lb, window=win), extent=ext)
+        a1.imshow(overlay_rgb(im, lb, window=win, grey=grey_classes), extent=ext)
         if rm is not None and rm.any():
             a1.contour(np.linspace(0, ext[1], im.shape[1]), np.linspace(0, ext[2], im.shape[0]), rm, [0.5],
                        colors="white", linewidths=0.6)
@@ -44,6 +57,10 @@ def specimen_panel(img, lab, roi, spacing, path, title="", center=None):
             a.text(ext[1] * 0.06, ext[2] * 0.86, f"{bar:g} mm", color="white", fontsize=6)
         a0.set_title(name, fontsize=8)
         a1.set_title(name + " + labels", fontsize=8)
+    if grey_classes:
+        names = {1: "new bone", 2: "graft"}
+        title = (title + " — " if title else "") + "grey: " + " and ".join(names[c] for c in grey_classes if c in names) \
+            + " not reported (split not supported)"
     if title:
         fig.suptitle(title, fontsize=9)
     fig.tight_layout()

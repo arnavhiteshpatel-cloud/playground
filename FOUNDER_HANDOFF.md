@@ -10,9 +10,11 @@ decision, `docs/ip/IP_STRATEGY.md`).
    licences (test keys only) and PDF/CSV reports.
 2. Its scientific core is a **measurement-support advisor** (version 1.4.3) that decides, per scan, whether graft,
    new-bone and mineral volumes are identifiable before reporting them, and refuses otherwise.
-3. In the final pre-registered held-out **simulation** (S1H3) no supported measurement failed, but coverage is low: new
-   bone was never supported, total mineral only with sharp imaging, and for 58% of specimens no volume endpoint at all;
-   with 9 phantom structures the evidence bounds the supported-failure rate only below 0.34 (`EXPERIMENT_REGISTRY.md`).
+3. In the pre-registered held-out **simulation** of the shipped advisor on the application's material paths (S1H4, 36
+   phantom structures) no supported measurement failed, but it reported almost nothing: residual graft only for HA
+   (10% of specimens), total mineral in 2%, new bone never, nothing with the material set to Unspecified, and no volume
+   endpoint for 89% of specimens; the supported-failure rate is bounded only below 0.14, so the pre-registered precision
+   criterion (0.10) is not demonstrated (`EXPERIMENT_REGISTRY.md`).
 4. Nothing has been tested on real graft material; the advisor and the simulator share attenuation physics, so the
    simulation shows internal safety, not accuracy.
 5. The next value comes from physical evidence (a phantom study) and ten customer conversations — not more software.
@@ -29,8 +31,12 @@ decision, `docs/ip/IP_STRATEGY.md`).
 
 ## 3. What the experiments showed
 * **Abstention works in simulation, at a high price** (SYNTHETIC). Held-out series: S1H (advisor 1.3.3) and S1H2 (1.4.0)
-  found supported measurements that failed; each failure produced a rule tested on new data; S1H3 (1.4.1) had none.
-  See the standard sentence in `EXPERIMENT_REGISTRY.md` and the per-material table in `docs/user/MATERIALS_AND_SUPPORT.md`.
+  found supported measurements that failed; each failure produced a rule tested on new data; S1H3 (1.4.1) and S1H4
+  (1.4.3, shipped) had none. S1H4 used the material paths the application offers: BCP and β-TCP (2 weeks), xenograft
+  and *Unspecified* were never supported for graft; the 12 supported total-mineral values were 7–17% low. See the
+  standard sentence in `EXPERIMENT_REGISTRY.md` and the per-material table in `docs/user/MATERIALS_AND_SUPPORT.md`.
+* **The blur the advisor measures is unreliable in noisy scans** (B1-blur, SYNTHETIC): it reads up to half the true blur
+  at high noise. The held-out conditions did not reach that regime; the fix needs the next advisor version (DF-041).
 * **New bone next to dense graft is not identifiable by intensity** at 20–40 µm voxels: every held-out run refused it.
 * **Day-0 registration is fragile** under granule motion (naive footprint graft Dice 0.80 → 0.535 → 0.35 at 0/50/100 µm,
   SYNTHETIC) and registration QC cannot verify alignment along a featureless bone axis (L5). There is no desktop day-0
@@ -46,9 +52,11 @@ See `EXPERIMENT_REGISTRY.md` rows S2, S3, U1 and O2.
 ## 4. Assumptions that failed
 * "Intensity can separate graft from new bone for common materials" — only for dense ceramics, and never for new bone next
   to them in held-out simulation.
-* "Total mineral is always a safe fallback" — supported in 10% of held-out specimens (sharp imaging only).
+* "Total mineral is always a safe fallback" — supported in 10% of S1H3 specimens and 2% of S1H4 specimens.
+* "Choose *Unspecified* when unsure" — with the material unspecified, S1H4 supported nothing at all.
 * "A day-0 scan rescues separation" — only without granule motion, and not for remodelling bone-derived grafts.
-* "Row-level confidence bounds are enough" — with 9 phantom structures the honest bound is 0.34, not 0.045.
+* "Row-level confidence bounds are enough" — with 9 phantom structures the honest bound is 0.34, not 0.045; with 24
+  structures (S1H4) it is 0.14, still above the 0.10 target.
 * "CI is configured, so it works" — it had never passed until 28 November.
 
 ## 5. What is genuinely differentiated
@@ -66,7 +74,7 @@ exist yet.
 ## 7. Founder decisions waiting for you
 `FOUNDER_DECISIONS.md` lists them with options. The most urgent: IP (public disclosures on 27–28 November start one-year
 US clocks; foreign rights need counsel now), whether any evaluation on customer data is offered before incorporation and
-Gate 1, and how to position the product given the S1H3 coverage.
+Gate 1, and how to position the product given the S1H3 and S1H4 coverage.
 
 ## 8. What to learn first
 `founder/LEARNING_CURRICULUM.md` (seven concepts with self-tests): partial volume and blur, why new bone is not

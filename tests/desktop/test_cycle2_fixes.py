@@ -216,8 +216,8 @@ def test_c2_03_study_blinding_enforced_for_reviewer(blinded_team, tmp_path):
     ev = [e for e in project.store.audit.events(limit=10000) if e["action"] == "study.unblind"][0]
     assert ev["details"]["signed"] and ev["details"]["signer"] == "dir" and ev["details"]["reason"]
     assert not rev.study_forces_blinding(sid) and "R01_week4" in json.dumps(rev.study_tree(False))
-    rev.store.conn.close()
-    dr.store.conn.close()
+    rev.store.close()
+    dr.store.close()
 
 
 def test_c2_03_reviewer_cannot_switch_blinded_mode_off(qtbot, window, blinded_team):
@@ -243,8 +243,8 @@ def approvable(team):
     S.sign_review(rev, REV_PW, "segmentation", _seg(project, scan)["id"], "approved", "approve segmentation")
     rep = S.generate_report(project, sid)
     yield project, sid, scan, rev, dr, rep
-    rev.store.conn.close()
-    dr.store.conn.close()
+    rev.store.close()
+    dr.store.close()
 
 
 def test_c2_04_signed_copy_refused_for_edited_bundle(approvable):
@@ -308,8 +308,8 @@ def test_c2_05_unreviewed_report_refused_even_without_bundle(team):
         S.sign_review(dr, DIR_PW, "report", early["report_id"], "approved", "approve the report release",
                       signature_role="study_director")
     assert not [r for r in project.store.reviews(project.user, "report", early["report_id"]) if r["decision"] == "approved"]
-    rev.store.conn.close()
-    dr.store.conn.close()
+    rev.store.close()
+    dr.store.close()
 
 
 # ============================================================================ C2-PRD-06
@@ -346,7 +346,7 @@ def test_c2_07_deactivated_user_session_ends_at_next_action(analysed):
     with pytest.raises(ProjectError):
         S.generate_report(ana, sid)
     assert "session.ended" in _acts(project)
-    ana.store.conn.close()
+    ana.store.close()
 
 
 def test_c2_07_window_signs_out_deactivated_user(qtbot, window, analysed, monkeypatch):
@@ -385,7 +385,7 @@ def test_c2_09_role_change_audited_and_database_edit_detected(project):
     project.store.exec("UPDATE users SET role='reviewer' WHERE id=?", (uid,))   # back to the audited state
     assert p2.login("ana", ANA_PW)
     p2.close()
-    ana.store.conn.close()
+    ana.store.close()
 
 
 # ============================================================================ C2-PRD-08
@@ -409,7 +409,7 @@ def test_c2_08_self_service_password_change(qtbot, project):
     assert not p3.login("ana", ANA_PW) and p3.login("ana", "Brand-New-Pass-7")
     assert not p3.password_change_required
     for p in (ana, other, p3):
-        p.store.conn.close()
+        p.store.close()
     # the dialog text no longer tells users to ask an administrator; the Users dialog changes roles
     from osteoquant.desktop.dialogs import AddUserDialog, UserAdminDialog
     d = AddUserDialog()
@@ -506,7 +506,7 @@ def test_c2_11_version_allocation_is_atomic_under_concurrency(project, study):
     assert sorted(vs) == list(range(1, 121))
     rv = [r["version"] for r in project.store.q("SELECT version FROM rois WHERE scan_id=?", (scan,))]
     assert sorted(rv) == list(range(1, len(rv) + 1))
-    stores[2].conn.close()
+    stores[2].close()
 
 
 # ============================================================================ C2-PRD-12

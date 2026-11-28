@@ -44,7 +44,8 @@ class TimingRecorder:
         self.project = project
         self.clock = clock
         self.session_id = uuid.uuid4().hex[:12]
-        project.store.conn.executescript(SCHEMA)
+        with project.store.lock:
+            project.store.conn.executescript(SCHEMA)
         self.scan_id = None
         self.study_id = None
         self._last_input = None
@@ -119,7 +120,8 @@ class TimingRecorder:
 
     # ------------------------------------------------------------------ export
     def events(self, study_id=None) -> list[dict]:
-        self.project.store.conn.executescript(SCHEMA)
+        with self.project.store.lock:
+            self.project.store.conn.executescript(SCHEMA)
         q = "SELECT * FROM desktop_timing_events"
         args = ()
         if study_id is not None:

@@ -152,6 +152,12 @@ class Store:
                 self.conn.executescript(MIGRATIONS[v])
                 self.conn.execute("INSERT INTO schema_version VALUES (?)", (v,))
 
+    def close(self) -> None:
+        """Close the shared connection once no other thread is inside a store call (closing a SQLite connection while
+        another thread is stepping a statement can crash the interpreter; seen on macOS CI, DF-043)."""
+        with self.lock:
+            self.conn.close()
+
     def q(self, sql, args=()):
         with self.lock:
             return [dict(r) for r in self.conn.execute(sql, args).fetchall()]

@@ -150,7 +150,7 @@ class Project:
         self._token = None
         self.user = None
         try:
-            self.store.conn.close()
+            self.store.close()               # waits for any thread inside a store call (DF-043)
         except Exception:  # noqa: BLE001
             pass
 

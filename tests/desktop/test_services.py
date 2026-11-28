@@ -74,7 +74,7 @@ def test_review_requires_reauth_and_separation_of_duties(analysed):
     p2 = Project(project.folder)
     assert p2.login("rev", "Reviewer-Pass-1")
     assert S.sign_review(p2, "Reviewer-Pass-1", "segmentation", seg["id"], "approved", "approve for reporting")
-    p2.store.conn.close()
+    p2.store.close()
     assert project.store.audit.verify_chain()["ok"]
 
 

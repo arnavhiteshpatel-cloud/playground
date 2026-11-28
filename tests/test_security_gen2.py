@@ -86,7 +86,7 @@ def test_truncated_database_fails_or_detects(tmp_path):
     st = Store(p, tmp_path / "d")
     make_users(st)
     st.conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
-    st.conn.close()
+    st.close()
     raw = p.read_bytes()
     p.write_bytes(raw[: len(raw) // 3])
     for f in (tmp_path / "t.db-wal", tmp_path / "t.db-shm"):
@@ -102,12 +102,12 @@ def test_reopen_is_idempotent_and_chain_survives(tmp_path):
     st = Store(tmp_path / "a.db", tmp_path / "d")
     make_users(st)
     head = st.audit.anchor()
-    st.conn.close()
+    st.close()
     st2 = Store(tmp_path / "a.db", tmp_path / "d")
     from osteoquant.study.db import SCHEMA_VERSION
     assert st2.q1("SELECT max(v) v FROM schema_version")["v"] == SCHEMA_VERSION == 3   # v3: must_change_password
     assert st2.audit.verify_chain(head)["ok"]
-    st2.conn.close()
+    st2.close()
 
 
 @pytest.mark.skipif((hasattr(os, "geteuid") and os.geteuid() == 0) or os.name == "nt",
@@ -127,7 +127,7 @@ def test_read_only_database_file_rejects_writes(tmp_path):
     p = tmp_path / "a.db"
     st = Store(p, tmp_path / "d")
     make_users(st)
-    st.conn.close()
+    st.close()
     ro = sqlite3.connect(f"{p.as_uri()}?mode=ro", uri=True, isolation_level=None)
     from osteoquant.audit.log import AuditLog
     with pytest.raises(sqlite3.OperationalError):
@@ -271,6 +271,6 @@ def test_newer_schema_database_is_refused(tmp_path):
     st = Store(tmp_path / "x.db", tmp_path / "data")
     st.conn.execute("INSERT INTO schema_version VALUES (?)", (max(MIGRATIONS) + 1,))
     st.conn.commit()
-    st.conn.close()
+    st.close()
     with pytest.raises(RuntimeError, match="newer OsteoQuant"):
         Store(tmp_path / "x.db", tmp_path / "data")

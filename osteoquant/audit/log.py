@@ -103,13 +103,15 @@ class AuditLog:
         return {"ok": True, "n": n, "head": prev}
 
     def anchor(self) -> dict:
-        r = self.conn.execute("SELECT seq,row_hash FROM audit_log ORDER BY seq DESC LIMIT 1").fetchone()
+        with self.lock:      # every use of the shared connection is serialised (a close mid-query can crash)
+            r = self.conn.execute("SELECT seq,row_hash FROM audit_log ORDER BY seq DESC LIMIT 1").fetchone()
         return {"seq": r[0], "row_hash": r[1]} if r else {"seq": 0, "row_hash": GENESIS}
 
     def verify_anchor(self, anchor: dict) -> bool:
         if int(anchor.get("seq", -1)) == 0:   # anchor exported from an empty log (QA-008)
             return anchor.get("row_hash") == GENESIS
-        r = self.conn.execute("SELECT row_hash FROM audit_log WHERE seq=?", (anchor["seq"],)).fetchone()
+        with self.lock:
+            r = self.conn.execute("SELECT row_hash FROM audit_log WHERE seq=?", (anchor["seq"],)).fetchone()
         return bool(r and r[0] == anchor["row_hash"])
 
     def events(self, org_id=None, object_type=None, object_id=None, limit=500):
@@ -128,7 +130,9 @@ class AuditLog:
         args.append(limit)
         cols = ["seq", "ts", "user_id", "org_id", "action", "object_type", "object_id", "details", "row_hash"]
         out = []
-        for r in self.conn.execute(q, args):
+        with self.lock:
+            rows = self.conn.execute(q, args).fetchall()
+        for r in rows:
             d = dict(zip(cols, r))
             d["details"] = json.loads(d["details"])
             out.append(d)

@@ -41,7 +41,8 @@ def anchor_dir() -> Path:
 
 def project_key(store) -> str:
     """Stable identity of a project: the hash of its first audit event (unique per project database)."""
-    r = store.conn.execute("SELECT row_hash FROM audit_log ORDER BY seq ASC LIMIT 1").fetchone()
+    with store.lock:
+        r = store.conn.execute("SELECT row_hash FROM audit_log ORDER BY seq ASC LIMIT 1").fetchone()
     return (r[0] if r else "0" * 64)[:32]
 
 

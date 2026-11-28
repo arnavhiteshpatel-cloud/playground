@@ -73,7 +73,7 @@ def test_ux02_accept_roi_is_signed_audited_and_clears_flag(team):
     row = build_rows(project, sid)[0]
     assert "accepted" in row["roi"]
     assert not any("ROI not yet accepted" in r for r in row["values"]["TV_mm3"]["reasons"])
-    rev.store.conn.close()
+    rev.store.close()
 
 
 def test_ux02_review_panel_accept_and_edit_buttons(qtbot, window, team):
@@ -236,7 +236,7 @@ def test_ux07_08_report_signoff_roles_gates_and_signed_rows(qtbot, team):
     assert rid_row["created_by"] == admin["id"]
     with pytest.raises(PermissionError, match="report you generated"):    # the store's own message
         st.review(admin, "report", rep["report_id"], "approved", "approve")
-    st.conn.close()
+    st.close()
     with pytest.raises(PermissionError):
         S.sign_review(rev, REV_PW, "report", rep["report_id"], "approved", "approve release",
                       signature_role="study_director")                 # a reviewer cannot sign as study director
@@ -255,8 +255,8 @@ def test_ux07_08_report_signoff_roles_gates_and_signed_rows(qtbot, team):
     assert "Signed copy of report" not in _pdf_text(rep["pdf"])
     acts = [e["action"] for e in project.store.audit.events(limit=1000)]
     assert "review.signature_role" in acts and "report.signed_copy" in acts and "review.needs_changes" in acts
-    rev.store.conn.close()
-    dr.store.conn.close()
+    rev.store.close()
+    dr.store.close()
 
 
 def test_ux07_08_reports_view_buttons(qtbot, window, team):

@@ -28,4 +28,4 @@ def store(tmp_path):
     from osteoquant.study.db import Store
     st = Store(tmp_path / "t.db", tmp_path / "data")
     yield st
-    st.conn.close()
+    st.close()          # waits for background threads still inside a store call (DF-043: macOS segfault)

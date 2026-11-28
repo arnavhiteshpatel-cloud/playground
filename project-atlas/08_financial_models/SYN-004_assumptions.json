@@ -1,0 +1,310 @@
+{
+ "id": "SYN-004",
+ "name": "Commercial energy cost management for ComEd-zone food, cold-storage and multi-site grocery accounts (supply procurement + capacity-tag management + demand-response origination + bill audit)",
+ "summary": "One analyst-led relationship per C&I customer in the ComEd zone: free bill/interval/PLC audit, supply RFP among ARES (supplier-paid mils), capacity-tag (PLC) peak management, and demand-response enrollment with a PJM CSP for curtailable refrigeration/process load. Launch legally without an ABC licence by serving only customers with >1,500 kW aggregate Illinois billing demand (83 IAC 454.30(b)(5)) plus licence-free DR, PLC and audit work; add the founder's own ABC licence once a qualifying electric-industry person is in place. Stage D batch DI, 2026-11-28.",
+ "evidence_notes": [
+  "Licensing: soliciting customers is 'attempts to sell' under 83 IAC 454.20 (DI-S019); Part 454 does not apply to deals for customers with >1,500 kW aggregate Illinois billing demand or to exclusive agents of a single RES (C7-S003). Technical requirement = 1 year electric-industry experience of 'persons used to satisfy' it (C7-S001). No fee, $5,000 bond, 90-180 days (WS11-S023).",
+  "Capacity price is A-level: PJM 2028/29 BRA cleared at the $325/MW-day cap in every LDA incl. COMED; a no-cap simulation cleared COMED at $776.69 (DI-S022). COMED cleared 1,105.6 MW of DR. This sustains the PLC/DR pitch to May 2029; after that the price could fall to the floor or rise, so no price growth is modelled.",
+  "DR revenue split is A-level for the customer side only: a 2020 Illinois school board packet shows NRG paying the district 70% and Direct Energy 75%, CSP keeping 25-30% (DI-S023). The channel-partner share of the CSP's cut is MISSING; 8% of gross is an E assumption.",
+  "Supplier commission levels are D-level: a Chicago BOMA presentation shows supplier adders of $0.001-$0.005/kWh, some with $12k-$18k upfront (DI-S026); trade sites say mils fall with account size (C7-S008, C7-S009). Base 1.5 mils on large exempt accounts is E.",
+  "Customer electricity sizes are A-level: Chicago benchmarking 2023 shows independent grocery stores at 2.5-3.3 GWh/yr each (Pete's Fresh Market stores; Shop & Save) (DI-S003).",
+  "Public bodies can buy DR through state/city contracts without a channel partner (City Colleges used State of Illinois contract CMS5882960 and City spec 1257550 with CPower) (DI-S024, DI-S025), so public-sector prospects are excluded from the base funnel.",
+  "Funnel, churn, partner share and audit hit rates are E."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 4,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_start_delay_months__evidence": "E",
+  "sales_start_delay_months__source": "Entity + E&O insurance + supplier broker onboarding (ENGIE: inquiry form, reply within 15 business days, nine application documents, DI-S027) + CSP partner agreement. No ABC licence needed for the exempt >1,500 kW segment (C7-S003).",
+  "sales_cycle_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1.5
+  },
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "Audit acceptance in days; supply decision tied to contract expiry; DR enrollment tied to delivery-year deadlines (SYN-004 Stage C; DI-S026 advises Sept-Dec sign-up).",
+  "founder_ramp_months": 6,
+  "founder_ramp_months__evidence": "E",
+  "founder_ramp_months__source": "Analyst estimate.",
+  "founder_leads_per_month": {
+   "conservative": 15,
+   "base": 22,
+   "optimistic": 30
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Qualified conversations with controllers/plant managers that yield 12-24 months of bills or interval data. Target list is public (EPA ECHO food/cold-storage registries DI-S017/DI-S018; Chicago benchmarking DI-S003).",
+  "lead_to_proposal_pct": 0.4,
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Free audit converts to an RFP/PLC proposal; analyst estimate.",
+  "proposal_to_win_pct": {
+   "conservative": 0.18,
+   "base": 0.25,
+   "optimistic": 0.32
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Heavily solicited buyers (392 ABCs, C7-S007); customers often let several brokers bid. Analyst estimate.",
+  "rep_ramp_months": 4,
+  "rep_ramp_months__evidence": "E",
+  "rep_ramp_months__source": "Analyst estimate.",
+  "rep_new_customers_per_month": 1.5,
+  "rep_new_customers_per_month__evidence": "E",
+  "rep_new_customers_per_month__source": "Analyst estimate for a commissioned energy rep.",
+  "referral_new_per_100_active": 0.8,
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Analyst estimate (CPA, refrigeration-contractor and trade-association referrals).",
+  "monthly_churn_pct": {
+   "conservative": 0.02,
+   "base": 0.013,
+   "optimistic": 0.009
+  },
+  "monthly_churn_pct__evidence": "E",
+  "monthly_churn_pct__source": "~25% of accounts lost at each 12-36-month renewal (WS11-007 Stage C) => ~1.0-1.6%/month; supplier exits (active ARES in ComEd down 14% y/y, C7-S007) add risk.",
+  "arpc_monthly": {
+   "conservative": 220,
+   "base": 410,
+   "optimistic": 620
+  },
+  "arpc_monthly__evidence": "E",
+  "arpc_monthly__source": "Blended per account, arithmetic: base = 2.75 GWh x $0.0015/kWh supply residual ($344/mo) + DR partner share on 25% of accounts (0.3 MW x $325/MW-day x 365 x 0.75 accreditation x 8% = $2,135/site/yr => $44/mo) + PLC/gas fees ~$20/mo. Conservative = 1.8 GWh x 1.25 mils + DR on 15% at $175 floor; optimistic = 3.5 GWh x 1.75 mils + DR on 30% at 10% share. Volumes A (DI-S003 grocery stores 2.5-3.3 GWh); mils D (DI-S026, C7-S008); capacity price A (DI-S022); customer DR share 70-75% A (DI-S023); partner share E (MISSING).",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 300,
+   "base": 600,
+   "optimistic": 1000
+  },
+  "onetime_revenue_per_new_customer__evidence": "E",
+  "onetime_revenue_per_new_customer__source": "Contingency bill-audit recoveries: ~30% hit rate x ~$6k refund/first-year savings x ~35% fee (WS11-010 Stage C, E).",
+  "arpc_annual_growth_pct": {
+   "conservative": -0.03,
+   "base": 0.0,
+   "optimistic": 0.02
+  },
+  "arpc_annual_growth_pct__evidence": "E",
+  "arpc_annual_growth_pct__source": "Mils fixed per contract; capacity collar ends May 2029 (floor $175 would cut DR value 46%; uncapped COMED simulation $776.69 would raise it) (DI-S022).",
+  "gross_margin_pct": {
+   "conservative": 0.65,
+   "base": 0.8,
+   "optimistic": 0.88
+  },
+  "gross_margin_pct__evidence": "E",
+  "gross_margin_pct__source": "Commission revenue is near-pure margin; COGS = splits with a licensed ABC partner on sub-1,500 kW deals (assumed 50% split on ~30% of the book in base) and data feeds. Split levels MISSING.",
+  "onetime_gross_margin_pct": 0.85,
+  "onetime_gross_margin_pct__evidence": "E",
+  "onetime_gross_margin_pct__source": "Audit data-extraction cost only; analyst estimate.",
+  "variable_opex_pct_revenue": 0.02,
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Analyst estimate.",
+  "cac_per_new_customer": 150,
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Travel, site visit, data pulls; analyst estimate.",
+  "fixed_marketing_per_month": 300,
+  "fixed_marketing_per_month__evidence": "E",
+  "fixed_marketing_per_month__source": "Trade-association dues/events (food manufacturers, refrigeration), website; analyst estimate.",
+  "dso_days": {
+   "conservative": 75,
+   "base": 60,
+   "optimistic": 45
+  },
+  "dso_days__evidence": "E",
+  "dso_days__source": "Supplier residuals paid monthly in arrears after the customer pays (C7-S008/C7-S009, D); DR payments settle after the delivery season (DI-S023: district paid at end of DR season).",
+  "inventory_days_cogs": 0,
+  "dpo_days": 20,
+  "dpo_days__evidence": "E",
+  "dpo_days__source": "Partner splits paid after receipt; analyst estimate.",
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 0,
+  "founder_draw_per_month__evidence": "E",
+  "founder_draw_per_month__source": "Set to 0 so peak funding shows business capital need only.",
+  "founder_draw_start_month": 13,
+  "start_capital_injection": {
+   "conservative": 15000,
+   "base": 10000,
+   "optimistic": 8000
+  },
+  "start_capital_injection__evidence": "E",
+  "start_capital_injection__source": "Analyst estimate (tools, insurance, bond, travel through ramp).",
+  "lt_growth_y6_pct": 0.06,
+  "lt_growth_decay": 0.85,
+  "incremental_roic_pct": 1.0,
+  "maint_capex_pct_op": 0.02,
+  "reserve_months": 2,
+  "ev_multiple": 3.0,
+  "ev_multiple__evidence": "E",
+  "ev_multiple__source": "Residual commission books typically trade on low multiples; analyst estimate."
+ },
+ "staff": [
+  {
+   "role": "Electric-industry-experienced compliance partner (part-time; qualifies own ABC licence under 454.70)",
+   "trigger": "month",
+   "start_month": 10,
+   "count": 1,
+   "monthly_cost": {
+    "conservative": 2500,
+    "base": 1500,
+    "optimistic": 1000
+   },
+   "annual_raise_pct": 0.03,
+   "notes": "E: retainer for a person with >=1 year electric-industry experience named in the ABC application (C7-S001). Needed for sub-1,500 kW customers; availability/rate MISSING."
+  },
+  {
+   "role": "Energy analyst (bill/interval data, RFP administration, DR performance)",
+   "trigger": "active_customers",
+   "threshold": 60,
+   "per": 120,
+   "start_month": 1,
+   "monthly_cost": {
+    "conservative": 6500,
+    "base": 6000,
+    "optimistic": 5500
+   },
+   "annual_raise_pct": 0.03,
+   "notes": "E: loaded cost; founder does analysis until 60 accounts."
+  },
+  {
+   "role": "Commissioned energy sales rep",
+   "trigger": "month",
+   "start_month": 18,
+   "count": 1,
+   "is_sales_rep": true,
+   "monthly_cost": {
+    "conservative": 7500,
+    "base": 6500,
+    "optimistic": 6000
+   },
+   "annual_raise_pct": 0.03,
+   "notes": "C/E: BLS OEWS 2025 Chicago non-technical wholesale sales reps mean $85,490 (DI-S015); lower base + commission assumed."
+  }
+ ],
+ "overhead": [
+  {
+   "item": "E&O / general liability insurance",
+   "monthly": {
+    "conservative": 400,
+    "base": 250,
+    "optimistic": 200
+   },
+   "annual_growth_pct": 0.05
+  },
+  {
+   "item": "ABC $5,000 surety bond premium (from own licence)",
+   "monthly": 15,
+   "start_month": 12
+  },
+  {
+   "item": "CRM, e-signature, supplier pricing portals",
+   "monthly": 150
+  },
+  {
+   "item": "Interval-data analytics + LLM bill parsing",
+   "monthly": 200,
+   "is_ai": true
+  },
+  {
+   "item": "Market data (forward curves, PJM data tools)",
+   "monthly": 200
+  },
+  {
+   "item": "Travel and vehicle",
+   "monthly": 500
+  },
+  {
+   "item": "Accounting, legal, admin",
+   "monthly": 300
+  }
+ ],
+ "capex": [
+  {
+   "item": "Laptop + portable power/kW data logger",
+   "month": 1,
+   "amount": {
+    "conservative": 3500,
+    "base": 3000,
+    "optimistic": 2500
+   }
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Independent grocer, 3 stores x 2.9 GWh/yr (aggregate demand >1,500 kW, ABC-exempt): 24-month fixed supply contract",
+   "revenue": 13050,
+   "lines": [
+    {
+     "item": "Partner split (none: exempt deal)",
+     "amount": 0
+    },
+    {
+     "item": "Data/CRM allocation",
+     "amount": 300
+    },
+    {
+     "item": "Founder RFP/renewal time (not cash)",
+     "amount": 0
+    }
+   ],
+   "notes": "Annual residual = 8.7 GWh x $0.0015/kWh. Store sizes A (DI-S003); mils D/E (DI-S026). Paid monthly in arrears over the term; disclosure of total price incl. broker fee required for licensed ABC deals (C7-S005).",
+   "evidence": "A (volume) / D-E (rate)"
+  },
+  {
+   "name": "Cold-storage warehouse, 0.8 MW peak, 5 GWh/yr: supply + DR enrollment (0.5 MW) + PLC management",
+   "revenue": 13700,
+   "lines": [
+    {
+     "item": "Supply residual 5 GWh x 1.25 mils (gross $6,250)",
+     "amount": 0
+    },
+    {
+     "item": "DR partner share: 0.5 MW x $325 x 365 x 0.75 x 8% (gross $3,560)",
+     "amount": 0
+    },
+    {
+     "item": "PLC fee: 15% of ~$26k tag savings (gross $3,890)",
+     "amount": 0
+    },
+    {
+     "item": "Site assessment, DR test support, travel",
+     "amount": 900
+    }
+   ],
+   "notes": "Capacity price A (DI-S022); customer keeps 70-75% of DR revenue (A, DI-S023); partner share and PLC fee E; site <1,500 kW so supply part needs ABC licence or a licensed partner. DR cash arrives after the delivery season.",
+   "evidence": "A (price) / E (shares)"
+  },
+  {
+   "name": "Mid-size manufacturer, 1.2 GWh (~250 kW): supply via licensed partner ABC",
+   "revenue": 3000,
+   "lines": [
+    {
+     "item": "50% split to licensed ABC partner",
+     "amount": 1500
+    },
+    {
+     "item": "Data/CRM allocation",
+     "amount": 100
+    }
+   ],
+   "notes": "2.5 mils on a smaller account (D, DI-S026 range $0.001-0.005); split E.",
+   "evidence": "D/E"
+  },
+  {
+   "name": "One-time contingency bill audit (tariff class / demand-ratchet error)",
+   "revenue": 2800,
+   "lines": [
+    {
+     "item": "Analyst/founder 20 h (opportunity cost, not cash)",
+     "amount": 0
+    },
+    {
+     "item": "Data extraction / LLM parsing",
+     "amount": 50
+    },
+    {
+     "item": "Utility-dispute filing costs",
+     "amount": 100
+    }
+   ],
+   "notes": "$8,000 refund x 35% fee; hit rates MISSING (WS11-010 Stage C). Paid 3-9 months after the hit.",
+   "evidence": "E"
+  }
+ ]
+}

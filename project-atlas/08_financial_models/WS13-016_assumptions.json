@@ -1,0 +1,73 @@
+{
+ "id": "WS13-016",
+ "name": "Pond & stormwater-basin aquatic management for HOAs, business parks and public bodies in DuPage/Will/Kane/Lake (IL)",
+ "summary": "Customers = annual aquatic-management contracts (an HOA, business park or public body with 1-25 ponds). Recurring revenue = seasonal program fee (biweekly algae/weed treatment, dye, water-quality readings, reports), spread evenly by the engine although work runs Apr-Oct. One-time revenue = aeration/fountain installs sold to a minority of new accounts. Founder is the first IDOA-licensed applicator (Aquatic category).",
+ "evidence_notes": [
+  "Public prices: Wheaton Park District 2026 six ponds McCloud $14,550 / SOLitude $17,232 / Jones $44,200 [A, C7-S031]; Mokena 23 ponds $26,564 (McCloud) [C, C7-S032] and 2026 rebid for 25 ponds biweekly x 5 months with prevailing wage [C, DE-S018]; Lombard 3 wet ponds weekly $24,000 (2026) [A, C7-S034]; Hawthorn Woods 2026 budget $2,500 + $1,000 for two park ponds [A, DE-S023]; Vernon Hills $1,000-$1,400 per pond per season [C, C7-S033].",
+  "Public pond work in Illinois is procured as public works: prevailing wage (Mokena, Lincolnshire, Kane FPD) and performance/payment bonds (Kane FPD) [A, DE-S017; C, DE-S018, DE-S019]. Prevailing-wage rates MISSING (IDOL tables not extractable) [A, DE-S038].",
+  "Competition: ~15 private aquatic firms with ILG87 coverage in the Chicago metro (SOLitude/Rentokil, McCloud, Jones, Tigris, Rollins Aquatic Solutions, etc.), and many park districts/villages hold their own ILG87 coverage (self-perform risk) [A, DE-S025].",
+  "Licence: IDOA commercial applicator $300/3 yrs with Aquatic category; operators $240; certificate of insurance required [A, WS13-S023].",
+  "Equipment: Kasco VFX 1 HP 240V fountain list $4,345; 2 HP $7,216 [B, DE-S026]; dealer discount MISSING.",
+  "HOA (non-public) prices MISSING; modeled from municipal per-pond prices (E). Seasonality ignored by the engine (cash timing understated).",
+  "Owner draw $4,000/mo from month 13 (comparability); operating profit is before owner compensation."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {"conservative": 4, "base": 3, "optimistic": 2},
+  "sales_start_delay_months__evidence": "A/E", "sales_start_delay_months__source": "IDOA General Standards + Aquatic exams (online-proctored) [A, WS13-S023], insurance, ILG87 NOI; bids open Dec-Mar",
+  "sales_cycle_months": {"conservative": 3, "base": 2, "optimistic": 1},
+  "sales_cycle_months__evidence": "A/E", "sales_cycle_months__source": "Kane FPD: ITB 2026-02-02 -> award 2026-03-10 [A, DE-S017]; Wheaton quotes Dec -> board Jan [A, C7-S031]",
+  "founder_ramp_months": 6,
+  "founder_leads_per_month": {"conservative": 8, "base": 12, "optimistic": 16},
+  "founder_leads_per_month__evidence": "E", "founder_leads_per_month__source": "Public bids + HOA/property-manager quote requests; 35 named public/HOA prospects [A, DE-S025 and bid sources]",
+  "lead_to_proposal_pct": 0.6,
+  "lead_to_proposal_pct__evidence": "E", "lead_to_proposal_pct__source": "Bids/quotes are proposals by construction",
+  "proposal_to_win_pct": {"conservative": 0.15, "base": 0.25, "optimistic": 0.33},
+  "proposal_to_win_pct__evidence": "A/E", "proposal_to_win_pct__source": "Wheaton took 3 quotes and awarded the low bid [A, C7-S031]; Grayslake/Kane award to lowest responsible bidder [C/A]",
+  "referral_new_per_100_active": {"conservative": 0.5, "base": 1.0, "optimistic": 1.5},
+  "monthly_churn_pct": {"conservative": 0.025, "base": 0.015, "optimistic": 0.01},
+  "monthly_churn_pct__evidence": "A/E", "monthly_churn_pct__source": "Wheaton changed vendors twice in 8 years (ILM -> SOLitude -> McCloud) [A, C7-S031]; HOAs assumed stickier",
+  "arpc_monthly": {"conservative": 250, "base": 350, "optimistic": 450},
+  "arpc_monthly__evidence": "A/E", "arpc_monthly__source": "Annual contract $3,000/$4,200/$5,400: ~88% HOA/business-park accounts of ~2 ponds at $1,000-$2,500/pond [A, DE-S023; C, C7-S033] + ~12% public multi-pond contracts $12k-$27k [A, C7-S031, C7-S034; C, C7-S032]",
+  "onetime_revenue_per_new_customer": {"conservative": 400, "base": 700, "optimistic": 1000},
+  "onetime_revenue_per_new_customer__evidence": "B/E", "onetime_revenue_per_new_customer__source": "~12-18% of new accounts buy an aeration fountain at ~$5,500-$6,500 installed (Kasco 1 HP 240V list $4,345 [B, DE-S026] + electrical/labor E)",
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": {"conservative": 0.8, "base": 0.85, "optimistic": 0.88},
+  "gross_margin_pct__evidence": "E", "gross_margin_pct__source": "Recurring COGS = algaecides/herbicides, dye, test reagents ~12-20% of program revenue (Stage C 12%, E); labor modeled as staff",
+  "onetime_gross_margin_pct": 0.32,
+  "onetime_gross_margin_pct__evidence": "E", "onetime_gross_margin_pct__source": "Dealer discount MISSING; assumes ~25% off list + electrician subcontract",
+  "variable_opex_pct_revenue": 0.06,
+  "cac_per_new_customer": {"conservative": 250, "base": 150, "optimistic": 100},
+  "cac_per_new_customer__evidence": "E", "cac_per_new_customer__source": "Bid prep, site visits, bond premium share, printed reports",
+  "fixed_marketing_per_month": 250,
+  "dso_days": {"conservative": 60, "base": 45, "optimistic": 35},
+  "dso_days__evidence": "E", "dso_days__source": "Municipal net-30 after board approval + monthly/seasonal invoicing",
+  "inventory_days_cogs": 30,
+  "dpo_days": 20,
+  "tax_rate_pct": 0.30,
+  "founder_draw_per_month": 4000, "founder_draw_start_month": 13,
+  "start_capital_injection": 40000
+ },
+ "staff": [
+  {"role": "Licensed aquatic technician (IDOA operator licence)", "trigger": "active_customers", "threshold": 30, "per": 35, "start_month": 1, "capex_per_hire": 32000, "monthly_cost": {"conservative": 5200, "base": 4300, "optimistic": 3900}, "notes": "Chicago median pesticide applicator $49,550 [C, C2-S022] x1.2 load, ~9-month season incl. fountain installs/removals; conservative reflects prevailing wage on public jobs (rates MISSING). capex_per_hire = used truck + jon boat + sprayer."},
+  {"role": "Office / billing & reporting coordinator (part-time -> full-time)", "trigger": "revenue", "threshold": 30000, "per": 120000, "max_count": 2, "monthly_cost": 3800, "notes": "E"}
+ ],
+ "overhead": [
+  {"item": "Insurance (GL with pesticide/pollution, auto, inland marine for boats)", "monthly": {"conservative": 900, "base": 650, "optimistic": 500}, "annual_growth_pct": 0.06, "notes": "Must meet 415 ILCS 60/10 financial-responsibility minimums [A, WS13-S023]; premium E"},
+  {"item": "Shop / boat & chemical storage", "monthly": 600, "notes": "E"},
+  {"item": "Licences, bonds, ILG87, water-lab tests", "monthly": 150, "notes": "IDOA $300/3 yrs [A]; bond premium E"},
+  {"item": "Field-service software (Jobber Connect)", "monthly": 140, "is_ai": true, "notes": "[B, DE-S035]"},
+  {"item": "AI assistant tools", "monthly": 40, "is_ai": true},
+  {"item": "Phone, office, accounting", "monthly": 300}
+ ],
+ "capex": [
+  {"item": "Used 3/4-ton pickup", "month": 1, "amount": {"conservative": 35000, "base": 28000, "optimistic": 22000}, "notes": "E"},
+  {"item": "Jon boat, outboard, trailer", "month": 1, "amount": {"conservative": 6000, "base": 4500, "optimistic": 3500}, "notes": "E"},
+  {"item": "Sprayers, pumps, spreaders, DO/pH meter, PPE", "month": 1, "amount": {"conservative": 6000, "base": 4500, "optimistic": 3500}, "notes": "E"}
+ ],
+ "transactions": [
+  {"name": "Park district: 6 ponds, biweekly season (Wheaton 2026 low bid)", "revenue": 14550, "lines": [{"item": "Chemicals/dye (~15%)", "amount": 2180}, {"item": "Labor 77 h x $28 (84 pond-visits + travel)", "amount": 2160}, {"item": "Truck/boat fuel", "amount": 700}, {"item": "Reports 10 h", "amount": 280}], "notes": "Price [A, C7-S031]; costs E; paid net-30 after monthly invoices; prevailing wage would raise labor (rates MISSING)", "evidence": "A/E"},
+  {"name": "HOA: 2 detention ponds, algae program", "revenue": 3000, "lines": [{"item": "Chemicals/dye", "amount": 450}, {"item": "Labor 28 h x $28", "amount": 785}, {"item": "Fuel", "amount": 250}], "notes": "Price anchored to Hawthorn Woods $1,000-$2,500/pond [A, DE-S023] and Vernon Hills $1,000-$1,400 [C]; HOA price itself E", "evidence": "E"},
+  {"name": "Village: 3 wet ponds weekly with DO/pH/temp readings (Lombard 2026)", "revenue": 24000, "lines": [{"item": "Chemicals/dye", "amount": 3000}, {"item": "Labor 104 h x $28 (x~1.8 if prevailing wage)", "amount": 2910}, {"item": "Meter calibration/consumables", "amount": 200}, {"item": "Fuel", "amount": 900}], "notes": "Price [A, C7-S034]", "evidence": "A/E"},
+  {"name": "Aeration fountain install (Kasco VFX 1 HP 240V)", "revenue": 6500, "lines": [{"item": "Unit at ~25% off list $4,345 (discount MISSING)", "amount": 3260}, {"item": "Electrician subcontract", "amount": 1200}, {"item": "Install labor 6 h", "amount": 170}], "notes": "List price [B, DE-S026]; sale price E; customer deposit 50% assumed", "evidence": "B/E"}
+ ]
+}

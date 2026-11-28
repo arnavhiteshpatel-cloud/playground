@@ -1,0 +1,346 @@
+{
+ "id": "WS05-007",
+ "name": "Chicago food-facility commercial pest control (SW-side route) with residential/landlord plan line",
+ "summary": "One IDPH-licensed pest company: founder becomes the Certified Technician, wins food establishments cited for live pests in CDPH inspections (SW cluster 60608/60609/60616/60623/60632), adds residential/2-6-flat landlord quarterly plans as a secondary line. Customer unit = blended service account (~75% commercial monthly, ~25% residential quarterly). Technician labor is modelled as capacity-triggered staff (founder services the first ~110 accounts); gross margin therefore covers materials/devices only.",
+ "evidence_notes": [
+  "Demand: 1,416 Chicago food licences showed live pest evidence (droppings, roaches, flies, rodents) in CDPH inspections 2025-11-01..2026-11-25; 256 of these in the SW cluster out of 1,572 licences inspected there [A, DA-S001].",
+  "Pricing: restaurants ~$100-150/mo [D, C2-S020]; operator-published restaurant range $50-422/mo [D, C2-S019]; public per-building bids $30-180/mo [A, C2-S017]; Chicago residential monthly visits ~$40-70 [D, DA-S021]. No Chicago commercial rate card was found (MISSING).",
+  "Churn: Rentokil North America customer retention 80.7%/yr [B, C2-S009] -> ~1.8%/mo; ~10% of inspected Chicago food licences were found 'Out of Business' within 13 months [A, DA-S001].",
+  "Labour: Chicago MSA pest-control worker median $46,740 ($22.47/hr) [C, DA-S011]. Insurance: broker averages GL $112/mo, auto $114/mo, WC $90/mo for small pest firms [C, DA-S010]; statutory minimum limits per IDPH form [A, C2-S004].",
+  "Software: GorillaDesk published plans $49-149/mo first route [B, DA-S016]. Supplier: Veseris branch at 3642 S Kedzie Ave, Chicago, requires applicator licence number to open an account [B, DA-S014].",
+  "Win rates, lead volumes, CAC and one-time revenue are analyst assumptions (E) to be tested by the validation plan. Incumbent gross margin (Rollins 52.8% incl. labour) is incumbent economics, not used directly."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 2
+  },
+  "sales_start_delay_months__evidence": "A",
+  "sales_start_delay_months__source": "IDPH exams roughly monthly at Westchester, application due 15 days prior [A, C2-S005, WS05-S013]; business licence $250 + insurance certificate [A, WS05-S012, C2-S004]. Processing time itself MISSING.",
+  "sales_cycle_months": 1,
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "Restaurants decide in days after a citation; plants 1-3 months (Stage A/C, E).",
+  "founder_ramp_months": 4,
+  "founder_leads_per_month": {
+   "conservative": 32,
+   "base": 45,
+   "optimistic": 60
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Qualified owner/manager conversations from walk-ins at CDPH-cited licences (~20/mo with live pests in SW cluster, ~109/mo citywide [A, DA-S001]), new licences (~124/mo citywide [A, C2-S014]) and residential inbound. Conversation volume is E.",
+  "lead_to_proposal_pct": {
+   "conservative": 0.35,
+   "base": 0.4,
+   "optimistic": 0.45
+  },
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Analyst estimate; free inspection offered on the spot.",
+  "proposal_to_win_pct": {
+   "conservative": 0.22,
+   "base": 0.3,
+   "optimistic": 0.38
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Displacement sale (most cited sites already have a provider: 212 comments 'additional service needed' vs 98 no provider [A, C2-S014]); L.E.K. survey: ~37% of facility managers switched a provider in the past year [C, DA-S019].",
+  "rep_ramp_months": 3,
+  "rep_new_customers_per_month": {
+   "conservative": 3,
+   "base": 4,
+   "optimistic": 5
+  },
+  "rep_new_customers_per_month__evidence": "E",
+  "rep_new_customers_per_month__source": "Analyst estimate for a commissioned route-sales rep.",
+  "referral_new_per_100_active": {
+   "conservative": 0.6,
+   "base": 1.0,
+   "optimistic": 1.4
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Analyst estimate (owner networks, landlords with multiple buildings).",
+  "monthly_churn_pct": {
+   "conservative": 0.025,
+   "base": 0.018,
+   "optimistic": 0.014
+  },
+  "monthly_churn_pct__evidence": "B",
+  "monthly_churn_pct__source": "Rentokil NA retention 80.7%/yr [B, C2-S009] = 1.77%/mo; conservative adds new-entrant quality risk and restaurant closures [A, DA-S001].",
+  "arpc_monthly": {
+   "conservative": 85,
+   "base": 105,
+   "optimistic": 125
+  },
+  "arpc_monthly__evidence": "D",
+  "arpc_monthly__source": "Blend 75% commercial at ~$125/mo (restaurants $100-150 [D, C2-S020]; wholesale food plants higher, E) + 25% residential at ~$45/mo equivalent (Chicago monthly visit $40-70 [D, DA-S021]; quarterly plans ~$120-150/qtr, E).",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 125,
+   "base": 200,
+   "optimistic": 275
+  },
+  "onetime_revenue_per_new_customer__evidence": "E",
+  "onetime_revenue_per_new_customer__source": "Initial cleanout + exclusion (1,267 of 3,182 CDPH pest comments cite door gaps/openings [A, DA-S001]); Rollins: ~25% of revenue non-recurring [A, C2-S008]. Ticket size E.",
+  "arpc_annual_growth_pct": 0.03,
+  "arpc_annual_growth_pct__evidence": "E",
+  "arpc_annual_growth_pct__source": "Annual price increase assumption; L.E.K.: >95% of FMs have escalators in some multi-year contracts [C, DA-S019].",
+  "gross_margin_pct": {
+   "conservative": 0.85,
+   "base": 0.88,
+   "optimistic": 0.9
+  },
+  "gross_margin_pct__evidence": "E",
+  "gross_margin_pct__source": "Materials/devices/logbook consumables only (~9-12% of revenue, Stage C E); technician labour and vehicles are in Staff.",
+  "onetime_gross_margin_pct": 0.45,
+  "onetime_gross_margin_pct__evidence": "E",
+  "onetime_gross_margin_pct__source": "Rodent stations, door sweeps, sealants installed at cost ~$80-110 per new account (E).",
+  "variable_opex_pct_revenue": 0.06,
+  "variable_opex_pct_revenue__evidence": "C",
+  "variable_opex_pct_revenue__source": "Fuel/route variable + card fees + bad debt; Rollins fleet ~5.2% of revenue incl. ownership [A, C2-S008]; set 6% (fuel ~3%, processing 2%, bad debt 1%).",
+  "cac_per_new_customer": {
+   "conservative": 180,
+   "base": 120,
+   "optimistic": 80
+  },
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Commercial canvassing near-zero cash; residential paid leads (Google LSA) assumed $60-120/lead at ~40% close; blended E.",
+  "fixed_marketing_per_month": {
+   "conservative": 500,
+   "base": 350,
+   "optimistic": 300
+  },
+  "fixed_marketing_per_month__evidence": "E",
+  "fixed_marketing_per_month__source": "Website, Google Business, LSA floor budget, print (E).",
+  "dso_days": {
+   "conservative": 30,
+   "base": 20,
+   "optimistic": 15
+  },
+  "dso_days__evidence": "A",
+  "dso_days__source": "Rollins DSO ~20 days (incumbent) [A, C2-S008]; residential autopay; restaurants net-15.",
+  "inventory_days_cogs": 20,
+  "inventory_days_cogs__evidence": "E",
+  "inventory_days_cogs__source": "Bait, monitors, stations stock (E).",
+  "dpo_days": {
+   "conservative": 0,
+   "base": 25,
+   "optimistic": 30
+  },
+  "dpo_days__evidence": "B",
+  "dpo_days__source": "Veseris offers an online credit application [B, DA-S014]; actual terms MISSING; conservative = card/COD.",
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": {
+   "conservative": 20000,
+   "base": 15000,
+   "optimistic": 12000
+  },
+  "start_capital_injection__evidence": "E",
+  "start_capital_injection__source": "Launch budget: equipment, insurance deposit, storage, 3 months overhead.",
+  "ev_multiple": 3.5,
+  "ev_multiple__evidence": "E",
+  "ev_multiple__source": "Small recurring pest books are acquired actively (Rollins 26 deals in 2025 [A, C2-S008]); multiple not disclosed (MISSING) - 3.5x EBITDA assumed.",
+  "lt_growth_y6_pct": 0.1,
+  "lt_growth_decay": 0.85,
+  "incremental_roic_pct": 0.6,
+  "maint_capex_pct_op": 0.05
+ },
+ "staff": [
+  {
+   "role": "Pest technician (uncertified, supervised; incl. van)",
+   "trigger": "active_customers",
+   "threshold": 110,
+   "per": 190,
+   "start_month": 1,
+   "capex_per_hire": 2500,
+   "monthly_cost": {
+    "conservative": 6200,
+    "base": 5700,
+    "optimistic": 5400
+   },
+   "notes": "Chicago MSA median $46,740/yr [C, DA-S011] x ~1.25 load (payroll tax, WC, Chicago paid leave) = ~$4,870 + leased van/fuel ~$850. Capacity ~190 blended accounts (8-12 commercial stops/day; residential quarterly). Supervision rule allows uncertified techs [A, C2-S002]. Threshold uses base value (structural)."
+  },
+  {
+   "role": "Office / dispatch coordinator",
+   "trigger": "revenue",
+   "threshold": 30000,
+   "per": 90000,
+   "max_count": 2,
+   "start_month": 1,
+   "monthly_cost": {
+    "conservative": 4600,
+    "base": 4200,
+    "optimistic": 4000
+   },
+   "notes": "Scheduling, logbooks/audit reports, billing. Chicago wage $17.05 floor [A, DA-S013]; ~$45-50k loaded (E)."
+  },
+  {
+   "role": "Commercial sales rep (salary + commission), hired once the book reaches 300 accounts",
+   "trigger": "active_customers",
+   "threshold": 300,
+   "per": 100000,
+   "max_count": 1,
+   "is_sales_rep": true,
+   "monthly_cost": {
+    "conservative": 6000,
+    "base": 5500,
+    "optimistic": 5200
+   },
+   "notes": "E. Test: a salaried rep hired at month 20 regardless of scale cut base yr-3 operating profit to ~$4k, because at ~$105 ARPC a rep adding 4 accounts/mo needs >12 months to cover cost. Hire on scale, keep pay commission-heavy."
+  },
+  {
+   "role": "Service manager / second Certified Technician",
+   "trigger": "active_customers",
+   "threshold": 650,
+   "per": 2000,
+   "max_count": 1,
+   "monthly_cost": 6800,
+   "notes": "Second CT needed for a second licensed location [A, C2-S003]; E cost."
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Insurance: GL (IDPH minimums+), commercial auto, pollution/professional",
+   "monthly": {
+    "conservative": 450,
+    "base": 320,
+    "optimistic": 260
+   },
+   "annual_growth_pct": 0.06,
+   "notes": "Broker averages GL $112, auto $114, professional $58/mo [C, DA-S010]; hardening market [A, C2-S008]."
+  },
+  {
+   "item": "IDPH business licence + CT renewal/CEUs",
+   "monthly": 30,
+   "notes": "$250/location/yr [A, WS05-S012]; 9 classroom hours per 3 yrs [A, C2-S007]."
+  },
+  {
+   "item": "Pesticide storage (small unit/garage space)",
+   "monthly": {
+    "conservative": 500,
+    "base": 300,
+    "optimistic": 200
+   },
+   "notes": "E; storage disclosure required on licence application [A, WS05-S012]."
+  },
+  {
+   "item": "Founder service vehicle (lease, fuel, maintenance)",
+   "monthly": {
+    "conservative": 1000,
+    "base": 850,
+    "optimistic": 700
+   },
+   "notes": "E."
+  },
+  {
+   "item": "Field-service software (routing, digital logbooks, billing)",
+   "monthly": {
+    "conservative": 200,
+    "base": 150,
+    "optimistic": 99
+   },
+   "annual_growth_pct": 0.05,
+   "notes": "GorillaDesk Pro $99/mo + $50/added route [B, DA-S016]."
+  },
+  {
+   "item": "AI assistant + inspection-data prospecting scripts",
+   "monthly": 40,
+   "is_ai": true,
+   "notes": "Ordinary subscription; Socrata API free."
+  },
+  {
+   "item": "Bookkeeping/accounting, phone, website, misc",
+   "monthly": {
+    "conservative": 400,
+    "base": 300,
+    "optimistic": 250
+   },
+   "notes": "E."
+  }
+ ],
+ "capex": [
+  {
+   "item": "Sprayers, dusters, bait stock, PPE, ladder, tablet, van shelving",
+   "month": 1,
+   "amount": {
+    "conservative": 7500,
+    "base": 5500,
+    "optimistic": 4000
+   },
+   "notes": "E (no supplier price list accessible without account)."
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Independent restaurant, monthly IPM after a CDPH live-rodent citation (first year)",
+   "revenue": 1700,
+   "lines": [
+    {
+     "item": "Materials/devices (stations, glue boards, bait, sealant) incl. initial install",
+     "amount": 210
+    },
+    {
+     "item": "Technician time 12 x 0.75h + 2 callbacks x 1h at ~$28/h loaded",
+     "amount": 310
+    },
+    {
+     "item": "Vehicle/fuel allocation 14 stops",
+     "amount": 110
+    },
+    {
+     "item": "Card fees/bad debt 3%",
+     "amount": 51
+    }
+   ],
+   "notes": "Revenue = $200 initial cleanout/exclusion + 12 x $125. Paid at service/net-15. Contribution ~$1,019 (60%). Prices D/E; wage C.",
+   "evidence": "D"
+  },
+  {
+   "name": "Wholesale food plant (tortilla/meat processor), 2x-monthly audit-ready program",
+   "revenue": 6000,
+   "lines": [
+    {
+     "item": "Materials, exterior stations, insect light traps bulbs",
+     "amount": 700
+    },
+    {
+     "item": "Technician time 24 x 1.5h at ~$28/h",
+     "amount": 1010
+    },
+    {
+     "item": "Audit documentation/trend reports (admin 1h/mo)",
+     "amount": 300
+    },
+    {
+     "item": "Vehicle allocation",
+     "amount": 190
+    }
+   ],
+   "notes": "Ticket $500/mo is E (Waubonsee low bid ~$535/mo multi-campus is the nearest public anchor [A, C2-S018]). Net-30. Contribution ~$3,800 (63%).",
+   "evidence": "E"
+  },
+  {
+   "name": "2-flat landlord / homeowner quarterly mouse & insect plan",
+   "revenue": 600,
+   "lines": [
+    {
+     "item": "Materials",
+     "amount": 60
+    },
+    {
+     "item": "Technician time 5 visits x 0.75h",
+     "amount": 105
+    },
+    {
+     "item": "Vehicle allocation",
+     "amount": 40
+    },
+    {
+     "item": "Paid lead cost (amortized acquisition)",
+     "amount": 150
+    }
+   ],
+   "notes": "Initial $150 + 3 x $150 quarterly; autopay. Contribution ~$245 in year 1 (41%), higher in year 2 without acquisition cost. Prices D/E.",
+   "evidence": "D"
+  }
+ ]
+}

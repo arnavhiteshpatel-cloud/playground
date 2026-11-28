@@ -1,0 +1,302 @@
+{
+ "id": "WS17-004",
+ "name": "Mobile overnight PM for light/medium-duty service fleets (Cook/DuPage/Lake/Will)",
+ "summary": "Equipped vans + hired technicians perform yard PM and DVIR-defect repairs overnight for 10-100-vehicle trade and route fleets; revenue = PM + repair pull-through per account; technicians hired per ~$22k/month of revenue.",
+ "evidence_notes": [
+  "Buyer universe A floor: 528 private fleets with 10-100 USDOT power units in 8 counties (DC-S003); light vans unregistered.",
+  "PM price anchors A: Rockford POs $66 (oil+rotation), $380.50 for 2 PMs, $1,218 full service + repairs (DC-S019..S021); mobile priced at quality-shop parity (C, C4-S021).",
+  "Parts margin 28-30% at Rush (A, WS17-S021); tech wages C: Chicago auto tech median $55,320, diesel $65,680 (C4-S016).",
+  "Tech capacity 1,200 billable h x $125 + parts => ~$22.7k revenue/month per tech (E).",
+  "ARPC base 15 vehicles x (3.5 PM x $130/12 + 1.2x repairs) = $1,251/mo (E)."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_start_delay_months__evidence": "E",
+  "sales_start_delay_months__source": "Hire lead tech, upfit van, garage-liability insurance",
+  "sales_cycle_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_cycle_months__evidence": "C",
+  "sales_cycle_months__source": "Trial on a few vehicles over 2-8 weeks (C4 memo, C4-S021)",
+  "founder_ramp_months": 6,
+  "founder_leads_per_month": {
+   "conservative": 10,
+   "base": 15,
+   "optimistic": 20
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Yard visits/calls to ~1,000 identifiable fleets (DC-S003)",
+  "lead_to_proposal_pct": {
+   "conservative": 0.4,
+   "base": 0.5,
+   "optimistic": 0.55
+  },
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Paid trial offer",
+  "proposal_to_win_pct": {
+   "conservative": 0.2,
+   "base": 0.3,
+   "optimistic": 0.35
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Assumed; incumbents Cox, dealers, quick lubes",
+  "rep_ramp_months": 4,
+  "rep_new_customers_per_month": {
+   "conservative": 0.8,
+   "base": 1.2,
+   "optimistic": 1.5
+  },
+  "rep_new_customers_per_month__evidence": "E",
+  "rep_new_customers_per_month__source": "Assumed",
+  "referral_new_per_100_active": {
+   "conservative": 0.5,
+   "base": 0.8,
+   "optimistic": 1.2
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Assumed",
+  "monthly_churn_pct": {
+   "conservative": 0.025,
+   "base": 0.015,
+   "optimistic": 0.01
+  },
+  "monthly_churn_pct__evidence": "E",
+  "monthly_churn_pct__source": "No contract norm (C4 memo); quality-driven switching assumed",
+  "arpc_monthly": {
+   "conservative": 550,
+   "base": 1250,
+   "optimistic": 2500
+  },
+  "arpc_monthly__evidence": "A/E",
+  "arpc_monthly__source": "10/15/20 vehicles x 3-4 PMs/yr x $110/130/160 + 0.8/1.2/1.6x repair pull-through; PM anchored on Rockford POs (DC-S019, DC-S020)",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 800,
+   "base": 1500,
+   "optimistic": 2500
+  },
+  "onetime_revenue_per_new_customer__evidence": "A/E",
+  "onetime_revenue_per_new_customer__source": "Initial baseline inspection + catch-up repairs; $1,218 single-unit full service+repairs (DC-S021)",
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": {
+   "conservative": 0.58,
+   "base": 0.64,
+   "optimistic": 0.68
+  },
+  "gross_margin_pct__evidence": "A/E",
+  "gross_margin_pct__source": "Ex-tech-labor: parts ~45% of revenue at 28-30% margin (Rush, WS17-S021) + 3% supplies/disposal",
+  "onetime_gross_margin_pct": {
+   "conservative": 0.5,
+   "base": 0.55,
+   "optimistic": 0.6
+  },
+  "variable_opex_pct_revenue": {
+   "conservative": 0.1,
+   "base": 0.08,
+   "optimistic": 0.07
+  },
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Van fuel/maintenance ~4%, processing 1.5%, comebacks 2% (C4 memo)",
+  "cac_per_new_customer": {
+   "conservative": 500,
+   "base": 300,
+   "optimistic": 200
+  },
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Discounted trial night + visits",
+  "fixed_marketing_per_month": {
+   "conservative": 600,
+   "base": 500,
+   "optimistic": 400
+  },
+  "dso_days": {
+   "conservative": 55,
+   "base": 40,
+   "optimistic": 30
+  },
+  "dso_days__evidence": "C",
+  "dso_days__source": "Net-30 norm (C4 memo); slow payers assumed in cons",
+  "inventory_days_cogs": 10,
+  "dpo_days": {
+   "conservative": 15,
+   "base": 25,
+   "optimistic": 30
+  },
+  "dpo_days__evidence": "E",
+  "dpo_days__source": "Parts-store commercial accounts (terms MISSING)",
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": {
+   "conservative": 40000,
+   "base": 30000,
+   "optimistic": 25000
+  },
+  "ev_multiple": 3.0
+ },
+ "staff": [
+  {
+   "role": "Mobile technician (incl. equipped van)",
+   "trigger": "revenue",
+   "threshold": 0,
+   "per": 22000,
+   "start_month": 3,
+   "capex_per_hire": 55000,
+   "monthly_cost": {
+    "conservative": 7800,
+    "base": 7000,
+    "optimistic": 6500
+   },
+   "notes": "Lead tech hired month 3 (before first PM night); Chicago auto/diesel medians $55-66k (C4-S016) + premium for self-directed night work, x1.25 load"
+  },
+  {
+   "role": "Service writer / dispatcher",
+   "trigger": "revenue",
+   "threshold": 60000,
+   "per": 200000,
+   "max_count": 3,
+   "monthly_cost": 5000,
+   "notes": "E"
+  },
+  {
+   "role": "Service manager",
+   "trigger": "revenue",
+   "threshold": 120000,
+   "per": 10000000,
+   "max_count": 1,
+   "monthly_cost": 8000,
+   "notes": "E"
+  },
+  {
+   "role": "Sales rep",
+   "trigger": "month",
+   "start_month": 30,
+   "count": 1,
+   "is_sales_rep": true,
+   "monthly_cost": 6000,
+   "notes": "E"
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Garage liability, garagekeepers, commercial auto, GL",
+   "monthly": {
+    "conservative": 1500,
+    "base": 1200,
+    "optimistic": 1000
+   },
+   "annual_growth_pct": 0.06
+  },
+  {
+   "item": "Yard / parts storage space",
+   "monthly": {
+    "conservative": 1000,
+    "base": 800,
+    "optimistic": 600
+   }
+  },
+  {
+   "item": "Shop management + DVI software",
+   "monthly": 250,
+   "is_ai": true
+  },
+  {
+   "item": "AI scheduling/quoting tools",
+   "monthly": 100,
+   "is_ai": true
+  },
+  {
+   "item": "Phones, telematics",
+   "monthly": 150
+  },
+  {
+   "item": "Tool replacement / consumables",
+   "monthly": 300
+  },
+  {
+   "item": "Founder vehicle",
+   "monthly": 400
+  },
+  {
+   "item": "Accounting / legal",
+   "monthly": 300
+  }
+ ],
+ "capex": [
+  {
+   "item": "Diagnostic scanners, jacks, fluid equipment, initial stock",
+   "month": 1,
+   "amount": {
+    "conservative": 20000,
+    "base": 15000,
+    "optimistic": 12000
+   }
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Overnight yard PM - 6 vans at a trade contractor",
+   "revenue": 1300,
+   "lines": [
+    {
+     "item": "Oil/filters 6 x $38",
+     "amount": 228
+    },
+    {
+     "item": "Repair parts cost (on $270 billed)",
+     "amount": 190
+    },
+    {
+     "item": "Technician 9 h x $40.9 loaded",
+     "amount": 368
+    },
+    {
+     "item": "Van fuel/consumables/disposal",
+     "amount": 60
+    }
+   ],
+   "notes": "PM $130/van (E, anchored on Rockford POs DC-S019/S020); contribution ~$454",
+   "evidence": "E"
+  },
+  {
+   "name": "DVIR brake job on a Transit van",
+   "revenue": 650,
+   "lines": [
+    {
+     "item": "Pads/rotors cost",
+     "amount": 245
+    },
+    {
+     "item": "Technician 3 h incl travel",
+     "amount": 123
+    },
+    {
+     "item": "Consumables",
+     "amount": 20
+    }
+   ],
+   "notes": "$125/h labor E; contribution ~$262",
+   "evidence": "E"
+  },
+  {
+   "name": "Annual 49 CFR 396 inspection - interstate box truck",
+   "revenue": 150,
+   "lines": [
+    {
+     "item": "Technician 1.25 h",
+     "amount": 51
+    },
+    {
+     "item": "Consumables/forms",
+     "amount": 5
+    }
+   ],
+   "notes": "Price E; Illinois intrastate units must use Official Testing Stations",
+   "evidence": "E"
+  }
+ ]
+}

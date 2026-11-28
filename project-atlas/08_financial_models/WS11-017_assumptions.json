@@ -1,0 +1,324 @@
+{
+ "id": "WS11-017",
+ "name": "Cooling-tower / closed-loop / boiler water-treatment route for Chicago high-rise and mid-size buildings",
+ "summary": "Monthly chemical-treatment programmes (scale/corrosion/biocide), testing, controller management and ASHRAE 188 water-management-plan support for condo/co-op high-rises, hotels, independent hospitals and mid-size institutional buildings in Cook County, sold to boards, property managers and chief engineers. Founder runs the first ~20 accounts as route technician under a contracted experienced water technologist (CWT); private-label chemistry from a toll blender. Stage D batch DI, 2026-11-28.",
+ "evidence_notes": [
+  "Public award prices are A-level: VA Illiana boiler + cooling-tower programme $32,512/yr with 12 offers (DI-S005); Cook County Facilities Mgmt water treatment & testing $349,541 for 2024-27 (DI-S004); City of Chicago H-O-H awards $3.88M (2016-21) and $4.32M (2022-27) (DI-S001); Columbus GA same-scope bids $29.4k-$78.0k/yr (C1-S006).",
+  "Chemical unit prices are A-level but out-of-state and 2021: Maine state contract cooling inhibitor $23.97-30.48/gal, oxidising biocide $10.60/gal, non-oxidising biocide $30.40/gal, closed-loop nitrite $13.73/gal (DI-S007). Toll-blender/private-label buy prices for a newcomer are MISSING (no blender publishes terms).",
+  "Private-building programme pricing ($500-850/month per building) is an E-level estimate triangulated from the public awards; no published private price list was found.",
+  "Labour cost proxies are C-level BLS OEWS 2025 Chicago MSA means: HVAC mechanics $79,340, chemical technicians $66,160 (DI-S015).",
+  "CWT designation needs 5 years' water-treatment experience (a technical degree credits 2 years) (DI-S008): the founder cannot be the credentialed technologist before ~2029, so a contracted CWT is modelled from month 1.",
+  "Illinois pesticide rules (8 IAC 250.120) have no cooling-tower category; whether biocide application for hire needs an IDOA or IDPH licence still requires direct confirmation (DI-S010). Insurance premiums are E.",
+  "All funnel and churn rates are E (no newcomer win-rate data exists).",
+  "No dedicated sales hire is modelled: at ~$650/month per building a $10k/month technical account manager adding ~0.8 accounts/month does not pay back within 3 years (tested), so growth stays founder- and referral-led (G7 risk)."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 6,
+   "base": 4,
+   "optimistic": 3
+  },
+  "sales_start_delay_months__evidence": "E",
+  "sales_start_delay_months__source": "Time to sign a contract CWT, open blender/test-lab accounts, bind GL+pollution+professional insurance, and confirm the IDOA/IDPH biocide position (DI-S008, DI-S010); analyst estimate.",
+  "sales_cycle_months": {
+   "conservative": 4,
+   "base": 3,
+   "optimistic": 2
+  },
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "Stage C memo: 2-6 months, switching triggered by failures or renewal (WS11-017 Stage C). Condo boards meet monthly (E).",
+  "founder_ramp_months": 6,
+  "founder_ramp_months__evidence": "E",
+  "founder_ramp_months__source": "Analyst estimate.",
+  "founder_leads_per_month": {
+   "conservative": 8,
+   "base": 12,
+   "optimistic": 16
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Qualified site conversations (chief engineer / board / property manager) per month while also running the route. Public permit data lists 211 Chicago addresses with cooling-tower permits since 2006 (DI-S002) and 658 benchmarked buildings over 250k sq ft (DI-S003), so lead supply is not the constraint.",
+  "lead_to_proposal_pct": 0.35,
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Analyst estimate: proposal requires a site survey + water analysis.",
+  "proposal_to_win_pct": {
+   "conservative": 0.15,
+   "base": 0.22,
+   "optimistic": 0.3
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "No newcomer data. Public bids are very competitive (12 offers on VA Illiana, DI-S005); private boards are relationship-driven. Analyst estimate.",
+  "rep_ramp_months": 6,
+  "rep_ramp_months__evidence": "E",
+  "rep_ramp_months__source": "Analyst estimate for a technical account manager.",
+  "rep_new_customers_per_month": 0.8,
+  "rep_new_customers_per_month__evidence": "E",
+  "rep_new_customers_per_month__source": "Analyst estimate (technical sale, long cycle).",
+  "referral_new_per_100_active": 1.0,
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Property-management firms (e.g., FirstService Residential appears as owner's agent on a 2025 cooling-tower permit, DI-S002) control many buildings; analyst estimate.",
+  "monthly_churn_pct": {
+   "conservative": 0.015,
+   "base": 0.01,
+   "optimistic": 0.007
+  },
+  "monthly_churn_pct__evidence": "E",
+  "monthly_churn_pct__source": "Multi-year relationships; switching friction (controllers, programme knowledge) per Stage C. Annual churn 8-17%. Analyst estimate.",
+  "arpc_monthly": {
+   "conservative": 500,
+   "base": 650,
+   "optimistic": 850
+  },
+  "arpc_monthly__evidence": "E",
+  "arpc_monthly__source": "Per-building programme fee incl. chemicals, monthly visit, testing and reports. Triangulated from A-level public awards: VA Illiana 16 boilers + tower $32,512/yr (DI-S005), Columbus multi-building $29.4k-78.0k/yr (C1-S006), Cook County $116.5k/yr average across facilities (DI-S004). Private mid-size price list MISSING.",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 800,
+   "base": 1500,
+   "optimistic": 2500
+  },
+  "onetime_revenue_per_new_customer__evidence": "E",
+  "onetime_revenue_per_new_customer__source": "Start-up cleaning/passivation, controller or feed-equipment sale, water-management-plan drafting. Controller bid prices $3,958-5,816 each (A, C1-S007); attach rate is E.",
+  "arpc_annual_growth_pct": 0.03,
+  "arpc_annual_growth_pct__evidence": "E",
+  "arpc_annual_growth_pct__source": "Analyst estimate (inflation pass-through).",
+  "gross_margin_pct": {
+   "conservative": 0.52,
+   "base": 0.62,
+   "optimistic": 0.7
+  },
+  "gross_margin_pct__evidence": "E",
+  "gross_margin_pct__source": "COGS = chemicals at blender cost + test reagents + Legionella lab tests. Chemical end-prices from Maine state contract (A, DI-S007, 2021); blender buy-price assumed 40-55% of that end-price (E, MISSING). Technician labour is modelled as staff, not COGS.",
+  "onetime_gross_margin_pct": 0.4,
+  "onetime_gross_margin_pct__evidence": "E",
+  "onetime_gross_margin_pct__source": "Equipment resale margin (dealer cost MISSING); analyst estimate.",
+  "variable_opex_pct_revenue": 0.04,
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Fuel, drum delivery, payment processing; analyst estimate.",
+  "cac_per_new_customer": 400,
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Water-analysis lab fees, survey time/travel, samples; analyst estimate.",
+  "fixed_marketing_per_month": 300,
+  "fixed_marketing_per_month__evidence": "E",
+  "fixed_marketing_per_month__source": "BOMA/IFMA/condo-association event fees, website; analyst estimate.",
+  "dso_days": 45,
+  "dso_days__evidence": "E",
+  "dso_days__source": "Net-30/45 B2B per Stage C; condo associations pay monthly via managers.",
+  "inventory_days_cogs": 30,
+  "inventory_days_cogs__evidence": "E",
+  "inventory_days_cogs__source": "Drum stock at a small flex-space unit; analyst estimate.",
+  "dpo_days": 30,
+  "dpo_days__evidence": "E",
+  "dpo_days__source": "Blender credit terms MISSING; net-30 assumed (requires direct confirmation).",
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 0,
+  "founder_draw_start_month": 19,
+  "start_capital_injection": {
+   "conservative": 35000,
+   "base": 25000,
+   "optimistic": 20000
+  },
+  "start_capital_injection__evidence": "E",
+  "start_capital_injection__source": "Covers capex, insurance and the contracted-CWT retainer before route density; analyst estimate.",
+  "lt_growth_y6_pct": 0.08,
+  "lt_growth_decay": 0.85,
+  "incremental_roic_pct": 0.6,
+  "maint_capex_pct_op": 0.06,
+  "reserve_months": 2,
+  "ev_multiple": 3.0,
+  "ev_multiple__evidence": "E",
+  "ev_multiple__source": "Small service-business SDE multiple; analyst estimate.",
+  "founder_draw_per_month__evidence": "E",
+  "founder_draw_per_month__source": "Set to 0 so peak funding shows business capital need only; founder living costs are an opportunity cost, not modelled."
+ },
+ "staff": [
+  {
+   "role": "Contracted CWT technical advisor (programme design, sign-off, troubleshooting)",
+   "trigger": "month",
+   "start_month": 1,
+   "count": 1,
+   "monthly_cost": {
+    "conservative": 3000,
+    "base": 2000,
+    "optimistic": 1500
+   },
+   "annual_raise_pct": 0.03,
+   "notes": "E: retainer for ~15-25 h/month from an experienced Certified Water Technologist; availability and rate MISSING (DI-S008 sets the 5-year experience bar)."
+  },
+  {
+   "role": "Field service technician",
+   "trigger": "active_customers",
+   "threshold": 30,
+   "per": 45,
+   "start_month": 1,
+   "capex_per_hire": 8000,
+   "monthly_cost": {
+    "conservative": 8300,
+    "base": 7500,
+    "optimistic": 6900
+   },
+   "annual_raise_pct": 0.03,
+   "notes": "C/E: BLS OEWS 2025 Chicago means HVAC mechanics $79,340 / chemical technicians $66,160 (DI-S015) + ~25% load; ~45 buildings per technician (E). Founder runs the first ~30 buildings himself (~90-110 route hours/month), then hires."
+  },
+  {
+   "role": "Office coordinator (scheduling, reports, billing)",
+   "trigger": "revenue",
+   "threshold": 50000,
+   "per": 100000,
+   "max_count": 2,
+   "monthly_cost": 5000,
+   "annual_raise_pct": 0.03,
+   "notes": "E."
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Insurance: GL, pollution, professional/E&O, commercial auto",
+   "monthly": {
+    "conservative": 1200,
+    "base": 900,
+    "optimistic": 700
+   },
+   "annual_growth_pct": 0.06
+  },
+  {
+   "item": "Founder vehicle lease, fuel, tolls",
+   "monthly": 800
+  },
+  {
+   "item": "Flex-space unit for drum storage",
+   "monthly": 700,
+   "start_month": 9
+  },
+  {
+   "item": "Lab services and reagents (fixed portion)",
+   "monthly": 150
+  },
+  {
+   "item": "AWT membership, training, CWT exam fees (amortised)",
+   "monthly": 150
+  },
+  {
+   "item": "Accounting, legal, admin",
+   "monthly": 300
+  },
+  {
+   "item": "Software: CRM, route/reporting, LLM report drafting",
+   "monthly": 250,
+   "is_ai": true
+  }
+ ],
+ "capex": [
+  {
+   "item": "Test equipment (photometer, kits, conductivity/ORP meters)",
+   "month": 1,
+   "amount": {
+    "conservative": 4500,
+    "base": 3500,
+    "optimistic": 3000
+   }
+  },
+  {
+   "item": "Demonstration controller + feed pumps",
+   "month": 2,
+   "amount": {
+    "conservative": 6000,
+    "base": 5000,
+    "optimistic": 4000
+   }
+  },
+  {
+   "item": "AWT technical training courses and study materials (one-time)",
+   "month": 1,
+   "amount": {
+    "conservative": 4000,
+    "base": 3000,
+    "optimistic": 2500
+   }
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Chicago condo high-rise: one 400-ton tower/fluid cooler + closed loop + 2 heating boilers, monthly programme",
+   "revenue": 7800,
+   "lines": [
+    {
+     "item": "Chemicals at blender cost (inhibitor, oxidiser, non-ox biocide, nitrite, boiler blend)",
+     "amount": 2200
+    },
+    {
+     "item": "Quarterly Legionella lab tests + reagents",
+     "amount": 500
+    },
+    {
+     "item": "Technician time 12 visits x 3 h x $45/h loaded",
+     "amount": 1620
+    },
+    {
+     "item": "Vehicle/fuel allocation",
+     "amount": 300
+    }
+   ],
+   "notes": "Annual. Revenue E (no private price list); chemical cost E derived from Maine per-gallon prices (DI-S007); labour C (DI-S015). Billed monthly, net-30.",
+   "evidence": "E"
+  },
+  {
+   "name": "Public multi-facility contract (Cook County Facilities Mgmt scale)",
+   "revenue": 116514,
+   "lines": [
+    {
+     "item": "Chemicals at blender cost",
+     "amount": 38000
+    },
+    {
+     "item": "Technician time (approx. 0.6 FTE loaded)",
+     "amount": 54000
+    },
+    {
+     "item": "Lab testing and reports",
+     "amount": 6000
+    },
+    {
+     "item": "Vehicle/fuel",
+     "amount": 4000
+    }
+   ],
+   "notes": "Revenue A: $349,541 over 2024-07-01 to 2027-06-30 = $116.5k/yr (DI-S004); cost lines E. A newcomer is unlikely to win this before references exist; shown to frame the public-bid ceiling.",
+   "evidence": "A (revenue) / E (costs)"
+  },
+  {
+   "name": "One-time: new cooling-tower start-up (passivation) + conductivity controller installation",
+   "revenue": 5500,
+   "lines": [
+    {
+     "item": "Controller at dealer cost",
+     "amount": 2800
+    },
+    {
+     "item": "Passivation chemistry (~20 gal)",
+     "amount": 250
+    },
+    {
+     "item": "Technician labour 6 h",
+     "amount": 270
+    }
+   ],
+   "notes": "Controller resale price range $3,958-5,816 (A, C1-S007); dealer cost E. Triggered by tower replacements seen in Chicago permits (DI-S002).",
+   "evidence": "A (price range) / E (costs)"
+  },
+  {
+   "name": "One-time: ASHRAE 188 / CMS QSO-17-30 water-management-plan drafting for a small long-term-care building",
+   "revenue": 3500,
+   "lines": [
+    {
+     "item": "Contracted CWT/consultant review 10 h x $100",
+     "amount": 1000
+    },
+    {
+     "item": "Baseline lab sampling",
+     "amount": 400
+    }
+   ],
+   "notes": "Price MISSING in public sources (search found no per-building WMP award); E. CMS requires a programme, not a vendor (C1-S008).",
+   "evidence": "E"
+  }
+ ]
+}

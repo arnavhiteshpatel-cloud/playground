@@ -1,0 +1,358 @@
+{
+ "id": "WS13-028",
+ "name": "Pet cremation & aftercare for independent Chicago vet clinics (route + trade cremation, own retort from month 12)",
+ "summary": "Customers = independent veterinary clinics on a weekly freezer-pickup route in Chicago/inner Cook. Months 1-11 cremation is bought from a trade crematory; an owned multi-chamber retort in a leased industrial unit is installed in month 12 (capex + rent + operator). Revenue = wholesale per-pet fees billed monthly to clinics (clinics mark up to owners). Direct-to-family and home-euthanasia partner cases are excluded (upside).",
+ "evidence_notes": [
+  "Clinic universe: 115 licensed veterinary-hospital locations in the City of Chicago; ~35 held by national/venture groups by licence-holder name, plus local multi-site groups [A, DE-S001]. Illinois: 22% of vet establishments and 41% of receipts sit in 500+-employee firms [C, DE-S002].",
+  "Main incumbent: Gateway Services' Trusted Journey brand has 6 Illinois sites incl. Hinsdale Animal Cemetery (Willowbrook), Paw Print Gardens (West Chicago) and Pets At Peace (Hampshire), with barcode chain-of-custody (Paws e-Track, 20+ scans) [B, DE-S003; C, DE-S004]. The planned tracking wedge is already the incumbent standard.",
+  "Retail anchors: Chicago private cremation from $130 (cat) / $160 (small dog) [B, DE-S015]; CodaPet Chicago cremation $150-$505 [B, DE-S014]; downstate Deiters individual $200-$300, group $50-$180, vet transfer $95 [B, C8-S014; located Washington IL, DE-S041]. Clinic WHOLESALE prices and trade-cremation fees are MISSING; drivers use E values anchored ~40-55% below retail.",
+  "Pets per clinic per month MISSING; statute treats >5 referrals per average month as 'regular' referring (815 ILCS 318) [A, C8-S006]; base uses 10 (E).",
+  "Retort cost: one federal transaction $95,047 for a Matthews Power Pak I system + accessories (2018) [A, DE-S011]; seller ranges new $35k-$100k+, used $2k-$35k [D, DE-S012]. Installed cost incl. stack/gas/freight modeled $80k-$160k (E).",
+  "Air permit: no Illinois permit exemption for incinerators/crematories (35 IAC 201.146) and ROSS registration excludes incinerator systems (35 IAC 201.175) [A, DE-S005, DE-S006] -> assume IEPA construction + operating permit; local special use typical (Huntley approved a pet crematory SUP in ~7 months; Mokena denied a crematorium SUP) [C, DE-S007, DE-S008].",
+  "Constant gross margin is a simplification: months 1-11 (trade cremation) would run ~30 points lower on small revenue; error on year-1 operating profit is roughly $5-15k.",
+  "Owner draw $4,000/mo from month 13 (comparability); operating profit is before owner compensation."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 4,
+   "base": 3,
+   "optimistic": 2
+  },
+  "sales_start_delay_months__evidence": "E",
+  "sales_start_delay_months__source": "Van, freezer, insurance, trade-crematory agreement and 815 ILCS 318 written explanation before first clinic (no state licence needed [A, C8-S006])",
+  "sales_cycle_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "Stage A/C: 1-3 months, trust-based trial",
+  "founder_ramp_months": 6,
+  "founder_leads_per_month": {
+   "conservative": 12,
+   "base": 18,
+   "optimistic": 22
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Qualified clinic conversations; ~80 non-consolidator Chicago licences [A, DE-S001] plus inner-suburb clinics (Illinois 1,137 vet establishments [C, DE-S002])",
+  "lead_to_proposal_pct": 0.4,
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Assumed share of conversations that agree to a priced trial",
+  "proposal_to_win_pct": {
+   "conservative": 0.12,
+   "base": 0.2,
+   "optimistic": 0.26
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Switching from Gateway/Trusted Journey (barcode tracking, local cemeteries) or local crematories requires a service failure or price gap [B, DE-S003]",
+  "referral_new_per_100_active": {
+   "conservative": 0.5,
+   "base": 1.0,
+   "optimistic": 1.5
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Vet-to-vet and home-euthanasia-vet word of mouth (CodaPet/Lap of Love channel [B, DE-S014; C, DE-S042])",
+  "monthly_churn_pct": {
+   "conservative": 0.025,
+   "base": 0.015,
+   "optimistic": 0.01
+  },
+  "monthly_churn_pct__evidence": "E",
+  "monthly_churn_pct__source": "Losses from service failures and from consolidator acquisitions of independents (41% of IL vet receipts already in 500+ firms [C, DE-S002])",
+  "arpc_monthly": {
+   "conservative": 600,
+   "base": 850,
+   "optimistic": 1050
+  },
+  "arpc_monthly__evidence": "E",
+  "arpc_monthly__source": "Pets/clinic/month 7/10/12.5 (E; statutory 'regular' threshold >5 [A, C8-S006]) x blended wholesale ~$78.50 (55% private at $110, 45% communal at $40; E, ~40-55% below Chicago retail $130-$505 [B, DE-S014, DE-S015]) + $50-$70 merchandise/upgrades",
+  "onetime_revenue_per_new_customer": 0,
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": {
+   "conservative": 0.55,
+   "base": 0.66,
+   "optimistic": 0.72
+  },
+  "gross_margin_pct__evidence": "E",
+  "gross_margin_pct__source": "Own retort: gas+maintenance ~$12/pet, bags/ID tags/basic urns ~$8/pet, merchandise COGS, overflow trade cremation for >70-lb pets and downtime; months 1-11 trade cremation (fee MISSING, ~$46.50/pet E) blended in",
+  "onetime_gross_margin_pct": 0.4,
+  "variable_opex_pct_revenue": 0.05,
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Van fuel/maintenance on weekly route + card/ACH fees",
+  "cac_per_new_customer": 300,
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Lunch-and-learns, printed statutory explanations, sample urns, travel",
+  "fixed_marketing_per_month": 400,
+  "dso_days": 30,
+  "dso_days__evidence": "E",
+  "dso_days__source": "Clinics billed monthly net-30 (Stage A/C)",
+  "inventory_days_cogs": 10,
+  "dpo_days": 15,
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": 50000
+ },
+ "staff": [
+  {
+   "role": "Driver / care technician (pickups, intake, ID tagging)",
+   "trigger": "active_customers",
+   "threshold": 20,
+   "per": 35,
+   "start_month": 1,
+   "capex_per_hire": 30000,
+   "monthly_cost": {
+    "conservative": 5000,
+    "base": 4600,
+    "optimistic": 4400
+   },
+   "notes": "Loaded cost ~$22-25/hr (E). Founder drives until 20 clinics. capex_per_hire $30k = additional used van (conservatively counted even for the first hire)."
+  },
+  {
+   "role": "Retort operator / aftercare technician",
+   "trigger": "month",
+   "start_month": 12,
+   "count": 1,
+   "monthly_cost": {
+    "conservative": 5000,
+    "base": 4600,
+    "optimistic": 4400
+   },
+   "notes": "Needed once own retort runs (E); CANA CPCO course $595-$695 [C, WS13-S018]."
+  },
+  {
+   "role": "Client-care & billing coordinator (family calls, memorial orders)",
+   "trigger": "revenue",
+   "threshold": 45000,
+   "per": 150000,
+   "max_count": 2,
+   "monthly_cost": 4300,
+   "notes": "E"
+  },
+  {
+   "role": "Additional retort operator / care tech (volume)",
+   "trigger": "active_customers",
+   "threshold": 70,
+   "per": 50,
+   "start_month": 12,
+   "monthly_cost": {
+    "conservative": 5000,
+    "base": 4600,
+    "optimistic": 4400
+   },
+   "notes": "One multi-chamber retort handles roughly 60-80 clinics at 10 pets/month (E, from B&L burn rates 75-250 lb/hr [B, DE-S009])"
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Insurance (GL incl. bailee/care-custody, commercial auto, property)",
+   "monthly": {
+    "conservative": 1100,
+    "base": 800,
+    "optimistic": 650
+   },
+   "annual_growth_pct": 0.06,
+   "notes": "No quotes obtained (E)"
+  },
+  {
+   "item": "Leased industrial unit for retort + cold room",
+   "start_month": 12,
+   "monthly": {
+    "conservative": 5000,
+    "base": 3500,
+    "optimistic": 2800
+   },
+   "notes": "3,000-4,000 sq ft industrial; rent MISSING (E); must be zoned for crematory/special use"
+  },
+  {
+   "item": "Cold storage, utilities (non-fuel), waste",
+   "monthly": 400
+  },
+  {
+   "item": "Retort site utilities, annual IEPA operating fees, stack/permit compliance",
+   "start_month": 12,
+   "monthly": {
+    "conservative": 800,
+    "base": 500,
+    "optimistic": 350
+   },
+   "notes": "IEPA fee schedule MISSING (E)"
+  },
+  {
+   "item": "Chain-of-custody/route software + clinic portal",
+   "monthly": 250,
+   "is_ai": true,
+   "notes": "Jobber Connect $139/mo [B, DE-S035] + barcode/photo app (E)"
+  },
+  {
+   "item": "AI assistant tools (ordinary post-Dec-2026 pricing)",
+   "monthly": 60,
+   "is_ai": true
+  },
+  {
+   "item": "Phone, office, accounting, legal",
+   "monthly": 600
+  }
+ ],
+ "capex": [
+  {
+   "item": "Launch: written explanation (815 ILCS 318), branding, ID-tag system",
+   "month": 1,
+   "amount": 3000
+  },
+  {
+   "item": "Used cargo/refrigerated van",
+   "month": 2,
+   "amount": {
+    "conservative": 45000,
+    "base": 35000,
+    "optimistic": 28000
+   },
+   "notes": "E"
+  },
+  {
+   "item": "Chest/walk-in freezer, scales, carts, body bags",
+   "month": 2,
+   "amount": {
+    "conservative": 15000,
+    "base": 12000,
+    "optimistic": 9000
+   },
+   "notes": "E"
+  },
+  {
+   "item": "Facility fit-out, zoning special use, IEPA application/engineering, stack test",
+   "month": 11,
+   "amount": {
+    "conservative": 50000,
+    "base": 30000,
+    "optimistic": 15000
+   },
+   "notes": "E; Huntley SUP took ~7 months [C, DE-S007]"
+  },
+  {
+   "item": "Multi-chamber pet retort installed (stack, gas line, freight, install)",
+   "month": 12,
+   "amount": {
+    "conservative": 160000,
+    "base": 110000,
+    "optimistic": 80000
+   },
+   "notes": "Anchor $95,047 Matthews Power Pak I system 2018 [A, DE-S011]; new $35k-$100k+ seller range [D, DE-S012]"
+  },
+  {
+   "item": "Second retort + install (only reached in optimistic volumes)",
+   "month": 30,
+   "amount": {
+    "conservative": 0,
+    "base": 0,
+    "optimistic": 110000
+   },
+   "notes": "Capacity: ~8,000 pets/yr per retort at ~30 lb avg and ~150 lb/hr (E from DE-S009)"
+  },
+  {
+   "item": "Third retort + install (optimistic only)",
+   "month": 46,
+   "amount": {
+    "conservative": 0,
+    "base": 0,
+    "optimistic": 110000
+   },
+   "notes": "E"
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Private cremation, cat, clinic account, own retort",
+   "revenue": 110,
+   "lines": [
+    {
+     "item": "Gas + retort maintenance",
+     "amount": 12
+    },
+    {
+     "item": "Basic urn, ID tag, certificate",
+     "amount": 10
+    },
+    {
+     "item": "Route pickup/return allocation (0.5 h + van)",
+     "amount": 20
+    },
+    {
+     "item": "Operator time 0.4 h",
+     "amount": 10
+    }
+   ],
+   "notes": "Wholesale price E (retail $130-$300 [B, DE-S015, C8-S014]); paid net-30 by clinic",
+   "evidence": "E"
+  },
+  {
+   "name": "Communal cremation, 40-lb dog, clinic account, own retort",
+   "revenue": 40,
+   "lines": [
+    {
+     "item": "Gas share + maintenance",
+     "amount": 6
+    },
+    {
+     "item": "Bag/tag",
+     "amount": 2
+    },
+    {
+     "item": "Route allocation",
+     "amount": 12
+    },
+    {
+     "item": "Operator time",
+     "amount": 4
+    }
+   ],
+   "notes": "Retail group $75 at Deiters 30-99 lb [B, C8-S014]; wholesale E",
+   "evidence": "E"
+  },
+  {
+   "name": "Private cremation via trade crematory (months 1-11)",
+   "revenue": 110,
+   "lines": [
+    {
+     "item": "Trade cremation fee (MISSING)",
+     "amount": 65
+    },
+    {
+     "item": "Urn, tag, certificate",
+     "amount": 10
+    },
+    {
+     "item": "Route allocation + extra leg to crematory",
+     "amount": 28
+    }
+   ],
+   "notes": "Shows why phase 1 barely breaks even",
+   "evidence": "E"
+  },
+  {
+   "name": "Direct-family private cremation with residence pickup",
+   "revenue": 280,
+   "lines": [
+    {
+     "item": "Gas + maintenance",
+     "amount": 12
+    },
+    {
+     "item": "Urn/paw print",
+     "amount": 18
+    },
+    {
+     "item": "Pickup labor + van (1.5 h)",
+     "amount": 45
+    },
+    {
+     "item": "Card fees",
+     "amount": 8
+    }
+   ],
+   "notes": "Anchored to Deiters $200 individual + residence pickup and CodaPet $150-$505 [B]; prepaid",
+   "evidence": "D"
+  }
+ ]
+}

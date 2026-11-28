@@ -1,0 +1,265 @@
+{
+ "id": "WS03-012",
+ "name": "Overhead crane & hoist inspection and repair for Illinois metals plants",
+ "summary": "Hired crane technicians sell fixed-price OSHA 1910.179 periodic inspections to mid-size metals plants (avg ~8 cranes/hoists) and convert findings into repair/parts work; technicians added per ~$20k/month of revenue.",
+ "evidence_notes": [
+  "Inspection list prices B: $108-$253 per crane periodic, $72-$169 frequent (Mazzella, C3-S001); labor $150-160/h (C3-S002).",
+  "Repair pull-through: Konecranes Industrial Service ~EUR 1.6B annual sales vs EUR 351.7M agreement base (~3.5x, incumbent, B, C3-S007); new entrant assumed 1.5/2.5/3.5x inspection revenue (E).",
+  "Federal awards A: 183rd Wing hoist inspections $30,328 (2 yrs) re-bid to $9,600/yr (DC-S025); crane repair task orders $8-19k (DC-S026).",
+  "Tech pay: Chicago industrial machinery mechanic median $75,800 (C, C3-S010); Konecranes Chicago tech $22-48/h (D, DC-S027).",
+  "ARPC base = 8 cranes x ~$200/yr inspections ($133/mo) + 2.5x repairs ($333) = $466 -> $470/mo."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 5,
+   "base": 3,
+   "optimistic": 2
+  },
+  "sales_start_delay_months__evidence": "E",
+  "sales_start_delay_months__source": "Recruit experienced lead tech, GL/completed-ops insurance, service truck",
+  "sales_cycle_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "Plant budget cycles; inspection due dates",
+  "founder_ramp_months": 6,
+  "founder_leads_per_month": {
+   "conservative": 10,
+   "base": 15,
+   "optimistic": 20
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Plant outreach to ~4,500 IL metals/machinery establishments (C3-S014)",
+  "lead_to_proposal_pct": {
+   "conservative": 0.4,
+   "base": 0.5,
+   "optimistic": 0.55
+  },
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Fixed-price inspection quotes are the norm (C3-S002)",
+  "proposal_to_win_pct": {
+   "conservative": 0.2,
+   "base": 0.3,
+   "optimistic": 0.35
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Crowded Chicago field (C3-S009); assumed",
+  "rep_ramp_months": 4,
+  "rep_new_customers_per_month": {
+   "conservative": 0.8,
+   "base": 1.2,
+   "optimistic": 1.5
+  },
+  "referral_new_per_100_active": {
+   "conservative": 0.5,
+   "base": 0.8,
+   "optimistic": 1.2
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Insurer loss-control/machinery-dealer referrals assumed",
+  "monthly_churn_pct": {
+   "conservative": 0.02,
+   "base": 0.012,
+   "optimistic": 0.008
+  },
+  "monthly_churn_pct__evidence": "B/E",
+  "monthly_churn_pct__source": "Annual inspection contracts; Konecranes agreement base growing +5.1% (C3-S007) suggests stickiness; 183rd Wing re-bid shows price churn (DC-S025)",
+  "arpc_monthly": {
+   "conservative": 250,
+   "base": 470,
+   "optimistic": 750
+  },
+  "arpc_monthly__evidence": "B/E",
+  "arpc_monthly__source": "Inspections $100/133/167 per month (C3-S001 list prices x ~8 cranes) + repairs 1.5/2.5/3.5x (E, C3-S007 ratio)",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 1500,
+   "base": 2500,
+   "optimistic": 4000
+  },
+  "onetime_revenue_per_new_customer__evidence": "E",
+  "onetime_revenue_per_new_customer__source": "Baseline inspection + deficiency backlog at takeover; federal repair task orders $8-19k (DC-S026) for scale",
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": {
+   "conservative": 0.6,
+   "base": 0.66,
+   "optimistic": 0.7
+  },
+  "gross_margin_pct__evidence": "B/E",
+  "gross_margin_pct__source": "Ex-tech-labor: parts ~40% of revenue at ~33% margin (Alta, C3-S031) + lift rental/consumables 5%",
+  "onetime_gross_margin_pct": 0.6,
+  "variable_opex_pct_revenue": 0.05,
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Truck fuel, processing, warranty comebacks",
+  "cac_per_new_customer": {
+   "conservative": 400,
+   "base": 250,
+   "optimistic": 150
+  },
+  "fixed_marketing_per_month": 500,
+  "dso_days": {
+   "conservative": 65,
+   "base": 50,
+   "optimistic": 40
+  },
+  "dso_days__evidence": "E",
+  "dso_days__source": "Manufacturers commonly net-45/60 (E)",
+  "inventory_days_cogs": 15,
+  "dpo_days": 30,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": {
+   "conservative": 45000,
+   "base": 35000,
+   "optimistic": 30000
+  },
+  "ev_multiple": 3.5,
+  "ev_multiple__evidence": "C",
+  "ev_multiple__source": "Active PE roll-up of crane service (Crane 1/L Squared, WS03-S016); small-firm multiple assumed"
+ },
+ "staff": [
+  {
+   "role": "Crane technician (incl. service truck)",
+   "trigger": "revenue",
+   "threshold": 0,
+   "per": 20000,
+   "start_month": 4,
+   "capex_per_hire": 45000,
+   "monthly_cost": {
+    "conservative": 9500,
+    "base": 8850,
+    "optimistic": 8000
+   },
+   "notes": "Lead tech hired month 4 (quotes and first inspections); $85k base x1.25 (C3-S010 median $75.8k; DC-S027 $22-48/h)"
+  },
+  {
+   "role": "Dispatcher / office",
+   "trigger": "revenue",
+   "threshold": 50000,
+   "per": 200000,
+   "max_count": 2,
+   "monthly_cost": 5000,
+   "notes": "E"
+  },
+  {
+   "role": "Sales rep",
+   "trigger": "month",
+   "start_month": 30,
+   "count": 1,
+   "is_sales_rep": true,
+   "monthly_cost": 6500,
+   "notes": "E"
+  }
+ ],
+ "overhead": [
+  {
+   "item": "GL/umbrella/completed-ops + WC base (high-hazard)",
+   "monthly": {
+    "conservative": 2200,
+    "base": 1500,
+    "optimistic": 1100
+   },
+   "annual_growth_pct": 0.06
+  },
+  {
+   "item": "Inspection reporting app + CRM",
+   "monthly": 200,
+   "is_ai": true
+  },
+  {
+   "item": "AI report drafting",
+   "monthly": 100,
+   "is_ai": true
+  },
+  {
+   "item": "Storage/office",
+   "monthly": 600
+  },
+  {
+   "item": "Phone",
+   "monthly": 100
+  },
+  {
+   "item": "Founder vehicle",
+   "monthly": 400
+  },
+  {
+   "item": "Accounting / legal",
+   "monthly": 300
+  },
+  {
+   "item": "Test equipment calibration",
+   "monthly": 100
+  }
+ ],
+ "capex": [
+  {
+   "item": "Rigging gear, load cell, tools, PPE, initial parts",
+   "month": 1,
+   "amount": {
+    "conservative": 15000,
+    "base": 12000,
+    "optimistic": 10000
+   }
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Annual periodic inspection - 8 cranes at a service center",
+   "revenue": 1360,
+   "lines": [
+    {
+     "item": "Technician 9.5 h x $51 loaded",
+     "amount": 485
+    },
+    {
+     "item": "Truck/fuel",
+     "amount": 40
+    }
+   ],
+   "notes": "List price 8 x $170 (B, C3-S001); contribution ~$835",
+   "evidence": "B"
+  },
+  {
+   "name": "Hoist repair found at inspection (load chain, hook, brake)",
+   "revenue": 2300,
+   "lines": [
+    {
+     "item": "Parts cost (67% of $1,400)",
+     "amount": 938
+    },
+    {
+     "item": "Technician 7 h x $51",
+     "amount": 357
+    },
+    {
+     "item": "Consumables",
+     "amount": 30
+    }
+   ],
+   "notes": "$150/h labor (B, C3-S002); contribution ~$975",
+   "evidence": "E"
+  },
+  {
+   "name": "Federal small-purchase hoist inspection (183rd Wing FY26)",
+   "revenue": 9600,
+   "lines": [
+    {
+     "item": "Technician ~40 h incl travel",
+     "amount": 2040
+    },
+    {
+     "item": "Travel/lodging",
+     "amount": 900
+    },
+    {
+     "item": "Truck",
+     "amount": 300
+    }
+   ],
+   "notes": "Award price A (DC-S025); costs E; contribution ~$6,360",
+   "evidence": "A"
+  }
+ ]
+}

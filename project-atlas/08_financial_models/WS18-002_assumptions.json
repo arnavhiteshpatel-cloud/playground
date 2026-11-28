@@ -1,0 +1,331 @@
+{
+ "id": "WS18-002",
+ "name": "Private-pay non-medical home care agency \u2014 central DuPage (Wheaton/Glen Ellyn/Lombard/Downers Grove)",
+ "summary": "Independent IDPH-licensed home services agency, private pay only (no CCP/Medicaid), founder as agency manager and referral seller; dementia and hospital-to-home focus. Customers = active clients; recurring revenue = weekly hours x bill rate. Direct caregiver labor (wages + payroll load) is in gross margin; office roles are capacity-triggered staff.",
+ "evidence_notes": [
+  "Bill rate: CareScout Cost of Care Survey 2025 Illinois median for non-medical in-home care $36/hr [C, DD-S006]; Home Instead 2024 national ~$33/client-hour [B, WS18-S005]; CCP Medicaid $30.80/hr [A, WS18-S020]. No Chicago-metro or DuPage private-pay median retrieved (MISSING).",
+  "Wages: Illinois personal care aide median $18.30/hr, Chicago $18.36, 90th pct $20.43 [C, C6-S024]; Illinois minimum wage $15.00, overtime after 40 h/week [A, DD-S008]. Base wage $19/hr is an assumption (E) above the median to recruit.",
+  "Gross margin: A Place At Home Illinois outlets 42.1% and 52.3% gross profit after direct labor; system median ~51% [B, C6-S022]; Addus (Medicaid-heavy) 32.8% [B, WS04-S004]. Independent base 37% derived from $19 wage x ~1.18 payroll load (FICA, unemployment, workers' comp 1.2-3.5 per $100 [D, DD-S009], Illinois paid leave) + ~3% non-billable time (E).",
+  "Ramp benchmark: A Place At Home 2025 cohort medians $329k (12-24 months), $671k (25-36), $1.50M (37-48) [B, C6-S022]. Model base year-3 revenue is checked against the 25-36-month franchise median (an independent without brand should not beat it).",
+  "Licensing: IDPH Home Services Agency licence $1,500/yr; no manager credential; worker training 10 h initial + 10 h annual; supervisor/trainer needs 2 years' experience; provisional licence valid 240 days [A, C6-S015..S021, WS04-S027].",
+  "Client churn (6%/month base), hours/client (18 h/wk base), inquiry volume and conversion are E \u2014 no public data found.",
+  "Founder draw $4,000/month from month 13 (cross-model convention); operating profit is before owner compensation.",
+  "Peak funding including the $4,000/month draw is the capital-at-risk figure; without any owner draw the base-case peak is ~$140k (computed separately in the deep dive)."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 6,
+   "base": 4,
+   "optimistic": 3
+  },
+  "sales_start_delay_months__evidence": "A/E",
+  "sales_start_delay_months__source": "IDPH targets ~90-day decision on provisional licence (WS04-S027); +1 month for insurance, policies, trainer hire (E).",
+  "sales_cycle_months": 1,
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "Families in crisis start within days (Stage A/C); referral-source trust is modelled through founder ramp.",
+  "founder_ramp_months": {
+   "conservative": 12,
+   "base": 9,
+   "optimistic": 6
+  },
+  "founder_ramp_months__evidence": "E",
+  "founder_ramp_months__source": "Referral-source development 6-18 months (Stage A, E).",
+  "founder_leads_per_month": {
+   "conservative": 3,
+   "base": 4.5,
+   "optimistic": 5.5
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Qualified family inquiries/month the founder's referral network generates at full pace (E). Calibrated so base year-3 revenue sits near, not above, A Place At Home's 2025 25-36-month franchise median ($671k, B, C6-S022) given ~28 months of operation by year-end 3 and no brand.",
+  "lead_to_proposal_pct": 0.5,
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Inquiry -> free in-home assessment.",
+  "proposal_to_win_pct": {
+   "conservative": 0.45,
+   "base": 0.55,
+   "optimistic": 0.65
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Assessment -> start of care; families usually decide within days.",
+  "rep_ramp_months": 4,
+  "rep_new_customers_per_month": {
+   "conservative": 0.5,
+   "base": 0.8,
+   "optimistic": 1.0
+  },
+  "rep_new_customers_per_month__evidence": "E",
+  "rep_new_customers_per_month__source": "Community liaison hired month 18; starts/month assumption.",
+  "referral_new_per_100_active": {
+   "conservative": 0.5,
+   "base": 1.0,
+   "optimistic": 1.5
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Word of mouth and repeat referrals from satisfied families/partners.",
+  "monthly_churn_pct": {
+   "conservative": 0.075,
+   "base": 0.06,
+   "optimistic": 0.055
+  },
+  "monthly_churn_pct__evidence": "E",
+  "monthly_churn_pct__source": "Client tenure MISSING; clients end on death, facility move, recovery or switching. 6%/mo = ~17-month average tenure.",
+  "arpc_monthly": {
+   "conservative": 2208,
+   "base": 2806,
+   "optimistic": 3291
+  },
+  "arpc_monthly__evidence": "C/E",
+  "arpc_monthly__source": "hours/week x 4.33 x bill rate: cons 15h x $34; base 18h x $36 (IL 2025 median, DD-S006); opt 20h x $38. Hours per client E.",
+  "onetime_revenue_per_new_customer": 0,
+  "arpc_annual_growth_pct": 0.03,
+  "arpc_annual_growth_pct__evidence": "C/E",
+  "arpc_annual_growth_pct__source": "Illinois CCP and Addus IL rate +3.9% for 2026 (WS04-S004); private-pay escalator assumed 3%.",
+  "gross_margin_pct": {
+   "conservative": 0.32,
+   "base": 0.37,
+   "optimistic": 0.43
+  },
+  "gross_margin_pct__evidence": "B/E",
+  "gross_margin_pct__source": "APAH IL outlets 42-52% GP after direct labor (C6-S022); Addus 32.8% (WS04-S004); derived $19 wage x 1.18 load + 3% non-billable at $36 = ~36%.",
+  "onetime_gross_margin_pct": 0.4,
+  "variable_opex_pct_revenue": 0.035,
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Card/ACH processing ~1% blended + caregiver recruiting ads, fingerprint background checks, paid onboarding training ~2.5%.",
+  "cac_per_new_customer": {
+   "conservative": 500,
+   "base": 350,
+   "optimistic": 250
+  },
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Referral-partner lunches/in-services, collateral, local search ads per start of care.",
+  "fixed_marketing_per_month": 1200,
+  "fixed_marketing_per_month__evidence": "E",
+  "fixed_marketing_per_month__source": "Website/SEO, Google Business Profile/LSA, print, community events.",
+  "dso_days": {
+   "conservative": 15,
+   "base": 4,
+   "optimistic": 0
+  },
+  "dso_days__evidence": "E",
+  "dso_days__source": "Private pay billed weekly with card/ACH on file (some agencies bill in advance); LTC-insurance clients pay in arrears 30-60 days (Stage A) - conservative mixes these in.",
+  "dpo_days": 7,
+  "dpo_days__evidence": "E",
+  "dpo_days__source": "Caregiver payroll weekly/biweekly in arrears.",
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": {
+   "conservative": 60000,
+   "base": 50000,
+   "optimistic": 40000
+  },
+  "start_capital_injection__evidence": "E",
+  "start_capital_injection__source": "Owner capital for cash tracking only; peak funding need is the capital-at-risk measure.",
+  "ev_multiple": 3.0
+ },
+ "staff": [
+  {
+   "role": "Supervisor/trainer (2 yrs experience per 77 IAC 245.71; part-time)",
+   "trigger": "month",
+   "start_month": 4,
+   "count": 1,
+   "monthly_cost": {
+    "conservative": 3000,
+    "base": 2600,
+    "optimistic": 2400
+   },
+   "notes": "~0.5 FTE loaded; required trainer qualification the founder lacks (C6-S015). E."
+  },
+  {
+   "role": "Care coordinator / scheduler-recruiter",
+   "trigger": "active_customers",
+   "threshold": 10,
+   "per": 30,
+   "monthly_cost": {
+    "conservative": 5200,
+    "base": 4900,
+    "optimistic": 4700
+   },
+   "notes": "~$49k loaded; E."
+  },
+  {
+   "role": "Client care manager (full-time supervision visits every 90 days, C6-S016)",
+   "trigger": "active_customers",
+   "threshold": 30,
+   "per": 40,
+   "monthly_cost": {
+    "conservative": 6000,
+    "base": 5600,
+    "optimistic": 5400
+   },
+   "notes": "E."
+  },
+  {
+   "role": "Community liaison (referral sales)",
+   "trigger": "month",
+   "start_month": 18,
+   "count": 1,
+   "is_sales_rep": true,
+   "monthly_cost": {
+    "conservative": 5600,
+    "base": 5200,
+    "optimistic": 5000
+   },
+   "notes": "E."
+  },
+  {
+   "role": "General manager",
+   "trigger": "revenue",
+   "threshold": 150000,
+   "per": 400000,
+   "max_count": 1,
+   "monthly_cost": {
+    "conservative": 9000,
+    "base": 8500,
+    "optimistic": 8000
+   },
+   "notes": "Added at ~$1.8M annualized revenue; frees founder from daily operations; Stage C $85k GM + load. E."
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Insurance: GL/professional, abuse & molestation, hired/non-owned auto, EPLI, crime/fidelity bond",
+   "monthly": {
+    "conservative": 1300,
+    "base": 900,
+    "optimistic": 700
+   },
+   "annual_growth_pct": 0.06,
+   "notes": "Premiums MISSING (E); liability insurance evidence required for licence (C6-S019)."
+  },
+  {
+   "item": "Office rent (small suite, central DuPage)",
+   "monthly": {
+    "conservative": 1700,
+    "base": 1400,
+    "optimistic": 1100
+   },
+   "start_month": 6,
+   "notes": "Home/virtual office until licensed and first clients (cheapest path); IDPH office requirement not verified (MISSING). E."
+  },
+  {
+   "item": "Home care scheduling/EVV/billing software",
+   "monthly": {
+    "conservative": 450,
+    "base": 350,
+    "optimistic": 300
+   },
+   "is_ai": true,
+   "notes": "AxisCare-type platforms reported from ~$200-325/mo (D, DD-S010)."
+  },
+  {
+   "item": "AI tools (recruiting screening, care-note summaries, family updates)",
+   "monthly": 150,
+   "is_ai": true
+  },
+  {
+   "item": "Payroll service",
+   "monthly": 250,
+   "notes": "E; scales with caregivers."
+  },
+  {
+   "item": "Accounting/legal",
+   "monthly": 600
+  },
+  {
+   "item": "Phones, mileage, supplies, PPE",
+   "monthly": 500
+  },
+  {
+   "item": "IDPH licence fee ($1,500/yr)",
+   "monthly": 125,
+   "annual_growth_pct": 0.0,
+   "notes": "A, C6-S018."
+  }
+ ],
+ "capex": [
+  {
+   "item": "Formation, licence application, policies/procedures, office setup, training materials",
+   "month": 1,
+   "amount": {
+    "conservative": 10000,
+    "base": 7000,
+    "optimistic": 5000
+   }
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Standard private-pay client week (18 h at $36/h)",
+   "revenue": 648,
+   "lines": [
+    {
+     "item": "Caregiver wages 18 h x $19",
+     "amount": 342
+    },
+    {
+     "item": "Payroll load ~18% (FICA, FUTA/SUTA, workers' comp, paid leave)",
+     "amount": 61.56
+    },
+    {
+     "item": "Non-billable time/overtime/travel allowance (3% of wages)",
+     "amount": 10.26
+    },
+    {
+     "item": "Card/ACH processing ~1%",
+     "amount": 6.48
+    }
+   ],
+   "notes": "Paid weekly by card/ACH; caregiver paid weekly/biweekly. Rate C (DD-S006), wage C/E.",
+   "evidence": "C/E"
+  },
+  {
+   "name": "Hospital-to-home short visits (3 x 4-h visits/week at $38/h)",
+   "revenue": 456,
+   "lines": [
+    {
+     "item": "Caregiver wages 12 h x $19",
+     "amount": 228
+    },
+    {
+     "item": "Payroll load ~18%",
+     "amount": 41.04
+    },
+    {
+     "item": "Mileage reimbursement between visits",
+     "amount": 12
+    },
+    {
+     "item": "Processing ~1%",
+     "amount": 4.56
+    }
+   ],
+   "notes": "Short-shift premium of $2/h is an assumption; 4-h minimums common (Stage A).",
+   "evidence": "E"
+  },
+  {
+   "name": "24/7 hourly care week (168 h at $34/h, three 8-h shift caregivers, no overtime)",
+   "revenue": 5712,
+   "lines": [
+    {
+     "item": "Caregiver wages 168 h x $19.50",
+     "amount": 3276
+    },
+    {
+     "item": "Payroll load ~18%",
+     "amount": 589.68
+    },
+    {
+     "item": "Scheduling backfill premium (5% of wages)",
+     "amount": 163.8
+    },
+    {
+     "item": "Processing ~1%",
+     "amount": 57.12
+    }
+   ],
+   "notes": "Volume discount to $34/h assumed; Illinois overtime after 40 h/week applies [A, DD-S008]; live-in day-rate models carry overtime/sleep-time risk not modelled here.",
+   "evidence": "E"
+  }
+ ]
+}

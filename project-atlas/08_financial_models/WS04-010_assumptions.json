@@ -1,0 +1,243 @@
+{
+ "id": "WS04-010",
+ "name": "Specialty billing/RCM for independent pediatric therapy clinics (SLP/OT/PT) billing Illinois Medicaid MCOs + commercial \u2014 Cook/DuPage/Lake",
+ "summary": "Outsourced claims, eligibility/authorization tracking, denial and appeal work, payment posting and patient statements for 3-10-clinician pediatric speech/occupational/physical therapy clinics in Chicagoland whose payer mix includes the five HealthChoice Illinois MCOs plus BCBSIL and other commercial plans. Opening trigger: CPT 92507 is deleted on 1 Jan 2027 and replaced by ten time-based SLP treatment codes. Fee: ~6.5% of commercial collections plus a flat per-claim fee on Medicaid claims (42 CFR 447.10). Customers = clinics; billers are capacity-triggered staff.",
+ "evidence_notes": [
+  "Published fee levels: TheraThink (mental health) 6.5-8% of allowed amount, no setup, $35/mo clearinghouse pass-through, credentialing $120-260 per application [B, DD-S021]; Carepatron managed billing 3.9% + $79-99/provider/mo + $0.25/claim [B, DD-S022]; vendor-stated market ranges 4-9% of collections and $1-5 per claim [D, DD-S023]; SPRY pediatric RCM 4-6% [D, DD-S024].",
+  "Illinois Medicaid FFS rates (practitioner fee schedule eff. 10/1/2026): 92507 $50.81 state max; 92523 eval $151.80; 97530 $23.99/unit; 97110 $19.41/unit; 2.7% reduction applies to non-excluded provider types [A, DD-S027]. MCO rates and commercial (BCBSIL) rates MISSING.",
+  "Five HealthChoice Illinois plans: Aetna Better Health, Blue Cross Community Health Plans, Molina, Meridian (incl. YouthCare), CountyCare (Cook only) [A, DD-S026] - each with its own portal, authorization and denial rules.",
+  "CPT 92507 deleted 1 Jan 2027; ten time-based codes (base 30 min + 15-min add-ons) replace it; Medicare-only pediatric code proposed; Medicaid/commercial implementation not addressed [C, DD-S028].",
+  "Platform competition: CentralReach BillMax (ABA) [C6-S037]; SimplePractice self-serve claim tools + paid Claim Assistant [B, DD-S025]; Carepatron and SPRY bundle RCM with EHR [B/D, DD-S022, DD-S024].",
+  "Biller cost: Illinois medical records specialist median $56,440 (Chicago $57,970) [C, C6-S027] x1.2 = ~$68k loaded. Capacity 4 clinics (~20 clinicians) per biller with AI-assisted scrubbing is an assumption (E).",
+  "Clinic size, visit volume, payer mix and blended collection per visit are E (no Illinois data). Founder draw $4,000/month from month 13 (cross-model convention)."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_start_delay_months__evidence": "E",
+  "sales_start_delay_months__source": "No Illinois billing licence identified (Stage C, not re-verified); HIPAA policies, BAA, E&O/cyber, clearinghouse account, hire experienced biller.",
+  "sales_cycle_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "1-3 months; vendor controls cash flow so trust barrier is high (Stage A/C).",
+  "founder_ramp_months": 6,
+  "founder_leads_per_month": {
+   "conservative": 6,
+   "base": 10,
+   "optimistic": 12
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Qualified owner conversations/month from NPPES-identified clinics, ISHA/IOTA networks, EHR partner listings, 92507-transition content.",
+  "lead_to_proposal_pct": 0.3,
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Free A/R aging + denial audit -> proposal.",
+  "proposal_to_win_pct": {
+   "conservative": 0.12,
+   "base": 0.2,
+   "optimistic": 0.25
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "No track record; high perceived switching risk.",
+  "rep_ramp_months": 3,
+  "rep_new_customers_per_month": 0,
+  "referral_new_per_100_active": {
+   "conservative": 0.8,
+   "base": 1.5,
+   "optimistic": 2.0
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Owner-to-owner referrals in therapy networks.",
+  "monthly_churn_pct": {
+   "conservative": 0.02,
+   "base": 0.012,
+   "optimistic": 0.008
+  },
+  "monthly_churn_pct__evidence": "E",
+  "monthly_churn_pct__source": "Sticky once onboarded; losses from clinic sale/PE roll-up, EHR-bundled billing, errors. No data.",
+  "arpc_monthly": {
+   "conservative": 1600,
+   "base": 2400,
+   "optimistic": 3000
+  },
+  "arpc_monthly__evidence": "A/B/E",
+  "arpc_monthly__source": "Base clinic 5 clinicians x 1,200 billed visits/yr x ~$70 blended (Medicaid 92507 $49.44 after 2.7% cut, A DD-S027; commercial assumed $85-100, E) = ~$420k collections x ~6.8% blended fee (6.5% commercial per DD-S021 range + $5/claim Medicaid).",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 500,
+   "base": 1500,
+   "optimistic": 3000
+  },
+  "onetime_revenue_per_new_customer__evidence": "B/E",
+  "onetime_revenue_per_new_customer__source": "Credentialing applications ($120-260 each, DD-S021) + aged-A/R recovery project.",
+  "onetime_gross_margin_pct": 0.6,
+  "arpc_annual_growth_pct": 0.02,
+  "gross_margin_pct": {
+   "conservative": 0.88,
+   "base": 0.92,
+   "optimistic": 0.94
+  },
+  "gross_margin_pct__evidence": "B/E",
+  "gross_margin_pct__source": "Clearinghouse ~$120/mo per tax ID (Claim.MD Unlimited, DD-S029) + statements/postage ~$40; biller labor is in staff.",
+  "variable_opex_pct_revenue": 0.02,
+  "cac_per_new_customer": {
+   "conservative": 400,
+   "base": 250,
+   "optimistic": 150
+  },
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Audit time, association events, content.",
+  "fixed_marketing_per_month": 300,
+  "dso_days": {
+   "conservative": 40,
+   "base": 25,
+   "optimistic": 10
+  },
+  "dso_days__evidence": "E",
+  "dso_days__source": "Invoice early next month on prior-month collections, net 15 or auto-debit.",
+  "dpo_days": 15,
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": 15000,
+  "ev_multiple": 3.0
+ },
+ "staff": [
+  {
+   "role": "Experienced therapy biller / A-R specialist",
+   "trigger": "active_customers",
+   "threshold": 1,
+   "per": 4,
+   "monthly_cost": {
+    "conservative": 6000,
+    "base": 5700,
+    "optimistic": 5500
+   },
+   "notes": "IL median $56,440 x1.2 (C6-S027); hired at first client because the founder has no billing track record."
+  },
+  {
+   "role": "Credentialing / eligibility & authorization coordinator",
+   "trigger": "active_customers",
+   "threshold": 10,
+   "per": 15,
+   "monthly_cost": 4800,
+   "notes": "E."
+  },
+  {
+   "role": "Billing operations lead (QA, payer escalations)",
+   "trigger": "active_customers",
+   "threshold": 16,
+   "per": 100,
+   "max_count": 1,
+   "monthly_cost": {
+    "conservative": 7500,
+    "base": 7000,
+    "optimistic": 6800
+   },
+   "notes": "E."
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Insurance: E&O/professional + cyber",
+   "monthly": {
+    "conservative": 850,
+    "base": 600,
+    "optimistic": 450
+   },
+   "annual_growth_pct": 0.06,
+   "notes": "Stage C E: $5-10k/yr; premiums MISSING."
+  },
+  {
+   "item": "Claim scrubbing / denial analytics / AI drafting tools",
+   "monthly": {
+    "conservative": 450,
+    "base": 300,
+    "optimistic": 250
+   },
+   "is_ai": true
+  },
+  {
+   "item": "HIPAA compliance tooling, secure file transfer, password vault",
+   "monthly": 120,
+   "is_ai": true
+  },
+  {
+   "item": "Accounting/legal (BAA and service-agreement review)",
+   "monthly": 350
+  },
+  {
+   "item": "Phone, misc",
+   "monthly": 150
+  }
+ ],
+ "capex": [
+  {
+   "item": "Laptops, secure workstation setup, billing certification course/exam (price MISSING)",
+   "month": 1,
+   "amount": {
+    "conservative": 5000,
+    "base": 3500,
+    "optimistic": 2500
+   }
+  }
+ ],
+ "transactions": [
+  {
+   "name": "5-clinician pediatric therapy clinic, one month",
+   "revenue": 2400,
+   "lines": [
+    {
+     "item": "Biller time ~0.25 FTE x $5,700",
+     "amount": 1425
+    },
+    {
+     "item": "Clearinghouse share (Claim.MD Unlimited $120 per tax ID)",
+     "amount": 120
+    },
+    {
+     "item": "Patient statements/postage",
+     "amount": 40
+    }
+   ],
+   "notes": "Collections ~$35k/month; fee invoiced next month. Contribution before founder sales and overhead.",
+   "evidence": "A/B/E"
+  },
+  {
+   "name": "Medicaid MCO claim batch (flat fee, 250 claims at $5)",
+   "revenue": 1250,
+   "lines": [
+    {
+     "item": "Biller time 250 claims x 6 min x $32.50/h",
+     "amount": 812.5
+    },
+    {
+     "item": "Clearinghouse/ERA marginal",
+     "amount": 0
+    }
+   ],
+   "notes": "Flat per-claim pricing avoids percentage fees on Medicaid (42 CFR 447.10, C6-S035). $5/claim is E; rates per claim $1-5 cited by vendors (D, DD-S023).",
+   "evidence": "D/E"
+  },
+  {
+   "name": "Onboarding: credentialing 4 payers + aged-A/R recovery",
+   "revenue": 1500,
+   "lines": [
+    {
+     "item": "Coordinator time 14 h x $27.70/h",
+     "amount": 387.8
+    },
+    {
+     "item": "Biller A/R follow-up 8 h x $32.50/h",
+     "amount": 260
+    }
+   ],
+   "notes": "Credentialing priced inside the $120-260/application range (DD-S021).",
+   "evidence": "B/E"
+  }
+ ]
+}

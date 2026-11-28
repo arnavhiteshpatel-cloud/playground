@@ -1,0 +1,354 @@
+{
+ "id": "WS05-026",
+ "name": "Medical, dental and community-clinic night janitorial (OSHA BBP-compliant), Chicago West/Southwest side and near-west suburbs",
+ "summary": "Owner-operated janitorial contractor for 2,000-15,000 sq ft outpatient sites (FQHC sites, dental/specialty practices, PT clinics, small ASCs). Customer unit = one clinic site under a monthly fixed-fee contract. Cleaning crews are direct labour inside gross margin; supervisors, office and sales are staff.",
+ "evidence_notes": [
+  "Wages: Chicago minimum wage $17.05/hr from 1 Jul 2026 [A, DA-S013]; Chicago MSA janitor median $18.49/hr, 25th pct $17.48 [C, DA-S012]; Illinois prevailing janitorial wage (state contracts, Cook) $22.40/hr + $949.87/mo health + $56/wk pension [A, DA-S026] - the union-scale benchmark private non-union firms undercut.",
+  "Prices: public health-centre bid spread $1,950-29,825/mo [A, C1-S023]; VA Kankakee County clinic janitorial $579,737 over ~5 yrs (~$116k/yr) and Peoria CBOC $714,184 over 4 yrs [A, DA-S023]; Winnebago County (incl. 2 health dept sites) $27,899/mo for 11 locations, 60-day no-cause termination [A, DA-S025]. Private clinic price per sq ft MISSING; ARPC below is E derived from labour hours.",
+  "Structure: IL janitorial payroll = 40.6% of receipts [C, C1-S021]; ABM operating margin 3.6% at scale [A, WS08-S037].",
+  "Insurance: Illinois cleaners via broker avg GL $83/mo, WC $134/mo (small firms); janitorial bond ~$10/mo; commercial auto $234/mo [C, DA-S009]. Public clients require $1-2M GL and up to $5M umbrella [A, DA-S025].",
+  "OSHA 1910.1030: exposure control plan, Hep B vaccination offered free within 10 working days, annual paid training [A, C1-S024]. Vaccine cost MISSING (CDC price list blocked) - E.",
+  "Funnel, churn and ARPC are E; validation plan tests them."
+ ],
+ "drivers": {
+  "sales_start_delay_months": 1,
+  "sales_start_delay_months__evidence": "E",
+  "sales_start_delay_months__source": "LLC, insurance/bond, BBP written program; no IL janitorial licence identified [C1 memo; ilga.gov unavailable].",
+  "sales_cycle_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 2
+  },
+  "sales_cycle_months__evidence": "A",
+  "sales_cycle_months__source": "Walkthrough + proposal + incumbent notice; public contracts carry 30-60 day termination notice [A, DA-S025]; private cycle E.",
+  "founder_ramp_months": 4,
+  "founder_leads_per_month": {
+   "conservative": 18,
+   "base": 25,
+   "optimistic": 35
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Qualified practice-manager/landlord conversations; ~245 active FQHC sites in Cook County [A, DA-S022] plus 12,500+ IL physician/dental offices [C, C1-S022]. Volume E.",
+  "lead_to_proposal_pct": 0.4,
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Walkthrough-to-proposal ratio E.",
+  "proposal_to_win_pct": {
+   "conservative": 0.15,
+   "base": 0.2,
+   "optimistic": 0.25
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Eight bidders on one public health-centre bid [A, C1-S023] implies ~12% if random; private proposals assumed slightly better. L.E.K.: ~37% of FMs switched a provider in past year [C, DA-S019].",
+  "rep_ramp_months": 4,
+  "rep_new_customers_per_month": {
+   "conservative": 1.5,
+   "base": 2,
+   "optimistic": 2.5
+  },
+  "rep_new_customers_per_month__evidence": "E",
+  "rep_new_customers_per_month__source": "Analyst estimate.",
+  "referral_new_per_100_active": {
+   "conservative": 1.0,
+   "base": 1.5,
+   "optimistic": 2.0
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Multi-site FQHC/dental groups and medical-office landlords add sites once trust exists (E).",
+  "monthly_churn_pct": {
+   "conservative": 0.03,
+   "base": 0.02,
+   "optimistic": 0.015
+  },
+  "monthly_churn_pct__evidence": "D",
+  "monthly_churn_pct__source": "No janitorial churn statistic found (MISSING). 60-day no-cause termination is standard [A, DA-S025]; incumbents can hold 7+ yrs (Winnebago since 2017) [A, DA-S025]; ~37% switch rate across FM services [C, DA-S019]. Base 21%/yr E.",
+  "arpc_monthly": {
+   "conservative": 1100,
+   "base": 1400,
+   "optimistic": 1800
+  },
+  "arpc_monthly__evidence": "E",
+  "arpc_monthly__source": "Blended site: ~4,000 sq ft, 5 nights/wk, ~1.8 labour-h/night (E production rate) priced at ~$0.30-0.45/sq ft/mo (E); small dental 3x/wk ~$600-900; FQHC sites larger. Anchors: public spread $1,950-29,825/mo [A, C1-S023]; VA clinic ~$9.7k/mo (federal SCA wages) [A, DA-S023].",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 250,
+   "base": 400,
+   "optimistic": 600
+  },
+  "onetime_revenue_per_new_customer__evidence": "E",
+  "onetime_revenue_per_new_customer__source": "Initial deep clean / floor strip-and-wax at start (E).",
+  "arpc_annual_growth_pct": 0.03,
+  "arpc_annual_growth_pct__evidence": "A",
+  "arpc_annual_growth_pct__source": "Chicago minimum wage is indexed annually (rose $16.60 -> $17.05 in 2026, +2.7%) [A, DA-S013]; escalators common [C, DA-S019]. Pass-through assumed.",
+  "gross_margin_pct": {
+   "conservative": 0.3,
+   "base": 0.36,
+   "optimistic": 0.42
+  },
+  "gross_margin_pct__evidence": "C",
+  "gross_margin_pct__source": "Direct crew labour + supplies. Transaction 1: 39 h x $18.50 wage x ~1.22 load (FICA, UI, WC, Chicago paid leave/sick) + ~5% supplies = $956 on $1,500 => 36%. Wage floor A [DA-S013], median C [DA-S012]. IL payroll/receipts 40.6% [C, C1-S021] suggests mature firms bill more per labour hour; entrant set at 36%.",
+  "onetime_gross_margin_pct": 0.5,
+  "variable_opex_pct_revenue": 0.03,
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Inter-site travel reimbursement, processing, bad debt (E).",
+  "cac_per_new_customer": {
+   "conservative": 200,
+   "base": 120,
+   "optimistic": 70
+  },
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Proposal materials, walkthrough travel, small paid listings (E).",
+  "fixed_marketing_per_month": 250,
+  "fixed_marketing_per_month__evidence": "E",
+  "fixed_marketing_per_month__source": "Website, LinkedIn, association memberships (E).",
+  "dso_days": {
+   "conservative": 55,
+   "base": 40,
+   "optimistic": 32
+  },
+  "dso_days__evidence": "E",
+  "dso_days__source": "Net-30 invoicing; FQHC/public prompt-payment acts allow longer (Winnebago: Local Government Prompt Payment Act) [A, DA-S025]; realized days E.",
+  "inventory_days_cogs": 3,
+  "dpo_days": {
+   "conservative": 7,
+   "base": 10,
+   "optimistic": 12
+  },
+  "dpo_days__evidence": "E",
+  "dpo_days__source": "COGS is ~88% labour paid biweekly (~7 days) + supplies on net-30 from Imperial Dade/Grainger (terms assumed) -> ~10 days blended.",
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": {
+   "conservative": 15000,
+   "base": 10000,
+   "optimistic": 8000
+  },
+  "ev_multiple": 2.5,
+  "ev_multiple__evidence": "E",
+  "ev_multiple__source": "Small janitorial firms trade at low multiples (no source accessible; BizBuySell blocked) - 2.5x assumed.",
+  "lt_growth_y6_pct": 0.08,
+  "lt_growth_decay": 0.85,
+  "incremental_roic_pct": 0.8,
+  "maint_capex_pct_op": 0.03
+ },
+ "staff": [
+  {
+   "role": "Night supervisor / area manager (QA, call-outs, training)",
+   "trigger": "active_customers",
+   "threshold": 12,
+   "per": 25,
+   "start_month": 1,
+   "capex_per_hire": 1500,
+   "monthly_cost": {
+    "conservative": 5600,
+    "base": 5200,
+    "optimistic": 5000
+   },
+   "notes": "~$52-55k loaded (E). Founder covers supervision for the first 12 sites."
+  },
+  {
+   "role": "Office / HR-payroll coordinator",
+   "trigger": "revenue",
+   "threshold": 60000,
+   "per": 120000,
+   "max_count": 6,
+   "monthly_cost": {
+    "conservative": 4800,
+    "base": 4500,
+    "optimistic": 4300
+   },
+   "notes": "Hiring, onboarding, BBP training records, scheduling (E)."
+  },
+  {
+   "role": "Sales rep (salary + commission)",
+   "trigger": "active_customers",
+   "threshold": 40,
+   "per": 100000,
+   "max_count": 1,
+   "is_sales_rep": true,
+   "monthly_cost": {
+    "conservative": 6000,
+    "base": 5500,
+    "optimistic": 5200
+   },
+   "notes": "Hired once 40 sites prove the offer (E)."
+  },
+  {
+   "role": "Operations manager (multi-crew, quality, client retention)",
+   "trigger": "revenue",
+   "threshold": 150000,
+   "per": 10000000,
+   "max_count": 1,
+   "monthly_cost": {
+    "conservative": 8500,
+    "base": 8000,
+    "optimistic": 7500
+   },
+   "notes": "Needed once monthly revenue >$150k (~100+ sites) so the founder is not the quality bottleneck (E)."
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Insurance: GL $1-2M, umbrella, auto, janitorial/fidelity bond",
+   "monthly": {
+    "conservative": 650,
+    "base": 450,
+    "optimistic": 350
+   },
+   "annual_growth_pct": 0.06,
+   "notes": "Broker averages IL cleaners GL $83/mo, bond $10, auto $234, umbrella $87 [C, DA-S009]; WC is in crew load."
+  },
+  {
+   "item": "OSHA BBP program: Hep B vaccine offers, PPE, annual training, sharps/spill kits",
+   "monthly": {
+    "conservative": 250,
+    "base": 150,
+    "optimistic": 100
+   },
+   "notes": "Requirements [A, C1-S024]; cost E (vaccine price MISSING)."
+  },
+  {
+   "item": "Founder vehicle",
+   "monthly": {
+    "conservative": 800,
+    "base": 700,
+    "optimistic": 600
+   }
+  },
+  {
+   "item": "Scheduling/QA/inspection app + payroll service",
+   "monthly": {
+    "conservative": 400,
+    "base": 300,
+    "optimistic": 250
+   },
+   "annual_growth_pct": 0.05,
+   "notes": "E (no public price page reachable)."
+  },
+  {
+   "item": "AI assistant (proposals, SOPs, multilingual training material)",
+   "monthly": 40,
+   "is_ai": true
+  },
+  {
+   "item": "Background checks, job ads, uniforms",
+   "monthly": {
+    "conservative": 300,
+    "base": 200,
+    "optimistic": 150
+   },
+   "notes": "Turnover-driven (E)."
+  },
+  {
+   "item": "Bookkeeping, phone, storage closet, misc",
+   "monthly": {
+    "conservative": 450,
+    "base": 350,
+    "optimistic": 300
+   }
+  }
+ ],
+ "capex": [
+  {
+   "item": "Backpack vacuums, microfiber systems, carts, floor machine",
+   "month": 1,
+   "amount": {
+    "conservative": 4500,
+    "base": 3000,
+    "optimistic": 2500
+   },
+   "notes": "E."
+  },
+  {
+   "item": "Auto-scrubber / burnisher once multi-site",
+   "month": 18,
+   "amount": {
+    "conservative": 6000,
+    "base": 5000,
+    "optimistic": 4000
+   },
+   "notes": "E."
+  }
+ ],
+ "transactions": [
+  {
+   "name": "4,000 sq ft multi-provider clinic, 5 nights/week, monthly",
+   "revenue": 1500,
+   "lines": [
+    {
+     "item": "Crew labour 39 h x $18.50 wage",
+     "amount": 722
+    },
+    {
+     "item": "Payroll taxes, WC, Chicago paid leave (~22%)",
+     "amount": 159
+    },
+    {
+     "item": "Supplies (liners, disinfectant, microfiber, paper if included)",
+     "amount": 75
+    },
+    {
+     "item": "BBP/PPE allocation",
+     "amount": 15
+    },
+    {
+     "item": "Supervision allocation (1/25 of supervisor)",
+     "amount": 210
+    }
+   ],
+   "notes": "Contribution ~$319/mo (21%) after supervision; gross margin before supervision ~35%. Net-30 => ~6 weeks of payroll float. Price E; wage A/C.",
+   "evidence": "E"
+  },
+  {
+   "name": "FQHC site, ~12,000 sq ft, 6 nights/week, public RFP award",
+   "revenue": 4300,
+   "lines": [
+    {
+     "item": "Crew labour 135 h x $19.00",
+     "amount": 2565
+    },
+    {
+     "item": "Payroll taxes, WC, paid leave",
+     "amount": 564
+    },
+    {
+     "item": "Supplies",
+     "amount": 215
+    },
+    {
+     "item": "Supervision allocation",
+     "amount": 210
+    }
+   ],
+   "notes": "~$0.36/sq ft/mo (E). Contribution ~$746/mo (17%). Low-bid dynamics [A, C1-S023] cap price.",
+   "evidence": "E"
+  },
+  {
+   "name": "2,000 sq ft dental office, 3 nights/week",
+   "revenue": 700,
+   "lines": [
+    {
+     "item": "Crew labour 15.6 h x $18.50",
+     "amount": 289
+    },
+    {
+     "item": "Payroll load",
+     "amount": 64
+    },
+    {
+     "item": "Supplies",
+     "amount": 35
+    },
+    {
+     "item": "Drive time between sites (unbilled, 4 h)",
+     "amount": 90
+    },
+    {
+     "item": "Supervision allocation",
+     "amount": 105
+    }
+   ],
+   "notes": "Contribution ~$117/mo (17%); small sites are only viable when clustered on one route.",
+   "evidence": "E"
+  }
+ ]
+}

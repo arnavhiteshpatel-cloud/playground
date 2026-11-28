@@ -1,0 +1,287 @@
+{
+ "id": "WS18-003",
+ "name": "Junk removal & cleanouts — independent, Chicago north/west side + near-west suburbs (B2B-first: property managers, self-storage, restoration)",
+ "summary": "Job-based hauling service. Each 'customer' is one paid job (monthly churn = 100%; active = jobs in the month). Demand = company inbound leads (LSA/search, property-manager, storage and restoration accounts) ramping over ~24 months to a single-territory plateau calibrated to Junk King and College Hunks FDD unit revenues. Crew labour and tipping fees are variable COGS (hourly crews, per-ton disposal); trucks are added by capacity (jobs/month) as 'staff' lines carrying each truck's fixed costs. Founder drives truck #1 in year 1 (unpaid inside operating profit). Operating profit is before owner compensation.",
+ "evidence_notes": [
+  "Ticket and cost structure: Junk King CY2024 avg $399/job (median $389); labour 20.6%, dumping 7.2%, gasoline 3.3% of sales; gross profit 56.3% after 13% franchise/call-centre fees [B, WS18-S001].",
+  "Unit revenue/profit: College Hunks CY2025 franchised stores 13-36 months median sales $691k, median EBITDA $44k (before truck payments and owner pay); 60+ months $1.56M / $137k [B, C8-S017]. Junk King avg $554k, median $436k, bottom quartile $194k, top quartile $1.12M [B, WS18-S001].",
+  "Independent owner economics (seller-claimed, D): Naperville property-cleanout/junk firm est. 2020, 4 employees, revenue $814,489, cash flow $219,912, asking $284,999 [DF-S018]; Chicagoland 4-territory franchise est. 2021 listed with $25k cash flow [DF-S019].",
+  "Chicago disposal: SWANCC Glenview Transfer Station (from 1 Mar 2026) $100/ton commercial & residential waste ($25 min), white goods $25/item, mattresses $75/item [B, DF-S016]; Chicago-region landfills: 4 sites, 12.4 years life [A, DF-S017].",
+  "Licensing: Chicago 'Private Scavenger Vehicle' regulated licence is held per vehicle (337 active vehicle licences, 37 holders; 1-800-GOT-JUNK? Chicagoland holds 10) and 29 'Junk Peddler' licences are active [A, DF-S015]; fee MISSING.",
+  "Model structure: leads at plateau back-solved from franchise unit revenues — cons ~59 jobs x $380 = ~$270k/yr (Junk King bottom half); base ~118 x $420 = ~$590k/yr (between Junk King median $436k and College Hunks yr1-3 median $691k); opt ~185 x $470 = ~$1.04M (Junk King top quartile $1.12M). Truck capacity ~55 jobs/month (≈2.5 jobs/day).",
+  "Churn-based stress tests and the churn tornado bar are not meaningful here (churn is structurally 100% in a job-based model); read CAC, ticket, margin, labour and demand tests."
+ ],
+ "drivers": {
+  "sales_start_delay_months": 1,
+  "sales_start_delay_months__evidence": "E",
+  "sales_start_delay_months__source": "Entity, insurance, used truck, Chicago private-scavenger vehicle licence (category documented [A, DF-S015]; processing time and fee MISSING).",
+  "sales_cycle_months": 0,
+  "sales_cycle_months__evidence": "D",
+  "sales_cycle_months__source": "Consumers book same day to one week (Stage C memo).",
+  "founder_ramp_months": {
+   "conservative": 30,
+   "base": 24,
+   "optimistic": 18
+  },
+  "founder_ramp_months__evidence": "B",
+  "founder_ramp_months__source": "Months to plateau. College Hunks stores reach median $691k within 13-36 months with brand + call centre [B, C8-S017]; independent assumed no faster (E).",
+  "founder_leads_per_month": {
+   "conservative": 180,
+   "base": 280,
+   "optimistic": 380
+  },
+  "founder_leads_per_month__evidence": "B",
+  "founder_leads_per_month__source": "Company inbound leads/month at plateau, back-solved from franchise unit revenues (see evidence notes) [B, WS18-S001, C8-S017].",
+  "lead_to_proposal_pct": {
+   "conservative": 0.6,
+   "base": 0.7,
+   "optimistic": 0.75
+  },
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Lead -> photo/on-site quote.",
+  "proposal_to_win_pct": {
+   "conservative": 0.55,
+   "base": 0.6,
+   "optimistic": 0.65
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Quote -> booked paid job; consumers shop 2-3 quotes (E).",
+  "rep_ramp_months": 1,
+  "rep_new_customers_per_month": 0,
+  "rep_new_customers_per_month__evidence": "E",
+  "rep_new_customers_per_month__source": "No sales reps; B2B account development is founder work inside the lead driver.",
+  "referral_new_per_100_active": {
+   "conservative": 3,
+   "base": 6,
+   "optimistic": 10
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Repeat B2B jobs (property-manager turnovers, storage auctions, restoration contents) per 100 jobs in prior month.",
+  "monthly_churn_pct": 1.0,
+  "monthly_churn_pct__evidence": "E",
+  "monthly_churn_pct__source": "Structural: each customer = one job.",
+  "arpc_monthly": 0,
+  "onetime_revenue_per_new_customer": {
+   "conservative": 380,
+   "base": 420,
+   "optimistic": 470
+  },
+  "onetime_revenue_per_new_customer__evidence": "B",
+  "onetime_revenue_per_new_customer__source": "Junk King CY2024 avg $399/job, median $389 [B, WS18-S001]; Chicago premium +5% in base (E).",
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": 0.65,
+  "onetime_gross_margin_pct": {
+   "conservative": 0.59,
+   "base": 0.65,
+   "optimistic": 0.7
+  },
+  "onetime_gross_margin_pct__evidence": "B",
+  "onetime_gross_margin_pct__source": "After crew labour and disposal only. Junk King labour 20.6% + dumping 7.2% [B, WS18-S001]; Chicago: labour 24% (laborer median $40,550, light-truck driver $47,950 [C, DF-S020], loaded) and disposal ~11% at $100/ton + item fees [B, DF-S016] (E for the uplift).",
+  "variable_opex_pct_revenue": 0.07,
+  "variable_opex_pct_revenue__evidence": "B",
+  "variable_opex_pct_revenue__source": "Fuel ~4% (Junk King 3.3% [B, WS18-S001], Chicago uplift E) + card processing ~3% (E).",
+  "cac_per_new_customer": {
+   "conservative": 75,
+   "base": 55,
+   "optimistic": 40
+  },
+  "cac_per_new_customer__evidence": "B",
+  "cac_per_new_customer__source": "College Hunks franchisees spend median $83k on $691k sales (~12%) on local marketing ON TOP of brand fund and call centre [B, C8-S017]; base $55 = 13% of ticket; junk-specific LSA CPL MISSING.",
+  "fixed_marketing_per_month": 700,
+  "fixed_marketing_per_month__evidence": "E",
+  "fixed_marketing_per_month__source": "Website/GBP, truck wrap amortisation, BOMA/realtor association dues, donation-partner materials.",
+  "dso_days": 4,
+  "dso_days__evidence": "E",
+  "dso_days__source": "Consumers pay at completion; property managers/restoration net-30 (~15% of revenue).",
+  "inventory_days_cogs": 0,
+  "dpo_days": 0,
+  "dpo_days__evidence": "B",
+  "dpo_days__source": "Transfer-station fees paid at the scale [B, DF-S016]; crews paid bi-weekly (ignored).",
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": 55000,
+  "start_capital_injection__evidence": "E",
+  "start_capital_injection__source": "Used truck + equipment + insurance deposits + 3 months fixed costs.",
+  "lt_growth_y6_pct": 0.07,
+  "lt_growth_decay": 0.85,
+  "incremental_roic_pct": 0.5,
+  "maint_capex_pct_op": 0.12,
+  "maint_capex_pct_op__evidence": "E",
+  "maint_capex_pct_op__source": "Truck replacement cycle heavy relative to profit.",
+  "reserve_months": 2,
+  "ev_multiple": 2.0,
+  "ev_multiple__evidence": "D",
+  "ev_multiple__source": "Naperville listing asks $285k on $220k cash flow (1.3x) [DF-S018]; franchise resale listings ask more on thin cash flow [DF-S019]. Asking ≠ sold."
+ },
+ "staff": [
+  {
+   "role": "Additional truck unit (fixed costs: insurance, maintenance, licence, parking)",
+   "trigger": "active_customers",
+   "threshold": 55,
+   "per": 55,
+   "max_count": 4,
+   "start_month": 1,
+   "capex_per_hire": 42000,
+   "monthly_cost": {
+    "conservative": 1700,
+    "base": 1400,
+    "optimistic": 1100
+   },
+   "notes": "Not a person: capacity trigger for trucks (≈55 jobs/truck/month). Fixed cost = box-truck commercial auto (~$800/mo, E; small-biz avg $245/mo is a floor [D, DF-S034]) + maintenance (~$600/mo, E). Crew wages are variable COGS. Capex = used 14-16 ft box/dump truck (E — requires quotes)."
+  },
+  {
+   "role": "Dispatcher / office coordinator",
+   "trigger": "revenue",
+   "threshold": 35000,
+   "per": 120000,
+   "max_count": 2,
+   "start_month": 1,
+   "monthly_cost": {
+    "conservative": 5300,
+    "base": 4900,
+    "optimistic": 4600
+   },
+   "notes": "Chicago dispatcher median $58,900; CSR $47,100 [C, DF-S033]; loaded x1.2 (E)."
+  },
+  {
+   "role": "Operations manager",
+   "trigger": "revenue",
+   "threshold": 80000,
+   "per": 400000,
+   "max_count": 1,
+   "start_month": 1,
+   "monthly_cost": 6500,
+   "notes": "E."
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Truck #1 fixed costs (insurance, maintenance, licence)",
+   "monthly": {
+    "conservative": 1700,
+    "base": 1400,
+    "optimistic": 1100
+   },
+   "start_month": 1,
+   "notes": "Commercial auto small-biz avg $245/mo is a floor for box trucks [D, DF-S034]; E."
+  },
+  {
+   "item": "GL + umbrella + WC minimum premium",
+   "monthly": {
+    "conservative": 1800,
+    "base": 1500,
+    "optimistic": 1100
+   },
+   "annual_growth_pct": 0.06,
+   "notes": "College Hunks stores (13-36 months) report median insurance ~$49k/yr (incl. moving and more trucks) [B, C8-S017]; this line + truck lines ≈ $37k/yr at 2 trucks in base (E). WC on crew wages also inside labour %."
+  },
+  {
+   "item": "Yard / parking + small sorting space",
+   "monthly": {
+    "conservative": 2000,
+    "base": 1500,
+    "optimistic": 1000
+   },
+   "start_month": 4,
+   "notes": "E."
+  },
+  {
+   "item": "Booking/FSM software + AI photo-quote and call answering",
+   "monthly": 350,
+   "is_ai": true,
+   "notes": "Housecall Pro Essentials $149-189/mo [B, DF-S035] + AI tools (E)."
+  },
+  {
+   "item": "Phones, accounting, legal",
+   "monthly": 400,
+   "notes": "E."
+  }
+ ],
+ "capex": [
+  {
+   "item": "Used box/dump truck + dollies, straps, tools",
+   "month": 1,
+   "amount": {
+    "conservative": 55000,
+    "base": 45000,
+    "optimistic": 30000
+   },
+   "notes": "E — no dealer quotes obtained; optimistic = pickup + 14 ft dump trailer."
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Half-truck household cleanout (Chicago bungalow basement)",
+   "revenue": 420,
+   "lines": [
+    {
+     "item": "2-person crew 2.5 h incl. drive & tip run at ~$24/h loaded each",
+     "amount": 120
+    },
+    {
+     "item": "Disposal ~0.5 t at $100/t + 1 mattress $75",
+     "amount": 125
+    },
+    {
+     "item": "Fuel + card fees (7%)",
+     "amount": 29
+    },
+    {
+     "item": "Acquisition cost",
+     "amount": 55
+    }
+   ],
+   "notes": "Disposal at SWANCC published rates [B, DF-S016]; ticket per Junk King avg [B, WS18-S001]. Contribution ~$91 (22%). Paid at completion.",
+   "evidence": "B"
+  },
+  {
+   "name": "Apartment turnover / eviction cleanout for a property manager (full truck)",
+   "revenue": 850,
+   "lines": [
+    {
+     "item": "2-person crew 4 h",
+     "amount": 200
+    },
+    {
+     "item": "Disposal ~1.5 t at $100/t",
+     "amount": 150
+    },
+    {
+     "item": "Fuel + card/ACH fees",
+     "amount": 55
+    },
+    {
+     "item": "Acquisition cost (account already won)",
+     "amount": 0
+    }
+   ],
+   "notes": "Price for a full truck is an assumption (E); net-30 invoice. Contribution ~$445 (52%) shows why repeat B2B accounts matter.",
+   "evidence": "E"
+  },
+  {
+   "name": "Single-item pickup (sofa)",
+   "revenue": 150,
+   "lines": [
+    {
+     "item": "2-person crew 1 h",
+     "amount": 48
+    },
+    {
+     "item": "Disposal (minimum charge $25 or by weight)",
+     "amount": 25
+    },
+    {
+     "item": "Fuel + card fees",
+     "amount": 11
+    },
+    {
+     "item": "Acquisition cost (paid lead)",
+     "amount": 55
+    }
+   ],
+   "notes": "Minimum-charge job; contribution ~$11 — paid-lead small jobs barely cover CAC. Price E.",
+   "evidence": "E"
+  }
+ ]
+}

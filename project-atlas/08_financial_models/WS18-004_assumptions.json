@@ -1,0 +1,70 @@
+{
+ "id": "WS18-004",
+ "name": "Lawn fertilization & weed-control subscription route for single-family subdivisions in DuPage/Will (independent, IDOA Turf-licensed)",
+ "summary": "Customers = households on an auto-renewing 5-6 application program sold by direct mail/door hangers/online instant quotes in dense subdivisions; founder is the first licensed applicator driving one truck with a <=100-gal skid sprayer loaded at a permitted portable (General Class A) containment pad. Engine spreads revenue evenly though applications run ~Apr-Nov and selling peaks Feb-May.",
+ "evidence_notes": [
+  "Spring-Green 2026 FDD Item 19 (CY2025): avg revenue per customer $585 (median $595, range $401-$967); gross profit 68.4% after materials 12.9% and direct labor 18.8%; gross sales per full-time production vehicle $209,478; marketing 7.4% of revenue returning $2.62 of new-service revenue per $1; retention 81.2% (64.9-93.0%); smallest unit $123,254 [B, DE-S027, DE-S028].",
+  "Weed Man 2026 FDD: 149 units avg $2.04M, bottom quartile $347k, low $96k [B, WS18-S007]; Lawn Doctor 2026 FDD (summary): 202 units 2+ yrs avg net revenue $1.17M, median $616k, low $15k; royalty 10% + marketing fund 5% [C, DE-S029]. Mature-franchise numbers are incumbent economics.",
+  "Licensing: IDOA commercial applicator $300/3 yrs (Turf category), operators $240 [A, C2-S026]. Containment: permit needed for any turf-pesticide loading/rinse area before use; $250 fee; General Class A portable pad allowed for <=100-gal devices; fertilizer-only exempt [A, DE-S030, DE-S031, DE-S032].",
+  "Competition: Illinois 4,949 landscaping firms [C, DE-S002]; 1,132 permitted lawncare facilities (2011) [A, DE-S033]; TruGreen, Spring-Green (HQ Plainfield), Weed Man, Lawn Doctor, plus Landscape Illinois members (955) [C, DE-S034].",
+  "Chicago-area per-application prices MISSING; ARPC set below Spring-Green's mature $585 because a new entrant sells fewer add-ons (E).",
+  "Owner draw $4,000/mo from month 13 (comparability); operating profit is before owner compensation."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {"conservative": 3, "base": 2, "optimistic": 2},
+  "sales_start_delay_months__evidence": "A/E", "sales_start_delay_months__source": "IDOA exams (online-proctored) + $250 containment permit before use + insurance [A, C2-S026, DE-S032]",
+  "sales_cycle_months": {"conservative": 1, "base": 0, "optimistic": 0},
+  "founder_ramp_months": 4,
+  "founder_leads_per_month": {"conservative": 35, "base": 60, "optimistic": 90},
+  "founder_leads_per_month__evidence": "E", "founder_leads_per_month__source": "Annual-average quote requests from direct mail/door hangers/search (seasonal peak Feb-May)",
+  "lead_to_proposal_pct": 0.85,
+  "lead_to_proposal_pct__evidence": "E", "lead_to_proposal_pct__source": "Instant aerial-measurement quotes",
+  "proposal_to_win_pct": {"conservative": 0.2, "base": 0.28, "optimistic": 0.35},
+  "proposal_to_win_pct__evidence": "E",
+  "referral_new_per_100_active": {"conservative": 0.8, "base": 1.5, "optimistic": 2.0},
+  "referral_new_per_100_active__evidence": "E", "referral_new_per_100_active__source": "Neighbour referrals and yard signs in dense subdivisions",
+  "monthly_churn_pct": {"conservative": 0.028, "base": 0.02, "optimistic": 0.016},
+  "monthly_churn_pct__evidence": "B/E", "monthly_churn_pct__source": "Spring-Green retention 81.2% (~1.7%/mo) for mature franchisees, range 64.9-93.0% [B, DE-S027]; new entrant assumed worse",
+  "arpc_monthly": {"conservative": 36, "base": 42, "optimistic": 48},
+  "arpc_monthly__evidence": "B/E", "arpc_monthly__source": "$432/$504/$576 per year vs Spring-Green avg $585, range $401-$967 [B, DE-S027]",
+  "onetime_revenue_per_new_customer": 0,
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": {"conservative": 0.83, "base": 0.86, "optimistic": 0.87},
+  "gross_margin_pct__evidence": "B", "gross_margin_pct__source": "Materials 12.9% of revenue (Spring-Green CY2025; 12.8% CY2024) + ~1% consumables; applicator labor modeled as staff [B, DE-S027, DE-S028]",
+  "onetime_gross_margin_pct": 0.6,
+  "variable_opex_pct_revenue": 0.07,
+  "variable_opex_pct_revenue__evidence": "E", "variable_opex_pct_revenue__source": "Truck fuel/maintenance ~4% + card/autopay fees ~3%",
+  "cac_per_new_customer": {"conservative": 280, "base": 210, "optimistic": 160},
+  "cac_per_new_customer__evidence": "B/E", "cac_per_new_customer__source": "Spring-Green: $1 marketing -> $2.62 new-services revenue, i.e. ~$223 per $585 of new revenue [B, DE-S027]; unbranded entrant assumed similar-to-worse",
+  "fixed_marketing_per_month": 400,
+  "dso_days": 5, "dso_days__evidence": "E", "dso_days__source": "Card-on-file autopay / prepay discounts",
+  "inventory_days_cogs": 30,
+  "dpo_days": 20,
+  "tax_rate_pct": 0.30,
+  "founder_draw_per_month": 4000, "founder_draw_start_month": 13,
+  "start_capital_injection": 40000
+ },
+ "staff": [
+  {"role": "Licensed lawn applicator (IDOA operator, Turf)", "trigger": "active_customers", "threshold": 350, "per": 400, "start_month": 1, "capex_per_hire": 32000, "monthly_cost": {"conservative": 4800, "base": 4200, "optimistic": 3800}, "notes": "Chicago median vegetation pesticide applicator $49,550 [C, C2-S022] x1.2 load x ~85% (seasonal). ~400 customers per truck from Spring-Green $209k sales per production vehicle [B, DE-S027]. capex_per_hire = used truck + skid sprayer."},
+  {"role": "Seasonal customer-service / office", "trigger": "revenue", "threshold": 25000, "per": 100000, "max_count": 2, "monthly_cost": 3200, "notes": "E"}
+ ],
+ "overhead": [
+  {"item": "Insurance (GL incl. pesticide drift, commercial auto)", "monthly": {"conservative": 650, "base": 450, "optimistic": 350}, "annual_growth_pct": 0.06, "notes": "Must meet 415 ILCS 60/10 minimums; premium E"},
+  {"item": "Shop/yard rent with permitted containment pad", "monthly": {"conservative": 1200, "base": 900, "optimistic": 700}, "notes": "E"},
+  {"item": "IDOA licences + containment permit (amortised)", "monthly": 15, "notes": "$300/3 yrs + $250/5 yrs [A]"},
+  {"item": "Field-service software + aerial measuring", "monthly": 200, "is_ai": true, "notes": "Jobber Connect $139 [B, DE-S035] + measurement (E)"},
+  {"item": "AI assistant tools", "monthly": 40, "is_ai": true},
+  {"item": "Phone, office, accounting", "monthly": 250}
+ ],
+ "capex": [
+  {"item": "Used pickup truck", "month": 1, "amount": {"conservative": 30000, "base": 26000, "optimistic": 22000}, "notes": "E"},
+  {"item": "<=100-gal skid sprayer, hose reel, rotary spreaders", "month": 1, "amount": {"conservative": 9000, "base": 7000, "optimistic": 5500}, "notes": "E; <=100 gal keeps General Class A portable containment eligible [A, DE-S031]"},
+  {"item": "Portable containment pad + permit", "month": 1, "amount": {"conservative": 2800, "base": 2000, "optimistic": 1500}, "notes": "$250 permit [A, DE-S032]; pad cost E"}
+ ],
+ "transactions": [
+  {"name": "Standard 6-application program, ~7,000 sq ft lot", "revenue": 450, "lines": [{"item": "Fertilizer/control products (13%)", "amount": 59}, {"item": "Applicator time 6 x 0.4 h x $28", "amount": 67}, {"item": "Fuel", "amount": 20}, {"item": "Card/autopay fees", "amount": 13}], "notes": "Price E (below Spring-Green avg $585 [B]); billed per application or prepaid", "evidence": "B/E"},
+  {"name": "Core aeration add-on", "revenue": 150, "lines": [{"item": "Labor 1 h", "amount": 28}, {"item": "Aerator rental/wear", "amount": 12}, {"item": "Fuel", "amount": 5}], "notes": "E", "evidence": "E"},
+  {"name": "Grub-control add-on", "revenue": 90, "lines": [{"item": "Product", "amount": 18}, {"item": "Labor 0.3 h", "amount": 8}], "notes": "E", "evidence": "E"},
+  {"name": "Mature franchise benchmark (Spring-Green avg franchised business CY2025)", "revenue": 1120124, "lines": [{"item": "Materials 12.9%", "amount": 144496}, {"item": "Direct labor 18.8% (ex payroll taxes)", "amount": 210583}, {"item": "Local marketing 7.4%", "amount": 82889}], "notes": "Incumbent economics [B, DE-S027]; royalties, overhead and owner pay not shown", "evidence": "B"}
+ ]
+}

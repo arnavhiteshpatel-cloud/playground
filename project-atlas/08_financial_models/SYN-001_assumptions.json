@@ -1,0 +1,337 @@
+{
+ "id": "SYN-001",
+ "name": "Insurance-led small-carrier compliance hub (Chicago 8 counties)",
+ "summary": "Done-for-you DOT compliance + D&A consortium subscription sold to established 3-20 PU for-hire carriers; ~25% of clients also place trucking insurance through an aggregator/wholesaler (commission netted of split) - insurance commission is folded into blended ARPC.",
+ "evidence_notes": [
+  "Buyer universe A: 3,166 for-hire carriers with 3-20 PU registered before 2021 in 8 Chicago counties, median 6 PU (DC-S001).",
+  "Churn derived from census cohorts: exit of 5-10-yr-old carriers ~6-7%/yr, 3-5 yr ~15%/yr (A data, E arithmetic, DC-S002); agency/vendor switching added as E.",
+  "Compliance price D: $149-$249/mo done-for-you plans incl. consortium, $99 setup (C4-S011); $150-400 (C4-S012). Consortium $149/yr (C, C4-S006). DQ software $5/driver/mo (B, C4-S008).",
+  "Insurance: ~10% commission via MGAs/wholesalers (D, DC-S014) inside a 15.9% Illinois selling-expense pool (C, C4-S015); premium/PU $12k base anchored on ATRI 10.6 c/mile (C, WS02-S017); aggregator split 20% and attach rate 25% are E.",
+  "Licensing A: 40 h pre-licensing, $184 exams, $215 producer + $250 entity licence, broker bond $2,500+ (DC-S005..S007).",
+  "ARPC base = $250 compliance + $12.5 consortium + $25 filings + 0.25 x (6 PU x $12k x 10% x 0.8)/12 = $407.5 -> $405."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 4,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_start_delay_months__evidence": "A/E",
+  "sales_start_delay_months__source": "IDOI 20 h/line pre-licensing + exams + 5-day wait + NIPR (DC-S005); aggregator onboarding 24-48 h claimed (DC-S009, DC-S010) but trucking market access unconfirmed",
+  "sales_cycle_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "Insurance shopped 30-60 days pre-renewal; compliance 1-6 weeks (Stage A/C, E)",
+  "founder_ramp_months": 6,
+  "founder_leads_per_month": {
+   "conservative": 12,
+   "base": 20,
+   "optimistic": 30
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Qualified conversations from mail/web/yard visits to a 3,166-carrier universe (DC-S001); hours-based estimate",
+  "lead_to_proposal_pct": {
+   "conservative": 0.3,
+   "base": 0.4,
+   "optimistic": 0.5
+  },
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Free DQ/CSA audit converts conversation to proposal; no benchmark found",
+  "proposal_to_win_pct": {
+   "conservative": 0.15,
+   "base": 0.25,
+   "optimistic": 0.35
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Assumed; competitors OOIDA/Simplex/agency freebies (C4-S004, C4-S013, C4-S038) cap win rate",
+  "rep_ramp_months": 4,
+  "rep_new_customers_per_month": {
+   "conservative": 1.0,
+   "base": 1.5,
+   "optimistic": 2.0
+  },
+  "rep_new_customers_per_month__evidence": "E",
+  "rep_new_customers_per_month__source": "Licensed producer hired yr 2; assumed",
+  "referral_new_per_100_active": {
+   "conservative": 0.5,
+   "base": 1.0,
+   "optimistic": 1.5
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Factoring/dispatch/word-of-mouth referrals assumed",
+  "monthly_churn_pct": {
+   "conservative": 0.022,
+   "base": 0.015,
+   "optimistic": 0.011
+  },
+  "monthly_churn_pct__evidence": "A/E",
+  "monthly_churn_pct__source": "Census cohort survival (DC-S002): 6-15%/yr carrier exit for 3-10-yr-old carriers + vendor switching (E)",
+  "arpc_monthly": {
+   "conservative": 275,
+   "base": 405,
+   "optimistic": 640
+  },
+  "arpc_monthly__evidence": "D/C/E",
+  "arpc_monthly__source": "Compliance $200/250/300 (C4-S011, C4-S012) + consortium (C4-S006) + filings (E) + attach 15/25/35% x commission on 6-7 PU x $10-14k premium x 9-12% x 75-85% retained (DC-S014, C4-S015, WS02-S017)",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 99,
+   "base": 150,
+   "optimistic": 250
+  },
+  "onetime_revenue_per_new_customer__evidence": "D",
+  "onetime_revenue_per_new_customer__source": "$99 enrolment fee observed (C4-S011); file rebuild priced higher in base/opt (E)",
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": {
+   "conservative": 0.78,
+   "base": 0.84,
+   "optimistic": 0.87
+  },
+  "gross_margin_pct__evidence": "B/E",
+  "gross_margin_pct__source": "Direct costs ~$56/mo on $405: DQ software 8 drivers x $5 (C4-S008), MVR $12.95/driver/yr, consortium cost ~50% of fee (E); coordinator labor carried in staff",
+  "onetime_gross_margin_pct": 0.3,
+  "onetime_gross_margin_pct__evidence": "E",
+  "onetime_gross_margin_pct__source": "MVR/PSP pulls at onboarding consume most of the setup fee",
+  "variable_opex_pct_revenue": {
+   "conservative": 0.05,
+   "base": 0.035,
+   "optimistic": 0.03
+  },
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Card/ACH ~1.5% + commission chargebacks/bad debt 2-3.5% (cancellation for non-pay common in trucking)",
+  "cac_per_new_customer": {
+   "conservative": 250,
+   "base": 150,
+   "optimistic": 100
+  },
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Audit time/MVR samples, travel to yards",
+  "fixed_marketing_per_month": {
+   "conservative": 900,
+   "base": 700,
+   "optimistic": 600
+  },
+  "fixed_marketing_per_month__evidence": "E",
+  "fixed_marketing_per_month__source": "Direct mail to ~3,166 carriers x 3-4 touches/yr at ~$0.80 + web",
+  "dso_days": {
+   "conservative": 25,
+   "base": 15,
+   "optimistic": 10
+  },
+  "dso_days__evidence": "E",
+  "dso_days__source": "Compliance billed monthly in advance by ACH; commissions arrive ~30-45 days after premium collection",
+  "inventory_days_cogs": 0,
+  "dpo_days": 15,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": 15000,
+  "ev_multiple": 3.0,
+  "ev_multiple__evidence": "C",
+  "ev_multiple__source": "Sub-$1M-EBITDA agencies trade far below large-deal multiples (WS02-S007); 3x kept"
+ },
+ "staff": [
+  {
+   "role": "Compliance coordinator",
+   "trigger": "active_customers",
+   "threshold": 35,
+   "per": 70,
+   "start_month": 1,
+   "capex_per_hire": 2000,
+   "monthly_cost": {
+    "conservative": 5800,
+    "base": 5350,
+    "optimistic": 5100
+   },
+   "notes": "BLS Chicago claims/policy clerk median $51,280 x1.25 load (C, C4-S016)"
+  },
+  {
+   "role": "Licensed CSR (insurance servicing)",
+   "trigger": "active_customers",
+   "threshold": 80,
+   "per": 150,
+   "max_count": 3,
+   "start_month": 1,
+   "capex_per_hire": 2000,
+   "monthly_cost": {
+    "conservative": 6000,
+    "base": 5600,
+    "optimistic": 5300
+   },
+   "notes": "Licensed premium over clerk median (E)"
+  },
+  {
+   "role": "Licensed producer / sales rep",
+   "trigger": "month",
+   "start_month": 24,
+   "count": 1,
+   "is_sales_rep": true,
+   "capex_per_hire": 2000,
+   "monthly_cost": {
+    "conservative": 6500,
+    "base": 6000,
+    "optimistic": 5500
+   },
+   "notes": "Base + commission (E)"
+  },
+  {
+   "role": "Office manager / bookkeeper",
+   "trigger": "revenue",
+   "threshold": 60000,
+   "per": 150000,
+   "max_count": 2,
+   "monthly_cost": 5000,
+   "notes": "E"
+  }
+ ],
+ "overhead": [
+  {
+   "item": "E&O (agency + compliance services)",
+   "monthly": {
+    "conservative": 500,
+    "base": 350,
+    "optimistic": 250
+   },
+   "annual_growth_pct": 0.06
+  },
+  {
+   "item": "GL / cyber (driver PII)",
+   "monthly": 100,
+   "annual_growth_pct": 0.06
+  },
+  {
+   "item": "Agency management system + comparative rater + CRM (AgencyZoom $99 B)",
+   "monthly": {
+    "conservative": 500,
+    "base": 400,
+    "optimistic": 300
+   },
+   "is_ai": true
+  },
+  {
+   "item": "Compliance platform base fee / document portal",
+   "monthly": 200,
+   "is_ai": true
+  },
+  {
+   "item": "AI API / OCR for document intake",
+   "monthly": 150,
+   "is_ai": true
+  },
+  {
+   "item": "Office (shared suite, from month 6)",
+   "monthly": {
+    "conservative": 1100,
+    "base": 900,
+    "optimistic": 700
+   },
+   "start_month": 6
+  },
+  {
+   "item": "Licences, broker bond, CE, dues",
+   "monthly": 80
+  },
+  {
+   "item": "Phone / telecom",
+   "monthly": 150
+  },
+  {
+   "item": "Founder vehicle & travel to yards",
+   "monthly": 400
+  },
+  {
+   "item": "Accounting / legal",
+   "monthly": 300
+  }
+ ],
+ "capex": [
+  {
+   "item": "Setup: licensing courses/exams/licences, computers, website",
+   "month": 1,
+   "amount": {
+    "conservative": 6500,
+    "base": 5000,
+    "optimistic": 4000
+   }
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Monthly compliance subscription - 6 PU / 8 drivers",
+   "revenue": 262.5,
+   "lines": [
+    {
+     "item": "DQ software 8 drivers x $5",
+     "amount": 40
+    },
+    {
+     "item": "MVR amortised 8 x $12.95/12",
+     "amount": 8.63
+    },
+    {
+     "item": "Consortium cost share",
+     "amount": 6
+    },
+    {
+     "item": "Coordinator 3 h x $32.9 loaded",
+     "amount": 98.7
+    }
+   ],
+   "notes": "Contribution ~$109/mo; prices D (C4-S011, C4-S006, C4-S008); labor C/E",
+   "evidence": "D"
+  },
+  {
+   "name": "Annual insurance placement - 6 PU at $12k premium/PU",
+   "revenue": 7200,
+   "lines": [
+    {
+     "item": "Aggregator/network split 20% (E)",
+     "amount": 1440
+    },
+    {
+     "item": "CSR servicing 25 h x $34",
+     "amount": 850
+    },
+    {
+     "item": "Chargeback reserve 3%",
+     "amount": 216
+    },
+    {
+     "item": "E&O allocation",
+     "amount": 150
+    }
+   ],
+   "notes": "10% commission D (DC-S014); premium C/E (WS02-S017); contribution ~$4,544/yr",
+   "evidence": "D"
+  },
+  {
+   "name": "Onboarding / DQ file rebuild",
+   "revenue": 150,
+   "lines": [
+    {
+     "item": "MVR pulls 8 x $12.95",
+     "amount": 103.6
+    },
+    {
+     "item": "Coordinator 4 h x $32.9",
+     "amount": 131.6
+    }
+   ],
+   "notes": "Loss leader: contribution about -$85; $99 market setup fee (C4-S011)",
+   "evidence": "D"
+  },
+  {
+   "name": "Annual consortium membership (company)",
+   "revenue": 150,
+   "lines": [
+    {
+     "item": "Wholesale C/TPA cost (MISSING; assumed 50%)",
+     "amount": 75
+    }
+   ],
+   "notes": "$149 market price (C4-S006)",
+   "evidence": "C"
+  }
+ ]
+}

@@ -1,0 +1,280 @@
+{
+ "id": "WS11-021",
+ "name": "ILR10 construction stormwater inspections + BMP maintenance for Chicagoland site contractors, homebuilders and public owners",
+ "summary": "Customer unit = one active ILR10-covered construction site under a per-site monthly contract for 7-day and post-0.5-inch-storm inspections, signed reports and corrective-action tickets, with BMP repair/maintenance (inlet filters, silt fence, construction entrance, ditch checks) billed on a T&M/unit basis and averaged into ARPC. Founder inspects the first ~15 sites (after the free USEPA CGP inspector course and, later, CESSWI); inspectors are hired at ~25 sites each (storm-trigger cap). Winter months drop to monthly inspections where work stops for frozen conditions; seasonality is averaged into ARPC because the engine has no seasonal driver.",
+ "evidence_notes": [
+  "Mandate: ILR10 inspections every 7 calendar days and within 24 hours / next business day of a 0.5-inch storm by qualified personnel the permittee provides; monthly in frozen shutdowns [A, C7-S011]. EPA CGP inspector course is free and passing it qualifies a person [A, DB-S010]; CESSWI costs $370 + $345, renewal $160/yr [B, DB-S011]. GCs may self-inspect as 'knowledgeable persons' [A, C7-S011].",
+  "Demand: 5,341 effective ILR10 coverages; new coverages by effective year 1,007 (2023), 1,306 (2024), 1,503 (2025), 1,525 (2026 to 28 Nov); Chicagoland ZIP3 600-608 = 1,582 coverages effective 2025-26 under 957 permittee names [A, DB-S008]. 346 statewide permittees with 2+ sites hold 1,652 of 3,028 2025-26 coverages (repeat buyers). 'TBD' operator on 306 statewide coverages (owner filed before choosing a contractor).",
+  "Price evidence is thin: $95/inspection vendor proposal (NM) [D, C7-S014]; Fort Wayne municipal $1,440 for six monthly inspections (~$240) [B proxy, C7-S013]; Kane-DuPage SWCD charges developers $690/yr for oversight inspections on 0-9 acre sites (at least monthly + after significant rain) and $95/h non-compliance [A, DB-S009] - a public cost-recovery floor, not a private weekly price. No Illinois private per-inspection price found (MISSING).",
+  "Labour: specialist SWPPP firm pays inspectors ~$25-28 per inspection [D, C7-S016]; BLS wages not retrievable (API limit).",
+  "BMP pull-through prices (IDOT Aug-2022 letting awards): perimeter erosion barrier $1.93-$8.80/ft; inlet filters $61.60-$176 each; temporary ditch checks $8.80-$25/ft; stabilized construction entrance $70/sq yd; temporary sediment basin $2,500 [A, DB-S012] (public-contract installation prices, 2022).",
+  "Seasonality, win rates, share of GCs that outsource, and site lifetimes are E."
+ ],
+ "drivers": {
+  "sales_start_delay_months": 1,
+  "sales_start_delay_months__evidence": "A",
+  "sales_start_delay_months__source": "Free online EPA course qualifies [A, DB-S010]; GL/E&O policy and report templates (E).",
+  "sales_cycle_months": 1,
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "Contracted at mobilisation; NOI appears in ECHO near start (E).",
+  "founder_ramp_months": 6,
+  "founder_ramp_months__evidence": "E",
+  "founder_ramp_months__source": "Credibility with site superintendents builds slowly; first season (E).",
+  "founder_leads_per_month": {
+   "conservative": 10,
+   "base": 15,
+   "optimistic": 20
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "~69 new Chicagoland ILR10 coverages per month in 2025-26 [A, DB-S008]; founder qualifies a fraction (E).",
+  "lead_to_proposal_pct": 0.4,
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Many permittees already bundle inspections with the SWPPP engineer or self-inspect (E).",
+  "proposal_to_win_pct": {
+   "conservative": 0.18,
+   "base": 0.25,
+   "optimistic": 0.32
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "No benchmark (E).",
+  "rep_ramp_months": 3,
+  "rep_new_customers_per_month": 2,
+  "referral_new_per_100_active": {
+   "conservative": 2.5,
+   "base": 4,
+   "optimistic": 5.5
+  },
+  "referral_new_per_100_active__evidence": "D",
+  "referral_new_per_100_active__source": "Repeat sites from existing clients: 55% of 2025-26 coverages belong to permittees with 2+ sites [A, DB-S008]; rate per active site E.",
+  "monthly_churn_pct": {
+   "conservative": 0.09,
+   "base": 0.07,
+   "optimistic": 0.06
+  },
+  "monthly_churn_pct__evidence": "E",
+  "monthly_churn_pct__source": "Sites end at stabilisation/NOT; average coverage life ~11-17 months assumed (E). ECHO counts include stale coverages, so life is not directly observable [A caveat, C7-S012].",
+  "arpc_monthly": {
+   "conservative": 420,
+   "base": 560,
+   "optimistic": 680
+  },
+  "arpc_monthly__evidence": "D",
+  "arpc_monthly__source": "Inspection: ~45 inspections/site-yr (8 active months x ~5 incl. storm + 4 winter months x ~1.25) x $110/$130/$150 = $412/$487/$562 per site-month [D, C7-S013/S014; DB-S009 floor]; plus BMP maintenance averaging ~$10/$75/$120 per site-month (E, priced from IDOT unit awards [A, DB-S012]).",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 150,
+   "base": 350,
+   "optimistic": 600
+  },
+  "onetime_revenue_per_new_customer__evidence": "E",
+  "onetime_revenue_per_new_customer__source": "Site set-up visit, SWPPP map/amendment, NOT support on a minority of sites (E). NOI state fee $250/$750 is the permittee's [A, WS15-S028].",
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": {
+   "conservative": 0.74,
+   "base": 0.8,
+   "optimistic": 0.84
+  },
+  "gross_margin_pct__evidence": "E",
+  "gross_margin_pct__source": "Direct costs: mileage ~$15-25 per visit, report software per site, BMP materials (inlet filters, fence) - labour is in Staff (E).",
+  "onetime_gross_margin_pct": 0.85,
+  "variable_opex_pct_revenue": 0.01,
+  "cac_per_new_customer": 150,
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Site visits/lunches with superintendents (E).",
+  "fixed_marketing_per_month": 300,
+  "fixed_marketing_per_month__evidence": "E",
+  "dso_days": {
+   "conservative": 60,
+   "base": 45,
+   "optimistic": 35
+  },
+  "dso_days__evidence": "D",
+  "dso_days__source": "Net 30-60 from GCs/builders (Stage C, E); municipal owners pay on board cycles.",
+  "inventory_days_cogs": 5,
+  "dpo_days": 20,
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 3000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": 10000,
+  "lt_growth_y6_pct": 0.06,
+  "lt_growth_decay": 0.85,
+  "incremental_roic_pct": 0.8,
+  "maint_capex_pct_op": 0.06,
+  "reserve_months": 2,
+  "ev_multiple": 2.5,
+  "ev_multiple__evidence": "E",
+  "ev_multiple__source": "No transaction comps found (E)."
+ },
+ "staff": [
+  {
+   "role": "Field stormwater inspector (EPA CGP-trained; CESSWI within 12 mo)",
+   "trigger": "active_customers",
+   "threshold": 15,
+   "per": 25,
+   "start_month": 1,
+   "capex_per_hire": 3500,
+   "monthly_cost": {
+    "conservative": 6600,
+    "base": 6200,
+    "optimistic": 5900
+   },
+   "notes": "~$50-55k + burden + vehicle allowance ~$600/mo; ~25 sites per inspector because one 0.5-inch storm triggers every site within ~1 business day (Stage C). Silver Leaf pays $25-28/inspection [D, C7-S016]. Founder covers first 15 sites."
+  },
+  {
+   "role": "BMP maintenance laborer (seasonal, shared truck)",
+   "trigger": "active_customers",
+   "threshold": 35,
+   "per": 60,
+   "start_month": 1,
+   "capex_per_hire": 4000,
+   "monthly_cost": {
+    "conservative": 5000,
+    "base": 4600,
+    "optimistic": 4400
+   },
+   "notes": "Non-union landscape/erosion laborer (E); public jobs would require prevailing wage - Cook laborer $53.00 + fringes [A, DB-S004]."
+  },
+  {
+   "role": "Scheduler / report QA / billing coordinator",
+   "trigger": "revenue",
+   "threshold": 30000,
+   "per": 90000,
+   "max_count": 2,
+   "monthly_cost": 4300,
+   "notes": "(E)"
+  }
+ ],
+ "overhead": [
+  {
+   "item": "GL + professional (E&O) + commercial auto insurance",
+   "monthly": {
+    "conservative": 750,
+    "base": 550,
+    "optimistic": 450
+   },
+   "annual_growth_pct": 0.06,
+   "notes": "Premiums MISSING for Illinois stormwater inspectors (E); Insureon small-contractor medians ~$88/mo GL, $67/mo professional, $268/mo auto [D, DB-S007]."
+  },
+  {
+   "item": "Inspection app, weather alerts, Claude seat, cloud storage",
+   "monthly": {
+    "conservative": 350,
+    "base": 250,
+    "optimistic": 200
+   },
+   "is_ai": true,
+   "notes": "Claude Pro/Team $20-25/seat [B, DB-S022]; inspection/forms app and rain-gauge alerts (E)."
+  },
+  {
+   "item": "Founder vehicle, fuel, phone",
+   "monthly": {
+    "conservative": 900,
+    "base": 750,
+    "optimistic": 650
+   },
+   "notes": "(E)"
+  },
+  {
+   "item": "Certifications/CE (CESSWI renewal, PDH), accounting",
+   "monthly": 150,
+   "notes": "CESSWI renewal $160/yr + 6 PDH [B, DB-S011]; accountant (E)."
+  }
+ ],
+ "capex": [
+  {
+   "item": "Tablet, rain gauge, PPE, camera, CESSWI application+exam",
+   "month": 1,
+   "amount": {
+    "conservative": 3000,
+    "base": 2200,
+    "optimistic": 1800
+   }
+  },
+  {
+   "item": "Used pickup/trailer for BMP crew",
+   "month": 14,
+   "amount": {
+    "conservative": 22000,
+    "base": 15000,
+    "optimistic": 12000
+   }
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Active subdivision site, 12 acres, Kane County, peak season month (5 inspections incl. 1 storm event)",
+   "revenue": 650,
+   "lines": [
+    {
+     "item": "Inspector time 5 x 1.25 h incl. drive @ $36 loaded",
+     "amount": 225
+    },
+    {
+     "item": "Mileage 5 x 25 mi @ $0.70",
+     "amount": 88
+    },
+    {
+     "item": "Report app/storage share",
+     "amount": 10
+    }
+   ],
+   "notes": "$130/inspection (E inside $95-$240 proxy range [D, C7-S013/S014]). Billed monthly net 45 (E).",
+   "evidence": "D/E"
+  },
+  {
+   "name": "Same site, frozen-shutdown month (1 inspection)",
+   "revenue": 130,
+   "lines": [
+    {
+     "item": "Inspector 1.25 h",
+     "amount": 45
+    },
+    {
+     "item": "Mileage",
+     "amount": 18
+    }
+   ],
+   "notes": "ILR10 allows monthly inspections when work stops for frozen conditions [A, C7-S011].",
+   "evidence": "A/E"
+  },
+  {
+   "name": "BMP corrective-action ticket: replace 8 inlet filters + 150 ft silt fence repair",
+   "revenue": 1450,
+   "lines": [
+    {
+     "item": "Inlet filter materials 8 x $45",
+     "amount": 360
+    },
+    {
+     "item": "Silt fence/stakes 150 ft",
+     "amount": 120
+    },
+    {
+     "item": "Labour 2 workers x 4 h @ $32 loaded",
+     "amount": 256
+    },
+    {
+     "item": "Truck/disposal",
+     "amount": 80
+    }
+   ],
+   "notes": "Priced below IDOT 2022 awards ($61.60-$176/inlet filter; $1.93-$8.80/ft barrier) [A, DB-S012]: 8 x $120 + 150 x $3.25 = ~$1,450. Material costs E.",
+   "evidence": "A/E"
+  },
+  {
+   "name": "Community-solar site (rural, 10 acres) monthly contract, 4.5 inspections",
+   "revenue": 700,
+   "lines": [
+    {
+     "item": "Inspector time incl. 60-mi drive 4.5 x 2.25 h @ $36",
+     "amount": 365
+    },
+    {
+     "item": "Mileage 4.5 x 90 mi @ $0.70",
+     "amount": 284
+    }
+   ],
+   "notes": "Remote solar sites are a distinct segment (455 solar/energy coverages statewide 2025-26 [A, DB-S008]) but travel erodes margin unless clustered.",
+   "evidence": "E"
+  }
+ ]
+}

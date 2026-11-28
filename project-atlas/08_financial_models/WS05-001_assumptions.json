@@ -1,0 +1,316 @@
+{
+ "id": "WS05-001",
+ "name": "Fire extinguisher + emergency/exit lighting annual inspection route for small Chicago occupancies (first-aid cabinet add-on tested)",
+ "summary": "OSFM Class A licensed distributor (founder holds Class 1 employee licence via NAFED/ICC exam). Customer unit = small commercial/mixed-use occupancy (~6 extinguishers, ~8 emergency/exit fixtures) on an annual inspection with pull-through (6-year maintenance, hydrotests, replacements, battery/lamp repairs). Revenue is billed at the annual visit; modelled as monthly average ARPC. Technician labour is staff (founder services the first ~350 accounts).",
+ "evidence_notes": [
+  "Illinois public price (Park District of Highland Park, Jul 2025): Fox Valley Fire & Safety $3/extinguisher annual test, 6-yr maintenance $19.75-35.50, hydrotest $30.75-40, 5-lb replacement $85, 10-lb $110; JCI bid $7, $65-110, $70-120, $100, $170 [A, DA-S005]. Volume public prices are a floor.",
+  "Small-account price structure: $15-22 per unit plus a $75-125 service-call fee (Tampa operator guide) [D, DA-S007]; Clinton CT public bid $3-4.50/unit with $130/h labour [A, DA-S006]. The Stage C $4.75 anchor is Boone County, MISSOURI (Korsemeyer), not Illinois [A, C1-S001 re-read].",
+  "Emergency/exit lighting: annual 90-minute and monthly 30-second tests are code duties [C, DA-S008]; no per-fixture price found (MISSING) - E.",
+  "Licensing: Class A distributor $900/3 yrs, Class 1 employee $300/3 yrs, NAFED/ICC exam $320, $1M liability + WC [A, WS05-S001/S002/S025, DA-S003]. Act scheduled to sunset 1 Jan 2028; the 2022 sunset review recommended continuation and P.A. 102-0715 extended it [A, DA-S002, DA-S003].",
+  "Market: 184 active distributor licences; 29 issued 2025-26 incl. new Chicago micro-entrants and consolidator re-licensing (Pye-Barker via Phoenix Fire Systems; The Hiller Companies at Reliable Fire Equipment's Alsip address) [A, DA-S004].",
+  "Supplier: Brooks Equipment (Elk Grove Village warehouse) sells to fire-equipment distributors; net 30 for approved credit, else COD/card; special orders min $175 [B, DA-S017]. Amerex direct distributorship asks about prior fire-suppression spend and is not guaranteed [B, DA-S018].",
+  "Win rates, lead volumes, account mix and pull-through rates are E."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_start_delay_months__evidence": "A",
+  "sales_start_delay_months__source": "NAFED/ICC open-book exam [A, WS05-S025]; OSFM distributor + employee licence applications with $1M COI, WC proof, maintenance-equipment access [A, DA-S003]. Processing time MISSING.",
+  "sales_cycle_months": 1,
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "Owner-level decision; often triggered by a DOB/fire-inspector citation (E).",
+  "founder_ramp_months": 4,
+  "founder_leads_per_month": {
+   "conservative": 50,
+   "base": 70,
+   "optimistic": 90
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Walk-in conversations with owners/managers of small occupancies; 545 Chicago addresses cited for extinguisher/exit/emergency-light items in 13 months [A, DA-S020] plus ~11,000 food licences [A, C2-S015]. Volume E.",
+  "lead_to_proposal_pct": {
+   "conservative": 0.35,
+   "base": 0.45,
+   "optimistic": 0.5
+  },
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Free tag-date check on site (E).",
+  "proposal_to_win_pct": {
+   "conservative": 0.25,
+   "base": 0.33,
+   "optimistic": 0.4
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Annual relationship, low switching cost; E.",
+  "rep_ramp_months": 3,
+  "rep_new_customers_per_month": {
+   "conservative": 5,
+   "base": 7,
+   "optimistic": 9
+  },
+  "rep_new_customers_per_month__evidence": "E",
+  "rep_new_customers_per_month__source": "E.",
+  "referral_new_per_100_active": {
+   "conservative": 0.5,
+   "base": 0.8,
+   "optimistic": 1.2
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Property managers and multi-site owners (E).",
+  "monthly_churn_pct": {
+   "conservative": 0.018,
+   "base": 0.012,
+   "optimistic": 0.009
+  },
+  "monthly_churn_pct__evidence": "D",
+  "monthly_churn_pct__source": "Operator guide describes ~10-year service relationships [D, DA-S007]; business closures (~10%/13 months for food licences) [A, DA-S001]; base 13.5%/yr E.",
+  "arpc_monthly": {
+   "conservative": 20,
+   "base": 28,
+   "optimistic": 36
+  },
+  "arpc_monthly__evidence": "D",
+  "arpc_monthly__source": "Annual base ~$333: 6 ext x $12 + $65 trip + 8 lights x $9 + 6-yr maint (1/6 x 6 x $28) + hydro (1/12 x 6 x $35) + replacements 0.3 x $95 + light batteries/lamps $30 + misc $20. Unit prices bracketed by A public bids [DA-S005] and D small-account guide [DA-S007]; lighting E. Optimistic includes first-aid cabinet add-on on ~20% of accounts (+$10/mo each).",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 80,
+   "base": 120,
+   "optimistic": 160
+  },
+  "onetime_revenue_per_new_customer__evidence": "E",
+  "onetime_revenue_per_new_customer__source": "First-visit corrections: expired/missing units, signage, mounts (DOB cites 'recharge & tag' 300x, 'extinguisher required' 124x in 13 months [A, DA-S020]).",
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": {
+   "conservative": 0.7,
+   "base": 0.76,
+   "optimistic": 0.8
+  },
+  "gross_margin_pct__evidence": "E",
+  "gross_margin_pct__source": "Parts/agent/replacement units ~20-25% of revenue (replacement resale at ~40-50% margin over Brooks cost; inspection is labour-only). Labour in Staff. APi company GM 31.4% includes labour [A, WS05-S019].",
+  "onetime_gross_margin_pct": 0.45,
+  "variable_opex_pct_revenue": 0.05,
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Fuel, tags/labels, card fees, bad debt (E).",
+  "cac_per_new_customer": {
+   "conservative": 50,
+   "base": 30,
+   "optimistic": 20
+  },
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Leave-behinds, door-hangers, small search spend (E).",
+  "fixed_marketing_per_month": 200,
+  "dso_days": {
+   "conservative": 45,
+   "base": 30,
+   "optimistic": 20
+  },
+  "dso_days__evidence": "E",
+  "dso_days__source": "Invoice at visit, net-15/30; small occupancies often pay on site (E).",
+  "inventory_days_cogs": 45,
+  "inventory_days_cogs__evidence": "E",
+  "inventory_days_cogs__source": "Spare 5-lb/10-lb units, agent, valves, batteries on the van (E).",
+  "dpo_days": {
+   "conservative": 0,
+   "base": 15,
+   "optimistic": 30
+  },
+  "dpo_days__evidence": "B",
+  "dpo_days__source": "Brooks: net 30 for approved credit, otherwise COD/card [B, DA-S017].",
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": {
+   "conservative": 25000,
+   "base": 18000,
+   "optimistic": 12000
+  },
+  "ev_multiple": 4.0,
+  "ev_multiple__evidence": "D",
+  "ev_multiple__source": "Active consolidators (Pye-Barker, Hiller, APi) re-licensing acquired Illinois locations 2025-26 [A, DA-S004]; multiples not disclosed (MISSING); 4x assumed.",
+  "lt_growth_y6_pct": 0.1,
+  "lt_growth_decay": 0.85,
+  "incremental_roic_pct": 0.6,
+  "maint_capex_pct_op": 0.05
+ },
+ "staff": [
+  {
+   "role": "Fire equipment technician (OSFM Class 1 employee licence; incl. van)",
+   "trigger": "active_customers",
+   "threshold": 600,
+   "per": 1200,
+   "start_month": 1,
+   "capex_per_hire": 4000,
+   "monthly_cost": {
+    "conservative": 6300,
+    "base": 5800,
+    "optimistic": 5500
+   },
+   "notes": "Chicago MSA 'installation, maintenance & repair, all other' median $27.36/h [C, DA-S012 proxy] -> ~$4,850 x 1.2 load + van ~$800. ~6-8 small accounts/day => ~1,200-1,500 annual accounts per tech. Employee licence $300 + exam $320. Founder services up to ~600 annual accounts (~2.5 visits/working day) before the first hire; test with hire at 350 accounts cut base yr-5 operating profit to ~$5k because ARPC is only ~$28/mo."
+  },
+  {
+   "role": "Office coordinator (scheduling annual due-dates, reports, billing)",
+   "trigger": "revenue",
+   "threshold": 25000,
+   "per": 80000,
+   "max_count": 2,
+   "monthly_cost": {
+    "conservative": 4600,
+    "base": 4200,
+    "optimistic": 4000
+   }
+  },
+  {
+   "role": "Sales rep (commission-heavy), once the route is proven",
+   "trigger": "active_customers",
+   "threshold": 1000,
+   "per": 100000,
+   "max_count": 1,
+   "is_sales_rep": true,
+   "monthly_cost": {
+    "conservative": 5500,
+    "base": 5000,
+    "optimistic": 4800
+   }
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Insurance: $1M GL/products-completed ops, commercial auto, umbrella",
+   "monthly": {
+    "conservative": 650,
+    "base": 450,
+    "optimistic": 350
+   },
+   "annual_growth_pct": 0.06,
+   "notes": "$1M minimum by statute [A, DA-S003]; premium E (pest-control broker averages GL $112 + auto $114 used as floor [C, DA-S010])."
+  },
+  {
+   "item": "OSFM licences + NAFED recert",
+   "monthly": 45,
+   "notes": "$900 + $300 per 3 years; $320 exam [A, WS05-S001/S002/S025]."
+  },
+  {
+   "item": "Small shop/flex space for recharge station + storage",
+   "monthly": {
+    "conservative": 1000,
+    "base": 700,
+    "optimistic": 400
+   },
+   "notes": "OSFM requires access to proper maintenance equipment [A, DA-S003]; rent E."
+  },
+  {
+   "item": "Founder van (lease, fuel, maintenance)",
+   "monthly": {
+    "conservative": 950,
+    "base": 800,
+    "optimistic": 650
+   }
+  },
+  {
+   "item": "Inspection/barcode-tag software + billing",
+   "monthly": {
+    "conservative": 250,
+    "base": 150,
+    "optimistic": 100
+   },
+   "annual_growth_pct": 0.05,
+   "notes": "E (vendor price pages not reachable)."
+  },
+  {
+   "item": "AI assistant + DOB/food-inspection prospecting scripts",
+   "monthly": 40,
+   "is_ai": true
+  },
+  {
+   "item": "Bookkeeping, phone, misc",
+   "monthly": {
+    "conservative": 350,
+    "base": 250,
+    "optimistic": 200
+   }
+  }
+ ],
+ "capex": [
+  {
+   "item": "Recharge station, nitrogen, scale, leak detection, collar/valve tools, spare units",
+   "month": 1,
+   "amount": {
+    "conservative": 14000,
+    "base": 9000,
+    "optimistic": 5000
+   },
+   "notes": "E. Optimistic subcontracts recharge/hydro to a PHMSA RIN holder initially [A, WS05-S001]."
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Corner restaurant/grocer: 4 ABC + 1 K-class extinguishers, 6 exit/emergency fixtures (annual)",
+   "revenue": 289,
+   "lines": [
+    {
+     "item": "Technician time 1.2 h at ~$34/h loaded",
+     "amount": 41
+    },
+    {
+     "item": "Tags, collars, O-rings",
+     "amount": 6
+    },
+    {
+     "item": "One 5-lb replacement at Brooks cost (est.)",
+     "amount": 45
+    },
+    {
+     "item": "Two emergency-light batteries at cost (est.)",
+     "amount": 30
+    },
+    {
+     "item": "Fuel/vehicle allocation",
+     "amount": 12
+    }
+   ],
+   "notes": "Revenue: 5 x $12 inspection + $65 trip + 6 x $9 light test + one 5-lb unit $85 + 2 batteries $25 = $289. Contribution ~$155 (54%). Hood-system service excluded (needs Class B). Paid at visit or net-15. Prices A/D brackets, costs E.",
+   "evidence": "D"
+  },
+  {
+   "name": "Three-storey mixed-use building (property manager): 10 extinguishers, 14 fixtures, 6-year maintenance due on 3 units",
+   "revenue": 547,
+   "lines": [
+    {
+     "item": "Technician time 2.5 h",
+     "amount": 85
+    },
+    {
+     "item": "Agent, valve parts for 3 maintenances",
+     "amount": 36
+    },
+    {
+     "item": "Batteries/lamps (3)",
+     "amount": 45
+    },
+    {
+     "item": "Vehicle allocation",
+     "amount": 15
+    }
+   ],
+   "notes": "Revenue: 10 x $12 + $65 + 14 x $9 + 3 x $28 + 3 x $35 + misc $47. Contribution ~$366 (67%). Net-30 via property manager.",
+   "evidence": "D"
+  },
+  {
+   "name": "First-aid cabinet add-on (narrow WS13-004 test), per account per year",
+   "revenue": 120,
+   "lines": [
+    {
+     "item": "Refill items at wholesale (est. 55% of price)",
+     "amount": 66
+    },
+    {
+     "item": "Incremental time 0.15 h x 4 quarterly checks",
+     "amount": 20
+    }
+   ],
+   "notes": "Only viable as an add-on on existing stops; UniFirst's $127M first-aid segment lost $4.6M [A, C1-S012]. Contribution ~$34/yr. E.",
+   "evidence": "E"
+  }
+ ]
+}

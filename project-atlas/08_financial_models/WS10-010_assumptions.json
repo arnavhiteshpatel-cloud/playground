@@ -1,0 +1,296 @@
+{
+ "id": "WS10-010",
+ "name": "Chicago masonry restoration & tuckpointing for 2-6 flats, small condo associations and property-managed buildings (North/Northwest Side first)",
+ "summary": "Customer unit = one masonry job (tuckpointing, lintel/parapet/chimney repair) modelled as one-time revenue per new customer; recurring revenue is zero. Past customers form a referral pool that decays (churn). The founder sells, estimates, handles permits and runs the business; the City licence requires a hired supervising mason (City exam, 21+) and all mason work by W-2 employees, so crew units of two W-2 workers are added as revenue grows (first unit includes the supervising mason). Seasonality (Dec-Feb ~10% of permits) is averaged; crew cost is a blended 10.5-month equivalent.",
+ "evidence_notes": [
+  "Licensing: Chicago mason contractor licence $150 (+$150 exam) requires employing a supervising mason who passed the City written exam (age 21+); work only by the licensee's employees (UI, WC and income-tax employees), never 1099 contractors; licence auto-inactivates without a supervising mason [A, DB-S003].",
+  "Demand: express masonry permits 1,964 (2024), 1,924 (2025), 1,873 (2026 to 28 Nov); median reported cost $15,000 (2024-25) and $16,200 (2026); IQR 2025 $7,500-$39,900 [A, DB-S001] (applicant-reported cost). Median 400 sq ft; median $54/sq ft for 100-499 sq ft jobs, $27.50 for 500-1,499, $13 for 1,500-4,999 (cost per sq ft includes lintels/rebuild work) [A, DB-S001].",
+  "Condo/association-owned buildings: 661 of 5,767 express masonry permits 2024-26 (11.5%) with median reported cost $48,550 - about 3x the overall median [A, DB-S001].",
+  "Violations: 6,572 exterior-wall/parapet/chimney violations dated 2025-26 at 4,216 addresses; 3,722 addresses still OPEN; only 250 of those addresses had an express masonry permit in 2024-26 [A, DB-S002] - a large unserved, identifiable need (some owners will use unpermitted or non-masonry fixes).",
+  "Competition: 350 distinct mason contractors on 2025 permits; top firm 86 permits (~4.5%) [A, DB-S001].",
+  "Labour: Cook County prevailing (union-scale) brick mason $54.81/h + $14.74 H/W + $25.51 pension + $1.59 training = $96.65/h package; laborer $53.00 + $19.86 + $18.34 + $0.91 = $92.11/h [A, DB-S004] - applies to public work and union shops. BLS brickmasons Chicago MSA annual mean $84,010 (2025) [C, DB-S005]. Private residential tuckpointing is mostly non-union (E).",
+  "Workers' comp: Illinois class-5022 rate MISSING; neighbouring Missouri NCCI advisory loss cost for 5022 = $4.143 per $100 payroll effective 2026-01-01 [C proxy, DB-S006]; with carrier loss-cost multipliers and Illinois benefit levels we assume $7-10 per $100 (E). Insureon masonry medians (tiny firms): GL $88/mo, WC $213/mo, auto $268/mo [D, DB-S007] - too small for a W-2 crew.",
+  "Job costs, win rates, crew productivity (35-45 jobs/crew-season) are E."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 5,
+   "base": 3,
+   "optimistic": 2
+  },
+  "sales_start_delay_months__evidence": "A",
+  "sales_start_delay_months__source": "Recruit supervising mason who holds or passes the City exam via Continental Testing Services, licence $150 [A, DB-S003]; GL/WC binding, truck and scaffold (E for time).",
+  "sales_cycle_months": 1,
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "2-8 weeks for owners; 2-6 months for condo boards (Stage A/C, E).",
+  "founder_ramp_months": 6,
+  "founder_leads_per_month": {
+   "conservative": 15,
+   "base": 20,
+   "optimistic": 22
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Estimate requests from violation-address mailers, PM referrals, Google LSA; 3,722 open masonry-violation addresses [A, DB-S002]. Volume E. Optimistic capped so year-3 job volume stays near the busiest 2025 Chicago permit holder (86 express permits [A, DB-S001]).",
+  "lead_to_proposal_pct": {
+   "conservative": 0.45,
+   "base": 0.5,
+   "optimistic": 0.55
+  },
+  "lead_to_proposal_pct__evidence": "E",
+  "proposal_to_win_pct": {
+   "conservative": 0.2,
+   "base": 0.25,
+   "optimistic": 0.28
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Owners take 2-4 bids (E); 350 permit-holding competitors [A, DB-S001].",
+  "rep_ramp_months": 4,
+  "rep_new_customers_per_month": 2,
+  "referral_new_per_100_active": {
+   "conservative": 0.8,
+   "base": 1.5,
+   "optimistic": 2.5
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Past-customer and PM repeat/referral work (portfolio managers pulled 8-17 masonry permits each 2024-26 [A, DB-S001]); rate E; masonry is an occasional purchase (pointing every 20-30 years), so referral rates are set low.",
+  "monthly_churn_pct": 0.03,
+  "monthly_churn_pct__evidence": "E",
+  "monthly_churn_pct__source": "Decay of the past-customer referral pool (no recurring revenue modelled).",
+  "arpc_monthly": 0,
+  "onetime_revenue_per_new_customer": {
+   "conservative": 14000,
+   "base": 17500,
+   "optimistic": 21000
+  },
+  "onetime_revenue_per_new_customer__evidence": "A",
+  "onetime_revenue_per_new_customer__source": "Median express masonry permit reported cost $15,000-$16,200 [A, DB-S001]; mix shifted toward small condo associations (median $48,550) lifts the mean; reported costs are applicant-stated and may understate price (E).",
+  "arpc_annual_growth_pct": 0.03,
+  "gross_margin_pct": 0.5,
+  "onetime_gross_margin_pct": {
+   "conservative": 0.72,
+   "base": 0.77,
+   "optimistic": 0.8
+  },
+  "onetime_gross_margin_pct__evidence": "C",
+  "onetime_gross_margin_pct__source": "Direct non-labour costs: materials, scaffold/lift rental, permits (median express fee $375 [A, DB-S001]), dumpster, silica controls ~20-28% (Stage C used 17%, E). Census NAICS 238 materials 30.4% of receipts incl. material-heavy trades [C, WS10-S022]. Crew labour is in Staff. Illinois masonry firms with 5-19 employees take in ~$232-242k receipts per employee with payroll ~$71-86k per employee [C, DB-S036].",
+  "variable_opex_pct_revenue": 0.02,
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Card/financing fees, warranty reserve (E).",
+  "cac_per_new_customer": {
+   "conservative": 650,
+   "base": 450,
+   "optimistic": 350
+  },
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Estimating time is founder's; mailers, LSA leads, drone/photo surveys spread over ~2 bids per job won... (E).",
+  "fixed_marketing_per_month": {
+   "conservative": 1000,
+   "base": 800,
+   "optimistic": 700
+  },
+  "fixed_marketing_per_month__evidence": "E",
+  "dso_days": {
+   "conservative": 25,
+   "base": 12,
+   "optimistic": 6
+  },
+  "dso_days__evidence": "E",
+  "dso_days__source": "Deposit + progress payments for residential (Home Repair Act formalities over $1,000 [A, WS18-S011]); condo boards pay slower (E).",
+  "inventory_days_cogs": 3,
+  "dpo_days": {
+   "conservative": 10,
+   "base": 25,
+   "optimistic": 30
+  },
+  "dpo_days__evidence": "E",
+  "dpo_days__source": "Supply-house trade credit after 3-6 months of history (assumed; terms MISSING).",
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 3000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": {
+   "conservative": 70000,
+   "base": 60000,
+   "optimistic": 50000
+  },
+  "labor_cost_multiplier": 1,
+  "lt_growth_y6_pct": 0.05,
+  "lt_growth_decay": 0.85,
+  "incremental_roic_pct": 0.5,
+  "maint_capex_pct_op": 0.1,
+  "reserve_months": 2,
+  "ev_multiple": 2.0,
+  "ev_multiple__evidence": "E",
+  "ev_multiple__source": "Small trade contractors sell at low SDE multiples (BizBuySell-type D evidence not retrieved) (E)."
+ },
+ "staff": [
+  {
+   "role": "Mason crew unit: 2 W-2 workers (supervising mason or foreman + mason/tender), non-union",
+   "trigger": "revenue",
+   "threshold": 1,
+   "per": 40000,
+   "start_month": 1,
+   "capex_per_hire": 6000,
+   "monthly_cost": {
+    "conservative": 17000,
+    "base": 15500,
+    "optimistic": 14500
+   },
+   "notes": "Crew count = ceil(prior-month revenue / $40k), i.e. ~$480k/yr per 2-person crew (~27 median jobs) (E). Wages ~$88k supervising mason/foreman + ~$60k mason/tender = ~$148k (BLS brickmason mean $84,010 [C, DB-S005]); burden ~30% incl. WC 5022 at assumed $7-10/$100 [E; MO loss cost $4.143, DB-S006] = ~$192k/yr, blended to ~$15.5k/mo for winter layoffs. First unit must include the City-exam supervising mason [A, DB-S003]. Union packages would be ~$96.65/h mason, ~$92.11/h laborer [A, DB-S004]."
+  },
+  {
+   "role": "Estimator / project coordinator",
+   "trigger": "revenue",
+   "threshold": 110000,
+   "per": 200000,
+   "max_count": 1,
+   "monthly_cost": 6500,
+   "notes": "Frees the founder from estimating (E)."
+  }
+ ],
+ "overhead": [
+  {
+   "item": "General liability (masonry, height work) + umbrella",
+   "monthly": {
+    "conservative": 2200,
+    "base": 1500,
+    "optimistic": 1200
+   },
+   "annual_growth_pct": 0.06,
+   "notes": "Premium MISSING; Insureon tiny-firm median GL $88/mo + umbrella $93/mo [D, DB-S007] is far below a 3-person exterior-height crew; E."
+  },
+  {
+   "item": "Commercial auto, truck lease/fuel",
+   "monthly": {
+    "conservative": 1500,
+    "base": 1200,
+    "optimistic": 1000
+   },
+   "notes": "Insureon auto median $268/mo [D, DB-S007]; fuel/maintenance E."
+  },
+  {
+   "item": "Yard/storage, small tools replacement, silica PPE, permits admin",
+   "monthly": {
+    "conservative": 1000,
+    "base": 800,
+    "optimistic": 650
+   },
+   "notes": "(E)"
+  },
+  {
+   "item": "Estimating/CRM software + Claude seat",
+   "monthly": {
+    "conservative": 250,
+    "base": 180,
+    "optimistic": 150
+   },
+   "is_ai": true,
+   "notes": "Claude Pro $20/mo [B, DB-S022]; CRM/estimating (E)."
+  },
+  {
+   "item": "Accounting, phone, licence renewal ($150/yr)",
+   "monthly": 400,
+   "notes": "Licence fee [A, DB-S003]; rest E."
+  }
+ ],
+ "capex": [
+  {
+   "item": "Used box/stake truck, scaffold frames and planks, mixers, grinders with shrouds + HEPA vacuums, ladders",
+   "month": 3,
+   "amount": {
+    "conservative": 50000,
+    "base": 38000,
+    "optimistic": 30000
+   }
+  }
+ ],
+ "transactions": [
+  {
+   "name": "3-flat, Logan Square: 450 sq ft tuckpointing + 2 lintels + parapet coping (express permit)",
+   "revenue": 17500,
+   "lines": [
+    {
+     "item": "Crew 6 days x 3 workers x 9 h @ $41 avg loaded",
+     "amount": 6640
+    },
+    {
+     "item": "Mortar, brick, steel lintels, flashing",
+     "amount": 1350
+    },
+    {
+     "item": "Scaffold/planks rental and haul",
+     "amount": 900
+    },
+    {
+     "item": "Express permit fee",
+     "amount": 375
+    },
+    {
+     "item": "Dumpster/debris",
+     "amount": 450
+    },
+    {
+     "item": "Silica controls/consumables",
+     "amount": 250
+    }
+   ],
+   "notes": "Price near 2025-26 median permit cost [A, DB-S001] ($39/sq ft vs $54 median for 100-499 sq ft jobs incl. lintel work). Labour productivity E. Deposit 1/3, balance at completion (E).",
+   "evidence": "A/E"
+  },
+  {
+   "name": "Small condo association (12 units, 4 stories): 1,800 sq ft repoint + parapet rebuild, board-approved",
+   "revenue": 48000,
+   "lines": [
+    {
+     "item": "Crew 16 days x 3 x 9 h @ $41",
+     "amount": 17710
+    },
+    {
+     "item": "Materials",
+     "amount": 3800
+    },
+    {
+     "item": "Mast climber/scaffold rental 5 weeks",
+     "amount": 4500
+    },
+    {
+     "item": "Permit + street/sidewalk use",
+     "amount": 900
+    },
+    {
+     "item": "Debris, protection, silica",
+     "amount": 1400
+    }
+   ],
+   "notes": "Condo-owned permit median $48,550 [A, DB-S001]. Board pays 30% deposit, progress draws, 10% retainage on completion (E).",
+   "evidence": "A/E"
+  },
+  {
+   "name": "Violation-driven chimney rebuild above roofline (2-flat)",
+   "revenue": 6500,
+   "lines": [
+    {
+     "item": "Crew 2 days",
+     "amount": 2210
+    },
+    {
+     "item": "Brick/mortar/crown/cap",
+     "amount": 600
+    },
+    {
+     "item": "Scaffold/roof protection",
+     "amount": 350
+    },
+    {
+     "item": "Permit",
+     "amount": 300
+    },
+    {
+     "item": "Debris",
+     "amount": 250
+    }
+   ],
+   "notes": "Chimney violations: 1,101 'chimney' + 367 'chimney capping' 2025-26 [A, DB-S002]; price E.",
+   "evidence": "A/E"
+  }
+ ]
+}

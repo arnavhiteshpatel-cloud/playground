@@ -620,12 +620,14 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
                 extra.append(intensity["resorbable_timepoint_rule"])
             if intensity.get("uncertain_profile_rule"):
                 extra.append("material appearance is uncertain (" + intensity["uncertain_profile_rule"].split(" | ")[-1]
-                             + "); measure it with a material-only or day-0 scan")
+                             + "); measure it with a scan of the material alone (characterisation workflow)")
             if extra:
                 why = "; ".join(extra)
             if bone_like:
                 why = "graft is bone-derived and remodels towards bone intensity, so neither intensity nor texture separates it"
-            why += ". Report total mineral; add a day-0 scan or histology to separate graft from new bone"
+            # cycle-3 review C3-BIZ-18: the product has no day-0 workflow, so the advice names what is available now
+            why += (". Report total mineral where it is supported; separate graft from new bone by histology (a day-0 "
+                    "scan design is research-only: no desktop workflow)")
             ep[e] = EndpointSupport(e, NOT_SUPPORTED, None, why)
 
     # Thickness-type morphometry on new bone needs resolvable structures

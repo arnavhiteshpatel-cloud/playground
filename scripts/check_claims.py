@@ -26,7 +26,7 @@ RES = ROOT / "experiments" / "results"
 EXCLUDE_DIRS = ("docs/reviews/",)
 SCAN_GLOBS = ["*.md", "docs/**/*.md", "publications/*.md", "investor/*.md", "investor/build_decks.py",
               "founder/*.md", "grants/*.md", "business/*.md", "scripts/build_final_report.py", "website/**/*.html",
-              "web/landing/*.html"]
+              "web/landing/*.html", "investor/*.pptx"]
 
 CLAIMS = [
     # id, json file, path, decimals, anchors
@@ -62,7 +62,7 @@ CLAIMS = [
      [r"residual graft volume supported in\s*"], 100),
     # C3-SCI-05: rows from one phantom structure are correlated, so the structure-level bound leads
     ("S1H3_graft_bound_struct", "exp_S1H3_heldout.json", lambda d: _struct_bound(d), 2,
-     [r"upper bound on the supported-failure rate\s*"]),
+     [r"upper bound on the supported-failure rate (?=\d)"]),     # a quoted value, not rule text ("of at most 0.10")
     ("S1H3_graft_bound", "exp_S1H3_heldout.json",
      "summary.0.per_endpoint.residual_graft_volume.p_fail_given_supported_upper95", 3,
      [r"counting phantom structures as the unit;\s*"]),
@@ -146,7 +146,8 @@ SCALE = {"K": 1e3, "M": 1e6, "%": 0.01}
 
 # Customer-, investor- and grant-facing files and phrases that must not appear in them.
 FACING_GLOBS = ["website/*.html", "docs/user/*.md", "investor/*.md", "investor/build_decks.py", "grants/*.md",
-                "business/*.md", "business/templates/*.md"]
+                "business/*.md", "business/templates/*.md", "investor/*.pptx", "publications/*.md", "web/landing/*.html",
+                "outreach/*.md", "founder/*.md", "FOUNDER_EXECUTIVE_SUMMARY.md"]
 BANNED = [
     (r"audit[- ]ready", "compliance-flavoured: use 'tamper-evident audit trail (research prototype; not validated)'"),
     (r"validated (?:analysis )?services?", "no service is validated"),
@@ -167,9 +168,38 @@ BANNED_STRICT = {"website/*.html": [r"(?<![Uu]n)(?<!not )\bverified\b"], "invest
 ALLOW_LINE = re.compile(r"[Nn]ot offered|not sold|[Nn]o GLP|do not|Do not|banned|retired", re.I)
 
 VERSION_GLOBS = ["website/*.html", "docs/user/*.md", "docs/quality/*.md", "investor/*.md", "founder/*.md", "business/*.md",
-                 "grants/*.md", "FOUNDER_EXECUTIVE_SUMMARY.md", "deliverables/README.md"]   # scope widened (C3-BIZ)
+                 "grants/*.md", "FOUNDER_EXECUTIVE_SUMMARY.md", "deliverables/README.md", "investor/*.pptx",
+                 "publications/*.md", "web/landing/*.html"]   # scope widened (C3-BIZ-17)
 VERSION_RE = re.compile(r"(?:[Aa]dvisor(?: version)?|ADVISOR_VERSION = \")\s*\**(\d+\.\d+\.\d+)")
 VERSION_ALLOW = re.compile(r"history|histor|changelog|earlier|previous|superseded|since|until|before|motivated", re.I)
+
+
+def _read(f: Path) -> str:
+    """Text of a checked file. Decks (.pptx) and PDFs are checked on their extracted text (cycle-3 review C3-BIZ-17:
+    the generated decks were outside the checker)."""
+    suf = f.suffix.lower()
+    if suf == ".pptx":
+        try:
+            from pptx import Presentation
+            prs = Presentation(str(f))
+            out = []
+            for slide in prs.slides:
+                for sh in slide.shapes:
+                    if sh.has_text_frame:
+                        out.append(sh.text_frame.text)
+                    if getattr(sh, "has_table", False) and sh.has_table:
+                        out += [c.text for r in sh.table.rows for c in r.cells]
+            return "\n".join(out)
+        except Exception as e:  # noqa: BLE001
+            return f"[unreadable deck: {e}]"
+    if suf == ".pdf":
+        try:
+            import pypdfium2 as pdfium
+            doc = pdfium.PdfDocument(str(f))
+            return "\n".join(doc[i].get_textpage().get_text_range() for i in range(len(doc)))
+        except Exception:  # noqa: BLE001 - pypdfium2 optional
+            return ""
+    return f.read_text(errors="ignore")
 
 
 def get(d, path):
@@ -196,7 +226,7 @@ def check_money(files) -> tuple[list[str], dict]:
     for cid, fn, anchors in MONEY_CLAIMS:
         want = float(fn(d))
         for f in files:
-            text = f.read_text(errors="ignore")
+            text = _read(f)
             for a in anchors:
                 for m in re.finditer(a, text):
                     n = MONEY_RE.match(text, m.end()) or MONEY_RE.search(text[m.end(): m.end() + 12])
@@ -222,7 +252,7 @@ def check_banned() -> list[str]:
         for g, extra in BANNED_STRICT.items():
             if f in set(ROOT.glob(g)):
                 pats += [(re.compile(p), "quality claim: say what was checked, not 'verified'") for p in extra]
-        for i, line in enumerate(f.read_text(errors="ignore").splitlines(), 1):
+        for i, line in enumerate(_read(f).splitlines(), 1):
             for rx, why in pats:
                 if rx.search(line) and not ALLOW_LINE.search(line):
                     bad.append(f"BANNED {rel}:{i}: '{rx.search(line).group(0)}' ({why})")
@@ -249,7 +279,7 @@ def check_versions() -> list[str]:
     runs = _run_versions()
     files = sorted({p for g in VERSION_GLOBS for p in ROOT.glob(g) if p.is_file()})
     for f in files:
-        for i, line in enumerate(f.read_text(errors="ignore").splitlines(), 1):
+        for i, line in enumerate(_read(f).splitlines(), 1):
             for m in VERSION_RE.finditer(line):
                 named = {rid for rid in runs if re.search(rf"\b{rid}\b", line)}
                 if any(runs[rid] == m.group(1) for rid in named):
@@ -281,7 +311,7 @@ def main(paths=None) -> int:
         raw = float(path(jd) if callable(path) else get(jd, path)) * (scale or 1)
         want = round(raw, dec)
         for f in sorted(set(files)):
-            text = f.read_text(errors="ignore")
+            text = _read(f)
             for a in anchors:
                 for m in re.finditer(a, text):
                     window = text[m.end(): m.end() + 40]

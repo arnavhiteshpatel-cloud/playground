@@ -1,0 +1,10 @@
+{
+ "date": "2026-11-28",
+ "passed": 597,
+ "failed": 0,
+ "skipped": 1,
+ "suite": "library and desktop test suites (pytest), local full run at commit 4b5e84c; CI runs the same suites on every push",
+ "coverage_total": 90.8,
+ "coverage_note": "line+branch coverage of the osteoquant package with the desktop UI code excluded, measured with the library and desktop test suites (CI gate: >=90% overall, >=95% for morphometry, stats, metrics, I/O and audit)",
+ "superseded_figures": "earlier documents quoted 58, 61, 372, 485 and 556 tests and 62%, 87%, 88% and 91% coverage at different dates; this file is the single source"
+}

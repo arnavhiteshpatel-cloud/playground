@@ -62,7 +62,7 @@ bone 650–1000 by maturity; host 1000–1150) × noise σ ∈ {30, 80, 150, 250
 Intensity-only oracle: with the test volumes' true class-conditional histograms (256 bins), the Dice-maximising union
 of bins (a superlevel set of the graft likelihood ratio) — an upper bound for any voxel-wise intensity method at this
 binning. (An earlier draft reported the accuracy-optimal rule's Dice, which is not a Dice bound; corrected after
-independent review.) Ablation (C2): RF feature sets and granule
+an internal automated review.) Ablation (C2): RF feature sets and granule
 morphology (compact 300–600 µm, roughness 0.15 vs strut-like 120–250 µm, roughness 0.6).
 2.6 **Longitudinal.** For each specimen, day-0 (s=0) and later (s=0.6) phantoms share host anatomy and initial packing;
 the later scan undergoes random rigid motion (≤5°, ≤200 µm) and is registered (rigid, normalised correlation, metric

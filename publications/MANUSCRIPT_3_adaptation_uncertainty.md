@@ -16,7 +16,7 @@ uncertainty can direct analyst review to cut hands-on time while preserving accu
   suffice to exceed 0.8 — **optimistic**, because held-out materials differ from training materials only in simulated
   density/porosity/resorption, not in morphology or scanner.
 * **K/M — uncertainty and modelled review effort** (`exp_K_M_uncertainty.json`, rerun with temperature scaling applied
-  and validation-derived thresholds after independent review): see results file for risk–coverage, AURC, ECE, ID-vs-OOD
+  and validation-derived thresholds after an internal automated review): see results file for risk–coverage, AURC, ECE, ID-vs-OOD
   AUROC and failure-detection sensitivity/specificity. Effort model uses ASSUMED constants (20 s per reviewed slice,
   90 s per manually delineated slice) and must be replaced by a timed user study.
 

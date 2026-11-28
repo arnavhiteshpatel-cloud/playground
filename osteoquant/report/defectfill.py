@@ -232,6 +232,17 @@ def _support(s: dict, key: str) -> str | None:
     return "supported" if key.startswith("class_volumes.TV") or key.endswith("uncertain_fraction") else None
 
 
+def _endpoint_label(ep: str, eps) -> str:
+    """One vocabulary in the support table (C3-PRD-17): an advisor endpoint id is shown with the report labels of the
+    metrics it governs; anything else (already a label) is shown as given."""
+    from ..advisor.integration import ENDPOINT_METRICS
+    paths = ENDPOINT_METRICS.get(ep)
+    if not paths:
+        return ep.replace("_", " ")
+    labels = [lab for k, lab, _ in eps if any(k == p_ or k.startswith(p_ + ".") for p_ in paths)]
+    return " / ".join(dict.fromkeys(labels)) if labels else ep.replace("_", " ")
+
+
 def _fmt_support(v, status):
     if status in REFUSED:
         return "n/m"
@@ -532,7 +543,8 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     if bundle.get("audit_excerpt"):
         rows = [["Seq", "Time", "User", "Action", "Object", "Row hash (first 12)"]]
         for e in bundle["audit_excerpt"][:25]:
-            rows.append([str(e["seq"]), e["ts"][:19], str(e.get("user_id")), e["action"], f"{e.get('object_type')}:{e.get('object_id')}",
+            who = f"{e['user_name']} ({e.get('user_id')})" if e.get("user_name") else str(e.get("user_id"))
+            rows.append([str(e["seq"]), e["ts"][:19], who, e["action"], f"{e.get('object_type')}:{e.get('object_id')}",
                          e["row_hash"][:12]])
         flow.append(table(rows))
 
@@ -573,7 +585,7 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
                 text += " Conditions: " + "; ".join(d["conditions"])
             status = {"supported_with_conditions": "conditional", "not_assessed": "not assessed"}.get(
                 d.get("status"), "not measured")
-            items.append((ep.replace("_", " "), status, text))
+            items.append((_endpoint_label(ep, bundle["endpoints"]), status, text))
         for k in items:
             if k not in grouped:
                 grouped[k] = []

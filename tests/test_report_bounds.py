@@ -229,3 +229,11 @@ def test_report_discloses_unmeasured_groups_partial_pooling_and_omitted_comparis
     assert re.search(r"\(1\s+from\s+part\s+of\s+their\s+scans\)", text)
     assert tx["class_volumes.mineral_volume_mm3"]["n_conditional"] == 3      # animals, not scans (4 scans in Tx)
     assert "Comparisons not computed" in text and "New bone volume (Tx @ Week 4)" in text.replace("\n", " ")
+
+
+def test_support_table_uses_report_endpoint_labels(tmp_path):
+    """C3-PRD-17: advisor endpoint ids are shown with the report's own labels (one vocabulary)."""
+    text = _pdf_text(build_pdf(_supported_bundle(), tmp_path / "v.pdf")["pdf"])
+    sect = text[text.find("Reason / conditions") - 200:]
+    assert "New bone volume" in sect and "new bone volume " not in sect
+    assert "Total mineral volume" in sect and "total mineral volume" not in sect

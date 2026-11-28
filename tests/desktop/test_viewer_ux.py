@@ -160,9 +160,9 @@ def test_close_with_running_job_returns_within_3s(qtbot, window, project):
         return 1
     job = w.jobs.submit("test", "stubborn", stubborn)
     qtbot.waitUntil(lambda: job.status == "running", timeout=5000)
-    t0 = time.time()
     assert w.close_project(ask=False)
-    assert time.time() - t0 < 4.5
+    # event-based (C3-PRD-19): closing returned while the stubborn job is still running, so it did not wait for it
+    assert job.status == "running" and not release
     assert w.project is None and w._closing                     # store closes once the job has stopped
     release.append(1)
     w.jobs.wait(10000)

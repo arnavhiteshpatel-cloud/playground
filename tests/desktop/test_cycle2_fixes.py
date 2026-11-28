@@ -118,16 +118,28 @@ def test_c2_01_report_specimens_joined_by_scan_and_segmentation_id(analysed, mon
 def test_c2_01_bundle_built_from_one_snapshot(project, study):
     """Writes from another thread wait until the report's read snapshot ends."""
     st = project.store
-    done = threading.Event()
+    started, done = threading.Event(), threading.Event()
+    probe = {}
 
     def writer():
+        started.set()                 # about to write (C3-PRD-19: the assertion no longer depends on scheduling)
         st.exec("INSERT INTO timepoints(study_id,label) VALUES (?,?)", (study, "w2"))
         done.set()
+
+    def lock_probe():                 # deterministic: can another thread take the store lock right now?
+        got = st.lock.acquire(blocking=False)
+        probe["free"] = got
+        if got:
+            st.lock.release()
     with st.snapshot():
         n0 = st.q1("SELECT count(*) n FROM timepoints")["n"]
         t = threading.Thread(target=writer)
         t.start()
-        time.sleep(0.3)
+        assert started.wait(5)
+        p = threading.Thread(target=lock_probe)
+        p.start()
+        p.join(5)
+        assert probe == {"free": False}       # the snapshot holds the lock, so the writer cannot be inside exec
         assert not done.is_set()
         assert st.q1("SELECT count(*) n FROM timepoints")["n"] == n0
     t.join(5)

@@ -35,9 +35,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Windows is left out by founder decision (28 Nov 2026, DECISIONS.md D-026) until DF-044 (a desktop test crashes
+        # when the 3D view opens on the headless runner) is fixed; the tests stay blocking on the platforms built here.
         include:
-          - os: windows-latest
-            label: windows-x64
           - os: macos-15
             label: macos-arm64
           - os: ubuntu-22.04

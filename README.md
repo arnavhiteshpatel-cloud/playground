@@ -26,8 +26,8 @@ pytest -q                                     # test counts and coverage: docs/q
 python scripts/check_claims.py                # customer-facing numbers against their result files
 ```
 Bundles are built with `python packaging/build.py` (`docs/desktop/PACKAGING.md`) or the `desktop-build` CI workflow,
-which produced self-tested macOS (Apple silicon) and Linux bundles on 28 Nov; the Windows build fails on a headless
-desktop-test crash (DF-044). Nothing is signed or distributed.
+which produced self-tested macOS (Apple silicon) and Linux bundles on 28 Nov; Windows is left out for now (a headless
+desktop-test crash, DF-044; D-026). Nothing is signed or distributed.
 
 ## Repository map
 | Path | Contents |

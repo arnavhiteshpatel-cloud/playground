@@ -968,5 +968,86 @@
    48,
    48
   ]
+ },
+ "s2v2_gen0_synth_k1_s2": {
+  "sha256": "4348f4d5ff822b33c23b857a43ceedbc737ca4fef4036286c01cecd2f660415f",
+  "created": "2026-11-28T04:52:25Z",
+  "provenance": [
+   "public-real",
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 1,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0,
+    "boundary_ignore_aware": true
+   },
+   "eval_in_roi": false,
+   "roi_distance_channel": false,
+   "seed": 2
+  },
+  "parent": "unet_noctx_s0",
+  "onnx_sha256": "bccb075213aafa7a02fedd8e0894b983ac7204ee84c78e9b57192b6689cb19a0",
+  "onnx_patch": [
+   48,
+   48,
+   48
+  ]
+ },
+ "s2v2_dr_synth_k1_s2": {
+  "sha256": "8a74da75f4ac726794c4dd48d6f12d9d62850a65716b42da2fd0b364d0f93732",
+  "created": "2026-11-28T04:58:41Z",
+  "provenance": [
+   "public-real",
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 1,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "n_classes": 2,
+   "log_every": 300,
+   "seed": 2,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0,
+    "boundary_ignore_aware": true
+   },
+   "val_every": 1000000000
+  },
+  "parent": "unet_dr2_mineral_s0",
+  "onnx_sha256": "c578e860ae3e30870453d5dc9a870fff62282d184c3f5acaa17c0947127b85a1",
+  "onnx_patch": [
+   48,
+   48,
+   48
+  ]
  }
 }

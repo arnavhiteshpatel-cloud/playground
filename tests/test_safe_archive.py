@@ -3,6 +3,7 @@ import io
 import stat
 import tarfile
 import zipfile
+from pathlib import Path
 
 import pytest
 
@@ -24,7 +25,7 @@ def _zip(path, members):
 def test_valid_zip_extracts_nested_folders(tmp_path):
     z = _zip(tmp_path / "ok.zip", [("a/b/c.txt", b"hello"), ("d.txt", b"x" * 1000), ("e/", b"")])
     out = safe_extract(z, tmp_path / "out")
-    assert sorted(p.split("out/")[1] for p in out) == ["a/b/c.txt", "d.txt"]
+    assert sorted(Path(p).relative_to(tmp_path / "out").as_posix() for p in out) == ["a/b/c.txt", "d.txt"]
     assert (tmp_path / "out" / "a" / "b" / "c.txt").read_bytes() == b"hello"
 
 
@@ -192,7 +193,7 @@ def test_tar_directory_members_and_unknown_types(tmp_path):
         t.addfile(d)
         _file(t, "sub/a.txt", b"ok")
     out = safe_extract(_tar(tmp_path / "d.tar", add), tmp_path / "o", allow_tar=True)
-    assert [p.rsplit("/", 2)[-2:] for p in out] == [["sub", "a.txt"]]
+    assert [list(Path(p).relative_to(tmp_path / "o").parts) for p in out] == [["sub", "a.txt"]]
 
     def odd(t):
         ti = tarfile.TarInfo("weird")

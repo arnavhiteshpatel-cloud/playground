@@ -23,6 +23,23 @@ import numpy as np
 
 from ..volume import Volume
 
+
+def _owned(a) -> np.ndarray:
+    """C-contiguous array that does not keep the source file memory-mapped.
+
+    ``np.ascontiguousarray`` returns a memmap slice unchanged when it is already contiguous, so a Volume would keep
+    the user's source file mapped (on Windows the file then cannot be overwritten, moved or deleted). Copy only when
+    the data is backed by a memory map; in-memory arrays are not duplicated.
+    """
+    import mmap
+    b = np.ascontiguousarray(a)
+    base = b
+    while base is not None:
+        if isinstance(base, (np.memmap, mmap.mmap)):
+            return np.array(b, order="C", copy=True)
+        base = getattr(base, "base", None)
+    return b
+
 READER_VERSION = "0.1.0"
 
 
@@ -383,7 +400,7 @@ def read_tiff(path, zrange=None, step=1, do_hash=True, **kw):
         raise ValueError(f"TIFF has {arr.ndim} dims after squeeze; expected 3 (multi-channel not supported here)")
     z0, z1 = zrange or (0, arr.shape[0])
     rep.zrange = (z0, z1)
-    data = np.ascontiguousarray(arr[z0:z1:step, ::step, ::step])
+    data = _owned(arr[z0:z1:step, ::step, ::step])
     spacing = found.get("spacing_um")
     if spacing is None:
         spacing = [1.0, 1.0, 1.0]
@@ -608,7 +625,7 @@ def read_dicom_series(path, zrange=None, step=1, do_hash=True, **kw):
             rep.metadata_found[tag] = str(getattr(ds0, tag))
     arr = arr[:, ::step, ::step][::step] if step > 1 else arr
     rep.decimation_step = step
-    return Volume(np.ascontiguousarray(arr), _apply_step_spacing(spacing_um, step),
+    return Volume(_owned(arr), _apply_step_spacing(spacing_um, step),
                   meta={"format": "dicom", "intensity_unit": "rescaled"}), rep
 
 
@@ -639,7 +656,7 @@ def read_nifti(path, zrange=None, step=1, do_hash=True, **kw):
     rep.metadata_found["affine"] = img.affine.tolist()
     z0, z1 = zrange or (0, arr.shape[0])
     rep.zrange = (z0, z1)
-    data = np.ascontiguousarray(arr[z0:z1:step, ::step, ::step])
+    data = _owned(arr[z0:z1:step, ::step, ::step])
     rep.decimation_step = step
     return Volume(data, _apply_step_spacing(spacing, step), meta={"format": "nifti"}), rep
 
@@ -678,7 +695,7 @@ def read_nrrd(path, zrange=None, step=1, do_hash=True, **kw):
     z0, z1 = zrange or (0, arr.shape[0])
     rep.zrange = (z0, z1)
     rep.decimation_step = step
-    return Volume(np.ascontiguousarray(arr[z0:z1:step, ::step, ::step]),
+    return Volume(_owned(arr[z0:z1:step, ::step, ::step]),
                   _apply_step_spacing(spacing, step), meta={"format": "nrrd"}), rep
 
 
@@ -699,7 +716,7 @@ def read_itk(path, zrange=None, step=1, do_hash=True, **kw):
     rep.warnings.append("MetaImage has no unit field; spacing interpreted as mm")
     spacing = [s * 1000.0 for s in sp]
     z0, z1 = zrange or (0, arr.shape[0])
-    return Volume(np.ascontiguousarray(arr[z0:z1:step, ::step, ::step]),
+    return Volume(_owned(arr[z0:z1:step, ::step, ::step]),
                   _apply_step_spacing(spacing, step), meta={"format": "itk"}), rep
 
 
@@ -714,7 +731,7 @@ def read_npy(path, zrange=None, step=1, do_hash=True, **kw):
     z0, z1 = zrange or (0, arr.shape[0])
     rep.metadata_assumed["spacing_um"] = [1.0, 1.0, 1.0]
     rep.warnings.append("NumPy arrays carry no spacing; assumed 1 µm")
-    return Volume(np.ascontiguousarray(arr[z0:z1:step, ::step, ::step]), (step,) * 3,
+    return Volume(_owned(arr[z0:z1:step, ::step, ::step]), (step,) * 3,
                   meta={"format": "npy"}), rep
 
 

@@ -369,6 +369,31 @@ def test_nifti_4d_and_unknown_units(tmp_path):
         read_volume(p)
 
 
+@pytest.mark.parametrize("fmt", ["nii", "npy", "tif"])
+def test_reader_output_does_not_keep_source_memory_mapped(tmp_path, fmt):
+    """Readers must return owned arrays: a memmap-backed Volume kept the source file mapped, so on Windows it could
+    not be overwritten or deleted after import (CI failure in test_nifti_4d_and_unknown_units)."""
+    import mmap
+    arr = np.arange(4 * 5 * 6, dtype=np.int16).reshape(4, 5, 6)
+    p = tmp_path / f"a.{fmt}"
+    if fmt == "nii":
+        import nibabel as nib
+        nib.save(nib.Nifti1Image(np.transpose(arr, (2, 1, 0)), np.eye(4)), str(p))
+    elif fmt == "npy":
+        np.save(p, arr)
+    else:
+        import tifffile
+        tifffile.imwrite(p, arr)
+    v, _ = read_volume(p, spacing_um=(1.0, 1.0, 1.0)) if fmt != "nii" else read_volume(p)
+    base = v.data
+    while base is not None:
+        assert not isinstance(base, (np.memmap, mmap.mmap)), f"{fmt}: Volume data is backed by a memory map"
+        base = getattr(base, "base", None)
+    assert np.array_equal(v.data, arr)
+    del v
+    p.unlink()                      # the source can be removed once read (fails on Windows while mapped)
+
+
 def test_nrrd_units_and_missing_spacing(tmp_path):
     import nrrd
     p = tmp_path / "a.nrrd"

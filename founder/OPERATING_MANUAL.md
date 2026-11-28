@@ -21,7 +21,7 @@ Package map (each folder has a docstring at the top of its main file explaining 
 ## 2. Install on your Mac (Apple Silicon)
 ```bash
 git clone <repo> osteoquant && cd osteoquant
-python3 -m venv .venv && source .venv/bin/activate          # Python 3.11–3.13
+python3 -m venv .venv && source .venv/bin/activate          # Python 3.12–3.13
 pip install --upgrade pip
 pip install -e ".[dev]"                                      # installs everything in pyproject.toml
 pytest -q                                                    # expect: all tests pass

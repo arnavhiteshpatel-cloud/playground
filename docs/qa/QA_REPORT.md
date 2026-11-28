@@ -188,7 +188,7 @@ The survivors that would change results were killed with new analytic tests (lis
 - **`lint`:** blocking ruff on the QA-owned and reviewed paths, plus non-blocking ruff on the whole
   package and non-blocking mypy.
 - **`test`:**
-  - Matrix: ubuntu, windows and macos × Python 3.11 and 3.13.
+  - Matrix: ubuntu, windows and macos × Python 3.12 and 3.13 (3.11 dropped: numcodecs>=0.17.1 requires 3.12).
   - CPU torch wheels. On Linux, `libegl1`, `libgl1` and `libxkbcommon0` are installed and
     `QT_QPA_PLATFORM=offscreen` is set.
   - The fast set (`-m "not slow"`) runs everywhere. The full set with coverage runs on ubuntu/3.13.

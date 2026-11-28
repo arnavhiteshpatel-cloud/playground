@@ -2,20 +2,21 @@
 name = "osteoquant"
 version = "0.1.0"
 description = "Preclinical bone-defect imaging analysis (research prototype; not validated)"
-requires-python = ">=3.10"
+requires-python = ">=3.12"   # numcodecs>=0.17.1 (Zarr 3 codecs, pickle-free) requires 3.12
 dependencies = [
   "numpy>=1.26", "scipy>=1.11", "scikit-image>=0.22", "scikit-learn>=1.4", "pandas>=2.0",
   "SimpleITK>=2.3", "tifffile>=2024.1", "pydicom>=2.4", "nibabel>=5.2", "pynrrd>=1.0",
   "zarr>=3.0", "numcodecs>=0.17.1", "olefile>=0.47", "imagecodecs", "matplotlib>=3.8", "statsmodels>=0.14",
   "fastapi>=0.110", "uvicorn>=0.29", "python-multipart", "reportlab>=4.0", "openpyxl>=3.1",
   "pyyaml", "psutil", "onnxruntime>=1.17",
+  "cryptography>=42",   # licence and validation-record signatures (Ed25519)
 ]
 [project.optional-dependencies]
-dev = ["pytest>=8", "httpx", "hypothesis", "pytest-cov"]
+dev = ["pytest>=8", "httpx", "hypothesis", "pytest-cov", "pypdfium2>=4"]
 # PyTorch is needed only to TRAIN models or run the PyTorch inference path ("unet:"); analysis with exported
 # models uses ONNX Runtime ("onnx:"), so the desktop bundle can omit PyTorch.
 train = ["torch>=2.6", "onnx>=1.15"]
-desktop = ["PySide6>=6.7", "vtk>=9.3", "cryptography>=42", "pytest-qt>=4.4"]
+desktop = ["PySide6>=6.7", "vtk>=9.3", "pypdfium2>=4", "pytest-qt>=4.4"]
 [project.scripts]
 osteoquant = "osteoquant.cli:main"
 [project.gui-scripts]
@@ -52,7 +53,7 @@ exclude_also = [
 
 [tool.ruff]
 line-length = 130
-target-version = "py310"
+target-version = "py312"
 extend-exclude = ["experiments", "investor", "publications", "business", "grants", "outreach", "founder"]
 
 [tool.ruff.lint]

@@ -76,7 +76,7 @@ Please report anything that differs: the macOS build has not been observed on a 
 
 ## From source (any platform, for developers and evaluators)
 
-Requires Python 3.10 or later (the project is developed on Python 3.13).
+Requires Python 3.12 or later (the Zarr 3 codec package numcodecs needs 3.12; the project is developed on Python 3.13).
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate

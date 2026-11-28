@@ -1,11 +1,19 @@
 jaccard,id_a,title_a,id_b,title_b
 0.52,WS12-019,WOTC / hiring tax-credit screening on contingency,WS14-015,Work Opportunity Tax Credit (WOTC) screening & certification on contingency
 0.48,WS10-025,"Home inspection company (Illinois-licensed inspectors, multi-inspector)",WS18-010,"Home inspection firm (licensed, multi-inspector with ancillary tests)"
+0.48,WS09-020,Illinois cannabis Responsible Vendor training provider + dispensary staff training,WS15-026,Illinois cannabis Responsible Vendor Training provider and dispensary compliance training
 0.45,WS11-015,Community solar subscriber acquisition (Illinois Shines designee/sales agent),WS15-011,Community solar subscriber acquisition (Illinois Shines Marketing Designee)
 0.44,WS04-001,Independent private-pay non-medical home care agency (Chicago suburbs),WS18-002,Non-medical in-home senior care agency (IDPH-licensed Home Services agency)
 0.43,WS04-023,Buying group / GPO for independent dental or veterinary practices,WS14-020,Independent veterinary (or dental) practice buying group
 0.42,WS04-013,Medical records retrieval + AI-assisted medical chronologies for personal-injury law firms,WS12-024,Medical & employment records retrieval for personal-injury and workers'-comp law firms
+0.4,WS11-032,IT asset disposition (ITAD) and certified data destruction for businesses,WS14-027,IT asset disposition (ITAD): certified data destruction plus refurbished-device resale revenue share
+0.4,WS10-019,Radon mitigation installer (Illinois IEMA-licensed),WS11-019,Radon measurement and mitigation (IEMA-OHS licensed)
 0.4,WS05-025,"Restroom hygiene service route (feminine hygiene units, air care, sanitizer/soap dispensers, urinal treatments)",WS13-005,"Restroom hygiene service route (sanitary disposal units, air care, soap/sanitizer dispensers)"
+0.39,WS10-005,GPR concrete scanning & private utility locating for contractors and facilities,WS13-014,Private utility locating & concrete GPR scanning for contractors and facilities
+0.38,WS11-019,Radon measurement and mitigation (IEMA-OHS licensed),WS15-016,"Radon measurement & mitigation (IEMA-licensed) for real estate transactions, rentals, daycares and schools"
+0.38,WS04-032,Pet aftercare (cremation) service for veterinary clinics,WS13-028,"Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later)"
+0.36,WS11-021,Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance,WS15-021,Construction stormwater (ILR10) SWPPP preparation and inspection service
 0.36,WS10-019,Radon mitigation installer (Illinois IEMA-licensed),WS18-011,Radon testing & mitigation contractor (IEMA-licensed)
+0.35,WS11-019,Radon measurement and mitigation (IEMA-OHS licensed),WS18-011,Radon testing & mitigation contractor (IEMA-licensed)
 0.32,WS04-029,DOT/employer drug & alcohol testing collection site + consortium/third-party administrator (C/TPA),WS17-002,DOT drug & alcohol testing consortium / C-TPA for owner-operators and small fleets
 0.31,WS07-022,"Office furniture decommissioning, liquidation and recycling (Chicago)",WS14-026,"Office furniture decommissioning, resale and donation (two-sided revenue)"

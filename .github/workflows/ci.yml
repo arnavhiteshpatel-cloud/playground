@@ -91,17 +91,24 @@ jobs:
         # excluded from the coverage figure)
         run: |
           python -m pip install onnx onnxruntime -e ".[desktop]"
-          python -m pytest -q -p no:cacheprovider --cov --cov-report=term --cov-report=xml
+          python -m pytest -q -p no:cacheprovider --cov --cov-report=term --cov-report=xml --cov-report=json:coverage.json --junitxml=junit.xml
       - name: Coverage gates
         if: ${{ matrix.os == 'ubuntu-latest' && matrix.python == '3.13' }}
         run: |
           python -m coverage report --fail-under=90
           python -m coverage report --fail-under=95 --include="osteoquant/morphometry/*,osteoquant/stats/*,osteoquant/segment/metrics.py,osteoquant/io/readers.py,osteoquant/io/writers.py,osteoquant/io/safe_archive.py,osteoquant/audit/*"
+      - name: Test metrics record (the CI counterpart of docs/qa/test_summary.json; C3-BIZ-10)
+        if: ${{ always() && matrix.os == 'ubuntu-latest' && matrix.python == '3.13' }}
+        run: |
+          python -m coverage json -o cov-critical.json --include="osteoquant/morphometry/*,osteoquant/stats/*,osteoquant/segment/metrics.py,osteoquant/io/readers.py,osteoquant/io/writers.py,osteoquant/io/safe_archive.py,osteoquant/audit/*"
+          python scripts/test_metrics.py junit.xml coverage.json test-metrics.json --critical-json cov-critical.json
       - uses: actions/upload-artifact@v4
         if: ${{ always() && matrix.os == 'ubuntu-latest' && matrix.python == '3.13' }}
         with:
-          name: coverage-xml
-          path: coverage.xml
+          name: coverage-and-test-metrics
+          path: |
+            coverage.xml
+            test-metrics.json
           if-no-files-found: ignore
 
   audit:

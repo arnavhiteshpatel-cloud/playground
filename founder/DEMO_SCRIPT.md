@@ -17,7 +17,7 @@ http://127.0.0.1:8765; have `reports_samples/` PDFs and `experiments/results/fig
 | 6:30 | Measure tool; 3D graft surface; Export OBJ | |
 | 7:30 | Sign as `demo_reviewer` (re-enter password) | "Signatures state their meaning and go into a hash-chained audit trail." |
 | 8:30 | Audit trail → *Verify hash chain* | "If anyone edits the database outside the app, verification fails at that row." |
-| 9:00 | Open `DefectFill_SAMPLE4_gen2_synthetic_betatcp_refused.pdf` (current code; the Gen-1 SAMPLE1-3 are superseded) | Banners (SYNTHETIC DATA), methods, group stats with bounded CIs, per-specimen table with "n/m" and the reasons, analysis parameters with the timepoint, sign-off. |
+| 9:00 | Open `DefectFill_SAMPLE4_gen2_synthetic_betatcp.pdf` (current code; the Gen-1 SAMPLE1-3 are superseded) | Banners (SYNTHETIC DATA), methods, group stats with bounded CIs, per-specimen table with "n/m" and the reasons, analysis parameters with the timepoint, sign-off. |
 | 10:00 | `exp_C_separability.png` and L2 result | "Key finding so far — in simulation only: when graft and new bone have similar density *and* similar shape, single-scan methods fail; a registered day-0 scan keeps graft Dice above 0.8. Do your studies acquire a post-op scan?" |
 | 11:00 | Ask | "Could we test this on 3–5 of your retrospective scans, alongside your current analysis, to measure time and agreement?" |
 

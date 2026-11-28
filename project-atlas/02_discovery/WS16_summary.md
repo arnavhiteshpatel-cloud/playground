@@ -1,6 +1,6 @@
 # WS16 — Specialty B2B distribution, authorized reselling & manufacturer representation (Stage A summary)
 
-34 opportunities and 48 sources (as of 2026-11-28). Scores are for THIS founder starting from zero. Most records rest on D/E economics. Read the composite scores as hypotheses to screen, not as findings.
+34 opportunities, 48 sources (2026-11-28). Scores are for THIS founder from zero; most economics are D/E, so treat composites as hypotheses.
 
 ## Landscape: what incumbents actually earn
 Incumbent economics come from FY2025/26 10-K XBRL (A). Turns = COGS/avg inventory; DSO is year-end.
@@ -19,7 +19,7 @@ Incumbent economics come from FY2025/26 10-K XBRL (A). Turns = COGS/avg inventor
 | BlueLinx | 15.3% | 1.1% | 7.3 | 27 |
 | Bunzl | n/a | 7.7% (ROIC 13.0%, cash conv. 95%) | — | — |
 
-\*Pool's December year-end is its seasonal trough. Other benchmarks: Sysco 18.5%/3.7%, Chefs' Warehouse 24.2%/3.5%, WESCO 21.1%/5.2%, ScanSource 13.6%/3.1%, Transcat 32.6%/4.0%, Ecolab 44.5%/17.0%, Cintas 50.7%/23.1%.
+\*Pool's December year-end is its seasonal trough. Also (GM/op): Sysco 18.5/3.7, Chefs' 24.2/3.5, WESCO 21.1/5.2, ScanSource 13.6/3.1, Ecolab 44.5/17.0, Cintas 50.7/23.1.
 
 Census 2022 data for independent merchant wholesalers:
 - All wholesale: 20.1% gross margin, about 6.9% implied operating margin.
@@ -31,20 +31,20 @@ Census 2022 data for independent merchant wholesalers:
 
 ## Strongest candidates
 1. **WS16-006 Promotional products distributor.** Lowest capital and fastest to revenue. ASI offers same-day onboarding to 3,000+ suppliers and states an average 37% gross margin; a second ASI page says about 40% (both C/D). Suppliers make goods to order and drop-ship them, so there is no inventory. The weaknesses are extreme competition and discretionary demand.
-2. **WS16-018 Warehouse rack and storage dealer-integrator, including used rack.** Manufacturers sell through dealers (Steel King, Penco; B). Materials ship direct to site, and project deposits are typical (deposits assumed, E). Demand triggers in the Chicago industrial market can be observed. Used rack adds a margin wedge. It is cyclical.
+2. **WS16-018 Warehouse rack and storage dealer-integrator, including used rack.** Manufacturers sell through dealers (Steel King, Penco; B). Materials ship direct to site, and project deposits are typical (deposits assumed, E). Demand triggers in the Chicago industrial market can be observed. Used rack adds a margin wedge. Cyclical.
 3. **WS16-011 Barcode/RFID reseller plus recurring label and ribbon supplies.** Reseller rights are open: Zebra reviews an online application in about 7 days, new partners start in a Registered track, and they buy through distributors (B). Recurring consumables fit the founder's technical skills.
 4. **WS16-025 Warewash and laundry chemical dispensing program.** Ecolab's 44.5% gross margin and 17% operating margin show what service-bundled chemical programs can earn (A). Installed dispensers and health-code sanitation logs create lock-in. Margins for small independents are unverified (D).
 5. **WS16-024 HVAC filter change-out routes.** Recurring, low capital and easy to delegate. HVAC parts and supplies are an open category: 29% of Watsco revenue comes from 1,300+ vendors (A). Pricing evidence is E, and it overlaps with WS05.
 6. **WS16-033 Direct-sale uniform programs.** New-hire replenishment makes this recurring. Blank-apparel wholesaler SanMar takes reseller signups with a resale certificate and a credit application (B). Screen it together with WS16-006.
 7. **WS16-003 / WS16-001 Industrial packaging and jan-san distribution.** These have the best-documented economics (C) and a real exit market: Bunzl has made 220–230+ acquisitions since 2004, and Imperial Dade has 230+ locations. Margins are thin, and receivables plus inventory weigh on ROIC.
-8. **WS16-007 Electronics manufacturers' rep agency.** Asset-light and a good founder fit, but design-ins take 6–24 months and the principal can terminate the line.
+8. **WS16-007 Electronics manufacturers' rep agency.** Asset-light, good founder fit; 6–24-month design-ins and line-termination risk.
 
 ## Surprises
 - **Rep commissions are lower than folklore suggests.** Census shows an average realized commission of 4.5% (2019–22 range 4.3–4.6%). MANA's own rate surveys stopped in 2005 and are members-only. MANA's illustrative firm keeps only about 30% of commission income after staff (D).
 - **Access splits sharply.** Many programs take open applications (ASI, Zebra, Essendant, AFFLINK recruiting). Others set volume floors: Ergodyne requires $75k/yr for a direct account and sends smaller sellers to a wholesaler (B); Essendant closes accounts that stay under its minimum for six months (B). HVAC equipment is closed: Watsco's Carrier, Rheem and Mitsubishi agreements give it exclusive territories (A).
 - **Tariffs.** The Supreme Court held on 2026-02-20 that IEEPA does not authorize tariffs (A). Tariffs were then re-imposed under other statutes. Fastenal's refunds were limited because it is not the importer of record for most products (A). Being the importer of record cuts both ways: it carries the risk and receives any refunds. Private-label importers such as Global Industrial (China-dependent) took cost increases.
 - **Drop-ship first, stock later, is a documented incumbent playbook.** Global Industrial stocks an item only after it proves volume as a drop-ship SKU, and in-stock items earn higher margin (A).
-- Imperial Dade's site now redirects to imperialbrady.com, which suggests it has merged with BradyIFS. The site does not state this.
+- imperialdade.com now redirects to imperialbrady.com (likely BradyIFS merger; not stated on site).
 
 ## Looked good but fail
 - **Stocking branches** (pool, landscape, waterworks, building products; WS16-026) put more than $150k at risk before the first sale and fail G1. Landscape supply is 81% regional and local, but it is being consolidated.
@@ -52,7 +52,7 @@ Census 2022 data for independent merchant wholesalers:
 - **Medical-device reps, HVAC/lighting/spec reps** (WS16-029/030/021/031): gated by relationships, exclusive territories and 12–36-month ramps.
 - **IT and test-equipment resale** (WS16-012/019): price-transparent goods with single-digit operating margins.
 - **Specialty chemicals and beverage alcohol** (WS16-015/034): hazmat obligations or three-tier licensing, plus inventory.
-- **Ethnic food distribution** (WS16-027): about 3.5% operating margins even at scale.
+- **Ethnic food distribution** (WS16-027): ~3.5% operating margins at scale.
 
 ## Evidence gaps (biggest)
 - **Search ran out early.** The shared WebSearch budget was used up near the start. After that, research relied on direct fetches of known primary URLs, chiefly SEC XBRL/EDGAR, Census AWTS tables and official program pages. Coverage of trade press and anecdotes is thin.

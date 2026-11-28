@@ -9,6 +9,7 @@
 | Finalists as holding-company foundations (3/5/10-yr) | `LONG_TERM_WEALTH_REPORT.md` |
 | Landscape of 630 ideas and why most were rejected | `sections/LANDSCAPE_AND_REJECTIONS.md` |
 | Independent verification brief | `CHATGPT_DEEP_RESEARCH_HANDOFF.md` |
+| **Everything in one document (200 pages)** | `Project_Atlas_Findings.pdf` |
 
 | Data / models | File |
 |---|---|

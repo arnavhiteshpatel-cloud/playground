@@ -5,7 +5,7 @@ self-test. Long-running functions take a ``ctx`` with ``progress(frac, msg)`` / 
 (see ``jobs.JobContext``) and are executed on worker threads by ``jobs.JobManager``.
 
 Science is never re-implemented here: reading uses ``osteoquant.io``, QC ``osteoquant.qc``,
-analysis is the same job handler the web API uses (``osteoquant.api.app.job_analyze``),
+analysis is the same job handler the web API uses (``osteoquant.study.handlers.job_analyze``),
 reports use ``osteoquant.api.bundle`` + ``osteoquant.report.build_pdf``.
 """
 from __future__ import annotations
@@ -627,7 +627,7 @@ def analyze_scan(project, scan_id, config: dict | None = None, ctx=None, use_sav
 
     ``config["healing_weeks"]`` may be "auto" (default: from the scan's timepoint), "unknown", or a number
     of weeks; the resolved value and its source are recorded in the analysis configuration."""
-    from ..api.app import job_analyze
+    from ..study.handlers import job_analyze
     ctx = ctx or NullContext()
     config = dict(config or {})
     weeks, source = resolve_healing_weeks(project, scan_id, config.pop("healing_weeks", HEALING_AUTO))

@@ -436,7 +436,7 @@ def third_party_components() -> list[tuple[str, str, str]]:
              ("Matplotlib", "matplotlib", "Matplotlib licence (PSF-based)"), ("pandas", "pandas", "BSD-3-Clause"),
              ("statsmodels", "statsmodels", "BSD-3-Clause"), ("cryptography", "cryptography", "Apache-2.0 or BSD-3-Clause"),
              ("psutil", "psutil", "BSD-3-Clause"), ("Pillow", "pillow", "MIT-CMU (HPND)"),
-             ("FastAPI (shared job handlers)", "fastapi", "MIT"), ("Pydantic", "pydantic", "MIT")]
+             ]
     out = []
     for name, dist, lic in comps:
         try:

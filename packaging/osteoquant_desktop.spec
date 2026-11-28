@@ -74,8 +74,9 @@ excludes = [
     "uvicorn", "uvloop", "httptools", "watchfiles", "websockets",     # the desktop never serves HTTP
     "mypy", "hypothesis", "wheel", "pip",     # development tools pulled in by hooks (bundle inventory, C2-BIZ-08)
 ]
-# fastapi / starlette / pydantic / anyio are still bundled: the desktop imports the shared job handlers from
-# osteoquant/api/app.py, which defines the FastAPI app. Moving the handlers out of that module removes them.
+# The shared job handlers live in osteoquant/study/handlers.py (no web framework), so the web stack is excluded too.
+excludes += ["fastapi", "starlette", "pydantic", "pydantic_core", "anyio", "sniffio", "python_multipart", "multipart",
+             "osteoquant.api.app"]
 if not BUNDLE_SITK:
     excludes += ["SimpleITK"]
 if not BUNDLE_TORCH:

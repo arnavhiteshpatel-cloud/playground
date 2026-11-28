@@ -195,25 +195,60 @@ def md_sheet(wb, title, path, first_only=True):
     sheet(wb, title, hdr, body, {h: 45 for h in hdr})
 
 
+_EP_ROW = {"residual_graft_volume": ("err_graft", "status"), "new_bone_volume": ("err_new", "status_new"),
+           "total_mineral_volume": ("err_mineral", "status_mineral")}
+
+
+def _struct_bound(rows, ep):
+    """Structures with support and the Clopper-Pearson 95% upper bound with phantom structures as the unit
+    (pre-registered unit; cycle-3 review C3-SCI-05). None when the rows carry no structure or endpoint fields."""
+    if ep not in _EP_ROW or not rows or "structure" not in rows[0]:
+        return None, None
+    ek, sk = _EP_ROW[ep]
+    if ek not in rows[0] and ek == "err_graft":
+        ek = "err"
+    sup = [r for r in rows if r.get(sk) in ("supported", "supported_with_conditions") and r.get(ek) is not None]
+    k = len({r["structure"] for r in sup})
+    x = len({r["structure"] for r in sup if abs(r[ek]) > 0.2})
+    if not k:
+        return 0, None
+    from scipy.stats import beta
+    return k, (1.0 if x == k else float(beta.ppf(0.975, x + 1, k - x)))
+
+
 def gen2_sheets(wb):
     # advisor validation, per endpoint
     rows = []
-    for name in ("exp_S1H3_heldout", "exp_S1H2_heldout", "exp_S1H_heldout", "exp_S1b_advisor_threshold",
-                 "exp_S1c_control_reference", "exp_S1_advisor"):
+    for name in ("exp_S1H4_heldout", "exp_S1H3_heldout", "exp_S1H2_heldout", "exp_S1H_heldout",
+                 "exp_S1b_advisor_threshold", "exp_S1c_control_reference", "exp_S1_advisor"):
         d = load(name)
         if not d:
             continue
         kind = "held-out (pre-registered)" if "heldout" in name else "in-sample (development)"
-        for s_ in d.get("summary", []):
+        summaries = d.get("summary", [])
+        if not summaries and isinstance(d.get("analysis"), dict):        # S1H4 format
+            summaries = [{"method": "advisor_threshold", "per_endpoint": {
+                ep: {"n": v["n"], "n_fail": v["n_fail"], "failures_refused": v["failures_refused"],
+                     "supported_but_failed": v["supported_but_failed"],
+                     "supported_and_ok": v["n_supported"] - v["supported_but_failed"],
+                     "refused_but_ok": (v["n"] - v["n_supported"]) - v["failures_refused"],
+                     "p_fail_given_supported_upper95": v["row_upper95"],
+                     "abs_err_supported_median": v["abs_err_supported_median"],
+                     "abs_err_supported_max": v["abs_err_supported_max"]}
+                for ep, v in d["analysis"].items() if isinstance(v, dict) and "n_fail" in v}}]
+        for s_ in summaries:
             for ep, v in (s_.get("per_endpoint") or {}).items():
                 ns = (v["supported_and_ok"] or 0) + (v["supported_but_failed"] or 0)
                 bound = 1.0 if ns and v["supported_but_failed"] == ns else v["p_fail_given_supported_upper95"]
+                k, sb = _struct_bound(d.get("rows") or [], ep) if "heldout" in name else (None, None)
                 rows.append([name, kind, d.get("advisor_version"), s_["method"], ep, v["n"], v["n_fail"], v["failures_refused"],
                              v["supported_but_failed"], v["supported_and_ok"], v["refused_but_ok"], ns / v["n"],
-                             bound, v["abs_err_supported_median"], v["abs_err_supported_max"]])
+                             k, sb, bound, v["abs_err_supported_median"], v["abs_err_supported_max"]])
     sheet(wb, "Advisor_Validation", ["Experiment", "Kind", "Advisor", "Method", "Endpoint", "n", "Failures (>20%)",
                                      "Failures refused", "Supported & failed", "Supported & OK", "Refused but OK",
-                                     "Coverage (share supported)", "P(fail|supported) 95% upper",
+                                     "Coverage (share supported)", "Structures with support",
+                                     "95% upper, structures as unit (pre-registered)",
+                                     "95% upper, rows as if independent",
                                      "Median |err| supported", "Max |err| supported"], rows,
           {"Experiment": 28, "Kind": 24, "Method": 22, "Endpoint": 24})
     b4 = load("analysis_B4_volume_agreement")

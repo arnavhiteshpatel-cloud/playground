@@ -13,12 +13,12 @@ external sign-off.
 - [ ] Desktop build Linux (local): the only packaged build (27 Nov 2026) passed its packaged self-test and licence check at the time (`packaging/dist/build-info.json`), but it predates advisor 1.3.1–1.4.3 and the cycle-2/3 fixes, so it does not show the current code working. It must be rebuilt before any use or distribution (B-016); `build-info.json` should then record the commit and advisor version
 - [ ] Desktop build Windows / macOS: never built; the `desktop-build` workflow has never run (manual dispatch is a founder distribution decision, B-013, decision #21)
 - [x] CI green on Ubuntu, Windows and macOS × Python 3.12 / 3.13 for the library test suite, lint and dependency audit (first green run 2026-11-28, run 59; earlier runs failed: DF-022)
-- [ ] Desktop tests in CI: run for the first time in run 59 (non-blocking step then). Since 2026-11-28 the full suite including desktop and licensing tests is a blocking CI step; whether CI passes under the new configuration is not yet recorded
+- [x] Desktop tests in CI: the full suite including desktop and licensing tests is a blocking step on Ubuntu (Python 3.13) and passed with both coverage gates in run 86 (2026-11-28, commit `5ddcc35`). Run 86 failed overall on a macOS/Python 3.13 segfault at test-fixture teardown (shared SQLite connection closed while a job-runner thread was inside a query), fixed in `d124ae6` (DF-043); the outcome of the next run is recorded in `docs/qa/test_summary.json`
 - [ ] Coverage ≥95% critical / ≥90% overall: single source `docs/qa/test_summary.json` (597 passed, 1 skipped; 90.8% line+branch overall, desktop UI excluded; local full run at `4b5e84c`). CI gates are now ≥90% overall and ≥95% for morphometry, stats, metrics, I/O and audit; the per-module figures for the ≥95% target are not recorded in that file, so this item stays open
 - [ ] Security: zero open critical/high — see docs/security/SECURITY_REVIEW_GEN2.md and the cycle-3 product review
 - [x] Claims checker passes (`scripts/check_claims.py`)
-- [ ] Benchmark scorecard targets met: B4, B10 met on synthetic data only; B1–B3 and B5–B8 not met or pending (BENCHMARK_SCORECARD.md)
-- [ ] Review cycles: 2 completed / cycle 3 in progress (automated reviewer agents, not human experts)
+- [ ] Benchmark scorecard targets met: B4, B10 met on synthetic data only; B5 sensitivity met but precision not demonstrated (S1H4 structure-level bound 0.14 > 0.10) and coverage very low on the application's material paths; B1–B3 and B6–B8 not met or pending (BENCHMARK_SCORECARD.md)
+- [x] Review cycles: 3 completed across 12 perspectives (automated reviewer agents, not human experts); responses in `docs/reviews/cycle3/` (all critical and high findings fixed or mitigated; open items listed there)
 
 **Gate status:** Gate 1 not met (Windows/macOS builds never run; the only Linux build predates the current code and
 must be rebuilt; critical-module coverage and the security items unconfirmed). Gate 2 not met (no real-data

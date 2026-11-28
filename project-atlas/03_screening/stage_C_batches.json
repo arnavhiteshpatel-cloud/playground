@@ -1,0 +1,231 @@
+{
+ "C1": {
+  "name": "Building & workplace compliance routes",
+  "ids": [
+   "WS05-001",
+   "WS05-011",
+   "WS05-025",
+   "WS05-026",
+   "WS13-004",
+   "SYN-005",
+   "WS11-017",
+   "WS13-018"
+  ],
+  "also_read": {
+   "WS05-025": [
+    "WS13-005"
+   ]
+  },
+  "bundle_components": {
+   "SYN-005": [
+    "WS13-004",
+    "WS13-005",
+    "WS13-006",
+    "WS13-003"
+   ]
+  }
+ },
+ "C2": {
+  "name": "Pest control & residential route services",
+  "ids": [
+   "WS05-007",
+   "SYN-003",
+   "WS13-009",
+   "WS18-007",
+   "WS13-038",
+   "WS18-004",
+   "WS18-013",
+   "WS18-032"
+  ],
+  "also_read": {
+   "WS13-038": [
+    "WS18-033"
+   ]
+  },
+  "bundle_components": {
+   "SYN-003": [
+    "WS05-007",
+    "WS05-032",
+    "WS13-001",
+    "WS05-035",
+    "WS13-010"
+   ]
+  }
+ },
+ "C3": {
+  "name": "Industrial services & industrial distribution/brokerage",
+  "ids": [
+   "WS03-012",
+   "WS03-014",
+   "WS03-017",
+   "WS03-013",
+   "WS13-014",
+   "WS17-023",
+   "WS16-018",
+   "WS03-001"
+  ],
+  "also_read": {
+   "WS03-013": [
+    "WS13-013"
+   ],
+   "WS13-014": [
+    "WS10-005",
+    "WS11-023"
+   ]
+  },
+  "bundle_components": {}
+ },
+ "C4": {
+  "name": "Fleet, trucking, freight & trade services",
+  "ids": [
+   "WS17-009",
+   "WS17-001",
+   "SYN-001",
+   "WS02-001",
+   "WS17-004",
+   "WS07-036",
+   "WS07-015",
+   "WS14-001"
+  ],
+  "also_read": {},
+  "bundle_components": {
+   "SYN-001": [
+    "WS17-001",
+    "WS17-002",
+    "WS17-031",
+    "WS02-028",
+    "WS02-001"
+   ]
+  }
+ },
+ "C5": {
+  "name": "Financial back office & commercial insurance",
+  "ids": [
+   "WS02-028",
+   "WS02-026",
+   "WS15-023",
+   "SYN-006",
+   "WS02-002",
+   "WS02-018",
+   "WS02-019",
+   "WS02-004"
+  ],
+  "also_read": {
+   "WS02-028": [
+    "WS12-022"
+   ]
+  },
+  "bundle_components": {
+   "SYN-006": [
+    "WS02-028",
+    "WS15-023",
+    "WS10-004",
+    "WS02-007",
+    "WS02-026"
+   ]
+  }
+ },
+ "C6": {
+  "name": "Healthcare, dental & veterinary operations",
+  "ids": [
+   "WS04-014",
+   "WS04-024",
+   "WS04-010",
+   "WS04-015",
+   "WS04-013",
+   "WS04-011",
+   "SYN-002",
+   "WS18-002"
+  ],
+  "also_read": {
+   "WS04-013": [
+    "WS12-024"
+   ],
+   "WS18-002": [
+    "WS04-001"
+   ]
+  },
+  "bundle_components": {
+   "SYN-002": [
+    "WS04-014",
+    "WS04-011",
+    "WS04-021",
+    "WS04-026",
+    "WS04-024"
+   ]
+  }
+ },
+ "C7": {
+  "name": "Environmental compliance, energy & tax recovery",
+  "ids": [
+   "WS11-021",
+   "WS15-020",
+   "WS11-007",
+   "WS11-010",
+   "SYN-004",
+   "WS11-026",
+   "WS13-016",
+   "WS14-004"
+  ],
+  "also_read": {
+   "WS11-021": [
+    "WS15-021"
+   ],
+   "WS11-007": [
+    "WS15-013",
+    "WS14-021"
+   ]
+  },
+  "bundle_components": {
+   "SYN-004": [
+    "WS11-007",
+    "WS11-010",
+    "WS11-008",
+    "WS11-009"
+   ]
+  }
+ },
+ "C8": {
+  "name": "Real estate, construction trades, local services & death care",
+  "ids": [
+   "WS10-016",
+   "SYN-007",
+   "WS10-010",
+   "WS18-003",
+   "WS18-035",
+   "WS18-009",
+   "WS18-030",
+   "WS13-030",
+   "WS13-028"
+  ],
+  "also_read": {
+   "WS13-028": [
+    "WS04-032"
+   ]
+  },
+  "bundle_components": {
+   "SYN-007": [
+    "WS10-032",
+    "WS10-016",
+    "WS10-014",
+    "WS02-004"
+   ]
+  }
+ },
+ "C9": {
+  "name": "B2B procurement, government, distribution, recruiting & finance",
+  "ids": [
+   "WS08-001",
+   "WS08-017",
+   "WS14-019",
+   "WS14-008",
+   "WS16-006",
+   "WS12-012",
+   "WS12-014",
+   "WS01-003",
+   "WS07-023"
+  ],
+  "also_read": {},
+  "bundle_components": {}
+ }
+}

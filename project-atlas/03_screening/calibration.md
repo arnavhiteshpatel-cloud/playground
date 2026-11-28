@@ -1,24 +1,25 @@
 # Calibration: original (author) vs blind re-scores
 
-Records with blind scores: 554
+Records with blind scores: 630
 
 | Criterion | mean orig | mean blind | mean |diff| | share |diff|>2 |
 |---|---|---|---|---|
-| fcf | 3.59 | 2.91 | 0.70 | 1% |
-| roic | 5.45 | 5.03 | 0.63 | 1% |
-| access | 4.97 | 4.83 | 0.33 | 0% |
-| scale | 4.41 | 4.05 | 0.48 | 0% |
-| resilience | 5.36 | 5.03 | 0.49 | 0% |
-| entry | 3.66 | 3.30 | 0.52 | 0% |
-| delegation | 5.75 | 5.69 | 0.40 | 0% |
-| cash | 5.73 | 5.55 | 0.54 | 1% |
-| feasibility | 7.22 | 6.91 | 0.61 | 1% |
-| ai | 4.22 | 3.45 | 0.85 | 1% |
+| fcf | 3.58 | 2.90 | 0.70 | 1% |
+| roic | 5.46 | 5.02 | 0.63 | 1% |
+| access | 4.97 | 4.79 | 0.36 | 0% |
+| scale | 4.41 | 4.02 | 0.49 | 0% |
+| resilience | 5.33 | 4.99 | 0.49 | 0% |
+| entry | 3.67 | 3.31 | 0.53 | 0% |
+| delegation | 5.77 | 5.65 | 0.41 | 0% |
+| cash | 5.79 | 5.55 | 0.57 | 1% |
+| feasibility | 7.20 | 6.88 | 0.61 | 1% |
+| ai | 4.15 | 3.41 | 0.81 | 1% |
 
 ## Author inflation by workstream (mean original raw − mean blind raw)
 
 | Workstream | n | orig raw | blind raw | inflation |
 |---|---|---|---|---|
+| WS01 | 33 | 4.48 | 3.87 | +0.61 |
 | WS02 | 34 | 5.39 | 4.69 | +0.70 |
 | WS03 | 35 | 5.21 | 4.72 | +0.50 |
 | WS04 | 36 | 4.92 | 4.66 | +0.26 |
@@ -28,8 +29,9 @@ Records with blind scores: 554
 | WS08 | 33 | 4.45 | 3.77 | +0.68 |
 | WS09 | 35 | 4.45 | 4.27 | +0.19 |
 | WS10 | 35 | 4.79 | 4.35 | +0.44 |
-| WS11 | 32 | 4.73 | 4.51 | +0.21 |
+| WS11 | 35 | 4.65 | 4.41 | +0.24 |
 | WS12 | 34 | 4.51 | 4.34 | +0.17 |
+| WS13 | 40 | 5.12 | 4.65 | +0.47 |
 | WS14 | 35 | 4.73 | 4.35 | +0.38 |
 | WS15 | 34 | 4.82 | 4.46 | +0.36 |
 | WS16 | 34 | 4.59 | 4.13 | +0.45 |
@@ -51,6 +53,7 @@ Records with blind scores: 554
 | WS02-015 | Insurance agency franchise (Goosehead-type personal-lines franchise) | +1.33 |
 | WS02-022 | Premium finance company (commercial lines premium financing) | +1.33 |
 | WS08-006 | GSA Multiple Award Schedule product reseller (Startup Springboard entry) | +1.30 |
+| WS01-026 | Small-balance private credit fund (later-stage: raise LP capital to lend business-purpose loans) | +1.28 |
 | WS12-017 | High-volume hourly hiring-as-a-service (per-hire fee for frontline roles) | +1.25 |
 | WS08-020 | DOE national-lab subcontract supplier (Argonne / Fermilab M&O procurement) | +1.21 |
 | WS02-024 | Integrated/embedded payments partner for vertical software (ISV referral or payfac-as-a-service) | +1.20 |
@@ -58,15 +61,14 @@ Records with blind scores: 554
 | WS10-030 | Short-term rental co-hosting / management (Chicago and suburbs) | +1.15 |
 | WS02-016 | Niche MGA / program administrator (later-stage adjacency) | +1.15 |
 | WS14-006 | Unclaimed property & surplus-funds locator (finder) service | +1.15 |
+| WS13-015 | K-12 Chromebook / 1:1 device repair depot for Illinois school districts | +1.15 |
 | WS03-029 | 3D printing / additive manufacturing service bureau | +1.14 |
 | WS02-014 | Captive/exclusive carrier agency (State Farm / Allstate / American Family-type) | +1.13 |
 | WS02-005 | Digital small-commercial micro-business agency (online BOP/GL/PL, national) | +1.13 |
+| WS13-023 | Lumper (freight unloading) services at grocery/retail distribution centers | +1.10 |
 | WS10-035 | Owner's representative / capital-project manager for condo associations & small owners | +1.10 |
+| WS01-022 | Seller-financed note brokerage ('note finder') for real-estate contracts and business-sale seller notes | +1.08 |
 | WS14-035 | Peer-to-peer car-sharing fleet host (marketplace supply-side operator) | +1.08 |
+| WS13-026 | Illinois video gaming terminal (VGT) operator | +1.04 |
 | WS02-013 | Crop insurance agency (Illinois row-crop farmers) | +1.00 |
 | WS14-034 | Event ticket brokerage (time-sensitive buy-resell on secondary marketplaces) | +1.00 |
-| WS18-018 | Independent math/learning center (membership tutoring) | +0.99 |
-| WS02-012 | Final-expense / simplified-issue life telesales agency | +0.98 |
-| WS07-010 | Auto transport (vehicle shipping) brokerage for consumers and dealers | +0.98 |
-| WS16-021 | Lighting & electrical controls rep agency (specification and project commissions) | +0.98 |
-| WS17-033 | Snow & ice control equipment dealer/installer for contractor and municipal fleets | +0.98 |

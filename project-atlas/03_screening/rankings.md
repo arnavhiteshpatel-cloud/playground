@@ -8,8 +8,8 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
 | 1 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.33 | 6.57 |
-| 2 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.11 | 6.30 |
-| 3 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.05 | 6.50 |
+| 2 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.05 | 6.50 |
+| 3 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.02 | 6.20 |
 | 4 | WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | C | 5.87 | 6.03 |
 | 5 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 5.85 | 6.22 |
 | 6 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 5.82 | 5.96 |
@@ -19,26 +19,26 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 | 10 | WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | C | 5.73 | 5.86 |
 | 11 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | B | 5.72 | 5.75 |
 | 12 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 5.71 | 6.29 |
-| 13 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.71 | 6.01 |
-| 14 | WS11-021 | Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance | E | 5.70 | 6.26 |
-| 15 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.66 | 6.21 |
-| 16 | WS17-009 | Outsourced fleet maintenance management for 15-300 vehicle service fleets | E | 5.66 | 6.20 |
-| 17 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.65 | 5.93 |
-| 18 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.63 | 5.90 |
-| 19 | WS13-018 | Multifamily doorstep (valet) trash collection service | E | 5.61 | 6.11 |
-| 20 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 5.61 | 5.87 |
-| 21 | WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | D | 5.61 | 5.87 |
-| 22 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.60 | 5.86 |
-| 23 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | E | 5.60 | 6.09 |
-| 24 | WS04-010 | Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP) | E | 5.58 | 6.05 |
-| 25 | WS10-016 | Multifamily unit-turn (make-ready) services for property managers | D | 5.58 | 5.83 |
+| 13 | WS11-021 | Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance | E | 5.70 | 6.26 |
+| 14 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.66 | 6.21 |
+| 15 | WS17-009 | Outsourced fleet maintenance management for 15-300 vehicle service fleets | E | 5.66 | 6.20 |
+| 16 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.66 | 5.94 |
+| 17 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.60 | 5.86 |
+| 18 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | E | 5.60 | 6.09 |
+| 19 | WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | D | 5.60 | 5.86 |
+| 20 | WS04-010 | Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP) | E | 5.58 | 6.05 |
+| 21 | WS10-016 | Multifamily unit-turn (make-ready) services for property managers | D | 5.58 | 5.83 |
+| 22 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 5.57 | 5.60 |
+| 23 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | E | 5.52 | 5.95 |
+| 24 | WS13-038 | Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration | E | 5.51 | 5.93 |
+| 25 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | E | 5.51 | 5.92 |
 
 ## highest_confidence
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
 | 1 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.18 | 6.57 |
-| 2 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 5.97 | 6.30 |
+| 2 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 5.90 | 6.20 |
 | 3 | WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | C | 5.77 | 6.03 |
 | 4 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.75 | 6.50 |
 | 5 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 5.72 | 5.96 |
@@ -48,110 +48,110 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 | 9 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.56 | 6.12 |
 | 10 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 5.55 | 6.10 |
 | 11 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 5.54 | 5.60 |
-| 12 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.50 | 6.01 |
-| 13 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.46 | 5.93 |
-| 14 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.45 | 5.90 |
-| 15 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 5.43 | 5.87 |
-| 16 | WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | D | 5.43 | 5.87 |
-| 17 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.43 | 5.86 |
-| 18 | WS10-016 | Multifamily unit-turn (make-ready) services for property managers | D | 5.41 | 5.83 |
-| 19 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 5.40 | 6.33 |
-| 20 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 5.39 | 6.29 |
-| 21 | WS13-016 | Lake, pond & stormwater-basin management for HOAs, business parks and municipalities | D | 5.38 | 5.77 |
-| 22 | WS11-021 | Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance | E | 5.38 | 6.26 |
-| 23 | WS16-006 | Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship) | C | 5.37 | 5.50 |
-| 24 | WS02-018 | Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data) | D | 5.36 | 5.72 |
-| 25 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.36 | 6.21 |
+| 12 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.47 | 5.94 |
+| 13 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.43 | 5.86 |
+| 14 | WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | D | 5.43 | 5.86 |
+| 15 | WS10-016 | Multifamily unit-turn (make-ready) services for property managers | D | 5.41 | 5.83 |
+| 16 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 5.40 | 6.33 |
+| 17 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 5.39 | 6.29 |
+| 18 | WS11-021 | Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance | E | 5.38 | 6.26 |
+| 19 | WS16-006 | Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship) | C | 5.37 | 5.50 |
+| 20 | WS02-018 | Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data) | D | 5.36 | 5.72 |
+| 21 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.36 | 6.21 |
+| 22 | WS04-015 | Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis | D | 5.36 | 5.72 |
+| 23 | WS17-009 | Outsourced fleet maintenance management for 15-300 vehicle service fleets | E | 5.36 | 6.20 |
+| 24 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.36 | 5.71 |
+| 25 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 5.36 | 5.47 |
 
 ## profit_potential
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
 | 1 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.19 | 6.57 |
-| 2 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.77 | 5.93 |
-| 3 | WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | C | 5.76 | 6.03 |
-| 4 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | B | 5.71 | 5.75 |
-| 5 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 5.63 | 5.38 |
-| 6 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.56 | 5.90 |
-| 7 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.49 | 6.01 |
-| 8 | WS11-017 | Commercial cooling-tower/boiler water treatment service route | E | 5.44 | 5.79 |
-| 9 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 5.42 | 6.30 |
-| 10 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.42 | 6.12 |
-| 11 | WS04-015 | Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis | D | 5.42 | 5.72 |
-| 12 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 5.42 | 6.10 |
-| 13 | WS04-018 | Biosafety cabinet, fume hood and USP <797>/<800> cleanroom certification | D | 5.38 | 5.36 |
-| 14 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 5.35 | 6.22 |
-| 15 | WS11-026 | Roll-off dumpster rental (C&D, cleanouts, light commercial) | D | 5.35 | 5.56 |
-| 16 | WS13-002 | Commercial ice-machine subscription (ice-as-a-service) for restaurants, bars, healthcare and hotels | D | 5.35 | 5.37 |
-| 17 | WS13-016 | Lake, pond & stormwater-basin management for HOAs, business parks and municipalities | D | 5.35 | 5.77 |
-| 18 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 5.34 | 5.96 |
-| 19 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.33 | 5.30 |
-| 20 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.32 | 6.50 |
-| 21 | WS01-028 | Outsourced commercial credit analysis and independent loan review for community banks and credit unions (AI-assisted) | E | 5.28 | 5.59 |
-| 22 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.28 | 6.21 |
-| 23 | WS17-004 | Mobile preventive maintenance for light/medium-duty service and delivery fleets | E | 5.28 | 5.68 |
-| 24 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | E | 5.28 | 5.92 |
-| 25 | WS17-023 | Forklift planned-maintenance and repair route (multi-brand) with operator training | E | 5.25 | 5.77 |
+| 2 | WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | C | 5.76 | 6.03 |
+| 3 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | B | 5.71 | 5.75 |
+| 4 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 5.63 | 5.38 |
+| 5 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.59 | 5.71 |
+| 6 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.46 | 5.94 |
+| 7 | WS11-017 | Commercial cooling-tower/boiler water treatment service route | E | 5.44 | 5.79 |
+| 8 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.42 | 6.12 |
+| 9 | WS04-015 | Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis | D | 5.42 | 5.72 |
+| 10 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 5.42 | 6.10 |
+| 11 | WS04-018 | Biosafety cabinet, fume hood and USP <797>/<800> cleanroom certification | D | 5.38 | 5.36 |
+| 12 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 5.38 | 6.20 |
+| 13 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 5.35 | 6.22 |
+| 14 | WS11-026 | Roll-off dumpster rental (C&D, cleanouts, light commercial) | D | 5.35 | 5.56 |
+| 15 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 5.34 | 5.96 |
+| 16 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.33 | 5.30 |
+| 17 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.32 | 6.50 |
+| 18 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.28 | 6.21 |
+| 19 | WS17-004 | Mobile preventive maintenance for light/medium-duty service and delivery fleets | E | 5.28 | 5.68 |
+| 20 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | E | 5.28 | 5.92 |
+| 21 | WS17-023 | Forklift planned-maintenance and repair route (multi-brand) with operator training | E | 5.25 | 5.77 |
+| 22 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.25 | 5.86 |
+| 23 | WS10-016 | Multifamily unit-turn (make-ready) services for property managers | D | 5.25 | 5.83 |
+| 24 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.25 | 5.49 |
+| 25 | WS13-016 | Lake, pond & stormwater-basin management for HOAs, business parks and municipalities | D | 5.25 | 5.66 |
 
 ## return_on_capital
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
-| 1 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.70 | 6.30 |
-| 2 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 6.59 | 5.28 |
+| 1 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 6.59 | 5.28 |
+| 2 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.59 | 6.20 |
 | 3 | WS16-006 | Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship) | C | 6.59 | 5.50 |
 | 4 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.58 | 6.50 |
-| 5 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.49 | 5.47 |
-| 6 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.49 | 6.57 |
-| 7 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.49 | 4.83 |
-| 8 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 6.40 | 6.22 |
-| 9 | WS07-023 | Online consignment auctions for business liquidations (restaurant/industrial/office assets) | D | 6.40 | 5.57 |
+| 5 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.49 | 6.57 |
+| 6 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.49 | 4.83 |
+| 7 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 6.40 | 6.22 |
+| 8 | WS07-023 | Online consignment auctions for business liquidations (restaurant/industrial/office assets) | D | 6.40 | 5.57 |
+| 9 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.38 | 5.45 |
 | 10 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | E | 6.31 | 5.95 |
-| 11 | WS01-002 | Generalist small-business loan brokerage via lender referral/ISO programs | C | 6.28 | 4.90 |
-| 12 | WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | C | 6.28 | 5.86 |
-| 13 | WS02-029 | Fractional CFO / FP&A for a niche (e.g., trucking fleets or contractors $5M-$50M) | E | 6.24 | 4.97 |
-| 14 | WS01-001 | Small-balance commercial real estate (CRE) debt brokerage — Chicago-area investors and owner-users | D | 6.22 | 5.18 |
-| 15 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 6.22 | 5.70 |
-| 16 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 6.22 | 6.12 |
-| 17 | WS03-008 | Used-machinery consignment & plant-surplus brokerage (commission, no ownership) | D | 6.22 | 4.93 |
-| 18 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 6.22 | 5.87 |
-| 19 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 6.19 | 5.60 |
-| 20 | WS02-010 | Medicare (MA/Med Supp/PDP) local field-and-referral agency in Illinois | C | 6.17 | 5.26 |
-| 21 | WS09-018 | Paid peer-advisory roundtables for owners of trade/service businesses (industry-specific) | E | 6.17 | 4.96 |
-| 22 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | E | 6.17 | 6.09 |
-| 23 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 6.17 | 5.47 |
-| 24 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.17 | 5.96 |
-| 25 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.17 | 5.21 |
+| 11 | WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | C | 6.28 | 5.86 |
+| 12 | WS02-029 | Fractional CFO / FP&A for a niche (e.g., trucking fleets or contractors $5M-$50M) | E | 6.24 | 4.97 |
+| 13 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 6.22 | 6.12 |
+| 14 | WS03-008 | Used-machinery consignment & plant-surplus brokerage (commission, no ownership) | D | 6.22 | 4.93 |
+| 15 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 6.22 | 5.66 |
+| 16 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 6.19 | 5.60 |
+| 17 | WS02-010 | Medicare (MA/Med Supp/PDP) local field-and-referral agency in Illinois | C | 6.17 | 5.26 |
+| 18 | WS09-018 | Paid peer-advisory roundtables for owners of trade/service businesses (industry-specific) | E | 6.17 | 4.96 |
+| 19 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | E | 6.17 | 6.09 |
+| 20 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 6.17 | 5.47 |
+| 21 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.17 | 5.96 |
+| 22 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.17 | 5.21 |
+| 23 | WS18-030 | Senior move management & estate sale/cleanout service | E | 6.17 | 5.78 |
+| 24 | WS04-010 | Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP) | E | 6.10 | 6.05 |
+| 25 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 6.10 | 6.21 |
 
 ## capital_efficiency
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
 | 1 | WS16-006 | Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship) | C | 7.23 | 5.50 |
-| 2 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 7.21 | 5.87 |
-| 3 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 7.17 | 6.30 |
-| 4 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 7.17 | 5.47 |
-| 5 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 7.10 | 4.83 |
-| 6 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 7.09 | 5.60 |
+| 2 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 7.17 | 5.47 |
+| 3 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 7.15 | 5.66 |
+| 4 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 7.10 | 4.83 |
+| 5 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 7.09 | 5.60 |
+| 6 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 7.04 | 6.20 |
 | 7 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 7.00 | 6.50 |
-| 8 | WS01-002 | Generalist small-business loan brokerage via lender referral/ISO programs | C | 6.83 | 4.90 |
-| 9 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.83 | 5.47 |
-| 10 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.77 | 5.32 |
-| 11 | WS18-013 | Pet waste removal weekly route (yard scooping) | E | 6.77 | 5.67 |
-| 12 | WS06-019 | Illinois cottage food home bakery / specialty confections | C | 6.76 | 3.51 |
-| 13 | WS05-022 | Storefront & low-rise commercial window cleaning route | E | 6.73 | 5.24 |
-| 14 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 6.73 | 4.85 |
-| 15 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 6.72 | 5.28 |
-| 16 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.70 | 6.57 |
-| 17 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.65 | 5.21 |
-| 18 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 6.64 | 6.22 |
-| 19 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.62 | 5.96 |
-| 20 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 6.61 | 5.70 |
-| 21 | WS01-009 | Trucking owner-operator and small-fleet finance desk (freight factoring referrals + truck/trailer financing) | D | 6.61 | 4.82 |
-| 22 | WS04-012 | Provider credentialing & payer enrollment service | E | 6.57 | 5.54 |
-| 23 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | E | 6.57 | 5.95 |
-| 24 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 6.57 | 6.29 |
-| 25 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 6.54 | 5.51 |
+| 8 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.77 | 5.32 |
+| 9 | WS18-013 | Pet waste removal weekly route (yard scooping) | E | 6.77 | 5.67 |
+| 10 | WS06-019 | Illinois cottage food home bakery / specialty confections | C | 6.76 | 3.51 |
+| 11 | WS05-022 | Storefront & low-rise commercial window cleaning route | E | 6.73 | 5.24 |
+| 12 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 6.72 | 5.28 |
+| 13 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.70 | 5.45 |
+| 14 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.70 | 6.57 |
+| 15 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 6.69 | 4.76 |
+| 16 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.65 | 5.21 |
+| 17 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 6.64 | 6.22 |
+| 18 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.62 | 5.96 |
+| 19 | WS04-012 | Provider credentialing & payer enrollment service | E | 6.57 | 5.54 |
+| 20 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | E | 6.57 | 5.95 |
+| 21 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 6.57 | 6.29 |
+| 22 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 6.54 | 5.51 |
+| 23 | WS09-018 | Paid peer-advisory roundtables for owners of trade/service businesses (industry-specific) | E | 6.53 | 4.96 |
+| 24 | WS03-008 | Used-machinery consignment & plant-surplus brokerage (commission, no ownership) | D | 6.52 | 4.93 |
+| 25 | WS14-001 | Small-parcel spend audit + UPS/FedEx contract renegotiation on gain-share | D | 6.52 | 5.55 |
 
 ## cash_conversion
 
@@ -159,29 +159,29 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 |---|---|---|---|---|---|
 | 1 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 7.09 | 5.60 |
 | 2 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.96 | 5.96 |
-| 3 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.87 | 5.47 |
-| 4 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 6.87 | 5.47 |
-| 5 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 6.82 | 6.01 |
-| 6 | WS07-023 | Online consignment auctions for business liquidations (restaurant/industrial/office assets) | D | 6.75 | 5.57 |
-| 7 | WS01-002 | Generalist small-business loan brokerage via lender referral/ISO programs | C | 6.70 | 4.90 |
-| 8 | WS01-010 | Residential mortgage brokerage (licensed MLO + Illinois mortgage broker license, wholesale channel) | C | 6.70 | 4.68 |
-| 9 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.68 | 6.50 |
-| 10 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 6.61 | 6.22 |
-| 11 | WS01-001 | Small-balance commercial real estate (CRE) debt brokerage — Chicago-area investors and owner-users | D | 6.54 | 5.18 |
-| 12 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 6.54 | 5.70 |
-| 13 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.53 | 6.57 |
-| 14 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.53 | 4.83 |
-| 15 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.53 | 6.30 |
-| 16 | WS09-018 | Paid peer-advisory roundtables for owners of trade/service businesses (industry-specific) | E | 6.49 | 4.96 |
-| 17 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | E | 6.49 | 5.95 |
-| 18 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.49 | 5.21 |
-| 19 | WS16-006 | Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship) | C | 6.45 | 5.50 |
-| 20 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.43 | 5.32 |
-| 21 | WS18-013 | Pet waste removal weekly route (yard scooping) | E | 6.43 | 5.67 |
-| 22 | WS01-008 | Invoice factoring, ABL and purchase-order finance brokerage for B2B companies | D | 6.40 | 5.17 |
-| 23 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 6.40 | 5.87 |
-| 24 | WS02-029 | Fractional CFO / FP&A for a niche (e.g., trucking fleets or contractors $5M-$50M) | E | 6.38 | 4.97 |
-| 25 | WS18-030 | Senior move management & estate sale/cleanout service | E | 6.38 | 5.78 |
+| 3 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 6.87 | 5.47 |
+| 4 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 6.82 | 5.94 |
+| 5 | WS07-023 | Online consignment auctions for business liquidations (restaurant/industrial/office assets) | D | 6.75 | 5.57 |
+| 6 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.68 | 6.50 |
+| 7 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.62 | 5.45 |
+| 8 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 6.61 | 6.22 |
+| 9 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.53 | 6.57 |
+| 10 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.53 | 4.83 |
+| 11 | WS09-018 | Paid peer-advisory roundtables for owners of trade/service businesses (industry-specific) | E | 6.49 | 4.96 |
+| 12 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | E | 6.49 | 5.95 |
+| 13 | WS18-019 | Premium in-home/online tutoring & test-prep agency | E | 6.49 | 5.21 |
+| 14 | WS16-006 | Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship) | C | 6.45 | 5.50 |
+| 15 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.43 | 5.32 |
+| 16 | WS18-013 | Pet waste removal weekly route (yard scooping) | E | 6.43 | 5.67 |
+| 17 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 6.40 | 5.66 |
+| 18 | WS02-029 | Fractional CFO / FP&A for a niche (e.g., trucking fleets or contractors $5M-$50M) | E | 6.38 | 4.97 |
+| 19 | WS13-036 | School and youth-sports volume photography (picture days, league photos) | E | 6.38 | 5.33 |
+| 20 | WS18-030 | Senior move management & estate sale/cleanout service | E | 6.38 | 5.78 |
+| 21 | WS18-008 | Handyman service company (W-2 craftsmen, small residential repairs) | B | 6.33 | 4.99 |
+| 22 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 6.32 | 4.76 |
+| 23 | WS18-010 | Home inspection firm (licensed, multi-inspector with ancillary tests) | E | 6.32 | 5.05 |
+| 24 | WS18-035 | Garage door repair & installation | E | 6.32 | 5.82 |
+| 25 | WS01-010 | Residential mortgage brokerage (licensed MLO + Illinois mortgage broker license, wholesale channel) | C | 6.28 | 4.34 |
 
 ## fastest_validation
 
@@ -189,59 +189,59 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 |---|---|---|---|---|---|
 | 1 | WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | C | 7.34 | 5.47 |
 | 2 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 7.26 | 5.60 |
-| 3 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 7.24 | 5.87 |
+| 3 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 7.13 | 5.66 |
 | 4 | WS16-006 | Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship) | C | 7.12 | 5.50 |
 | 5 | WS06-019 | Illinois cottage food home bakery / specialty confections | C | 7.04 | 3.51 |
-| 6 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 7.00 | 6.30 |
-| 7 | WS18-005 | Residential lawn mowing & snow removal maintenance route | C | 6.96 | 4.87 |
+| 6 | WS18-005 | Residential lawn mowing & snow removal maintenance route | C | 6.96 | 4.87 |
+| 7 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.93 | 6.20 |
 | 8 | WS05-022 | Storefront & low-rise commercial window cleaning route | E | 6.79 | 5.24 |
 | 9 | WS18-008 | Handyman service company (W-2 craftsmen, small residential repairs) | B | 6.76 | 4.99 |
 | 10 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.75 | 6.50 |
 | 11 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.62 | 6.57 |
-| 12 | WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | D | 6.61 | 5.87 |
-| 13 | WS18-013 | Pet waste removal weekly route (yard scooping) | E | 6.57 | 5.67 |
-| 14 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 6.55 | 6.33 |
-| 15 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.55 | 4.83 |
+| 12 | WS18-013 | Pet waste removal weekly route (yard scooping) | E | 6.57 | 5.67 |
+| 13 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 6.55 | 6.33 |
+| 14 | WS07-002 | Independent freight agent under a host brokerage (agent-to-agency path) | C | 6.55 | 4.83 |
+| 15 | WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | D | 6.50 | 5.86 |
 | 16 | WS04-017 | Dental handpiece repair (mail-in + local pickup) | D | 6.46 | 4.62 |
 | 17 | WS09-011 | Paid B2B intelligence briefing for an Illinois regulated industry (regulatory/legislative/procurement tracking) | E | 6.46 | 5.32 |
-| 18 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 6.46 | 4.85 |
-| 19 | WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | D | 6.43 | 5.70 |
-| 20 | WS01-009 | Trucking owner-operator and small-fleet finance desk (freight factoring referrals + truck/trailer financing) | D | 6.43 | 4.82 |
-| 21 | WS18-024 | Wash-and-fold pickup & delivery laundry service (asset-light) | E | 6.42 | 5.25 |
-| 22 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 6.41 | 5.47 |
-| 23 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.39 | 5.96 |
-| 24 | WS12-028 | Document translation agency incl. certified translations (immigration, legal, technical) | D | 6.38 | 4.36 |
-| 25 | WS04-012 | Provider credentialing & payer enrollment service | E | 6.38 | 5.54 |
+| 18 | WS18-024 | Wash-and-fold pickup & delivery laundry service (asset-light) | E | 6.42 | 5.25 |
+| 19 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.39 | 5.96 |
+| 20 | WS12-028 | Document translation agency incl. certified translations (immigration, legal, technical) | D | 6.38 | 4.36 |
+| 21 | WS04-012 | Provider credentialing & payer enrollment service | E | 6.38 | 5.54 |
+| 22 | WS04-021 | Practice compliance-as-a-service: OSHA bloodborne/infection control, HIPAA risk analysis and CPR/BLS training for dental, vet and small medical offices | E | 6.38 | 5.51 |
+| 23 | WS13-033 | Apostille & embassy legalization expediting for businesses and immigration filers | E | 6.38 | 4.76 |
+| 24 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 6.38 | 6.29 |
+| 25 | WS16-013 | Niche B2B e-commerce store using manufacturer drop-ship, stocking only proven SKUs (Global Industrial playbook in a vertical) | D | 6.36 | 5.03 |
 
 ## owner_distributions
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
 | 1 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.57 | 6.57 |
-| 2 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.19 | 6.30 |
-| 3 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 6.19 | 6.01 |
-| 4 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | B | 6.16 | 5.75 |
-| 5 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.16 | 6.50 |
-| 6 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 6.16 | 5.93 |
-| 7 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 6.14 | 6.22 |
-| 8 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.11 | 5.96 |
-| 9 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.93 | 5.86 |
-| 10 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 5.91 | 6.10 |
+| 2 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 6.17 | 5.94 |
+| 3 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | B | 6.16 | 5.75 |
+| 4 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.16 | 6.50 |
+| 5 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 6.14 | 6.22 |
+| 6 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.11 | 6.20 |
+| 7 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.11 | 5.96 |
+| 8 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.93 | 5.86 |
+| 9 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 5.91 | 6.10 |
+| 10 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.91 | 5.71 |
 | 11 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 5.88 | 5.60 |
-| 12 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.88 | 5.63 |
-| 13 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.85 | 6.21 |
-| 14 | WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | C | 5.83 | 6.03 |
-| 15 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | E | 5.83 | 5.92 |
-| 16 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.82 | 6.12 |
-| 17 | WS18-032 | Drain cleaning & sewer camera inspection service | E | 5.80 | 5.79 |
-| 18 | WS07-023 | Online consignment auctions for business liquidations (restaurant/industrial/office assets) | D | 5.79 | 5.57 |
-| 19 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 5.78 | 5.24 |
-| 20 | WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | E | 5.78 | 5.59 |
-| 21 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 5.77 | 6.29 |
-| 22 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 5.76 | 6.33 |
-| 23 | WS13-018 | Multifamily doorstep (valet) trash collection service | E | 5.74 | 6.11 |
-| 24 | WS13-038 | Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration | E | 5.74 | 5.97 |
-| 25 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.74 | 5.39 |
+| 12 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.85 | 6.21 |
+| 13 | WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | C | 5.83 | 6.03 |
+| 14 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | E | 5.83 | 5.92 |
+| 15 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.82 | 6.12 |
+| 16 | WS18-032 | Drain cleaning & sewer camera inspection service | E | 5.80 | 5.79 |
+| 17 | WS07-023 | Online consignment auctions for business liquidations (restaurant/industrial/office assets) | D | 5.79 | 5.57 |
+| 18 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 5.78 | 5.24 |
+| 19 | WS17-008 | Illinois Official Testing Station (public truck/trailer safety lane) with repair upsell | E | 5.78 | 5.59 |
+| 20 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 5.77 | 6.29 |
+| 21 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 5.76 | 6.33 |
+| 22 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.75 | 5.54 |
+| 23 | WS02-008 | Small-group employee benefits brokerage with ICHRA/level-funded focus | D | 5.74 | 5.39 |
+| 24 | WS04-015 | Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis | D | 5.74 | 5.72 |
+| 25 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | E | 5.73 | 6.09 |
 
 ## management_delegation
 
@@ -252,26 +252,26 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 | 3 | WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | C | 6.38 | 6.03 |
 | 4 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.31 | 6.50 |
 | 5 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 6.28 | 5.38 |
-| 6 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 6.26 | 5.93 |
-| 7 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.23 | 6.30 |
-| 8 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 6.19 | 6.22 |
-| 9 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 6.16 | 5.63 |
-| 10 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 6.14 | 5.24 |
-| 11 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 6.12 | 6.10 |
-| 12 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 6.12 | 5.90 |
-| 13 | WS14-019 | Niche non-healthcare group purchasing organization (GPO) for fragmented SMB buyers | B | 6.12 | 5.35 |
-| 14 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.11 | 5.96 |
-| 15 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 6.05 | 5.86 |
-| 16 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 6.00 | 5.28 |
-| 17 | WS13-018 | Multifamily doorstep (valet) trash collection service | E | 5.99 | 6.11 |
-| 18 | WS13-020 | Local portable storage container rental, sales and modification | C | 5.98 | 5.25 |
-| 19 | WS10-016 | Multifamily unit-turn (make-ready) services for property managers | D | 5.96 | 5.83 |
-| 20 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 5.93 | 6.33 |
-| 21 | WS06-005 | Adult incontinence supplies: discreet DTC autoship with caregiver/agency referral channel | D | 5.93 | 5.33 |
-| 22 | WS11-026 | Roll-off dumpster rental (C&D, cleanouts, light commercial) | D | 5.93 | 5.56 |
-| 23 | WS05-025 | Restroom hygiene service route (feminine hygiene units, air care, sanitizer/soap dispensers, urinal treatments) | E | 5.92 | 5.79 |
-| 24 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 5.92 | 6.29 |
-| 25 | WS03-017 | Industrial scale & weighing service (Illinois-registered service agency: calibration, repair, sales) | D | 5.89 | 5.62 |
+| 6 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.23 | 6.20 |
+| 7 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 6.19 | 6.22 |
+| 8 | WS04-002 | Home care franchise unit (e.g., Home Instead-type system) | B | 6.14 | 5.24 |
+| 9 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 6.12 | 6.10 |
+| 10 | WS14-019 | Niche non-healthcare group purchasing organization (GPO) for fragmented SMB buyers | B | 6.12 | 5.35 |
+| 11 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.11 | 5.96 |
+| 12 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 6.08 | 5.54 |
+| 13 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 6.05 | 5.86 |
+| 14 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 6.01 | 5.71 |
+| 15 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 6.00 | 5.28 |
+| 16 | WS10-016 | Multifamily unit-turn (make-ready) services for property managers | D | 5.96 | 5.83 |
+| 17 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 5.93 | 6.33 |
+| 18 | WS06-005 | Adult incontinence supplies: discreet DTC autoship with caregiver/agency referral channel | D | 5.93 | 5.33 |
+| 19 | WS11-026 | Roll-off dumpster rental (C&D, cleanouts, light commercial) | D | 5.93 | 5.56 |
+| 20 | WS05-025 | Restroom hygiene service route (feminine hygiene units, air care, sanitizer/soap dispensers, urinal treatments) | E | 5.92 | 5.79 |
+| 21 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 5.92 | 6.29 |
+| 22 | WS03-017 | Industrial scale & weighing service (Illinois-registered service agency: calibration, repair, sales) | D | 5.89 | 5.62 |
+| 23 | WS02-018 | Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data) | D | 5.86 | 5.72 |
+| 24 | WS16-001 | Local jan-san (janitorial & sanitation) distributor for Chicago-area facilities | C | 5.85 | 5.06 |
+| 25 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.84 | 6.12 |
 
 ## ai_leverage
 
@@ -282,11 +282,11 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 | 3 | WS11-010 | Utility bill audit and rate optimization on contingency (electric, gas, water/sewer, waste) | D | 5.77 | 5.57 |
 | 4 | WS11-021 | Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance | E | 5.71 | 6.26 |
 | 5 | WS14-008 | Retailer/distributor deduction & chargeback recovery for emerging CPG brands | E | 5.71 | 5.86 |
-| 6 | WS01-003 | Business-acquisition financing advisory for first-time buyers and search funds (SBA 7(a) change-of-ownership loans) | D | 5.70 | 5.67 |
-| 7 | WS14-001 | Small-parcel spend audit + UPS/FedEx contract renegotiation on gain-share | D | 5.70 | 5.55 |
-| 8 | WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | C | 5.68 | 5.86 |
-| 9 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 5.68 | 5.28 |
-| 10 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | E | 5.66 | 6.09 |
+| 6 | WS14-001 | Small-parcel spend audit + UPS/FedEx contract renegotiation on gain-share | D | 5.70 | 5.55 |
+| 7 | WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | C | 5.68 | 5.86 |
+| 8 | WS12-014 | Contingency direct-hire recruiting desk in a technical niche | C | 5.68 | 5.28 |
+| 9 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | E | 5.66 | 6.09 |
+| 10 | WS01-003 | Business-acquisition financing advisory for first-time buyers and search funds (SBA 7(a) change-of-ownership loans) | D | 5.63 | 5.61 |
 | 11 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.63 | 6.12 |
 | 12 | WS02-018 | Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data) | D | 5.63 | 5.72 |
 | 13 | WS03-025 | Lockout/tagout procedure development & machine-safeguarding compliance service (AI-assisted) | E | 5.61 | 5.62 |
@@ -298,7 +298,7 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 | 19 | WS04-010 | Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP) | E | 5.55 | 6.05 |
 | 20 | WS09-017 | Illinois local-government bid & procurement intelligence (aggregated bids from municipalities, school/park districts, townships) | E | 5.55 | 5.57 |
 | 21 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 5.55 | 6.29 |
-| 22 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 5.51 | 5.47 |
+| 22 | WS01-011 | Business-purpose investor loan brokerage — DSCR rental, fix-and-flip and bridge loans (1-4 unit, non-owner-occupied) | C | 5.51 | 5.45 |
 | 23 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 5.51 | 6.57 |
 | 24 | WS04-011 | Dental insurance verification, claims & AR recovery outsourcing for independent practices | E | 5.50 | 5.75 |
 | 25 | WS11-007 | Commercial electricity procurement brokerage (ICC-licensed ABC) with gas add-on | E | 5.50 | 5.80 |
@@ -311,27 +311,27 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 | 2 | WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | C | 6.17 | 6.03 |
 | 3 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | B | 6.07 | 5.75 |
 | 4 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 6.05 | 5.38 |
-| 5 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 6.05 | 5.90 |
-| 6 | WS14-019 | Niche non-healthcare group purchasing organization (GPO) for fragmented SMB buyers | B | 5.95 | 5.35 |
-| 7 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.88 | 6.50 |
-| 8 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.88 | 5.93 |
-| 9 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 5.85 | 6.30 |
-| 10 | WS13-020 | Local portable storage container rental, sales and modification | C | 5.85 | 5.25 |
-| 11 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 5.85 | 5.96 |
-| 12 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.79 | 6.12 |
-| 13 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 5.79 | 6.22 |
-| 14 | WS11-026 | Roll-off dumpster rental (C&D, cleanouts, light commercial) | D | 5.79 | 5.56 |
-| 15 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | E | 5.76 | 5.95 |
-| 16 | WS02-018 | Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data) | D | 5.70 | 5.72 |
-| 17 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 5.70 | 6.10 |
-| 18 | WS10-016 | Multifamily unit-turn (make-ready) services for property managers | D | 5.70 | 5.83 |
-| 19 | WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | D | 5.70 | 5.87 |
-| 20 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.69 | 5.30 |
-| 21 | WS13-018 | Multifamily doorstep (valet) trash collection service | E | 5.69 | 6.11 |
-| 22 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 5.64 | 5.28 |
-| 23 | WS12-005 | IT contract staffing for mid-market companies | C | 5.64 | 4.80 |
-| 24 | WS05-013 | Commercial HVAC preventive-maintenance agreements (light commercial RTUs) with repair/replacement pull-through | E | 5.62 | 5.13 |
-| 25 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 5.62 | 6.33 |
+| 5 | WS14-019 | Niche non-healthcare group purchasing organization (GPO) for fragmented SMB buyers | B | 5.95 | 5.35 |
+| 6 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.88 | 6.50 |
+| 7 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 5.85 | 6.20 |
+| 8 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 5.85 | 5.96 |
+| 9 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.79 | 6.12 |
+| 10 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 5.79 | 6.22 |
+| 11 | WS11-026 | Roll-off dumpster rental (C&D, cleanouts, light commercial) | D | 5.79 | 5.56 |
+| 12 | WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | E | 5.76 | 5.95 |
+| 13 | WS02-018 | Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data) | D | 5.70 | 5.72 |
+| 14 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 5.70 | 6.10 |
+| 15 | WS10-016 | Multifamily unit-turn (make-ready) services for property managers | D | 5.70 | 5.83 |
+| 16 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.70 | 5.49 |
+| 17 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.70 | 5.71 |
+| 18 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.69 | 5.30 |
+| 19 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 5.64 | 5.28 |
+| 20 | WS12-005 | IT contract staffing for mid-market companies | C | 5.64 | 4.80 |
+| 21 | WS05-013 | Commercial HVAC preventive-maintenance agreements (light commercial RTUs) with repair/replacement pull-through | E | 5.62 | 5.13 |
+| 22 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 5.62 | 6.33 |
+| 23 | WS17-009 | Outsourced fleet maintenance management for 15-300 vehicle service fleets | E | 5.62 | 6.20 |
+| 24 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.61 | 5.86 |
+| 25 | WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | D | 5.61 | 5.86 |
 
 ## adjacent_expansion
 
@@ -341,99 +341,99 @@ Eligible (no FAIL gate, not duplicate): 577 of 637 scored records.
 | 2 | WS05-002 | Fire sprinkler inspection, testing & maintenance (NFPA 25) contractor - inspection-first | D | 5.98 | 5.38 |
 | 3 | WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | C | 5.93 | 6.03 |
 | 4 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | B | 5.86 | 5.75 |
-| 5 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.84 | 5.90 |
-| 6 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.84 | 5.93 |
-| 7 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.84 | 6.01 |
-| 8 | WS04-015 | Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis | D | 5.70 | 5.72 |
-| 9 | WS04-018 | Biosafety cabinet, fume hood and USP <797>/<800> cleanroom certification | D | 5.70 | 5.36 |
-| 10 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 5.70 | 6.10 |
-| 11 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 5.68 | 6.30 |
-| 12 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.66 | 5.30 |
-| 13 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.63 | 6.12 |
-| 14 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.63 | 5.86 |
-| 15 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 5.59 | 5.28 |
-| 16 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 5.56 | 6.22 |
-| 17 | WS07-015 | Licensed customs brokerage for small/mid importers (founder sits the CBLE) | D | 5.56 | 5.55 |
-| 18 | WS13-002 | Commercial ice-machine subscription (ice-as-a-service) for restaurants, bars, healthcare and hotels | D | 5.56 | 5.37 |
-| 19 | WS13-016 | Lake, pond & stormwater-basin management for HOAs, business parks and municipalities | D | 5.56 | 5.77 |
-| 20 | WS05-011 | Annual fire door assembly inspection (NFPA 80) and door hardware repair for hospitals, schools and commercial buildings | E | 5.55 | 5.66 |
-| 21 | WS11-017 | Commercial cooling-tower/boiler water treatment service route | E | 5.55 | 5.79 |
-| 22 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 5.51 | 5.96 |
-| 23 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.49 | 6.50 |
-| 24 | WS01-028 | Outsourced commercial credit analysis and independent loan review for community banks and credit unions (AI-assisted) | E | 5.44 | 5.59 |
-| 25 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.44 | 6.21 |
+| 5 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.77 | 5.71 |
+| 6 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 5.77 | 5.94 |
+| 7 | WS04-015 | Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis | D | 5.70 | 5.72 |
+| 8 | WS04-018 | Biosafety cabinet, fume hood and USP <797>/<800> cleanroom certification | D | 5.70 | 5.36 |
+| 9 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 5.70 | 6.10 |
+| 10 | WS05-006 | Fire alarm inspection/testing + monitoring RMR (private alarm contractor agency) | E | 5.66 | 5.30 |
+| 11 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.63 | 6.12 |
+| 12 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 5.63 | 5.86 |
+| 13 | WS03-016 | Calibration laboratory (dimensional, pressure, temperature, torque, electrical) with on-site service | C | 5.59 | 5.28 |
+| 14 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 5.59 | 6.20 |
+| 15 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 5.56 | 6.22 |
+| 16 | WS07-015 | Licensed customs brokerage for small/mid importers (founder sits the CBLE) | D | 5.56 | 5.55 |
+| 17 | WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | D | 5.56 | 5.49 |
+| 18 | WS05-011 | Annual fire door assembly inspection (NFPA 80) and door hardware repair for hospitals, schools and commercial buildings | E | 5.55 | 5.66 |
+| 19 | WS11-017 | Commercial cooling-tower/boiler water treatment service route | E | 5.55 | 5.79 |
+| 20 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 5.51 | 5.96 |
+| 21 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 5.49 | 6.50 |
+| 22 | WS01-028 | Outsourced commercial credit analysis and independent loan review for community banks and credit unions (AI-assisted) | E | 5.44 | 5.46 |
+| 23 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.44 | 6.21 |
+| 24 | WS17-004 | Mobile preventive maintenance for light/medium-duty service and delivery fleets | E | 5.44 | 5.68 |
+| 25 | WS17-009 | Outsourced fleet maintenance management for 15-300 vehicle service fleets | E | 5.44 | 6.20 |
 
 ## holding_company_foundation
 
 | # | ID | Title | Ev | Score | Raw v1 |
 |---|---|---|---|---|---|
 | 1 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | C | 6.66 | 6.57 |
-| 2 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.45 | 6.30 |
+| 2 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | C | 6.38 | 6.20 |
 | 3 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | D | 6.37 | 6.50 |
 | 4 | WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | D | 6.29 | 6.22 |
 | 5 | WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | B | 6.21 | 5.75 |
 | 6 | WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | C | 6.13 | 5.96 |
-| 7 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 6.12 | 6.01 |
+| 7 | WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | D | 6.12 | 5.94 |
 | 8 | WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | D | 6.08 | 6.10 |
-| 9 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 6.08 | 5.93 |
-| 10 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 6.01 | 5.86 |
-| 11 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 5.99 | 6.29 |
-| 12 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.98 | 6.12 |
-| 13 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.96 | 6.21 |
-| 14 | WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | C | 5.96 | 6.03 |
-| 15 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 5.95 | 5.60 |
-| 16 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 5.95 | 6.33 |
-| 17 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 5.95 | 5.87 |
-| 18 | WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | C | 5.93 | 5.86 |
-| 19 | WS13-018 | Multifamily doorstep (valet) trash collection service | E | 5.93 | 6.11 |
-| 20 | WS07-023 | Online consignment auctions for business liquidations (restaurant/industrial/office assets) | D | 5.91 | 5.57 |
-| 21 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | E | 5.89 | 6.09 |
-| 22 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.88 | 5.63 |
-| 23 | WS15-020 | UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination) | E | 5.85 | 5.92 |
-| 24 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | E | 5.85 | 5.92 |
-| 25 | WS04-010 | Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP) | E | 5.83 | 6.05 |
+| 9 | WS04-024 | Small-generator regulated medical waste (PIMW) collection route | D | 6.01 | 5.86 |
+| 10 | WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | E | 5.99 | 6.29 |
+| 11 | WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | D | 5.98 | 6.12 |
+| 12 | WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | E | 5.96 | 6.21 |
+| 13 | WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | C | 5.96 | 6.03 |
+| 14 | WS18-003 | Junk removal and hauling (with optional dumpster rental) | B | 5.95 | 5.60 |
+| 15 | WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | E | 5.95 | 6.33 |
+| 16 | WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | C | 5.93 | 5.86 |
+| 17 | WS07-023 | Online consignment auctions for business liquidations (restaurant/industrial/office assets) | D | 5.91 | 5.57 |
+| 18 | WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | E | 5.89 | 6.09 |
+| 19 | WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | D | 5.88 | 5.66 |
+| 20 | WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | D | 5.88 | 5.71 |
+| 21 | WS15-020 | UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination) | E | 5.85 | 5.92 |
+| 22 | WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | E | 5.85 | 5.92 |
+| 23 | WS04-010 | Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP) | E | 5.83 | 6.05 |
+| 24 | WS04-015 | Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis | D | 5.79 | 5.72 |
+| 25 | WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | D | 5.79 | 5.54 |
 
 ## Weight-sensitivity stability (1,000 Dirichlet perturbations of v1 weights)
 
 | ID | Title | P(top 10) | P(top 25) |
 |---|---|---|---|
-| WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | 0.93 | 1.00 |
+| WS02-026 | Payroll service bureau for niche verticals (construction incl. certified payroll, restaurants) on a white-label platform | 0.95 | 1.00 |
 | WS02-028 | Vertical-niche outsourced bookkeeping (construction job-costing, trucking per-mile/IFTA, restaurants) | 1.00 | 1.00 |
 | WS05-007 | Commercial pest control for food-handling and audited facilities (restaurants, grocers, food plants, warehouses) | 1.00 | 1.00 |
 | WS13-004 | Independent first-aid cabinet restocking & safety-supply van route (with AED/eyewash compliance) | 1.00 | 1.00 |
-| WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | 0.79 | 1.00 |
-| WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | 0.76 | 1.00 |
-| WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | 0.40 | 0.99 |
-| WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | 0.91 | 0.99 |
-| WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | 0.68 | 0.99 |
-| WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | 0.26 | 0.99 |
-| WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | 0.38 | 0.98 |
-| WS11-021 | Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance | 0.21 | 0.95 |
-| WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | 0.05 | 0.95 |
-| WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | 0.40 | 0.91 |
-| WS17-009 | Outsourced fleet maintenance management for 15-300 vehicle service fleets | 0.08 | 0.88 |
-| WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | 0.41 | 0.84 |
-| WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | 0.23 | 0.78 |
-| WS13-001 | Dishmachine lease + chemical subscription route for independent foodservice (Auto-Chlor model) | 0.06 | 0.77 |
-| WS13-018 | Multifamily doorstep (valet) trash collection service | 0.01 | 0.71 |
-| WS04-024 | Small-generator regulated medical waste (PIMW) collection route | 0.01 | 0.66 |
-| WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | 0.08 | 0.65 |
-| WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | 0.01 | 0.63 |
-| WS10-016 | Multifamily unit-turn (make-ready) services for property managers | 0.00 | 0.57 |
-| WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | 0.17 | 0.57 |
-| WS04-010 | Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP) | 0.00 | 0.55 |
-| WS18-003 | Junk removal and hauling (with optional dumpster rental) | 0.12 | 0.49 |
-| WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | 0.00 | 0.29 |
-| WS13-016 | Lake, pond & stormwater-basin management for HOAs, business parks and municipalities | 0.00 | 0.29 |
-| WS13-038 | Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration | 0.00 | 0.26 |
-| WS04-015 | Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis | 0.00 | 0.22 |
-| WS02-018 | Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data) | 0.00 | 0.21 |
-| WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | 0.00 | 0.16 |
-| WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | 0.00 | 0.16 |
-| WS16-006 | Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship) | 0.02 | 0.16 |
-| WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | 0.02 | 0.13 |
-| WS08-001 | DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship) | 0.00 | 0.11 |
-| WS01-007 | Equipment finance and leasing brokerage via equipment-vendor (dealer) programs | 0.00 | 0.09 |
-| WS01-003 | Business-acquisition financing advisory for first-time buyers and search funds (SBA 7(a) change-of-ownership loans) | 0.00 | 0.07 |
-| WS14-008 | Retailer/distributor deduction & chargeback recovery for emerging CPG brands | 0.00 | 0.07 |
-| WS18-032 | Drain cleaning & sewer camera inspection service | 0.00 | 0.07 |
+| WS18-004 | Lawn fertilization & weed-control subscription route (IDOA-licensed) | 0.84 | 1.00 |
+| WS02-002 | Contractor & trades commercial insurance agency (Chicagoland small contractors) | 0.84 | 1.00 |
+| WS05-001 | Portable fire extinguisher + emergency/exit lighting inspection route (OSFM Class A distributor) | 0.76 | 1.00 |
+| WS05-026 | Medical, dental & ambulatory clinic janitorial (OSHA bloodborne-pathogen-trained, infection-control cleaning) | 0.47 | 1.00 |
+| WS15-023 | Prevailing-wage certified payroll & Illinois public-works labor compliance outsourcing | 0.31 | 0.99 |
+| WS03-012 | Overhead crane & hoist inspection, maintenance and repair (OSHA 1910.179 / ASME B30 programs) | 0.92 | 0.99 |
+| WS02-001 | Trucking / motor-carrier niche commercial insurance agency (owner-operators and small fleets) | 0.42 | 0.99 |
+| WS11-021 | Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance | 0.25 | 0.98 |
+| WS04-014 | HIPAA-focused managed IT services for independent dental, vet and small medical practices | 0.07 | 0.97 |
+| WS18-002 | Non-medical in-home senior care agency (IDPH-licensed Home Services agency) | 0.45 | 0.94 |
+| WS17-009 | Outsourced fleet maintenance management for 15-300 vehicle service fleets | 0.10 | 0.93 |
+| WS13-030 | Low-cost direct cremation provider (online arrangements, employed licensed funeral director, trade crematory) | 0.30 | 0.82 |
+| WS17-001 | Done-for-you DOT compliance management for small/mid motor carriers | 0.01 | 0.81 |
+| WS04-024 | Small-generator regulated medical waste (PIMW) collection route | 0.03 | 0.77 |
+| WS10-016 | Multifamily unit-turn (make-ready) services for property managers | 0.00 | 0.72 |
+| WS13-014 | Private utility locating & concrete GPR scanning for contractors and facilities | 0.04 | 0.71 |
+| WS04-010 | Specialty billing/RCM for small outpatient practices (behavioral health, ABA, PT/OT/SLP) | 0.00 | 0.71 |
+| WS18-003 | Junk removal and hauling (with optional dumpster rental) | 0.13 | 0.56 |
+| WS12-012 | Offshore/nearshore dedicated remote staff for US SMB verticals | 0.01 | 0.42 |
+| WS13-028 | Pet cremation & aftercare serving veterinary clinics (asset-light start, own crematory later) | 0.01 | 0.37 |
+| WS04-015 | Independent biomedical equipment service organization (ISO) for clinics, ASCs, dental, vet and dialysis | 0.00 | 0.36 |
+| WS02-018 | Insurance-agency back-office outsourcing (service center: COIs, endorsements, renewals, AMS data) | 0.00 | 0.33 |
+| WS18-007 | Residential pest control quarterly service plans (IDPH-licensed) | 0.00 | 0.33 |
+| WS13-038 | Nuisance wildlife control & exclusion (bats, raccoons, squirrels, birds) with attic restoration | 0.00 | 0.28 |
+| WS13-009 | Restaurant back-of-house wear-parts route (refrigeration door gaskets, hood-filter exchange, strip curtains, knife/blade exchange) | 0.03 | 0.28 |
+| WS16-006 | Promotional products / branded merchandise distributor (ASI/PPAI supplier network, supplier-decorated drop-ship) | 0.03 | 0.21 |
+| WS15-020 | UST compliance management for independent gas stations (walkthrough inspections, operator training, test coordination) | 0.00 | 0.18 |
+| WS18-001 | Recurring residential cleaning company (W-2 team model, biweekly plans) | 0.02 | 0.16 |
+| WS08-001 | DLA DIBBS spare-parts dealer (approved-source NSN quoting, drop-ship) | 0.00 | 0.15 |
+| WS14-008 | Retailer/distributor deduction & chargeback recovery for emerging CPG brands | 0.00 | 0.15 |
+| WS18-032 | Drain cleaning & sewer camera inspection service | 0.00 | 0.12 |
+| WS13-018 | Multifamily doorstep (valet) trash collection service | 0.00 | 0.12 |
+| WS13-021 | Secure truck & trailer parking yard on leased industrial land (Chicago region) | 0.00 | 0.12 |
+| WS11-017 | Commercial cooling-tower/boiler water treatment service route | 0.00 | 0.11 |
+| WS02-004 | Small habitational / landlord property insurance niche (Chicago 2-6 flats and small apartment owners) | 0.00 | 0.10 |
+| WS11-007 | Commercial electricity procurement brokerage (ICC-licensed ABC) with gas add-on | 0.00 | 0.10 |

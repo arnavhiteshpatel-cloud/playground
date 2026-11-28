@@ -47,10 +47,10 @@ All graft and new-bone evidence is **simulation** (computational phantoms with a
   (`experiments/results/exp_H_I_real.json`); Tb.Th ICC(2,1) 0.983 against Scanco IPL on 8 public cubes, with a
   border convention chosen after seeing them (`experiments/results/exp_G_morphometry.json`). The Generation-0 synthetic
   model, applied to the real dog test scans without real training data, reached Dice 0.377 at native scale and 0.513
-  with 2× upsampling (`experiments/results/exp_S2v2_sim2real_a.json`). Status per `EXPERIMENT_REGISTRY.md`: S2 parts
-  b and c (domain-randomised pretraining, few-shot) are running; U1 (ensembles, conformal intervals) and O2 (ONNX
-  runtime) are queued; S3 (self-supervised pretraining) has a script but no registry entry and has not run. No numbers
-  from any of them yet.
+  with 2× upsampling (`experiments/results/exp_S2v2_sim2real_a.json`). Status per `EXPERIMENT_REGISTRY.md`: S2 part b
+  (domain-randomised pretraining, one seed) was worse than the Gen-0 model on every test scan (0.353 native, 0.457 at
+  2×); part c (few-shot) is running; S3 (self-supervised pretraining), U1 (ensembles, conformal intervals) and O2 (ONNX
+  runtime) are queued.
 
 ## 3. What is unknown
 * Whether real graft materials behave like the simulator: no physical phantom has been scanned

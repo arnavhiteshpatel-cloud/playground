@@ -44,8 +44,8 @@ decision, `docs/ip/IP_STRATEGY.md`).
   SYNTHETIC) and registration QC cannot verify alignment along a featureless bone axis (L5). There is no desktop day-0
   workflow.
 * **Synthetic → real** (REAL dog forelimb, 5 test scans): the synthetic model reaches Dice 0.377 zero-shot and 0.513 with
-  2× upsampling; domain-randomised pretraining did not improve the zero-shot curve on the training scans; few-shot,
-  self-supervised, ensemble/conformal and runtime results: §3a.
+  2× upsampling; domain-randomised pretraining was worse on every one of the 5 test scans (0.353 native, 0.457 at 2×;
+  one seed); few-shot, self-supervised, ensemble/conformal and runtime results: §3a.
 * **Morphometry** agrees with Scanco IPL on public cubes; graft-specific endpoints have no real reference yet.
 
 ### 3a. ML campaign (filled from the result files when the runs finish)

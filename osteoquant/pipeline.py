@@ -124,7 +124,18 @@ def segment(vol: Volume, roi_mask: np.ndarray, cfg: dict, progress=lambda f, m: 
     raise ValueError(f"Unknown segmentation method {method}")
 
 
-def analyze(vol: Volume, cfg: dict | None = None, roi_dict: dict | None = None, progress=lambda f, m: None) -> dict:
+def analyze(vol: Volume, cfg: dict | None = None, roi_dict: dict | None = None, progress=lambda f, m: None,
+            check=None) -> dict:
+    """Run the analysis. ``check`` (optional) is called inside long morphometry loops and raises to cancel."""
+    from .morphometry.core import CANCEL_CHECK
+    token = CANCEL_CHECK.set(check)
+    try:
+        return _analyze(vol, cfg, roi_dict, progress)
+    finally:
+        CANCEL_CHECK.reset(token)
+
+
+def _analyze(vol: Volume, cfg: dict | None, roi_dict: dict | None, progress) -> dict:
     from .qc import run_qc
     from .morphometry import defect_report_metrics
     from .uncertainty import predictive_entropy, abstain, plausibility_checks

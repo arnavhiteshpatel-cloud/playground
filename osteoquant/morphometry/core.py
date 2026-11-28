@@ -29,6 +29,8 @@ Key conventions (verified numerically in Experiment G / tests/test_morphometry.p
 """
 from __future__ import annotations
 
+import contextvars
+
 import numpy as np
 from scipy import ndimage as ndi
 
@@ -53,6 +55,17 @@ def surface_area_mm2(mask, spacing) -> float:
     except (ValueError, RuntimeError):
         return 0.0
     return float(mesh_surface_area(verts, faces)) * 1e-6
+
+
+# Cancellation for long morphometry loops (cycle-3 review C3-PRD-20): the analysis pipeline sets a callable that raises
+# when its job is cancelled; library callers that set nothing are unaffected.
+CANCEL_CHECK: contextvars.ContextVar = contextvars.ContextVar("osteoquant_cancel_check", default=None)
+
+
+def _check_cancel() -> None:
+    f = CANCEL_CHECK.get()
+    if f is not None:
+        f()
 
 
 def local_thickness(mask: np.ndarray, voxel_um: float, radius_step: float = 0.25, border: str = "background",
@@ -82,6 +95,7 @@ def local_thickness(mask: np.ndarray, voxel_um: float, radius_step: float = 0.25
     th = np.zeros(m.shape, np.float32)
     q = np.round(radii / radius_step) * radius_step
     for r in np.unique(q):
+        _check_cancel()
         sel = pts[q == r]
         seed = np.zeros(m.shape, bool)
         seed[tuple(sel.T)] = True
@@ -273,12 +287,15 @@ def defect_report_metrics(labels: np.ndarray, roi: np.ndarray, vol: Volume, axis
     host = labels == 3
     mineral = new | graft | host
     iso = vol.is_isotropic
+    _check_cancel()
     if iso:
         out["new_bone_architecture"] = trabecular_morphometry(new, roi, sp[0], compute_thickness=thickness)
     else:
         out["new_bone_architecture"] = {"note": "anisotropic voxels: resample for thickness metrics"}
+    _check_cancel()
     out["bridging_all_mineral"] = bridging(mineral, roi, axis, host)
     out["bridging_new_bone"] = bridging(new, roi, axis, host)
+    _check_cancel()
     out["radial_ingrowth"] = radial_ingrowth_profile(new, roi, sp, shell_um=max(200.0, 4 * sp[0]))
     out["density"] = {n: density_stats(vol, (labels == c) & (roi if c != 3 else np.ones_like(roi)))
                       for c, n in LABEL_NAMES.items() if ((labels == c)).any()}

@@ -48,7 +48,8 @@ def job_analyze(store, user, params, ctx):
         r = store.latest_roi(user, scan_id)
         if r:
             roi_dict = r["definition"]
-    res = analyze(vol, params.get("config", {}), roi_dict, progress=lambda f, m: ctx.progress(f, m))
+    res = analyze(vol, params.get("config", {}), roi_dict, progress=lambda f, m: ctx.progress(f, m),
+                  check=getattr(ctx, "check", None))
     if res.get("status") == "needs_manual_roi":
         return {"status": "needs_manual_roi", "error": res.get("roi_error")}
     import uuid

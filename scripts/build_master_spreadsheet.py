@@ -1,7 +1,10 @@
 """Build deliverables/OsteoQuant_Master_Workbook.xlsx from project files (no hand-typed results).
 
 Sheets: README · Experiments · Benchmarks · Datasets · Competitors · Prospects · Funding · Collaborators ·
-Phantom_BOM · Financial_Summary · Blockers · Remaining_Work
+Phantom_BOM · Financial_Summary · Blockers · Remaining_Work, plus Generation-2 sheets: Advisor_Validation ·
+Longitudinal_L3 · Transfer · Uncertainty_U1 · Runtime_O2 · Scorecard · Forensic_Audit · Baseline_Comparison ·
+Founder_Decisions · Risks · Defects · QA_Defects · Reviews · Traceability · Datasets_R2 · Competitor_Matrix · Patents ·
+Model_Registry
 """
 import csv
 import json
@@ -155,10 +158,110 @@ def main():
                     if l.startswith("|") and not set(l.replace("|", "").strip()) <= set("-: ")]
             if rows:
                 sheet(wb, title, rows[0], rows[1:], {h: 40 for h in rows[0]})
+    gen2_sheets(wb)
     out = ROOT / "deliverables" / "OsteoQuant_Master_Workbook.xlsx"
     out.parent.mkdir(exist_ok=True)
     wb.save(out)
     print("saved", out, [s.title for s in wb.worksheets])
+
+
+def md_rows(path):
+    """All Markdown table rows in a file (separator rows dropped); header = first row of the first table."""
+    p = ROOT / path
+    if not p.exists():
+        return []
+    rows = []
+    for line in p.read_text().splitlines():
+        if line.strip().startswith("|"):
+            cells = [c.strip().replace("**", "").replace("`", "") for c in line.strip().strip("|").split("|")]
+            if all(re.fullmatch(r":?-{3,}:?", c) for c in cells if c):
+                continue
+            rows.append(cells)
+    return rows
+
+
+def md_sheet(wb, title, path, first_only=True):
+    rows = md_rows(path)
+    if not rows:
+        return
+    hdr = rows[0]
+    body = []
+    for r in rows[1:]:
+        if first_only and r == hdr:
+            continue
+        if first_only and len(r) != len(hdr):
+            continue
+        body.append(r)
+    sheet(wb, title, hdr, body, {h: 45 for h in hdr})
+
+
+def gen2_sheets(wb):
+    # advisor validation, per endpoint
+    rows = []
+    for name in ("exp_S1H_heldout", "exp_S1b_advisor_threshold", "exp_S1c_control_reference", "exp_S1_advisor"):
+        d = load(name)
+        if not d:
+            continue
+        for s_ in d.get("summary", []):
+            for ep, v in (s_.get("per_endpoint") or {}).items():
+                rows.append([name, d.get("advisor_version"), s_["method"], ep, v["n"], v["n_fail"], v["failures_refused"],
+                             v["supported_but_failed"], v["supported_and_ok"], v["refused_but_ok"],
+                             v["p_fail_given_supported_upper95"], v["abs_err_supported_median"], v["abs_err_supported_max"]])
+    sheet(wb, "Advisor_Validation", ["Experiment", "Advisor", "Method", "Endpoint", "n", "Failures (>20%)", "Failures refused",
+                                     "Supported & failed", "Supported & OK", "Refused but OK", "P(fail|supported) 95% upper",
+                                     "Median |err| supported", "Max |err| supported"], rows,
+          {"Experiment": 28, "Method": 22, "Endpoint": 24})
+    L3 = load("exp_L3_displacement")
+    if L3:
+        sheet(wb, "Longitudinal_L3", ["Displacement mean (µm)", "Fragment prob.", "Method", "Graft Dice", "Mean |graft vol err|", "n"],
+              [[r["D_um"], r["F"], r["method"], r["dice_graft"], r["abs_vol_err"], r["n"]] for r in L3["summary"]])
+    rows = []
+    for name in ("exp_S2v2_sim2real_a", "exp_S2v2_sim2real_b"):
+        d = load(name)
+        if d:
+            for key in ("gen0_train_zoom_curve", "dr_train_zoom_curve"):
+                for z, v in (d.get(key) or {}).items():
+                    rows.append([name, key, f"zoom {z}", "train Dice", v, None, None])
+    c = load("exp_S2v2_sim2real_c")
+    if c:
+        for k, v in c.get("fewshot_summary", {}).items():
+            rows.append(["S2v2c", "few-shot test (5 specimens, 3 seeds)", k, "Dice", v.get("mean"), v.get("ci_lo"), v.get("ci_hi")])
+        for k, v in c.get("paired_differences", {}).items():
+            rows.append(["S2v2c", "paired per-specimen difference", k, "Dice diff", v.get("mean"), v.get("ci_lo"), v.get("ci_hi")])
+    s3 = load("exp_S3_selfsupervised")
+    if s3:
+        for k, v in s3.get("summary", {}).items():
+            rows.append(["S3", "few-shot test (5 specimens, 3 seeds)", k, "Dice", v.get("mean"), v.get("ci_lo"), v.get("ci_hi")])
+    sheet(wb, "Transfer", ["Experiment", "Data / quantity", "Arm", "Metric", "Value", "CI low", "CI high"], rows)
+    u = load("exp_U1_ensemble_conformal")
+    if u:
+        rows = [["seed", s_["seed"], k, v] for s_ in u.get("seeds", []) for k, v in s_.items() if k != "seed"]
+        rows += [["ensemble", "", k, v] for k, v in u.get("ensemble", {}).items()]
+        for sc_, v in u.get("failure_detection", {}).get("auroc", {}).items():
+            for st, vv in v.items():
+                rows.append(["failure AUROC", sc_, st, vv.get("failure") if isinstance(vv, dict) else vv])
+        for k, v in u.get("conformal", {}).items():
+            rows.append(["conformal", k, "", json.dumps(v) if isinstance(v, dict) else v])
+        sheet(wb, "Uncertainty_U1", ["Block", "Item", "Quantity", "Value"], rows, {"Value": 60})
+    o2 = load("exp_O2_runtime")
+    if o2:
+        sheet(wb, "Runtime_O2", ["Variant", "Median voxels/s", "Min label agreement vs PyTorch", "Mean |graft vol err|"],
+              [[k, v["median_voxels_per_s"], v["min_label_agreement"], v["mean_abs_graft_vol_err"]] for k, v in o2["summary"].items()])
+    for title, path in (("Scorecard", "BENCHMARK_SCORECARD.md"), ("Forensic_Audit", "FORENSIC_AUDIT.md"),
+                        ("Baseline_Comparison", "BASELINE_COMPARISON.md"), ("Founder_Decisions", "FOUNDER_DECISIONS.md"),
+                        ("Risks", "RISK_REGISTER.md"), ("Defects", "DEFECT_REGISTRY.md"), ("QA_Defects", "docs/qa/DEFECTS_FOUND.md"),
+                        ("Reviews", "REVIEW_REGISTRY.md")):
+        md_sheet(wb, title, path)
+    csv_sheet(wb, "Traceability", "docs/quality/traceability_matrix.csv")
+    csv_sheet(wb, "Datasets_R2", "docs/research/datasets_r2.csv")
+    csv_sheet(wb, "Competitor_Matrix", "docs/research/competitor_matrix.csv")
+    csv_sheet(wb, "Patents", "docs/ip/patents.csv")
+    reg = ROOT / "models" / "registry.json"
+    if reg.exists():
+        R = json.loads(reg.read_text())
+        sheet(wb, "Model_Registry", ["Model", "Provenance", "Licence tag", "n train", "Parent", "SHA-256 (12)", "ONNX"],
+              [[k, ", ".join(v.get("provenance", [])), v.get("licence_tag"), v.get("n_train"), v.get("parent"),
+                (v.get("sha256") or "")[:12], "yes" if v.get("onnx_sha256") else ""] for k, v in sorted(R.items())])
 
 
 if __name__ == "__main__":

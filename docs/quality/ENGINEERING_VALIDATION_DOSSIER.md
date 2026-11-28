@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | Document ID | OQ-QMS-EVD-001 |
-| Version | 0.1 (DRAFT) |
-| Date | 2026-11-27 |
-| Software baseline | `osteoquant` 0.1.0 (Generation-2 desktop), measurement-support advisor 1.4.3, working tree of 2026-11-28 (not a tagged release) |
+| Version | 0.2 (DRAFT) |
+| Date | 2026-11-28 (v0.1: 2026-11-27) |
+| Software baseline | `osteoquant` 0.1.0 (Generation-2 desktop), measurement-support advisor 1.4.3; test evidence at commit `d124ae6`, Linux bundle at `1f568f4` (not tagged releases) |
 | Owner | Quality / Engineering (TBD) |
 | Related | URS.md v0.2, FUNCTIONAL_SPEC.md v0.2, RISK_ASSESSMENT.md v0.2, traceability_matrix.csv, IQ/OQ/PQ v0.2, PART11_GLP_GAP_ANALYSIS.md v0.2 |
 
@@ -20,9 +20,9 @@
 | Functional specification items | 129 (3 retired) | FUNCTIONAL_SPEC.md |
 | Traceability (FS rows) | **VERIFIED 54 · PARTIAL 42 · GAP 33** (was 12 · 24 · 45 of 81 rows for the Generation-1 baseline) | traceability_matrix.csv |
 | Requirements fully verified (all FS rows VERIFIED) | 22 of 88; 55 mixed; 11 entirely GAP | `scripts/build_traceability.py` output |
-| Automated tests collected | 439–457 test items during 2026-11-27 (the suite grew while this dossier was written); 55 items in `tests/desktop/` | `pytest --collect-only -q` |
+| Automated tests | Full suite (library + desktop + licensing): **611 passed, 1 skipped** at `d124ae6` (2026-11-28); CI runs the same suites on Ubuntu, Windows and macOS × Python 3.12/3.13 | `docs/qa/test_summary.json`, `.github/workflows/ci.yml` |
 | Distinct tests cited as evidence | 172 | traceability_matrix.csv |
-| Library line+branch coverage | 62 % (desktop GUI excluded) | docs/qa/coverage_baseline.txt |
+| Library line+branch coverage | **93.4 %** overall, **99 %** on morphometry, stats, metrics, I/O and audit (desktop GUI excluded); v0.1 baseline was 62 % | `docs/qa/test_summary.json` |
 | QA defects | 25 found, 21 fixed with regression tests, 4 assigned (open) | docs/qa/DEFECTS_FOUND.md |
 | Security findings (Gen 2) | 20: 12 fixed (including the critical-conditional G2-01), 3 assigned to the lead, 3 open (low), 2 info | docs/security/SECURITY_REVIEW_GEN2.md |
 | IQ / OQ / PQ executed | **None** | IQ_PROTOCOL.md, OQ_PROTOCOL.md, PQ_PLAN.md |
@@ -97,10 +97,12 @@ Engineering run record (not OQ execution; developer container, Linux, Python 3.1
 | R1 | tests/desktop, test_controls, test_audit_properties, test_advisor, test_longitudinal_v2, test_security_gen2, test_security_fixes, test_store_api_workflows, test_api | 157 passed, 1 failed, 1 skipped (109 s). The failure was `test_advisor.py::test_resorbable_material_needs_early_known_timepoint`, a test being added concurrently with an advisor change; it is not cited in the matrix. The skip is `test_read_only_data_directory` (POSIX permissions are not enforced for root). |
 | R2 | test_controls, test_advisor (after the concurrent change was completed) | 35 passed |
 
-A complete suite run on a clean, release-tagged build, with the log retained, is still required before any of this is used as OQ evidence. One test is a strict expected failure documenting an open defect (`test_update_registry_works_without_fcntl`, QA-022, Windows only).
+| R3 | Full suite with coverage, clean tree at `d124ae6` (2026-11-28) | **611 passed, 1 skipped** (6 min); coverage 93.4 % overall, 99 % critical; log retained by the developer, summary in `docs/qa/test_summary.json` |
+
+A complete suite run on a release-tagged build, under an approved protocol, is still required before any of this is used as OQ evidence. One test is a strict expected failure documenting an open defect (`test_update_registry_works_without_fcntl`, QA-022, Windows only).
 
 ## 5. Coverage
-`docs/qa/coverage_baseline.txt` (library, line + branch, desktop GUI excluded by configuration): **62 % overall**. High: `qc/engine.py` 94 %, `morphometry/core.py` 87 %, `audit/log.py` 85 %, `study/db.py` 79 %. Low: `io/readers.py` 55 %, `stats/core.py` 56 %, `roi/engine.py` 54 %, `segment/classical.py` 24 %, `uncertainty/core.py` 23 %, `cli.py`, `histology`, `phantom/ctsim.py` 0 %. The baseline predates the advisor, licensing and longitudinal tests and does not list `advisor/` or `licensing/`; `longitudinal/core.py` shows 0 % although tests now exist. Re-measure on the release build; add `licensing`, `advisor` and the non-GUI desktop modules (`project`, `services`, `support`, `editing`, `timing`, `import_wizard` model) to the measured set.
+Current: **93.4 % overall, 99 % on the critical modules** (line + branch, desktop GUI excluded by configuration; `docs/qa/test_summary.json`). CI enforces ≥90 % overall and ≥95 % for morphometry, stats, metrics, I/O and audit. The v0.1 baseline (`docs/qa/coverage_baseline.txt`, 62 %) is kept for history.
 
 ## 6. QA reports
 | Evidence | Location | Content |
@@ -127,9 +129,11 @@ All experiment results are scripted runs with recorded JSON in `experiments/resu
 |---|---|---|---|
 | G | Morphometry vs analytic and vs Scanco IPL maps (URS-062) | Analytic + 8 real cubes | experiments/results/exp_G_morphometry.json |
 | P | Bit-identical reruns, format round-trips (URS-113) | Synthetic | experiments/results/exp_P_reproducibility.json |
-| S1, S1b, S1c | Advisor refuses failing measurements (URS-150/151) | Synthetic | experiments/results/exp_S1*.json; EXPERIMENT_REGISTRY.md |
+| S1, S1b, S1c | Advisor development checks (in-sample; URS-150/151) | Synthetic | experiments/results/exp_S1*.json; EXPERIMENT_REGISTRY.md |
+| S1H, S1H2, S1H3, S1H4 | Pre-registered held-out validation of the advisor (URS-150/151); S1H4 tests the shipped 1.4.3 on the application's material paths: no supported failure, precision not demonstrated (structure bound 0.14), very low coverage | Synthetic | experiments/results/exp_S1H*_heldout.json; PREREGISTRATION.md §7–§10 |
+| B1-blur | Accuracy of the scan-measured blur the advisor uses: under-reads at high noise (DF-041) | Synthetic | experiments/results/exp_B1_blur_estimator.json |
 | F, F2 | ROI detection; ROI propagation (URS-040, URS-182) | Synthetic + 2 real ovine | experiments/results/exp_F*.json |
-| L, L2, L3, L4 | Day-0 propagation, displacement, registration QC (URS-180/181) | Synthetic | experiments/exp_L*.py, results |
+| L, L2, L3, L4, L5 | Day-0 propagation, displacement, registration QC incl. fail-closed axis verification (URS-180/181) | Synthetic | experiments/exp_L*.py, results |
 | H, I | Real-data bone segmentation; synthetic-to-real transfer (zero-shot fails) | Public dog forelimb CT (not defects) | experiments/results/exp_H_I_real.json |
 | O, O2 | Speed and memory; ONNX runtime | Real large volumes; synthetic | experiments/results/exp_O*.json |
 | Blocked | Physical separability (E2), real adaptation (U3), analyst time/ICC (A7/E6), micro-CT vs histology (E8) | Need physical or partner data | EXPERIMENT_REGISTRY.md |
@@ -139,7 +143,7 @@ No experiment uses real grafted-defect specimens with ground truth. The graft/ne
 ## 9. Review registry
 | Evidence | Location | Notes |
 |---|---|---|
-| Review registry | REVIEW_REGISTRY.md | 12 perspectives × 3 cycles planned. Per the registry's own disclosure, the reviews were performed by **automated reviewer agents, not qualified human experts**, and must not be presented as expert review. |
+| Review registry | REVIEW_REGISTRY.md | 12 perspectives × 3 cycles, all completed. Per the registry's own disclosure, the reviews were performed by **automated reviewer agents, not qualified human experts**, and must not be presented as expert review. Cycle-3 responses: docs/reviews/cycle3/RESPONSE_*.md |
 | Cycle-1 science/architecture reviews | docs/reviews/cycle1/REVIEW_IMAGING_STATS.md, REVIEW_ML_ARCH.md, RESPONSE.md, RESPONSE_PART2.md | 60 findings; critical and high findings fixed or accepted with documented limitation (STAT-04); medium/low open for cycle 2 |
 | Cycle-1 biology/CRO/quality review | docs/reviews/cycle1/REVIEW_BIO_CRO_QUALITY.md | QA-REG-01 (report omitted support status) now implemented in `report/defectfill.py` but untested (FS-152-2 GAP); QA-REG-02 (quality documents described the web architecture) addressed by this re-baseline; QA-REG-04 (no executed verification) remains open; BIO and CRO findings partly open |
 | Forensic audit | FORENSIC_AUDIT.md | FA-20 (traceability 45 of 81 GAP) addressed by regenerating the matrix; remaining GAP rows listed in the matrix |
@@ -153,22 +157,24 @@ No experiment uses real grafted-defect specimens with ground truth. The graft/ne
 | Architecture | docs/desktop/ARCHITECTURE.md |
 | Packaging | docs/desktop/PACKAGING.md, packaging/ |
 | Screenshots of the workflow | docs/screenshots/desktop/ (start page, viewer, editing, revision dialog, import, QC, results, report preview, audit trail, blinded review) |
-| Release notes | **None** (URS-141 GAP) |
+| Release notes | docs/user/RELEASE_NOTES_GEN2.md |
 
 ## 11. Defects and gaps found during the re-baseline
 These were found while mapping requirements to code and tests. They are listed here because this document owns no code; proposed changes are for the engineering backlog.
 
-| ID | Severity | Finding | Evidence | Proposed change |
+Status updated 2026-11-28 (v0.2) against the code and tests named in the last column.
+
+| ID | Severity | Finding | Evidence | Proposed change / status (v0.2) |
 |---|---|---|---|---|
-| D-1 | medium (security / attributability) | Desktop e-signature re-authentication bypasses the lockout. `desktop/project.py::Project.reauthenticate` calls `check_password` directly, so wrong passwords at signing never lock the account and inactive or locked accounts are not refused. The Store/API path (`Store.reauthenticate`, fix for G2-03/QA-011) does all three. | FS-092-2 | Make `Project.reauthenticate` delegate to `Store.reauthenticate` (keep the `review.reauth_failed` event or rely on `auth.reauth_failed`); add `test_desktop_reauth_failures_lock_account`. |
-| D-2 | high (attributability) | No user administration in the desktop: a project has one admin and further named accounts need library calls. No password change. | FS-010-3, FS-016-1 | Add *Project > Users* (create, role, deactivate, reset password) for `manage_users`. |
-| D-3 | high (integrity) | Study tables (scans, segmentations, measurements, reviews) are outside the audit hash chain; direct SQLite edits leave no trace except where hashes appear in audit details. | RSK-48 | Record a per-row content hash in the audit details for every insert/update of data tables, or chain the tables; add an on-demand integrity check (FS-021-2). |
-| D-4 | medium | No anchor export/import, audit export, backup, archive or JSON/label export in the desktop. | FS-102-2, FS-104-2, FS-120-1, FS-124-1, FS-081-1 | Tools menu functions; tests for each. |
-| D-5 | medium | QC "unsuitable" verdict does not block analysis; manual ROI reason defaults to a fixed text. | FS-032-1, FS-041-1 | Gate with audited override; require a reason. |
-| D-6 | medium | `models/validation_records.json` is an unprotected file that can turn learned-model support on. | FS-161-1, RSK-39 | Record its hash in the model registry; verify at load; audit changes. |
-| D-7 | medium | Unblinding, SAP lock and post-unblinding flags are not available in the desktop; admin role holds all permissions. | FS-075-2, FS-070-1, FS-076-1, FS-015-1 | Desktop unblind with re-authentication; SAP object; role separation option. |
-| D-8 | low | No idle lock; no second-instance detection. | FS-013-3, FS-125-2 | Idle lock timer; project lock file. |
-| D-9 | low (test gap) | Report PDF/CSV support content, RUO text and provenance are not asserted by any test; offline operation is not tested with the network blocked. | FS-152-2, FS-001-1/2, FS-080-1, FS-211-1 | Text-extraction tests on the generated PDF (pypdfium2 is already used); a self-test run with socket creation blocked. |
+| D-1 | medium (security / attributability) | Desktop e-signature re-authentication bypasses the lockout. `desktop/project.py::Project.reauthenticate` calls `check_password` directly, so wrong passwords at signing never lock the account and inactive or locked accounts are not refused. The Store/API path (`Store.reauthenticate`, fix for G2-03/QA-011) does all three. | FS-092-2 | Make `Project.reauthenticate` delegate to `Store.reauthenticate` (keep the `review.reauth_failed` event or rely on `auth.reauth_failed`); add `test_desktop_reauth_failures_lock_account`. **Fixed:** `Project.reauthenticate` delegates to `Store.reauthenticate` (shared lockout); `tests/desktop/test_admin_lock_audit.py`. |
+| D-2 | high (attributability) | No user administration in the desktop: a project has one admin and further named accounts need library calls. No password change. | FS-010-3, FS-016-1 | Add *Project > Users* (create, role, deactivate, reset password) for `manage_users`. **Fixed:** Project > Users (create, role, deactivate, reset, password change; audited, authority-bound); `test_user_admin_add_deactivate_reset_audited`. |
+| D-3 | high (integrity) | Study tables (scans, segmentations, measurements, reviews) are outside the audit hash chain; direct SQLite edits leave no trace except where hashes appear in audit details. | RSK-48 | Record a per-row content hash in the audit details for every insert/update of data tables, or chain the tables; add an on-demand integrity check (FS-021-2). **Open** (mitigated: report bundles and PDFs are hash-protected and re-verified before signing; chain heads anchored outside the project). |
+| D-4 | medium | No anchor export/import, audit export, backup, archive or JSON/label export in the desktop. | FS-102-2, FS-104-2, FS-120-1, FS-124-1, FS-081-1 | Tools menu functions; tests for each. **Partly fixed:** audit export with chain verification and external anchors; backup, archive and label export not in the desktop. |
+| D-5 | medium | QC "unsuitable" verdict does not block analysis; manual ROI reason defaults to a fixed text. | FS-032-1, FS-041-1 | Gate with audited override; require a reason. **Partly fixed:** QC 'review'/'unsuitable' and an unaccepted automatic ROI flag every endpoint in Results, reports and CSV; analysis is not blocked. |
+| D-6 | medium | `models/validation_records.json` is an unprotected file that can turn learned-model support on. | FS-161-1, RSK-39 | Record its hash in the model registry; verify at load; audit changes. **Fixed:** validation records are Ed25519-signed, bound to model bytes, test-signed records never qualify (C3-PRD-02/05/06). |
+| D-7 | medium | Unblinding, SAP lock and post-unblinding flags are not available in the desktop; admin role holds all permissions. | FS-075-2, FS-070-1, FS-076-1, FS-015-1 | Desktop unblind with re-authentication; SAP object; role separation option. **Partly fixed:** desktop unblinding with re-authentication and a reason; SAP object and role-separation option not implemented. |
+| D-8 | low | No idle lock; no second-instance detection. | FS-013-3, FS-125-2 | Idle lock timer; project lock file. **Partly fixed:** idle lock implemented (`desktop/lock.py`); second-instance detection not implemented. |
+| D-9 | low (test gap) | Report PDF/CSV support content, RUO text and provenance are not asserted by any test; offline operation is not tested with the network blocked. | FS-152-2, FS-001-1/2, FS-080-1, FS-211-1 | Text-extraction tests on the generated PDF (pypdfium2 is already used); a self-test run with socket creation blocked. **Partly fixed:** report PDF text is asserted by tests (support statuses, RUO text, provenance, watermark, anchors); offline operation with the network blocked is not tested. |
 
 ## 12. Statement of limitations
 - All evidence is engineering verification produced by the developers on a development container; nothing has been executed under an approved protocol on a qualified installation.

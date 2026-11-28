@@ -6,7 +6,7 @@
   "Buyer universe A floor: 528 private fleets with 10-100 USDOT power units in 8 counties (DC-S003); light vans unregistered.",
   "PM price anchors A: Rockford POs $66 (oil+rotation), $380.50 for 2 PMs, $1,218 full service + repairs (DC-S019..S021); mobile priced at quality-shop parity (C, C4-S021).",
   "Parts margin 28-30% at Rush (A, WS17-S021); tech wages C: Chicago auto tech median $55,320, diesel $65,680 (C4-S016).",
-  "Tech capacity 1,200 billable h x $125 + parts => ~$22.7k revenue/month per tech (E).",
+  "Tech capacity: 1,200 billable h x $125 / (1 - 40% parts share) / 12 = ~$21k revenue/month per tech (E).",
   "ARPC base 15 vehicles x (3.5 PM x $130/12 + 1.2x repairs) = $1,251/mo (E)."
  ],
  "drivers": {
@@ -84,12 +84,12 @@
   "onetime_revenue_per_new_customer__source": "Initial baseline inspection + catch-up repairs; $1,218 single-unit full service+repairs (DC-S021)",
   "arpc_annual_growth_pct": 0.03,
   "gross_margin_pct": {
-   "conservative": 0.58,
-   "base": 0.64,
-   "optimistic": 0.68
+   "conservative": 0.63,
+   "base": 0.69,
+   "optimistic": 0.73
   },
   "gross_margin_pct__evidence": "A/E",
-  "gross_margin_pct__source": "Ex-tech-labor: parts ~45% of revenue at 28-30% margin (Rush, WS17-S021) + 3% supplies/disposal",
+  "gross_margin_pct__source": "Ex-tech-labor: parts/fluids 45/40/35% of revenue at 28/30/35% margin (Rush parts GM 28-30%, A, WS17-S021) + 3-4% supplies/disposal",
   "onetime_gross_margin_pct": {
    "conservative": 0.5,
    "base": 0.55,
@@ -143,7 +143,7 @@
    "role": "Mobile technician (incl. equipped van)",
    "trigger": "revenue",
    "threshold": 0,
-   "per": 22000,
+   "per": 21000,
    "start_month": 3,
    "capex_per_hire": 55000,
    "monthly_cost": {

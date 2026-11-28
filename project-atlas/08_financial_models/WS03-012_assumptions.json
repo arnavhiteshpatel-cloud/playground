@@ -1,7 +1,7 @@
 {
  "id": "WS03-012",
  "name": "Overhead crane & hoist inspection and repair for Illinois metals plants",
- "summary": "Hired crane technicians sell fixed-price OSHA 1910.179 periodic inspections to mid-size metals plants (avg ~8 cranes/hoists) and convert findings into repair/parts work; technicians added per ~$20k/month of revenue.",
+ "summary": "Hired crane technicians sell fixed-price OSHA 1910.179 periodic inspections to mid-size metals plants (avg ~8 cranes/hoists) and convert findings into repair/parts work; technicians added per ~$21k/month of revenue (1,150 billable h x $145 / 65% labor share / 12).",
  "evidence_notes": [
   "Inspection list prices B: $108-$253 per crane periodic, $72-$169 frequent (Mazzella, C3-S001); labor $150-160/h (C3-S002).",
   "Repair pull-through: Konecranes Industrial Service ~EUR 1.6B annual sales vs EUR 351.7M agreement base (~3.5x, incumbent, B, C3-S007); new entrant assumed 1.5/2.5/3.5x inspection revenue (E).",
@@ -82,12 +82,12 @@
   "onetime_revenue_per_new_customer__source": "Baseline inspection + deficiency backlog at takeover; federal repair task orders $8-19k (DC-S026) for scale",
   "arpc_annual_growth_pct": 0.03,
   "gross_margin_pct": {
-   "conservative": 0.6,
-   "base": 0.66,
-   "optimistic": 0.7
+   "conservative": 0.67,
+   "base": 0.72,
+   "optimistic": 0.77
   },
   "gross_margin_pct__evidence": "B/E",
-  "gross_margin_pct__source": "Ex-tech-labor: parts ~40% of revenue at ~33% margin (Alta, C3-S031) + lift rental/consumables 5%",
+  "gross_margin_pct__source": "Ex-tech-labor: parts 40/35/30% of revenue at 30/33/35% margin (Alta parts ~33%, B, C3-S031) + lift rental/test weights/consumables 3.5-5%",
   "onetime_gross_margin_pct": 0.6,
   "variable_opex_pct_revenue": 0.05,
   "variable_opex_pct_revenue__evidence": "E",
@@ -123,7 +123,7 @@
    "role": "Crane technician (incl. service truck)",
    "trigger": "revenue",
    "threshold": 0,
-   "per": 20000,
+   "per": 21000,
    "start_month": 4,
    "capex_per_hire": 45000,
    "monthly_cost": {

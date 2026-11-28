@@ -51,6 +51,22 @@ _CODE_ALPHABET = "23456789ABCDEFGHJKMNPQRSTUVWXYZ"
 _CODE_PREFIX = {"scan": "S", "animal": "A"}
 
 
+def _desktop_schema(conn) -> list[str]:
+    """Create missing desktop tables and columns; returns what was added."""
+    import re
+    existing = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    added = [t for t in re.findall(r"CREATE TABLE IF NOT EXISTS (\w+)", DESKTOP_SCHEMA) if t not in existing]
+    conn.executescript(DESKTOP_SCHEMA)
+    for table, cols in DESKTOP_COLUMNS.items():
+        have = {r[1] for r in conn.execute(f"PRAGMA table_info({table})")}
+        for name, typ in cols:
+            if name not in have:
+                conn.execute(f"ALTER TABLE {table} ADD COLUMN {name} {typ}")
+                if table not in added:
+                    added.append(f"{table}.{name}")
+    return added
+
+
 class ProjectError(RuntimeError):
     pass
 
@@ -72,15 +88,21 @@ class Project:
             raise ProjectError(f"{self.folder} is not an OsteoQuant project folder")
         self.meta = json.loads((self.folder / MARKER).read_text(encoding="utf-8"))
         self.store = Store(self.folder / DB_NAME, self.folder / "data")
-        self.store.conn.executescript(DESKTOP_SCHEMA)
-        for table, cols in DESKTOP_COLUMNS.items():
-            have = {r[1] for r in self.store.conn.execute(f"PRAGMA table_info({table})")}
-            for name, typ in cols:
-                if name not in have:
-                    self.store.conn.execute(f"ALTER TABLE {table} ADD COLUMN {name} {typ}")
+        self._apply_desktop_schema()
         self.user: dict | None = None
         self._token: str | None = None
         self.session_end_reason: str | None = None
+
+    def _apply_desktop_schema(self):
+        """Add the desktop's own tables and columns. Opening a project happens before anyone signs in, so any change
+        made here is written to the audit trail with what was added (cycle-3 review C3-PRD-21)."""
+        conn = self.store.conn
+        added = _desktop_schema(conn)
+        if added:
+            org = conn.execute("SELECT id FROM orgs ORDER BY id LIMIT 1").fetchone()
+            self.store.audit.record("project.schema_upgrade", None, org[0] if org else None, "project", None,
+                                    {"added": added, "app_version": __version__,
+                                     "note": "applied when the project was opened, before sign-in"})
 
     # ------------------------------------------------------------------ lifecycle
     @classmethod
@@ -99,6 +121,8 @@ class Project:
         st = Store(folder / DB_NAME, folder / "data")
         oid = st.create_org(name)
         st.create_user(oid, username, password, "admin", full_name or username)
+        _desktop_schema(st.conn)            # part of creation, so opening the new project changes nothing
+        st.conn.commit()
         st.conn.close()
         (folder / MARKER).write_text(json.dumps({
             "name": name, "created": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),

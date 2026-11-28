@@ -119,3 +119,24 @@ def test_report_audit_excerpt_names_users(team):
     u = project.store.q1("SELECT username, full_name FROM users WHERE id=?", (project.user["id"],))
     name = u["full_name"] or u["username"]
     assert re.search(rf"{re.escape(name)}\s*\({project.user['id']}\)", text)
+
+
+def test_schema_change_at_project_open_is_audited(tmp_path):
+    """C3-PRD-21: opening a project before sign-in may add desktop tables or columns; that change is audited, and
+    opening an up-to-date project changes nothing."""
+    import sqlite3
+
+    from osteoquant.desktop.project import DB_NAME, Project
+    Project.create(tmp_path / "proj", "Schema", "admin", PW).close()
+    p = Project(tmp_path / "proj")
+    assert not [e for e in p.store.audit.events(limit=10 ** 6) if e["action"] == "project.schema_upgrade"]
+    p.close()                                                       # created complete: opening changes nothing
+    con = sqlite3.connect(tmp_path / "proj" / DB_NAME)
+    con.execute("DROP TABLE desktop_review_meta")
+    con.commit()
+    con.close()
+    p = Project(tmp_path / "proj")
+    ev = [e for e in p.store.audit.events(limit=10 ** 6) if e["action"] == "project.schema_upgrade"]
+    assert len(ev) == 1 and ev[0]["details"]["added"] == ["desktop_review_meta"]
+    assert p.store.audit.verify_chain()["ok"]
+    p.close()

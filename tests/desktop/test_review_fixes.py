@@ -248,7 +248,11 @@ def test_ux07_08_report_signoff_roles_gates_and_signed_rows(qtbot, team):
     assert "Dora Director" in text and "Customer approver" in text and "approve the report release" in text
     assert "Rita Reviewer" in text and "Signed copy of report" in text and rep["sha256"] in text.replace("\n", "")
     assert "Analyst" in text
-    assert "Dora Director" not in _pdf_text(rep["pdf"])                 # the signed original is never modified
+    # the signed original is never modified (the audit excerpt names users since C3-PRD-17, so the director's name
+    # can appear there from her earlier actions; the file's hash and the absence of the signature page are checked)
+    import hashlib
+    assert hashlib.sha256(open(rep["pdf"], "rb").read()).hexdigest() == rep["sha256"]
+    assert "Signed copy of report" not in _pdf_text(rep["pdf"])
     acts = [e["action"] for e in project.store.audit.events(limit=1000)]
     assert "review.signature_role" in acts and "report.signed_copy" in acts and "review.needs_changes" in acts
     rev.store.conn.close()

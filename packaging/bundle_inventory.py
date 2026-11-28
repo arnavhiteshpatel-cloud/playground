@@ -76,8 +76,23 @@ NO_FILE_LICENCES = {
     "pyparsing": ("MIT", "pyparsing is distributed under the MIT License. Copyright (c) 2003-2022 Paul T. McGuire.\n"
                   "See https://github.com/pyparsing/pyparsing/blob/master/LICENSE for the full text.\n"),
     "wheel": ("MIT", "wheel is distributed under the MIT License. Copyright (c) 2012 Daniel Holth and contributors.\n"
-              "See https://github.com/pypa/wheel/blob/main/LICENSE.txt for the full text. (Build tool; it should not\n"
-              "be bundled and is excluded from the next build.)\n"),
+              "See https://github.com/pypa/wheel/blob/main/LICENSE.txt for the full text. (Build tool collected through\n"
+              "setuptools' vendored copy; it is not used by the application.)\n"),
+    "pyside6_webengine": ("LGPL-3.0-only", "PySide6_WebEngine (Qt for Python add-on) is licensed LGPL-3.0-only OR GPL-2.0-only OR\n"
+                          "GPL-3.0-only (its package metadata). Only its metadata is present: the Qt WebEngine modules are\n"
+                          "excluded from the bundle (packaging/osteoquant_desktop.spec). LGPL-3.0 text: licenses/ (Qt).\n"),
+}
+# macOS: libraries shipped with the python.org framework build of CPython that PyInstaller copies next to the
+# interpreter (C3-PRD-10). Licence notes are written into licenses/system/.
+MAC_RUNTIME_LIBS = {
+    "libssl": ("OpenSSL 3", "Apache-2.0", "OpenSSL 3 (libssl, libcrypto) is licensed under the Apache License 2.0.\n"
+               "Shipped with the python.org macOS build of Python. Text: https://www.openssl.org/source/license.html\n"),
+    "libcrypto": ("OpenSSL 3", "Apache-2.0", None),
+    "libncurses": ("ncurses", "X11 (MIT-style)", "ncurses is distributed under an MIT/X11-style licence (Copyright Thomas E.\n"
+                   "Dickey and Free Software Foundation). Shipped with the python.org macOS build of Python.\n"
+                   "Text: https://invisible-island.net/ncurses/ncurses-license.html\n"),
+    "libpanel": ("ncurses", "X11 (MIT-style)", None), "libform": ("ncurses", "X11 (MIT-style)", None),
+    "libmenu": ("ncurses", "X11 (MIT-style)", None),
 }
 
 
@@ -157,6 +172,14 @@ def inventory(app: Path, write: bool = True) -> dict:
             entry.update(owner="python-runtime", kind="python-runtime")
         elif ".cpython-" in f.name or f.name.endswith(".abi3.so"):
             entry.update(owner="python-extension (see INDEX.json)", kind="wheel")
+        elif sys.platform == "darwin" and f.name.split(".")[0] in MAC_RUNTIME_LIBS:
+            owner, spdx, note = MAC_RUNTIME_LIBS[f.name.split(".")[0]]
+            entry.update(owner=owner, licence=spdx, kind="python-runtime")
+            key = owner.split()[0].lower()
+            text = note or next((n for o, _, n in MAC_RUNTIME_LIBS.values() if o == owner and n), "")
+            if write and text:
+                (sysdir / f"{key}.LICENSE-NOTE.txt").write_text(text)
+            entry["licence_file"] = f"system/{key}.LICENSE-NOTE.txt"
         else:
             own = _dpkg_owner(f.name) if sys.platform.startswith("linux") else None
             if own:

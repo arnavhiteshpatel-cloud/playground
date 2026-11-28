@@ -1,15 +1,17 @@
 {
  "id": "WS12-014",
  "name": "Contingency direct-hire desk: controls, automation & I&C engineers for Illinois manufacturers, integrators and engineering firms",
- "summary": "Customer = hiring company that has paid at least one placement fee. First placement fee is modeled as one-time revenue at the moment a client is 'won'; repeat placements from active clients are modeled as recurring revenue (expected repeat fees per month). Fees are net of fallout/realization. Founder-led desk; a junior recruiter is added once revenue supports it. Operating profit is before founder pay.",
+ "summary": "Stage E refresh (2026-11-28). Customer = hiring company that has paid at least one placement fee. The first placement fee is one-time revenue when a client is 'won'; repeat placements from active clients are recurring revenue (expected repeat fees per month). Fees are net of fallout/discount (realization). Founder-led desk; up to three full-desk recruiters and a part-time coordinator are added on revenue triggers. Operating profit is before owner pay; standardized $4,000/month owner draw from month 13, 30% tax. Engine limitation: repeat placements consume no modeled labour, so per-producer revenue is checked against public benchmarks (PageGroup GP per fee earner GBP148.9k [B, E-WS12014-S013]) in the playbook.",
  "evidence_notes": [
-  "Fee: 20% of first-year base is the most common North American direct-hire fee (SIA survey via secondary source) [D, C9-S025]; platforms cite 15-25% with 60-90-day guarantees, net-30 [D, C9-S024].",
-  "Salaries for Illinois controls engineers: ZipRecruiter Chicago $81-120k; ExpressPros Champaign $74.2-115k; Rivian Normal staff level $125.8-157.2k [D, DG-S034]. Base salary $105k.",
-  "Realization: Kforce books direct hire net of a fallout reserve with a <=90-day fallout period [A, WS12-S009]; 85% realization is E.",
-  "Demand: 25 named Illinois employers with current controls/automation/I&C postings (Sargent & Lundy alone lists 20+ I&C/automation roles) [D, DG-S020..S039]; several roles posted 30+ days (Ingredion, Medline, Abbott, Primient) [D].",
-  "Competition: Illinois JobLink shows controls postings by Actalent and Aerotek [D, DG-S034]; Abbott runs a separate Workday 'Agency' site [D, DG-S026] - large employers channel agencies through vendor portals.",
-  "Tools priced: Recruit CRM $95-215/user/mo [B, DG-S040]; Loxo from $149 [B, DG-S041]; Top Echelon split network $135-150/mo + $350 startup [B, DG-S043]. LinkedIn Recruiter price not published (MISSING, DG-S045).",
-  "Cyclicality: Robert Half perm placement -13.6% in 2025, +6.2% Q3 2026 [A, WS12-S008, C9-S023]. No Illinois licence for employer-paid recruiters [A, C9-S022]."
+  "Licensing: 225 ILCS 515/1.1 excludes persons in consulting or recruiting compensated solely by an employer, provided the individual is never charged a fee directly or indirectly (incl. resume preparation or any personal service) [A, E-WS12014-S001]; IDOL FAQ repeats this [A, E-WS12014-S002]. No IDOL licence or bond for an employer-paid desk.",
+  "Fee basis: 20% most common North American direct-hire fee (SIA 2021 via secondary) [D, C9-S025]; Top Echelon network 2018 engineering placements averaged 23% / $24.5k on $105.8k salary, industry & manufacturing 20% / $18.7k [D, E-WS12014-S018].",
+  "Salary: Illinois controls/I&C postings show pay ranges $72-156k; engineer-level midpoints cluster ~$95-140k (Ingredion, Medline, Abbott, Primient, Ameren, BW Design Group, Formic, Sargent & Lundy) [D, E-WS12014-S025, S027, S028]. Base salary $105k.",
+  "Realization: Kforce books direct hire net of a fallout reserve, fallout period typically <=90 days [A, E-WS12014-S012]; 85% realization (base) is E.",
+  "Cyclicality: Robert Half perm revenue -57% in 2009 [A, E-WS12014-S011]; -21.7% in 2023 (placements -24.1%, avg fee +2.4%) [A, E-WS12014-S009]; -9.8% in 2025 (placements -13.6%, avg fee +3.8%) [A, E-WS12014-S010]; +6.2% Q3 2026 [A, C9-S023]. US manufacturing job openings 1,025k (Apr 2022) -> 376k (Apr 2025) -> 584k (Sep 2026, P) [C, E-WS12014-S014].",
+  "Productivity benchmark: PageGroup GP per fee earner GBP148.9k in 2025 (~$195-200k), 72% permanent [B, E-WS12014-S013]; Top Echelon 2025 top-10 split-network recruiters 7-61 placements, $99k-$524k cash-in [D, E-WS12014-S019].",
+  "Access barriers: Chamberlain posting tells agencies not to contact hiring managers [D, E-WS12014-S026]; Abbott runs a separate Workday 'Agency' site [D, DG-S026]; MSP/VMS fees 1-4% of revenue and margin compression (Kforce) [A, E-WS12014-S012].",
+  "Tools: Recruit CRM $95-215/user/mo [B, DG-S040]; LinkedIn Recruiter Lite ~$170/mo, 30 InMails (third-party, D) [D, E-WS12014-S022]; Top Echelon $135-150/mo [B, DG-S043].",
+  "Long-term: SIA forecasts US staffing +2.4% 2026 and +2.2% 2027 [C, E-WS12014-S030]; sold service businesses SDE multiple median 2.38x (LQ 1.75x) [D, E-WS05007-S007]; owner-dependent perm desks assumed below the service median (E)."
  ],
  "drivers": {
   "sales_start_delay_months": 1,
@@ -23,19 +25,19 @@
   "sales_cycle_months__evidence": "D",
   "sales_cycle_months__source": "Job order to start typically 30-90 days plus sourcing time; first fee ~4 months after first outreach (E); Paraform claims ~12-day fills on its marketplace [D, C9-S024].",
   "founder_ramp_months": {
-   "conservative": 12,
-   "base": 9,
-   "optimistic": 6
+   "conservative": 18,
+   "base": 12,
+   "optimistic": 8
   },
   "founder_ramp_months__evidence": "E",
-  "founder_ramp_months__source": "Recruiting craft learnable in 6-12 months (Stage A, E).",
+  "founder_ramp_months__source": "Corrected in Stage E (was 6/9/12). In-firm benchmarks expect a new recruiter's first placement or near-miss by days 61-90 using the firm's existing job orders, and there is 'no universally agreed industry number' for full ramp [D, E-WS12014-S023]. A solo newcomer must build clients and candidates at once, so full pace is assumed at 12 months (base).",
   "founder_leads_per_month": {
    "conservative": 7,
    "base": 9,
-   "optimistic": 10
+   "optimistic": 9
   },
   "founder_leads_per_month__evidence": "E",
-  "founder_leads_per_month__source": "Hiring-manager conversations about a specific open controls/automation role; universe evidenced by public postings [D, DG-S020..S039]; rate is an estimate. Optimistic capped at 10 because one recruiter's capacity is ~20-25 placements/yr including repeats (E).",
+  "founder_leads_per_month__source": "Hiring-manager conversations about a specific open controls/automation role per month; universe evidenced by public postings [D, DG-S020..S039; E-WS12014-S025..S028]. Optimistic cut from 10 to 9 in Stage E so per-producer revenue stays within public benchmarks [B, E-WS12014-S013; D, E-WS12014-S019].",
   "lead_to_proposal_pct": {
    "conservative": 0.25,
    "base": 0.3,
@@ -50,7 +52,11 @@
   },
   "proposal_to_win_pct__evidence": "E",
   "proposal_to_win_pct__source": "Contingency job order -> placement (fill ratio). Non-exclusive orders compete with in-house TA and other agencies; analyst estimate.",
-  "rep_ramp_months": 6,
+  "rep_ramp_months": {
+   "conservative": 9,
+   "base": 6,
+   "optimistic": 5
+  },
   "rep_new_customers_per_month": {
    "conservative": 0.25,
    "base": 0.35,
@@ -61,34 +67,34 @@
   "referral_new_per_100_active": {
    "conservative": 1,
    "base": 2,
-   "optimistic": 2.5
+   "optimistic": 2
   },
   "referral_new_per_100_active__evidence": "E",
-  "referral_new_per_100_active__source": "Placed engineers moving jobs and hiring managers changing employers refer the desk; estimate.",
+  "referral_new_per_100_active__source": "Placed engineers and hiring managers who change employers refer the desk; optimistic trimmed from 2.5 in Stage E (benchmark cap).",
   "monthly_churn_pct": {
    "conservative": 0.07,
    "base": 0.05,
-   "optimistic": 0.04
+   "optimistic": 0.045
   },
   "monthly_churn_pct__evidence": "E",
-  "monthly_churn_pct__source": "Non-exclusive relationships lapse after hiring needs end; 5%/month = ~20-month average active life; estimate.",
+  "monthly_churn_pct__source": "Non-exclusive relationships lapse after hiring needs end; 5%/month = ~20-month average active life; optimistic raised from 4% in Stage E (benchmark cap).",
   "arpc_monthly": {
    "conservative": 570,
    "base": 670,
-   "optimistic": 950
+   "optimistic": 800
   },
   "arpc_monthly__evidence": "E",
-  "arpc_monthly__source": "Repeat placements per active client per year x realized fee / 12: cons 0.5 x $13,680; base 0.45 x $17,850; opt 0.5 x $22,770.",
+  "arpc_monthly__source": "Repeat placements per active client per year x realized fee / 12: cons 0.5 x $13,680; base 0.45 x $17,850; opt 0.42 x $22,770 (opt cut from $950 in Stage E so per-producer revenue stays <= ~$350k, near the top of public benchmarks).",
   "onetime_revenue_per_new_customer": {
    "conservative": 13680,
    "base": 17850,
    "optimistic": 22770
   },
   "onetime_revenue_per_new_customer__evidence": "D",
-  "onetime_revenue_per_new_customer__source": "Realized first fee: cons $95k x 18% x 0.80; base $105k x 20% x 0.85; opt $115k x 22% x 0.90. Salary D [DG-S034]; fee D [C9-S025]; realization E with A-level fallout mechanism [WS12-S009].",
+  "onetime_revenue_per_new_customer__source": "Realized first fee: cons $95k x 18% x 0.80; base $105k x 20% x 0.85; opt $115k x 22% x 0.90. Salary D [E-WS12014-S025, S027, S028; DG-S034]; fee D [C9-S025; E-WS12014-S018]; realization E with A-level fallout mechanism [E-WS12014-S012].",
   "arpc_annual_growth_pct": 0.03,
-  "arpc_annual_growth_pct__evidence": "E",
-  "arpc_annual_growth_pct__source": "Salary inflation lifts fee base; RH average fee rose 3.8% in 2025 [A, WS12-S008].",
+  "arpc_annual_growth_pct__evidence": "A/E",
+  "arpc_annual_growth_pct__source": "RH average fee per placement rose 2.4% in 2023 and 3.8% in 2025 even as placements fell [A, E-WS12014-S009, S010]; 3% assumed.",
   "gross_margin_pct": 0.95,
   "gross_margin_pct__evidence": "C",
   "gross_margin_pct__source": "RH perm gross margin 99.8% [A, C9-S023]; 95% leaves room for per-search job ads, background checks, candidate travel.",
@@ -110,47 +116,116 @@
    "optimistic": 35
   },
   "dso_days__evidence": "D",
-  "dso_days__source": "Invoice on start, net-30 [D, C9-S024]; mid-size manufacturers often pay late.",
+  "dso_days__source": "Invoice on start, net-30 [D, C9-S024]; Kforce recognises direct hire when the candidate has accepted, resigned and starts within the following month [A, E-WS12014-S012]; mid-size manufacturers often pay late (E).",
   "inventory_days_cogs": 0,
   "dpo_days": 15,
   "tax_rate_pct": 0.3,
   "founder_draw_per_month": 4000,
   "founder_draw_start_month": 13,
-  "start_capital_injection": 12000,
+  "start_capital_injection": 12900,
   "start_capital_injection__evidence": "E",
-  "start_capital_injection__source": "Tools and insurance for ~9 months before fee cash arrives; founder living costs excluded.",
-  "lt_growth_y6_pct": 0.06,
-  "incremental_roic_pct": 0.6,
-  "ev_multiple": 2.5
+  "start_capital_injection__source": "Stage E standardization: smallest round amount ($12,900) keeping the base-case cash balance >= 0 (base peak funding need $12,836 with the $4k/month draw from month 13). Founder living costs before month 13 are NOT included.",
+  "lt_growth_y6_pct": {
+   "conservative": 0.01,
+   "base": 0.05,
+   "optimistic": 0.08
+  },
+  "incremental_roic_pct": {
+   "conservative": 0.35,
+   "base": 0.6,
+   "optimistic": 0.9
+  },
+  "ev_multiple": {
+   "conservative": 1.0,
+   "base": 2.0,
+   "optimistic": 2.75
+  },
+  "rep_ramp_months__evidence": "E",
+  "rep_ramp_months__source": "Hired recruiter works the founder's existing job orders, so first placement in ~90 days and meaningful production by month 6 (base) [D, E-WS12014-S023]; conservative 9.",
+  "lt_growth_y6_pct__evidence": "C/E",
+  "lt_growth_y6_pct__source": "Mature desk grows by fee inflation (~3%/yr, RH avg fee +2.4% to +3.8% [A, E-WS12014-S009, S010]) plus occasional recruiter adds; SIA forecasts US staffing +2.4% 2026, +2.2% 2027 [C, E-WS12014-S030]. Conservative 1% reflects a cyclical trough year.",
+  "lt_growth_decay": {
+   "conservative": 0.7,
+   "base": 0.85,
+   "optimistic": 0.9
+  },
+  "lt_growth_decay__evidence": "E",
+  "lt_growth_decay__source": "Growth fades as the founder's niche saturates; no cross-cycle evidence for small desks.",
+  "incremental_roic_pct__evidence": "E",
+  "incremental_roic_pct__source": "Growth capital = recruiter ramp losses (6-9 months of ~$6.9k/mo before production) plus wash-outs. At scale, recruiter pay absorbs most gross profit: PageGroup EBIT/GP 2.7% in 2025 (Americas 3.2%) [B, E-WS12014-S013]; RH perm segment margin 2.9% (2025) vs 17.6% (2022) [A, E-WS12014-S010, S009].",
+  "maint_capex_pct_op": {
+   "conservative": 0.03,
+   "base": 0.02,
+   "optimistic": 0.02
+  },
+  "maint_capex_pct_op__evidence": "E",
+  "maint_capex_pct_op__source": "Asset-light: laptops, headsets, website refresh; software is opex.",
+  "reserve_months": {
+   "conservative": 4,
+   "base": 3,
+   "optimistic": 2
+  },
+  "reserve_months__evidence": "A/E",
+  "reserve_months__source": "Perm placement is the most cyclical staffing line: RH perm -57% in 2009 [A, E-WS12014-S011], -21.7% in 2023 [A, E-WS12014-S009]; reserve raised above the 2-month default.",
+  "ev_multiple__evidence": "D/E",
+  "ev_multiple__source": "Sold service businesses SDE multiple LQ 1.75x / median 2.38x / UQ 3.13x [D, E-WS05007-S007]; an owner-dependent perm desk transfers poorly (relationships leave with the producer, G7) so base is set below the service median and conservative at 1.0x.",
+  "tax_rate_pct__evidence": "E",
+  "tax_rate_pct__source": "Stage E standardization (30% blended pass-through estimate).",
+  "founder_draw_per_month__evidence": "E",
+  "founder_draw_per_month__source": "Stage E standardization: $4,000/month from month 13 in all scenarios."
  },
  "staff": [
   {
-   "role": "Junior recruiter / researcher (controls & automation)",
+   "role": "Recruiter #1 (full desk, controls & automation)",
    "trigger": "revenue",
    "threshold": 20000,
    "per": 100000000,
    "max_count": 1,
    "is_sales_rep": true,
    "monthly_cost": {
-    "conservative": 6500,
-    "base": 6000,
-    "optimistic": 5800
+    "conservative": 7300,
+    "base": 6900,
+    "optimistic": 6900
    },
-   "notes": "Base ~$55k + expected commission + payroll tax; hired once monthly revenue first exceeds $20k; E"
+   "notes": "Hired when monthly revenue first exceeds $20k. ~$50k base + commission on own billings + payroll taxes/paid leave (~$6.5k) + tool seats (~$400: CRM, Recruiter Lite, data). E."
   },
   {
-   "role": "Second recruiter",
+   "role": "Part-time coordinator (scheduling, CRM hygiene, invoicing, references)",
    "trigger": "revenue",
-   "threshold": 45000,
+   "threshold": 35000,
+   "per": 100000000,
+   "max_count": 1,
+   "is_sales_rep": false,
+   "monthly_cost": 2600,
+   "notes": "~25 h/week at ~$22/h + taxes. E."
+  },
+  {
+   "role": "Recruiter #2 (full desk)",
+   "trigger": "revenue",
+   "threshold": 40000,
    "per": 100000000,
    "max_count": 1,
    "is_sales_rep": true,
    "monthly_cost": {
-    "conservative": 7000,
-    "base": 6500,
-    "optimistic": 6200
+    "conservative": 7300,
+    "base": 6900,
+    "optimistic": 6900
    },
-   "notes": "E"
+   "notes": "E."
+  },
+  {
+   "role": "Recruiter #3 / team lead (full desk)",
+   "trigger": "revenue",
+   "threshold": 60000,
+   "per": 100000000,
+   "max_count": 1,
+   "is_sales_rep": true,
+   "monthly_cost": {
+    "conservative": 8000,
+    "base": 7500,
+    "optimistic": 7500
+   },
+   "notes": "Experienced hire who can run the desk day-to-day. E."
   }
  ],
  "overhead": [
@@ -161,14 +236,14 @@
    "notes": "B, DG-S040"
   },
   {
-   "item": "LinkedIn Recruiter seat (price MISSING; Recruiter Lite assumed)",
+   "item": "LinkedIn Recruiter Lite seat (founder)",
    "monthly": {
-    "conservative": 250,
-    "base": 180,
+    "conservative": 210,
+    "base": 170,
     "optimistic": 170
    },
    "is_ai": true,
-   "notes": "MISSING; E"
+   "notes": "~$170/mo, 30 InMails/mo, overage ~$10 each (third-party pages; LinkedIn does not publish) [D, E-WS12014-S022]; conservative adds InMail overage."
   },
   {
    "item": "Contact data / sequencing (Apollo-type)",
@@ -214,6 +289,11 @@
    "item": "Laptop, headset, website",
    "month": 1,
    "amount": 2500
+  },
+  {
+   "item": "One-time: attorney review of fee agreement + LLC filing (~$150 state fee, confirm) (expensed in reality)",
+   "month": 1,
+   "amount": 1500
   }
  ],
  "transactions": [
@@ -230,15 +310,15 @@
      "amount": 300
     },
     {
-     "item": "Background/reference check",
-     "amount": 75
+     "item": "Reference checks by founder (employer runs any background check through its own CRA; FCRA/IL criminal-history timing rules)",
+     "amount": 0
     },
     {
      "item": "Founder travel / client visit",
      "amount": 120
     }
    ],
-   "notes": "Contribution ~$17,355; invoiced on start date, paid ~40 days later; 90-day guarantee.",
+   "notes": "Contribution ~$17,430; invoiced on start date, paid ~40 days later; 90-day replacement guarantee. Salary in line with Medline $85-128k and Ingredion $84.4-112.5k posted ranges [D, E-WS12014-S025].",
    "evidence": "D (fee/salary D; reserve E)"
   },
   {
@@ -254,11 +334,11 @@
      "amount": 450
     },
     {
-     "item": "Background check",
-     "amount": 75
+     "item": "Reference checks by founder (employer runs any background check through its own CRA; FCRA/IL criminal-history timing rules)",
+     "amount": 0
     }
    ],
-   "notes": "Contribution ~$25,655; Rivian posts staff-level controls pay of $125.8-157.2k [D, DG-S034].",
+   "notes": "Contribution ~$25,730; Primient posts $123.5-154.4k for a Sr. Electrical engineer; Formic $120-145k for Controls & Automation [D, E-WS12014-S025, S027].",
    "evidence": "D"
   },
   {
@@ -295,6 +375,22 @@
     }
    ],
    "notes": "Cash cost small but consumes ~4-6 weeks of desk capacity.",
+   "evidence": "E"
+  },
+  {
+   "name": "Search cancelled after 6 weeks of work (hiring freeze or internal hire)",
+   "revenue": 0,
+   "lines": [
+    {
+     "item": "Job ads / InMail overage",
+     "amount": 300
+    },
+    {
+     "item": "Founder time (opportunity cost, not cash)",
+     "amount": 0
+    }
+   ],
+   "notes": "Contingency risk: no fee when a client freezes or fills internally; PageGroup reports interview-to-offer conversion as its biggest 2025 challenge [B, E-WS12014-S013].",
    "evidence": "E"
   }
  ]

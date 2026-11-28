@@ -447,7 +447,7 @@ Operating profit is on an EBITDA basis and **before owner pay**. In the base cas
 ### 7.1 Launch capital and working capital
 - **Launch spend in base:**
   - $5,500 of equipment and starter stock in month 3, after the exam.
-  - Pre-revenue overhead of $690/month in months 1–2, $1,340 in month 3 (insurance, storage and licence start) and $2,340 in month 4 (vehicle and software start).
+  - Pre-revenue costs: $690/month in months 1–2 ($340 overhead plus $350 fixed marketing); $1,340 in month 3, when insurance, storage and the licence start; $2,340 in month 4, when the vehicle and software start.
 - **Year 1 (base):** revenue $17,644; operating profit −$15,506; free cash flow −$23,493.
 - **Working capital is small** (unchanged from Stage D: receivables 20 days, inventory 20 days, payables 25 days):
   - about $679 at 10 accounts;
@@ -637,6 +637,8 @@ Both are detectable within about 4 months of selling (E4 and E7). That is why th
 **Is it a strong first company for a diversified portfolio?**
 
 **For:** small, staged capital at risk; a fast, cheap, paid test; code-driven recurring demand; obtainable regulated entry; a real exit market; AI-independent operations; and route, hiring and density skills that transfer to other service roll-ups. **Against:** base economics look like a job for 5+ years; founder-dependent (CT and seller); copyable wedge; two-thirds of US pest firms stay under $500k revenue [C, C2-S012].
+
+**Revised scores (Stage D → E):** access 6 → 5, because the incumbent has usually fixed the citation before a newcomer arrives. All others are unchanged: fcf 4, roic 6, scale 6, resilience 7, entry 4, delegation 7, cash 7, feasibility 8, ai 4. Composite raw 5.55, evidence-adjusted (C) 5.47; Stage D was 5.67 and 5.57.
 
 **It is a strong first company only if E4 lands at or above the optimistic conversion** (about 15% per conversation, about 9 wins a month at full pace). At base conversion, it is a respectable but slow first asset. Compare it against the other finalists' refreshed models before committing to a 12-month build.
 

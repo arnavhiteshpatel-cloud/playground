@@ -175,7 +175,13 @@
    "optimistic": 2
   },
   "reserve_months__evidence": "E",
-  "reserve_months__source": "Policy: 2 months of cash operating costs (3 in conservative) because insurance renewals and winter seasonality (Dec inspection pest share 4.8% vs Sep 8.8% [A, E-WS05007-S001]) bunch cash needs."
+  "reserve_months__source": "Policy: 2 months of cash operating costs (3 in conservative) because insurance renewals and winter seasonality (Dec inspection pest share 4.8% vs Sep 8.8% [A, E-WS05007-S001]) bunch cash needs.",
+  "founder_draw_per_month__evidence": "E",
+  "founder_draw_per_month__source": "Standardized for cross-finalist comparability (STAGE_E_PROTOCOL.md): $4,000/mo draw from month 13; 30% blended tax.",
+  "founder_draw_start_month__evidence": "E",
+  "founder_draw_start_month__source": "Standardized for cross-finalist comparability (STAGE_E_PROTOCOL.md): $4,000/mo draw from month 13; 30% blended tax.",
+  "tax_rate_pct__evidence": "E",
+  "tax_rate_pct__source": "Standardized for cross-finalist comparability (STAGE_E_PROTOCOL.md): $4,000/mo draw from month 13; 30% blended tax."
  },
  "staff": [
   {

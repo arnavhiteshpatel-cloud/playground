@@ -45,6 +45,15 @@ def main():
         opps.extend(jl(p))
     for p in sorted(DISC.glob("WS*_sources.jsonl")):
         srcs.extend(jl(p))
+    for folder in ("04_industry_investigations", "05_deep_dives", "06_playbooks", "07_review"):
+        for p in sorted((ROOT / folder).glob("**/sources*.jsonl")):
+            srcs.extend(jl(p))
+    seen, uniq = set(), []
+    for s in srcs:
+        if s.get("source_id") in seen:
+            continue
+        seen.add(s.get("source_id")); uniq.append(s)
+    srcs = uniq
     # de-duplicate exact id collisions (keep last written)
     by_id = collections.OrderedDict()
     for o in opps:

@@ -770,5 +770,44 @@
    48,
    48
   ]
+ },
+ "s2v2_scratch_lr3e3_k1_s1": {
+  "sha256": "9c8e2499aab4fbeaeb1949ffdaaae93a3bbb539879998a71309b82a095972df5",
+  "created": "2026-11-28T04:19:39Z",
+  "provenance": [
+   "public-real"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 1,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.003,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "n_classes": 2,
+   "log_every": 300,
+   "val_every": 1000000000,
+   "seed": 1,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0,
+    "boundary_ignore_aware": true
+   }
+  },
+  "parent": null,
+  "onnx_sha256": "3d771272d6e58d8f51d9252a756c4a69df439358ab8947dd9dd6193631ea53d3",
+  "onnx_patch": [
+   48,
+   48,
+   48
+  ]
  }
 }

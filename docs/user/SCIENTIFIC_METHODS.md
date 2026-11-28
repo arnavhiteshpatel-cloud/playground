@@ -221,9 +221,12 @@ slowly resorbing, bone-like materials (DBBM, HA).
 
 1. **Registration.** Rigid (also affine/B-spline available) with SimpleITK, masked to exclude the defect so that
    healing does not drive the alignment.
-2. **Registration QC.** Block-wise residual displacement measured by masked normalised cross-correlation in a shell
-   around the defect; pass if ≤2 voxels. This replaced a host-mineral Dice criterion that rejected 56% of harmless
-   misalignments (Experiment L4). [SYNTHETIC] L4: all 6 harmful misalignments flagged; 85% of harmless ones passed.
+2. **Registration QC.** Residual displacement measured by masked normalised cross-correlation in eight blocks of a
+   shell around the defect; each block's shift is projected onto the directions its structure constrains (along the
+   axis of a diaphyseal tube a shift cannot be seen, and is reported as unverifiable instead of passed); pass if every
+   block is within 2 voxels. This replaced a host-mineral Dice criterion that rejected 56% of harmless misalignments
+   (Experiment L4). [SYNTHETIC] L4: all 6 harmful misalignments flagged; 78% of harmless ones passed (the others were
+   4–8° rotations beyond the tolerance that had not yet lowered graft Dice by 0.10).
 3. **Footprint.** Mineral inside the ROI on day 0.
 4. **Granule tracking** (optional). Per-granule search for displacement; reports the share of graft volume that could
    not be tracked and the 90th-percentile shift.

@@ -128,9 +128,9 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
 |---|---|---|---|
 | S1H3 | Synthetic, pre-registered, held out | Done | In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.045); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported. |
 | S1H, S1H2 | Synthetic, pre-registered, held out | Done | Earlier versions (1.3.3, 1.4.0) supported some measurements that failed; the fixes were then tested on S1H3 |
-| F2 | Synthetic | Done | Propagated segmental ROI Dice 0.995; the Gen-1 failure mode was not reproduced |
+| F2 | Synthetic | Done | Propagated segmental ROI Dice 0.984 (minimum 0.963), registration QC passed 16/16; the Gen-1 failure mode was not reproduced |
 | L3 | Synthetic | Done | Day-0 is fragile under granule motion: naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35. The advisor refuses these cases |
-| L4 | Synthetic | Done | Registration QC flagged all harmful misalignments |
+| L4 | Synthetic | Done | Registration QC flagged all 6 harmful misalignments and passed 78% of harmless ones |
 | S2, U1, O2 | Real (S2), synthetic | Not completed | — |
 
 Details: [SCIENTIFIC_METHODS.md](SCIENTIFIC_METHODS.md), [EXPERIMENT_REGISTRY.md](../../EXPERIMENT_REGISTRY.md).

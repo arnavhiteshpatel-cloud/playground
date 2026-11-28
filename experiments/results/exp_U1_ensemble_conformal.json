@@ -1,0 +1,4951 @@
+{
+ "experiment": "U1",
+ "rows": [
+  {
+   "case": "val_000_condyle_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 8670.0,
+   "members": [
+    {
+     "dice_new": 0.8433317116375385,
+     "dice_graft": 0.85949177877429,
+     "graft_vol_err": 0.006228373702422241
+    },
+    {
+     "dice_new": 0.8400985668575072,
+     "dice_graft": 0.853891039343694,
+     "graft_vol_err": -0.0035755478662052864
+    },
+    {
+     "dice_new": 0.8410226485283927,
+     "dice_graft": 0.849444218122563,
+     "graft_vol_err": -0.018108419838523626
+    },
+    {
+     "dice_new": 0.8431651849304975,
+     "dice_graft": 0.8463081130355515,
+     "graft_vol_err": -0.10207612456747406
+    },
+    {
+     "dice_new": 0.8411212642043698,
+     "dice_graft": 0.8540736133883643,
+     "graft_vol_err": 0.04002306805074962
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.848296452837607,
+    "dice_graft": 0.8600209619191802,
+    "graft_vol_err": -0.019146482122260666
+   },
+   "score_entropy_single": 0.13286176323890686,
+   "score_mutual_info": 0.01021154597401619,
+   "score_vol_cv": 0.048072482189018745,
+   "V_ens": 8504.0,
+   "V_sd": 410.32747897258844,
+   "score_oracle": 0.4076205674222705,
+   "advisor_status": "not_supported",
+   "split": "val"
+  },
+  {
+   "case": "val_001_calvarial_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 10272.0,
+   "members": [
+    {
+     "dice_new": 0.8468012477193808,
+     "dice_graft": 0.9670952916442576,
+     "graft_vol_err": -0.008859034267912791
+    },
+    {
+     "dice_new": 0.8301579925650557,
+     "dice_graft": 0.96047197640118,
+     "graft_vol_err": -0.01985981308411211
+    },
+    {
+     "dice_new": 0.8515265065421709,
+     "dice_graft": 0.9681855600213065,
+     "graft_vol_err": 0.01041666666666674
+    },
+    {
+     "dice_new": 0.8419774501300954,
+     "dice_graft": 0.9631468769777518,
+     "graft_vol_err": -0.00029205607476634476
+    },
+    {
+     "dice_new": 0.8297128446151201,
+     "dice_graft": 0.9640956159876125,
+     "graft_vol_err": 0.011876947040498465
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8549329869516443,
+    "dice_graft": 0.9667817713146247,
+    "graft_vol_err": 0.0016549844236759537
+   },
+   "score_entropy_single": 0.08310456573963165,
+   "score_mutual_info": 0.005692501086741686,
+   "score_vol_cv": 0.0119619850381059,
+   "V_ens": 10289.0,
+   "V_sd": 122.70843491789796,
+   "score_oracle": 0.3977492724479472,
+   "advisor_status": "not_supported",
+   "split": "val"
+  },
+  {
+   "case": "val_002_segmental_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 4664.0,
+   "members": [
+    {
+     "dice_new": 0.9252819414703783,
+     "dice_graft": 0.8217844202898551,
+     "graft_vol_err": -0.10634648370497424
+    },
+    {
+     "dice_new": 0.9205212374415598,
+     "dice_graft": 0.8002227171492204,
+     "graft_vol_err": -0.07461406518010294
+    },
+    {
+     "dice_new": 0.92272156375868,
+     "dice_graft": 0.838729321018979,
+     "graft_vol_err": 0.11256432246998282
+    },
+    {
+     "dice_new": 0.9235361250109736,
+     "dice_graft": 0.839438403884725,
+     "graft_vol_err": 0.031089193825042827
+    },
+    {
+     "dice_new": 0.9222787673169353,
+     "dice_graft": 0.8007096392667061,
+     "graft_vol_err": -0.18717838765008576
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9293308496919329,
+    "dice_graft": 0.8335716642833572,
+    "graft_vol_err": -0.05081475128644941
+   },
+   "score_entropy_single": 0.09837037324905396,
+   "score_mutual_info": 0.00964418426156044,
+   "score_vol_cv": 0.11028037631919961,
+   "V_ens": 4427.0,
+   "V_sd": 491.2549643515066,
+   "score_oracle": 0.3263273955139028,
+   "advisor_status": "not_supported",
+   "split": "val"
+  },
+  {
+   "case": "val_003_condyle_bcp",
+   "material": "bcp",
+   "graft_true_vox": 11460.0,
+   "members": [
+    {
+     "dice_new": 0.9044442497590769,
+     "dice_graft": 0.9421261692222269,
+     "graft_vol_err": 0.04301919720767877
+    },
+    {
+     "dice_new": 0.9030859916782247,
+     "dice_graft": 0.9465115287900098,
+     "graft_vol_err": 0.04738219895287954
+    },
+    {
+     "dice_new": 0.8957795004306632,
+     "dice_graft": 0.9427818398231593,
+     "graft_vol_err": 0.05270506108202433
+    },
+    {
+     "dice_new": 0.9050748493695261,
+     "dice_graft": 0.9465529247910863,
+     "graft_vol_err": 0.00488656195462478
+    },
+    {
+     "dice_new": 0.8998862485781072,
+     "dice_graft": 0.939448769198401,
+     "graft_vol_err": 0.0737347294938917
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9078236626589998,
+    "dice_graft": 0.9468788667491573,
+    "graft_vol_err": 0.045113438045375265
+   },
+   "score_entropy_single": 0.122194305062294,
+   "score_mutual_info": 0.007735772058367729,
+   "score_vol_cv": 0.02141802854516795,
+   "V_ens": 11977.0,
+   "V_sd": 256.3352492342791,
+   "score_oracle": 0.20923933118274274,
+   "advisor_status": "not_supported",
+   "split": "val"
+  },
+  {
+   "case": "val_004_calvarial_bcp",
+   "material": "bcp",
+   "graft_true_vox": 6910.0,
+   "members": [
+    {
+     "dice_new": 0.9289412028788283,
+     "dice_graft": 0.9324606200100698,
+     "graft_vol_err": 0.012011577424023256
+    },
+    {
+     "dice_new": 0.9271588429868394,
+     "dice_graft": 0.9327405707729814,
+     "graft_vol_err": 0.01823444283646891
+    },
+    {
+     "dice_new": 0.9224740401210989,
+     "dice_graft": 0.93275199527047,
+     "graft_vol_err": -0.041678726483357464
+    },
+    {
+     "dice_new": 0.9263080842917271,
+     "dice_graft": 0.9305901303265486,
+     "graft_vol_err": -0.023444283646888553
+    },
+    {
+     "dice_new": 0.9252300776114339,
+     "dice_graft": 0.9322311693864462,
+     "graft_vol_err": 0.030824891461649795
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9312719131500021,
+    "dice_graft": 0.9373868982989504,
+    "graft_vol_err": -0.0007235890014472002
+   },
+   "score_entropy_single": 0.11631456017494202,
+   "score_mutual_info": 0.006624311674386263,
+   "score_vol_cv": 0.027263290011278484,
+   "V_ens": 6905.0,
+   "V_sd": 188.23665955387116,
+   "score_oracle": 0.20991926182237597,
+   "advisor_status": "not_supported",
+   "split": "val"
+  },
+  {
+   "case": "val_005_segmental_bcp",
+   "material": "bcp",
+   "graft_true_vox": 12560.0,
+   "members": [
+    {
+     "dice_new": 0.8473892582356017,
+     "dice_graft": 0.971903287746385,
+     "graft_vol_err": 0.03176751592356686
+    },
+    {
+     "dice_new": 0.843103318534126,
+     "dice_graft": 0.9735727728983689,
+     "graft_vol_err": 0.030573248407643305
+    },
+    {
+     "dice_new": 0.8296790594216714,
+     "dice_graft": 0.9745102666981355,
+     "graft_vol_err": 0.024044585987261113
+    },
+    {
+     "dice_new": 0.8577126639564316,
+     "dice_graft": 0.9731345631908115,
+     "graft_vol_err": 0.02412420382165603
+    },
+    {
+     "dice_new": 0.863412788497919,
+     "dice_graft": 0.974047965974875,
+     "graft_vol_err": 0.021735668789808926
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8694712466229255,
+    "dice_graft": 0.9746507612619683,
+    "graft_vol_err": 0.02898089171974516
+   },
+   "score_entropy_single": 0.06508667767047882,
+   "score_mutual_info": 0.005115011241286993,
+   "score_vol_cv": 0.0038650741257979207,
+   "V_ens": 12924.0,
+   "V_sd": 49.829308644611956,
+   "score_oracle": 0.10949414600097462,
+   "advisor_status": "not_supported",
+   "split": "val"
+  },
+  {
+   "case": "val_006_condyle_ha",
+   "material": "ha",
+   "graft_true_vox": 18362.0,
+   "members": [
+    {
+     "dice_new": 0.6443090734209682,
+     "dice_graft": 0.9746501833989947,
+     "graft_vol_err": 0.004411284173837293
+    },
+    {
+     "dice_new": 0.6323646375038238,
+     "dice_graft": 0.9739435077731552,
+     "graft_vol_err": -0.010238536107177842
+    },
+    {
+     "dice_new": 0.6165202108963093,
+     "dice_graft": 0.9742396452133921,
+     "graft_vol_err": -0.01061975819627492
+    },
+    {
+     "dice_new": 0.5891472868217055,
+     "dice_graft": 0.9741088796953341,
+     "graft_vol_err": -0.01225356714954795
+    },
+    {
+     "dice_new": 0.60961461145253,
+     "dice_graft": 0.9743308769142263,
+     "graft_vol_err": -0.012035725955778287
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.6340612404499789,
+    "dice_graft": 0.9760519920264329,
+    "graft_vol_err": -0.005609410739570886
+   },
+   "score_entropy_single": 0.09018278867006302,
+   "score_mutual_info": 0.006472937297075987,
+   "score_vol_cv": 0.006379465041979129,
+   "V_ens": 18259.0,
+   "V_sd": 116.1853691305407,
+   "score_oracle": 0.05464054640546401,
+   "advisor_status": "supported",
+   "split": "val"
+  },
+  {
+   "case": "val_007_calvarial_ha",
+   "material": "ha",
+   "graft_true_vox": 11636.0,
+   "members": [
+    {
+     "dice_new": 0.9105436195427785,
+     "dice_graft": 0.9611189742735825,
+     "graft_vol_err": 0.06445513922310075
+    },
+    {
+     "dice_new": 0.9153903516319624,
+     "dice_graft": 0.9690029780630007,
+     "graft_vol_err": 0.048899965623925734
+    },
+    {
+     "dice_new": 0.9066129959746981,
+     "dice_graft": 0.9626545651359341,
+     "graft_vol_err": 0.06419731866620837
+    },
+    {
+     "dice_new": 0.9112935637595453,
+     "dice_graft": 0.963678773742086,
+     "graft_vol_err": 0.0632519766242694
+    },
+    {
+     "dice_new": 0.9063882769849632,
+     "dice_graft": 0.9632809569457759,
+     "graft_vol_err": 0.061962873839807475
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9161547147423016,
+    "dice_graft": 0.9658133911448344,
+    "graft_vol_err": 0.06136129254039191
+   },
+   "score_entropy_single": 0.10712461173534393,
+   "score_mutual_info": 0.006563256494700909,
+   "score_vol_cv": 0.005555507541089064,
+   "V_ens": 12350.0,
+   "V_sd": 68.5582963615637,
+   "score_oracle": 0.07755175429276628,
+   "advisor_status": "supported",
+   "split": "val"
+  },
+  {
+   "case": "cal_000_condyle_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 5032.0,
+   "members": [
+    {
+     "dice_new": 0.9118014766588823,
+     "dice_graft": 0.8322914806215396,
+     "graft_vol_err": 0.2253577106518283
+    },
+    {
+     "dice_new": 0.9058531360709956,
+     "dice_graft": 0.8193446644471701,
+     "graft_vol_err": 0.26828298887122415
+    },
+    {
+     "dice_new": 0.904344124671885,
+     "dice_graft": 0.839059342274481,
+     "graft_vol_err": 0.1633545310015898
+    },
+    {
+     "dice_new": 0.9155070166167577,
+     "dice_graft": 0.8415512465373961,
+     "graft_vol_err": 0.1522257551669317
+    },
+    {
+     "dice_new": 0.9035124187819972,
+     "dice_graft": 0.8034334763948497,
+     "graft_vol_err": 0.31518282988871227
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9154962712023902,
+    "dice_graft": 0.834681042228212,
+    "graft_vol_err": 0.2118441971383147
+   },
+   "score_entropy_single": 0.12729889154434204,
+   "score_mutual_info": 0.009069005958735943,
+   "score_vol_cv": 0.05046243882052953,
+   "V_ens": 6098.0,
+   "V_sd": 311.0302879142158,
+   "score_oracle": 0.36255479023168435,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_001_calvarial_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 7071.0,
+   "members": [
+    {
+     "dice_new": 0.8566916533310873,
+     "dice_graft": 0.9217126229735347,
+     "graft_vol_err": 0.04129543204638675
+    },
+    {
+     "dice_new": 0.8569996240130342,
+     "dice_graft": 0.9238778668917969,
+     "graft_vol_err": 0.010182435299109116
+    },
+    {
+     "dice_new": 0.8554551483999336,
+     "dice_graft": 0.9245683555052363,
+     "graft_vol_err": -0.0014142271248762661
+    },
+    {
+     "dice_new": 0.8504983388704319,
+     "dice_graft": 0.9146816803811174,
+     "graft_vol_err": -0.04072974119643613
+    },
+    {
+     "dice_new": 0.8596895714109267,
+     "dice_graft": 0.9240041565639072,
+     "graft_vol_err": 0.041436854758874375
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8634462089204321,
+    "dice_graft": 0.928019119921271,
+    "graft_vol_err": 0.011879507848960635
+   },
+   "score_entropy_single": 0.11020204424858093,
+   "score_mutual_info": 0.008199043571949005,
+   "score_vol_cv": 0.030258695698262474,
+   "V_ens": 7155.0,
+   "V_sd": 216.1318116335492,
+   "score_oracle": 0.6600953554400815,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_002_segmental_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 6265.0,
+   "members": [
+    {
+     "dice_new": 0.8273145929275459,
+     "dice_graft": 0.8835269585939827,
+     "graft_vol_err": 0.14333599361532312
+    },
+    {
+     "dice_new": 0.8207898110590361,
+     "dice_graft": 0.862066468756788,
+     "graft_vol_err": 0.2044692737430167
+    },
+    {
+     "dice_new": 0.8212601617342693,
+     "dice_graft": 0.8757049732659489,
+     "graft_vol_err": 0.17924980047885075
+    },
+    {
+     "dice_new": 0.8326665689210984,
+     "dice_graft": 0.8940433073899977,
+     "graft_vol_err": 0.07134876296887471
+    },
+    {
+     "dice_new": 0.8158828288695724,
+     "dice_graft": 0.8600672822274712,
+     "graft_vol_err": 0.23000798084596963
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8311465101655837,
+    "dice_graft": 0.8813934607720127,
+    "graft_vol_err": 0.16264964086193134
+   },
+   "score_entropy_single": 0.0977068543434143,
+   "score_mutual_info": 0.0093274200335145,
+   "score_vol_cv": 0.04733756451765899,
+   "V_ens": 7284.0,
+   "V_sd": 345.7062336724636,
+   "score_oracle": 0.3092919903653696,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_003_condyle_bcp",
+   "material": "bcp",
+   "graft_true_vox": 15621.0,
+   "members": [
+    {
+     "dice_new": 0.8361102525919474,
+     "dice_graft": 0.9643915947222674,
+     "graft_vol_err": -0.035016964342871826
+    },
+    {
+     "dice_new": 0.8364339347752998,
+     "dice_graft": 0.9626843706053569,
+     "graft_vol_err": -0.04257089814992643
+    },
+    {
+     "dice_new": 0.8377337269787712,
+     "dice_graft": 0.967112959833615,
+     "graft_vol_err": -0.03008770245182768
+    },
+    {
+     "dice_new": 0.8338653634283454,
+     "dice_graft": 0.9648038514084966,
+     "graft_vol_err": -0.03200819409768896
+    },
+    {
+     "dice_new": 0.8390823568245586,
+     "dice_graft": 0.9652888268337825,
+     "graft_vol_err": -0.02848729274694317
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8442275875606404,
+    "dice_graft": 0.9661430383452044,
+    "graft_vol_err": -0.03168811215671208
+   },
+   "score_entropy_single": 0.099822036921978,
+   "score_mutual_info": 0.005015359725803137,
+   "score_vol_cv": 0.00514265328514146,
+   "V_ens": 15126.0,
+   "V_sd": 77.63143693118143,
+   "score_oracle": 0.13327739010099227,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_004_calvarial_bcp",
+   "material": "bcp",
+   "graft_true_vox": 8695.0,
+   "members": [
+    {
+     "dice_new": 0.9264595204816687,
+     "dice_graft": 0.9380431102584359,
+     "graft_vol_err": 0.038182863714778525
+    },
+    {
+     "dice_new": 0.9280642616366636,
+     "dice_graft": 0.9433235094082975,
+     "graft_vol_err": 0.029212190914318592
+    },
+    {
+     "dice_new": 0.9243326395801285,
+     "dice_graft": 0.9403861352602462,
+     "graft_vol_err": 0.03726279470960314
+    },
+    {
+     "dice_new": 0.9249238423130306,
+     "dice_graft": 0.9414956757673393,
+     "graft_vol_err": 0.03461759631972394
+    },
+    {
+     "dice_new": 0.9258555133079848,
+     "dice_graft": 0.9427218401172623,
+     "graft_vol_err": 0.04002300172512929
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9316663073938348,
+    "dice_graft": 0.9451257417349533,
+    "graft_vol_err": 0.035077630822311745
+   },
+   "score_entropy_single": 0.10365509241819382,
+   "score_mutual_info": 0.005928847473114729,
+   "score_vol_cv": 0.003623231878913024,
+   "V_ens": 9000.0,
+   "V_sd": 32.633724886993825,
+   "score_oracle": 0.13398533007334967,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_005_segmental_bcp",
+   "material": "bcp",
+   "graft_true_vox": 12398.0,
+   "members": [
+    {
+     "dice_new": 0.8519417475728155,
+     "dice_graft": 0.9429026122734153,
+     "graft_vol_err": 0.07799645104049047
+    },
+    {
+     "dice_new": 0.8331917303879921,
+     "dice_graft": 0.933134761522893,
+     "graft_vol_err": 0.1121955154057106
+    },
+    {
+     "dice_new": 0.8364072403357505,
+     "dice_graft": 0.9323245380579424,
+     "graft_vol_err": 0.12147120503306974
+    },
+    {
+     "dice_new": 0.8351029005721443,
+     "dice_graft": 0.9384384961020008,
+     "graft_vol_err": 0.10025810614615271
+    },
+    {
+     "dice_new": 0.8461137193531559,
+     "dice_graft": 0.9415356080219482,
+     "graft_vol_err": 0.08735279883852232
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8493027440395862,
+    "dice_graft": 0.9390229863003186,
+    "graft_vol_err": 0.10187126955960646
+   },
+   "score_entropy_single": 0.08704615384340286,
+   "score_mutual_info": 0.00693078339099884,
+   "score_vol_cv": 0.014397792349898212,
+   "V_ens": 13661.0,
+   "V_sd": 196.32829648321203,
+   "score_oracle": 0.14310790055528366,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_006_condyle_ha",
+   "material": "ha",
+   "graft_true_vox": 16644.0,
+   "members": [
+    {
+     "dice_new": 0.8420060465943446,
+     "dice_graft": 0.9628284872474033,
+     "graft_vol_err": 0.0188055755827925
+    },
+    {
+     "dice_new": 0.8477274702355089,
+     "dice_graft": 0.9660946251936599,
+     "graft_vol_err": 0.016582552271088735
+    },
+    {
+     "dice_new": 0.8451682803927976,
+     "dice_graft": 0.9653936878564391,
+     "graft_vol_err": 0.012196587358807909
+    },
+    {
+     "dice_new": 0.8481137802445582,
+     "dice_graft": 0.9656144983197311,
+     "graft_vol_err": 0.002403268445085427
+    },
+    {
+     "dice_new": 0.8507173187481434,
+     "dice_graft": 0.9652598844957797,
+     "graft_vol_err": 0.02865897620764235
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8555998815392923,
+    "dice_graft": 0.967126635472238,
+    "graft_vol_err": 0.01592165344869012
+   },
+   "score_entropy_single": 0.12514139711856842,
+   "score_mutual_info": 0.007903406396508217,
+   "score_vol_cv": 0.008439660982116022,
+   "V_ens": 16909.0,
+   "V_sd": 142.67922063145704,
+   "score_oracle": 0.08041021917683899,
+   "advisor_status": "supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_007_calvarial_ha",
+   "material": "ha",
+   "graft_true_vox": 13058.0,
+   "members": [
+    {
+     "dice_new": 0.8515976929229992,
+     "dice_graft": 0.976395823876532,
+     "graft_vol_err": 0.024506049931076745
+    },
+    {
+     "dice_new": 0.8214046822742475,
+     "dice_graft": 0.9745426829268292,
+     "graft_vol_err": 0.009496094348292239
+    },
+    {
+     "dice_new": 0.8374875373878365,
+     "dice_graft": 0.9785309875745716,
+     "graft_vol_err": 0.01539286261295758
+    },
+    {
+     "dice_new": 0.8142632913430192,
+     "dice_graft": 0.9757506651463322,
+     "graft_vol_err": 0.014856792770715277
+    },
+    {
+     "dice_new": 0.8293867638129934,
+     "dice_graft": 0.9763378783850507,
+     "graft_vol_err": 0.01631183948537296
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8446364051663275,
+    "dice_graft": 0.9780457285860539,
+    "graft_vol_err": 0.01968142135089601
+   },
+   "score_entropy_single": 0.09733320027589798,
+   "score_mutual_info": 0.006507146172225475,
+   "score_vol_cv": 0.0047476687441737435,
+   "V_ens": 13315.0,
+   "V_sd": 62.99396796519489,
+   "score_oracle": 0.09714686963837382,
+   "advisor_status": "supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_008_segmental_ha",
+   "material": "ha",
+   "graft_true_vox": 13984.0,
+   "members": [
+    {
+     "dice_new": 0.7887152164842571,
+     "dice_graft": 0.9486664168682086,
+     "graft_vol_err": 0.0993278032036613
+    },
+    {
+     "dice_new": 0.7786845270995221,
+     "dice_graft": 0.9489105935386927,
+     "graft_vol_err": 0.0939645308924486
+    },
+    {
+     "dice_new": 0.811130004637502,
+     "dice_graft": 0.9546470446652684,
+     "graft_vol_err": 0.07973398169336376
+    },
+    {
+     "dice_new": 0.8040157136621563,
+     "dice_graft": 0.958897451919739,
+     "graft_vol_err": 0.05992562929061784
+    },
+    {
+     "dice_new": 0.7850299593066102,
+     "dice_graft": 0.9503798507973444,
+     "graft_vol_err": 0.08967391304347827
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8014145984006117,
+    "dice_graft": 0.9531903228017271,
+    "graft_vol_err": 0.08681350114416486
+   },
+   "score_entropy_single": 0.09665385633707047,
+   "score_mutual_info": 0.007276642601937056,
+   "score_vol_cv": 0.012795237386050458,
+   "V_ens": 15198.0,
+   "V_sd": 194.05257019684126,
+   "score_oracle": 0.09251036016306724,
+   "advisor_status": "supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_009_condyle_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 8380.0,
+   "members": [
+    {
+     "dice_new": 0.8635951301026498,
+     "dice_graft": 0.8970563592693962,
+     "graft_vol_err": 0.13639618138424825
+    },
+    {
+     "dice_new": 0.8652001009973488,
+     "dice_graft": 0.9070310276117278,
+     "graft_vol_err": 0.09606205250596656
+    },
+    {
+     "dice_new": 0.8596368715083799,
+     "dice_graft": 0.8936146585230428,
+     "graft_vol_err": 0.14916467780429588
+    },
+    {
+     "dice_new": 0.8686061381074168,
+     "dice_graft": 0.9039697108765489,
+     "graft_vol_err": 0.08019093078758943
+    },
+    {
+     "dice_new": 0.85874148042479,
+     "dice_graft": 0.8913741556859706,
+     "graft_vol_err": 0.15536992840095465
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8692124861353193,
+    "dice_graft": 0.9036402569593148,
+    "graft_vol_err": 0.11766109785202872
+   },
+   "score_entropy_single": 0.1114240363240242,
+   "score_mutual_info": 0.007442775648087263,
+   "score_vol_cv": 0.026612158202626503,
+   "V_ens": 9366.0,
+   "V_sd": 250.53750218280695,
+   "score_oracle": 0.5721302113078242,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_010_calvarial_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 1601.0,
+   "members": [
+    {
+     "dice_new": 0.9289278901182755,
+     "dice_graft": 0.729806598407281,
+     "graft_vol_err": 0.1961274203622736
+    },
+    {
+     "dice_new": 0.9241809863357459,
+     "dice_graft": 0.7088807146610615,
+     "graft_vol_err": 0.3772642098688319
+    },
+    {
+     "dice_new": 0.9282207082796293,
+     "dice_graft": 0.7747173093650334,
+     "graft_vol_err": 0.15427857589006866
+    },
+    {
+     "dice_new": 0.9255667390705785,
+     "dice_graft": 0.7205503009458297,
+     "graft_vol_err": 0.1792629606495939
+    },
+    {
+     "dice_new": 0.9236565232705943,
+     "dice_graft": 0.7595720720720721,
+     "graft_vol_err": 0.2186133666458463
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.932484037515657,
+    "dice_graft": 0.7600341588385995,
+    "graft_vol_err": 0.1942535915053092
+   },
+   "score_entropy_single": 0.09825804829597473,
+   "score_mutual_info": 0.008052822202444077,
+   "score_vol_cv": 0.06442940364255795,
+   "V_ens": 1912.0,
+   "V_sd": 126.37183230451318,
+   "score_oracle": 0.47572222975722234,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_011_segmental_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 5812.0,
+   "members": [
+    {
+     "dice_new": 0.80927925445299,
+     "dice_graft": 0.8177482295129354,
+     "graft_vol_err": 0.38093599449414994
+    },
+    {
+     "dice_new": 0.809425969611648,
+     "dice_graft": 0.8147123088128186,
+     "graft_vol_err": 0.362353750860289
+    },
+    {
+     "dice_new": 0.8044379925342182,
+     "dice_graft": 0.8107646304997864,
+     "graft_vol_err": 0.41672401927047487
+    },
+    {
+     "dice_new": 0.810871743486974,
+     "dice_graft": 0.8298896541509294,
+     "graft_vol_err": 0.32329662766689604
+    },
+    {
+     "dice_new": 0.7963404125906026,
+     "dice_graft": 0.8019089678752048,
+     "graft_vol_err": 0.41551961459050246
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8138791660325674,
+    "dice_graft": 0.8194444444444444,
+    "graft_vol_err": 0.37852718513420514
+   },
+   "score_entropy_single": 0.09239126741886139,
+   "score_mutual_info": 0.009027980268001556,
+   "score_vol_cv": 0.0253926183705617,
+   "V_ens": 8012.0,
+   "V_sd": 203.6284852372084,
+   "score_oracle": 0.49578578354590885,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_012_condyle_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 7866.0,
+   "members": [
+    {
+     "dice_new": 0.8580123558376762,
+     "dice_graft": 0.8731081244702749,
+     "graft_vol_err": 0.09992372234935165
+    },
+    {
+     "dice_new": 0.855513161444483,
+     "dice_graft": 0.870561282932417,
+     "graft_vol_err": 0.10869565217391308
+    },
+    {
+     "dice_new": 0.8534510330710676,
+     "dice_graft": 0.8695545314900154,
+     "graft_vol_err": 0.06903127383676577
+    },
+    {
+     "dice_new": 0.8589746897494775,
+     "dice_graft": 0.8691529709228825,
+     "graft_vol_err": 0.01118738876175951
+    },
+    {
+     "dice_new": 0.8530235452753864,
+     "dice_graft": 0.8567410792757953,
+     "graft_vol_err": 0.16971777269260113
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.863302126125198,
+    "dice_graft": 0.877318897877258,
+    "graft_vol_err": 0.09013475718281216
+   },
+   "score_entropy_single": 0.13172252476215363,
+   "score_mutual_info": 0.010220128111541271,
+   "score_vol_cv": 0.04748946534127873,
+   "V_ens": 8575.0,
+   "V_sd": 407.8110346716969,
+   "score_oracle": 0.401488635227224,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_013_calvarial_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 6059.0,
+   "members": [
+    {
+     "dice_new": 0.9174827887132745,
+     "dice_graft": 0.8923127626266788,
+     "graft_vol_err": 0.00313583099521364
+    },
+    {
+     "dice_new": 0.9175675894054718,
+     "dice_graft": 0.8936874327790187,
+     "graft_vol_err": -0.005116355834296038
+    },
+    {
+     "dice_new": 0.9141696457588561,
+     "dice_graft": 0.8916765553483641,
+     "graft_vol_err": -0.052813995708862804
+    },
+    {
+     "dice_new": 0.9150193798449613,
+     "dice_graft": 0.8856636570753523,
+     "graft_vol_err": -0.04406667766958239
+    },
+    {
+     "dice_new": 0.917390811851708,
+     "dice_graft": 0.895553929935788,
+     "graft_vol_err": 0.030533091269186352
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9210343321959344,
+    "dice_graft": 0.8966719229811603,
+    "graft_vol_err": -0.01138801782472354
+   },
+   "score_entropy_single": 0.1038408949971199,
+   "score_mutual_info": 0.006570294965058565,
+   "score_vol_cv": 0.03130078922093511,
+   "V_ens": 5990.0,
+   "V_sd": 187.05977654215243,
+   "score_oracle": 0.3851125771213376,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_014_segmental_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 10180.0,
+   "members": [
+    {
+     "dice_new": 0.7672096064677209,
+     "dice_graft": 0.9362639422626301,
+     "graft_vol_err": 0.09607072691552054
+    },
+    {
+     "dice_new": 0.7775521506368839,
+     "dice_graft": 0.9385073498133005,
+     "graft_vol_err": 0.07829076620825148
+    },
+    {
+     "dice_new": 0.7533256393123975,
+     "dice_graft": 0.9452827459865979,
+     "graft_vol_err": 0.03762278978388989
+    },
+    {
+     "dice_new": 0.7729092652117521,
+     "dice_graft": 0.9465394962093422,
+     "graft_vol_err": 0.008349705304518729
+    },
+    {
+     "dice_new": 0.7819989023720959,
+     "dice_graft": 0.939833238582528,
+     "graft_vol_err": 0.07347740667976432
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7874636275460718,
+    "dice_graft": 0.944568682495123,
+    "graft_vol_err": 0.06453831041257363
+   },
+   "score_entropy_single": 0.07360420376062393,
+   "score_mutual_info": 0.007393648847937584,
+   "score_vol_cv": 0.029802269310765885,
+   "V_ens": 10837.0,
+   "V_sd": 321.2148190852969,
+   "score_oracle": 0.3345611673868386,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_015_condyle_bcp",
+   "material": "bcp",
+   "graft_true_vox": 10833.0,
+   "members": [
+    {
+     "dice_new": 0.889040367862837,
+     "dice_graft": 0.9247938778299094,
+     "graft_vol_err": 0.026493122865318908
+    },
+    {
+     "dice_new": 0.8899342772202795,
+     "dice_graft": 0.9273763226915076,
+     "graft_vol_err": 0.0413551186190344
+    },
+    {
+     "dice_new": 0.884229447769005,
+     "dice_graft": 0.9202695115103874,
+     "graft_vol_err": -0.02713929659374137
+    },
+    {
+     "dice_new": 0.8888002643543259,
+     "dice_graft": 0.9187435342800715,
+     "graft_vol_err": -0.03692421305270932
+    },
+    {
+     "dice_new": 0.8839096315014664,
+     "dice_graft": 0.9220674157303371,
+     "graft_vol_err": 0.05390935105695549
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8931861090451398,
+    "dice_graft": 0.9292307692307692,
+    "graft_vol_err": 0.010061848056863276
+   },
+   "score_entropy_single": 0.13485777378082275,
+   "score_mutual_info": 0.008835762739181519,
+   "score_vol_cv": 0.03633012535607281,
+   "V_ens": 10942.0,
+   "V_sd": 398.1055136518458,
+   "score_oracle": 0.24504322617383656,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_016_calvarial_bcp",
+   "material": "bcp",
+   "graft_true_vox": 7922.0,
+   "members": [
+    {
+     "dice_new": 0.9285836990301876,
+     "dice_graft": 0.934829256330084,
+     "graft_vol_err": 0.05894976016157538
+    },
+    {
+     "dice_new": 0.9266882335474393,
+     "dice_graft": 0.9355907250644093,
+     "graft_vol_err": 0.057813683413279415
+    },
+    {
+     "dice_new": 0.9259971016319073,
+     "dice_graft": 0.9411109046999814,
+     "graft_vol_err": 0.03850037869224954
+    },
+    {
+     "dice_new": 0.9259154575717605,
+     "dice_graft": 0.9401223506148427,
+     "graft_vol_err": 0.042792224185811634
+    },
+    {
+     "dice_new": 0.9263844056535774,
+     "dice_graft": 0.934578305947978,
+     "graft_vol_err": 0.08192375662711426
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.931451486575394,
+    "dice_graft": 0.940085942295887,
+    "graft_vol_err": 0.05629891441555168
+   },
+   "score_entropy_single": 0.1094539538025856,
+   "score_mutual_info": 0.00631102966144681,
+   "score_vol_cv": 0.014453144083652522,
+   "V_ens": 8368.0,
+   "V_sd": 120.90922214620355,
+   "score_oracle": 0.18194488438390877,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_017_segmental_bcp",
+   "material": "bcp",
+   "graft_true_vox": 10944.0,
+   "members": [
+    {
+     "dice_new": 0.8418768085985945,
+     "dice_graft": 0.9410207772729278,
+     "graft_vol_err": 0.07136330409356728
+    },
+    {
+     "dice_new": 0.8255462544462571,
+     "dice_graft": 0.9316383447918017,
+     "graft_vol_err": 0.11321271929824572
+    },
+    {
+     "dice_new": 0.8357337902232692,
+     "dice_graft": 0.9407836935512213,
+     "graft_vol_err": 0.08004385964912286
+    },
+    {
+     "dice_new": 0.8319307525847559,
+     "dice_graft": 0.9410464910730069,
+     "graft_vol_err": 0.06761695906432741
+    },
+    {
+     "dice_new": 0.8262895963346236,
+     "dice_graft": 0.9334258576571106,
+     "graft_vol_err": 0.10681652046783618
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8411983032873807,
+    "dice_graft": 0.9398801976301867,
+    "graft_vol_err": 0.08982090643274865
+   },
+   "score_entropy_single": 0.09612149745225906,
+   "score_mutual_info": 0.007531642913818359,
+   "score_vol_cv": 0.017174072281543225,
+   "V_ens": 11927.0,
+   "V_sd": 204.45733051177208,
+   "score_oracle": 0.15264639282161974,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_018_condyle_ha",
+   "material": "ha",
+   "graft_true_vox": 16251.0,
+   "members": [
+    {
+     "dice_new": 0.8807713129334124,
+     "dice_graft": 0.9634373189400177,
+     "graft_vol_err": 0.017906590363669928
+    },
+    {
+     "dice_new": 0.882623134375835,
+     "dice_graft": 0.965680761163632,
+     "graft_vol_err": 0.024306196541751257
+    },
+    {
+     "dice_new": 0.8764247226624405,
+     "dice_graft": 0.9640095000304488,
+     "graft_vol_err": 0.020921789428342885
+    },
+    {
+     "dice_new": 0.8810146140475118,
+     "dice_graft": 0.9655003219969946,
+     "graft_vol_err": 0.006584210202449148
+    },
+    {
+     "dice_new": 0.8761751832379374,
+     "dice_graft": 0.9623410745024613,
+     "graft_vol_err": 0.03759768629622795
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8862338327570751,
+    "dice_graft": 0.9669814194334451,
+    "graft_vol_err": 0.020183373330872056
+   },
+   "score_entropy_single": 0.13851308822631836,
+   "score_mutual_info": 0.007985610514879227,
+   "score_vol_cv": 0.009816578803845797,
+   "V_ens": 16579.0,
+   "V_sd": 162.95324482807945,
+   "score_oracle": 0.08881044055572873,
+   "advisor_status": "supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_019_calvarial_ha",
+   "material": "ha",
+   "graft_true_vox": 13481.0,
+   "members": [
+    {
+     "dice_new": 0.8091591812693271,
+     "dice_graft": 0.9712187958883994,
+     "graft_vol_err": 0.02062161560715081
+    },
+    {
+     "dice_new": 0.7890690471852797,
+     "dice_graft": 0.9697416974169741,
+     "graft_vol_err": 0.010236629330168334
+    },
+    {
+     "dice_new": 0.7899943867527365,
+     "dice_graft": 0.971990354294194,
+     "graft_vol_err": -0.0005192493138491683
+    },
+    {
+     "dice_new": 0.7676503933761638,
+     "dice_graft": 0.9689217996185348,
+     "graft_vol_err": -0.01654179956976487
+    },
+    {
+     "dice_new": 0.7901577813303677,
+     "dice_graft": 0.9723168023686158,
+     "graft_vol_err": 0.004302351457607045
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7994437907797626,
+    "dice_graft": 0.973968347877533,
+    "graft_vol_err": 0.006082634819375432
+   },
+   "score_entropy_single": 0.10462722927331924,
+   "score_mutual_info": 0.007768432144075632,
+   "score_vol_cv": 0.012259538575558449,
+   "V_ens": 13563.0,
+   "V_sd": 165.86910501959068,
+   "score_oracle": 0.11461727387244103,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_020_segmental_ha",
+   "material": "ha",
+   "graft_true_vox": 14790.0,
+   "members": [
+    {
+     "dice_new": 0.8050197387424977,
+     "dice_graft": 0.9571064829927531,
+     "graft_vol_err": 0.07126436781609202
+    },
+    {
+     "dice_new": 0.7903162055335968,
+     "dice_graft": 0.9545705471667478,
+     "graft_vol_err": 0.08215010141987822
+    },
+    {
+     "dice_new": 0.8118097528559223,
+     "dice_graft": 0.9575765480809991,
+     "graft_vol_err": 0.07349560513860709
+    },
+    {
+     "dice_new": 0.8129866036249015,
+     "dice_graft": 0.9638784523103289,
+     "graft_vol_err": 0.051521298174442176
+    },
+    {
+     "dice_new": 0.8031693077564637,
+     "dice_graft": 0.956286468689898,
+     "graft_vol_err": 0.0741717376605815
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8136616056238565,
+    "dice_graft": 0.9589792122181249,
+    "graft_vol_err": 0.07187288708586892
+   },
+   "score_entropy_single": 0.09462599456310272,
+   "score_mutual_info": 0.007147061172872782,
+   "score_vol_cv": 0.00951665118923575,
+   "V_ens": 15853.0,
+   "V_sd": 150.6771382791696,
+   "score_oracle": 0.09116532847187209,
+   "advisor_status": "supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_021_condyle_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 15970.0,
+   "members": [
+    {
+     "dice_new": 0.7655943025540275,
+     "dice_graft": 0.9639587734460022,
+     "graft_vol_err": -0.043706950532247935
+    },
+    {
+     "dice_new": 0.7693979832135741,
+     "dice_graft": 0.9610698556594979,
+     "graft_vol_err": -0.052160300563556694
+    },
+    {
+     "dice_new": 0.7631833575229802,
+     "dice_graft": 0.965497485517856,
+     "graft_vol_err": -0.032686286787727004
+    },
+    {
+     "dice_new": 0.7765167781117723,
+     "dice_graft": 0.9647246608140463,
+     "graft_vol_err": -0.03850970569818413
+    },
+    {
+     "dice_new": 0.7383274062177354,
+     "dice_graft": 0.9596105185612248,
+     "graft_vol_err": -0.04502191609267381
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7759027399745962,
+    "dice_graft": 0.9655458961902327,
+    "graft_vol_err": -0.040826549780839105
+   },
+   "score_entropy_single": 0.07860434800386429,
+   "score_mutual_info": 0.00514113949611783,
+   "score_vol_cv": 0.00682134223138885,
+   "V_ens": 15318.0,
+   "V_sd": 104.31605820773713,
+   "score_oracle": 0.4359196961475854,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_022_calvarial_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 743.0,
+   "members": [
+    {
+     "dice_new": 0.8923533778767632,
+     "dice_graft": 0.5321188878235859,
+     "graft_vol_err": 0.8075370121130552
+    },
+    {
+     "dice_new": 0.8862146830423528,
+     "dice_graft": 0.4996053670086819,
+     "graft_vol_err": 1.4104979811574698
+    },
+    {
+     "dice_new": 0.8886176297129377,
+     "dice_graft": 0.5434782608695652,
+     "graft_vol_err": 0.847913862718708
+    },
+    {
+     "dice_new": 0.8883369271501488,
+     "dice_graft": 0.4983164983164983,
+     "graft_vol_err": 0.7981157469717362
+    },
+    {
+     "dice_new": 0.8855854991848087,
+     "dice_graft": 0.4775493075954679,
+     "graft_vol_err": 1.2072678331090176
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8938538319546045,
+    "dice_graft": 0.5240295748613678,
+    "graft_vol_err": 0.9125168236877523
+   },
+   "score_entropy_single": 0.11853955686092377,
+   "score_mutual_info": 0.010586597956717014,
+   "score_vol_cv": 0.12389211250857234,
+   "V_ens": 1421.0,
+   "V_sd": 185.41693558032935,
+   "score_oracle": 0.6374434983706507,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_023_segmental_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 11917.0,
+   "members": [
+    {
+     "dice_new": 0.7323198942498348,
+     "dice_graft": 0.9733745096402637,
+     "graft_vol_err": 0.01074095829487276
+    },
+    {
+     "dice_new": 0.745988078862907,
+     "dice_graft": 0.9749697045672977,
+     "graft_vol_err": 0.008139632457833335
+    },
+    {
+     "dice_new": 0.7032863849765258,
+     "dice_graft": 0.9753200033464402,
+     "graft_vol_err": 0.006041789040865941
+    },
+    {
+     "dice_new": 0.7466493731085171,
+     "dice_graft": 0.9744949494949495,
+     "graft_vol_err": -0.0062096165142233595
+    },
+    {
+     "dice_new": 0.7841611352712291,
+     "dice_graft": 0.9748151860669089,
+     "graft_vol_err": 0.009146597297977621
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7774924118608452,
+    "dice_graft": 0.9767752715121136,
+    "graft_vol_err": 0.008894856087941605
+   },
+   "score_entropy_single": 0.05177679285407066,
+   "score_mutual_info": 0.004426010884344578,
+   "score_vol_cv": 0.006050950872716232,
+   "V_ens": 12023.0,
+   "V_sd": 72.51096468810769,
+   "score_oracle": 0.3004323458767013,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_024_condyle_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 14114.0,
+   "members": [
+    {
+     "dice_new": 0.8246741515034198,
+     "dice_graft": 0.9453522346066443,
+     "graft_vol_err": -0.035780076519767556
+    },
+    {
+     "dice_new": 0.8256240448293428,
+     "dice_graft": 0.9453492580528411,
+     "graft_vol_err": -0.04236927873033869
+    },
+    {
+     "dice_new": 0.824425140521206,
+     "dice_graft": 0.9459897088985643,
+     "graft_vol_err": -0.03096216522601669
+    },
+    {
+     "dice_new": 0.8270402261920061,
+     "dice_graft": 0.9398592217075751,
+     "graft_vol_err": -0.057318974068301
+    },
+    {
+     "dice_new": 0.8253253253253253,
+     "dice_graft": 0.9466705102334967,
+     "graft_vol_err": -0.033725379056256166
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8354707937074526,
+    "dice_graft": 0.9479463930932341,
+    "graft_vol_err": -0.038614141986679895
+   },
+   "score_entropy_single": 0.10356864333152771,
+   "score_mutual_info": 0.006401680409908295,
+   "score_vol_cv": 0.009820938403328669,
+   "V_ens": 13569.0,
+   "V_sd": 133.06389442670013,
+   "score_oracle": 0.3487491199714424,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_025_calvarial_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 5207.0,
+   "members": [
+    {
+     "dice_new": 0.897807926637774,
+     "dice_graft": 0.8728946157386103,
+     "graft_vol_err": 0.08661417322834652
+    },
+    {
+     "dice_new": 0.8957026274824285,
+     "dice_graft": 0.8678244972577697,
+     "graft_vol_err": 0.10101786057230644
+    },
+    {
+     "dice_new": 0.897859480450339,
+     "dice_graft": 0.879838243789717,
+     "graft_vol_err": -0.005377376608411755
+    },
+    {
+     "dice_new": 0.8956271143966922,
+     "dice_graft": 0.8737715866806602,
+     "graft_vol_err": 0.012867294027270937
+    },
+    {
+     "dice_new": 0.8935087774393117,
+     "dice_graft": 0.8675716982828373,
+     "graft_vol_err": 0.136162857691569
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9008924230304741,
+    "dice_graft": 0.8784525248767786,
+    "graft_vol_err": 0.0651046667946995
+   },
+   "score_entropy_single": 0.11500387638807297,
+   "score_mutual_info": 0.0073427315801382065,
+   "score_vol_cv": 0.050490523177730985,
+   "V_ens": 5546.0,
+   "V_sd": 280.3233846827624,
+   "score_oracle": 0.6305710153819186,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_026_segmental_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 13100.0,
+   "members": [
+    {
+     "dice_new": 0.7292255511588468,
+     "dice_graft": 0.9614878827728724,
+     "graft_vol_err": 0.0316793893129772
+    },
+    {
+     "dice_new": 0.746122643760439,
+     "dice_graft": 0.9626490066225165,
+     "graft_vol_err": 0.01717557251908386
+    },
+    {
+     "dice_new": 0.6522607163828538,
+     "dice_graft": 0.961380946913155,
+     "graft_vol_err": -0.005572519083969496
+    },
+    {
+     "dice_new": 0.6674238513164688,
+     "dice_graft": 0.9592998489718468,
+     "graft_vol_err": -0.028778625954198445
+    },
+    {
+     "dice_new": 0.7621864647420729,
+     "dice_graft": 0.9625421353634057,
+     "graft_vol_err": 0.015496183206106906
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7465850211964201,
+    "dice_graft": 0.965015350794072,
+    "graft_vol_err": 0.013969465648854928
+   },
+   "score_entropy_single": 0.07141373306512833,
+   "score_mutual_info": 0.006976335309445858,
+   "score_vol_cv": 0.020936092649726804,
+   "V_ens": 13283.0,
+   "V_sd": 275.90839059368966,
+   "score_oracle": 0.3818954671953033,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_027_condyle_bcp",
+   "material": "bcp",
+   "graft_true_vox": 10610.0,
+   "members": [
+    {
+     "dice_new": 0.8963568282975767,
+     "dice_graft": 0.931422351233672,
+     "graft_vol_err": 0.07803958529688981
+    },
+    {
+     "dice_new": 0.8941292065831491,
+     "dice_graft": 0.9327040885783001,
+     "graft_vol_err": 0.07700282752120646
+    },
+    {
+     "dice_new": 0.8911341071178857,
+     "dice_graft": 0.9346411220093501,
+     "graft_vol_err": 0.05636192271442031
+    },
+    {
+     "dice_new": 0.8967525301148238,
+     "dice_graft": 0.9379380773337047,
+     "graft_vol_err": 0.030442978322337444
+    },
+    {
+     "dice_new": 0.8937543429870328,
+     "dice_graft": 0.9320196157826067,
+     "graft_vol_err": 0.09491046182846374
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8985327207950496,
+    "dice_graft": 0.9361663322998358,
+    "graft_vol_err": 0.06710650329877477
+   },
+   "score_entropy_single": 0.13233788311481476,
+   "score_mutual_info": 0.006777296774089336,
+   "score_vol_cv": 0.02073866299142952,
+   "V_ens": 11322.0,
+   "V_sd": 234.85706291274275,
+   "score_oracle": 0.22335093051778387,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_028_calvarial_bcp",
+   "material": "bcp",
+   "graft_true_vox": 9599.0,
+   "members": [
+    {
+     "dice_new": 0.8904561367902989,
+     "dice_graft": 0.9524969549330086,
+     "graft_vol_err": 0.0527138243567038
+    },
+    {
+     "dice_new": 0.89055,
+     "dice_graft": 0.9562928943701945,
+     "graft_vol_err": 0.018856130846963248
+    },
+    {
+     "dice_new": 0.8824343724364233,
+     "dice_graft": 0.9514405792698365,
+     "graft_vol_err": 0.05740181268882183
+    },
+    {
+     "dice_new": 0.884401639550381,
+     "dice_graft": 0.9494147582697201,
+     "graft_vol_err": 0.04708823835816234
+    },
+    {
+     "dice_new": 0.8877240277569767,
+     "dice_graft": 0.9541108019225905,
+     "graft_vol_err": 0.059068652984686
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8952919210778625,
+    "dice_graft": 0.9561724628838723,
+    "graft_vol_err": 0.04896343369100942
+   },
+   "score_entropy_single": 0.09480711072683334,
+   "score_mutual_info": 0.006579502485692501,
+   "score_vol_cv": 0.014027612787244006,
+   "V_ens": 10069.0,
+   "V_sd": 140.98311955691716,
+   "score_oracle": 0.15169695263260485,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_029_segmental_bcp",
+   "material": "bcp",
+   "graft_true_vox": 13597.0,
+   "members": [
+    {
+     "dice_new": 0.8172314347512617,
+     "dice_graft": 0.9601856811283699,
+     "graft_vol_err": 0.05964551003897922
+    },
+    {
+     "dice_new": 0.8202017701305936,
+     "dice_graft": 0.9631512981199641,
+     "graft_vol_err": 0.0537618592336544
+    },
+    {
+     "dice_new": 0.8002489884842826,
+     "dice_graft": 0.9630294973592498,
+     "graft_vol_err": 0.04699566080753104
+    },
+    {
+     "dice_new": 0.8210538936514598,
+     "dice_graft": 0.965185987721199,
+     "graft_vol_err": 0.03647863499301307
+    },
+    {
+     "dice_new": 0.8278012103429305,
+     "dice_graft": 0.9628380802066145,
+     "graft_vol_err": 0.050305214385526265
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8325719224595629,
+    "dice_graft": 0.9634085213032582,
+    "graft_vol_err": 0.05412958740898732
+   },
+   "score_entropy_single": 0.0691312924027443,
+   "score_mutual_info": 0.00550502073019743,
+   "score_vol_cv": 0.007350880337196206,
+   "V_ens": 14333.0,
+   "V_sd": 104.8911817075201,
+   "score_oracle": 0.1188300847427779,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_030_condyle_ha",
+   "material": "ha",
+   "graft_true_vox": 18591.0,
+   "members": [
+    {
+     "dice_new": 0.7740351976604523,
+     "dice_graft": 0.9812201534581746,
+     "graft_vol_err": 0.004948631058038888
+    },
+    {
+     "dice_new": 0.7615020638276452,
+     "dice_graft": 0.9811891891891892,
+     "graft_vol_err": -0.00978968318003337
+    },
+    {
+     "dice_new": 0.7558859975216853,
+     "dice_graft": 0.9821933676355702,
+     "graft_vol_err": -0.0032811575493518763
+    },
+    {
+     "dice_new": 0.7350418777270675,
+     "dice_graft": 0.9818299107622837,
+     "graft_vol_err": 0.0011833682964874637
+    },
+    {
+     "dice_new": 0.7372556444360298,
+     "dice_graft": 0.9810913019989195,
+     "graft_vol_err": -0.00871389381959009
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7677002322997677,
+    "dice_graft": 0.9831256560002153,
+    "graft_vol_err": -0.0013447367005540167
+   },
+   "score_entropy_single": 0.0927852913737297,
+   "score_mutual_info": 0.005594910588115454,
+   "score_vol_cv": 0.005664386916758814,
+   "V_ens": 18566.0,
+   "V_sd": 104.97694985090774,
+   "score_oracle": 0.06496137102376065,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_031_calvarial_ha",
+   "material": "ha",
+   "graft_true_vox": 11853.0,
+   "members": [
+    {
+     "dice_new": 0.8718411182390194,
+     "dice_graft": 0.959680408549895,
+     "graft_vol_err": 0.04851092550409186
+    },
+    {
+     "dice_new": 0.8760168817664689,
+     "dice_graft": 0.9613012706427714,
+     "graft_vol_err": 0.0383869062684552
+    },
+    {
+     "dice_new": 0.8761372994034827,
+     "dice_graft": 0.9618314290445438,
+     "graft_vol_err": 0.03796507213363709
+    },
+    {
+     "dice_new": 0.8715936078573441,
+     "dice_graft": 0.9598470363288719,
+     "graft_vol_err": 0.02969712309120065
+    },
+    {
+     "dice_new": 0.8750176871298336,
+     "dice_graft": 0.9612364862087392,
+     "graft_vol_err": 0.05239179954441919
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8817962591444262,
+    "dice_graft": 0.9639687977217384,
+    "graft_vol_err": 0.04412385050198253
+   },
+   "score_entropy_single": 0.12096695601940155,
+   "score_mutual_info": 0.007492823526263237,
+   "score_vol_cv": 0.007791912201657097,
+   "V_ens": 12376.0,
+   "V_sd": 96.18024745237454,
+   "score_oracle": 0.12579890880748246,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_032_segmental_ha",
+   "material": "ha",
+   "graft_true_vox": 13838.0,
+   "members": [
+    {
+     "dice_new": 0.8662215141153936,
+     "dice_graft": 0.9572089711641153,
+     "graft_vol_err": 0.029917618152912162
+    },
+    {
+     "dice_new": 0.8557544107780739,
+     "dice_graft": 0.9538978541673959,
+     "graft_vol_err": 0.06438791732909377
+    },
+    {
+     "dice_new": 0.8673235443392429,
+     "dice_graft": 0.9548581859028363,
+     "graft_vol_err": 0.058678999855470426
+    },
+    {
+     "dice_new": 0.8564175503663828,
+     "dice_graft": 0.95779855654709,
+     "graft_vol_err": 0.03259141494435602
+    },
+    {
+     "dice_new": 0.8700570926657883,
+     "dice_graft": 0.9553068693693694,
+     "graft_vol_err": 0.053475935828877
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8715913136347455,
+    "dice_graft": 0.9586525899509198,
+    "graft_vol_err": 0.046610781904899534
+   },
+   "score_entropy_single": 0.11769387125968933,
+   "score_mutual_info": 0.008963670581579208,
+   "score_vol_cv": 0.013339418680469242,
+   "V_ens": 14483.0,
+   "V_sd": 193.41623509933183,
+   "score_oracle": 0.10920910619713364,
+   "advisor_status": "supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_033_condyle_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 3609.0,
+   "members": [
+    {
+     "dice_new": 0.8382481285262989,
+     "dice_graft": 0.6787704130643611,
+     "graft_vol_err": 0.884455527847049
+    },
+    {
+     "dice_new": 0.8400053489587765,
+     "dice_graft": 0.6851614177115214,
+     "graft_vol_err": 0.8065946245497368
+    },
+    {
+     "dice_new": 0.837235323449643,
+     "dice_graft": 0.6710172744721689,
+     "graft_vol_err": 0.8872263784981989
+    },
+    {
+     "dice_new": 0.8450295275590551,
+     "dice_graft": 0.7061871696548865,
+     "graft_vol_err": 0.6735937932945415
+    },
+    {
+     "dice_new": 0.8356187864244087,
+     "dice_graft": 0.6661608497723824,
+     "graft_vol_err": 0.9215849265724578
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8453359051676779,
+    "dice_graft": 0.6936518906111167,
+    "graft_vol_err": 0.8065946245497368
+   },
+   "score_entropy_single": 0.1299375593662262,
+   "score_mutual_info": 0.009888595901429653,
+   "score_vol_cv": 0.048462807381877526,
+   "V_ens": 6520.0,
+   "V_sd": 320.89163279836384,
+   "score_oracle": 0.6288249088802871,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_034_calvarial_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 5413.0,
+   "members": [
+    {
+     "dice_new": 0.8719391066616841,
+     "dice_graft": 0.8908645559285131,
+     "graft_vol_err": 0.036393866617402626
+    },
+    {
+     "dice_new": 0.8724312206249631,
+     "dice_graft": 0.8908161402227497,
+     "graft_vol_err": 0.02364677627932754
+    },
+    {
+     "dice_new": 0.8666759019215927,
+     "dice_graft": 0.8854633446854275,
+     "graft_vol_err": 0.06133382597450576
+    },
+    {
+     "dice_new": 0.8657301279413782,
+     "dice_graft": 0.8662216790448435,
+     "graft_vol_err": -0.03491594309994461
+    },
+    {
+     "dice_new": 0.8687187890137328,
+     "dice_graft": 0.8787987129066858,
+     "graft_vol_err": 0.0668760391649732
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8751521337992226,
+    "dice_graft": 0.8898798689479432,
+    "graft_vol_err": 0.029927951228523986
+   },
+   "score_entropy_single": 0.10558565706014633,
+   "score_mutual_info": 0.0077559989877045155,
+   "score_vol_cv": 0.035343454920287405,
+   "V_ens": 5575.0,
+   "V_sd": 197.18113500028343,
+   "score_oracle": 0.5867443385671849,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_035_segmental_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 9141.0,
+   "members": [
+    {
+     "dice_new": 0.8384920167902397,
+     "dice_graft": 0.9294601488885418,
+     "graft_vol_err": 0.10141122415490655
+    },
+    {
+     "dice_new": 0.8337334225335484,
+     "dice_graft": 0.9287104750881254,
+     "graft_vol_err": 0.07931298545016952
+    },
+    {
+     "dice_new": 0.835619754680439,
+     "dice_graft": 0.9290477182746405,
+     "graft_vol_err": 0.09998906027786902
+    },
+    {
+     "dice_new": 0.8442411447337556,
+     "dice_graft": 0.9360701304254864,
+     "graft_vol_err": 0.04660321627830655
+    },
+    {
+     "dice_new": 0.8394788787998421,
+     "dice_graft": 0.9311639549436797,
+     "graft_vol_err": 0.0978011158516574
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8495926882575005,
+    "dice_graft": 0.9351492928234678,
+    "graft_vol_err": 0.08839295481894749
+   },
+   "score_entropy_single": 0.07203962653875351,
+   "score_mutual_info": 0.0068743969313800335,
+   "score_vol_cv": 0.01917594437649956,
+   "V_ens": 9949.0,
+   "V_sd": 190.19085151499795,
+   "score_oracle": 0.3815735084737978,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_036_condyle_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 7623.0,
+   "members": [
+    {
+     "dice_new": 0.8974388797134151,
+     "dice_graft": 0.8701709126088358,
+     "graft_vol_err": 0.03397612488521573
+    },
+    {
+     "dice_new": 0.8925316236354185,
+     "dice_graft": 0.8665553557667609,
+     "graft_vol_err": 0.04276531549258822
+    },
+    {
+     "dice_new": 0.8916314220342508,
+     "dice_graft": 0.8724301528729573,
+     "graft_vol_err": -0.009182736455463747
+    },
+    {
+     "dice_new": 0.8944372753249148,
+     "dice_graft": 0.8568497366801177,
+     "graft_vol_err": -0.08198871835235466
+    },
+    {
+     "dice_new": 0.8943079980937547,
+     "dice_graft": 0.8624596493448953,
+     "graft_vol_err": 0.07254361799816356
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9006045334227226,
+    "dice_graft": 0.8746001697238723,
+    "graft_vol_err": 0.009576282303555006
+   },
+   "score_entropy_single": 0.13084566593170166,
+   "score_mutual_info": 0.009649546816945076,
+   "score_vol_cv": 0.05300641684657958,
+   "V_ens": 7696.0,
+   "V_sd": 408.7642841540831,
+   "score_oracle": 0.4246854364466638,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_037_calvarial_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 7569.0,
+   "members": [
+    {
+     "dice_new": 0.8981643534535391,
+     "dice_graft": 0.9185078345243559,
+     "graft_vol_err": 0.015193552648962827
+    },
+    {
+     "dice_new": 0.8975062496189257,
+     "dice_graft": 0.9197882197220384,
+     "graft_vol_err": -0.0036992997753996226
+    },
+    {
+     "dice_new": 0.8928283642224013,
+     "dice_graft": 0.9181096211430804,
+     "graft_vol_err": 0.029594398203197203
+    },
+    {
+     "dice_new": 0.8926114390392835,
+     "dice_graft": 0.9164127699032985,
+     "graft_vol_err": -0.0052847139648566355
+    },
+    {
+     "dice_new": 0.8950116245870212,
+     "dice_graft": 0.9221256038647343,
+     "graft_vol_err": 0.05112960760998808
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9017817099522974,
+    "dice_graft": 0.9242782152230972,
+    "graft_vol_err": 0.013476020610384554
+   },
+   "score_entropy_single": 0.10016482323408127,
+   "score_mutual_info": 0.006866715382784605,
+   "score_vol_cv": 0.02085546923623636,
+   "V_ens": 7671.0,
+   "V_sd": 160.5996264005617,
+   "score_oracle": 0.4727712677741225,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_038_segmental_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 6247.0,
+   "members": [
+    {
+     "dice_new": 0.8717692324413625,
+     "dice_graft": 0.8841338493057136,
+     "graft_vol_err": 0.10965263326396668
+    },
+    {
+     "dice_new": 0.8646168170431621,
+     "dice_graft": 0.873943456718158,
+     "graft_vol_err": 0.19689450936449493
+    },
+    {
+     "dice_new": 0.857290102847924,
+     "dice_graft": 0.867,
+     "graft_vol_err": 0.24107571634384506
+    },
+    {
+     "dice_new": 0.861227847819803,
+     "dice_graft": 0.878278809313292,
+     "graft_vol_err": 0.17256283015847607
+    },
+    {
+     "dice_new": 0.8676768777935244,
+     "dice_graft": 0.8828535484348405,
+     "graft_vol_err": 0.1631182967824556
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8721386671371234,
+    "dice_graft": 0.8819628647214854,
+    "graft_vol_err": 0.17256283015847607
+   },
+   "score_entropy_single": 0.08510994166135788,
+   "score_mutual_info": 0.008085947483778,
+   "score_vol_cv": 0.03655194036754287,
+   "V_ens": 7325.0,
+   "V_sd": 268.67869286566065,
+   "score_oracle": 0.26880230264911253,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "cal_039_condyle_bcp",
+   "material": "bcp",
+   "graft_true_vox": 17809.0,
+   "members": [
+    {
+     "dice_new": 0.7115222876366695,
+     "dice_graft": 0.9599428162973552,
+     "graft_vol_err": -0.0361053399966309
+    },
+    {
+     "dice_new": 0.7001943404275489,
+     "dice_graft": 0.9572053910839765,
+     "graft_vol_err": -0.05019933741366722
+    },
+    {
+     "dice_new": 0.6893971282914737,
+     "dice_graft": 0.9601215561480462,
+     "graft_vol_err": -0.04138357010500304
+    },
+    {
+     "dice_new": 0.6937169095253714,
+     "dice_graft": 0.9589434395635946,
+     "graft_vol_err": -0.044247290695715646
+    },
+    {
+     "dice_new": 0.6740371545083824,
+     "dice_graft": 0.9571757925072046,
+     "graft_vol_err": -0.051546970632826095
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.704381114419396,
+    "dice_graft": 0.9606931772536869,
+    "graft_vol_err": -0.042899657476556774
+   },
+   "score_entropy_single": 0.09076421707868576,
+   "score_mutual_info": 0.005555129610002041,
+   "score_vol_cv": 0.005962014368612168,
+   "V_ens": 17045.0,
+   "V_sd": 101.43175045319882,
+   "score_oracle": 0.14437461596023626,
+   "advisor_status": "not_supported",
+   "split": "cal"
+  },
+  {
+   "case": "test_000_condyle_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 7472.0,
+   "members": [
+    {
+     "dice_new": 0.9171066397411255,
+     "dice_graft": 0.8930809566440722,
+     "graft_vol_err": 0.0928800856531049
+    },
+    {
+     "dice_new": 0.9099114400097053,
+     "dice_graft": 0.8811634879122281,
+     "graft_vol_err": 0.09809957173447548
+    },
+    {
+     "dice_new": 0.9048080342362448,
+     "dice_graft": 0.8737619077660715,
+     "graft_vol_err": 0.1213865096359743
+    },
+    {
+     "dice_new": 0.9156635286972366,
+     "dice_graft": 0.8821353065539113,
+     "graft_vol_err": 0.025695931477516032
+    },
+    {
+     "dice_new": 0.9082752835624932,
+     "dice_graft": 0.8723848050060047,
+     "graft_vol_err": 0.11737152034261245
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9175727388689789,
+    "dice_graft": 0.8864614791492643,
+    "graft_vol_err": 0.08284261241970015
+   },
+   "score_entropy_single": 0.12277071923017502,
+   "score_mutual_info": 0.008475329726934433,
+   "score_vol_cv": 0.031582822152908606,
+   "V_ens": 8091.0,
+   "V_sd": 257.4821158838027,
+   "score_oracle": 0.344342836650529,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_001_calvarial_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 4742.0,
+   "members": [
+    {
+     "dice_new": 0.886666764270969,
+     "dice_graft": 0.8111314852766692,
+     "graft_vol_err": -0.0449177562210038
+    },
+    {
+     "dice_new": 0.8876549849557394,
+     "dice_graft": 0.8041415012942191,
+     "graft_vol_err": -0.04470687473639812
+    },
+    {
+     "dice_new": 0.8857315772788841,
+     "dice_graft": 0.7840724402136058,
+     "graft_vol_err": -0.18346689160691687
+    },
+    {
+     "dice_new": 0.885219921914394,
+     "dice_graft": 0.7875386553659375,
+     "graft_vol_err": -0.15879375790805572
+    },
+    {
+     "dice_new": 0.8857051802062812,
+     "dice_graft": 0.7992801185687063,
+     "graft_vol_err": -0.00801349641501481
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8909904560529479,
+    "dice_graft": 0.8071649712516585,
+    "graft_vol_err": -0.09278785322648675
+   },
+   "score_entropy_single": 0.11860816180706024,
+   "score_mutual_info": 0.008987579494714737,
+   "score_vol_cv": 0.07636621761608842,
+   "V_ens": 4302.0,
+   "V_sd": 330.2686179460592,
+   "score_oracle": 0.4442188660559544,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_002_segmental_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 9737.0,
+   "members": [
+    {
+     "dice_new": 0.8228830490241279,
+     "dice_graft": 0.9342574064131973,
+     "graft_vol_err": 0.10424155283968362
+    },
+    {
+     "dice_new": 0.826083511607638,
+     "dice_graft": 0.9340680776358139,
+     "graft_vol_err": 0.1059874704734518
+    },
+    {
+     "dice_new": 0.8156393598478846,
+     "dice_graft": 0.9368099369085173,
+     "graft_vol_err": 0.08359864434630793
+    },
+    {
+     "dice_new": 0.8293631131608035,
+     "dice_graft": 0.9434817650614548,
+     "graft_vol_err": 0.03882099209202017
+    },
+    {
+     "dice_new": 0.825916333097873,
+     "dice_graft": 0.9357932857003034,
+     "graft_vol_err": 0.09859299578925751
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8345894174909719,
+    "dice_graft": 0.9388256087981147,
+    "graft_vol_err": 0.09181472732874596
+   },
+   "score_entropy_single": 0.07641010731458664,
+   "score_mutual_info": 0.007022531237453222,
+   "score_vol_cv": 0.023004511568978182,
+   "V_ens": 10631.0,
+   "V_sd": 243.31411796276842,
+   "score_oracle": 0.3281561304771461,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_003_condyle_bcp",
+   "material": "bcp",
+   "graft_true_vox": 14804.0,
+   "members": [
+    {
+     "dice_new": 0.9088108915618117,
+     "dice_graft": 0.9539734876522441,
+     "graft_vol_err": 0.007700621453661238
+    },
+    {
+     "dice_new": 0.9112792086485162,
+     "dice_graft": 0.9611806438658724,
+     "graft_vol_err": 0.01850851121318553
+    },
+    {
+     "dice_new": 0.8975482020668049,
+     "dice_graft": 0.9529142781404287,
+     "graft_vol_err": 0.03857065657930292
+    },
+    {
+     "dice_new": 0.9095938678370526,
+     "dice_graft": 0.9578232207722319,
+     "graft_vol_err": 0.00837611456363141
+    },
+    {
+     "dice_new": 0.9058301491433501,
+     "dice_graft": 0.9538995263193009,
+     "graft_vol_err": 0.024993245068900327
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9145615496129053,
+    "dice_graft": 0.9592805562984755,
+    "graft_vol_err": 0.020534990543096487
+   },
+   "score_entropy_single": 0.11541152000427246,
+   "score_mutual_info": 0.006402137689292431,
+   "score_vol_cv": 0.011248548736729104,
+   "V_ens": 15108.0,
+   "V_sd": 169.79234376143114,
+   "score_oracle": 0.15700649914112164,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_004_calvarial_bcp",
+   "material": "bcp",
+   "graft_true_vox": 8546.0,
+   "members": [
+    {
+     "dice_new": 0.9266836335160532,
+     "dice_graft": 0.9395445613223905,
+     "graft_vol_err": 0.02457289960215303
+    },
+    {
+     "dice_new": 0.927183191070256,
+     "dice_graft": 0.9388553350589589,
+     "graft_vol_err": 0.034285045635384925
+    },
+    {
+     "dice_new": 0.9232148490030382,
+     "dice_graft": 0.9404522179391289,
+     "graft_vol_err": 0.03381699040486774
+    },
+    {
+     "dice_new": 0.9244207126141271,
+     "dice_graft": 0.9412580943570767,
+     "graft_vol_err": 0.023870816756377256
+    },
+    {
+     "dice_new": 0.9244324626436309,
+     "dice_graft": 0.9400526255577165,
+     "graft_vol_err": 0.045635384975427185
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9314036674615574,
+    "dice_graft": 0.9444700460829493,
+    "graft_vol_err": 0.031359700444652416
+   },
+   "score_entropy_single": 0.11197186261415482,
+   "score_mutual_info": 0.006210328079760075,
+   "score_vol_cv": 0.0076847214955816714,
+   "V_ens": 8814.0,
+   "V_sd": 67.8038346998162,
+   "score_oracle": 0.15999657211414864,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_005_segmental_bcp",
+   "material": "bcp",
+   "graft_true_vox": 12052.0,
+   "members": [
+    {
+     "dice_new": 0.8229150668100138,
+     "dice_graft": 0.9528433284253254,
+     "graft_vol_err": 0.08504812479256563
+    },
+    {
+     "dice_new": 0.8216898123608608,
+     "dice_graft": 0.9541503867315206,
+     "graft_vol_err": 0.08114835711915025
+    },
+    {
+     "dice_new": 0.8056719303899452,
+     "dice_graft": 0.9556417743290269,
+     "graft_vol_err": 0.07442748091603058
+    },
+    {
+     "dice_new": 0.8231306491372227,
+     "dice_graft": 0.9586470706663982,
+     "graft_vol_err": 0.06065383338864927
+    },
+    {
+     "dice_new": 0.8221393687969333,
+     "dice_graft": 0.954104254044338,
+     "graft_vol_err": 0.0772485894457351
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8309740122543842,
+    "dice_graft": 0.9556477345245692,
+    "graft_vol_err": 0.08031861931629614
+   },
+   "score_entropy_single": 0.0718999132514,
+   "score_mutual_info": 0.0057723261415958405,
+   "score_vol_cv": 0.007749691081207366,
+   "V_ens": 13020.0,
+   "V_sd": 100.47009505320477,
+   "score_oracle": 0.12760884424027596,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_006_condyle_ha",
+   "material": "ha",
+   "graft_true_vox": 17620.0,
+   "members": [
+    {
+     "dice_new": 0.7785630153121319,
+     "dice_graft": 0.9771547833935018,
+     "graft_vol_err": 0.012258796821793316
+    },
+    {
+     "dice_new": 0.7777058612010068,
+     "dice_graft": 0.9766637366376499,
+     "graft_vol_err": 0.0015323496027241923
+    },
+    {
+     "dice_new": 0.7703516883844753,
+     "dice_graft": 0.9775191598069827,
+     "graft_vol_err": -0.0005675368898978572
+    },
+    {
+     "dice_new": 0.74476453704688,
+     "dice_graft": 0.9754938027053031,
+     "graft_vol_err": 0.005561861520998912
+    },
+    {
+     "dice_new": 0.7799857040743388,
+     "dice_graft": 0.9763043845331232,
+     "graft_vol_err": 0.016685584562996514
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7835831651772845,
+    "dice_graft": 0.978865280289331,
+    "graft_vol_err": 0.008626560726447297
+   },
+   "score_entropy_single": 0.10153181105852127,
+   "score_mutual_info": 0.006250132340937853,
+   "score_vol_cv": 0.006445073409071083,
+   "V_ens": 17772.0,
+   "V_sd": 114.36782764396638,
+   "score_oracle": 0.06620471217848756,
+   "advisor_status": "supported",
+   "split": "test"
+  },
+  {
+   "case": "test_007_calvarial_ha",
+   "material": "ha",
+   "graft_true_vox": 13489.0,
+   "members": [
+    {
+     "dice_new": 0.8801142127211932,
+     "dice_graft": 0.9750265869668855,
+     "graft_vol_err": 0.021573133664467337
+    },
+    {
+     "dice_new": 0.8608974837601733,
+     "dice_graft": 0.9756115586431158,
+     "graft_vol_err": 0.0062272963155163286
+    },
+    {
+     "dice_new": 0.8662670219064535,
+     "dice_graft": 0.9774159083373245,
+     "graft_vol_err": 0.012232189191192733
+    },
+    {
+     "dice_new": 0.8454618007690633,
+     "dice_graft": 0.9739015039811265,
+     "graft_vol_err": 0.011120171991993555
+    },
+    {
+     "dice_new": 0.8681529816929491,
+     "dice_graft": 0.9757676043390329,
+     "graft_vol_err": 0.0160871821484172
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8751296872684156,
+    "dice_graft": 0.9772401367797919,
+    "graft_vol_err": 0.016235451108310484
+   },
+   "score_entropy_single": 0.09471219778060913,
+   "score_mutual_info": 0.006344584282487631,
+   "score_vol_cv": 0.005070270446556153,
+   "V_ens": 13708.0,
+   "V_sd": 69.31262511260124,
+   "score_oracle": 0.08876526632137605,
+   "advisor_status": "supported",
+   "split": "test"
+  },
+  {
+   "case": "test_008_segmental_ha",
+   "material": "ha",
+   "graft_true_vox": 13659.0,
+   "members": [
+    {
+     "dice_new": 0.8600867262749914,
+     "dice_graft": 0.9621390529328647,
+     "graft_vol_err": 0.02071893989311069
+    },
+    {
+     "dice_new": 0.8547692188798084,
+     "dice_graft": 0.9593443791199002,
+     "graft_vol_err": 0.05468921590160325
+    },
+    {
+     "dice_new": 0.8632564359745905,
+     "dice_graft": 0.9629416627727256,
+     "graft_vol_err": 0.0368255362764478
+    },
+    {
+     "dice_new": 0.8430762090770213,
+     "dice_graft": 0.9626949379455079,
+     "graft_vol_err": 0.023354564755838636
+    },
+    {
+     "dice_new": 0.8678622345614166,
+     "dice_graft": 0.9622972537505818,
+     "graft_vol_err": 0.04473241086463142
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8680105637147797,
+    "dice_graft": 0.965596577632383,
+    "graft_vol_err": 0.03653268906947793
+   },
+   "score_entropy_single": 0.11836246401071548,
+   "score_mutual_info": 0.009914245456457138,
+   "score_vol_cv": 0.012357618445478344,
+   "V_ens": 14158.0,
+   "V_sd": 174.88007319303134,
+   "score_oracle": 0.10493713975940111,
+   "advisor_status": "supported",
+   "split": "test"
+  },
+  {
+   "case": "test_009_condyle_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 4179.0,
+   "members": [
+    {
+     "dice_new": 0.8964972212308163,
+     "dice_graft": 0.799706221802539,
+     "graft_vol_err": 0.280689160086145
+    },
+    {
+     "dice_new": 0.8944578927251879,
+     "dice_graft": 0.8202294942626435,
+     "graft_vol_err": 0.2522134481933478
+    },
+    {
+     "dice_new": 0.8884669660038487,
+     "dice_graft": 0.7941547518923465,
+     "graft_vol_err": 0.27614261785116057
+    },
+    {
+     "dice_new": 0.8985426151537503,
+     "dice_graft": 0.8150193263390392,
+     "graft_vol_err": 0.1667863125149558
+    },
+    {
+     "dice_new": 0.8898853372621869,
+     "dice_graft": 0.78846545750968,
+     "graft_vol_err": 0.34840871021775555
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9018644607063315,
+    "dice_graft": 0.8152879804109443,
+    "graft_vol_err": 0.24766690595836316
+   },
+   "score_entropy_single": 0.12311215698719025,
+   "score_mutual_info": 0.010198984295129776,
+   "score_vol_cv": 0.04628490171432168,
+   "V_ens": 5214.0,
+   "V_sd": 244.65273348156157,
+   "score_oracle": 0.4023299395297618,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_010_calvarial_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 8815.0,
+   "members": [
+    {
+     "dice_new": 0.8529396714936295,
+     "dice_graft": 0.9323602091833803,
+     "graft_vol_err": -0.025978445830969976
+    },
+    {
+     "dice_new": 0.8489270603734387,
+     "dice_graft": 0.9250905691246932,
+     "graft_vol_err": -0.05853658536585371
+    },
+    {
+     "dice_new": 0.8429522461602977,
+     "dice_graft": 0.9287129834097729,
+     "graft_vol_err": 0.003516732841746917
+    },
+    {
+     "dice_new": 0.8435287200593062,
+     "dice_graft": 0.9247816145863869,
+     "graft_vol_err": -0.06500283607487234
+    },
+    {
+     "dice_new": 0.8526201698888413,
+     "dice_graft": 0.9341603596426336,
+     "graft_vol_err": -0.006466250709018739
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8579616693533942,
+    "dice_graft": 0.9352145119493234,
+    "graft_vol_err": -0.03006239364719232
+   },
+   "score_entropy_single": 0.10537780076265335,
+   "score_mutual_info": 0.007301489356905222,
+   "score_vol_cv": 0.02817848121182778,
+   "V_ens": 8550.0,
+   "V_sd": 240.8189361325226,
+   "score_oracle": 0.518445364765849,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_011_segmental_calcium_sulfate",
+   "material": "calcium_sulfate",
+   "graft_true_vox": 8232.0,
+   "members": [
+    {
+     "dice_new": 0.7980605189907516,
+     "dice_graft": 0.9167942827973455,
+     "graft_vol_err": 0.14176384839650136
+    },
+    {
+     "dice_new": 0.7975732876395129,
+     "dice_graft": 0.914555164185888,
+     "graft_vol_err": 0.13824101068999028
+    },
+    {
+     "dice_new": 0.7932355414369803,
+     "dice_graft": 0.9229792147806004,
+     "graft_vol_err": 0.10398445092322639
+    },
+    {
+     "dice_new": 0.8069169350213948,
+     "dice_graft": 0.9320101600803355,
+     "graft_vol_err": 0.05648688046647221
+    },
+    {
+     "dice_new": 0.792851266112076,
+     "dice_graft": 0.9125565610859728,
+     "graft_vol_err": 0.1477162293488825
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.809141388646689,
+    "dice_graft": 0.9211968935587026,
+    "graft_vol_err": 0.12730806608357637
+   },
+   "score_entropy_single": 0.07383943349123001,
+   "score_mutual_info": 0.007614405360072851,
+   "score_vol_cv": 0.030571231625999964,
+   "V_ens": 9280.0,
+   "V_sd": 281.26755945185005,
+   "score_oracle": 0.40247931550560534,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_012_condyle_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 6850.0,
+   "members": [
+    {
+     "dice_new": 0.8927781871775976,
+     "dice_graft": 0.8521200948116935,
+     "graft_vol_err": 0.21722627737226285
+    },
+    {
+     "dice_new": 0.8880125823436894,
+     "dice_graft": 0.8474598578573309,
+     "graft_vol_err": 0.21839416058394168
+    },
+    {
+     "dice_new": 0.8893162099672641,
+     "dice_graft": 0.8516173434273916,
+     "graft_vol_err": 0.12116788321167893
+    },
+    {
+     "dice_new": 0.8985033329140989,
+     "dice_graft": 0.8610121168923734,
+     "graft_vol_err": 0.04817518248175179
+    },
+    {
+     "dice_new": 0.8877207543689768,
+     "dice_graft": 0.8398061389337641,
+     "graft_vol_err": 0.25912408759124084
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8981744143484627,
+    "dice_graft": 0.8610512129380054,
+    "graft_vol_err": 0.16642335766423355
+   },
+   "score_entropy_single": 0.12979423999786377,
+   "score_mutual_info": 0.009757710620760918,
+   "score_vol_cv": 0.06571649527524893,
+   "V_ens": 7990.0,
+   "V_sd": 527.9531797422949,
+   "score_oracle": 0.3670889395966114,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_013_calvarial_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 6970.0,
+   "members": [
+    {
+     "dice_new": 0.9113182325905037,
+     "dice_graft": 0.9268116465573297,
+     "graft_vol_err": -0.014203730272596804
+    },
+    {
+     "dice_new": 0.9121030326380098,
+     "dice_graft": 0.9315603093156031,
+     "graft_vol_err": -0.014777618364418932
+    },
+    {
+     "dice_new": 0.9048186489908393,
+     "dice_graft": 0.9263097294185377,
+     "graft_vol_err": -0.006312769010043073
+    },
+    {
+     "dice_new": 0.9056020036094434,
+     "dice_graft": 0.9194850534584333,
+     "graft_vol_err": -0.027403156384504967
+    },
+    {
+     "dice_new": 0.9095489399260799,
+     "dice_graft": 0.9323308270676691,
+     "graft_vol_err": 0.022668579626972774
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9145841378422611,
+    "dice_graft": 0.9325348149217115,
+    "graft_vol_err": -0.011621233859397395
+   },
+   "score_entropy_single": 0.10565730929374695,
+   "score_mutual_info": 0.006509669590741396,
+   "score_vol_cv": 0.01689420772969354,
+   "V_ens": 6889.0,
+   "V_sd": 116.80993108464708,
+   "score_oracle": 0.41982573271472223,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_014_segmental_beta_tcp",
+   "material": "beta_tcp",
+   "graft_true_vox": 12191.0,
+   "members": [
+    {
+     "dice_new": 0.8461951656222023,
+     "dice_graft": 0.968570271364925,
+     "graft_vol_err": 0.02526453941432205
+    },
+    {
+     "dice_new": 0.8431749519362812,
+     "dice_graft": 0.9691368078175896,
+     "graft_vol_err": 0.014600935116069191
+    },
+    {
+     "dice_new": 0.7842100292756634,
+     "dice_graft": 0.9683306055646481,
+     "graft_vol_err": 0.004757608071528141
+    },
+    {
+     "dice_new": 0.8429423459244533,
+     "dice_graft": 0.966743119266055,
+     "graft_vol_err": 0.0027889426626199754
+    },
+    {
+     "dice_new": 0.8633819616478576,
+     "dice_graft": 0.9686317588185036,
+     "graft_vol_err": 0.016159461898121563
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8623904531046056,
+    "dice_graft": 0.9705248607553767,
+    "graft_vol_err": 0.017635960954802687
+   },
+   "score_entropy_single": 0.05984954163432121,
+   "score_mutual_info": 0.005532773677259684,
+   "score_vol_cv": 0.008079676957312324,
+   "V_ens": 12406.0,
+   "V_sd": 99.75169171497795,
+   "score_oracle": 0.39198046523583085,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "test_015_condyle_bcp",
+   "material": "bcp",
+   "graft_true_vox": 11101.0,
+   "members": [
+    {
+     "dice_new": 0.9000714838863406,
+     "dice_graft": 0.9495872123660636,
+     "graft_vol_err": 0.051346725520223346
+    },
+    {
+     "dice_new": 0.8981909845788849,
+     "dice_graft": 0.9522100656455142,
+     "graft_vol_err": 0.058373119538780216
+    },
+    {
+     "dice_new": 0.8873072716103029,
+     "dice_graft": 0.9454592901878914,
+     "graft_vol_err": 0.0711647599315377
+    },
+    {
+     "dice_new": 0.8998169288701683,
+     "dice_graft": 0.951271374147249,
+     "graft_vol_err": 0.033510494550040626
+    },
+    {
+     "dice_new": 0.8975145110879595,
+     "dice_graft": 0.9481481481481482,
+     "graft_vol_err": 0.0673813169984685
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9042648108493933,
+    "dice_graft": 0.9525019717816142,
+    "graft_vol_err": 0.05585082425006749
+   },
+   "score_entropy_single": 0.11671750247478485,
+   "score_mutual_info": 0.006923750974237919,
+   "score_vol_cv": 0.012643629574701528,
+   "V_ens": 11721.0,
+   "V_sd": 148.26678657069493,
+   "score_oracle": 0.19085438100489194,
+   "advisor_status": "not_supported",
+   "split": "test"
+  },
+  {
+   "case": "ood_mat_000_condyle_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 10756.0,
+   "members": [
+    {
+     "dice_new": 0.8935843046803136,
+     "dice_graft": 0.8892913077525451,
+     "graft_vol_err": -0.10040907400520638
+    },
+    {
+     "dice_new": 0.8952997582264476,
+     "dice_graft": 0.8951349241204314,
+     "graft_vol_err": -0.09473782075120862
+    },
+    {
+     "dice_new": 0.8839096586063657,
+     "dice_graft": 0.8765511445098136,
+     "graft_vol_err": -0.11946820379323164
+    },
+    {
+     "dice_new": 0.8828316932240842,
+     "dice_graft": 0.8563186396072676,
+     "graft_vol_err": -0.16297880252882113
+    },
+    {
+     "dice_new": 0.8914267069092096,
+     "dice_graft": 0.8826300294406281,
+     "graft_vol_err": -0.10524358497582742
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8968729935383396,
+    "dice_graft": 0.8848149429263231,
+    "graft_vol_err": -0.11853849014503537
+   },
+   "score_entropy_single": 0.12481951713562012,
+   "score_mutual_info": 0.008907984010875225,
+   "score_vol_cv": 0.027857356899650864,
+   "V_ens": 9481.0,
+   "V_sd": 264.70617673186246,
+   "score_oracle": 0.21085149404628178,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_001_calvarial_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 9562.0,
+   "members": [
+    {
+     "dice_new": 0.8685477064847973,
+     "dice_graft": 0.9120499386913388,
+     "graft_vol_err": -0.12361430663041206
+    },
+    {
+     "dice_new": 0.8669208424110385,
+     "dice_graft": 0.9006607556333653,
+     "graft_vol_err": -0.14819075507216062
+    },
+    {
+     "dice_new": 0.8606338654557371,
+     "dice_graft": 0.9133281544778604,
+     "graft_vol_err": -0.1152478560970508
+    },
+    {
+     "dice_new": 0.8552881570614312,
+     "dice_graft": 0.8810592976396086,
+     "graft_vol_err": -0.18343442794394482
+    },
+    {
+     "dice_new": 0.8704335793357934,
+     "dice_graft": 0.9225471440284231,
+     "graft_vol_err": -0.0866973436519557
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8720578807583113,
+    "dice_graft": 0.9118452680418134,
+    "graft_vol_err": -0.1291570801087638
+   },
+   "score_entropy_single": 0.10903804749250412,
+   "score_mutual_info": 0.007997266948223114,
+   "score_vol_cv": 0.037517503747459637,
+   "V_ens": 8327.0,
+   "V_sd": 311.5903721234018,
+   "score_oracle": 0.3419354838709677,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_002_segmental_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 12022.0,
+   "members": [
+    {
+     "dice_new": 0.8297104421294398,
+     "dice_graft": 0.9470537652020802,
+     "graft_vol_err": 0.0313591748461155
+    },
+    {
+     "dice_new": 0.829147624837533,
+     "dice_graft": 0.946513422409942,
+     "graft_vol_err": 0.048161703543503576
+    },
+    {
+     "dice_new": 0.8245569405579581,
+     "dice_graft": 0.9464729108153214,
+     "graft_vol_err": 0.04350357677591088
+    },
+    {
+     "dice_new": 0.8326640989920512,
+     "dice_graft": 0.9429396742998284,
+     "graft_vol_err": -0.013059391116286845
+    },
+    {
+     "dice_new": 0.8290993071593533,
+     "dice_graft": 0.9449620357069567,
+     "graft_vol_err": 0.026701048078522804
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8426544240400667,
+    "dice_graft": 0.9501209065945325,
+    "graft_vol_err": 0.02952919647313257
+   },
+   "score_entropy_single": 0.07405004650354385,
+   "score_mutual_info": 0.007105792872607708,
+   "score_vol_cv": 0.02107337166974817,
+   "V_ens": 12377.0,
+   "V_sd": 260.26878414439176,
+   "score_oracle": 0.27880846616148414,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_003_condyle_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 16991.0,
+   "members": [
+    {
+     "dice_new": 0.7439845655418441,
+     "dice_graft": 0.954098260790107,
+     "graft_vol_err": -0.06774174563003943
+    },
+    {
+     "dice_new": 0.7355510517855894,
+     "dice_graft": 0.9452745495910964,
+     "graft_vol_err": -0.0856924254016832
+    },
+    {
+     "dice_new": 0.7401173348232993,
+     "dice_graft": 0.9523431537169897,
+     "graft_vol_err": -0.07221470190100643
+    },
+    {
+     "dice_new": 0.7288951343755489,
+     "dice_graft": 0.9437557816836263,
+     "graft_vol_err": -0.09134247542816787
+    },
+    {
+     "dice_new": 0.7317324185248714,
+     "dice_graft": 0.9504647749510763,
+     "graft_vol_err": -0.07521629097757632
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.743584335231667,
+    "dice_graft": 0.9502373296585516,
+    "graft_vol_err": -0.07810017067859454
+   },
+   "score_entropy_single": 0.10165964066982269,
+   "score_mutual_info": 0.005601328331977129,
+   "score_vol_cv": 0.009493028263287531,
+   "V_ens": 15664.0,
+   "V_sd": 148.64373515220882,
+   "score_oracle": 0.39014895873505595,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_004_calvarial_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 13506.0,
+   "members": [
+    {
+     "dice_new": 0.828187134502924,
+     "dice_graft": 0.9731227071947294,
+     "graft_vol_err": -0.02206426773285952
+    },
+    {
+     "dice_new": 0.8058274789819186,
+     "dice_graft": 0.9588302316748956,
+     "graft_vol_err": -0.05049607581815485
+    },
+    {
+     "dice_new": 0.807653334922811,
+     "dice_graft": 0.9741675377034493,
+     "graft_vol_err": -0.016585221383089044
+    },
+    {
+     "dice_new": 0.8018484494181839,
+     "dice_graft": 0.9693196309354137,
+     "graft_vol_err": -0.025914408411076506
+    },
+    {
+     "dice_new": 0.797155771138794,
+     "dice_graft": 0.9730357276608493,
+     "graft_vol_err": -0.022952761735524962
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8204477267482114,
+    "dice_graft": 0.9748886643463942,
+    "graft_vol_err": -0.021545979564637885
+   },
+   "score_entropy_single": 0.08565862476825714,
+   "score_mutual_info": 0.006748517509549856,
+   "score_vol_cv": 0.012173571821947459,
+   "V_ens": 13215.0,
+   "V_sd": 159.87795345200038,
+   "score_oracle": 0.4014952323629106,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_005_segmental_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 15201.0,
+   "members": [
+    {
+     "dice_new": 0.8240176507669679,
+     "dice_graft": 0.9645657762014772,
+     "graft_vol_err": 0.02177488323136645
+    },
+    {
+     "dice_new": 0.8252359126449178,
+     "dice_graft": 0.9653262073909926,
+     "graft_vol_err": 0.018682981382803776
+    },
+    {
+     "dice_new": 0.8120917678812416,
+     "dice_graft": 0.9663791124085676,
+     "graft_vol_err": 0.005591737385698403
+    },
+    {
+     "dice_new": 0.8186056148347663,
+     "dice_graft": 0.9635452947225263,
+     "graft_vol_err": -0.016775212157094876
+    },
+    {
+     "dice_new": 0.8324905519774312,
+     "dice_graft": 0.9649569303054033,
+     "graft_vol_err": 0.016183145845668045
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8335920355403308,
+    "dice_graft": 0.9667397063152042,
+    "graft_vol_err": 0.011512400499967157
+   },
+   "score_entropy_single": 0.07160880416631699,
+   "score_mutual_info": 0.006092364434152842,
+   "score_vol_cv": 0.013905621005776097,
+   "V_ens": 15376.0,
+   "V_sd": 213.3011017318007,
+   "score_oracle": 0.34822721577688465,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_006_condyle_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 11231.0,
+   "members": [
+    {
+     "dice_new": 0.8941325135782068,
+     "dice_graft": 0.8814159292035398,
+     "graft_vol_err": -0.08832695218591402
+    },
+    {
+     "dice_new": 0.8924221023022225,
+     "dice_graft": 0.8807833310130401,
+     "graft_vol_err": -0.08129285014691479
+    },
+    {
+     "dice_new": 0.8815563562498488,
+     "dice_graft": 0.8569090821581556,
+     "graft_vol_err": -0.1500311637432108
+    },
+    {
+     "dice_new": 0.8849857539582356,
+     "dice_graft": 0.8373093273318329,
+     "graft_vol_err": -0.21965987000267118
+    },
+    {
+     "dice_new": 0.8918045532959157,
+     "dice_graft": 0.8783875800081711,
+     "graft_vol_err": -0.03855400231502093
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8959330721988491,
+    "dice_graft": 0.8748168801096357,
+    "graft_vol_err": -0.11584008547769564
+   },
+   "score_entropy_single": 0.13213643431663513,
+   "score_mutual_info": 0.010505151934921741,
+   "score_vol_cv": 0.07127892471480873,
+   "V_ens": 9930.0,
+   "V_sd": 708.0135591921951,
+   "score_oracle": 0.24760133150577635,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_007_calvarial_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 8452.0,
+   "members": [
+    {
+     "dice_new": 0.8891326358420519,
+     "dice_graft": 0.8329489291598023,
+     "graft_vol_err": -0.2045669663984856
+    },
+    {
+     "dice_new": 0.8750833889259506,
+     "dice_graft": 0.7659604519774011,
+     "graft_vol_err": -0.3246568859441552
+    },
+    {
+     "dice_new": 0.8810400719632038,
+     "dice_graft": 0.8086305229162372,
+     "graft_vol_err": -0.27815901561760525
+    },
+    {
+     "dice_new": 0.8731329614520024,
+     "dice_graft": 0.7499820749982075,
+     "graft_vol_err": -0.34985802176999525
+    },
+    {
+     "dice_new": 0.8850530408406093,
+     "dice_graft": 0.8157347116869168,
+     "graft_vol_err": -0.23745858968291533
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8862305588644867,
+    "dice_graft": 0.8034035545186303,
+    "graft_vol_err": -0.27579271178419307
+   },
+   "score_entropy_single": 0.11289377510547638,
+   "score_mutual_info": 0.009857232682406902,
+   "score_vol_cv": 0.07435379099313681,
+   "V_ens": 6121.0,
+   "V_sd": 453.14174382857294,
+   "score_oracle": 0.343515272909364,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_008_segmental_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 12743.0,
+   "members": [
+    {
+     "dice_new": 0.8191397228637414,
+     "dice_graft": 0.9659623027584308,
+     "graft_vol_err": -0.005728635329200316
+    },
+    {
+     "dice_new": 0.8250950570342205,
+     "dice_graft": 0.9658821671141999,
+     "graft_vol_err": -0.01271286196343091
+    },
+    {
+     "dice_new": 0.8006847275974992,
+     "dice_graft": 0.9645204720044349,
+     "graft_vol_err": -0.01820607392293805
+    },
+    {
+     "dice_new": 0.8103951584193663,
+     "dice_graft": 0.9580028186027784,
+     "graft_vol_err": -0.05108687122341682
+    },
+    {
+     "dice_new": 0.8403533104606176,
+     "dice_graft": 0.9664694280078896,
+     "graft_vol_err": -0.010672526092756818
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8387953941541186,
+    "dice_graft": 0.9676450835539051,
+    "graft_vol_err": -0.013576080985639227
+   },
+   "score_entropy_single": 0.06610061228275299,
+   "score_mutual_info": 0.00593723077327013,
+   "score_vol_cv": 0.016529522151008273,
+   "V_ens": 12570.0,
+   "V_sd": 206.49009661482557,
+   "score_oracle": 0.24671916010498685,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_009_condyle_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 17357.0,
+   "members": [
+    {
+     "dice_new": 0.8879821053345083,
+     "dice_graft": 0.9296526619141514,
+     "graft_vol_err": -0.10076626145071155
+    },
+    {
+     "dice_new": 0.890654569369321,
+     "dice_graft": 0.9377535992305611,
+     "graft_vol_err": -0.08313648672005536
+    },
+    {
+     "dice_new": 0.8783947460501171,
+     "dice_graft": 0.9209630424781475,
+     "graft_vol_err": -0.1215071728985424
+    },
+    {
+     "dice_new": 0.8767090204076157,
+     "dice_graft": 0.9041190289741582,
+     "graft_vol_err": -0.16068445007777843
+    },
+    {
+     "dice_new": 0.8875935598513812,
+     "dice_graft": 0.9270763817266274,
+     "graft_vol_err": -0.10070864780780087
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8905649216208222,
+    "dice_graft": 0.9273609966107905,
+    "graft_vol_err": -0.11309558103358874
+   },
+   "score_entropy_single": 0.12920334935188293,
+   "score_mutual_info": 0.007839469239115715,
+   "score_vol_cv": 0.030002193504372214,
+   "V_ens": 15394.0,
+   "V_sd": 461.71575671618575,
+   "score_oracle": 0.4116261293435084,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_010_calvarial_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 12774.0,
+   "members": [
+    {
+     "dice_new": 0.7820304311684557,
+     "dice_graft": 0.9522694233564852,
+     "graft_vol_err": -0.061374667292938834
+    },
+    {
+     "dice_new": 0.7769939935745216,
+     "dice_graft": 0.9427977331104497,
+     "graft_vol_err": -0.07992797870674806
+    },
+    {
+     "dice_new": 0.7654199359628444,
+     "dice_graft": 0.943126022913257,
+     "graft_vol_err": -0.08673868795991857
+    },
+    {
+     "dice_new": 0.7571720247776585,
+     "dice_graft": 0.9386293476023874,
+     "graft_vol_err": -0.09808987004853609
+    },
+    {
+     "dice_new": 0.7767207231607814,
+     "dice_graft": 0.947599495914468,
+     "graft_vol_err": -0.07429152966964148
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7810198498982955,
+    "dice_graft": 0.9476554868121133,
+    "graft_vol_err": -0.07671833411617346
+   },
+   "score_entropy_single": 0.10300348699092865,
+   "score_mutual_info": 0.007092012092471123,
+   "score_vol_cv": 0.013332403880148709,
+   "V_ens": 11794.0,
+   "V_sd": 156.66907799562748,
+   "score_oracle": 0.496462775210738,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_011_segmental_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 14857.0,
+   "members": [
+    {
+     "dice_new": 0.720513687056438,
+     "dice_graft": 0.9706429330499469,
+     "graft_vol_err": 0.026788719122299298
+    },
+    {
+     "dice_new": 0.732338666187309,
+     "dice_graft": 0.9705074066626449,
+     "graft_vol_err": 0.008346234098404848
+    },
+    {
+     "dice_new": 0.5548760862568394,
+     "dice_graft": 0.9711593859084285,
+     "graft_vol_err": -0.013932826277175736
+    },
+    {
+     "dice_new": 0.6382292582820287,
+     "dice_graft": 0.9676472595727255,
+     "graft_vol_err": -0.027731035875344978
+    },
+    {
+     "dice_new": 0.7591529073941135,
+     "dice_graft": 0.9734912198075759,
+     "graft_vol_err": 0.000807700074039186
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7287149656266526,
+    "dice_graft": 0.9743916764557812,
+    "graft_vol_err": 0.005451975499764394
+   },
+   "score_entropy_single": 0.06845986843109131,
+   "score_mutual_info": 0.006294047925621271,
+   "score_vol_cv": 0.018700450424269863,
+   "V_ens": 14938.0,
+   "V_sd": 277.5146842961648,
+   "score_oracle": 0.34739428399292094,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_012_condyle_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 16881.0,
+   "members": [
+    {
+     "dice_new": 0.7418214634880048,
+     "dice_graft": 0.95880195599022,
+     "graft_vol_err": -0.06172620105443993
+    },
+    {
+     "dice_new": 0.7449320561372244,
+     "dice_graft": 0.9565483851198137,
+     "graft_vol_err": -0.0668206859783188
+    },
+    {
+     "dice_new": 0.7285852496837092,
+     "dice_graft": 0.9624905087319666,
+     "graft_vol_err": -0.04958237071263549
+    },
+    {
+     "dice_new": 0.7464256611600859,
+     "dice_graft": 0.9583868010999084,
+     "graft_vol_err": -0.061133819086547025
+    },
+    {
+     "dice_new": 0.7091595197255575,
+     "dice_graft": 0.9586288775914031,
+     "graft_vol_err": -0.05408447366862157
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7527423658464275,
+    "dice_graft": 0.9614435063549636,
+    "graft_vol_err": -0.05645400154019309
+   },
+   "score_entropy_single": 0.07382915914058685,
+   "score_mutual_info": 0.0047241984866559505,
+   "score_vol_cv": 0.006469845516610827,
+   "V_ens": 15928.0,
+   "V_sd": 102.80972716625601,
+   "score_oracle": 0.2666652722290782,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_013_calvarial_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 11202.0,
+   "members": [
+    {
+     "dice_new": 0.8727689638076351,
+     "dice_graft": 0.9375,
+     "graft_vol_err": -0.0974825923942153
+    },
+    {
+     "dice_new": 0.8623075750647767,
+     "dice_graft": 0.9196150715756212,
+     "graft_vol_err": -0.13542224602749509
+    },
+    {
+     "dice_new": 0.8810558506357637,
+     "dice_graft": 0.945647124407693,
+     "graft_vol_err": -0.0783788609176933
+    },
+    {
+     "dice_new": 0.8738159570172986,
+     "dice_graft": 0.9320461858792353,
+     "graft_vol_err": -0.113551151580075
+    },
+    {
+     "dice_new": 0.8653033527651831,
+     "dice_graft": 0.9359786126354298,
+     "graft_vol_err": -0.0966791644349223
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8788076791437195,
+    "dice_graft": 0.9374823462950758,
+    "graft_vol_err": -0.10373147652204961
+   },
+   "score_entropy_single": 0.0939585492014885,
+   "score_mutual_info": 0.006709262263029814,
+   "score_vol_cv": 0.021362642437311303,
+   "V_ens": 10040.0,
+   "V_sd": 214.34420915900668,
+   "score_oracle": 0.2286411716842962,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_014_segmental_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 9204.0,
+   "members": [
+    {
+     "dice_new": 0.8712508750201928,
+     "dice_graft": 0.8864592957601889,
+     "graft_vol_err": 0.11668839634941319
+    },
+    {
+     "dice_new": 0.8582641184850685,
+     "dice_graft": 0.8703543206729544,
+     "graft_vol_err": 0.1311386353759234
+    },
+    {
+     "dice_new": 0.8615052094879184,
+     "dice_graft": 0.8776935944110991,
+     "graft_vol_err": 0.20838765754019994
+    },
+    {
+     "dice_new": 0.8529345626264898,
+     "dice_graft": 0.8717462850304178,
+     "graft_vol_err": 0.17883528900478063
+    },
+    {
+     "dice_new": 0.8717650786944122,
+     "dice_graft": 0.883857750696013,
+     "graft_vol_err": 0.0683398522381573
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8769289284938057,
+    "dice_graft": 0.8872960195211225,
+    "graft_vol_err": 0.13722294654498035
+   },
+   "score_entropy_single": 0.08276380598545074,
+   "score_mutual_info": 0.009445237927138805,
+   "score_vol_cv": 0.04284025133715017,
+   "V_ens": 10467.0,
+   "V_sd": 449.7712307384722,
+   "score_oracle": 0.16274146599629535,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_015_condyle_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 17932.0,
+   "members": [
+    {
+     "dice_new": 0.7512607013017474,
+     "dice_graft": 0.955086439058292,
+     "graft_vol_err": -0.07422484943118446
+    },
+    {
+     "dice_new": 0.7463074921558124,
+     "dice_graft": 0.9522839685772476,
+     "graft_vol_err": -0.0833147445906759
+    },
+    {
+     "dice_new": 0.753839704257022,
+     "dice_graft": 0.9552636919776174,
+     "graft_vol_err": -0.0765670310060228
+    },
+    {
+     "dice_new": 0.7486768368617683,
+     "dice_graft": 0.9508397124312368,
+     "graft_vol_err": -0.08403970555431628
+    },
+    {
+     "dice_new": 0.7424056058742405,
+     "dice_graft": 0.9546205816684548,
+     "graft_vol_err": -0.07679009591791208
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7583186044724506,
+    "dice_graft": 0.9553139045962012,
+    "graft_vol_err": -0.07690162837385683
+   },
+   "score_entropy_single": 0.09630972146987915,
+   "score_mutual_info": 0.004984009079635143,
+   "score_vol_cv": 0.004277952641412711,
+   "V_ens": 16553.0,
+   "V_sd": 70.65295464451576,
+   "score_oracle": 0.3618570042057586,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_016_calvarial_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 12472.0,
+   "members": [
+    {
+     "dice_new": 0.8923022992718176,
+     "dice_graft": 0.9117912177533588,
+     "graft_vol_err": -0.13205580500320724
+    },
+    {
+     "dice_new": 0.8926195856274466,
+     "dice_graft": 0.9120987442677753,
+     "graft_vol_err": -0.12916933932007701
+    },
+    {
+     "dice_new": 0.8806635463431719,
+     "dice_graft": 0.8910856134157105,
+     "graft_vol_err": -0.1831302116741501
+    },
+    {
+     "dice_new": 0.8820905637776412,
+     "dice_graft": 0.8826307815702701,
+     "graft_vol_err": -0.20060936497754966
+    },
+    {
+     "dice_new": 0.8932282563792939,
+     "dice_graft": 0.915236875800256,
+     "graft_vol_err": -0.12139191789608728
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.893544751837214,
+    "dice_graft": 0.9083727592343418,
+    "graft_vol_err": -0.15274214239897366
+   },
+   "score_entropy_single": 0.12248650938272476,
+   "score_mutual_info": 0.008044127374887466,
+   "score_vol_cv": 0.03801236307469815,
+   "V_ens": 10567.0,
+   "V_sd": 401.42575901404234,
+   "score_oracle": 0.5066183563131743,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_017_segmental_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 13574.0,
+   "members": [
+    {
+     "dice_new": 0.824583617415019,
+     "dice_graft": 0.9734990704625816,
+     "graft_vol_err": 0.020996021806394483
+    },
+    {
+     "dice_new": 0.8230088495575221,
+     "dice_graft": 0.9747837560475003,
+     "graft_vol_err": 0.01001915426550748
+    },
+    {
+     "dice_new": 0.7439024390243902,
+     "dice_graft": 0.9751306011331028,
+     "graft_vol_err": 0.0025047885663769254
+    },
+    {
+     "dice_new": 0.8146421982716768,
+     "dice_graft": 0.9740867706144716,
+     "graft_vol_err": -0.0013997347870929877
+    },
+    {
+     "dice_new": 0.8441337993010485,
+     "dice_graft": 0.9742651096386865,
+     "graft_vol_err": 0.012450272579932253
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8401677063094386,
+    "dice_graft": 0.9767203513909224,
+    "graft_vol_err": 0.01267128333578893
+   },
+   "score_entropy_single": 0.06341684609651566,
+   "score_mutual_info": 0.005748884752392769,
+   "score_vol_cv": 0.007768517644384797,
+   "V_ens": 13746.0,
+   "V_sd": 106.3898491398498,
+   "score_oracle": 0.33703894911948606,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_018_condyle_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 10403.0,
+   "members": [
+    {
+     "dice_new": 0.911878525142708,
+     "dice_graft": 0.83015986152123,
+     "graft_vol_err": -0.11189080073055846
+    },
+    {
+     "dice_new": 0.9022116655836153,
+     "dice_graft": 0.790769558729482,
+     "graft_vol_err": -0.1962895318658079
+    },
+    {
+     "dice_new": 0.8962135966302822,
+     "dice_graft": 0.7906295754026355,
+     "graft_vol_err": -0.22733826780736321
+    },
+    {
+     "dice_new": 0.9023280706449023,
+     "dice_graft": 0.7606847296224918,
+     "graft_vol_err": -0.30414303566278955
+    },
+    {
+     "dice_new": 0.9089473802918555,
+     "dice_graft": 0.8114374837535742,
+     "graft_vol_err": -0.1510141305392675
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9120789009581793,
+    "dice_graft": 0.8096767287518732,
+    "graft_vol_err": -0.2039796212630972
+   },
+   "score_entropy_single": 0.1342105269432068,
+   "score_mutual_info": 0.011874559335410595,
+   "score_vol_cv": 0.08225592654402211,
+   "V_ens": 8281.0,
+   "V_sd": 686.1624880449236,
+   "score_oracle": 0.16477400917500185,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_019_calvarial_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 11916.0,
+   "members": [
+    {
+     "dice_new": 0.7588560668471225,
+     "dice_graft": 0.9250999555752999,
+     "graft_vol_err": -0.1109432695535415
+    },
+    {
+     "dice_new": 0.7489593582078257,
+     "dice_graft": 0.9061849135198768,
+     "graft_vol_err": -0.1465256797583081
+    },
+    {
+     "dice_new": 0.7573123784577529,
+     "dice_graft": 0.9292857775024338,
+     "graft_vol_err": -0.10355824102047662
+    },
+    {
+     "dice_new": 0.7413962635201573,
+     "dice_graft": 0.8957089037949095,
+     "graft_vol_err": -0.17338032896945288
+    },
+    {
+     "dice_new": 0.7537076661993655,
+     "dice_graft": 0.9187133718069163,
+     "graft_vol_err": -0.12411883182275929
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7631872571274672,
+    "dice_graft": 0.9206178643384823,
+    "graft_vol_err": -0.12562940584088622
+   },
+   "score_entropy_single": 0.10820138454437256,
+   "score_mutual_info": 0.0087517648935318,
+   "score_vol_cv": 0.029304950054541274,
+   "V_ens": 10419.0,
+   "V_sd": 303.20659623431675,
+   "score_oracle": 0.5225292506845904,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_020_segmental_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 8331.0,
+   "members": [
+    {
+     "dice_new": 0.8577848133585253,
+     "dice_graft": 0.8322728763529026,
+     "graft_vol_err": -0.1700876245348698
+    },
+    {
+     "dice_new": 0.8538347215981751,
+     "dice_graft": 0.8396389713155292,
+     "graft_vol_err": -0.05833633417356865
+    },
+    {
+     "dice_new": 0.8613151421044367,
+     "dice_graft": 0.8699736940999624,
+     "graft_vol_err": -0.083543392149802
+    },
+    {
+     "dice_new": 0.8521455619895056,
+     "dice_graft": 0.8030563777793075,
+     "graft_vol_err": -0.2562717560917057
+    },
+    {
+     "dice_new": 0.8580864759208708,
+     "dice_graft": 0.8424917863814985,
+     "graft_vol_err": -0.1367182811187132
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8642051387391089,
+    "dice_graft": 0.8487275545795117,
+    "graft_vol_err": -0.14163965910454923
+   },
+   "score_entropy_single": 0.10527189075946808,
+   "score_mutual_info": 0.01072933804243803,
+   "score_vol_cv": 0.08113353210395978,
+   "V_ens": 7151.0,
+   "V_sd": 580.6240091487778,
+   "score_oracle": 0.3619851624456383,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_021_condyle_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 17500.0,
+   "members": [
+    {
+     "dice_new": 0.7776298268974701,
+     "dice_graft": 0.9578587027090834,
+     "graft_vol_err": -0.06365714285714286
+    },
+    {
+     "dice_new": 0.769821061076424,
+     "dice_graft": 0.9529942429817794,
+     "graft_vol_err": -0.07440000000000002
+    },
+    {
+     "dice_new": 0.771770385885193,
+     "dice_graft": 0.9595807942535841,
+     "graft_vol_err": -0.0589142857142857
+    },
+    {
+     "dice_new": 0.7632327631625162,
+     "dice_graft": 0.9505692120203312,
+     "graft_vol_err": -0.07754285714285714
+    },
+    {
+     "dice_new": 0.7726280029119146,
+     "dice_graft": 0.9602232667450059,
+     "graft_vol_err": -0.05485714285714283
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.7793583000953019,
+    "dice_graft": 0.9579593764761455,
+    "graft_vol_err": -0.06445714285714288
+   },
+   "score_entropy_single": 0.09479527175426483,
+   "score_mutual_info": 0.005318047013133764,
+   "score_vol_cv": 0.00937640990532154,
+   "V_ens": 16372.0,
+   "V_sd": 153.27804800427228,
+   "score_oracle": 0.364537534273245,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_022_calvarial_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 13585.0,
+   "members": [
+    {
+     "dice_new": 0.8888370811521099,
+     "dice_graft": 0.9391996291718171,
+     "graft_vol_err": -0.09436878910563118
+    },
+    {
+     "dice_new": 0.8894179113910717,
+     "dice_graft": 0.9368943328940228,
+     "graft_vol_err": -0.10099374309900622
+    },
+    {
+     "dice_new": 0.883113530259676,
+     "dice_graft": 0.9361916576213366,
+     "graft_vol_err": -0.10114096429885899
+    },
+    {
+     "dice_new": 0.8768211920529801,
+     "dice_graft": 0.9190557159239194,
+     "graft_vol_err": -0.1384615384615384
+    },
+    {
+     "dice_new": 0.8924336592919415,
+     "dice_graft": 0.9451282641205567,
+     "graft_vol_err": -0.08030916451969083
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8923625103395618,
+    "dice_graft": 0.9383577576180507,
+    "graft_vol_err": -0.10128818549871177
+   },
+   "score_entropy_single": 0.11153488606214523,
+   "score_mutual_info": 0.006841088645160198,
+   "score_vol_cv": 0.021470688190483252,
+   "V_ens": 12209.0,
+   "V_sd": 261.62033560103845,
+   "score_oracle": 0.46895503772474545,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_023_segmental_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 15095.0,
+   "members": [
+    {
+     "dice_new": 0.8338462079516081,
+     "dice_graft": 0.905137497335323,
+     "graft_vol_err": -0.13540907585293138
+    },
+    {
+     "dice_new": 0.8385182044623456,
+     "dice_graft": 0.9177008944047702,
+     "graft_vol_err": -0.08903610467042067
+    },
+    {
+     "dice_new": 0.8340904705944259,
+     "dice_graft": 0.9074146584558431,
+     "graft_vol_err": -0.13892017224246445
+    },
+    {
+     "dice_new": 0.8211039758571078,
+     "dice_graft": 0.8858154216691603,
+     "graft_vol_err": -0.18463067240808217
+    },
+    {
+     "dice_new": 0.8412861648155766,
+     "dice_graft": 0.913573290131718,
+     "graft_vol_err": -0.11897979463398478
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8407757125589055,
+    "dice_graft": 0.9124335812964931,
+    "graft_vol_err": -0.12984431931103013
+   },
+   "score_entropy_single": 0.11540281772613525,
+   "score_mutual_info": 0.011342296376824379,
+   "score_vol_cv": 0.035883976813026346,
+   "V_ens": 13135.0,
+   "V_sd": 469.41265428192287,
+   "score_oracle": 0.4862387898281517,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_024_condyle_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 16283.0,
+   "members": [
+    {
+     "dice_new": 0.8126634549208535,
+     "dice_graft": 0.926166142557652,
+     "graft_vol_err": -0.12516121107903944
+    },
+    {
+     "dice_new": 0.8193661393617604,
+     "dice_graft": 0.9230769230769231,
+     "graft_vol_err": -0.12780200208806736
+    },
+    {
+     "dice_new": 0.8155729704102407,
+     "dice_graft": 0.9278538812785389,
+     "graft_vol_err": -0.11705459681876806
+    },
+    {
+     "dice_new": 0.8282235997096108,
+     "dice_graft": 0.9264055072938863,
+     "graft_vol_err": -0.12657372720014737
+    },
+    {
+     "dice_new": 0.8088972263164947,
+     "dice_graft": 0.9249909726553524,
+     "graft_vol_err": -0.12915310446477923
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8254308567658943,
+    "dice_graft": 0.9272572513586067,
+    "graft_vol_err": -0.12405576367991156
+   },
+   "score_entropy_single": 0.10083955526351929,
+   "score_mutual_info": 0.006126330234110355,
+   "score_vol_cv": 0.00486624996335329,
+   "V_ens": 14263.0,
+   "V_sd": 69.32070397796029,
+   "score_oracle": 0.2499633570779468,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_025_calvarial_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 6706.0,
+   "members": [
+    {
+     "dice_new": 0.9156859276996966,
+     "dice_graft": 0.7246119733924612,
+     "graft_vol_err": -0.31866984789740527
+    },
+    {
+     "dice_new": 0.908761198473489,
+     "dice_graft": 0.6678481484936106,
+     "graft_vol_err": -0.40128243364151506
+    },
+    {
+     "dice_new": 0.901082020670233,
+     "dice_graft": 0.5672704428855617,
+     "graft_vol_err": -0.5757530569639129
+    },
+    {
+     "dice_new": 0.9035777959490073,
+     "dice_graft": 0.5852004110996917,
+     "graft_vol_err": -0.5490605427974948
+    },
+    {
+     "dice_new": 0.9086778859078445,
+     "dice_graft": 0.6313121466172743,
+     "graft_vol_err": -0.470325082016105
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9112948845729063,
+    "dice_graft": 0.6376641191456006,
+    "graft_vol_err": -0.47807933194154484
+   },
+   "score_entropy_single": 0.1181204542517662,
+   "score_mutual_info": 0.009976519271731377,
+   "score_vol_cv": 0.1763032102935298,
+   "V_ens": 3500.0,
+   "V_sd": 634.8678602670008,
+   "score_oracle": 0.20465978289647868,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_026_segmental_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 10789.0,
+   "members": [
+    {
+     "dice_new": 0.8452562627661823,
+     "dice_graft": 0.9158613108597078,
+     "graft_vol_err": 0.023635183983687025
+    },
+    {
+     "dice_new": 0.8336842105263158,
+     "dice_graft": 0.9025274028444605,
+     "graft_vol_err": 0.04634349800722948
+    },
+    {
+     "dice_new": 0.8402523752240199,
+     "dice_graft": 0.9161255165523818,
+     "graft_vol_err": 0.04106033923440533
+    },
+    {
+     "dice_new": 0.8362209563429219,
+     "dice_graft": 0.9027718751475657,
+     "graft_vol_err": -0.03716748540179815
+    },
+    {
+     "dice_new": 0.8389430932262733,
+     "dice_graft": 0.9097489463074949,
+     "graft_vol_err": 0.02317174900361474
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.847098505902753,
+    "dice_graft": 0.9142070231810879,
+    "graft_vol_err": 0.019186208174992947
+   },
+   "score_entropy_single": 0.09617298096418381,
+   "score_mutual_info": 0.008729812689125538,
+   "score_vol_cv": 0.029189694429240538,
+   "V_ens": 10996.0,
+   "V_sd": 321.0399352105591,
+   "score_oracle": 0.3221229637414609,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_027_condyle_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 18569.0,
+   "members": [
+    {
+     "dice_new": 0.8814001494370781,
+     "dice_graft": 0.9122115273106808,
+     "graft_vol_err": -0.14249555711131456
+    },
+    {
+     "dice_new": 0.889295516925892,
+     "dice_graft": 0.9252870280459244,
+     "graft_vol_err": -0.11438418870159939
+    },
+    {
+     "dice_new": 0.8690140845070422,
+     "dice_graft": 0.8953804347826086,
+     "graft_vol_err": -0.1767461898863698
+    },
+    {
+     "dice_new": 0.8692250606895338,
+     "dice_graft": 0.8815339374662425,
+     "graft_vol_err": -0.20528838386558246
+    },
+    {
+     "dice_new": 0.8788670250532509,
+     "dice_graft": 0.9143667187409593,
+     "graft_vol_err": -0.1385104205934622
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.883112303371494,
+    "dice_graft": 0.9091758113471865,
+    "graft_vol_err": -0.1547740858419947
+   },
+   "score_entropy_single": 0.13993781805038452,
+   "score_mutual_info": 0.008046736009418964,
+   "score_vol_cv": 0.03773789193016129,
+   "V_ens": 15695.0,
+   "V_sd": 591.7980736704033,
+   "score_oracle": 0.3795280250536335,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_028_calvarial_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 11616.0,
+   "members": [
+    {
+     "dice_new": 0.9022368119703794,
+     "dice_graft": 0.9122456395348837,
+     "graft_vol_err": -0.10468319559228645
+    },
+    {
+     "dice_new": 0.9018060403703142,
+     "dice_graft": 0.9105964784567087,
+     "graft_vol_err": -0.1078684573002755
+    },
+    {
+     "dice_new": 0.8908401941836223,
+     "dice_graft": 0.8833979022961354,
+     "graft_vol_err": -0.17785812672176304
+    },
+    {
+     "dice_new": 0.8959430304310436,
+     "dice_graft": 0.8885535065792577,
+     "graft_vol_err": -0.1746728650137741
+    },
+    {
+     "dice_new": 0.9022359946530563,
+     "dice_graft": 0.9133901069034245,
+     "graft_vol_err": -0.09951790633608815
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9034658728471189,
+    "dice_graft": 0.907675297152861,
+    "graft_vol_err": -0.131370523415978
+   },
+   "score_entropy_single": 0.12370892614126205,
+   "score_mutual_info": 0.008264316245913506,
+   "score_vol_cv": 0.040948786425808056,
+   "V_ens": 10090.0,
+   "V_sd": 412.43617688073874,
+   "score_oracle": 0.47634869424246806,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_029_segmental_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 15326.0,
+   "members": [
+    {
+     "dice_new": 0.8326826547685443,
+     "dice_graft": 0.9698614206802985,
+     "graft_vol_err": 0.019900822132324247
+    },
+    {
+     "dice_new": 0.8256859712436272,
+     "dice_graft": 0.9701396486260377,
+     "graft_vol_err": 0.027795902388098703
+    },
+    {
+     "dice_new": 0.8269470682587774,
+     "dice_graft": 0.9707636457928174,
+     "graft_vol_err": 0.01304971943103217
+    },
+    {
+     "dice_new": 0.833516961438098,
+     "dice_graft": 0.9702152565519933,
+     "graft_vol_err": 0.006655356909826438
+    },
+    {
+     "dice_new": 0.8356435643564356,
+     "dice_graft": 0.9701907533139347,
+     "graft_vol_err": 0.018139110009134818
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8467153284671532,
+    "dice_graft": 0.9726151262675192,
+    "graft_vol_err": 0.020488059506720502
+   },
+   "score_entropy_single": 0.06945662200450897,
+   "score_mutual_info": 0.005920609459280968,
+   "score_vol_cv": 0.006935726626664232,
+   "V_ens": 15640.0,
+   "V_sd": 108.11549380176739,
+   "score_oracle": 0.30741438730568604,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_030_condyle_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 14279.0,
+   "members": [
+    {
+     "dice_new": 0.8326718826775522,
+     "dice_graft": 0.9037165342470912,
+     "graft_vol_err": -0.1401358638560123
+    },
+    {
+     "dice_new": 0.8271595708892461,
+     "dice_graft": 0.8948928408572732,
+     "graft_vol_err": -0.15701379648434766
+    },
+    {
+     "dice_new": 0.8244576672697768,
+     "dice_graft": 0.8940503432494279,
+     "graft_vol_err": -0.1637369563694937
+    },
+    {
+     "dice_new": 0.8236945429714915,
+     "dice_graft": 0.8799008213234155,
+     "graft_vol_err": -0.1923103858813643
+    },
+    {
+     "dice_new": 0.8311755662980868,
+     "dice_graft": 0.8977663554934049,
+     "graft_vol_err": -0.14699908957209884
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8340518049255913,
+    "dice_graft": 0.897362712638429,
+    "graft_vol_err": -0.15974508018768818
+   },
+   "score_entropy_single": 0.11303943395614624,
+   "score_mutual_info": 0.008141672238707542,
+   "score_vol_cv": 0.021498532838565988,
+   "V_ens": 11998.0,
+   "V_sd": 257.84910315919274,
+   "score_oracle": 0.2826285794694997,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_031_calvarial_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 7276.0,
+   "members": [
+    {
+     "dice_new": 0.9013409160603273,
+     "dice_graft": 0.742471105323132,
+     "graft_vol_err": -0.31143485431555795
+    },
+    {
+     "dice_new": 0.8958671719906154,
+     "dice_graft": 0.7044004030903595,
+     "graft_vol_err": -0.36338647608576136
+    },
+    {
+     "dice_new": 0.8908246225319396,
+     "dice_graft": 0.6541197658712292,
+     "graft_vol_err": -0.4737493128092358
+    },
+    {
+     "dice_new": 0.8851430059340267,
+     "dice_graft": 0.5934231602751343,
+     "graft_vol_err": -0.5413688840021991
+    },
+    {
+     "dice_new": 0.8968147900657089,
+     "dice_graft": 0.7280954339777869,
+     "graft_vol_err": -0.32943925233644855
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8983414256269798,
+    "dice_graft": 0.6941705587268638,
+    "graft_vol_err": -0.4109400769653656
+   },
+   "score_entropy_single": 0.11900442838668823,
+   "score_mutual_info": 0.010070357471704483,
+   "score_vol_cv": 0.14912266293223905,
+   "V_ens": 4286.0,
+   "V_sd": 646.8046382022936,
+   "score_oracle": 0.3928295073510446,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_032_segmental_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 10080.0,
+   "members": [
+    {
+     "dice_new": 0.8161329040370363,
+     "dice_graft": 0.8998081001918998,
+     "graft_vol_err": -0.035515873015873
+    },
+    {
+     "dice_new": 0.8151809490966914,
+     "dice_graft": 0.8905262109822273,
+     "graft_vol_err": -0.007242063492063466
+    },
+    {
+     "dice_new": 0.8132524281255452,
+     "dice_graft": 0.8961406033198006,
+     "graft_vol_err": -0.06954365079365077
+    },
+    {
+     "dice_new": 0.8076756492100258,
+     "dice_graft": 0.8687291868084649,
+     "graft_vol_err": -0.1529761904761905
+    },
+    {
+     "dice_new": 0.8132692885019513,
+     "dice_graft": 0.8923444976076556,
+     "graft_vol_err": -0.00952380952380949
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8202394776417734,
+    "dice_graft": 0.8970820390079951,
+    "graft_vol_err": -0.05188492063492067
+   },
+   "score_entropy_single": 0.1104261577129364,
+   "score_mutual_info": 0.010910334065556526,
+   "score_vol_cv": 0.05706080412587938,
+   "V_ens": 9557.0,
+   "V_sd": 543.561220103127,
+   "score_oracle": 0.38608740625808124,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_033_condyle_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 16619.0,
+   "members": [
+    {
+     "dice_new": 0.8319933920704846,
+     "dice_graft": 0.91335542614459,
+     "graft_vol_err": -0.1297912028401228
+    },
+    {
+     "dice_new": 0.831718655258371,
+     "dice_graft": 0.914667437453833,
+     "graft_vol_err": -0.12642156567783858
+    },
+    {
+     "dice_new": 0.8225327230386252,
+     "dice_graft": 0.8917172250065946,
+     "graft_vol_err": -0.17510078825440756
+    },
+    {
+     "dice_new": 0.8234768722765042,
+     "dice_graft": 0.8884911164147441,
+     "graft_vol_err": -0.18472832300379083
+    },
+    {
+     "dice_new": 0.8299775674344805,
+     "dice_graft": 0.912963737571994,
+     "graft_vol_err": -0.12991154702449004
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8330553860755203,
+    "dice_graft": 0.9069049553208773,
+    "graft_vol_err": -0.14820386304831823
+   },
+   "score_entropy_single": 0.1353864073753357,
+   "score_mutual_info": 0.008836445398628712,
+   "score_vol_cv": 0.02973762403630606,
+   "V_ens": 14156.0,
+   "V_sd": 420.4781088237532,
+   "score_oracle": 0.4169734977606546,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_034_calvarial_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 11201.0,
+   "members": [
+    {
+     "dice_new": 0.9041965364478454,
+     "dice_graft": 0.9284110050533408,
+     "graft_vol_err": -0.09195607535041517
+    },
+    {
+     "dice_new": 0.90221756309975,
+     "dice_graft": 0.9267560723998874,
+     "graft_vol_err": -0.09606285153111327
+    },
+    {
+     "dice_new": 0.8955393533929819,
+     "dice_graft": 0.9135601341638716,
+     "graft_vol_err": -0.13677350236586017
+    },
+    {
+     "dice_new": 0.893516963385959,
+     "dice_graft": 0.897171608617068,
+     "graft_vol_err": -0.17239532184626372
+    },
+    {
+     "dice_new": 0.9020747426864508,
+     "dice_graft": 0.9343776068217629,
+     "graft_vol_err": -0.07356486028033216
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9052896481633839,
+    "dice_graft": 0.9238415297959957,
+    "graft_vol_err": -0.11382912239978571
+   },
+   "score_entropy_single": 0.12713614106178284,
+   "score_mutual_info": 0.007696187123656273,
+   "score_vol_cv": 0.04029637655139982,
+   "V_ens": 9926.0,
+   "V_sd": 399.8367666936096,
+   "score_oracle": 0.5755187133922366,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_035_segmental_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 16165.0,
+   "members": [
+    {
+     "dice_new": 0.8292042370655694,
+     "dice_graft": 0.9807591014717273,
+     "graft_vol_err": -0.003402412619857742
+    },
+    {
+     "dice_new": 0.8294070584051916,
+     "dice_graft": 0.9813255445421496,
+     "graft_vol_err": -0.009093721002165212
+    },
+    {
+     "dice_new": 0.8030459716085362,
+     "dice_graft": 0.9813823163138231,
+     "graft_vol_err": -0.012991030003093096
+    },
+    {
+     "dice_new": 0.8368170808289226,
+     "dice_graft": 0.9793618677042801,
+     "graft_vol_err": -0.01268171976492427
+    },
+    {
+     "dice_new": 0.8505136379737868,
+     "dice_graft": 0.980878649379722,
+     "graft_vol_err": -0.010330961954840734
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8535298398835517,
+    "dice_graft": 0.9831708377320996,
+    "graft_vol_err": -0.007670893906588261
+   },
+   "score_entropy_single": 0.06514062732458115,
+   "score_mutual_info": 0.005375683773308992,
+   "score_vol_cv": 0.0035023098021040467,
+   "V_ens": 16041.0,
+   "V_sd": 56.065675774042006,
+   "score_oracle": 0.2988118118981089,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_036_condyle_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 12629.0,
+   "members": [
+    {
+     "dice_new": 0.8386133302402459,
+     "dice_graft": 0.8965920481122619,
+     "graft_vol_err": -0.10404624277456642
+    },
+    {
+     "dice_new": 0.8358145227861433,
+     "dice_graft": 0.8894244999788574,
+     "graft_vol_err": -0.12740517855728883
+    },
+    {
+     "dice_new": 0.8325394335263413,
+     "dice_graft": 0.8867020148462355,
+     "graft_vol_err": -0.1332647082112598
+    },
+    {
+     "dice_new": 0.8270549419021661,
+     "dice_graft": 0.8535806193983495,
+     "graft_vol_err": -0.21537730620001583
+    },
+    {
+     "dice_new": 0.8391502492963984,
+     "dice_graft": 0.8938453798423612,
+     "graft_vol_err": -0.1113310634254494
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.841588129135753,
+    "dice_graft": 0.8903614969627458,
+    "graft_vol_err": -0.13595692453875996
+   },
+   "score_entropy_single": 0.1294553130865097,
+   "score_mutual_info": 0.01004521083086729,
+   "score_vol_cv": 0.04637727198927589,
+   "V_ens": 10912.0,
+   "V_sd": 504.70530015049377,
+   "score_oracle": 0.3640239147387575,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_037_calvarial_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 9565.0,
+   "members": [
+    {
+     "dice_new": 0.9075156873930404,
+     "dice_graft": 0.8938773219597059,
+     "graft_vol_err": -0.13706220595922636
+    },
+    {
+     "dice_new": 0.8948671571812387,
+     "dice_graft": 0.844691811238084,
+     "graft_vol_err": -0.23429168844746473
+    },
+    {
+     "dice_new": 0.8951234368841592,
+     "dice_graft": 0.8649406814329963,
+     "graft_vol_err": -0.2110820700470465
+    },
+    {
+     "dice_new": 0.8896184122277525,
+     "dice_graft": 0.8275903469804298,
+     "graft_vol_err": -0.2584422373235755
+    },
+    {
+     "dice_new": 0.9017749378771743,
+     "dice_graft": 0.879107040641099,
+     "graft_vol_err": -0.1735493988499739
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9049704750589612,
+    "dice_graft": 0.8698125253932324,
+    "graft_vol_err": -0.19874542603240986
+   },
+   "score_entropy_single": 0.11009286344051361,
+   "score_mutual_info": 0.00875314325094223,
+   "score_vol_cv": 0.054201855528445746,
+   "V_ens": 7664.0,
+   "V_sd": 413.2566272910817,
+   "score_oracle": 0.23703703703703705,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_038_segmental_bioglass_45s5",
+   "material": "bioglass_45s5",
+   "graft_true_vox": 9013.0,
+   "members": [
+    {
+     "dice_new": 0.8906951147235628,
+     "dice_graft": 0.8262799274864037,
+     "graft_vol_err": -0.225119272162432
+    },
+    {
+     "dice_new": 0.8893310883208327,
+     "dice_graft": 0.8367683429513603,
+     "graft_vol_err": -0.11583268612004882
+    },
+    {
+     "dice_new": 0.8985572587917042,
+     "dice_graft": 0.8835018382352942,
+     "graft_vol_err": -0.06856762454232779
+    },
+    {
+     "dice_new": 0.887683049845212,
+     "dice_graft": 0.8341981416676723,
+     "graft_vol_err": -0.16110063241983796
+    },
+    {
+     "dice_new": 0.8827561028228148,
+     "dice_graft": 0.7849970849258275,
+     "graft_vol_err": -0.28725174747586824
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.8990778775844143,
+    "dice_graft": 0.8464201129531791,
+    "graft_vol_err": -0.17297237323865533
+   },
+   "score_entropy_single": 0.10323604196310043,
+   "score_mutual_info": 0.011440316215157509,
+   "score_vol_cv": 0.09361990006853055,
+   "V_ens": 7454.0,
+   "V_sd": 699.0223458516903,
+   "score_oracle": 0.18646776771443796,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  },
+  {
+   "case": "ood_mat_039_condyle_xenograft_dbbm",
+   "material": "xenograft_dbbm",
+   "graft_true_vox": 16566.0,
+   "members": [
+    {
+     "dice_new": 0.9096658683470132,
+     "dice_graft": 0.928262311653031,
+     "graft_vol_err": -0.08903778824097552
+    },
+    {
+     "dice_new": 0.9110347372791437,
+     "dice_graft": 0.9351597603594608,
+     "graft_vol_err": -0.06543522878184238
+    },
+    {
+     "dice_new": 0.8955476278724982,
+     "dice_graft": 0.9078385719829258,
+     "graft_vol_err": -0.1332850416515755
+    },
+    {
+     "dice_new": 0.8979036147358462,
+     "dice_graft": 0.8966448256560535,
+     "graft_vol_err": -0.16666666666666663
+    },
+    {
+     "dice_new": 0.9065850279953903,
+     "dice_graft": 0.9262958280657396,
+     "graft_vol_err": -0.09006398647832914
+    }
+   ],
+   "ensemble": {
+    "dice_new": 0.9096463617848547,
+    "dice_graft": 0.9231702644015839,
+    "graft_vol_err": -0.1096221175902451
+   },
+   "score_entropy_single": 0.13594070076942444,
+   "score_mutual_info": 0.00793455820530653,
+   "score_vol_cv": 0.040679319752061335,
+   "V_ens": 14750.0,
+   "V_sd": 600.5081181799294,
+   "score_oracle": 0.3579675486641467,
+   "advisor_status": "not_supported",
+   "split": "ood_mat"
+  }
+ ],
+ "seeds": [
+  {
+   "seed": 0,
+   "val_dice_graft": 0.9288288406699576,
+   "val_dice_new": 0.8563802880830689,
+   "val_graft_vol_err": 0.034637325703439525,
+   "test_dice_graft": 0.9215688492444016,
+   "test_dice_new": 0.8688556550140163,
+   "test_graft_vol_err": 0.07314903986466031,
+   "ood_mat_dice_graft": 0.9115107833235949,
+   "ood_mat_dice_new": 0.8453934618057264,
+   "ood_mat_graft_vol_err": 0.10115234578650437
+  },
+  {
+   "seed": 1,
+   "val_dice_graft": 0.9262946363989513,
+   "val_dice_new": 0.8514851173998873,
+   "val_graft_vol_err": 0.03167222725731446,
+   "test_dice_graft": 0.9215888359442839,
+   "test_dice_new": 0.8662259065455443,
+   "test_graft_vol_err": 0.07502009816151822,
+   "ood_mat_dice_graft": 0.9030845123358138,
+   "ood_mat_dice_new": 0.8422992649209231,
+   "ood_mat_graft_vol_err": 0.10962907492452631
+  },
+  {
+   "seed": 2,
+   "val_dice_graft": 0.9304121764129925,
+   "val_dice_new": 0.8482920657092106,
+   "val_graft_vol_err": 0.041791857423787424,
+   "test_dice_graft": 0.9186933253059375,
+   "test_dice_new": 0.8576747507833449,
+   "test_graft_vol_err": 0.07324620360549128,
+   "ood_mat_dice_graft": 0.9007420787858471,
+   "ood_mat_dice_new": 0.8314857891496888,
+   "ood_mat_graft_vol_err": 0.12581922988774774
+  },
+  {
+   "seed": 3,
+   "val_dice_graft": 0.9296198332054869,
+   "val_dice_new": 0.8497769010338128,
+   "val_graft_vol_err": 0.03267724595803374,
+   "test_dice_graft": 0.9220810701361764,
+   "test_dice_new": 0.863534201362901,
+   "test_graft_vol_err": 0.047275115599393666,
+   "ood_mat_dice_graft": 0.8842756815597568,
+   "ood_mat_dice_new": 0.8343915617505807,
+   "ood_mat_graft_vol_err": 0.15830200297708436
+  },
+  {
+   "seed": 4,
+   "val_dice_graft": 0.925277325882801,
+   "val_dice_new": 0.8497056099076723,
+   "val_graft_vol_err": 0.054921536535283755,
+   "test_dice_graft": 0.9183739443140925,
+   "test_dice_new": 0.8676139148795777,
+   "test_graft_vol_err": 0.08233031537521582,
+   "ood_mat_dice_graft": 0.9064045497270072,
+   "ood_mat_dice_new": 0.8443364523171433,
+   "ood_mat_graft_vol_err": 0.10330008456198163
+  }
+ ],
+ "ensemble": {
+  "val_dice_graft": 0.9326445383748132,
+  "val_dice_new": 0.861417883388174,
+  "val_graft_vol_err": 0.026675604984864557,
+  "test_dice_graft": 0.9251165398201385,
+  "test_dice_new": 0.8746997870470852,
+  "test_graft_vol_err": 0.06985137166255291,
+  "ood_mat_dice_graft": 0.9062303476945681,
+  "ood_mat_dice_new": 0.8499963547987459,
+  "ood_mat_graft_vol_err": 0.11832361675155814
+ },
+ "selection": {
+  "best_val_dice_seed": 2,
+  "best_val_volerr_seed": 1,
+  "test_abs_volerr_of_dice_choice": 0.07324620360549128,
+  "test_abs_volerr_of_vol_choice": 0.07502009816151822,
+  "note": "n_val = 8: selection is noisy; reported for transparency"
+ },
+ "failure_detection": {
+  "n": 56,
+  "n_fail": 5,
+  "n_fail_by_stratum": {
+   "pooled": 5,
+   "id_only": 1,
+   "ood_only": 4
+  },
+  "definition": "|vol err|>0.2 or graft Dice<0.8",
+  "auroc": {
+   "score_entropy_single": {
+    "pooled": {
+     "failure": 0.7764705882352941,
+     "ci95": [
+      0.6352941176470588,
+      0.9090909090909091
+     ]
+    },
+    "id_only": {
+     "failure": 0.9333333333333333,
+     "ci95": [
+      0.7857142857142857,
+      1.0
+     ]
+    },
+    "ood_only": {
+     "failure": 0.7569444444444444,
+     "ci95": [
+      0.5772285443338075,
+      0.9177489177489178
+     ]
+    },
+    "ood_membership": 0.509375
+   },
+   "score_mutual_info": {
+    "pooled": {
+     "failure": 0.9098039215686274,
+     "ci95": [
+      0.8176100628930818,
+      0.9807692307692307
+     ]
+    },
+    "id_only": {
+     "failure": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    },
+    "ood_only": {
+     "failure": 0.8819444444444444,
+     "ci95": [
+      0.75,
+      1.0
+     ]
+    },
+    "ood_membership": 0.5765625
+   },
+   "score_vol_cv": {
+    "pooled": {
+     "failure": 0.9529411764705882,
+     "ci95": [
+      0.8616352201257862,
+      1.0
+     ]
+    },
+    "id_only": {
+     "failure": 0.8666666666666667,
+     "ci95": [
+      0.6666666666666666,
+      1.0
+     ]
+    },
+    "ood_only": {
+     "failure": 0.9791666666666666,
+     "ci95": [
+      0.9210526315789473,
+      1.0
+     ]
+    },
+    "ood_membership": 0.6296875
+   },
+   "score_oracle": {
+    "pooled": {
+     "failure": 0.45098039215686275,
+     "ci95": [
+      0.16568181818181818,
+      0.7245711835334478
+     ]
+    },
+    "id_only": {
+     "failure": 0.7333333333333333,
+     "ci95": [
+      0.5,
+      0.9333333333333333
+     ]
+    },
+    "ood_only": {
+     "failure": 0.3125,
+     "ci95": [
+      0.013358918128654975,
+      0.7013888888888888
+     ]
+    },
+    "ood_membership": 0.5953125
+   },
+   "combined_rank": {
+    "pooled": {
+     "failure": 0.8490196078431372,
+     "ci95": [
+      0.7212890625,
+      0.9686274509803922
+     ]
+    },
+    "id_only": {
+     "failure": 0.9333333333333333,
+     "ci95": [
+      0.8,
+      1.0
+     ]
+    },
+    "ood_only": {
+     "failure": 0.7986111111111112,
+     "ci95": [
+      0.6053196957236842,
+      1.0
+     ]
+    },
+    "ood_membership": 0.62265625
+   }
+  },
+  "note": "materials cluster within splits; bootstrap resamples scans, not materials"
+ },
+ "conformal": {
+  "alpha": 0.1,
+  "q": 2.6841027997326106,
+  "n_cal": 40,
+  "test_id": {
+   "n": 16,
+   "coverage": 0.9375,
+   "coverage_ci95": [
+    0.697679261565468,
+    0.9984188882772341
+   ],
+   "q": 2.6841027997326106,
+   "median_rel_width": 0.18744741411267501
+  },
+  "ood": {
+   "n": 40,
+   "coverage": 0.625,
+   "coverage_ci95": [
+    0.45801475223261096,
+    0.772737277518174
+   ],
+   "q": 2.6841027997326106,
+   "median_rel_width": 0.26588942810312954
+  },
+  "q_gated": 2.590233518629389,
+  "n_cal_gated": 34,
+  "test_id_gated": {
+   "n": 12,
+   "coverage": 0.9166666666666666,
+   "coverage_ci95": [
+    0.6152038348490559,
+    0.9978924067681397
+   ],
+   "q": 2.590233518629389,
+   "median_rel_width": 0.1658779051642827
+  },
+  "ood_gated": {
+   "n": 28,
+   "coverage": 0.6071428571428571,
+   "coverage_ci95": [
+    0.4057682064875631,
+    0.784957170839039
+   ],
+   "q": 2.590233518629389,
+   "median_rel_width": 0.21384409434359092
+  },
+  "gate": "keep scans with MI and volume-CV \u2264 90th percentile of calibration scans",
+  "ood_retained_fraction": 0.7,
+  "test_retained_fraction": 0.75
+ },
+ "seconds": 668.2514727115631,
+ "saved": "2026-11-28T08:11:08Z",
+ "git_commit": "c51499b"
+}

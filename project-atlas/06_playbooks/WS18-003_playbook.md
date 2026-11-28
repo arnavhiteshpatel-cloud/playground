@@ -330,7 +330,7 @@ Track the repeat B2B share weekly. It is the leading indicator of whether the ba
   - Mature 1-800-GOT-JUNK franchisees (>72 months) had a median of **$2,764,205** in CY2023, at a median 17 subterritories and about $148k per subterritory [B, E-WS18003-S003]. CY2024's median was $2,032,678 after affiliates bought out the largest units [D, E-WS18003-S005].
   - College Hunks stores grow from $691k (1 territory) to $869k (2) and $1.56M (3); 8-territory corporate stores reach $5.04M [B, E-WS18003-S002].
 - **Margin evidence.** Margin does not expand with scale. College Hunks 60+ month stores earn a median 8.8% EBITDA after ~12% fees. The GM-run corporate stores earn about 4%, with insurance (8.5%) and office labour (8.4%) scaling linearly [B, E-WS18003-S002].
-- **Our engine.** Each variant was re-run with the same cost structure (scratch runs, not in `_results.json`):
+- **Our engine.** Each variant was re-run with the same cost structure (scratch runs via `/tmp/claude-0/atlas_scratch/E_WS18-003/scripts/variants.py`, not in `_results.json`):
 
 | Variant (base cost structure) | Y5 revenue | Y3 op | Y5 op | Peak funding (draw / no draw) |
 |---|---|---|---|---|
@@ -450,6 +450,7 @@ The leads and win-rate rows run "backwards": more demand opens zone 2 and hires 
 | Insurance/overhead +50% | $18,459 | $237,660 |
 | Key supplier refuses (3-month delay, −5 pts) | $28,678 | $252,256 |
 | Customers pay 30 days later | $49,282 | $217,133 |
+| Sales cycle doubles | $51,449 | $160,764 |
 | Growth takes twice as long | −$15,276 | $303,559 (breakeven month 38) |
 | Competitor response | $37,268 (Y5 $19,393) | $204,675 |
 | Win rate −40% / founder capacity −40% | $56,837 (Y5 $61,959) | $163,344 |
@@ -524,6 +525,23 @@ That is the difference between base (about 9% operating margin) and optimistic (
   - year-3 base return on peak funding is only 0.35×.
 
 **Overall.** It is a strong fallback or "floor" company. It is a weak first holding-company asset unless the B2B test shows the optimistic path.
+
+**Revised scores (Stage D → E):**
+
+| Key | Stage D | Stage E | Why |
+|---|---|---|---|
+| fcf | 5 | **3** | Base year-3/year-5 FCF $46,781 / $72,252 |
+| roic | 6 | **4** | Year-3 op ÷ peak funding = 0.35× |
+| access | 7 | 7 | Unchanged |
+| scale | 4 | 4 | Unchanged |
+| resilience | 5 | 5 | Unchanged |
+| entry | 3 | 3 | Unchanged |
+| delegation | 7 | 7 | Unchanged |
+| cash | 9 | 9 | Unchanged |
+| feasibility | 7 | 7 | Unchanged |
+| ai | 4 | 4 | Unchanged |
+
+Composite: raw **4.82**, evidence-adjusted **4.83** (B). Stage D was 5.48 / 5.46.
 
 ## 10. Execution plan
 

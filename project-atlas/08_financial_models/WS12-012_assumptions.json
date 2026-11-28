@@ -1,14 +1,16 @@
 {
  "id": "WS12-012",
- "name": "Dedicated Philippine tax & accounting staff for small/mid Illinois CPA firms (managed offshore seats)",
- "summary": "Customer = CPA-firm account. Each account rents 1-2+ dedicated, accounting-trained Philippine staff (staff accountant / tax preparer / bookkeeper) billed monthly in advance, with US account management, IRC 7216 consent workflow and an FTC-Safeguards-ready security program. Workers engaged as contractors via a contractor platform at first (EOR only where required). Operating profit is before founder pay.",
+ "name": "Dedicated Philippine tax & accounting staff for small/mid Illinois CPA firms (managed offshore seats) - Stage E refresh",
+ "summary": "Customer = CPA-firm account renting 1-2+ dedicated, accounting-trained Philippine staff (staff accountant / tax preparer / bookkeeper), billed monthly in advance, with US account management, an IRC 7216 consent workflow and an FTC-Safeguards-ready security program. Stage E structure: pilot seats (<=6 months) as contractors with PH-counsel-reviewed agreements; from ~month 9 workers are employed by the founder's own 100%-foreign-owned Philippine export-services company (BOI-registered), which pays 13th-month, SSS/PhilHealth/Pag-IBIG and night/holiday premia. Operating profit is before founder pay.",
  "evidence_notes": [
-  "Seat prices: CPA-firm-focused provider lists talent cost from $1,400 (US accountant), $2,300 (tax preparer), $2,400 (auditor) plus an undisclosed monthly management fee [B, DG-S002]; generalist managed VA firms $1,500-3,500/seat-month [B, C9-S016/S018/S019]; marketplace salary+$99 seat [B, DG-S007].",
-  "Philippine CPA-qualified accountant salary US$1,500-1,900/month per a 2026 vendor salary guide [D, DG-S003]; general VA salaries $500-1,200 [B, DG-S007]. Base worker cost assumes non-CPA accounting staff at ~$1,100 gross plus 13th-month equivalent, stipend, contractor-platform fee.",
-  "EOR is $599-699/employee-month [B, DG-S004/S005/S006]; at $2,400/seat an EOR model leaves ~15% gross margin, so the base case uses contractor engagement ($29-49/month platform fee) and treats EOR as the conservative case.",
-  "Client churn: no published data (MISSING). Provider worker attrition 22% (2025) vs 50% BPO benchmark [D, DG-S012]; 86% retention claim [D, DG-S013]. Client churn modeled 1.5-4%/month (E).",
-  "Funnel conversion rates are analyst estimates (E). Prospect universe: 1,062 active Illinois CPA firm licenses, 680 in the six-county Chicago area [A, DG-S001].",
-  "Regulatory: offshore tax-return disclosure needs signed taxpayer consent; SSN disclosure needs adequate data-protection safeguards at both preparers [A, DG-S009]; firms must contractually oversee service providers under 16 CFR 314.4(f) [A, DG-S010]; pay to foreign contractors for work abroad is not US wages / not withheld [A, DG-S011]."
+  "Stage E corrections: (1) base price cut from $2,400 to $2,300/seat and seats/account from 1.4 to 1.25 because compliant competitors publish $1,963 (Penbrothers PEO example), ~$2,000 (Accountant Offshore all-in), $1,260-2,760 (Sourcefit) and $2,500 (QX, SOC 2 Type II, 500+ CPA firms) [B/D, E-WS12012-S020..S022]; (2) base gross margin cut from 38% to 31% because the contractor model fails the Philippine control test for full-time dedicated seats and creates a US-PH treaty service-PE after 183 days [A, E-WS12012-S011/S013/S014] - so the base case employs workers through an own PH entity from ~month 9 with statutory costs [A/B, E-WS12012-S012/S015/S016/S034] and a $1,500/month entity-compliance line; (3) churn raised to 2.8%/month for AI-agentic 1040 prep launched by Wolters Kluwer (Oct 2026), Thomson Reuters (Dec 2025) and Black Ore (Apr 2026, marketed as an alternative to offshoring) [C/D, E-WS12012-S025..S027].",
+  "Statutory employer cost at a $1,100 (PHP 68,924 at 62.658/USD [A, E-WS12012-S019]) salary: 13th month 1/12 = $92 [A, E-WS12012-S012]; SSS employer 10% capped at MSC PHP 35,000 = ~$56 [B, E-WS12012-S015]; PhilHealth 2.5% employer = ~$28 [A, E-WS12012-S016]; Pag-IBIG PHP 200 = ~$3 [A, E-WS12012-S034]; total ~16% of salary. Correction: Stage D used ~20% ($230).",
+  "Night-shift differential 10% for hours 10pm-6am [A, E-WS12012-S013]: Chicago business hours fall mostly in that window, so US-hours seats cost ~9% more; holidays worked are paid double [A, E-WS12012-S013]. Base assumes half the seats overlap US hours (~$70/seat-month premia).",
+  "Separation pay of >=1 month per year of service applies if seats are cut for redundancy or labour-saving devices (incl. AI), with 1 month notice to worker and DOLE [A, E-WS12012-S013] - a cost the contractor model avoids but the compliant model must reserve.",
+  "IRC 7216: consent is required before tax return information goes to anyone located outside the US, even the firm's own employee [A, E-WS12012-S001]; SSNs for 1040 filers may go offshore only if both preparers keep an adequate data protection safeguard [A, E-WS12012-S002/S004]. CPA firms are 'financial institutions' under the FTC Safeguards Rule and must contractually oversee service providers [A, E-WS12012-S005]. AICPA ET 1.150.040/1.300.040/1.700.040: inform the client, supervise the provider, and have a confidentiality contract or specific consent [A, E-WS12012-S010].",
+  "Client churn: no published data (MISSING). Disintermediation precedent: a small Atlanta firm moved from a vendor to its own India EOR after vendor turnover [C, E-WS12012-S029]. 2023 MAP survey: ~25% of firms offshore, 12% planning [C, E-WS12012-S029].",
+  "Funnel conversion rates remain analyst estimates (E). Prospect universe: 1,062 active Illinois CPA firm licences, 680 in the six-county Chicago area [A, DG-S001].",
+  "Long-term drivers: BLS projects bookkeeping/accounting clerks -6% 2025-35 because software automates tasks [C, E-WS12012-S024]; small service-business SDE multiples median 2.38x (sold, 2021-25) [D, E-WS05007-S007]; recurring-revenue MSPs ~5.4x SDE [D, E-WS04014-S015]."
  ],
  "drivers": {
   "sales_start_delay_months": {
@@ -17,7 +19,7 @@
    "optimistic": 1
   },
   "sales_start_delay_months__evidence": "E",
-  "sales_start_delay_months__source": "Time to build security policy, 7216 consent templates, contractor agreements and a bench of 3-5 vetted candidates; no licence needed.",
+  "sales_start_delay_months__source": "Security policy/WISP (Pub 4557/5708), 7216 consent templates, MSA/DPA, PH-counsel opinion on pilot contractor agreements, and a bench of 3-5 vetted candidates; no licence needed. [E; requirements A, E-WS12012-S001..S006]",
   "sales_cycle_months": {
    "conservative": 3,
    "base": 2,
@@ -63,40 +65,40 @@
   "referral_new_per_100_active__evidence": "E",
   "referral_new_per_100_active__source": "CPA partners talk to peers (ICPAS chapters, study groups); no measured rate.",
   "monthly_churn_pct": {
-   "conservative": 0.04,
-   "base": 0.025,
-   "optimistic": 0.015
+   "conservative": 0.045,
+   "base": 0.028,
+   "optimistic": 0.018
   },
   "monthly_churn_pct__evidence": "E",
-  "monthly_churn_pct__source": "No client-churn data published (MISSING). Worker attrition 22%/yr at a quality provider [D, DG-S012]; month-to-month terms after 90 days are the norm [D, C9-S020]; post-tax-season downsizing adds churn.",
+  "monthly_churn_pct__source": "No client-churn data published (MISSING; vendors report only worker retention - Connext 22% attrition [D, DG-S012], Cloudstaff 99.5% claim [D]). Raised from Stage D (2.5%/4%/1.5%) because agentic 1040 preparation launched in CCH Axcess (Oct 2026) [C, E-WS12012-S025], Thomson Reuters Ready to Review (Dec 2025) [D, E-WS12012-S027] and Black Ore Tax Autopilot (claims >98% autonomy; pitched as an alternative to offshoring) [C/D, E-WS12012-S026], and because firms that learn offshoring can insource via their own EOR [C, E-WS12012-S029]. Month-to-month after 90 days is the norm [D, C9-S020]; post-April downsizing adds churn.",
   "arpc_monthly": {
-   "conservative": 2520,
-   "base": 3360,
-   "optimistic": 4320
+   "conservative": 2200,
+   "base": 2875,
+   "optimistic": 3900
   },
   "arpc_monthly__evidence": "C",
-  "arpc_monthly__source": "Seats/account x price: cons 1.2 x $2,100; base 1.4 x $2,400; opt 1.6 x $2,700. Prices anchored on $1,400-2,400+ talent cost plus management fee [B, DG-S002] and $1,500-3,500 managed seats [B, C9-S019]; seats/account E.",
+  "arpc_monthly__source": "Seats/account x price: cons 1.1 x $2,000; base 1.25 x $2,300; opt 1.5 x $2,600. Price evidence: Penbrothers PEO example $1,963, Accountant Offshore ~$2,000 all-in, Sourcefit accounting $1,260/2,010/2,760, MYCPE from $11/h (~$1,760) [D, E-WS12012-S020]; QX $2,500 staff accountant/tax preparer [B, E-WS12012-S021]; Cloud Accountant Staffing $2,700/$2,900/$3,100 [B, E-WS12012-S022]. Correction vs Stage D (1.4 x $2,400 = $3,360): first orders are usually one seat and seat expansion is already in arpc_annual_growth_pct; a new entrant without SOC 2 cannot price above QX.",
   "onetime_revenue_per_new_customer": {
    "conservative": 0,
-   "base": 750,
+   "base": 600,
    "optimistic": 1000
   },
-  "onetime_revenue_per_new_customer__evidence": "D",
-  "onetime_revenue_per_new_customer__source": "Setup/recruiting fee; Stealth Agents charges a one-time setup charge [B, C9-S016]; amount is E; may be waived to compete.",
+  "onetime_revenue_per_new_customer__evidence": "B/E",
+  "onetime_revenue_per_new_customer__source": "Setup/recruiting fee: Cloud Accountant Staffing $2,250 kickoff [B, E-WS12012-S022]; Penbrothers $300 setup, Sourcefit $0 [D, E-WS12012-S020]; base $600 (often waived), conservative $0.",
   "arpc_annual_growth_pct": {
-   "conservative": 0.03,
+   "conservative": 0.02,
    "base": 0.08,
-   "optimistic": 0.15
+   "optimistic": 0.12
   },
   "arpc_annual_growth_pct__evidence": "E",
-  "arpc_annual_growth_pct__source": "Seat expansion within accounts plus 2-3% price; analyst estimate.",
+  "arpc_annual_growth_pct__source": "Seat expansion within accounts (second seat after first busy season) plus 2-3% price; conservative = price only, as AI tools cut hours per return [C, E-WS12012-S025/S026]. Analyst estimate (E).",
   "gross_margin_pct": {
-   "conservative": 0.3,
-   "base": 0.38,
-   "optimistic": 0.45
+   "conservative": 0.24,
+   "base": 0.31,
+   "optimistic": 0.4
   },
-  "gross_margin_pct__evidence": "E",
-  "gross_margin_pct__source": "Base seat cost ~$1,490: salary $1,100 + 13th-month equivalent $92 + HMO $50 + equipment/security stipend $80 + contractor platform $49 [B, DG-S004] + replacement recruiting $120 (E) vs $2,400 price. Conservative assumes higher salaries and partial EOR at $599 [B, DG-S004/S005].",
+  "gross_margin_pct__evidence": "C",
+  "gross_margin_pct__source": "Base: own-PH-entity seat at $2,300: salary $1,100 + 13th month $92 [A, E-WS12012-S012] + SSS/PhilHealth/Pag-IBIG employer ~$87 [A/B, E-WS12012-S015/S016/S034] + night/holiday premia ~$70 [A, E-WS12012-S013] + HMO $50 + equipment/MDM $80 + recruiting/backfill reserve $100 (E) = $1,579 -> 31%. Conservative: price falls to ~$2,050 against compliant $1,963-2,010 offers [D, E-WS12012-S020] with the same cost -> ~24% (an EOR bridge at $599 would be ~5% [B, DG-S004]). Optimistic: $2,600 price with lean premia -> 40%. Correction vs Stage D 38% base, which assumed contractor engagement that fails the PH control test [A, E-WS12012-S014] and creates a treaty service PE [A, E-WS12012-S011].",
   "onetime_gross_margin_pct": 0.6,
   "onetime_gross_margin_pct__evidence": "E",
   "onetime_gross_margin_pct__source": "Job posting via OnlineJobs.ph $69-99/mo [B, DG-S008] plus screening time.",
@@ -123,7 +125,7 @@
    "optimistic": -15
   },
   "dso_days__evidence": "D",
-  "dso_days__source": "Monthly-in-advance billing is common among VA/offshore staffing firms [E, Stage A/C]; negative DSO = prepaid.",
+  "dso_days__source": "Monthly-in-advance billing: CapActix bills fortnightly in advance; Finsmart requires 3 months' cancellation notice [D, E-WS12012-S020]; negative DSO = prepaid.",
   "inventory_days_cogs": 0,
   "dpo_days": {
    "conservative": 5,
@@ -135,16 +137,56 @@
   "tax_rate_pct": 0.3,
   "founder_draw_per_month": 4000,
   "founder_draw_start_month": 13,
-  "start_capital_injection": 15000,
+  "start_capital_injection": 20000,
   "start_capital_injection__evidence": "E",
-  "start_capital_injection__source": "Covers setup, security tooling and ~6 months of overhead before contribution turns positive.",
-  "lt_growth_y6_pct": 0.08,
-  "incremental_roic_pct": 0.8,
-  "ev_multiple": 3.0
+  "start_capital_injection__source": "Standardization rule: smallest round amount that keeps the base-case cash balance >= 0 in every month (set by iteration on the rebuilt model).",
+  "lt_growth_y6_pct": {
+   "conservative": 0.02,
+   "base": 0.06,
+   "optimistic": 0.1
+  },
+  "incremental_roic_pct": {
+   "conservative": 0.4,
+   "base": 0.8,
+   "optimistic": 1.2
+  },
+  "ev_multiple": {
+   "conservative": 2.0,
+   "base": 3.0,
+   "optimistic": 4.0
+  },
+  "founder_draw_per_month__source": "Project Atlas standardization rule (Stage E protocol): $4,000/month from month 13 in all scenarios.",
+  "lt_growth_y6_pct__evidence": "C/E",
+  "lt_growth_y6_pct__source": "Offshoring adoption still rising (2023 MAP ~25% offshore + 12% planning [C, E-WS12012-S029]; 2025 MAP 29% [D, E-WS12012-S030]) but routine accounting work is shrinking: BLS -6% for bookkeeping/accounting clerks 2025-35 [C, E-WS12012-S024] and agentic 1040 tools [C, E-WS12012-S025/S026]. Base 6% = seat additions net of AI attrition; conservative 2% = price only.",
+  "lt_growth_decay": {
+   "conservative": 0.7,
+   "base": 0.85,
+   "optimistic": 0.9
+  },
+  "lt_growth_decay__evidence": "E",
+  "lt_growth_decay__source": "Analyst: growth fades as the Chicago CPA-firm base (680 licensed firms [A, DG-S001]) saturates and PE roll-ups bring captive offshore centres [D, DG-S015]; conservative fades fastest for AI substitution.",
+  "incremental_roic_pct__evidence": "E",
+  "incremental_roic_pct__source": "Growth capital = account-executive ramp (~4 months x $6.5k) plus recruiting bench and SOC 2 upkeep; one productive AE adds ~0.8 accounts/month x ~$720/seat-month contribution (model drivers) -> roughly 0.8x pre-tax in year one; conservative 0.4 (price compression, AI churn), optimistic 1.2.",
+  "maint_capex_pct_op": {
+   "conservative": 0.05,
+   "base": 0.03,
+   "optimistic": 0.02
+  },
+  "maint_capex_pct_op__evidence": "E",
+  "maint_capex_pct_op__source": "Asset-light: worker laptops/MDM are inside the $80/seat-month COGS stipend; maintenance capex = US laptops, security tooling refresh, PH entity systems (E).",
+  "reserve_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 2
+  },
+  "reserve_months__evidence": "A/E",
+  "reserve_months__source": "Two months of cash costs (three conservative): customers prepay, but PH employment creates accrued 13th-month pay and separation pay of >=1 month per year of service if seats are cut for redundancy or labour-saving devices [A, E-WS12012-S013]; a 25% client loss after April would trigger both.",
+  "ev_multiple__evidence": "D",
+  "ev_multiple__source": "Applied to operating profit before owner pay (SDE-like). Sold service businesses median 2.38x SDE, upper quartile 3.13x (BizBuySell 2021-25) [D, E-WS05007-S007]; sub-$1M MSPs with >=70% recurring revenue ~5.4x SDE [D, E-WS04014-S015]. Prepaid recurring seats argue above the service median; month-to-month terms, founder-held relationships and AI substitution argue well below MSPs -> 3.0x base, 2.0x conservative."
  },
  "staff": [
   {
-   "role": "Philippine team lead / recruiter (supervises seats, backfills)",
+   "role": "Philippine team lead / recruiter (supervises seats, backfills, QA)",
    "trigger": "active_customers",
    "threshold": 8,
    "per": 15,
@@ -154,7 +196,20 @@
     "base": 1600,
     "optimistic": 1400
    },
-   "notes": "Senior PH accounting supervisor; E (salary guide D, DG-S003)"
+   "notes": "Senior PH accounting supervisor; CPA-qualified PH accountants US$1,500-1,900/month [D, DG-S003]; E"
+  },
+  {
+   "role": "Philippine HR/payroll & compliance coordinator (own entity)",
+   "trigger": "active_customers",
+   "threshold": 20,
+   "per": 40,
+   "start_month": 9,
+   "monthly_cost": {
+    "conservative": 1000,
+    "base": 900,
+    "optimistic": 800
+   },
+   "notes": "Runs SSS/PhilHealth/Pag-IBIG filings, 13th-month accruals, onboarding; E"
   },
   {
    "role": "US account manager / onboarding (7216 consent, QA)",
@@ -173,46 +228,46 @@
    "role": "Account executive (CPA firms)",
    "trigger": "revenue",
    "is_sales_rep": true,
+   "threshold": 60000,
+   "per": 100000000,
+   "max_count": 1,
    "monthly_cost": {
     "conservative": 7000,
     "base": 6500,
     "optimistic": 6000
    },
-   "notes": "Hired only once revenue reaches $60k/month (~18-20 seats); base + commission, loaded; E",
-   "threshold": 60000,
-   "per": 100000000,
-   "max_count": 1
+   "notes": "Hired only once revenue reaches $60k/month (~21 accounts at base ARPC); base + commission, loaded; E"
   }
  ],
  "overhead": [
   {
    "item": "Insurance: professional liability/E&O + cyber + GL",
    "monthly": {
-    "conservative": 500,
-    "base": 350,
-    "optimistic": 300
+    "conservative": 650,
+    "base": 450,
+    "optimistic": 350
    },
    "annual_growth_pct": 0.06,
-   "notes": "MISSING quotes; E"
+   "notes": "MISSING quotes (none requested); E"
   },
   {
-   "item": "Security program: endpoint/MDM, VDI, password manager, policies (FTC Safeguards / 7216 'adequate data protection safeguard')",
+   "item": "Security program: endpoint/MDM, password manager, logging, WISP upkeep (FTC Safeguards 16 CFR 314.4; 7216 'adequate data protection safeguard')",
    "monthly": {
     "conservative": 600,
     "base": 400,
     "optimistic": 300
    },
-   "notes": "E"
+   "notes": "Requirements A [E-WS12012-S004/S005/S006]; costs E"
   },
   {
-   "item": "Independent security assessment / SOC 2 readiness (from month 13)",
+   "item": "Independent security assessment / SOC 2 readiness and audit (from month 13)",
    "monthly": {
-    "conservative": 1200,
-    "base": 800,
-    "optimistic": 600
+    "conservative": 1400,
+    "base": 1000,
+    "optimistic": 700
    },
    "start_month": 13,
-   "notes": "E; required to sell to firms >20 staff"
+   "notes": "Competitors advertise SOC 2 Type II/ISO 27001 [B, E-WS12012-S021]; cost E"
   },
   {
    "item": "Software + AI tools (CRM, Google Workspace, AI drafting/QA)",
@@ -220,22 +275,23 @@
    "is_ai": true
   },
   {
-   "item": "Legal/accounting (contracts, PH counsel, bookkeeping)",
+   "item": "US legal/accounting (MSA/DPA, contracts, bookkeeping, US tax incl. Form 5471 once PH entity exists)",
    "monthly": {
-    "conservative": 500,
-    "base": 350,
-    "optimistic": 300
-   }
+    "conservative": 600,
+    "base": 450,
+    "optimistic": 350
+   },
+   "notes": "Form 5471 duty [A, E-WS12012-S031]; cost E"
   },
   {
-   "item": "Philippine entity / registered office (from month 24, replaces some EOR use)",
+   "item": "Philippine entity compliance (payroll provider, PH accountant/BIR/SEC/LGU filings, registered office, counsel retainer) from month 9",
    "monthly": {
-    "conservative": 900,
-    "base": 600,
-    "optimistic": 500
+    "conservative": 2000,
+    "base": 1500,
+    "optimistic": 1200
    },
-   "start_month": 24,
-   "notes": "E"
+   "start_month": 9,
+   "notes": "Entity route per RA 11647 export-enterprise rules [A, E-WS12012-S017]; costs E - confirm with PH counsel"
   }
  ],
  "capex": [
@@ -247,27 +303,81 @@
     "base": 3500,
     "optimistic": 2500
    }
+  },
+  {
+   "item": "Philippine counsel opinion on pilot contractor agreements + PE exposure (one-time)",
+   "month": 2,
+   "amount": {
+    "conservative": 3000,
+    "base": 2000,
+    "optimistic": 1500
+   }
+  },
+  {
+   "item": "Philippine entity formation: SEC incorporation, BOI export-enterprise registration, BIR/SSS/PhilHealth/Pag-IBIG employer registration, LGU permit (one-time)",
+   "month": 8,
+   "amount": {
+    "conservative": 10000,
+    "base": 7000,
+    "optimistic": 5000
+   }
   }
  ],
  "transactions": [
   {
-   "name": "One dedicated staff accountant seat, monthly (base contractor model)",
-   "revenue": 2400,
+   "name": "Staff-accountant seat, employed by own PH entity (base structure from ~month 9)",
+   "revenue": 2300,
    "lines": [
     {
-     "item": "Worker gross pay",
+     "item": "Worker gross salary (PHP ~68,900)",
      "amount": 1100
     },
     {
-     "item": "13th-month equivalent (1/12)",
+     "item": "13th-month pay (1/12)",
      "amount": 92
     },
     {
-     "item": "HMO / benefits stipend",
+     "item": "SSS (10% of MSC capped PHP 35,000) + EC + PhilHealth 2.5% + Pag-IBIG PHP 200, employer share",
+     "amount": 87
+    },
+    {
+     "item": "Night-shift differential / holiday premia (half of seats on US hours)",
+     "amount": 70
+    },
+    {
+     "item": "HMO",
      "amount": 50
     },
     {
-     "item": "Equipment/internet/security stipend",
+     "item": "Equipment/internet/MDM",
+     "amount": 80
+    },
+    {
+     "item": "Recruiting/backfill reserve",
+     "amount": 100
+    }
+   ],
+   "notes": "Contribution ~$721/seat-month (31%) BEFORE the ~$1,500/month PH entity-compliance overhead (~$190/seat at 8 seats, ~$40/seat at 40 seats). Prepaid at month start; payroll semi-monthly in arrears.",
+   "evidence": "C (price B/D; statutory A/B; other E)"
+  },
+  {
+   "name": "Pilot seat as direct contractor (first <=6 months only, counsel-reviewed)",
+   "revenue": 2300,
+   "lines": [
+    {
+     "item": "Contractor fee",
+     "amount": 1100
+    },
+    {
+     "item": "13th-month-equivalent retention bonus (1/12)",
+     "amount": 92
+    },
+    {
+     "item": "HMO stipend",
+     "amount": 50
+    },
+    {
+     "item": "Equipment/internet/MDM",
      "amount": 80
     },
     {
@@ -275,92 +385,108 @@
      "amount": 49
     },
     {
-     "item": "Backfill recruiting reserve",
-     "amount": 120
+     "item": "Recruiting/backfill reserve",
+     "amount": 100
     }
    ],
-   "notes": "Contribution ~$909/seat-month (38%). Prepaid monthly; worker paid semi-monthly in arrears.",
-   "evidence": "C (price B; cost lines B/D/E)"
+   "notes": "Contribution ~$829 (36%) but a full-time controlled seat likely meets the PH control test [A, E-WS12012-S014] and >183 days creates a treaty service PE [A, E-WS12012-S011]; not a scalable structure.",
+   "evidence": "C"
   },
   {
-   "name": "Same seat under an EOR (conservative / compliance-heavy case)",
-   "revenue": 2400,
+   "name": "Same seat through an EOR (Deel/Remote from $599) - bridge only",
+   "revenue": 2300,
    "lines": [
     {
-     "item": "Worker gross pay",
+     "item": "Worker gross salary",
      "amount": 1100
     },
     {
-     "item": "13th-month pay + statutory contributions (~20%)",
-     "amount": 230
+     "item": "13th month + statutory employer share",
+     "amount": 179
+    },
+    {
+     "item": "Night/holiday premia",
+     "amount": 70
     },
     {
      "item": "HMO",
      "amount": 50
     },
     {
-     "item": "Equipment/security",
+     "item": "Equipment/MDM",
      "amount": 80
     },
     {
-     "item": "EOR fee (Deel/Remote from $599)",
+     "item": "EOR fee",
      "amount": 599
     },
     {
-     "item": "Backfill recruiting reserve",
-     "amount": 120
+     "item": "Recruiting/backfill reserve",
+     "amount": 100
     }
    ],
-   "notes": "Contribution ~$221/seat-month (9%) - shows why EOR at small scale breaks the model.",
-   "evidence": "C (EOR fee B; statutory % D)"
+   "notes": "Contribution ~$122 (5%): EOR at small scale breaks the model unless priced >= ~$2,900.",
+   "evidence": "C (EOR fee B)"
   },
   {
-   "name": "Tax-preparer seat during busy season (Jan-Apr), higher-skill",
+   "name": "Busy-season tax-preparer seat (1040/1065), own PH entity",
    "revenue": 2700,
    "lines": [
     {
-     "item": "Worker gross pay (US 1040/1065 experience)",
+     "item": "Worker gross salary (US tax software experience)",
      "amount": 1350
     },
     {
-     "item": "13th-month equivalent",
+     "item": "13th-month pay",
      "amount": 113
     },
     {
-     "item": "HMO / stipend / security",
-     "amount": 130
+     "item": "Statutory employer share",
+     "amount": 93
     },
     {
-     "item": "Contractor platform fee",
-     "amount": 49
+     "item": "Night/holiday premia",
+     "amount": 80
     },
     {
-     "item": "Backfill reserve",
-     "amount": 120
+     "item": "HMO",
+     "amount": 50
+    },
+    {
+     "item": "Equipment/MDM",
+     "amount": 80
+    },
+    {
+     "item": "Recruiting/backfill reserve",
+     "amount": 100
+    },
+    {
+     "item": "PTIN fee (annual $18.75, monthly equivalent)",
+     "amount": 2
     }
    ],
-   "notes": "Contribution ~$938. Accountant Offshore lists US tax preparer talent cost from $2,300 + management fee [B, DG-S002].",
+   "notes": "Contribution ~$832 (31%). Competitor anchors: tax preparer $2,900 (Cloud Accountant Staffing) [B, E-WS12012-S022]; $2,500 (QX) [B, E-WS12012-S021].",
    "evidence": "C"
   },
   {
    "name": "New-account setup (recruit + onboard first seat)",
-   "revenue": 750,
+   "revenue": 600,
    "lines": [
     {
      "item": "OnlineJobs.ph Premium month",
      "amount": 99
     },
     {
-     "item": "Screening/test time (PH team lead)",
+     "item": "Screening/skills-test time (PH team lead)",
      "amount": 150
     },
     {
-     "item": "7216 consent + security onboarding time",
+     "item": "7216 consent pack + security onboarding time",
      "amount": 50
     }
    ],
-   "notes": "Contribution ~$451; often waived in competitive deals.",
-   "evidence": "E"
+   "notes": "Contribution ~$301; often waived.",
+   "evidence": "B/E"
   }
  ]
 }

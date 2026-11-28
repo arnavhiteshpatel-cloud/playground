@@ -173,7 +173,15 @@
   "reserve_months__source": "Truck-downtime and winter-seasonality buffer (Chicago winter slower, E).",
   "owner_comp_growth_pct": 0.03,
   "owner_comp_growth_pct__evidence": "E",
-  "owner_comp_growth_pct__source": "Owner draw growth years 6-10."
+  "owner_comp_growth_pct__source": "Owner draw growth years 6-10.",
+  "inventory_days_cogs__evidence": "B",
+  "inventory_days_cogs__source": "No inventory: service business; disposal paid at scale [B, DF-S016].",
+  "gross_margin_pct__evidence": "E",
+  "gross_margin_pct__source": "Not used (no recurring revenue); mirrors one-time base margin.",
+  "arpc_monthly__evidence": "E",
+  "arpc_monthly__source": "No recurring revenue modelled (B2B accounts reorder as new jobs via referral driver).",
+  "founder_draw_start_month__evidence": "E",
+  "founder_draw_start_month__source": "Standardised: month 13 (Stage E protocol)."
  },
  "staff": [
   {

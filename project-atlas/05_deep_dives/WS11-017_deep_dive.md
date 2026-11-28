@@ -35,7 +35,7 @@ The fee includes chemistry, monthly testing and reports, controller management, 
 
 | Operator | Type | What is known |
 |---|---|---|
-| H-O-H Water Technology (Chicagoland, IL) | Illinois independent | City of Chicago awards of $11.36M (2007–12), $3.88M (2016–21) and $4.32M (2022–27, modification end-date 2030) [A, DI-S001]. Cook County chemical contract of ~$65k/yr in 2016–18 [A, DI-S004]. Family-owned for 50+ years per a trade-directory listing (D). |
+| H-O-H Water Technology (Chicagoland, IL) | Illinois independent | City of Chicago awards of $11.36M (2007–12), $3.88M (2016–21) and $4.32M (2022–27, modification end-date 2030) [A, DI-S001]. Cook County chemical contract of ~$65k/yr in 2016–18 [A, DI-S004]. Family-owned for 50+ years per a trade-directory listing [D, DI-S032]. |
 | Global Water Technology Inc | Regional independent | Cook County Facilities Management water treatment and testing, **$349,541 for 2024-07 to 2027-06** (~$116.5k/yr). Prior contract $228,864 plus amendments [A, DI-S004]. A $6,400 Peoria Air National Guard boiler order appeared in a search summary (D). |
 | AquaLab Water Treatment Inc (Prospect Heights, IL) | Chicago-area independent | VA Hines awards: $118,800 emergency softener/carbon filter and $14,450 boiler-plant repairs [A, DI-S006]. |
 | Liberty Technical Services LLC (MD) | Out-of-state small vendor | Won the VA Illiana boiler programme at $32,512/yr against 11 other offers [A, DI-S005]. |
@@ -98,7 +98,7 @@ These are prospects, not leads: no interest has been expressed.
 | T3 | New-tower start-up passivation + conductivity controller | $5,500 one-time | Controller at dealer cost $2,800; passivation chemistry $250; labour $270 | **$2,180** | Controller price range A [C1-S007]; costs E. Paid on completion. |
 | T4 | ASHRAE 188 water-management plan for a small long-term-care building | $3,500 one-time | CWT review 10 h × $100 = $1,000; baseline sampling $400 | **$2,100** | Price MISSING; E. |
 
-- **Unit economics.** T1 is the core unit. With 45 buildings per technician, one technician (~$90k loaded) is covered by roughly 28 T1 accounts before overhead.
+- **Unit economics.** T1 is the core unit. With 45 buildings per technician, one technician (~$90k loaded) is covered by roughly 20 T1 accounts (T1 margin before labour is ~$4.5k) before overhead.
 - **Thin margin per building.** This is why scale comes slowly.
 
 ## 6. Customer acquisition

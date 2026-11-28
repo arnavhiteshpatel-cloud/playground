@@ -146,7 +146,7 @@
     "base": 5800,
     "optimistic": 5500
    },
-   "notes": "Chicago MSA 'installation, maintenance & repair, all other' median $27.36/h [C, DA-S012 proxy] -> ~$4,850 x 1.2 load + van ~$800. ~6-8 small accounts/day => ~1,200-1,500 annual accounts per tech. Employee licence $300 + exam $320. Founder services up to ~600 annual accounts (~2.5 visits/working day) before the first hire; test with hire at 350 accounts cut base yr-5 operating profit to ~$5k because ARPC is only ~$28/mo."
+   "notes": "Chicago MSA 'installation, maintenance & repair, all other' median $27.36/h [C, DA-S012 proxy] -> ~$4,850 x 1.2 load + van ~$800. ~6-8 small accounts/day => ~1,200-1,500 annual accounts per tech. Employee licence $300 + exam $320. Founder services up to ~600 annual accounts (~2.5 visits/working day) before the first hire; tests: hiring at 350 accounts cuts base yr-5 operating profit to ~$16k (~$5k if a rep is also hired at 500), because ARPC is only ~$28/mo."
   },
   {
    "role": "Office coordinator (scheduling annual due-dates, reports, billing)",

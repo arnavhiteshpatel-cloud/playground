@@ -100,7 +100,7 @@ The ECHO registry contains historic records, so current operation, load size and
 
 **Customers #2–10:**
 - referrals from refrigeration contractors and CPAs;
-- food-industry associations: the Midwest Food Products Association member directory appeared in research (D);
+- food-industry associations: the Midwest Food Products Association member directory [D, DI-S032];
 - renewal-timed outreach using contract-expiry dates gathered in audits.
 
 **Customers #11–100:**

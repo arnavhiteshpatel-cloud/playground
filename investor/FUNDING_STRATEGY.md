@@ -65,17 +65,17 @@
 ## 3. Milestones and the capital each unlocks
 | # | Milestone (evidence, not claims) | Unlocks | Approx. timing [INF] |
 |---|---|---|---|
-| M0 | OTM ownership determination requested; founder decision on entity type with counsel | Everything below. Required before any SAFE, grant award or paid contract | Dec 2026 – Feb 2027 |
+| M0 | **One definition (used everywhere, including `business/REVENUE_MODEL.md` §4):** an entity exists (founder decision with counsel); the OTM ownership determination is received (IP clearance); insurance is in place; the NDA, SOW and DPA templates are counsel-reviewed | Everything below. Required before any SAFE, grant award, paid contract or evaluation on customer data | Requests start Dec 2026 – Feb 2027 (ask OTM; decide the entity type); completion date not set |
 | M1 | ≥20 discovery interviews logged and coded (`business/INTERVIEW_GUIDE.md`) | I-Corps Boost eligibility (≥20 interviews [V-repo]); stronger Cozad, NSF Pitch and iVenture applications | By Feb 2027 |
 | M2 | Physical phantom study: a separable path for ≥1 commercial material class, single-scan (or day-0, which is unproven under granule motion) (`validation/PHANTOM_EXPERIMENT_PROTOCOL.md`) | Credible SBIR/STTR technical aims; the first real-data claim in any pitch | Spring 2027 |
-| M3 | First **paid** pilot ($2.5–5K [HYP]) under a reviewed template | Behavioural price evidence (`business/PRICING_VALIDATION_PLAN.md` §7); a commercial letter of support for an SBIR/STTR | Mid 2027 |
+| M3 | First **paid** pilot ($2.5–5K [HYP]) under a reviewed template. **Prerequisites:** M0 and Gate 2 in `RELEASE_READINESS.md` (Gate 1; real-data validation for at least one task; closed human expert review; counsel-reviewed SOW/DPA), none met today | Behavioural price evidence (`business/PRICING_VALIDATION_PLAN.md` §7); a commercial letter of support for an SBIR/STTR | Mid 2027 at the earliest |
 | M4 | ≥3 paid pilots or studies **and** ≥1 licence; measured analyst hours per study | Illinois Ventures pre-seed or angel conversations; NSF/NIH Phase I commercialisation plan | Late 2027 – 2028 |
 | M5 | Phase I award, or ≥$100K trailing revenue, plus a published validation (e.g. an ORS abstract or manuscript) | Phase II (NSF up to $1.25M [V-repo]); DCEO match; a seed round **only if** expansion or non-US demand is evidenced | 2028+ |
 
 ## 4. Recommended sequence (next 12 months) [INF]
 1. **Dec 2026 – Feb 2027:**
    - Ask OTM for an ownership determination (counsel-guided).
-   - Register for Cozad (registration window: `grants/FUNDING_OPPORTUNITIES.md` §2).
+   - Register for Cozad (registration opens 1 Dec 2026; deadline 2 Feb 2027; finals April 2027, date not confirmed; `grants/COZAD_APPLICATION_PACKAGE.md`).
    - Join an Illinois I-Corps workshop.
    - Run Wave 1 interviews (`business/PROSPECT_SEGMENTATION.md`).
    - Optionally submit an NSF Project Pitch, which needs no registrations [V].
@@ -84,7 +84,7 @@
    - Ask a faculty member to nominate the founder for the IIA.
    - Apply to iVenture if a 2027 wave opens.
    - Decide on an NIH STTR with a UIUC faculty PD/PI.
-3. **Summer 2027:** iVenture (if accepted); first paid pilots once an entity exists (M3).
+3. **Summer 2027:** iVenture (if accepted); first paid pilots only once M0 and Gate 2 are met (M3).
 4. **Late 2027:** NSF I-Corps Teams (with a faculty Technical Lead) or a Phase I submission. Talk to pre-seed investors only if M4 is met.
 
 **Do not:** accept a SAFE or other investment, sign a grant sub-award, or make a public pitch that discloses the method before M0. Do not apply to programmes whose eligibility the founder does not meet. Do not let any application text be substantially machine-written (NIH policy above).
@@ -104,12 +104,12 @@
 | **PI eligibility** | NSF SBIR/STTR and NIH SBIR need a PI >50% employed by the company at award [V]. The founder is a full-time student | NIH STTR with a faculty PD/PI; graduation timing; a hired PI. Get program-officer answers in writing |
 | **IP ownership** | Use of university resources may bring the software within university ownership rules [RF/INF] | OTM determination before any investment, award or paid pilot (M0) |
 | **Market ceiling** | Serviceable pool ≈ $0.8–3.9M per year at Base prices [V counts × AE volumes × HYP prices] | Treat venture scale as conditional on adjacent modules and non-US demand. Test before raising |
-| **Separability** | Graft and new bone may be inseparable for some materials (`SCIENTIFIC_EVIDENCE.md` §1 #5, R3) | Material characterisation states "not separable" honestly; total mineral is still reported. **Day-0 is unproven under granule motion** (simulation, naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35; the advisor refuses those cases); **histology is the fallback** |
+| **Separability** | Graft and new bone may be inseparable for some materials (`SCIENTIFIC_EVIDENCE.md` §1 #5, R3) | Material characterisation states "not separable" honestly. Total mineral is not a safe fallback: in the held-out simulation S1H3 (SYNTHETIC), total mineral volume supported in 10% of held-out specimens (sharp imaging only), new-bone volume was never supported, and no volume endpoint supported for 58% of held-out specimens; the model carries no feasibility or refused-endpoint term (`business/REVENUE_MODEL.md` §2a-bis; founder decision #20). **Day-0 is unproven under granule motion** (simulation, naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35; the advisor refuses those cases); **histology is the fallback** |
 | **Free substitutes** | The Dragonfly academic licence is free; general platforms add deep learning [V] | Graft-specific value, abstention and audit trail. Test academic willingness to pay early (H4) |
 | **Grant dependence** | Grants are conditional and restricted; the model's lead case counts none | The no-grant path (max deficit ~$96K, Bootstrapped Base) is the default plan; treat any award as project funding |
-| **No licence on a public code base** | Licences are 56% of Bootstrapped Base 2031 revenue, but the full source is public with no LICENSE file, evaluation mode is fully functional, and no EULA or production signing key exists | Founder decision on the code licence (`FOUNDER_DECISIONS.md`); without licence revenue Base 2031 revenue is $114K |
+| **No licence on a public code base** | Licences are 56% of Bootstrapped Base 2031 revenue. In practice they are hard to collect: the full source is public with no LICENSE file, evaluation mode is fully functional, and the licence check can be removed from the public source. Legally, copyright may still be enforceable once ownership is settled, but no EULA, entity or production signing key exists and the OTM determination is open (counsel to confirm) | Founder decision on the code licence (`FOUNDER_DECISIONS.md`); without licence revenue Base 2031 revenue is $114K |
 | **Third-party licence compliance of the desktop bundle** | The bundle ships LGPL Qt, LGPL-2.1 system libraries and many other components; notices were incomplete until cycle 2 and the archive packed before that must not be distributed | `packaging/bundle_inventory.py` now fails the build on any unmapped library; counsel to confirm the LGPL source arrangement and draft the EULA |
-| **US patent bar date 2027-11-27** | Every invention in the repository became public on 2026-11-27; the founder's own disclosure becomes US prior art after one year, and foreign rights are likely already lost | Decide on a provisional application well before the bar date (practical decision date 2027-09; spring 2027 IP Clinic intake) — `FOUNDER_DECISIONS.md` |
+| **US patent bar dates 2027-11-27 and 2027-11-28** | The Generation-1 and most Generation-2 inventions became public on 2026-11-27; the advisor 1.4.0–1.4.3 mechanisms, external audit-chain anchors and fail-closed registration QC on 2026-11-28 (`docs/ip/INVENTION_REGISTER.md` §0a). The founder's own disclosure becomes US prior art after one year. Absolute-novelty jurisdictions (e.g. the EPO, China) are probably closed; some others (e.g. Japan, Korea) have grace periods with conditions — counsel must confirm | Decide on a provisional application, and on any filings in grace-period jurisdictions, well before the bar dates (practical decision date 2027-09; spring 2027 IP Clinic intake) — `FOUNDER_DECISIONS.md` #1, #19 |
 | **Copyright and inventorship of AI-assisted code** | How much protectable authorship and inventorship AI-assisted work carries is an open question (cycle-1 IP-08) | Inventorship analysis with counsel before any filing; keep records of human contributions |
 | **Early dilution / SAFE stacking** | Several small SAFEs (competitions, accelerators) compound before a priced round [INF] | Track every instrument in a cap table with counsel. Read SAFE terms before accepting prizes |
 | **Founder bandwidth** | Student workload versus sales, delivery and validation | Wave-based discovery (10 conversations at a time); summer accelerator |

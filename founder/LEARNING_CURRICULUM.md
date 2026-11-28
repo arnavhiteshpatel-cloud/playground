@@ -59,8 +59,8 @@ using a separate *calibration* set: you measure how wrong the model was on calib
 prediction by the corresponding quantile. The guarantee is *marginal* (on average over cases, not for each scan) and
 holds only if new cases resemble the calibration cases (exchangeability). Under distribution shift — a new graft
 material, a new scanner — coverage can collapse, which is why Experiment U1 also tests *gating*: refusing scans the
-failure detector flags before giving an interval (`docs/science/PREREGISTRATION.md` §6). U1 is still running; quote
-no number from it.
+failure detector flags before giving an interval (`docs/science/PREREGISTRATION.md` §6). U1 is queued, not yet run
+(`EXPERIMENT_REGISTRY.md`); quote no number from it.
 **Self-test:** A CRO asks: "your 90% interval — does that mean 90% certainty for *my* scan?" What do you say?
 
 ### A6. LGPL obligations of the desktop bundle
@@ -75,12 +75,18 @@ build now fails if one appears (`docs/desktop/PACKAGING.md` §Licence compliance
 break, and how do you fix the clause?
 
 ### A7. Public-repository disclosure
-Everything pushed to the public repository on 2026-11-27 is a public disclosure. In the US an inventor has a one-year
-grace period after their own disclosure, so the **bar date is 2027-11-27**; after it, your own repository is prior art
-against you. Most other countries require absolute novelty, so foreign patent rights are likely already lost. Each new
-push of inventive work starts its own clock and ends any trade-secret status. The public repository also exposes a
-non-privileged patent triage, prospect lists and the full source — which undercuts licence revenue (decisions #1, #2,
-#3 in `FOUNDER_DECISIONS.md`; `docs/ip/IP_STRATEGY.md`).
+Everything pushed to the public repository is a public disclosure from its push date. The Generation-1 and most
+Generation-2 work was pushed on 2026-11-27; the advisor 1.4.0–1.4.3 mechanisms (scan-measured blur, blur-scaled
+ambiguous rim, new-bone error propagation, method binding, read-time support evaluation, unspecified-material rim
+proxy, worst-case mineral rim gate), external audit-chain anchors and fail-closed registration QC were pushed on
+2026-11-28 (`docs/ip/INVENTION_REGISTER.md` §0a). In the US an inventor has a one-year grace period after their own
+disclosure, so the **bar date is 2027-11-27** for the 27 Nov material and **2027-11-28** for the 28 Nov material;
+after it, your own repository is prior art against you (counsel to confirm). Many countries, including the European
+Patent Office and China, require absolute novelty. Some others (for example Japan and Korea) have grace periods for
+the applicant's own disclosure, with conditions such as a declaration at filing; whether any of them still applies
+here is for counsel to confirm. Each new push of inventive work starts its own clock and ends any trade-secret status.
+The public repository also exposes a non-privileged patent triage, prospect lists and the full source — which
+undercuts licence revenue (decisions #1, #2, #3 and #17 in `FOUNDER_DECISIONS.md`; `docs/ip/IP_STRATEGY.md`).
 **Self-test:** You want to push a new day-0 tracking method next week. What should happen first, and who do you ask?
 
 ---
@@ -117,10 +123,14 @@ graduate courses in biomedical imaging or bone mechanics — ask your faculty ad
 ## Answers to the self-tests (cover these until you have answered)
 * **A1.** A number for every scan includes numbers the image cannot support; for overlapping materials those are
   plausible but unidentifiable, and nobody can tell which ones. We report what the scan supports, say why we refuse the
-  rest, and always give total mineral. A wrong number in a study costs more than a missing one.
+  rest, and give total mineral where the scan supports it. Be plain about how often that is: in the held-out
+  simulation S1H3 (SYNTHETIC), new-bone volume was never supported, total mineral volume supported in 10% of
+  held-out specimens (sharp imaging only), and no volume endpoint supported for 58% of held-out specimens. A wrong number
+  in a study costs more than a missing one, but a buyer must know in advance that many scans get no volume at all.
 * **A2.** Smaller voxels reduce the partial-volume mixing per voxel, but blur is set by the scanner's PSF in µm; if the
   blur stays the same, the halo stays the same width in µm. You need sharper imaging (focal spot, reconstruction), a
-  measured graft reference, or a different design (day-0 scan, histology).
+  measured graft reference, or a different design (histology; a day-0 scan is a research option this software does
+  not support).
 * **A3.** No. S1H3 tested advisor 1.4.1 frozen; a changed rule needs a new pre-registered held-out test on conditions no
   version has seen. Re-running S1H3 is only a development check. (The shipped 1.4.3 differs from 1.4.1 in rules S1H3
   does not exercise and in one it does, only in the stricter direction, which is why S1H3 is still quoted, with that
@@ -134,6 +144,8 @@ graduate courses in biomedical imaging or bone mechanics — ask your faculty ad
 * **A6.** It conflicts with LGPL-3.0 §4: users must be allowed to modify the Qt part and to reverse engineer for
   debugging such modifications. Carve the LGPL components out of the restriction ("except as permitted by the licences
   of third-party components listed in THIRD_PARTY_NOTICES"), drafted by counsel.
-* **A7.** First the decision in `FOUNDER_DECISIONS.md` #2: keep new inventive work private until a filing decision.
-  Ask the Landuyt IP Clinic or a registered patent attorney, and check the university ownership question (#4) with OTM.
-  The longitudinal area also has an open freedom-to-operate question (#15).
+* **A7.** First the founder decisions on pushing (`FOUNDER_DECISIONS.md` #2 and #17). The only instruction on record
+  is your 27 Nov decision to push all work publicly (`docs/ip/IP_STRATEGY.md` Addendum); confirm it or replace it
+  (for example, new inventive work to a private branch or remote until a filing decision) before the push. Ask the
+  Landuyt IP Clinic or a registered patent attorney, and check the university ownership question (#4) with OTM. The
+  longitudinal area also has an open freedom-to-operate question (#15).

@@ -9,14 +9,19 @@ interviews or pilots, and no test on real graft materials.
   imports scans with mandatory voxel-size confirmation and quality checks, shows linked 2D/3D views, lets an analyst
   correct the segmentation (every edit saved as a new version with a reason), runs the analysis in the background,
   requires a second person to sign off, keeps a hash-chained audit trail and writes PDF/CSV reports
-  (`docs/desktop/USER_GUIDE.md`). The Linux build passes its packaged self-test (`packaging/dist/build-info.json`);
-  Windows and macOS builds are configured but have never been built or run (`docs/user/INSTALLATION.md`).
-* **The core idea, the measurement-support advisor** (shipped version 1.4.2, `osteoquant/advisor/separability.py`).
-  Before reporting graft or new-bone volume, it decides whether the scan can support that number for this material,
-  noise, blur and timepoint. If not, the report says "not measured" and why. Total mineral is reported whenever the
-  scan allows.
-* **Supporting work:** about 88% line+branch test coverage of the analysis library, desktop UI excluded (measured
-  2026-11-28; the target is 90%); review cycles by automated reviewer agents — not human experts — with cycle 3 under
+  (`docs/desktop/USER_GUIDE.md`). The only packaged build is a local Linux build of 27 November; it passed its
+  self-test then (`packaging/dist/build-info.json`), but it predates advisor 1.3.1–1.4.3 and the cycle-2/3 fixes and
+  must be rebuilt before any use. Windows and macOS builds are configured but have never been built or run
+  (`docs/user/INSTALLATION.md`).
+* **The core idea, the measurement-support advisor** (shipped version 1.4.3 in the source,
+  `osteoquant/advisor/separability.py`; no packaged build contains it yet). Before reporting graft, new-bone or total
+  mineral volume, it decides whether the scan can support that number for this material, noise, blur and timepoint.
+  If not, the report says "not measured" and why. It is the default segmentation method (`advisor_threshold`), the
+  only one carrying measurement support. Total mineral is reported only when the scan's blur and noise allow it, which
+  in held-out simulation was rare (§2).
+* **Supporting work:** tests and coverage from one file, `docs/qa/test_summary.json`: 597 passed, 1 skipped; 90.8%
+  line+branch coverage of the `osteoquant` package, desktop UI excluded (local full run, 28 Nov). CI passed for the
+  first time on 28 Nov. Review cycles by automated reviewer agents — not human experts — with cycle 3 under
   way (`REVIEW_REGISTRY.md`); a financial model, pricing
   hypotheses and a competitor matrix (`business/`, `docs/research/`); three rebuilt decks whose every figure is read
   from these files (`investor/build_decks.py`).
@@ -31,16 +36,20 @@ All graft and new-bone evidence is **simulation** (computational phantoms with a
   the new-bone range. S1H2 (advisor 1.4.0) failed on total mineral: the ambiguous rim around graft was too narrow under
   heavy blur. Each failure led to a rule change that was then tested on new, unseen conditions
   (`EXPERIMENT_REGISTRY.md`). Safety was bought with coverage: most graft and all new-bone measurements are refused.
-* **The honest consequence.** By intensity alone, graft and new bone can be separated only for dense calcium phosphates
-  at low noise and early, known timepoints (`scripts/material_support_table.py`, run on the shipped advisor). Total
-  mineral is the robust endpoint, but under heavy blur even it is now refused.
+* **The honest consequence.** By intensity alone, residual graft volume can be supported only for dense calcium
+  phosphates at low noise and early, known timepoints (`scripts/material_support_table.py`, run on the shipped
+  advisor). New-bone volume was never supported in the held-out tests, for any material. Total mineral is not a safe
+  fallback: in S1H3, total mineral volume supported in 10% of held-out specimens (sharp imaging only), and no volume
+  endpoint supported for 58% of held-out specimens. A buyer must expect many scans with no volume reported.
 * **Day-0 scans are fragile.** In simulation, naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35 (`experiments/results/exp_L3_displacement.json`). No day-0 analysis is offered.
 * **Real data is two-class only.** Bone versus background on public dog scans: U-Net trained on 10 real scans Dice 0.826
   (`experiments/results/exp_H_I_real.json`); Tb.Th ICC(2,1) 0.983 against Scanco IPL on 8 public cubes, with a
   border convention chosen after seeing them (`experiments/results/exp_G_morphometry.json`). The Generation-0 synthetic
   model, applied to the real dog test scans without real training data, reached Dice 0.377 at native scale and 0.513
-  with 2× upsampling (`experiments/results/exp_S2v2_sim2real_a.json`). The domain-randomised, self-supervised and
-  uncertainty experiments (S2b/c, S3, U1, O2) are still running; no numbers yet.
+  with 2× upsampling (`experiments/results/exp_S2v2_sim2real_a.json`). Status per `EXPERIMENT_REGISTRY.md`: S2 parts
+  b and c (domain-randomised pretraining, few-shot) are running; U1 (ensembles, conformal intervals) and O2 (ONNX
+  runtime) are queued; S3 (self-supervised pretraining) has a script but no registry entry and has not run. No numbers
+  from any of them yet.
 
 ## 3. What is unknown
 * Whether real graft materials behave like the simulator: no physical phantom has been scanned
@@ -59,30 +68,38 @@ All graft and new-bone evidence is **simulation** (computational phantoms with a
   (`docs/security/IP_PROVENANCE.md`).
 
 ## 4. Five decisions with deadlines
-`FOUNDER_DECISIONS.md` lists 16 decisions only you can make. These five carry the hardest deadlines:
+`FOUNDER_DECISIONS.md` lists 25 decisions only you can make (#17–#25 added after review cycle 3). These six carry
+the hardest deadlines:
 
 | # | Decision | Deadline | Ask |
 |---|---|---|---|
-| 2 | Whether new inventive work stays public, and the repository's licence (#3, removing sensitive files, shares this deadline) | **Now, before the next push** | counsel; IP Clinic |
-| 4 | Request the university (OTM) ownership determination | Before Cozad registration and the **2 Feb 2027** pitch, and before any SAFE, grant sub-award, Beckman scan or paid pilot | OTM |
+| 17, 2 | The standing instruction on pushing (today: your 27 Nov decision to push everything publicly, under which new mechanisms were pushed on 28 Nov), then whether inventive work stays public and the repository's licence (#3, removing sensitive files, shares this deadline) | **Now** | counsel; IP Clinic |
+| 18 | Whether to offer any evaluation on customer data before M0 and Gate 1 (none is offered today) | Before outreach mentions pilots | counsel; insurer |
+| 4 | Request the university (OTM) ownership determination | Before Cozad registration (deadline **2 Feb 2027**) and any Cozad pitch (finals April 2027), and before any SAFE, grant sub-award, Beckman scan or paid pilot | OTM |
 | 8 | Approve the corrected financial-model assumptions, and the rebuilt decks, before using them | Before any investor, Cozad or I-Corps material uses the numbers | accountant; counsel |
 | 5 | Incorporation and founder-to-company IP assignment | Before the first paid pilot (mid-2027 at the earliest) and before any SAFE | counsel; accountant |
-| 1 | File or forgo a US provisional patent application | Decide by **2027-09**; US bar date **2027-11-27** | IP Clinic (spring intake); patent attorney |
+| 1, 19 | File or forgo a US provisional, and any filings in grace-period jurisdictions | Decide by **2027-09**; US bar dates **2027-11-27** (27 Nov material) and **2027-11-28** (28 Nov material) | IP Clinic (spring intake); patent attorney |
 
-## 5. The next 90 days (to the decision gate around 25 February 2027)
-**Weeks 1–2 (to mid-December).** Stop pushing new inventive work publicly until decision #2 is made with counsel.
-Request the OTM determination (#4) with a written record of your lab history. Run the trademark knockout search (#6).
+## 5. The next 90 days (to the price gate around 25 February 2027)
+**Weeks 1–2 (to mid-December).** Decide the standing instruction on pushing (#17): the only instruction on record is
+your 27 Nov decision to push all work publicly (`docs/ip/IP_STRATEGY.md` Addendum), and new advisor mechanisms were
+pushed on 28 Nov under it; confirm it, or tell the development process to keep new inventive work on a private branch
+or remote until #2 is decided. Request the OTM determination (#4) with a written record of your lab history. Run the trademark knockout search (#6).
 Read the financial model and the rebuilt decks, and approve or change them (#8); until then, send nothing.
 **December–January.** Join an Illinois I-Corps workshop and run Wave 1 discovery interviews, aiming for at least 20 logged
 and coded by February (`investor/FUNDING_STRATEGY.md` §3, M1). Register for Cozad, writing every application yourself
 (#10). Approach an imaging scientist about the 14 open phantom-protocol decisions
 (`validation/DECISIONS_FOR_IMAGING_SCIENTIST.md`) and the Beckman facility and data agreement (#11). Recruit at least one
 human expert (imaging scientist, bone biologist or biostatistician) to review the advisor rules and the held-out designs.
-**February.** Cozad pitch on 2 February (only after #4; a pitch carries no confidentiality). Start phantom scans if
-access and agreements are in place. Around 25 February apply the combined gate
-(`business/PRICING_VALIDATION_PLAN.md` §7): proceed only if the study-analysis price signal holds **and** the phantom
-work shows a separable path; otherwise lead with licences, or keep the project as research.
+**February.** Cozad registration closes on 2 February (register only after #4; the Demo Showcase and Finals are in
+April 2027, date not confirmed, and a pitch carries no confidentiality). Around 25 February apply the price gate
+(`business/PRICING_VALIDATION_PLAN.md` §7): does the study-analysis price signal hold? The separability gate (does
+the phantom study show a separable path?) can only follow the phantom read-out: M2 is spring 2027 at the earliest,
+and its protocol is not approved (14 imaging-scientist decisions, the OTM determination and a Beckman agreement are
+still needed). Proceed with services only if both pass; otherwise lead with licences, or keep the project as
+research.
 **Throughout.** About 8 hours a week on `founder/LEARNING_CURRICULUM.md` Part A (you should be able to explain all seven
 concepts by February). Make dated commits yourself.
-**Not in these 90 days:** paid pilots (need an entity), equity, and more software features. The next value comes from
+**Not in these 90 days:** paid pilots (they need M0 and Gate 2), any evaluation on customer data (none is agreed;
+#18), equity, and more software features. Rebuild the Linux package before anyone uses it. The next value comes from
 physical data, buyer conversations and human expert review.

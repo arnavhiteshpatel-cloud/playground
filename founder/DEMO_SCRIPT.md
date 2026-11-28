@@ -17,10 +17,18 @@ whenever a number is on screen.
    ```
    Sign in as `analyst`. Keep the `reviewer` password at hand (both are demo-only constants in
    `osteoquant/desktop/demo.py`; they are public, so never reuse them).
-2. Run `python -m osteoquant.desktop --selftest` once; it must end with `"selftest": "PASS"`.
-3. Open in a second window: `reports_samples/DefectFill_SAMPLE4_gen2_synthetic_betatcp.pdf` (graft and new bone refused)
-   and `reports_samples/DefectFill_SAMPLE5_gen2_synthetic_ha.pdf` (dense HA; the advisor decides per scan), plus the
-   held-out slide of `investor/OsteoQuant_Commercial_Pilot_Deck.pptx` ("Evidence so far, including what failed").
+2. Run `python -m osteoquant.desktop --selftest` once from the source checkout; it must end with `"selftest": "PASS"`.
+   Do not demo the packaged Linux build in `packaging/dist/`: it was built on 27 Nov, predates advisor 1.3.1–1.4.3 and
+   the cycle-2/3 fixes, and must be rebuilt before any use.
+3. Open in a second window the two sample reports (regenerated at commit `969d9a5` under advisor 1.4.3, watermarked
+   "SAMPLE - SYNTHETIC DATA - NOT FOR STUDY DECISIONS"):
+   * `reports_samples/DefectFill_SAMPLE4_gen2_synthetic_betatcp.pdf` (β-TCP, week 4): graft and new-bone endpoints
+     refused in 6/6; total mineral reported in 5/6;
+   * `reports_samples/DefectFill_SAMPLE5_gen2_synthetic_ha.pdf` (HA, week 8): residual graft reported but flagged "(f)"
+     in 6/6 (automatic ROI not yet accepted / QC verdict "review"); new bone refused in 6/6; total mineral reported in 3/6;
+
+   plus the held-out slide of `investor/OsteoQuant_Commercial_Pilot_Deck.pptx` ("Evidence so far, including what
+   failed").
 4. Close everything else: no customer data, no email, no repository pages with prospect lists on screen.
 
 ## The ten minutes
@@ -31,13 +39,13 @@ whenever a number is on screen.
 | 0:45 | Project tree; *Rejected imports (1)* | "Studies are organised by group, animal, timepoint and scan. This file was corrupt; it is listed with the reason instead of being dropped silently." |
 | 1:30 | Import wizard on the raw `R99_export.npy` scan (or screenshot `docs/screenshots/desktop/05_import_metadata.png`) | "When a file carries no voxel size, you must type and confirm it. There is no default, because every physical number depends on it." |
 | 2:15 | Viewer: double-click `R01_week4`; yellow ROI outline; 3D panel; QC panel | "Linked slices and 3D. The yellow outline is the analysis volume. QC is split into facts about the file and heuristic prompts; the heuristics are ours, not standards." |
-| 3:15 | **Results** tab; select `R01_week4`; read the reasons | "This is the core idea. For β-TCP at four weeks, graft and new bone are *not measured*: the material's appearance is uncertain and resorbing β-TCP reaches the bone intensity range. Total mineral is still reported. Most tools would print a plausible number here." |
+| 3:15 | **Results** tab; select `R01_week4`; read the reasons | "This is the core idea. For β-TCP at four weeks, graft and new bone are *not measured*: the material's appearance is uncertain and resorbing β-TCP reaches the bone intensity range. Total mineral is reported only when the scan's blur and noise allow it; read what the screen shows for this scan. Most tools would print a plausible number here." |
 | 4:30 | Segmentation panel: brush a few voxels, *Save as new revision*, type a reason; Review panel → *What changed*, tick *Highlight changes* | "Every correction becomes a new version with who, when and why; the original is never overwritten. The reviewer sees exactly what changed." |
 | 5:30 | Sign out; sign in as `reviewer`; *Accept ROI...*, then *Approve* the segmentation (password, meaning) | "Two people are needed. The author cannot approve their own work; each signature states its meaning and goes into a hash-chained audit trail." |
 | 6:30 | **Reports** tab: *Generate defect-fill report*; page to the per-specimen table | "Refused endpoints print as n/m, with the reason. The report records the advisor version, the timepoint it used and the data class, and carries an evaluation watermark because no production licence exists." |
 | 7:30 | **Audit trail**: *Verify chain*; toggle *Blinded review mode* | "If anyone edits the database outside the application, verification fails at that event. Blinded mode replaces animal IDs and groups with random codes everywhere." |
-| 8:15 | The held-out slide in the pilot deck | Read the evidence below. Then: "So the refusals are safe in simulation, but nobody has tested them on real scans yet." |
-| 9:15 | The ask | "Could we run this on ten to twenty of your completed scans, alongside your own analysis, and compare? Until we are incorporated that would be a free evaluation under NDA; your study and your analysis stay exactly as they are." |
+| 8:15 | The held-out slide in the pilot deck | Read the evidence below. Then: "So in simulation the refusals held, but at a cost: for most specimens no volume was given at all, and nobody has tested any of this on real scans yet." |
+| 9:15 | The ask | "We are not taking any customer scans today. An evaluation on your data is planned only after we incorporate, sign a data-processing agreement and meet our first release gate; that is still an open founder decision. What I would value now is your view: would a retrospective comparison on completed scans be useful to you later, and what would it have to show?" |
 
 ## What to say about the evidence (read it; do not paraphrase the numbers)
 * "In the pre-registered held-out simulation S1H3 (advisor 1.4.1; 216 synthetic specimens from 9 phantom structures; a failure is a volume error above 20%): residual graft volume supported in 37% of specimens, every failing measurement refused and none of the supported ones failed (95% upper bound on the supported-failure rate 0.34 counting phantom structures as the unit; 0.045 if the 80 supported measurements were independent); supported graft volumes: median error 4.2%, maximum 13.0%; total mineral volume supported in 10% of specimens (sharp imaging only); supported mineral volumes: maximum error 3.2%; new-bone volume never supported; no volume endpoint supported for 58% of specimens." (`experiments/results/exp_S1H3_heldout.json`)
@@ -53,12 +61,12 @@ whenever a number is on screen.
 ## Honest answers to the questions you will get
 | Question | Answer |
 |---|---|
-| "Does it work on my material?" | "I don't know yet. In simulation, intensity alone separates graft from new bone only for dense calcium phosphates at low noise and early known timepoints. Your scans would be the first real test." |
+| "Does it work on my material?" | "I don't know yet. In simulation, residual graft volume can be supported only for dense calcium phosphates at low noise and early known timepoints, and new-bone volume was never supported in the held-out tests. Real scans would be the first real test, and we are not taking customer data before incorporation, a data-processing agreement and our first release gate." |
 | "Is it validated?" | "No. It is a research prototype. The safety results are simulations; a physical phantom study is planned but not started." |
 | "Can I use it for a GLP study or a submission?" | "No. We make no GLP or Part 11 claim, and nothing it produces should go into a submission without your own QA." |
 | "How much time does it save?" | "Unmeasured. The application can record timing during a pilot; that is one of the things a pilot would measure." |
 | "Who reviewed this?" | "Automated reviewer agents so far, not human experts. Human expert review is one of the next milestones." |
-| "What does it cost?" | "We are testing prices, not quoting them. A paid pilot would only follow incorporation." |
+| "What does it cost?" | "We are testing prices, not quoting them. A paid pilot would only follow incorporation, counsel-reviewed contracts and our pilot-readiness gate (Gate 2), which needs real-data validation first." |
 
 **Never claim:** accuracy on real grafts, validation, GLP/Part 11 compliance, customers or pilots, regulatory
 acceptance, or a time saving. Never call the product AI or an assistant.

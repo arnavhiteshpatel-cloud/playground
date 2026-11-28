@@ -13,7 +13,7 @@ Nothing in the build needs a network connection at run time.
 | `packaging/licenses/` | LGPL-3.0 and GPL-3.0 texts shipped in every build |
 | `packaging/make_icons.py` | renders `packaging/icons/osteoquant.{png,ico,icns}` and the in-app window icon |
 | `packaging/macos/entitlements.plist` | hardened-runtime exceptions needed by the embedded Python (for signing) |
-| `.github/workflows/desktop-release.yml` | CI matrix: Windows x64, macOS 14 arm64, Ubuntu 22.04 x64; builds, tests, uploads artifacts; never publishes |
+| `.github/workflows/desktop-release.yml` | CI matrix: Windows x64, macOS 14 arm64, Ubuntu 22.04 x64; builds and tests. It creates no GitHub Release, but on a manual dispatch or a `desktop-v*` tag it uploads the unsigned application archives as workflow artifacts, which any signed-in GitHub user can download from this public repository: **starting it is a distribution** (founder decisions #12, #21; B-013). Pull-request runs upload only the licence report and build information. It has never run |
 
 ## Build locally
 
@@ -60,8 +60,12 @@ all 8 steps pass. Users can run the same check on an installed copy.
 |---|---|---|---|---|
 | first build (all default Qt plugins, SimpleITK, server libs) | 1,184 MiB | 388 MiB | not yet written | PASS |
 | before licence fixes (SimpleITK and uvloop excluded) | 909 MiB | 333 MiB | **FAIL**: 8 violations (Qt Virtual Keyboard libs + plugin) | PASS |
-| **current default** (unneeded Qt plugins removed before dependency analysis) | **869 MiB** | **318 MiB** | **PASS** | **PASS** (8/8 steps, frozen) |
+| last build, 27 Nov 2026 (unneeded Qt plugins removed before dependency analysis) | **869 MiB** | **318 MiB** | **PASS** | **PASS** (8/8 steps, frozen) |
 | with PyTorch and SimpleITK (`OQ_BUNDLE_TORCH=1 OQ_BUNDLE_SITK=1`, measured on the first build) | 1.9 GiB | not archived | n/a | not run |
+
+**The last build is out of date.** It was built on 27 November 2026 and predates advisor 1.3.1–1.4.3 and the
+cycle-2/3 fixes, so its self-test result says nothing about the current code. It must be rebuilt before any use, and
+`build-info.json` should then record the commit and advisor version (cycle-3 review C3-BIZ-05).
 
 PyTorch accounts for 680 MiB of the folder and SimpleITK for 260 MiB; neither is used by the
 default desktop workflows (classical segmentation; TXM/DICOM/NIfTI/NRRD/Zarr/TIFF import).
@@ -91,7 +95,9 @@ Qt and PySide6 are used under the **LGPL-3.0**. Requirements and how the build m
     licence files in `dist-info/licenses/` sub-folders, e.g. PDFium's under pypdfium2, are now
     collected; distributions without a licence file get a written note);
   * **Python runtime:** `Python-PSF-LICENSE.txt` (PSF-2.0, copied from the build interpreter);
-  * **ICU** (bundled inside the PySide6 wheel): `ICU-LICENSE.txt`;
+  * **ICU** (bundled inside the PySide6 wheel): `ICU-LICENSE.txt`. The text is currently copied from
+    the build host's ICU package, not from the ICU release inside the wheel; take it from the
+    matching ICU source release before distribution (cycle-3 review C3-BIZ-15);
   * **Qt's own third-party code** (PCRE2, double-conversion, zlib, HarfBuzz, FreeType, libpng,
     libjpeg, md4c, PDFium in Qt Pdf, ...): listed with licences and the exact Qt version in
     `THIRD_PARTY_NOTICES.txt`; the texts are in the Qt source archive of that version;
@@ -99,7 +105,11 @@ Qt and PySide6 are used under the **LGPL-3.0**. Requirements and how the build m
     libgcrypt/libgpg-error and libsystemd (LGPL-2.1+), libdbus-1 (AFL-2.1/GPL-2), krb5/GSSAPI (MIT),
     OpenSSL 3 (Apache-2.0), fontconfig, FreeType, xkbcommon, the xcb utility libraries, zstd, ...):
     the owning package's `copyright` file in `licenses/system/`, and a written offer of the source
-    code of the LGPL libraries in the notices;
+    code of the LGPL libraries in the notices. **As written, that offer names no offeror, address or
+    contact, and no entity exists to make it** (cycle-3 review C3-BIZ-15). Before any distribution
+    the offer must be made by the licensor, once incorporated, with a contact address and a
+    three-year commitment, or the corresponding source archives must ship with the build (founder
+    decision #22, with counsel);
   * FreeType, HarfBuzz and the image libraries vendored by Pillow: Pillow's licence file.
 * **Replaceable libraries (relinking).** The one-folder build keeps Qt and PySide6 as separate
   shared libraries under `_internal/` (Linux `_internal/PySide6/Qt/lib/libQt6*.so.6`; Windows
@@ -231,9 +241,11 @@ They are accepted only when `OSTEOQUANT_ACCEPT_TEST_LICENCES=1` and are labelled
 
 `packaging/dist/OsteoQuant-desktop-linux-x86_64.tar.gz` was packed **before** the system-library,
 PSF, ICU and PDFium notices were added (they were written into the built folder afterwards by
-`packaging/bundle_inventory.py`). Do not distribute that archive. Re-run `python packaging/build.py`
+`packaging/bundle_inventory.py`). The built folder and the archive also predate advisor 1.3.1–1.4.3
+and the cycle-2/3 fixes (built 27 Nov 2026). Do not distribute or use that archive. Re-run `python packaging/build.py`
 (which now runs the inventory and fails on any unmapped library) to produce an archive with the
 complete notices. Two items remain counsel tasks before any distribution: whether pointing to the
 upstream Qt / PySide6 source of the exact version (6.12.0) is enough for the LGPL-3.0 source
 requirement or a mirrored source archive / written offer is needed (review C2-BIZ-09), and the
-EULA with the LGPL carve-out (see `FOUNDER_DECISIONS.md`).
+EULA with the LGPL carve-out (see `FOUNDER_DECISIONS.md`). Who makes the LGPL-2.1 written offer
+(the licensor, once incorporated) is founder decision #22.

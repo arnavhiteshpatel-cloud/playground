@@ -13,7 +13,7 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
 
 * A native **desktop application** replaces the local server and browser as the primary interface.
 * The software now **refuses to report** graft and new-bone endpoints it cannot support, through a
-  **measurement-support advisor** (version 1.4.2), and reports say why. Support is bound to the advisor's own
+  **measurement-support advisor** (version 1.4.3), and reports say why. Support is bound to the advisor's own
   threshold method, now the default segmentation.
 * Endpoints, analysis conventions and acceptance criteria are written down and pre-registered.
 * New longitudinal tools (granule tracking, registration QC, ROI propagation) and an ONNX runtime path.
@@ -51,7 +51,10 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
   mixing for measured control references), 1.3.3 (bone-derived grafts not supported by the day-0 mechanism), 1.4.0
   (blur, granule thickness and graft level measured in the scan; new-bone error propagation; ambiguous graft rim),
   1.4.1 (rim width scaled to the measured blur), 1.4.2 (metals refuse total mineral; BCP treated as resorbable; DBBM
-  allowed the day-0 mechanism; scan noise added to measured references; support bound to the segmentation method).
+  allowed the day-0 mechanism; scan noise added to measured references; support bound to the segmentation method),
+  1.4.3 (shipped: unspecified-material rim proxy; worst-case mineral rim gate; measured-reference noise and partial
+  volume; day-0 limits for resorbable materials; support re-evaluated when results are shown or reported).
+* The desktop has no day-0 workflow, so the day-0 rules above apply only to the analysis library.
 * The desktop passes each scan's time since implantation to the advisor (from the timepoint's days or a label such as
   "Week 4"; or entered in the analysis dialog; otherwise unknown) and the report prints it with its source.
 * Studies carry a data class (synthetic, public, own research, customer) chosen at creation; synthetic demo studies
@@ -88,15 +91,22 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
 ### Licensing and packaging (ADR-G2-03, ADR-G2-06; T3.2, T3.3)
 * Offline Ed25519-signed licence files, evaluation mode with watermarked reports, machine binding, test-licence tool.
   Only a published test key exists; no production key.
-* PyInstaller one-folder builds; CI matrix for Windows x64, macOS 14 arm64 and Ubuntu 22.04 that never publishes.
-  Signing and notarisation steps are present but inactive until the publisher's credentials exist.
+* PyInstaller one-folder builds; a CI build workflow for Windows x64, macOS 14 arm64 and Ubuntu 22.04. It creates no
+  GitHub Release, but on a manual dispatch or a `desktop-v*` tag it uploads unsigned application archives as workflow
+  artifacts that any signed-in GitHub user can download from this public repository, so starting it is a distribution
+  decision for the founder (B-013). It has never run. Signing and notarisation steps are present but inactive until the
+  publisher's credentials exist.
+* The only packaged build is a local Linux build of 27 November 2026. It predates advisor 1.3.1–1.4.3 and the
+  cycle-2/3 fixes and must be rebuilt before any use.
 
 ### Quality, security and evidence (FA-10, FA-18, FA-19, FA-27; T4.1–T4.3)
 * Second security review: 20 findings; the conditional critical (pickle codec in uploaded Zarr stores), four medium and
   seven low findings fixed with regression tests; three assigned and three open (all low)
   ([SECURITY_REVIEW_GEN2.md](../security/SECURITY_REVIEW_GEN2.md)).
-* Tests: from 61 to 372 test functions in `tests/` (55 of them for the desktop), including property-based, fuzz and
-  destructive tests.
+* Tests: from 61 tests (Generation 1) to the current suite, including property-based, fuzz and destructive tests.
+  Current counts and coverage come from one file, [`docs/qa/test_summary.json`](../qa/test_summary.json): 597 passed,
+  1 skipped; 90.8% line+branch coverage with the desktop UI code excluded (local full run, 28 November 2026). Earlier
+  figures quoted elsewhere are superseded. CI passed for the first time on 28 November 2026.
 * Claims checker (`scripts/check_claims.py`) comparing numbers in documents with result files.
 * New ledgers: task, architecture decisions, evidence, model, benchmark scorecard, defect, review, risk and release
   readiness (FA-24).
@@ -131,7 +141,8 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
 | F2 | Synthetic | Done | Propagated segmental ROI Dice 0.984 (minimum 0.963), registration QC passed 16/16; the Gen-1 failure mode was not reproduced |
 | L3 | Synthetic | Done | Day-0 is fragile under granule motion: naive day-0 footprint graft Dice — no motion: 0.80; 50 µm motion: 0.535; 100 µm motion: 0.35. The advisor refuses these cases |
 | L4 | Synthetic | Done | Registration QC flagged all 6 harmful misalignments and passed 78% of harmless ones |
-| S2, U1, O2 | Real (S2), synthetic | Not completed | — |
+| S2 | Real | Part a done; parts b and c running | Part a only; no number from b or c |
+| U1, O2 | Synthetic | Queued | — |
 
 Details: [SCIENTIFIC_METHODS.md](SCIENTIFIC_METHODS.md), [EXPERIMENT_REGISTRY.md](../../EXPERIMENT_REGISTRY.md).
 
@@ -143,5 +154,7 @@ Details: [SCIENTIFIC_METHODS.md](SCIENTIFIC_METHODS.md), [EXPERIMENT_REGISTRY.md
 * Day-0 method fails under small granule motion in simulation; bone formed inside a resorbing footprint is counted as graft.
 * Desktop: no day-0 or characterisation workflow; no locked model installed by default (ONNX inference no longer
   needs PyTorch); histology not included. Users are managed under *Project > Users...*.
-* Windows and macOS builds untested; no build is signed or notarised.
-* Traceability matrix not regenerated (FA-20); test coverage targets not yet confirmed met.
+* Windows and macOS builds never run; the only Linux build predates the current code and must be rebuilt; no build is
+  signed or notarised.
+* Traceability matrix not regenerated (FA-20). Overall coverage is 90.8% in the local run recorded in
+  `docs/qa/test_summary.json`; whether the ≥95% target for critical modules is met is not recorded there.

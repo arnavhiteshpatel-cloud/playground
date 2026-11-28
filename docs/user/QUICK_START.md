@@ -85,8 +85,14 @@ latest saved ROI* ticked. User guide: [§6](../desktop/USER_GUIDE.md#6-run-the-a
 
 Open the **Results** tab. The **Support** column reads *supported*, *flagged*, *not supported* or *not
 analysed*. Endpoints the advisor does not support show **not measured**; hover for the reason. This is expected for
-many materials, for example β-TCP, calcium sulfate, allograft, autograft and DBBM without a day-0 scan. Total mineral
-volume is usually still reported. See [MATERIALS_AND_SUPPORT.md](MATERIALS_AND_SUPPORT.md).
+many materials, for example β-TCP, calcium sulfate and DBBM, and for noisy or blurred scans of any material.
+Bone-derived grafts (allograft, autograft, DBM) are refused by every mechanism, with or without a day-0 scan: use
+histology to separate them from new bone. The desktop application has no day-0 workflow.
+
+Total mineral volume is reported only when the scan's blur and noise allow it, so expect scans with no volume at all.
+In the pre-registered held-out simulation S1H3 (SYNTHETIC), new-bone volume was never supported, total mineral volume
+supported in 10% of specimens (sharp imaging only), and no volume endpoint supported for 58% of specimens. See
+[MATERIALS_AND_SUPPORT.md](MATERIALS_AND_SUPPORT.md).
 
 ## 8. Correct the segmentation
 

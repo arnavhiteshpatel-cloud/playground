@@ -39,7 +39,8 @@ optionally, ONNX models.
 
 ### From a built package
 Linux: unpack the archive and start `OsteoQuant/OsteoQuant`; check it with `OsteoQuant/osteoquant-desktop-console
---selftest`. Windows and macOS packages are configured in CI but **have never been built or run**; their first CI run
+--selftest`. The only packaged Linux build (`packaging/dist/`, built 27 Nov 2026) predates advisor 1.3.1–1.4.3 and
+the cycle-2/3 fixes; rebuild it (§11) before any use. Windows and macOS packages are configured in CI but **have never been built or run**; their first CI run
 is their first test (`docs/user/INSTALLATION.md`). Builds are unsigned: SmartScreen and Gatekeeper will warn.
 
 ## 3. Run
@@ -82,7 +83,10 @@ project folder, a customer scan or a result into the git repository.
    to see the reasons.
 
 How to explain a refusal: "the graft and new bone cannot be told apart for this material, scan and timepoint, so the
-software reports total mineral and says why it will not split it." Per-material behaviour of the shipped advisor:
+software says why it will not split them, and reports total mineral only if the scan's blur and noise allow it." In
+the held-out simulation S1H3 (SYNTHETIC), total mineral volume supported in 10% of held-out specimens (sharp imaging
+only) and no volume endpoint supported for 58% of held-out specimens, so expect many scans with no volume at all.
+Per-material behaviour of the shipped advisor:
 `python3 scripts/material_support_table.py` (prints the table from the shipped code).
 
 ## 7. Correct, review and sign off
@@ -124,10 +128,14 @@ pip install -e ".[desktop]" pyinstaller pypdfium2 onnxruntime
 python packaging/build.py      # -> packaging/dist/OsteoQuant/ and an archive; runs the licence check and the self-test
 ```
 `packaging/dist/build-info.json` records the result. The build **fails** on any GPL-only Qt module or unmapped bundled
-library. Do not distribute any archive yet: the Linux archive on disk predates the complete notices
-(`docs/desktop/PACKAGING.md` §Distribution status), and the LGPL source arrangement and the EULA are counsel questions
-(decision #12). Windows/macOS builds run only in CI (`.github/workflows/desktop-release.yml`), which never publishes;
-code signing needs certificates issued to a company, so it waits for incorporation (decision #5).
+library. Do not distribute or use any archive yet: the Linux build on disk (27 Nov) predates the complete notices,
+advisor 1.3.1–1.4.3 and the cycle-2/3 fixes (`docs/desktop/PACKAGING.md` §Distribution status), and the LGPL source
+arrangement and the EULA are counsel questions (decision #12). Windows/macOS builds run only in CI
+(`.github/workflows/desktop-release.yml`) and have never been run. That workflow creates no GitHub Release, but on a
+manual dispatch or a `desktop-v*` tag it uploads the unsigned application archives as workflow artifacts, which any
+signed-in GitHub user can download from this public repository: starting it is a distribution (decisions #12, #21;
+B-013). Pull-request runs upload only the licence report and build information. Code signing needs certificates
+issued to a company, so it waits for incorporation (decision #5).
 
 ## 12. The synthetic demo project
 ```bash
@@ -141,8 +149,10 @@ They are **public**, so use this project for demonstrations only. The project co
 The demo walk-through is `founder/DEMO_SCRIPT.md`.
 
 ## 13. Making changes safely
-1. **Before pushing anything, settle decision #2 in `FOUNDER_DECISIONS.md`:** each public push of new inventive work
-   starts its own one-year US patent clock and ends confidentiality.
+1. **Before pushing anything, check the standing instruction on pushing (`FOUNDER_DECISIONS.md` #2 and #17).** The
+   only instruction on record is the founder's 27 Nov decision to push all work publicly (`docs/ip/IP_STRATEGY.md`
+   Addendum); under it, new advisor mechanisms were pushed on 28 Nov. Each public push of new inventive work starts
+   its own one-year US patent clock and ends confidentiality; record its date in `docs/ip/INVENTION_REGISTER.md`.
 2. Create a branch; change code; run the tests as CI does:
    `python -m pytest -q --ignore=tests/desktop -m "not slow"` then `python -m pytest -q tests/desktop`.
 3. If you changed analysis or advisor code: bump `ADVISOR_VERSION`, re-run the affected experiment, and record the
@@ -172,7 +182,7 @@ Longitudinal: `exp_L3_displacement.py`, `exp_L4_registration_qc.py`, `exp_F2_roi
 | Unexpected error dialog | bug | `error.log` in the settings folder (`docs/user/TROUBLESHOOTING.md`) |
 
 ## 16. Words you must not use
-Never call anything "validated", "verified", "audit-ready" or "independently reviewed"; never claim GLP or Part 11
-compliance; never present SYNTHETIC results as real-world accuracy; never describe the product as AI or an assistant.
+Never call anything "validated", "verified" or "independently reviewed"; describe the audit trail only as a
+"tamper-evident audit trail (research prototype; not validated)"; never claim GLP or Part 11 compliance; never present SYNTHETIC results as real-world accuracy; never describe the product as AI or an assistant.
 Reviews so far were automated reviewer agents, not human experts (`REVIEW_REGISTRY.md`). Quote advisor-validation
 results only in the standard S1H3 wording (`EXPERIMENT_REGISTRY.md`), with its caveat.

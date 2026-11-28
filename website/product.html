@@ -176,9 +176,9 @@
 <table class="data min-640 stack">
 <thead><tr><th>Platform</th><th>How it is built</th><th>Tested here</th><th>Signed</th></tr></thead>
 <tbody>
-<tr><th>Linux x86_64</th><td data-label="How it is built">Built locally and in CI (Ubuntu 22.04)</td><td data-label="Tested here"><span class="st st-ok">Yes</span> packaged self-test passed (8 of 8 steps)</td><td data-label="Signed">No (archive only)</td></tr>
-<tr><th>Windows x64</th><td data-label="How it is built">CI build matrix only</td><td data-label="Tested here"><span class="st st-no">No</span> untested</td><td data-label="Signed">No — pending publisher credentials</td></tr>
-<tr><th>macOS 14, Apple silicon</th><td data-label="How it is built">CI build matrix only</td><td data-label="Tested here"><span class="st st-no">No</span> untested</td><td data-label="Signed">No — signing and notarisation pending</td></tr>
+<tr><th>Linux x86_64</th><td data-label="How it is built">Built locally once (27 Nov 2026); the CI build workflow has never run</td><td data-label="Tested here"><span class="st st-no">Outdated</span> that build passed its packaged self-test, but it predates advisor 1.3.1–1.4.3 and later fixes; it must be rebuilt before any use</td><td data-label="Signed">No (archive only)</td></tr>
+<tr><th>Windows x64</th><td data-label="How it is built">CI build matrix only; never run</td><td data-label="Tested here"><span class="st st-no">No</span> never built</td><td data-label="Signed">No — pending publisher credentials</td></tr>
+<tr><th>macOS 14, Apple silicon</th><td data-label="How it is built">CI build matrix only; never run</td><td data-label="Tested here"><span class="st st-no">No</span> never built</td><td data-label="Signed">No — signing and notarisation pending</td></tr>
 </tbody>
 </table>
 </div>

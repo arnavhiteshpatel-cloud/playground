@@ -13,7 +13,7 @@ Sources read here:
   investor/FUNDING_STRATEGY.md, investor/ONE_PAGE_OVERVIEW.md
   EXPERIMENT_REGISTRY.md, EVIDENCE_LEDGER.md, BENCHMARK_SCORECARD.md, REVIEW_REGISTRY.md, FOUNDER_DECISIONS.md
   docs/science/PREREGISTRATION.md, docs/research/COMPETITOR_MATRIX.md, docs/research/competitor_matrix.csv,
-  docs/security/IP_PROVENANCE.md, docs/qa/coverage_final.txt, packaging/dist/build-info.json, tests/,
+  docs/security/IP_PROVENANCE.md, docs/qa/test_summary.json, packaging/dist/build-info.json, RELEASE_READINESS.md,
   validation/PHANTOM_EXPERIMENT_PROTOCOL.md, validation/DECISIONS_FOR_IMAGING_SCIENTIST.md
   docs/screenshots/desktop/*.png, experiments/results/figures/phantom_models_overview.png
 
@@ -225,9 +225,19 @@ def heldout_tests(crit) -> list[dict]:
     for name in names:
         d = J(name)
         s = get(d, "summary", 0, default={})
+        rows = d.get("rows", [])
+        if not s and isinstance(d.get("analysis"), dict):
+            # S1H4 and later store a structure-level analysis; map it onto the summary fields used here
+            s = {"n": len(rows), "per_endpoint": {
+                ep: {"n": v.get("n"), "n_fail": v.get("n_fail"), "failures_refused": v.get("failures_refused"),
+                     "supported_but_failed": v.get("supported_but_failed"),
+                     "supported_and_ok": (v.get("n_supported") or 0) - (v.get("supported_but_failed") or 0),
+                     "p_fail_given_supported_upper95": v.get("row_upper95"),
+                     "abs_err_supported_median": v.get("abs_err_supported_median"),
+                     "abs_err_supported_max": v.get("abs_err_supported_max")}
+                for ep, v in d["analysis"].items() if isinstance(v, dict) and "n_fail" in v}}
         if not s:
             continue
-        rows = d.get("rows", [])
         psf = sorted({r["psf_um"] for r in rows if "psf_um" in r})
         dens = sorted({r["graft_mgHA"] for r in rows if "graft_mgHA" in r})
         t = {"id": d.get("experiment", name), "file": f"experiments/results/{name}.json",
@@ -287,6 +297,14 @@ def gather() -> dict:
                 m = rx(r"Mechanism:\s*([^|]+?)(?:\.\s|\.$|\||$)", r[4])
                 if m:
                     F["mech"][rid] = clean(m)
+
+    # experiment status as the registry states it (cycle-3 review C3-BIZ-21: never call a queued run "running")
+    F["reg_status"] = {}
+    for t in md_tables(reg):
+        if t and len(t[0]) > 3 and clean(t[0][3]) == "Status":
+            for r in t[1:]:
+                if len(r) > 3:
+                    F["reg_status"][clean(r[0])] = clean(r[3])
 
     # longitudinal (L3) and Gen-0 L2
     L3 = J("exp_L3_displacement")
@@ -364,9 +382,17 @@ def gather() -> dict:
     F["selftest_ok"] = get(bi, "selftest", "exit_code") == 0
     F["licence_ok"] = get(bi, "licence_check", "exit_code") == 0
     F["bundle_mib"] = (bi.get("size_bytes") or 0) / 2 ** 20 or None
-    F["n_tests"] = sum(len(re.findall(r"^\s*def test_", p.read_text(errors="ignore"), re.M))
-                       for p in (ROOT / "tests").rglob("test_*.py"))
-    F["coverage"] = rx(r"^TOTAL\s.*?(\d+%)\s*$", T("docs/qa/coverage_final.txt"), flags=re.M)
+    # tests and coverage: one source for every document (cycle-3 review C3-BIZ-10)
+    ts = json.loads(T("docs/qa/test_summary.json") or "{}")
+    F["tests_passed"], F["tests_skipped"] = ts.get("passed"), ts.get("skipped")
+    F["coverage"] = f"{ts['coverage_total']:g}%" if ok(ts.get("coverage_total")) else None
+    F["tests_date"] = ts.get("date")
+    # state of the only packaged build, as recorded in the release checklist (C3-BIZ-05)
+    rr_ck = T("RELEASE_READINESS.md")
+    F["build_date"] = rx(r"Desktop build Linux \(local\): the only packaged build \(([^)]+)\)", rr_ck)
+    F["build_predates"] = rx(r"Desktop build Linux \(local\):.*?but it (predates advisor [\d.]+–[\d.]+ and the "
+                             r"cycle-2/3 fixes)", rr_ck)
+    F["build_advisor"] = get(bi, "advisor_version")
 
     # evidence ledger / provenance
     led = T("EVIDENCE_LEDGER.md")
@@ -399,7 +425,9 @@ def gather() -> dict:
     F["hss"] = rx(r"Hospital for Special Surgery[^|]*\|\s*\*\*(\$\d+/h corporate)\*\*", rev)
     F["no_glp"] = rx(r"The \*\*(\$\d+K GLP-study offering is removed)\.\*\*", rev)
     F["pilot_scans"] = rx(r"\|\s*O1\s*\|.*?\|\s*(\d+[–-]\d+) retrospective scans", rev)
-    F["gate_date"] = rx(r"Combined gate \(around ([^,]+),", T("business/PRICING_VALIDATION_PLAN.md"))
+    pvp = T("business/PRICING_VALIDATION_PLAN.md")
+    F["gate_date"] = rx(r"Price gate \(around ([^)]+)\)", pvp)
+    F["sep_gate"] = rx(r"Separability gate \(([^)]+)\)", pvp)
     ilog = ROOT / "business" / "interview_log_template.csv"
     F["interviews"] = (sum(1 for row in csv.reader(ilog.open()) if any(c.strip() for c in row)) - 1) if ilog.exists() else None
     fsd = T("investor/FUNDING_STRATEGY.md")

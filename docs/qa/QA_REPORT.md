@@ -1,5 +1,11 @@
 # OsteoQuant QA Report (Gen-2 test campaign, 2026-11-27)
 
+> **Superseded figures (2026-11-28).** This report records the 27 November test campaign. Its test counts and coverage
+> are historical. The single current source is [`test_summary.json`](test_summary.json): 597 passed, 1 skipped; 90.8%
+> line+branch coverage of the `osteoquant` package with the desktop UI code excluded (local full run at commit
+> `4b5e84c`). The 91% "Final" figure below comes from `coverage_final.txt` (27 Nov, 22:48 UTC), whose run recorded
+> 1 failed test; do not quote it. CI passed for the first time on 2026-11-28; §7 is updated to the current workflow.
+
 Scope: everything in `osteoquant/` except `osteoquant/desktop/` (GUI, tested separately by
 `tests/desktop` and `.github/workflows/desktop-release.yml`). Commands are run from the repository root.
 
@@ -191,10 +197,12 @@ The survivors that would change results were killed with new analytic tests (lis
   - Matrix: ubuntu, windows and macos × Python 3.12 and 3.13 (3.11 dropped: numcodecs>=0.17.1 requires 3.12).
   - CPU torch wheels. On Linux, `libegl1`, `libgl1` and `libxkbcommon0` are installed and
     `QT_QPA_PLATFORM=offscreen` is set.
-  - The fast set (`-m "not slow"`) runs everywhere. The full set with coverage runs on ubuntu/3.13.
-  - Coverage gates: ≥ 85 % overall and ≥ 95 % for `morphometry/`, `stats/`, `segment/metrics.py`,
-    `io/readers.py`, `io/writers.py`, `io/safe_archive.py` and `audit/`.
-  - Desktop tests run non-blocking (they are gated in `desktop-release.yml`).
+  - The fast set (`-m "not slow"`) runs everywhere. The full set with coverage, including the desktop and licensing
+    tests, runs on ubuntu/3.13 and is blocking (changed 2026-11-28, cycle-3 review C3-PRD-09).
+  - Coverage gates (desktop UI code excluded): ≥ 90 % overall and ≥ 95 % for `morphometry/`, `stats/`,
+    `segment/metrics.py`, `io/readers.py`, `io/writers.py`, `io/safe_archive.py` and `audit/`. (Until 2026-11-28 the
+    overall gate was 85 % and the desktop tests were non-blocking.) Whether CI passes under these new gates is not yet
+    recorded.
 - **`audit`:** pip-audit on the declared dependencies (blocking) and bandit at medium+ (report only).
 - **Windows:** the model-saving tests skip with QA-022 until `fcntl` is replaced.
 - No secrets and no publishing; `permissions: contents: read`.

@@ -1,6 +1,6 @@
 # Research Collaboration Proposal (TEMPLATE)
 
-> Template for academic cores, labs and academic CROs. No collaborations exist yet. OsteoQuant is a student research project and is not incorporated. Any agreement involving University of Illinois resources, students or IP must go through the relevant university offices (sponsored programs / technology management) [UNR: confirm the correct UIUC office and policy before use].
+> Template for academic cores, labs and academic CROs. No collaborations exist yet. OsteoQuant is a student research project and is not incorporated. Any agreement involving University of Illinois resources, students or IP must go through the relevant university offices (sponsored programs / technology management) [UNR: confirm the correct UIUC office and policy before use]. No partner scans are to be received before M0 (`investor/FUNDING_STRATEGY.md` §3), a data agreement and Gate 1 (`RELEASE_READINESS.md`); whether to accept any external data before then is founder decision #18 (`FOUNDER_DECISIONS.md`).
 
 **Title:** Multi-site validation of semi-automated three-class micro-CT segmentation (new bone / residual graft / host bone) in preclinical bone-defect models
 **Partner:** [Institution / core / lab]  **Date:** [ ]

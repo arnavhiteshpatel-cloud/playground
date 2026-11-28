@@ -33,8 +33,8 @@ Below about 30 responses per segment, Van Westendorp curves are **directional on
 
 ## 3. Unit cards (read aloud; also shown on screen)
 - **Card P (H1), paid pilot:** "We analyse 10–20 scans from a study you have already finished, blind to your results, and compare against your own analysis: agreement statistics, the time each step took, and a debrief. Research use only."
-- **Card S (H2), non-GLP study analysis:** "One complete non-GLP study: up to 40 reconstructed scans, up to 2 time points, one defect model. You get reviewed new-bone / residual-graft / host-bone segmentation, morphometry using ASBMR nomenclature, an audit trail and a report. Not for GLP use."
-- **Card M (H3), material characterisation:** "Before a study: we assess whether your graft material can be told apart from new bone at your scanner settings, recommend scan settings, and design a day-0 baseline scan if needed. The answer may be 'not separable by micro-CT alone'."
+- **Card S (H2), non-GLP study analysis:** "One complete non-GLP study: up to 40 reconstructed scans, up to 2 time points, one defect model. You get a reviewed segmentation, morphometry using ASBMR nomenclature, an audit trail and a report. Residual-graft, new-bone and total-mineral volumes are reported only where the scan supports them; in simulation many are refused, and new-bone volume was never supported in the held-out tests. Not for GLP use."
+- **Card M (H3), material characterisation:** "Before a study: we assess whether your graft material can be told apart from new bone at your scanner settings and recommend scan settings. The answer may be 'not separable by micro-CT alone'. We do not design or analyse day-0 baseline scans."
 - **Card A (H4), academic licence:** "The desktop application for one lab or core, installed locally (no data leaves your computers), with updates and email support, for one year."
 - **Card E (H5), enterprise licence:** "The desktop application for your whole organisation: multiple seats, onboarding, and a document pack describing what has been tested. It is not a GLP validation. One year."
 
@@ -107,13 +107,17 @@ A hypothesis needs **both** the interview signal **and** a behavioural signal to
 
 | Hyp. | Interview signal: VALIDATE if… | Behavioural signal: VALIDATE if… | REVISE DOWN / RESTRUCTURE if… | REVISE UP if… | REJECT if… |
 |---|---|---|---|---|---|
-| H1 Pilot | Median `vw_expensive_usd` (card P) ≥ $2,500 among ≥5 manufacturers and CROs | ≥3 of the first 10 written pilot offers signed at ≥$2,500 | 0 of the first 5 offers signed: test a free pilot that converts to a paid study, with a credit | ≥50% say yes at $5,000 on the ladder | No one shares scans at any price (B-CONF/B-SPONSOR blockers dominate): build a data-free demo |
+| H1 Pilot | Median `vw_expensive_usd` (card P) ≥ $2,500 among ≥5 manufacturers and CROs | ≥3 of the first 10 written pilot offers signed at ≥$2,500 | 0 of the first 5 offers signed: consider a free pilot that converts to a paid study, with a credit, only if founder decision #18 allows evaluation on customer data and M0, a DPA and Gate 1 are in place | ≥50% say yes at $5,000 on the ladder | No one shares scans at any price (B-CONF/B-SPONSOR blockers dominate): build a data-free demo |
 | H2 Study | Acceptable range (PMC–PME, or medians) overlaps $8–15K for ≥8 manufacturers; ≥40% of decision-makers (DM-YES) say yes at ≥$8K | ≥1 paid study at ≥$8K within 6 months of the first pilot; this is the single gate definition; the earlier one-pager gate "≥3 of 15 buyers at ≥$10K" is retired (`investor/ONE_PAGE_OVERVIEW.md` now cites this row) | Median PME < $8K but > cost floor: price at the revenue-maximising ladder point | Median `vw_bargain_usd` ≥ $12K and ≥40% say yes at $15K | Median PME < cost floor, or ≥50% code P-NONE or C-COMP |
 | H3 Characterisation | ≥2 manufacturers code P-GRAFT at severity ≥4 and say yes at ≥$5K | ≥1 paid characterisation | Ladder yes only at $3–5K: limit scope to customer-supplied scans (cost below $2.5K) | ≥40% say yes at $15K | <20% of manufacturers see density overlap as a problem |
 | H4 Academic | ≥6 labs/cores; median `vw_expensive_usd` ≥ $4K; ≥3 name a budget line (BUD-GRANT / BUD-RECHARGE) | ≥1 paid licence after an evaluation; ≥2 evaluations started | Median < $4K: core-wide licence with per-scan recharge | Cores say yes at $10K for a core-wide licence | ≥50% say free tools are enough (C-COMP naming Dragonfly academic / BoneJ) |
 | H5 Enterprise | ≥2 CROs confirm ≥10 qualifying studies per year **and** say yes at ≥$30K | ≥1 signed enterprise evaluation or licence | Yes only below $30K: sell per-study subcontracting instead | ≥1 says yes at $75K | CROs code C-COMP (in-house deep-learning pipeline), or C-PULL in fewer than 1 of 3 CROs |
 
-**Combined gate (around 25 Feb 2027, as in the one-page overview):** proceed with the services-plus-licence plan if H2 meets its interview signal **and** the phantom study shows a separable path (single-scan; day-0 is unproven under granule motion). If H2 fails but H4 or H5 passes, lead with licences. If everything fails, stop selling and keep the project as research and publication.
+**Two gates (changed 2026-11-28, cycle-3 review C3-BIZ-09).** The earlier single "combined gate around 25 Feb 2027" could not be evaluated on that date: the phantom study (M2) is planned for spring 2027 at the earliest, and its protocol is not approved (it still needs the 14 imaging-scientist decisions, the OTM determination and a Beckman agreement).
+- **Price gate (around 25 Feb 2027):** does H2 meet its interview signal? If H2 fails but H4 or H5 passes, plan to lead with licences.
+- **Separability gate (after the phantom study read-out; spring 2027 at the earliest, date not set):** does the phantom study show a separable path for at least one commercial material (single scan; day-0 is unproven under granule motion and not offered)?
+
+Proceed with the services-plus-licence plan only if both gates pass. If everything fails, stop selling and keep the project as research and publication.
 
 ## 8. After every five interviews
 1. Update the per-segment medians and ladder curves in a scratch analysis. Do not edit the model yet.
@@ -121,7 +125,8 @@ A hypothesis needs **both** the interview signal **and** a behavioural signal to
 3. Promote a hypothesis from [HYP] to [V] in `REVENUE_MODEL.md` §7 only when the behavioural signal exists, backed by a signed document.
 
 ## 9. Ethics and compliance
-- Every written offer is genuine, has a validity date, and states its limits ("research use; not validated for GLP").
+- Every written offer is genuine, has a validity date, and states its limits ("research use; no GLP or Part 11 claim").
+- No written offer, quote or proposal is sent before M0 (an entity exists to make and honour it; `investor/FUNDING_STRATEGY.md` §3).
 - No fabricated scarcity, discounts, testimonials or logos.
 - Respondents' price answers are confidential. Store them coded, with no company names in shared files.
 - No price discussions with competitors, ever.

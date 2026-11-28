@@ -23,9 +23,11 @@ No. It is research software for preclinical (animal) micro-CT. It is not intende
 
 Because the measurement-support advisor decided that, for this material and this scan, graft and new bone cannot be
 told apart reliably. Hover over the value in the Results tab, or read the report's list of suppressed endpoints, for
-the reason. This is expected for β-TCP, calcium sulfate, allograft, autograft, DBBM, DBM, composites, metals and
-any *Unspecified* material without a day-0 scan, and for noisy scans of any material. See
-[MATERIALS_AND_SUPPORT.md](MATERIALS_AND_SUPPORT.md).
+the reason. This is expected for β-TCP, calcium sulfate, DBBM, composites, metals and any *Unspecified* material, and
+for noisy or blurred scans of any material. Bone-derived grafts (allograft, autograft, DBM) are refused by every
+mechanism, with or without a day-0 scan: use histology to separate them from new bone. The desktop application has no
+day-0 workflow. In the pre-registered held-out simulation S1H3 (SYNTHETIC), new-bone volume was never supported for
+any material. See [MATERIALS_AND_SUPPORT.md](MATERIALS_AND_SUPPORT.md).
 
 ### Can I see the value anyway?
 
@@ -33,10 +35,13 @@ Raw values are kept in the audit record for research and traceability, but repor
 in which unsupported endpoints are blank. A number the advisor refused is one you should not use for study
 decisions.
 
-### What is always reported?
+### Is total mineral always reported?
 
-Total mineral volume (new bone + graft) and mineralised fraction, whenever the scan's noise is acceptable and new bone
-can be separated from soft tissue. These do not require telling graft from new bone.
+No. Total mineral volume (new bone + graft) and mineralised fraction do not require telling graft from new bone, but
+they are reported only when the scan's noise and blur allow it and new bone can be separated from soft tissue. Under
+blur the ambiguous rim around graft makes them unreliable too. In the pre-registered held-out simulation S1H3
+(SYNTHETIC), total mineral volume supported in 10% of specimens (sharp imaging only), and no volume endpoint
+supported for 58% of specimens. Expect scans for which no volume is reported.
 
 ### Which graft materials does it know?
 
@@ -47,19 +52,22 @@ measured yet.
 
 ### My material is not listed. What should I do?
 
-Choose *Unspecified*. Graft and new-bone endpoints will be refused and total mineral reported. To go further, follow
+Choose *Unspecified*. Graft and new-bone endpoints will be refused; total mineral is reported only if the scan's blur
+and noise allow it. To go further, follow
 the material-characterisation workflow in [MATERIALS_AND_SUPPORT.md](MATERIALS_AND_SUPPORT.md#unsupported-material-and-material-characterisation-workflow).
 
 ### Does a day-0 scan solve the problem?
 
 Sometimes, in principle. In simulation a registered day-0 footprint works well when the graft only shrinks in place,
 but its graft Dice falls from 0.80 to 0.535 with 50 µm of granule motion (Experiment L3), and bone formed inside a
-resorbing graft's footprint is counted as graft. The desktop application has no day-0 workflow yet. See
+resorbing graft's footprint is counted as graft. It never helps for allograft, autograft or DBM, which are refused
+with or without a day-0 scan. The desktop application has no day-0 workflow, and day-0 analysis is not offered. See
 [SCIENTIFIC_METHODS §5](SCIENTIFIC_METHODS.md#5-longitudinal-day-0-method-and-its-limits).
 
 ### Does it need a GPU or the internet?
 
-Neither. It runs on CPU and makes no network connections. Classical segmentation is the default.
+Neither. It runs on CPU and makes no network connections. The default segmentation is the advisor's own threshold
+(`advisor_threshold`), a classical method and the only one that carries measurement support.
 
 ### Does it send my data anywhere?
 
@@ -89,8 +97,10 @@ not a result. The application can record real interaction timing, locally and on
 
 ### Does it work on Windows and macOS?
 
-Builds are produced by CI, but they have never been run in this project and are unsigned (signing and notarisation
-await the publisher's credentials). Linux is the tested platform. See [INSTALLATION.md](INSTALLATION.md).
+Not yet known. The Windows and macOS builds have never been run (the CI build workflow has never run) and would be
+unsigned (signing and notarisation await the publisher's credentials). Linux is the only platform built so far, but its
+only packaged build (27 November 2026) predates advisor 1.3.1–1.4.3 and later fixes and must be rebuilt before any
+use; until then, use a source install. See [INSTALLATION.md](INSTALLATION.md).
 
 ### Do I need a licence?
 

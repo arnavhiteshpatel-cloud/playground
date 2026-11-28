@@ -60,6 +60,27 @@ The product is an **offline desktop application**. Scans stay on the analyst's o
 
 **Stress test (not in the scenarios).** `SCIENTIFIC_EVIDENCE.md` §5 assumes a reviewer needs 20 s per slice. If every slice of a 300–600-slice defect ROI [AE] had to be reviewed, review alone would take 1.7–3.3 h per scan, or 50–100 h for 30 scans. Replacing the 15 h of spot-review in the Base column gives about 95–145 h per study, which costs $5.7–8.7K at $60/h plus data handling. Under those conditions an $8K study earns between +28% and −9% contribution margin, and an $11K study earns 21–48%. **Measuring real review time is the first job of the pilot.**
 
+### 2a-bis. Risk not in the model: refused or undeliverable studies (cycle-3 review C3-BIZ-02)
+The model assumes that every sold pilot, study and characterisation delivers usable results. The simulation evidence
+says many will not. In the pre-registered held-out simulation S1H3 (SYNTHETIC; advisor 1.4.1): new-bone volume was
+never supported; total mineral volume supported in 10% of held-out specimens (sharp imaging only); and no volume
+endpoint supported for 58% of held-out specimens (`experiments/results/exp_S1H3_heldout.json`; the shipped advisor
+1.4.3 is at least as strict on the one rule S1H3 exercises differently). Real scans have not been tested.
+
+Consequences the numbers below do **not** carry:
+- There is no feasibility-pass rate: some studies would fail the pre-contract feasibility check (`templates/SOW.md` §7)
+  and never be sold.
+- There is no fee reduction for refused endpoints (the percentage in SOW §7 is still a founder decision, #14).
+- The pilot-to-customer rate (40% Base) and the characterisation attach rate (40% Base) assume the pilot shows a
+  deliverable result. A sponsor whose pilot returns mostly refused endpoints may not buy a study.
+- An O2 study on an overlapping material may deliver residual graft and total mineral on only some scans, and no
+  new-bone volume.
+
+The revenue, cash and equity figures in §5 are therefore optimistic on this point by an unknown amount. Whether to add
+a feasibility-pass rate and a refused-endpoint fee reduction to `build_financial_model.py`, and how to position the
+offerings until stage-B (physical phantom) data exist, is founder decision #20 in `FOUNDER_DECISIONS.md`. The model
+numbers in this file are unchanged.
+
 ### 2b. Delivery cost and contribution per unit (Bootstrapped; `Unit economics` sheet)
 Delivery cost = analyst hours × loaded rate ($65 / $60 / $55 per hour [AE]) + data handling ($75 / $40 / $25: encrypted drives, shipping, backup [AE]) + scanner pass-through for O3 ($1,500 / $1,000 / $500 [AE]). **Compute ≈ $0**, because the application runs on local hardware.
 
@@ -87,7 +108,7 @@ No published conversion benchmark for this niche was verified, so every rate is 
 
 | Input | Cons / Base / Opt (Bootstrapped) | Rationale |
 |---|---|---|
-| Share of the year in which paid work can be sold | 2027: 0% / 25% / 50%, then 100% | [AE] **No revenue before incorporation and a first signed pilot.** M0 (entity, OTM/IP clearance, insurance, counsel-reviewed NDA/SOW/DPA) is planned for Dec 2026–Feb 2027 and M3 (first paid pilot) for mid-2027 at the earliest (`investor/FUNDING_STRATEGY.md` §3). Paid pilots, and everything that follows from them, are scaled by this share |
+| Share of the year in which paid work can be sold | 2027: 0% / 25% / 50%, then 100% | [AE] **No revenue before incorporation and a first signed pilot.** M0 (entity, OTM/IP clearance, insurance, counsel-reviewed NDA/SOW/DPA; one definition, `investor/FUNDING_STRATEGY.md` §3) starts with requests in Dec 2026–Feb 2027 and has no completion date; M3 (first paid pilot) is mid-2027 at the earliest and also needs Gate 2 (`RELEASE_READINESS.md`: real-data validation for one task, closed human review, counsel-reviewed SOW/DPA), which is not met. Paid pilots, and everything that follows from them, are scaled by this share |
 | Share of the year in which licences can be sold | 2027: 0% in every scenario; 2028: 50% / 100% / 100% | [AE] No production signing key and no licence/EULA exist (`docs/desktop/PACKAGING.md`); licences start after the first signed pilot. The code licence is a founder decision; while the source is public with no licence, licence revenue has no enforceable basis (see the "without licence revenue" column in §5a) |
 | Qualified industry conversations per year (distinct buying units) | 12–25 / 20–35 / 25–50 | [AE] Founder capacity alongside full-time study. Capped by ~200 US-visible industry buying units: 41 bone-void-filler and 24 dental applicants active in 2023–26, 117 spine applicants and 10–25 CROs (`MARKET_MODEL_INPUTS.md` §1b, §2). For scale, NSF I-Corps Teams expects ≥100 customer and partner interviews over its curriculum ([V] NSF 25-549, accessed 2026-11-27); those are learning interviews, not qualified buyers |
 | Conversation → paid pilot | 8% / 15% / 22% | [HYP] A paid pilot requires the customer to share retrospective scans. Confidentiality and sponsor consent are the expected blockers (`INTERVIEW_CODING_SCHEME.md` §6) |
@@ -201,7 +222,7 @@ Base outputs: 2031 revenue **$259,088**; cumulative 2027–31 EBITDA **−$34,92
 
 | Hypothesis | Status now | Evidence that validates it | Evidence that rejects or revises it |
 |---|---|---|---|
-| H1. Paid pilot at $2.5–5K | [HYP] | ≥3 signed paid pilots at ≥$2.5K from the first 10 pilot offers | 0 of the first 5 offers accepted: test a free pilot that converts to a paid study instead |
+| H1. Paid pilot at $2.5–5K | [HYP] | ≥3 signed paid pilots at ≥$2.5K from the first 10 pilot offers | 0 of the first 5 offers accepted: consider a free pilot that converts to a paid study instead (only if founder decision #18 allows evaluation on customer data, and after M0, a DPA and Gate 1) |
 | H2. Non-GLP study at $8–15K | [HYP] | ≥8 industry Van Westendorp responses whose acceptable range overlaps $8–15K; ≥40% of decision-makers say yes at ≥$8K on the price ladder; then ≥1 paid study at ≥$8K | Median "too expensive" price below $8K, or analysis costs under 5% of the study budget |
 | H3. Material characterisation at $5–15K | [HYP] | ≥2 manufacturers code the graft-separation pain (P-GRAFT) at severity ≥4 and say yes at ≥$5K on the ladder; ≥1 paid characterisation | Fewer than 20% of manufacturers see density overlap as a problem |
 | H4. Academic licence at $4–10K/yr | [HYP] | ≥6 lab or core interviews with a named budget line (grant or recharge) and a median "expensive but would consider" price ≥$4K; ≥1 paid licence after evaluation | ≥50% say free tools (Dragonfly academic, BoneJ) are enough: switch to per-scan core recharge |

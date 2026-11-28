@@ -6,6 +6,7 @@ Version 0.2 (2026-11-27). It replaces v0.1 (DefectFill Report only). No intervie
 - The product is now described as an **offline desktop application** plus optional services: paid pilot, non-GLP study analysis, material characterisation, academic licence, enterprise licence.
 - New: segment-specific modules (§10). Questions on IT and installation (§7), the day-0 baseline scan (§4), and how people react to software that **abstains** (§9).
 - Pricing now follows `PRICING_VALIDATION_PLAN.md`.
+- 2026-11-28 (cycle-3 review C3-BIZ-13): the §9 concept description no longer says the software registers later scans to a day-0 scan (there is no desktop day-0 workflow, and day-0 analysis is not sold); it states how often measurements are refused in simulation.
 - New logging columns in `interview_log_template.csv`.
 
 ## Purpose
@@ -81,12 +82,12 @@ Segments (`prospect_segments.csv`; codes in `INTERVIEW_CODING_SCHEME.md` §1):
 ## 9. Concept reaction (5 min)
 Read this description verbatim, then show a **mock** report page labelled "illustrative, not validated":
 
-> "OsteoQuant is a desktop application under development. It runs on your own computer, so scans do not leave your network. For each scan it proposes the defect region and labels new bone, residual graft and host bone for an analyst to review and correct. It can register later scans to a day-0 scan, reports standard morphometry, and keeps an audit trail of every change. When it cannot support a measurement, for example because the graft and new bone are not distinguishable at that resolution, it says so and does not report a number. It has been tested on simulated data and a small amount of public micro-CT data. It has not been validated on any commercial graft material, and it is not GLP-validated. Alongside the software we would offer analysis as a service."
+> "OsteoQuant is a desktop application under development. It runs on your own computer, so scans do not leave your network. For each scan it proposes the defect region and a segmentation for an analyst to review and correct, reports standard morphometry, and keeps a tamper-evident record of every change. Before it reports residual graft, new bone or total mineral volume, it checks whether the scan can support that measurement for your material, the scan's blur and noise, and the timepoint. When it cannot, it says so and does not report a number, and in simulation that happens often: new-bone volume was never supported in our held-out tests, and many scans received no volume at all. It does not analyse day-0 or other longitudinal designs. It has been tested on simulated data and a small amount of public micro-CT data. It has not been validated on any commercial graft material, and we make no GLP claim. Once a company exists, we would also offer analysis as a service."
 
 28. First reaction? What is missing? What would you not trust? → `concept_reaction_code`, `trust_requirements`
 29. **Abstention:** how would you feel about software that declines to report a value instead of giving a number with a warning? Helpful, frustrating, or a deal-breaker? → `abstention_reaction`
 30. What would you need to see before using it on a real study: agreement with your own analysts, comparison with histology, a validation report?
-31. **Pilot willingness:** would you share 10–20 retrospective, de-identified scans with your existing analysis so we can compare blind? What would block that? → `pilot_willing`, `pilot_blockers`
+31. **Pilot willingness (hypothetical; we are not collecting scans now):** once a company, a data-processing agreement and a release gate are in place, would you share 10–20 retrospective, de-identified scans with your existing analysis so we can compare blind? What would block that? Do not accept any scans or confidential data in the interview. → `pilot_willing`, `pilot_blockers`
 
 ## 10. Segment modules (pick one; 4 min)
 **Manufacturers (MFR / OEM / TISSUE)**

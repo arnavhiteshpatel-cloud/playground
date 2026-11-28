@@ -25,7 +25,8 @@ Best regards,
 
 ## C. Pilot-offer cover note (ONLY if the interviewee asked for a pilot proposal)
 **Preconditions (all required):**
-- a legal entity exists, decided by the founder with counsel;
+- a legal entity exists, decided by the founder with counsel, and the rest of M0 is in place (OTM determination received, insurance, counsel-reviewed NDA/SOW/DPA; `investor/FUNDING_STRATEGY.md` §3);
+- Gate 1 is met, and for a paid pilot Gate 2 (`RELEASE_READINESS.md`; neither is met today), and founder decision #18 allows evaluation on customer data;
 - `../templates/PILOT_PROPOSAL.md` has had legal review;
 - the price is a genuine offer within $2,500–5,000 [HYP] and is logged in `offer_sent_usd`;
 - the NDA/DPA route is agreed.

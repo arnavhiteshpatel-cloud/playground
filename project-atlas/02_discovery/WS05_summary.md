@@ -1,9 +1,9 @@
 # WS05 — Commercial & building services: discovery summary (2026-11-28)
 
-36 opportunity records, 36 sources. Most unit economics are analyst estimates (E). Licensing facts, firm counts and incumbent benchmarks come from primary sources (A).
+36 records, 36 sources. Unit economics are mostly analyst estimates (E); licensing facts, firm counts and incumbent benchmarks are primary (A).
 
 ## Landscape
-This workstream has a lot of mandated, recurring spend that is fragmented across small firms. What decides whether a cold start can work is **who may legally do the work**, not demand. The services fall into four tiers by how reachable the licence is for this founder:
+Mandated, recurring spend is fragmented across small firms. Whether a cold start works depends on **who may legally do the work**, not demand. Four tiers by licence reachability:
 
 | Tier | Services | Illinois/Chicago rule (primary source) |
 |---|---|---|
@@ -27,8 +27,7 @@ The OSFM licence rolls (dated 11/19/2026) show how small the licensed pool is:
 **Route density and pull-through:** No primary source puts a number on inspection-to-repair pull-through. APi says only that inspection dollars "can lead to" service work. The route model in the records is E-level:
 - One dense-route technician brings in about $150–250k a year.
 - Loaded labour plus vehicle cost about $80–95k.
-- That leaves roughly $50–110k contribution per route.
-- Repair, replacement and upgrade work (e.g., UL 300 suppression upgrades, communicator swaps, door hardware) carries much of the margin.
+- That leaves roughly $50–110k contribution per route; repairs and upgrades (UL 300 suppression, communicator swaps, door hardware) carry much of the margin.
 
 ## Strongest candidates (evidence-adjusted ranking)
 1. **WS05-007 Commercial pest control for food and audited facilities** (adjusted 6.38, C)

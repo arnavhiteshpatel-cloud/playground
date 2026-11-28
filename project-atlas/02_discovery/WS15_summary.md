@@ -10,12 +10,11 @@ Unreachable: chicago.gov and the Cook County Assessor (403), ilga.gov (503, so n
 
 ## Rule status verified (as of Nov 2026)
 - **ADA Title II web rule:** DOJ's interim final rule of 2026-04-20 moved compliance dates to **Apr 26, 2027** (population 50k and over) and **Apr 26, 2028** (smaller entities and special districts). DOJ also signaled it will revise the substantive requirements [S001]. SBA Advocacy urged withdrawal for small governments [S002].
-- **Corporate Transparency Act:** an Aug 2026 final rule permanently exempts US companies. About 28k filers remain, down from 32.6M [S004/S005]. The business is dead.
-- **FinCEN residential real estate rule:** vacated 2026-03-19, with an appeal pending [S031]. The business is dead for now.
+- **CTA:** Aug 2026 final rule permanently exempts US companies; ~28k filers remain vs 32.6M [S004/S005].
+- **FinCEN real estate rule:** vacated 2026-03-19; appeal pending [S031].
 - **PFAS drinking-water rule:** 2026-05-18 proposals keep PFOA/PFOS at 4 ppt, allow extensions to 2031 and rescind PFHxS, PFNA, GenX and the Hazard Index. Initial monitoring is still due by 2027 [S006].
 - **LCRI:** the 10-year replacement mandate stands. The EPA page as of Dec 2025 shows no announced revision [S007].
-- **OSHA heat rule:** still only proposed; post-hearing comments closed Oct 2025 [S008].
-- **OSHA HazCom 2024:** substance deadline moved to May 19, 2026, and the other dates moved 4 months later [S030].
+- **OSHA:** heat rule still only proposed [S008]; HazCom 2024 substance deadline moved to May 19, 2026, other dates +4 months [S030].
 - **AIM Act:** Technology Transitions reconsideration finalized May 2026. The leak-repair, reclaim and cylinder rules (Oct 2024) are in force, with a transport refrigeration unit exemption proposed [S017–S019].
 - **Federal tax credits (P.L. 119-21):** 25C and 25D ended Dec 31, 2025 [S032].
 - **Illinois CRGA (PA 104-0458):** signed 2026-01-08 and effective 2026-06-01. It sets a 3 GW storage target, and the renewable portfolio standard budget grows about 38% from June 2027 [S013].
@@ -26,12 +25,12 @@ Regulation creates three kinds of demand:
 2. **One-time deadline surges** (ADA Title II, HazCom, PFAS monitoring, LCRI inventories). Attractive but fragile: in 2025–2026 federal deadlines were delayed, narrowed or vacated.
 3. **Incentive programs** (Illinois Shines, utility efficiency programs, tax credits). Large A-level volumes, but crowded sales mechanisms and cliff risk.
 
-Illinois has the most local governments in the US, at 6,930 [S003]. It also had the largest lead service line count in its own 2020 inventory: 667k lead plus 820k unknown lines across 1,758 water systems [S009].
+Illinois has the most local governments of any state (6,930; Texas is next at 5,533) [S003]. Its 2020 statewide inventory listed 667k lead and 820k unknown-material service lines across 1,758 water systems [S009].
 
 ## Strongest candidates
-1. **WS15-023 Prevailing-wage certified payroll outsourcing.** Contractors must file through IDOL's portal [S025], and the pipeline keeps growing: LSL replacement, IIJA projects, and Illinois Shines prevailing-wage rules [S014]. It needs no license, little capital, monthly recurring revenue and SOP-based delegation. Award lists make buyers easy to find. Gaps: number of filers and market prices.
+1. **WS15-023 Prevailing-wage certified payroll outsourcing.** Contractors file through IDOL's portal [S025]; the pipeline grows with LSL, IIJA and Illinois Shines prevailing-wage work [S014]. No license, little capital, monthly revenue, SOP delegation; award lists identify buyers. Gaps: filer count, prices.
 2. **WS15-020 UST compliance for independent gas stations.** Illinois has 17,822 active USTs. In FY2026 there were 2,858 state inspections, walkthrough compliance was 83%, technical compliance was 76%, and there were 244 new releases [S029]. The gap is quantified and the revenue is a monthly route business. Gap: Illinois rules on who may perform walkthroughs and train operators.
-3. **WS15-016 Radon testing and mitigation.** The IEMA license is attainable through a course plus an NRPP/NRSB exam [S021], and the licensed pool is small (131 applicants in 2025 [S022]). Customers pay at service, and demand comes from disclosure rules and health concerns.
+3. **WS15-016 Radon testing and mitigation.** IEMA license via course plus NRPP/NRSB exam [S021]; small licensed pool (131 applicants in 2025 [S022]); paid at service; disclosure- and health-driven demand.
 4. **WS15-018 and WS15-017 Asbestos surveys before renovation, and AHERA school programs.** The federal mandates are permanent: schools must reinspect every 3 years [S020], and Illinois has 890 school districts [S003]. Accreditation takes days. These bundle well with radon and lead into one environmental-compliance firm.
 5. **WS15-005 LSL inventory verification.** The state mandate runs for decades and has A-level data. A firm can enter without a license as the field and data crew for overloaded engineering firms. The weak points are municipal cash cycles and engineering gatekeepers.
 6. **WS15-001 and WS15-002 ADA Title II accessibility for small Illinois governments.** This fits a tech founder best, with high AI leverage and no license. The deadlines fall within the window, but demand is at regulatory risk, so resilience is scored 4.

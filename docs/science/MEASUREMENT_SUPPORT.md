@@ -1,6 +1,6 @@
 # Measurement Support (Identifiability) Policy
 
-Implementation: `osteoquant/advisor/` (version **1.4.0**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
+Implementation: `osteoquant/advisor/` (version **1.4.1**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
 
 ## Why
 Graft and new bone are both mineral. For many materials their X-ray attenuation overlaps (Experiments C, C2; the
@@ -54,7 +54,7 @@ by which mechanism, and under which conditions — and abstains otherwise.
     Φ(δ/σ) + Φ((T−δ)/σ) − 1).
 11. **New-bone error propagation** (1.4.0): new bone = mineral − graft, so new-bone endpoints require
     |new-bone/soft ratio − 1| + (p/(1−p))·max(|graft ratio − 1|, 0.20) ≤ 10%, p = the scan's graft share of mineral.
-12. **Ambiguous graft rim** (1.4.0): mineral that is not graft-like but touches graft-like voxels may be new-bone coating
+12. **Ambiguous graft rim** (1.4.0; width max(1, ⌈2σ⌉) voxels from 1.4.1): mineral that is not graft-like but lies within the blur shell of graft-like voxels may be new-bone coating
     or graft halo. New-bone endpoints are refused if this rim exceeds 10% of the would-be new bone; total mineral is
     refused if the worst-case rim error (rim / mineral) could exceed 20%.
 9. **New bone vs soft tissue** (advisor ≥1.2.0): the mineral threshold and the new-bone/mineral endpoints are gated by

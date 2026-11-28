@@ -47,7 +47,7 @@ MIN_STRUCT_VOXELS = 3.0         # thickness endpoints need structures ≥3 voxel
 HOST_REL_MATURE = 1.0
 MIN_REFERENCE_SAMPLES = 500     # measured reference distributions need at least this many voxels
 MIN_GRAFT_FRACTION = 0.05       # below this share of mineral, relative graft-volume error is unbounded
-ADVISOR_VERSION = "1.4.0"
+ADVISOR_VERSION = "1.4.1"
 PROFILE_SCAN_MISMATCH_TOL = 0.15   # observed bright-mode vs profile graft level (relative)
 RIM_TOL = 0.10                     # ≥1.4.0: max ambiguous graft-rim share of new bone / half-rim share of mineral
 # Resorbable materials whose granules become microporous/fragmented and enter the bone intensity range as they
@@ -73,6 +73,8 @@ EARLY_WEEKS_MAX = 4.0
 # GRAFT; measured halo composition; new-bone/mineral partial volume unchanged from 1.3.3
 # (S1H held-out failure: wider PSF + small granules → graft −21…−28%, new bone +20…+50% while supported); new-bone
 # endpoints gated by propagation of graft-volume error (new bone = mineral − graft).
+# 1.4.1: ambiguous-rim width = max(1, ceil(2σ_blur)) voxels (S1H2 held-out: one-voxel rim under-covered heavy-blur halo).
+# Final advisor change of Generation 2; validated once on S1H3 (PREREGISTRATION §9).
 
 # Assumed new-bone maturity range in relative units. Early/mid healing: woven 650–1000 mgHA/cm³ vs
 # mature host ≈1075 → (0.60, 0.93) (SCIENTIFIC_EVIDENCE row 4, assumption anchored to a published callus
@@ -366,7 +368,7 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
                    observed_graft_level: float | None = None, blur_sigma_vox: float | None = None,
                    graft_struct_um: float | None = None, graft_level_deep: float | None = None,
                    halo_graft_fraction: float | None = None, rim_fraction_new: float | None = None,
-                   rim_fraction_mineral: float | None = None) -> SupportAssessment:
+                   rim_fraction_mineral: float | None = None, rim_width_vox: int | None = None) -> SupportAssessment:
     """Decide which endpoints can be reported.
 
     noise_rel          scan noise σ divided by (host − soft) grey contrast.
@@ -687,7 +689,7 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
                    observed_graft_level: float | None = None, blur_sigma_vox: float | None = None,
                    graft_struct_um: float | None = None, graft_level_deep: float | None = None,
                    halo_graft_fraction: float | None = None, rim_fraction_new: float | None = None,
-                   rim_fraction_mineral: float | None = None) -> SupportAssessment:
+                   rim_fraction_mineral: float | None = None, rim_width_vox: int | None = None) -> SupportAssessment:
     """Decide which endpoints can be reported (see module docstring and docs/science/MEASUREMENT_SUPPORT.md).
 
     noise_rel          scan noise σ divided by (host − soft) grey contrast.
@@ -719,7 +721,8 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
     # half the rim as a share of total mineral, lies in the one-voxel rim around graft-like voxels, the endpoint is not
     # identifiable (coating vs halo)
     if rim_fraction_new is not None and not no_graft:
-        a.intensity["ambiguous_rim"] = {"fraction_of_new_bone": rim_fraction_new, "half_rim_fraction_of_mineral": rim_fraction_mineral}
+        a.intensity["ambiguous_rim"] = {"fraction_of_new_bone": rim_fraction_new, "half_rim_fraction_of_mineral": rim_fraction_mineral,
+                                        "width_vox": rim_width_vox}
         if rim_fraction_new > RIM_TOL:
             why = (f"{rim_fraction_new:.0%} of the would-be new bone is a one-voxel rim touching graft-like voxels: new-bone "
                    "coating cannot be told from graft partial-volume halo at this resolution")

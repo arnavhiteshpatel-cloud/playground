@@ -61,11 +61,16 @@ def _assess_scan(image: np.ndarray, roi_mask: np.ndarray, spacing, cfg: dict):
             prior = float(np.clip(g.sum() / mineral.sum(), 0.005, 0.95))
         # ≥1.4.0 ambiguous graft rim: mineral that is not graft-like but touches graft-like voxels is either new bone
         # coating the granules (osteoconduction) or partial-volume halo of the graft — indistinguishable by intensity.
+        # 1.4.1: the rim spans the blur shell, max(1, ceil(2σ)) voxels, with σ measured from the scan (S1H2: a fixed
+        # one-voxel rim under-covered the graft halo at σ ≈ 1 voxel and total mineral was over-counted by 20–25%)
+        blur_pre = estimate_blur(image, roi, est["soft"], est["host"])
+        rim_w = int(max(1, np.ceil(2.0 * (blur_pre.get("sigma_vox") or 0.5))))
         if g.any():
             nb_like = mineral & ~g
-            rim = nb_like & ndi.binary_dilation(g, iterations=1)
+            rim = nb_like & ndi.binary_dilation(g, iterations=rim_w)
             kw["rim_fraction_new"] = float(rim.sum() / max(1, nb_like.sum()))
             kw["rim_fraction_mineral"] = float(0.5 * rim.sum() / max(1, mineral.sum()))
+            kw["rim_width_vox"] = rim_w
         # partial-volume halo and new-bone share measured from the scan (advisor ≥1.2.0)
         # surface shell of mineral structures (any phase), estimated with a conservative core threshold so that
         # the halo itself is not counted as structure; the share of non-core ROI voxels in that shell
@@ -101,7 +106,7 @@ def _assess_scan(image: np.ndarray, roi_mask: np.ndarray, spacing, cfg: dict):
             if shell_all.sum() > 0:
                 kw["halo_graft_fraction"] = float((ndi.binary_dilation(bright_mask, iterations=1) & shell_all).sum()
                                                   / shell_all.sum())
-        blur = estimate_blur(image, roi, est["soft"], est["host"])
+        blur = blur_pre
         if blur.get("sigma_vox"):
             kw["blur_sigma_vox"] = float(blur["sigma_vox"])
         a = assess_support(material, graft_prior=prior, **kw)

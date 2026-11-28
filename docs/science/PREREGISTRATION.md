@@ -76,6 +76,16 @@ validates it. S1H2 uses conditions not seen by any advisor version:
 * No advisor change in response to S1H2; results reported as found. In-sample re-runs of S1b, S1c and S1H under 1.4.0
   are labelled development checks.
 
+## 9. Final Generation-2 held-out advisor validation S1H3 (registered 2026-11-28, before running; advisor 1.4.1 frozen)
+Advisor 1.4.1 differs from 1.4.0 only in the ambiguous-rim width (max(1, ⌈2σ⌉) voxels), motivated by S1H2. **This is
+the last advisor change of Generation 2:** whatever S1H3 shows is reported as the Generation-2 result and no further
+rule changes are made before human expert review and physical data.
+* **Phantoms:** seeds 4000–4002 condyle (compact 300–600 µm), 4100–4102 segmental (compact 400–700 µm), 4200–4202
+  calvarial (strut-like 150–300 µm, roughness 0.5); graft fill 0.30; healing stage 0.50.
+* **Densities X:** 1350, 1900, 2450, 3000 mgHA/cm³.
+* **Imaging:** PSF σ 15, 35 and 50 µm (every specimen); noise smoothed with a 1.0-voxel Gaussian at σ ∈ {70, 140}.
+* **Advisor/method/outcome/acceptance:** as §7–§8. 216 specimens (9 structures × 4 densities × 3 PSF × 2 noise).
+
 ## Deviations log
 | Date | Item | Deviation | Justification |
 |---|---|---|---|

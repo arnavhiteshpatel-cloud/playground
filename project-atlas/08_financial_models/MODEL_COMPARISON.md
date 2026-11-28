@@ -4,39 +4,83 @@ All figures from each model's Python mirror (identical to the XLSX formulas; see
 
 ## Scenario summary
 
-| ID | Name | Scen | Y1 op | Y3 op | Y5 op | Peak funding | Breakeven | Payback | ≥$10k/mo | ≥$25k/mo | 10-yr deployable | Y10 EV |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| TEMPLATE | Template — illustrative recurring B2B se | cons | $-24k | $-68k | $-45k | $486k | never | never | never | never | $0 | $-192k |
-| TEMPLATE | Template — illustrative recurring B2B se | base | $-7k | $40k | $261k | $140k | m9 | m60 | m37 | m56 | $658k | $1.12M |
-| TEMPLATE | Template — illustrative recurring B2B se | opti | $31k | $336k | $865k | $27k | m6 | m29 | m12 | m30 | $3.20M | $3.71M |
+| ID | Name | Scen | Y1 op | Y3 op | Y5 op | Peak funding (model draw) | Peak funding (no draw) | Breakeven | Payback | ≥$10k/mo | ≥$25k/mo | 10-yr deployable | Y10 EV |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| WS05-007 | Chicago food-facility commercial pest co | cons | $-36k | $-2k | $25k | $228k | $71k | m32 | never | never | never | $0 | $124k |
+| WS05-007 | Chicago food-facility commercial pest co | base | $-15k | $52k | $143k | $36k | $24k | m11 | m49 | m49 | never | $375k | $715k |
+| WS05-007 | Chicago food-facility commercial pest co | opti | $15k | $200k | $479k | $14k | $14k | m7 | m12 | m15 | m43 | $1.90M | $2.40M |
+| WS04-014 | Managed IT + HIPAA security compliance f | cons | $-34k | $14k | $-34k | $298k | $106k | m24 | never | never | never | $0 | $-148k |
+| WS04-014 | Managed IT + HIPAA security compliance f | base | $-16k | $71k | $133k | $35k | $22k | m10 | m37 | m37 | never | $346k | $569k |
+| WS04-014 | Managed IT + HIPAA security compliance f | opti | $25k | $282k | $574k | $11k | $11k | m6 | m9 | m13 | m33 | $2.43M | $2.46M |
+| SYN-004 | Commercial energy cost management for Co | cons | $-31k | $-98k | $-131k | $494k | $494k | never | never | never | never | $0 | $-490k |
+| SYN-004 | Commercial energy cost management for Co | base | $-10k | $98k | $344k | $30k | $30k | m9 | m35 | m30 | m51 | $1.58M | $1.28M |
+| SYN-004 | Commercial energy cost management for Co | opti | $54k | $608k | $1.42M | $13k | $13k | m5 | m12 | m10 | m21 | $7.25M | $5.31M |
+| WS18-003 | Junk removal & cleanouts — independent,  | cons | $-61k | $-11k | $-10k | $417k | $225k | never | never | never | never | $0 | $-27k |
+| WS18-003 | Junk removal & cleanouts — independent,  | base | $-1k | $132k | $145k | $110k | $88k | m8 | m46 | m25 | never | $362k | $372k |
+| WS18-003 | Junk removal & cleanouts — independent,  | opti | $111k | $434k | $466k | $56k | $56k | m3 | m15 | m7 | m14 | $2.04M | $1.20M |
+| WS13-014 | Private utility locating & concrete GPR  | cons | $-28k | $-87k | $-25k | $521k | $329k | m13 | never | never | never | $0 | $-101k |
+| WS13-014 | Private utility locating & concrete GPR  | base | $1k | $112k | $200k | $230k | $161k | m7 | never | m17 | never | $451k | $800k |
+| WS13-014 | Private utility locating & concrete GPR  | opti | $73k | $743k | $1.45M | $122k | $114k | m6 | m28 | m9 | m14 | $5.63M | $5.79M |
+| WS18-035 | Garage door repair & installation — inde | cons | $-37k | $-64k | $-105k | $613k | $421k | never | never | never | never | $0 | $-421k |
+| WS18-035 | Garage door repair & installation — inde | base | $31k | $95k | $129k | $76k | $48k | m4 | m49 | m25 | never | $269k | $516k |
+| WS18-035 | Garage door repair & installation — inde | opti | $143k | $634k | $684k | $28k | $28k | m2 | m7 | m5 | m13 | $3.19M | $2.74M |
+| WS13-016 | Pond & stormwater-basin aquatic manageme | cons | $-28k | $-3k | $19k | $274k | $105k | m34 | never | never | never | $0 | $82k |
+| WS13-016 | Pond & stormwater-basin aquatic manageme | base | $-18k | $61k | $104k | $120k | $68k | m12 | never | m42 | never | $179k | $445k |
+| WS13-016 | Pond & stormwater-basin aquatic manageme | opti | $10k | $236k | $573k | $65k | $54k | m7 | m33 | m15 | m35 | $2.10M | $2.46M |
+| WS18-004 | Lawn fertilization & weed-control subscr | cons | $-40k | $-17k | $6k | $324k | $138k | m48 | never | never | never | $0 | $27k |
+| WS18-004 | Lawn fertilization & weed-control subscr | base | $-35k | $48k | $98k | $141k | $74k | m16 | never | m60 | never | $169k | $421k |
+| WS18-004 | Lawn fertilization & weed-control subscr | opti | $-20k | $159k | $435k | $79k | $58k | m10 | m39 | m27 | m43 | $1.55M | $1.87M |
+| WS16-006 | Branded workwear & safety-recognition me | cons | $-10k | $-38k | $-56k | $329k | $185k | m14 | never | never | never | $0 | $-198k |
+| WS16-006 | Branded workwear & safety-recognition me | base | $14k | $44k | $165k | $45k | $17k | m5 | m49 | m40 | never | $350k | $590k |
+| WS16-006 | Branded workwear & safety-recognition me | opti | $48k | $309k | $743k | $7k | $7k | m4 | m9 | m14 | m31 | $2.85M | $2.66M |
+| WS05-001 | Fire extinguisher + emergency/exit light | cons | $-41k | $-30k | $-21k | $368k | $176k | never | never | never | never | $0 | $-120k |
+| WS05-001 | Fire extinguisher + emergency/exit light | base | $-24k | $34k | $95k | $104k | $41k | m17 | never | never | never | $180k | $540k |
+| WS05-001 | Fire extinguisher + emergency/exit light | opti | $3k | $149k | $199k | $16k | $16k | m6 | m23 | m25 | never | $638k | $1.14M |
+| WS05-026 | Medical, dental and community-clinic nig | cons | $-31k | $-32k | $16k | $365k | $179k | m17 | never | never | never | $0 | $52k |
+| WS05-026 | Medical, dental and community-clinic nig | base | $-4k | $30k | $141k | $195k | $83k | m8 | never | m24 | never | $194k | $469k |
+| WS05-026 | Medical, dental and community-clinic nig | opti | $42k | $541k | $1.56M | $24k | $24k | m5 | m23 | m12 | m23 | $6.02M | $5.19M |
+| WS18-002 | Private-pay non-medical home care agency | cons | $-93k | $-147k | $-146k | $889k | $697k | never | never | never | never | $0 | $-625k |
+| WS18-002 | Private-pay non-medical home care agency | base | $-73k | $27k | $119k | $209k | $139k | m28 | never | m41 | never | $158k | $508k |
+| WS18-002 | Private-pay non-medical home care agency | opti | $-36k | $301k | $514k | $44k | $44k | m11 | m23 | m22 | m31 | $1.87M | $2.20M |
 
 ## Stress survival (base case)
 
 Cell = Y3 operating profit under the stress; ⚠ = Y3 op < 0 or peak funding > $100k.
 
-| Stress | TEMPLATE |
-|---|---|
-| Base case | $40k ⚠ |
-| CAC doubles | $15k ⚠ |
-| Win rate 40% below plan | $-10k ⚠ |
-| Sales cycle doubles | $19k ⚠ |
-| Gross margin −5 pts | $9k ⚠ |
-| Gross margin −10 pts | $-22k ⚠ |
-| Key supplier refuses (3-mo delay, −5 pts margin) | $646 ⚠ |
-| Largest customers leave (25% of base lost in month 18) | $30k ⚠ |
-| Customers pay 30 days later | $40k ⚠ |
-| Slow inventory (+30 days) | $40k ⚠ |
-| Labor cost +20% | $-849 ⚠ |
-| Insurance/overhead +50% | $31k ⚠ |
-| AI/software cost ×3 | $34k ⚠ |
-| Hires needed 30% sooner | $-15k ⚠ |
-| Recession (new −30%, churn ×1.5) | $-7k ⚠ |
-| Competitor response (no price growth, −3 pts margin, churn ×1.3) | $7k ⚠ |
-| Founder capacity 40% lower | $-4k ⚠ |
-| Growth takes twice as long | $-5k ⚠ |
+| Stress | WS05-007 | WS04-014 | SYN-004 | WS18-003 | WS13-014 | WS18-035 | WS13-016 | WS18-004 | WS16-006 | WS05-001 | WS05-026 | WS18-002 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Base case | $52k | $71k | $98k | $132k ⚠ | $112k ⚠ | $95k | $61k ⚠ | $48k ⚠ | $44k | $34k ⚠ | $30k ⚠ | $27k ⚠ |
+| CAC doubles | $38k | $64k | $86k | $41k ⚠ | $91k ⚠ | $-68k ⚠ | $54k ⚠ | $-6k ⚠ | $32k | $27k ⚠ | $22k ⚠ | $3k ⚠ |
+| Win rate 40% below plan | $52k | $22k | $31k | $90k ⚠ | $66k ⚠ | $46k | $56k ⚠ | $33k ⚠ | $-542 ⚠ | $7k ⚠ | $76k ⚠ | $-71k ⚠ |
+| Sales cycle doubles | $54k | $56k | $79k | $130k ⚠ | $111k ⚠ | $94k | $59k ⚠ | $47k ⚠ | $24k | $30k ⚠ | $31k ⚠ | $-11k ⚠ |
+| Gross margin −5 pts | $43k | $58k | $80k | $99k ⚠ | $81k ⚠ | $47k ⚠ | $52k ⚠ | $38k ⚠ | $8k | $29k ⚠ | $-17k ⚠ | $-13k ⚠ |
+| Gross margin −10 pts | $33k | $45k | $63k | $65k ⚠ | $49k ⚠ | $-235 ⚠ | $42k ⚠ | $29k ⚠ | $-28k ⚠ | $23k ⚠ | $-65k ⚠ | $-53k ⚠ |
+| Key supplier refuses (3-mo delay, −5 pts margin) | $47k | $38k | $72k | $96k ⚠ | $73k ⚠ | $47k ⚠ | $49k ⚠ | $38k ⚠ | $-4k ⚠ | $22k ⚠ | $3k ⚠ | $-27k ⚠ |
+| Largest customers leave (25% of base lost in month 18) | $54k | $50k | $83k | $132k ⚠ | $103k ⚠ | $95k | $61k ⚠ | $49k ⚠ | $27k | $27k ⚠ | $46k ⚠ | $14k ⚠ |
+| Customers pay 30 days later | $52k | $71k | $98k | $132k ⚠ | $112k ⚠ | $95k ⚠ | $61k ⚠ | $48k ⚠ | $44k ⚠ | $34k ⚠ | $30k ⚠ | $27k ⚠ |
+| Slow inventory (+30 days) | $52k | $71k | $98k | $132k ⚠ | $112k ⚠ | $95k ⚠ | $61k ⚠ | $48k ⚠ | $44k | $34k ⚠ | $30k ⚠ | $27k ⚠ |
+| Labor cost +20% | $41k | $55k | $70k | $113k ⚠ | $39k ⚠ | $44k ⚠ | $51k ⚠ | $43k ⚠ | $19k | $34k ⚠ | $-20k ⚠ | $-5k ⚠ |
+| Insurance/overhead +50% | $39k | $59k | $89k | $101k ⚠ | $98k ⚠ | $73k ⚠ | $50k ⚠ | $37k ⚠ | $40k | $19k ⚠ | $16k ⚠ | $3k ⚠ |
+| AI/software cost ×3 | $51k | $56k | $93k | $123k ⚠ | $105k ⚠ | $86k | $57k ⚠ | $42k ⚠ | $32k | $33k ⚠ | $29k ⚠ | $14k ⚠ |
+| Hires needed 30% sooner | $34k ⚠ | $57k ⚠ | $66k | $114k ⚠ | $-50k ⚠ | $-45k ⚠ | $52k ⚠ | $14k ⚠ | $44k | $34k ⚠ | $-32k ⚠ | $-15k ⚠ |
+| Recession (new −30%, churn ×1.5) | $53k | $22k | $42k | $53k | $50k ⚠ | $73k | $59k ⚠ | $30k ⚠ | $-217 ⚠ | $9k ⚠ | $73k ⚠ | $-79k ⚠ |
+| Competitor response (no price growth, −3 pts margin, churn ×1.3) | $43k | $47k | $85k | $124k | $58k ⚠ | $151k | $47k ⚠ | $33k ⚠ | $6k | $25k ⚠ | $5k ⚠ | $-39k ⚠ |
+| Founder capacity 40% lower | $52k | $22k | $55k | $90k ⚠ | $80k ⚠ | $46k | $56k ⚠ | $33k ⚠ | $1k | $7k ⚠ | $76k ⚠ | $-49k ⚠ |
+| Growth takes twice as long | $30k ⚠ | $43k ⚠ | $18k ⚠ | $16k ⚠ | $43k ⚠ | $48k ⚠ | $30k ⚠ | $15k ⚠ | $-3k ⚠ | $-4k ⚠ | $26k ⚠ | $-66k ⚠ |
 
 ## Most sensitive driver (base case, ±25%)
 
 | ID | Driver | Y3 op @×0.75 | Y3 op @×1.25 |
 |---|---|---|---|
-| TEMPLATE | gross_margin_pct | $-31k | $111k |
+| WS05-007 | gross_margin_pct | $15k | $89k |
+| WS04-014 | proposal_to_win_pct | $23k | $119k |
+| SYN-004 | gross_margin_pct | $35k | $160k |
+| WS18-003 | onetime_revenue_per_new_customer | $35k | $229k |
+| WS13-014 | gross_margin_pct | $-29k | $254k |
+| WS18-035 | onetime_revenue_per_new_customer | $-45k | $235k |
+| WS13-016 | gross_margin_pct | $24k | $98k |
+| WS18-004 | gross_margin_pct | $6k | $89k |
+| WS16-006 | gross_margin_pct | $-142 | $88k |
+| WS05-001 | gross_margin_pct | $17k | $52k |
+| WS05-026 | gross_margin_pct | $-54k | $114k |
+| WS18-002 | gross_margin_pct | $-47k | $101k |

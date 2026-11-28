@@ -8,6 +8,8 @@ Writes 08_financial_models/MODEL_COMPARISON.md and 10_deliverables/Atlas_Model_C
 Usage: python3 tools/compare_models.py [ID ...]   (default: all except TEMPLATE)
 """
 import json, pathlib, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import fin_engine as E
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 
@@ -42,17 +44,19 @@ def main():
           "after owner draw (the capital actually at risk). 'Deployable' = cumulative surplus after reinvestment and "
           "reserves (10-yr). These are model outputs from evidenced-but-unvalidated drivers — not forecasts.\n"]
     md.append("## Scenario summary\n")
-    md.append("| ID | Name | Scen | Y1 op | Y3 op | Y5 op | Peak funding | Breakeven | Payback | ≥$10k/mo | ≥$25k/mo | 10-yr deployable | Y10 EV |")
-    md.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+    md.append("| ID | Name | Scen | Y1 op | Y3 op | Y5 op | Peak funding (model draw) | Peak funding (no draw) | Breakeven | Payback | ≥$10k/mo | ≥$25k/mo | 10-yr deployable | Y10 EV |")
+    md.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
     rows = []
     for i, r in res.items():
+        a = json.loads((FM / f"{i}_assumptions.json").read_text())
         for s in ("conservative", "base", "optimistic"):
             S = r["scenarios"][s]
+            nd = E.run(a, s, {"founder_draw_per_month": 0})["summary"]["peak_funding_need"]
             rows.append([i, r["name"][:40], s[:4], S["y1_op"], S["y3_op"], S["y5_op"], S["peak_funding_need"],
-                         S["breakeven_month"], S["payback_month"], S["first_month_op_10k"], S["first_month_op_25k"],
+                         nd, S["breakeven_month"], S["payback_month"], S["first_month_op_10k"], S["first_month_op_25k"],
                          S["lt_y10_cum_deployable"], S["lt_y10_ev"]])
             md.append(f"| {i} | {r['name'][:40]} | {s[:4]} | {k(S['y1_op'])} | {k(S['y3_op'])} | {k(S['y5_op'])} | "
-                      f"{k(S['peak_funding_need'])} | {mo(S['breakeven_month'])} | {mo(S['payback_month'])} | "
+                      f"{k(S['peak_funding_need'])} | {k(nd)} | {mo(S['breakeven_month'])} | {mo(S['payback_month'])} | "
                       f"{mo(S['first_month_op_10k'])} | {mo(S['first_month_op_25k'])} | {k(S['lt_y10_cum_deployable'])} | {k(S['lt_y10_ev'])} |")
     md.append("\n## Stress survival (base case)\n")
     md.append("Cell = Y3 operating profit under the stress; ⚠ = Y3 op < 0 or peak funding > $100k.\n")
@@ -73,14 +77,14 @@ def main():
         md.append(f"| {i} | {t['driver']} | {k(t['y3_op_low'])} | {k(t['y3_op_high'])} |")
     (FM / "MODEL_COMPARISON.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     wb = Workbook(); ws = wb.active; ws.title = "Scenarios"
-    cols = ["ID", "Name", "Scenario", "Y1 op", "Y3 op", "Y5 op", "Peak funding", "Breakeven month", "Payback month",
+    cols = ["ID", "Name", "Scenario", "Y1 op", "Y3 op", "Y5 op", "Peak funding (model draw)", "Peak funding (no draw)", "Breakeven month", "Payback month",
             "First month ≥$10k", "First month ≥$25k", "10-yr deployable", "Y10 EV"]
     for j, c in enumerate(cols, 1):
         cell = ws.cell(row=1, column=j, value=c); cell.fill = HDR; cell.font = HF
     for r_i, row in enumerate(rows, 2):
         for j, v in enumerate(row, 1):
             c = ws.cell(row=r_i, column=j, value=round(v) if isinstance(v, float) else v)
-            if j >= 4 and j not in (8, 9, 10, 11):
+            if j >= 4 and j not in (9, 10, 11, 12):
                 c.number_format = "#,##0"
     ws.freeze_panes = "D2"; ws.column_dimensions["B"].width = 42
     ws2 = wb.create_sheet("Stress")

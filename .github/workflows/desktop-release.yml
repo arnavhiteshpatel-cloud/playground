@@ -118,7 +118,7 @@ jobs:
           xcrun notarytool submit $RUNNER_TEMP/notarise.zip --apple-id "$NOTARY_APPLE_ID" \
             --team-id "$NOTARY_TEAM_ID" --password "$NOTARY_PASSWORD" --wait
           xcrun stapler staple packaging/dist/OsteoQuant.app
-          rm -f packaging/dist/OsteoQuant-desktop-macos-*.zip
+          rm -f packaging/dist/OsteoQuant-desktop-macos-*.zip packaging/dist/OsteoQuant-desktop-macos-*.dmg
           ditto -c -k --keepParent packaging/dist/OsteoQuant.app packaging/dist/OsteoQuant-desktop-macos-arm64-signed.zip
 
       # On this public repository an uploaded archive is a distributed copy (LGPL source offer, B-016): pull-request
@@ -144,7 +144,7 @@ jobs:
             packaging/dist/build-info.json
             packaging/dist/licence-check.txt
           if-no-files-found: error
-          retention-days: 14
+          retention-days: 30
 
       - name: Upload self-test output
         if: always()

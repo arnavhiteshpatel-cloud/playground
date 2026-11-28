@@ -50,7 +50,44 @@ def app_dir() -> Path:
 
 def console_exe() -> Path:
     name = "osteoquant-desktop-console" + (".exe" if sys.platform.startswith("win") else "")
+    mac_app = DIST / "OsteoQuant.app" / "Contents" / "MacOS" / name
+    if sys.platform == "darwin" and mac_app.exists():
+        return mac_app            # self-test the app bundle that is shipped, not the intermediate folder
     return app_dir() / name
+
+
+FIRST_LAUNCH = """OsteoQuant Desktop for macOS (Apple silicon) - research prototype
+
+Install: drag OsteoQuant onto the Applications folder.
+
+First launch: this build is not signed by an Apple-registered developer, so macOS blocks a plain double-click.
+  1. In Applications, Control-click (or right-click) OsteoQuant and choose Open, then choose Open again.
+  2. If macOS still refuses, open System Settings > Privacy & Security and click "Open Anyway" next to OsteoQuant.
+  3. If macOS says the app "is damaged", run this once in Terminal and try again:
+       xattr -dr com.apple.quarantine /Applications/OsteoQuant.app
+
+The app runs offline in evaluation mode. It is research software: not validated on real graft materials, not a
+medical device, no GLP or 21 CFR Part 11 compliance claimed. Third-party licences: OsteoQuant.app/Contents/Resources
+(THIRD_PARTY_NOTICES.txt and licenses/) and Help > About in the app.
+"""
+
+
+def macos_finish() -> dict:
+    """Ad-hoc sign the app bundle when no signing identity is configured (Apple silicon refuses to run unsigned arm64
+    code, and moving files into the bundle invalidates earlier per-file signatures), then verify the signature."""
+    appb = DIST / "OsteoQuant.app"
+    if sys.platform != "darwin" or not appb.exists():
+        return {}
+    res = appb / "Contents" / "Resources"          # licence notices travel inside the shipped bundle
+    shutil.copy2(app_dir() / "THIRD_PARTY_NOTICES.txt", res / "THIRD_PARTY_NOTICES.txt")
+    shutil.copytree(app_dir() / "licenses", res / "licenses", dirs_exist_ok=True)
+    ident = os.environ.get("OQ_CODESIGN_IDENTITY") or "-"
+    r = subprocess.run(["codesign", "--force", "--deep", "--sign", ident, str(appb)], capture_output=True, text=True)
+    v = subprocess.run(["codesign", "--verify", "--deep", "--strict", "--verbose=2", str(appb)], capture_output=True,
+                       text=True)
+    print((r.stdout + r.stderr + v.stdout + v.stderr)[-3000:], flush=True)
+    return {"identity": "ad-hoc" if ident == "-" else "configured", "sign_exit": r.returncode,
+            "verify_exit": v.returncode}
 
 
 def _provenance() -> dict:
@@ -190,8 +227,32 @@ def archive() -> Path:
     if sys.platform.startswith("win"):
         return Path(shutil.make_archive(str(base), "zip", DIST, "OsteoQuant"))
     if sys.platform == "darwin" and (DIST / "OsteoQuant.app").exists():
-        return Path(shutil.make_archive(str(base), "zip", DIST, "OsteoQuant.app"))
+        # ditto keeps the framework symlinks, permissions and signature that a Python zip would break
+        out = base.with_suffix(".zip")
+        out.unlink(missing_ok=True)
+        subprocess.run(["ditto", "-c", "-k", "--sequesterRsrc", "--keepParent", str(DIST / "OsteoQuant.app"), str(out)],
+                       check=True)
+        return out
     return Path(shutil.make_archive(str(base), "gztar", DIST, "OsteoQuant"))
+
+
+def macos_dmg() -> Path | None:
+    """Drag-to-Applications disk image with first-launch instructions for the unsigned build."""
+    appb = DIST / "OsteoQuant.app"
+    if sys.platform != "darwin" or not appb.exists():
+        return None
+    stage = DIST / "dmg-stage"
+    shutil.rmtree(stage, ignore_errors=True)
+    stage.mkdir()
+    subprocess.run(["ditto", str(appb), str(stage / "OsteoQuant.app")], check=True)
+    (stage / "Applications").symlink_to("/Applications")
+    (stage / "READ ME FIRST.txt").write_text(FIRST_LAUNCH)
+    out = DIST / f"OsteoQuant-desktop-macos-{platform.machine().lower()}.dmg"
+    out.unlink(missing_ok=True)
+    subprocess.run(["hdiutil", "create", "-volname", "OsteoQuant", "-srcfolder", str(stage), "-ov", "-format", "UDZO",
+                    str(out)], check=True)
+    shutil.rmtree(stage, ignore_errors=True)
+    return out
 
 
 def main(argv=None) -> int:
@@ -213,6 +274,12 @@ def main(argv=None) -> int:
     rc = 0 if info_lic["exit_code"] == 0 else 2
     if rc:
         print("licence check FAILED: see packaging/dist/licence-check.txt", flush=True)
+    mac = macos_finish()
+    if mac:
+        info["macos_signature"] = mac
+        if mac["sign_exit"] or mac["verify_exit"]:
+            rc = rc or 3
+            print("macOS code signature FAILED", flush=True)
     if not a.skip_selftest and rc == 0:
         st_out = PKG / "selftest-output"
         shutil.rmtree(st_out, ignore_errors=True)
@@ -225,6 +292,11 @@ def main(argv=None) -> int:
         info["archive"] = arc.name
         info["archive_bytes"] = arc.stat().st_size
         print(f"archive: {arc} ({arc.stat().st_size / 2**20:,.0f} MiB)", flush=True)
+        dmg = macos_dmg()
+        if dmg:
+            info["dmg"] = dmg.name
+            info["dmg_bytes"] = dmg.stat().st_size
+            print(f"disk image: {dmg} ({dmg.stat().st_size / 2**20:,.0f} MiB)", flush=True)
     (DIST / "build-info.json").write_text(json.dumps(info, indent=1))
     return rc
 

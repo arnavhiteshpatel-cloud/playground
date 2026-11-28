@@ -126,6 +126,7 @@ coll = COLLECT(exe_gui, exe_cli, a.binaries, a.datas, strip=False, upx=False, na
 if sys.platform == "darwin":
     app = BUNDLE(  # noqa: F821
         coll, name="OsteoQuant.app", icon=icon, bundle_identifier="com.osteoquant.desktop",
-        info_plist={"CFBundleShortVersionString": "0.1.0", "NSHighResolutionCapable": True,
+        info_plist={"CFBundleName": "OsteoQuant", "CFBundleDisplayName": "OsteoQuant",
+                    "CFBundleShortVersionString": "0.1.0", "CFBundleVersion": "0.1.0", "NSHighResolutionCapable": True,
                     "LSMinimumSystemVersion": "12.0", "NSRequiresAquaSystemAppearance": False},
     )

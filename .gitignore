@@ -28,3 +28,4 @@ experiments/results/P_S1.log
 # runtime logs (may contain demo credentials)
 runtime_*.log
 experiments/results/exp_S1H4_partial.jsonl
+experiments/results/exp_S1H5_partial.jsonl

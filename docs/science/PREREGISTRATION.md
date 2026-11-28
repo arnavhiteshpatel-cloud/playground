@@ -107,6 +107,32 @@ rule changes are made before human expert review and physical data.
   (c) any supported failure is reported with its structure, arm and imaging condition.
 * **No tuning:** the results will not be used to change 1.4.3; any later rule change needs another held-out test.
 
+## 11. Held-out precision test S1H5 of advisor 1.4.3 for HA residual graft (registered 2026-11-28, before running)
+* **Why:** S1H4 found no supported failure, but only 24 structures carried support, so the structure-level bound (0.14)
+  could not reach the 0.10 limit. Residual graft for sintered HA is the only endpoint the shipped advisor supported in
+  S1H4. This test asks one narrow question with enough structures: is the supported-failure rate for HA residual graft
+  below 0.10 on the defect models where S1H4 showed support?
+* **Advisor:** 1.4.3 frozen, unchanged (the script asserts the version). Method: `advisor_threshold`. Material
+  knowledge-base id `ha`, given to the advisor as in the application. Failure: |relative volume error| > 20%.
+* **Scope, chosen from S1H4 and stated as a restriction:** condyle and segmental defect models only (S1H4 supported HA
+  residual graft on none of the calvarial structures, so the claim excludes calvarial defects with 150–300 µm
+  granules). Geometry, granule sizes and fill as in S1H4 per model; healing stage 0.5.
+* **Structures (unseen seeds):** 48 — condyle 6300–6323, segmental 6400–6423.
+* **Imaging:** 40 µm voxels; PSF 20 and 40 µm; correlated noise (σ over 1.0 voxel) 60 and 120 (as S1H4).
+* **Size:** 48 structures × 2 PSF × 2 noise = 192 specimens.
+* **Primary analysis (structures are the unit), residual graft only:** a structure fails if any of its supported
+  measurements fails; k = structures with ≥1 supported measurement; Clopper–Pearson 95% upper bound on the structure
+  failure rate.
+* **Acceptance:** (a) ≥95% of failing residual-graft measurements refused; (b) no supported failure and an upper bound
+  ≤ 0.10 (requires k ≥ 36); otherwise "not demonstrated" if no supported failure occurred, "FAIL" if one did; (c) any
+  supported failure reported with structure and imaging condition.
+* **Secondary (descriptive, no acceptance):** coverage per model and imaging condition; new-bone and total-mineral
+  endpoints (refusals and any supported failures); the scan-measured blur against the reference.
+* **What a pass would mean:** in simulation, for HA residual graft on condyle and segmental defects at these imaging
+  conditions, the advisor's supported measurements fail at a rate bounded below 0.10. It says nothing about real
+  scans, other materials, other defect models, other endpoints or other imaging conditions.
+* **No tuning:** results will not be used to change 1.4.3.
+
 ## Deviations log
 | Date | Item | Deviation | Justification |
 |---|---|---|---|

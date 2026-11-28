@@ -105,8 +105,8 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
   seven low findings fixed with regression tests; three assigned and three open (all low)
   ([SECURITY_REVIEW_GEN2.md](../security/SECURITY_REVIEW_GEN2.md)).
 * Tests: from 61 tests (Generation 1) to the current suite, including property-based, fuzz and destructive tests.
-  Current counts and coverage come from one file, [`docs/qa/test_summary.json`](../qa/test_summary.json): 611 passed,
-  1 skipped; 93.4% line+branch coverage (99% on critical modules) with the desktop UI code excluded (local full run,
+  Current counts and coverage come from one file, [`docs/qa/test_summary.json`](../qa/test_summary.json): 636 passed,
+  1 skipped; 93.4% line+branch coverage (98.7% on critical modules) with the desktop UI code excluded (local full run,
   28 November 2026). Earlier
   figures quoted elsewhere are superseded. CI passed for the first time on 28 November 2026.
 * Claims checker (`scripts/check_claims.py`) comparing numbers in documents with result files.
@@ -159,4 +159,4 @@ Details: [SCIENTIFIC_METHODS.md](SCIENTIFIC_METHODS.md), [EXPERIMENT_REGISTRY.md
 * Windows and macOS builds never run; the only Linux build predates the current code and must be rebuilt; no build is
   signed or notarised.
 * Traceability matrix not regenerated (FA-20). Coverage in the local run recorded in `docs/qa/test_summary.json`:
-  93.4% overall and 99% on critical modules.
+  93.4% overall and 98.7% on critical modules.

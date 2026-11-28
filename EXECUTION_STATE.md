@@ -14,7 +14,7 @@ EXPERIMENT_REGISTRY.md, EVIDENCE_LEDGER.md._
 | 0 | Forensic audit, reproduction (G exact, H/I 29 rows identical, C ±0.004), remediation register, §55 ledgers | done |
 | 1–2 | Science: measurement-support advisor 1.4.3 bound to its validated method and evaluated at read time; pre-registered held-out validations S1H, S1H2, S1H3 (structure-level bound 0.34) and S1H4 (shipped 1.4.3 on the application's material paths: no supported failure, bound 0.14, very low coverage); blur-estimator check B1-blur; generator v2; granule tracking v2; fail-closed registration QC; ROI propagation; DR synthesis; ONNX runtime | advisor and longitudinal done; ML campaign (S2b/S2c, S3, U1, O2) running on CPU (restarted after a container restart at 02:11) |
 | 3 | Desktop application (PySide6+VTK), offline licensing (test keys only), PyInstaller packaging, CI for 3 OS | done (Linux bundle built locally; Windows/macOS builds only in CI, never run here) |
-| 4 | QA, security Gen-2, CI | CI first green on Ubuntu/Windows/macOS × Python 3.12/3.13 on 2026-11-28 (earlier runs never passed: DF-022); desktop and licensing tests blocking; a macOS teardown segfault (DF-043) fixed; 611 passed, 1 skipped, coverage 93.4% / 99% critical (`docs/qa/test_summary.json`) |
+| 4 | QA, security Gen-2, CI | CI first green on Ubuntu/Windows/macOS × Python 3.12/3.13 on 2026-11-28 (earlier runs never passed: DF-022); desktop and licensing tests blocking; a macOS teardown segfault (DF-043) fixed; 636 passed, 1 skipped, coverage 93.4% / 98.7% critical (`docs/qa/test_summary.json`) |
 | 4 | Reviews (automated reviewer agents, 12 perspectives) | cycles 1–3 done (cycle 3: 63 findings, 2 critical — all critical/high fixed or mitigated; responses for science, product and business/regulatory in `docs/reviews/cycle3/`) |
 | 5 | Website, documentation set, final deliverables | website, user docs and decks quote S1H4 (claims checker passes); Linux bundle being rebuilt; report, workbook and handoff rebuilt after the ML results |
 
@@ -29,7 +29,7 @@ EXPERIMENT_REGISTRY.md, EVIDENCE_LEDGER.md._
 | ONNX Runtime inference (no PyTorch at analysis time) | ✅ identical labels (spot check); O2 benchmark queued | osteoquant/ml/runtime.py |
 | Signed validation records for learned models | ✅ format and verification; no qualifying record exists | osteoquant/ml/validation_records.py |
 | Claims checker | ✅ L3, S1H3 and S1H4 (numbers bound to the run named before them), real-data and financial claims; banned phrases; advisor-version consistency; ledgers and validation pages in scope | scripts/check_claims.py |
-| Full test suite | 611 passed, 1 skipped (local, `d124ae6`, 2026-11-28); coverage 93.4% overall, 99% critical; CI runs all suites | `docs/qa/test_summary.json`, `.github/workflows/ci.yml` |
+| Full test suite | 636 passed, 1 skipped (local, `d371a3e`, 2026-11-28); coverage 93.4% overall, 98.7% critical; CI runs all suites | `docs/qa/test_summary.json`, `.github/workflows/ci.yml` |
 
 ## Generation-1 component table (history)
 

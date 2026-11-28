@@ -1,11 +1,11 @@
 {
  "date": "2026-11-28",
- "passed": 611,
+ "passed": 636,
  "failed": 0,
  "skipped": 1,
- "suite": "library and desktop test suites (pytest), local full run at commit d124ae6; CI runs the same suites on every push",
+ "suite": "library and desktop test suites (pytest), local full run at commit d371a3e (later commits change documents only); CI runs the same suites on every push",
  "coverage_total": 93.4,
- "coverage_critical": 99.0,
- "coverage_note": "line+branch coverage of the osteoquant package with the desktop UI code excluded, measured with the library and desktop test suites (CI gate: >=90% overall, >=95% for morphometry, stats, metrics, I/O and audit; 'coverage_critical' is that subset, rounded to whole percent by the coverage report)",
- "superseded_figures": "earlier documents quoted 58, 61, 372, 485, 556 and 597 tests and 62%, 87%, 88%, 90.8% and 91% coverage at different dates; this file is the single source"
+ "coverage_critical": 98.7,
+ "coverage_note": "line+branch coverage of the osteoquant package with the desktop UI code excluded, measured with the library and desktop test suites (CI gate: >=90% overall, >=95% for morphometry, stats, metrics, I/O and audit; 'coverage_critical' is that subset)",
+ "superseded_figures": "earlier documents quoted 58, 61, 372, 485, 556, 597 and 611 tests and 62%, 87%, 88%, 90.8%, 91% and 99% (rounded) coverage at different dates; this file is the single source"
 }

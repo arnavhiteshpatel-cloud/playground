@@ -5,7 +5,7 @@
 | Document ID | OQ-QMS-EVD-001 |
 | Version | 0.2 (DRAFT) |
 | Date | 2026-11-28 (v0.1: 2026-11-27) |
-| Software baseline | `osteoquant` 0.1.0 (Generation-2 desktop), measurement-support advisor 1.4.3; test evidence at commit `d124ae6`, Linux bundle at `1f568f4` (not tagged releases) |
+| Software baseline | `osteoquant` 0.1.0 (Generation-2 desktop), measurement-support advisor 1.4.3; test evidence at commit `d371a3e`, Linux bundle at `1f568f4` (not tagged releases) |
 | Owner | Quality / Engineering (TBD) |
 | Related | URS.md v0.2, FUNCTIONAL_SPEC.md v0.2, RISK_ASSESSMENT.md v0.2, traceability_matrix.csv, IQ/OQ/PQ v0.2, PART11_GLP_GAP_ANALYSIS.md v0.2 |
 
@@ -20,7 +20,7 @@
 | Functional specification items | 129 (3 retired) | FUNCTIONAL_SPEC.md |
 | Traceability (FS rows) | **VERIFIED 70 · PARTIAL 35 · GAP 24** (v0.1: 54 · 42 · 33; Generation-1 baseline 12 · 24 · 45 of 81 rows) | traceability_matrix.csv |
 | Requirements fully verified (all FS rows VERIFIED) | 32 of 88; 46 mixed; 10 entirely GAP | `scripts/build_traceability.py` output |
-| Automated tests | Full suite (library + desktop + licensing): **611 passed, 1 skipped** at `d124ae6` (2026-11-28); CI runs the same suites on Ubuntu, Windows and macOS × Python 3.12/3.13 | `docs/qa/test_summary.json`, `.github/workflows/ci.yml` |
+| Automated tests | Full suite (library + desktop + licensing): **636 passed, 1 skipped** at `d371a3e` (2026-11-28); CI runs the same suites on Ubuntu, Windows and macOS × Python 3.12/3.13 | `docs/qa/test_summary.json`, `.github/workflows/ci.yml` |
 | Distinct tests cited as evidence | 222 | traceability_matrix.csv |
 | Library line+branch coverage | **93.4 %** overall, **99 %** on morphometry, stats, metrics, I/O and audit (desktop GUI excluded); v0.1 baseline was 62 % | `docs/qa/test_summary.json` |
 | QA defects | 25 found, 21 fixed with regression tests, 4 assigned (open) | docs/qa/DEFECTS_FOUND.md |
@@ -97,12 +97,12 @@ Engineering run record (not OQ execution; developer container, Linux, Python 3.1
 | R1 | tests/desktop, test_controls, test_audit_properties, test_advisor, test_longitudinal_v2, test_security_gen2, test_security_fixes, test_store_api_workflows, test_api | 157 passed, 1 failed, 1 skipped (109 s). The failure was `test_advisor.py::test_resorbable_material_needs_early_known_timepoint`, a test being added concurrently with an advisor change; it is not cited in the matrix. The skip is `test_read_only_data_directory` (POSIX permissions are not enforced for root). |
 | R2 | test_controls, test_advisor (after the concurrent change was completed) | 35 passed |
 
-| R3 | Full suite with coverage, clean tree at `d124ae6` (2026-11-28) | **611 passed, 1 skipped** (6 min); coverage 93.4 % overall, 99 % critical; log retained by the developer, summary in `docs/qa/test_summary.json` |
+| R3 | Full suite with coverage, clean tree at `d371a3e` (2026-11-28) | **636 passed, 1 skipped** (6 min); coverage 93.4 % overall, 98.7% critical; log retained by the developer, summary in `docs/qa/test_summary.json` |
 
 A complete suite run on a release-tagged build, under an approved protocol, is still required before any of this is used as OQ evidence. One test is a strict expected failure documenting an open defect (`test_update_registry_works_without_fcntl`, QA-022, Windows only).
 
 ## 5. Coverage
-Current: **93.4 % overall, 99 % on the critical modules** (line + branch, desktop GUI excluded by configuration; `docs/qa/test_summary.json`). CI enforces ≥90 % overall and ≥95 % for morphometry, stats, metrics, I/O and audit. The v0.1 baseline (`docs/qa/coverage_baseline.txt`, 62 %) is kept for history.
+Current: **93.4 % overall, 98.7% on the critical modules** (line + branch, desktop GUI excluded by configuration; `docs/qa/test_summary.json`). CI enforces ≥90 % overall and ≥95 % for morphometry, stats, metrics, I/O and audit. The v0.1 baseline (`docs/qa/coverage_baseline.txt`, 62 %) is kept for history.
 
 ## 6. QA reports
 | Evidence | Location | Content |

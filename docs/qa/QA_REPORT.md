@@ -1,9 +1,9 @@
 # OsteoQuant QA Report (Gen-2 test campaign, 2026-11-27)
 
 > **Superseded figures (2026-11-28).** This report records the 27 November test campaign. Its test counts and coverage
-> are historical. The single current source is [`test_summary.json`](test_summary.json): 611 passed, 1 skipped; 93.4%
-> line+branch coverage of the `osteoquant` package (99% on critical modules) with the desktop UI code excluded (local
-> full run at commit `d124ae6`). The 91% "Final" figure below comes from `coverage_final.txt` (27 Nov, 22:48 UTC), whose run recorded
+> are historical. The single current source is [`test_summary.json`](test_summary.json): 636 passed, 1 skipped; 93.4%
+> line+branch coverage of the `osteoquant` package (98.7% on critical modules) with the desktop UI code excluded (local
+> full run at commit `d371a3e`). The 91% "Final" figure below comes from `coverage_final.txt` (27 Nov, 22:48 UTC), whose run recorded
 > 1 failed test; do not quote it. CI passed for the first time on 2026-11-28; §7 is updated to the current workflow.
 
 Scope: everything in `osteoquant/` except `osteoquant/desktop/` (GUI, tested separately by

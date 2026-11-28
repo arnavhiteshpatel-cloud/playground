@@ -9,7 +9,8 @@
   "Lead cost: LocaliQ 2025 'Garages' Google search CPL $81.45 [D, DF-S007]; Searchlight data via Valley Marketing: blended $145/lead, non-branded search $173, LSA residential repair $15-35 [D, DF-S008].",
   "Parts: DDM Garage Doors (West Chicago) public online prices — residential torsion springs median $52 each; LiftMaster head units $456-880 [B, DF-S012]. Dealer accounts (SSC) are application-only [B, DF-S011]; Raynor requires $100k/yr purchases [B, DF-S009].",
   "Model structure: 'founder_leads_per_month' = all company inbound leads at maturity (not just the founder's own prospecting). Plateau jobs/month = leads x booked% x sold%: cons ~62 jobs x $450 = ~$335k/yr (ProLift median-group avg $424k, bottom quartile $162k [B, DF-S002]); base ~133 x $575 = ~$920k/yr (Access yr-3 avg $1.02M [B, DF-S001]; Precision smallest-territory median $858k [B, C8-S019]); opt ~214 x $700 = ~$1.8M/yr (Precision smallest-territory avg $1.38M). Technicians capacity-triggered (~60 jobs/tech/month). Founder field labour is free inside operating profit, as in SDE.",
-  "Not modelled: maintenance-plan recurring revenue, commercial rolling-door work, seasonality (installs slower in Jan-Feb)."
+  "Not modelled: maintenance-plan recurring revenue, commercial rolling-door work, seasonality (installs slower in Jan-Feb).",
+  "Churn-based stress tests and the churn tornado bar are not meaningful here (churn is structurally 100% in a job-based model); read CAC, ticket, margin, labour, hiring-threshold and demand tests."
  ],
  "drivers": {
   "sales_start_delay_months": 1,

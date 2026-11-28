@@ -146,6 +146,19 @@ def main():
     qs_path = ROOT / "docs/qa/test_summary.json"
     QS = json.loads(qs_path.read_text()) if qs_path.exists() else {}
     h3 = (HO["S1H3"].get("summary") or [{}])[0].get("per_endpoint", {})
+    # the latest pre-registered held-out test leads (S1H4 tests the shipped advisor once it exists)
+    LT_ID = "S1H4" if HO.get("S1H4") else "S1H3"
+    LT = HO[LT_ID]
+    lt = per_endpoint(LT) if LT else {}
+    lt_rows = (LT or {}).get("rows") or []
+    lt_struct = len({r.get("structure") for r in lt_rows})
+    lt_gb, lt_gk = struct_bound(LT, "err_graft", "status") if LT else (None, 0)
+    lt_none = (sum(1 for r in lt_rows if all(r.get(k) not in ("supported", "supported_with_conditions")
+                                             for k in ("status", "status_new", "status_mineral"))) / len(lt_rows)
+               if lt_rows else None)
+
+    def _sbf(ep):
+        return (lt.get(ep) or {}).get("supported_but_failed") or 0
 
     def cov(e):
         return ((e.get("supported_and_ok", 0) or 0) + (e.get("supported_but_failed", 0) or 0)) / e["n"] if e.get("n") else None
@@ -192,14 +205,20 @@ def main():
         "CI but have not been run.",
         "<b>The central scientific change: abstention.</b> Before reporting graft or new-bone volume, a measurement-support "
         "advisor decides whether the split is identifiable for this material, scan and design — and refuses otherwise. "
-        "Support is bound to the method it was validated with (the advisor's own threshold). In the final pre-registered "
-        f"held-out simulation (S1H3, SYNTHETIC, advisor {HO['S1H3'].get('advisor_version', 'pending')}, "
-        f"{(HO['S1H3'].get('summary') or [{}])[0].get('n', 'pending')} specimens) it refused every failing measurement "
-        f"on every endpoint; residual graft was supported in {f(cov(h3.get('residual_graft_volume', {})), 0, pct=True)} "
-        f"of specimens with no supported failure (95% upper bound "
-        f"{f(h3.get('residual_graft_volume', {}).get('p_fail_given_supported_upper95'), 3)}), total mineral in "
-        f"{f(cov(h3.get('total_mineral_volume', {})), 0, pct=True)}, new bone in none. Two earlier held-out tests "
-        "(S1H, S1H2) found supported measurements that failed; each failure led to a rule tested on new data.",
+        "Support is bound to the method it was validated with (the advisor's own threshold). In the latest pre-registered "
+        f"held-out simulation ({LT_ID}, SYNTHETIC, advisor {(LT or {}).get('advisor_version', 'pending')}, "
+        f"{len(lt_rows) or 'pending'} specimens from {lt_struct} phantom structures) "
+        + ("every failing measurement was refused and no supported measurement failed on any endpoint"
+           if not any(_sbf(e) for e in ("residual_graft_volume", "new_bone_volume", "total_mineral_volume"))
+           else "supported measurements failed on "
+           + ", ".join(e.replace("_", " ") for e in ("residual_graft_volume", "new_bone_volume", "total_mineral_volume")
+                       if _sbf(e)))
+        + f"; residual graft was supported in {f(cov(lt.get('residual_graft_volume', {})), 0, pct=True)} of specimens "
+        f"(95% upper bound on the supported-failure rate {f(lt_gb, 2)} counting the {lt_gk} phantom structures with "
+        f"support as the unit), total mineral in {f(cov(lt.get('total_mineral_volume', {})), 0, pct=True)}, new bone in "
+        f"{f(cov(lt.get('new_bone_volume', {})), 0, pct=True)}; no volume endpoint was supported for "
+        f"{f(lt_none, 0, pct=True)} of specimens. Earlier held-out tests (S1H, S1H2) found supported measurements that "
+        "failed; each failure led to a rule tested on new data.",
         "<b>The honest consequence.</b> By intensity alone, graft/new-bone separation is supportable only for dense "
         "calcium phosphates at low noise and known early timepoints; bone-derived grafts, resorbing materials at later "
         "timepoints and uncharacterised materials are refused. The product's value is therefore a <i>separability "

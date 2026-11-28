@@ -1,0 +1,301 @@
+{
+ "id": "WS12-014",
+ "name": "Contingency direct-hire desk: controls, automation & I&C engineers for Illinois manufacturers, integrators and engineering firms",
+ "summary": "Customer = hiring company that has paid at least one placement fee. First placement fee is modeled as one-time revenue at the moment a client is 'won'; repeat placements from active clients are modeled as recurring revenue (expected repeat fees per month). Fees are net of fallout/realization. Founder-led desk; a junior recruiter is added once revenue supports it. Operating profit is before founder pay.",
+ "evidence_notes": [
+  "Fee: 20% of first-year base is the most common North American direct-hire fee (SIA survey via secondary source) [D, C9-S025]; platforms cite 15-25% with 60-90-day guarantees, net-30 [D, C9-S024].",
+  "Salaries for Illinois controls engineers: ZipRecruiter Chicago $81-120k; ExpressPros Champaign $74.2-115k; Rivian Normal staff level $125.8-157.2k [D, DG-S034]. Base salary $105k.",
+  "Realization: Kforce books direct hire net of a fallout reserve with a <=90-day fallout period [A, WS12-S009]; 85% realization is E.",
+  "Demand: 25 named Illinois employers with current controls/automation/I&C postings (Sargent & Lundy alone lists 20+ I&C/automation roles) [D, DG-S020..S039]; several roles posted 30+ days (Ingredion, Medline, Abbott, Primient) [D].",
+  "Competition: Illinois JobLink shows controls postings by Actalent and Aerotek [D, DG-S034]; Abbott runs a separate Workday 'Agency' site [D, DG-S026] - large employers channel agencies through vendor portals.",
+  "Tools priced: Recruit CRM $95-215/user/mo [B, DG-S040]; Loxo from $149 [B, DG-S041]; Top Echelon split network $135-150/mo + $350 startup [B, DG-S043]. LinkedIn Recruiter price not published (MISSING, DG-S045).",
+  "Cyclicality: Robert Half perm placement -13.6% in 2025, +6.2% Q3 2026 [A, WS12-S008, C9-S023]. No Illinois licence for employer-paid recruiters [A, C9-S022]."
+ ],
+ "drivers": {
+  "sales_start_delay_months": 1,
+  "sales_start_delay_months__evidence": "A",
+  "sales_start_delay_months__source": "No IDOL licence/bond for employer-paid recruiters [A, C9-S022]; only entity, fee agreement and tools.",
+  "sales_cycle_months": {
+   "conservative": 5,
+   "base": 4,
+   "optimistic": 3
+  },
+  "sales_cycle_months__evidence": "D",
+  "sales_cycle_months__source": "Job order to start typically 30-90 days plus sourcing time; first fee ~4 months after first outreach (E); Paraform claims ~12-day fills on its marketplace [D, C9-S024].",
+  "founder_ramp_months": {
+   "conservative": 12,
+   "base": 9,
+   "optimistic": 6
+  },
+  "founder_ramp_months__evidence": "E",
+  "founder_ramp_months__source": "Recruiting craft learnable in 6-12 months (Stage A, E).",
+  "founder_leads_per_month": {
+   "conservative": 7,
+   "base": 9,
+   "optimistic": 10
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Hiring-manager conversations about a specific open controls/automation role; universe evidenced by public postings [D, DG-S020..S039]; rate is an estimate. Optimistic capped at 10 because one recruiter's capacity is ~20-25 placements/yr including repeats (E).",
+  "lead_to_proposal_pct": {
+   "conservative": 0.25,
+   "base": 0.3,
+   "optimistic": 0.33
+  },
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Conversation -> signed fee agreement / job order; analyst estimate.",
+  "proposal_to_win_pct": {
+   "conservative": 0.15,
+   "base": 0.2,
+   "optimistic": 0.24
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Contingency job order -> placement (fill ratio). Non-exclusive orders compete with in-house TA and other agencies; analyst estimate.",
+  "rep_ramp_months": 6,
+  "rep_new_customers_per_month": {
+   "conservative": 0.25,
+   "base": 0.35,
+   "optimistic": 0.45
+  },
+  "rep_new_customers_per_month__evidence": "E",
+  "rep_new_customers_per_month__source": "Junior recruiter first-time-client placements; analyst estimate.",
+  "referral_new_per_100_active": {
+   "conservative": 1,
+   "base": 2,
+   "optimistic": 2.5
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "Placed engineers moving jobs and hiring managers changing employers refer the desk; estimate.",
+  "monthly_churn_pct": {
+   "conservative": 0.07,
+   "base": 0.05,
+   "optimistic": 0.04
+  },
+  "monthly_churn_pct__evidence": "E",
+  "monthly_churn_pct__source": "Non-exclusive relationships lapse after hiring needs end; 5%/month = ~20-month average active life; estimate.",
+  "arpc_monthly": {
+   "conservative": 570,
+   "base": 670,
+   "optimistic": 950
+  },
+  "arpc_monthly__evidence": "E",
+  "arpc_monthly__source": "Repeat placements per active client per year x realized fee / 12: cons 0.5 x $13,680; base 0.45 x $17,850; opt 0.5 x $22,770.",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 13680,
+   "base": 17850,
+   "optimistic": 22770
+  },
+  "onetime_revenue_per_new_customer__evidence": "D",
+  "onetime_revenue_per_new_customer__source": "Realized first fee: cons $95k x 18% x 0.80; base $105k x 20% x 0.85; opt $115k x 22% x 0.90. Salary D [DG-S034]; fee D [C9-S025]; realization E with A-level fallout mechanism [WS12-S009].",
+  "arpc_annual_growth_pct": 0.03,
+  "arpc_annual_growth_pct__evidence": "E",
+  "arpc_annual_growth_pct__source": "Salary inflation lifts fee base; RH average fee rose 3.8% in 2025 [A, WS12-S008].",
+  "gross_margin_pct": 0.95,
+  "gross_margin_pct__evidence": "C",
+  "gross_margin_pct__source": "RH perm gross margin 99.8% [A, C9-S023]; 95% leaves room for per-search job ads, background checks, candidate travel.",
+  "onetime_gross_margin_pct": 0.93,
+  "onetime_gross_margin_pct__evidence": "C",
+  "onetime_gross_margin_pct__source": "As above plus first-search job advertising; split-network deals (50/50) would lower this sharply.",
+  "variable_opex_pct_revenue": 0.04,
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Bad debt / fee disputes / payment processing.",
+  "cac_per_new_customer": 400,
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Plant visits, lunches, extra InMail/credits per new client.",
+  "fixed_marketing_per_month": 300,
+  "fixed_marketing_per_month__evidence": "E",
+  "fixed_marketing_per_month__source": "Sponsored job ads budget; analyst estimate (Indeed/ZipRecruiter price pages blocked).",
+  "dso_days": {
+   "conservative": 55,
+   "base": 40,
+   "optimistic": 35
+  },
+  "dso_days__evidence": "D",
+  "dso_days__source": "Invoice on start, net-30 [D, C9-S024]; mid-size manufacturers often pay late.",
+  "inventory_days_cogs": 0,
+  "dpo_days": 15,
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": 12000,
+  "start_capital_injection__evidence": "E",
+  "start_capital_injection__source": "Tools and insurance for ~9 months before fee cash arrives; founder living costs excluded.",
+  "lt_growth_y6_pct": 0.06,
+  "incremental_roic_pct": 0.6,
+  "ev_multiple": 2.5
+ },
+ "staff": [
+  {
+   "role": "Junior recruiter / researcher (controls & automation)",
+   "trigger": "revenue",
+   "threshold": 20000,
+   "per": 100000000,
+   "max_count": 1,
+   "is_sales_rep": true,
+   "monthly_cost": {
+    "conservative": 6500,
+    "base": 6000,
+    "optimistic": 5800
+   },
+   "notes": "Base ~$55k + expected commission + payroll tax; hired once monthly revenue first exceeds $20k; E"
+  },
+  {
+   "role": "Second recruiter",
+   "trigger": "revenue",
+   "threshold": 45000,
+   "per": 100000000,
+   "max_count": 1,
+   "is_sales_rep": true,
+   "monthly_cost": {
+    "conservative": 7000,
+    "base": 6500,
+    "optimistic": 6200
+   },
+   "notes": "E"
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Recruiting CRM/ATS (Recruit CRM Pro ~$135/user)",
+   "monthly": 135,
+   "is_ai": true,
+   "notes": "B, DG-S040"
+  },
+  {
+   "item": "LinkedIn Recruiter seat (price MISSING; Recruiter Lite assumed)",
+   "monthly": {
+    "conservative": 250,
+    "base": 180,
+    "optimistic": 170
+   },
+   "is_ai": true,
+   "notes": "MISSING; E"
+  },
+  {
+   "item": "Contact data / sequencing (Apollo-type)",
+   "monthly": 100,
+   "is_ai": true,
+   "notes": "E (Apollo pricing page not parseable)"
+  },
+  {
+   "item": "AI assistant + transcription tools",
+   "monthly": 60,
+   "is_ai": true
+  },
+  {
+   "item": "Top Echelon split network (optional)",
+   "monthly": {
+    "conservative": 150,
+    "base": 0,
+    "optimistic": 0
+   },
+   "notes": "B, DG-S043; used only in conservative case"
+  },
+  {
+   "item": "Insurance: professional liability/E&O + GL",
+   "monthly": {
+    "conservative": 250,
+    "base": 175,
+    "optimistic": 150
+   },
+   "annual_growth_pct": 0.05,
+   "notes": "MISSING quotes; E"
+  },
+  {
+   "item": "Legal (fee agreement review, collections) + accounting",
+   "monthly": 200
+  },
+  {
+   "item": "Phone, video, home office",
+   "monthly": 100
+  }
+ ],
+ "capex": [
+  {
+   "item": "Laptop, headset, website",
+   "month": 1,
+   "amount": 2500
+  }
+ ],
+ "transactions": [
+  {
+   "name": "Controls engineer placement at $105k base, 20% fee",
+   "revenue": 21000,
+   "lines": [
+    {
+     "item": "Fallout / fee-discount reserve (15%)",
+     "amount": 3150
+    },
+    {
+     "item": "Sponsored job ads for the search",
+     "amount": 300
+    },
+    {
+     "item": "Background/reference check",
+     "amount": 75
+    },
+    {
+     "item": "Founder travel / client visit",
+     "amount": 120
+    }
+   ],
+   "notes": "Contribution ~$17,355; invoiced on start date, paid ~40 days later; 90-day guarantee.",
+   "evidence": "D (fee/salary D; reserve E)"
+  },
+  {
+   "name": "Senior I&C / automation engineer at $140k base, 22% fee (engineering-firm client)",
+   "revenue": 30800,
+   "lines": [
+    {
+     "item": "Fallout / fee-discount reserve (15%)",
+     "amount": 4620
+    },
+    {
+     "item": "Job ads + extra InMail credits",
+     "amount": 450
+    },
+    {
+     "item": "Background check",
+     "amount": 75
+    }
+   ],
+   "notes": "Contribution ~$25,655; Rivian posts staff-level controls pay of $125.8-157.2k [D, DG-S034].",
+   "evidence": "D"
+  },
+  {
+   "name": "Controls technician at $72k, 18% fee, split 50/50 via split network",
+   "revenue": 12960,
+   "lines": [
+    {
+     "item": "Split-partner share (50%)",
+     "amount": 6480
+    },
+    {
+     "item": "Fallout reserve (15% of retained)",
+     "amount": 972
+    },
+    {
+     "item": "Network membership allocation",
+     "amount": 150
+    }
+   ],
+   "notes": "Contribution ~$5,358; illustrates why technician roles via splits are low-value.",
+   "evidence": "D/E (network fee B, DG-S043)"
+  },
+  {
+   "name": "Fallout inside 90-day guarantee (replacement, no refund)",
+   "revenue": 0,
+   "lines": [
+    {
+     "item": "Replacement search time (opportunity cost, not cash)",
+     "amount": 0
+    },
+    {
+     "item": "Re-advertising",
+     "amount": 300
+    }
+   ],
+   "notes": "Cash cost small but consumes ~4-6 weeks of desk capacity.",
+   "evidence": "E"
+  }
+ ]
+}

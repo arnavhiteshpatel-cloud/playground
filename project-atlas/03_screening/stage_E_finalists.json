@@ -1,0 +1,47 @@
+[
+ {
+  "id": "SYN-006",
+  "concept": "Construction subcontractor back office: WIP/job-cost bookkeeping for surety + Illinois certified payroll",
+  "notes": "Also read 04_industry_investigations/WS02-028.md, WS15-023.md, WS02-026.md. Key adjacency to evaluate: construction stormwater inspections (05_deep_dives/WS11-021_deep_dive.md) and later surety/insurance referral income."
+ },
+ {
+  "id": "SYN-004",
+  "concept": "Commercial energy cost management for large Illinois C&I users (license-exempt >1,500 kW segment): demand response, capacity-tag (PLC) management, bill audit, procurement advisory",
+  "notes": "Also read 04_industry_investigations/WS11-007.md, WS11-010.md. CRITICAL: re-verify from primary sources the claim that ICC agent/broker/consultant licensing does not apply to customers with >1,500 kW combined Illinois demand (220 ILCS 5/16-115C and 83 Ill. Adm. Code 454); state exactly what is and is not allowed without a license."
+ },
+ {
+  "id": "WS05-007",
+  "concept": "Commercial pest control for Chicago food facilities with a residential plan line (expansion path: fire-extinguisher license as second service, see 05_deep_dives/WS05-001_deep_dive.md)",
+  "notes": "Also read 04_industry_investigations/WS18-007.md and 05_deep_dives/WS05-001_deep_dive.md for the second-license adjacency."
+ },
+ {
+  "id": "WS04-014",
+  "concept": "Managed IT + HIPAA security compliance for independent dental and veterinary practices (Chicago area)",
+  "notes": "Also read 04_industry_investigations/SYN-002.md for adjacency logic."
+ },
+ {
+  "id": "WS18-003",
+  "concept": "Junk removal & cleanouts \u2014 independent, B2B-referral-led (property managers, realtors, restoration, estates)",
+  "notes": "Also read 04_industry_investigations/WS18-030.md (estate/senior-move adjacency)."
+ },
+ {
+  "id": "WS18-035",
+  "concept": "Garage door repair & installation \u2014 independent, residential + light commercial",
+  "notes": "Pay particular attention to lead-cost dependence and dealer-gated supply."
+ },
+ {
+  "id": "SYN-001",
+  "concept": "Insurance-led small-carrier compliance hub: DOT compliance + drug/alcohol consortium wedge \u2192 commercial trucking insurance agency",
+  "notes": "Also read 04_industry_investigations/WS02-001.md, WS17-001.md. The make-or-break question is whether a start-up Illinois agency can access trucking insurance markets (wholesalers/MGAs/aggregators) \u2014 find every documented path and its terms."
+ },
+ {
+  "id": "WS13-014",
+  "concept": "Private utility locating & concrete GPR scanning for Chicago-area contractors and facilities",
+  "notes": "Design the cheapest pilot (rented kit) and the promotion criteria (half-day price \u2265$550, \u22653 repeat accounts in 60 days) into the validation plan."
+ },
+ {
+  "id": "WS16-006",
+  "concept": "Branded workwear, safety-recognition & promotional merchandise distributor for Chicago trade contractors",
+  "notes": "Gross margin is the decisive driver; build the validation plan around proving \u226530% blended margin on real orders."
+ }
+]

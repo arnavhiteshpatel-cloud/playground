@@ -51,3 +51,15 @@ Stage update line → `03_screening/stage_updates/stageE_<batch>.jsonl` (`"stage
 `06_playbooks/sources_<batch>.jsonl` (IDs `E<batch>-S###`).
 
 Rules: read-only research; nothing sent; never fabricate. Final reply ≤200 words.
+
+## Standardization rules for refreshed models (added at launch — required for cross-finalist comparability)
+- Owner draw: `founder_draw_per_month` = 4000 and `founder_draw_start_month` = 13 in all three scenarios (a modest
+  living stipend; the comparison tool also reports peak funding with no draw). If the business cannot support it,
+  keep it anyway — the resulting funding need is the honest answer.
+- `tax_rate_pct` = 0.30 in all scenarios. `start_capital_injection` = the smallest amount that keeps the base-case
+  cash balance ≥ 0 (state it).
+- Long-term drivers (`lt_growth_y6_pct`, `lt_growth_decay`, `incremental_roic_pct`, `maint_capex_pct_op`,
+  `reserve_months`, `ev_multiple`) must be set with stated evidence (e.g., small-service-business SDE/EBITDA multiples,
+  agency book multiples) and `__evidence`/`__source` keys; conservative must be genuinely conservative.
+- Do NOT run `verify_fin_model.py` (LibreOffice cannot run concurrently across agents); verification is central.
+- Helper scripts in `/tmp/claude-0/atlas_scratch/E_<ID>/`. Web search ≈10 per agent; fetch primary sources directly.

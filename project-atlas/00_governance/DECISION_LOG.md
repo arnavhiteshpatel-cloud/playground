@@ -38,3 +38,15 @@ Each entry: date · decision · rationale · evidence · reversibility.
   survivors are merged into one concept (e.g., WS02-028 + WS15-023 → SYN-006; WS02-001 + WS17-001 → SYN-001;
   WS18-007 → WS05-007). Batches in `03_screening/stage_D_batches.json`. Chicago open data (food inspections, permits)
   and the DOT FMCSA census API are reachable and will be used for lawful, business-level prospect lists.
+- **2026-11-28 · Stage D results (22 of 25 concepts; DG batch pending).** Finalist verdicts: SYN-006, SYN-004,
+  WS05-007, WS04-014, SYN-001 (conditional). Strongest reserves: WS18-003 (B evidence), WS18-035, WS13-014, WS16-006.
+  Dropped: WS04-010, WS07-023, WS11-017, WS13-028, WS03-012, WS10-010. All 16 models built by then verified
+  (960/960 Summary values match after LibreOffice recalculation).
+- **2026-11-28 · Stage E finalists (first 9).** SYN-006, SYN-004, WS05-007, WS04-014, WS18-003, WS18-035, SYN-001,
+  WS13-014, WS16-006 (`03_screening/stage_E_finalists.json`). Rule: every Stage D finalist plus reserves with
+  base-case year-3 operating profit ≥ ~$40k AND either peak funding (no draw) ≤ $90k or B-level evidence, except
+  WS13-014 (peak $161k) kept because it is the best founder fit with A/B price anchors and a cheap rented-kit pilot.
+  Excluded reserves: WS11-021 (G4 ceiling, 10-yr deployable ~$47k; kept as SYN-006 adjacency), WS05-026 (margin
+  fragility), WS05-001 (kept as WS05-007 second license), WS18-004/WS13-016 (low year-3, high funding), WS18-002 (peak
+  funding > $100k), WS17-004 (peak funding ~$433k). Models standardized for comparability (owner draw $4k/mo from
+  month 13; tax 30%).

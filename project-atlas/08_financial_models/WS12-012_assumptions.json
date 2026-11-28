@@ -1,0 +1,366 @@
+{
+ "id": "WS12-012",
+ "name": "Dedicated Philippine tax & accounting staff for small/mid Illinois CPA firms (managed offshore seats)",
+ "summary": "Customer = CPA-firm account. Each account rents 1-2+ dedicated, accounting-trained Philippine staff (staff accountant / tax preparer / bookkeeper) billed monthly in advance, with US account management, IRC 7216 consent workflow and an FTC-Safeguards-ready security program. Workers engaged as contractors via a contractor platform at first (EOR only where required). Operating profit is before founder pay.",
+ "evidence_notes": [
+  "Seat prices: CPA-firm-focused provider lists talent cost from $1,400 (US accountant), $2,300 (tax preparer), $2,400 (auditor) plus an undisclosed monthly management fee [B, DG-S002]; generalist managed VA firms $1,500-3,500/seat-month [B, C9-S016/S018/S019]; marketplace salary+$99 seat [B, DG-S007].",
+  "Philippine CPA-qualified accountant salary US$1,500-1,900/month per a 2026 vendor salary guide [D, DG-S003]; general VA salaries $500-1,200 [B, DG-S007]. Base worker cost assumes non-CPA accounting staff at ~$1,100 gross plus 13th-month equivalent, stipend, contractor-platform fee.",
+  "EOR is $599-699/employee-month [B, DG-S004/S005/S006]; at $2,400/seat an EOR model leaves ~15% gross margin, so the base case uses contractor engagement ($29-49/month platform fee) and treats EOR as the conservative case.",
+  "Client churn: no published data (MISSING). Provider worker attrition 22% (2025) vs 50% BPO benchmark [D, DG-S012]; 86% retention claim [D, DG-S013]. Client churn modeled 1.5-4%/month (E).",
+  "Funnel conversion rates are analyst estimates (E). Prospect universe: 1,062 active Illinois CPA firm licenses, 680 in the six-county Chicago area [A, DG-S001].",
+  "Regulatory: offshore tax-return disclosure needs signed taxpayer consent; SSN disclosure needs adequate data-protection safeguards at both preparers [A, DG-S009]; firms must contractually oversee service providers under 16 CFR 314.4(f) [A, DG-S010]; pay to foreign contractors for work abroad is not US wages / not withheld [A, DG-S011]."
+ ],
+ "drivers": {
+  "sales_start_delay_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_start_delay_months__evidence": "E",
+  "sales_start_delay_months__source": "Time to build security policy, 7216 consent templates, contractor agreements and a bench of 3-5 vetted candidates; no licence needed.",
+  "sales_cycle_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 1
+  },
+  "sales_cycle_months__evidence": "E",
+  "sales_cycle_months__source": "Stage C: 2-6 weeks for owner-operators [E]; CPA firms buy around busy-season planning (Aug-Dec), so 2 months base.",
+  "founder_ramp_months": 6,
+  "founder_leads_per_month": {
+   "conservative": 8,
+   "base": 12,
+   "optimistic": 18
+  },
+  "founder_leads_per_month__evidence": "E",
+  "founder_leads_per_month__source": "Qualified conversations with CPA-firm partners/firm administrators from outbound to the 680 Chicago-area licensed firms [A universe, DG-S001] plus ICPAS events; rate is an analyst estimate.",
+  "lead_to_proposal_pct": {
+   "conservative": 0.35,
+   "base": 0.4,
+   "optimistic": 0.45
+  },
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Analyst estimate; proposal = role profile + candidate shortlist.",
+  "proposal_to_win_pct": {
+   "conservative": 0.18,
+   "base": 0.25,
+   "optimistic": 0.3
+  },
+  "proposal_to_win_pct__evidence": "E",
+  "proposal_to_win_pct__source": "Analyst estimate for an unknown entrant against established offshore firms; trial seat lowers friction.",
+  "rep_ramp_months": 4,
+  "rep_new_customers_per_month": {
+   "conservative": 0.5,
+   "base": 0.8,
+   "optimistic": 1.2
+  },
+  "rep_new_customers_per_month__evidence": "E",
+  "rep_new_customers_per_month__source": "Analyst estimate for a hired account executive selling to CPA firms.",
+  "referral_new_per_100_active": {
+   "conservative": 0.5,
+   "base": 1.0,
+   "optimistic": 1.5
+  },
+  "referral_new_per_100_active__evidence": "E",
+  "referral_new_per_100_active__source": "CPA partners talk to peers (ICPAS chapters, study groups); no measured rate.",
+  "monthly_churn_pct": {
+   "conservative": 0.04,
+   "base": 0.025,
+   "optimistic": 0.015
+  },
+  "monthly_churn_pct__evidence": "E",
+  "monthly_churn_pct__source": "No client-churn data published (MISSING). Worker attrition 22%/yr at a quality provider [D, DG-S012]; month-to-month terms after 90 days are the norm [D, C9-S020]; post-tax-season downsizing adds churn.",
+  "arpc_monthly": {
+   "conservative": 2520,
+   "base": 3360,
+   "optimistic": 4320
+  },
+  "arpc_monthly__evidence": "C",
+  "arpc_monthly__source": "Seats/account x price: cons 1.2 x $2,100; base 1.4 x $2,400; opt 1.6 x $2,700. Prices anchored on $1,400-2,400+ talent cost plus management fee [B, DG-S002] and $1,500-3,500 managed seats [B, C9-S019]; seats/account E.",
+  "onetime_revenue_per_new_customer": {
+   "conservative": 0,
+   "base": 750,
+   "optimistic": 1000
+  },
+  "onetime_revenue_per_new_customer__evidence": "D",
+  "onetime_revenue_per_new_customer__source": "Setup/recruiting fee; Stealth Agents charges a one-time setup charge [B, C9-S016]; amount is E; may be waived to compete.",
+  "arpc_annual_growth_pct": {
+   "conservative": 0.03,
+   "base": 0.08,
+   "optimistic": 0.15
+  },
+  "arpc_annual_growth_pct__evidence": "E",
+  "arpc_annual_growth_pct__source": "Seat expansion within accounts plus 2-3% price; analyst estimate.",
+  "gross_margin_pct": {
+   "conservative": 0.3,
+   "base": 0.38,
+   "optimistic": 0.45
+  },
+  "gross_margin_pct__evidence": "E",
+  "gross_margin_pct__source": "Base seat cost ~$1,490: salary $1,100 + 13th-month equivalent $92 + HMO $50 + equipment/security stipend $80 + contractor platform $49 [B, DG-S004] + replacement recruiting $120 (E) vs $2,400 price. Conservative assumes higher salaries and partial EOR at $599 [B, DG-S004/S005].",
+  "onetime_gross_margin_pct": 0.6,
+  "onetime_gross_margin_pct__evidence": "E",
+  "onetime_gross_margin_pct__source": "Job posting via OnlineJobs.ph $69-99/mo [B, DG-S008] plus screening time.",
+  "variable_opex_pct_revenue": 0.03,
+  "variable_opex_pct_revenue__evidence": "E",
+  "variable_opex_pct_revenue__source": "Card/ACH processing, FX spreads, bad debt.",
+  "cac_per_new_customer": {
+   "conservative": 500,
+   "base": 350,
+   "optimistic": 250
+  },
+  "cac_per_new_customer__evidence": "E",
+  "cac_per_new_customer__source": "Trial-seat discount, travel, data tools; analyst estimate.",
+  "fixed_marketing_per_month": {
+   "conservative": 800,
+   "base": 600,
+   "optimistic": 500
+  },
+  "fixed_marketing_per_month__evidence": "E",
+  "fixed_marketing_per_month__source": "ICPAS/CPA-society event fees, LinkedIn, website; analyst estimate.",
+  "dso_days": {
+   "conservative": 0,
+   "base": -10,
+   "optimistic": -15
+  },
+  "dso_days__evidence": "D",
+  "dso_days__source": "Monthly-in-advance billing is common among VA/offshore staffing firms [E, Stage A/C]; negative DSO = prepaid.",
+  "inventory_days_cogs": 0,
+  "dpo_days": {
+   "conservative": 5,
+   "base": 7,
+   "optimistic": 10
+  },
+  "dpo_days__evidence": "E",
+  "dpo_days__source": "Contractor pay semi-monthly in arrears.",
+  "tax_rate_pct": 0.3,
+  "founder_draw_per_month": 4000,
+  "founder_draw_start_month": 13,
+  "start_capital_injection": 15000,
+  "start_capital_injection__evidence": "E",
+  "start_capital_injection__source": "Covers setup, security tooling and ~6 months of overhead before contribution turns positive.",
+  "lt_growth_y6_pct": 0.08,
+  "incremental_roic_pct": 0.8,
+  "ev_multiple": 3.0
+ },
+ "staff": [
+  {
+   "role": "Philippine team lead / recruiter (supervises seats, backfills)",
+   "trigger": "active_customers",
+   "threshold": 8,
+   "per": 15,
+   "start_month": 1,
+   "monthly_cost": {
+    "conservative": 1900,
+    "base": 1600,
+    "optimistic": 1400
+   },
+   "notes": "Senior PH accounting supervisor; E (salary guide D, DG-S003)"
+  },
+  {
+   "role": "US account manager / onboarding (7216 consent, QA)",
+   "trigger": "revenue",
+   "threshold": 70000,
+   "per": 150000,
+   "max_count": 3,
+   "monthly_cost": {
+    "conservative": 6500,
+    "base": 6000,
+    "optimistic": 5500
+   },
+   "notes": "Loaded cost; E"
+  },
+  {
+   "role": "Account executive (CPA firms)",
+   "trigger": "revenue",
+   "is_sales_rep": true,
+   "monthly_cost": {
+    "conservative": 7000,
+    "base": 6500,
+    "optimistic": 6000
+   },
+   "notes": "Hired only once revenue reaches $60k/month (~18-20 seats); base + commission, loaded; E",
+   "threshold": 60000,
+   "per": 100000000,
+   "max_count": 1
+  }
+ ],
+ "overhead": [
+  {
+   "item": "Insurance: professional liability/E&O + cyber + GL",
+   "monthly": {
+    "conservative": 500,
+    "base": 350,
+    "optimistic": 300
+   },
+   "annual_growth_pct": 0.06,
+   "notes": "MISSING quotes; E"
+  },
+  {
+   "item": "Security program: endpoint/MDM, VDI, password manager, policies (FTC Safeguards / 7216 'adequate data protection safeguard')",
+   "monthly": {
+    "conservative": 600,
+    "base": 400,
+    "optimistic": 300
+   },
+   "notes": "E"
+  },
+  {
+   "item": "Independent security assessment / SOC 2 readiness (from month 13)",
+   "monthly": {
+    "conservative": 1200,
+    "base": 800,
+    "optimistic": 600
+   },
+   "start_month": 13,
+   "notes": "E; required to sell to firms >20 staff"
+  },
+  {
+   "item": "Software + AI tools (CRM, Google Workspace, AI drafting/QA)",
+   "monthly": 250,
+   "is_ai": true
+  },
+  {
+   "item": "Legal/accounting (contracts, PH counsel, bookkeeping)",
+   "monthly": {
+    "conservative": 500,
+    "base": 350,
+    "optimistic": 300
+   }
+  },
+  {
+   "item": "Philippine entity / registered office (from month 24, replaces some EOR use)",
+   "monthly": {
+    "conservative": 900,
+    "base": 600,
+    "optimistic": 500
+   },
+   "start_month": 24,
+   "notes": "E"
+  }
+ ],
+ "capex": [
+  {
+   "item": "Initial setup: website, contract templates, security baseline, 2 loaner laptops",
+   "month": 1,
+   "amount": {
+    "conservative": 5000,
+    "base": 3500,
+    "optimistic": 2500
+   }
+  }
+ ],
+ "transactions": [
+  {
+   "name": "One dedicated staff accountant seat, monthly (base contractor model)",
+   "revenue": 2400,
+   "lines": [
+    {
+     "item": "Worker gross pay",
+     "amount": 1100
+    },
+    {
+     "item": "13th-month equivalent (1/12)",
+     "amount": 92
+    },
+    {
+     "item": "HMO / benefits stipend",
+     "amount": 50
+    },
+    {
+     "item": "Equipment/internet/security stipend",
+     "amount": 80
+    },
+    {
+     "item": "Contractor platform fee (Deel)",
+     "amount": 49
+    },
+    {
+     "item": "Backfill recruiting reserve",
+     "amount": 120
+    }
+   ],
+   "notes": "Contribution ~$909/seat-month (38%). Prepaid monthly; worker paid semi-monthly in arrears.",
+   "evidence": "C (price B; cost lines B/D/E)"
+  },
+  {
+   "name": "Same seat under an EOR (conservative / compliance-heavy case)",
+   "revenue": 2400,
+   "lines": [
+    {
+     "item": "Worker gross pay",
+     "amount": 1100
+    },
+    {
+     "item": "13th-month pay + statutory contributions (~20%)",
+     "amount": 230
+    },
+    {
+     "item": "HMO",
+     "amount": 50
+    },
+    {
+     "item": "Equipment/security",
+     "amount": 80
+    },
+    {
+     "item": "EOR fee (Deel/Remote from $599)",
+     "amount": 599
+    },
+    {
+     "item": "Backfill recruiting reserve",
+     "amount": 120
+    }
+   ],
+   "notes": "Contribution ~$221/seat-month (9%) - shows why EOR at small scale breaks the model.",
+   "evidence": "C (EOR fee B; statutory % D)"
+  },
+  {
+   "name": "Tax-preparer seat during busy season (Jan-Apr), higher-skill",
+   "revenue": 2700,
+   "lines": [
+    {
+     "item": "Worker gross pay (US 1040/1065 experience)",
+     "amount": 1350
+    },
+    {
+     "item": "13th-month equivalent",
+     "amount": 113
+    },
+    {
+     "item": "HMO / stipend / security",
+     "amount": 130
+    },
+    {
+     "item": "Contractor platform fee",
+     "amount": 49
+    },
+    {
+     "item": "Backfill reserve",
+     "amount": 120
+    }
+   ],
+   "notes": "Contribution ~$938. Accountant Offshore lists US tax preparer talent cost from $2,300 + management fee [B, DG-S002].",
+   "evidence": "C"
+  },
+  {
+   "name": "New-account setup (recruit + onboard first seat)",
+   "revenue": 750,
+   "lines": [
+    {
+     "item": "OnlineJobs.ph Premium month",
+     "amount": 99
+    },
+    {
+     "item": "Screening/test time (PH team lead)",
+     "amount": 150
+    },
+    {
+     "item": "7216 consent + security onboarding time",
+     "amount": 50
+    }
+   ],
+   "notes": "Contribution ~$451; often waived in competitive deals.",
+   "evidence": "E"
+  }
+ ]
+}

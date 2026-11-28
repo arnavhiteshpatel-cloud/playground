@@ -25,3 +25,6 @@ Rules
 - Write lines as you go; validate every line parses (`python3 -c "import json;[json.loads(l) for l in open(p)]"`).
 - Final reply ≤120 words: count scored, the 5 records you think are most under-rated and 5 most over-rated
   (IDs only + 6 words each).
+
+Scratch files: if you write helper scripts, put them in a subdirectory unique to your packet (e.g.
+`/tmp/claude-0/atlas_scratch/<packet_name>/`) — other agents share the scratchpad.

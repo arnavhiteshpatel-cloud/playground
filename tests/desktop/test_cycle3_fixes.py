@@ -51,7 +51,7 @@ def test_report_prints_audit_anchor_and_anchor_file_is_written(team, tmp_path):
     assert "Audit trail at generation: event" in text
     anchors = stored_anchors(project.store)
     assert anchors and anchors[-1]["event"] == "report.generate"
-    assert not str(tmp_path / "anchors") in str(project.folder)      # anchors live outside the project folder
+    assert str(tmp_path / "anchors") not in str(project.folder)      # anchors live outside the project folder
 
 
 def test_rewritten_trail_disables_signatures(team):
@@ -105,3 +105,17 @@ def test_memory_preflight_refuses_before_loading(analysed):
     with pytest.raises(MemoryError, match="needs about"):
         S._memory_preflight(project, scan, available=1024)
     S._memory_preflight(project, scan, available=10 ** 12)          # plenty: no error
+
+
+def test_report_audit_excerpt_names_users(team):
+    """C3-PRD-17: the audit excerpt shows who acted, not only a numeric user id."""
+    import re
+
+    import pypdfium2 as pdfium
+    project, sid, scan, _, _ = team
+    rep = S.generate_report(project, sid)
+    doc = pdfium.PdfDocument(rep["pdf"])
+    text = "\n".join(doc[i].get_textpage().get_text_range() for i in range(len(doc)))
+    u = project.store.q1("SELECT username, full_name FROM users WHERE id=?", (project.user["id"],))
+    name = u["full_name"] or u["username"]
+    assert re.search(rf"{re.escape(name)}\s*\({project.user['id']}\)", text)

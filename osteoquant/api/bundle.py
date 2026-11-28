@@ -58,6 +58,19 @@ def git_commit():
         return "unknown"
 
 
+
+def _named_events(store, org_id) -> list[dict]:
+    """Audit excerpt with the user's name next to the id (cycle-3 review C3-PRD-17)."""
+    names = {str(r["id"]): (r["full_name"] or r["username"])          # audit user ids are stored as text
+             for r in store.q("SELECT id, username, full_name FROM users WHERE org_id=?", (org_id,))}
+    out = []
+    for e in store.audit.events(org_id=org_id, limit=25):
+        e = dict(e)
+        if str(e.get("user_id")) in names:
+            e["user_name"] = names[str(e["user_id"])]
+        out.append(e)
+    return out
+
 def bundle_from_store(store, user, sid, ctx=None, measurements=None, figures=True) -> dict:
     """``measurements``: the rows of ``store.latest_measurements`` to report (callers that post-process
     the bundle pass the same snapshot they use themselves); ``figures=False`` skips figure rendering
@@ -152,5 +165,5 @@ def bundle_from_store(store, user, sid, ctx=None, measurements=None, figures=Tru
         "reproducibility": {"software_version": __version__, "git_commit": git_commit()},
         "reviewers": [{"role": "Scientific reviewer", "name": r["full_name"] or r["username"], "meaning": r["meaning"],
                        "decision": r["decision"], "time": r["created"]} for s in out_specs for r in s["reviews"]][:6],
-        "audit_excerpt": store.audit.events(org_id=user["org_id"], limit=25),
+        "audit_excerpt": _named_events(store, user["org_id"]),
     }

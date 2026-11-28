@@ -14,7 +14,9 @@ decision, `docs/ip/IP_STRATEGY.md`).
    phantom structures) no supported measurement failed, but it reported almost nothing: residual graft only for HA
    (10% of specimens), total mineral in 2%, new bone never, nothing with the material set to Unspecified, and no volume
    endpoint for 89% of specimens; the supported-failure rate is bounded only below 0.14, so the pre-registered precision
-   criterion (0.10) is not demonstrated (`EXPERIMENT_REGISTRY.md`).
+   criterion (0.10) is not demonstrated in general. A narrower pre-registered test (S1H5: HA residual graft on condyle
+   and segmental defects, 48 structures) met it (bound 0.074), but no graft measurement failed there at all, so it
+   shows precision for that one case, not refusal (`EXPERIMENT_REGISTRY.md`).
 4. Nothing has been tested on real graft material; the advisor and the simulator share attenuation physics, so the
    simulation shows internal safety, not accuracy.
 5. The next value comes from physical evidence (a phantom study) and ten customer conversations — not more software.

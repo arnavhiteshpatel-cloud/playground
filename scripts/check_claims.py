@@ -121,6 +121,31 @@ if (RES / S1H4_FILE).exists():
     CLAIMS += S1H4_CLAIMS
 
 
+def _a5(ep, field):
+    return lambda d: d["analysis"][ep][field]
+
+
+# S1H5: pre-registered precision test limited to HA residual graft on condyle and segmental defects (§11). Its own
+# sentence (EXPERIMENT_REGISTRY), always with the scope and the statement that refusal was not exercised.
+S1H5_FILE = "exp_S1H5_heldout.json"
+S1H5_CLAIMS = [
+    ("S1H5_graft_cov", S1H5_FILE, _a5("residual_graft_volume", "coverage"), 0,
+     [r"residual graft volume supported in\s*"], 100),
+    ("S1H5_graft_bound_struct", S1H5_FILE, _a5("residual_graft_volume", "structure_upper95"), 3,
+     [r"upper bound on the supported-failure rate (?=\d)"]),
+    ("S1H5_n_struct", S1H5_FILE, lambda d: len({r["structure"] for r in d["rows"]}), 0,
+     [r"synthetic specimens from\s*"], 1),
+    ("S1H5_graft_median", S1H5_FILE, _a5("residual_graft_volume", "abs_err_supported_median"), 1,
+     [r"supported graft volumes: median error\s*"], 100),
+    ("S1H5_graft_max", S1H5_FILE, _a5("residual_graft_volume", "abs_err_supported_max"), 1,
+     [r"supported graft volumes: median error [\d.]+%, maximum\s*"], 100),
+    ("S1H5_n", S1H5_FILE, lambda d: len(d["rows"]), 0, [r"held-out simulation S1H5 \(advisor [\d.]+; "], 1),
+]
+S1H5_REQUIRED = {"preregistered": "docs/science/PREREGISTRATION.md §11", "advisor_version": "1.4.3"}
+if (RES / S1H5_FILE).exists():
+    CLAIMS += S1H5_CLAIMS
+
+
 _SUP = ("supported", "supported_with_conditions")
 
 
@@ -331,7 +356,7 @@ def check_versions() -> list[str]:
     return bad
 
 
-RUN_NAME = re.compile(r"\b(S1H[234]?)\b")
+RUN_NAME = re.compile(r"\b(S1H[2-5]?)\b")
 DEFAULT_RUN = "S1H3"     # an anchor with no run named before it is read as the S1H3 standard phrase (back-compatible)
 
 
@@ -362,6 +387,8 @@ def main(paths=None) -> int:
             bad.append(f"{cid}: {jf} is not the pre-registered frozen run ({S1H3_REQUIRED})")
         if cid.startswith("S1H4_") and any(jd.get(k) != v for k, v in S1H4_REQUIRED.items()):
             bad.append(f"{cid}: {jf} is not the pre-registered run ({S1H4_REQUIRED})")
+        if cid.startswith("S1H5_") and any(jd.get(k) != v for k, v in S1H5_REQUIRED.items()):
+            bad.append(f"{cid}: {jf} is not the pre-registered run ({S1H5_REQUIRED})")
         try:
             raw_v = path(jd) if callable(path) else get(jd, path)
         except (KeyError, TypeError):

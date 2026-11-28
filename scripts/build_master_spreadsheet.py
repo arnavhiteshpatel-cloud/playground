@@ -219,7 +219,7 @@ def _struct_bound(rows, ep):
 def gen2_sheets(wb):
     # advisor validation, per endpoint
     rows = []
-    for name in ("exp_S1H4_heldout", "exp_S1H3_heldout", "exp_S1H2_heldout", "exp_S1H_heldout",
+    for name in ("exp_S1H5_heldout", "exp_S1H4_heldout", "exp_S1H3_heldout", "exp_S1H2_heldout", "exp_S1H_heldout",
                  "exp_S1b_advisor_threshold", "exp_S1c_control_reference", "exp_S1_advisor"):
         d = load(name)
         if not d:

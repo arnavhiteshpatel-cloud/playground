@@ -205,6 +205,9 @@ EP = [("total_mineral_volume", "Total mineral"), ("residual_graft_volume", "Resi
 EP_ROW = {"residual_graft_volume": ("err_graft", "status"), "new_bone_volume": ("err_new", "status_new"),
           "total_mineral_volume": ("err_mineral", "status_mineral")}
 SUP_ST = ("supported", "supported_with_conditions")
+# held-out tests restricted to one endpoint/material by pre-registration: shown in the verdict table, never used as
+# the general "latest test" behind the standard sentence
+SCOPED_TESTS = {"S1H5": "HA residual graft, condyle and segmental defects only"}
 ARM_LABEL = {"ha": "HA", "bcp": "BCP", "beta_tcp": "β-TCP", "xenograft_dbbm": "xenograft (DBBM)",
              "unspecified": "Unspecified"}
 
@@ -266,6 +269,7 @@ def heldout_tests(crit) -> list[dict]:
         psf = sorted({r["psf_um"] for r in rows if "psf_um" in r})
         dens = sorted({r["graft_mgHA"] for r in rows if "graft_mgHA" in r})
         t = {"id": d.get("experiment", name), "file": f"experiments/results/{name}.json",
+             "scope": SCOPED_TESTS.get(d.get("experiment", name)),
              "advisor": d.get("advisor_version", PENDING), "n": s.get("n"), "prereg": d.get("preregistered", ""),
              "eps": {}, "rows": rows, "psf": psf, "dens": dens}
         fail_frac = float(crit["fail_pct"]) / 100 if crit.get("fail_pct") else 0.2
@@ -797,8 +801,9 @@ def held(F) -> dict:
 
 
 def final_test(F):
-    """The last held-out test on disk (S1H3 once it exists)."""
-    return F["held"][-1] if F["held"] else None
+    """The latest held-out test of general scope (scoped precision tests such as S1H5 are excluded)."""
+    general = [t for t in F["held"] if not t.get("scope")]
+    return general[-1] if general else None
 
 
 def failed_endpoints(t) -> list[str]:
@@ -1191,7 +1196,8 @@ def held_table(d: Deck, s, y, size=12, row_h=0.62):
     hdr = ["Pre-registered held-out test (SYNTHETIC)"] + [lab for _, lab in EP]
     rows, styles = [], {}
     for i, t in enumerate(F["held"]):
-        row = [f"**{t['id']}** · advisor {t['advisor']}" + (" · shipped advisor" if t["advisor"] == F["adv"] else "")]
+        row = [f"**{t['id']}** · advisor {t['advisor']}" + (" · HA graft only" if t.get("scope") else
+                                                            " · shipped advisor" if t["advisor"] == F["adv"] else "")]
         for j, (key, _) in enumerate(EP, 1):
             word, st = t["eps"][key]["verdict"]
             row.append(word)
@@ -1214,7 +1220,10 @@ def s_heldout(d: Deck):
     text(s, MX, yb + 0.08, CW, 0.62,
          f"Each test was registered before it ran. Pass: at least {crit['refuse_pct']}% of failures refused, no "
          f"supported failure, and a 95% upper bound of at most {crit['bound']} on the supported-failure rate counting "
-         "phantom structures as the unit; with too few structures the result is 'not demonstrated'.", 11.5, MUTED)
+         "phantom structures as the unit; with too few structures the result is 'not demonstrated'."
+         + (" S1H5 was limited to HA residual graft on condyle and segmental defects; no graft measurement failed there, "
+            "refused or not, so it shows precision for that case, not refusal." if any(t.get("scope") for t in F["held"])
+            else ""), 11.5, MUTED)
     box(s, MX, yb + 0.8, CW, 2.05)
     text(s, MX + 0.25, yb + 0.9, CW - 0.5, 1.9, [
         {"t": "Latest result (shipped advisor), in the standard wording", "bold": True, "size": 14, "space": 4},
@@ -1227,7 +1236,7 @@ def s_failures(d: Deck):
     s = d.slide("Held-out validation, including failures", "Each failure produced a rule change, tested on new data",
                 ["EXPERIMENT_REGISTRY.md (S1H–S1H4 rows)", "docs/science/MEASUREMENT_SUPPORT.md rules 10–16",
                  "docs/science/PREREGISTRATION.md §8–10"] + [t["file"] for t in F["held"]])
-    tests = F["held"]
+    tests = [t for t in F["held"] if not t.get("scope")]
     rows, styles = [], {}
     for i, t in enumerate(tests):
         bad = failed_endpoints(t)

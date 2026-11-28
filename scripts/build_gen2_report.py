@@ -118,7 +118,7 @@ def main():
     S3, U1, O2, G, H = J("exp_S3_selfsupervised"), J("exp_U1_ensemble_conformal"), J("exp_O2_runtime"), \
         J("exp_G_morphometry"), J("exp_H_I_real")
     HO = {"S1H": J("exp_S1H_heldout"), "S1H2": J("exp_S1H2_heldout"), "S1H3": J("exp_S1H3_heldout"),
-          "S1H4": J("exp_S1H4_heldout")}
+          "S1H4": J("exp_S1H4_heldout"), "S1H5": J("exp_S1H5_heldout")}
     L5 = J("exp_L5_qc_axial")
 
     def struct_bound(d, ek, sk):
@@ -218,7 +218,13 @@ def main():
         f"support as the unit), total mineral in {f(cov(lt.get('total_mineral_volume', {})), 0, pct=True)}, new bone in "
         f"{f(cov(lt.get('new_bone_volume', {})), 0, pct=True)}; no volume endpoint was supported for "
         f"{f(lt_none, 0, pct=True)} of specimens. Earlier held-out tests (S1H, S1H2) found supported measurements that "
-        "failed; each failure led to a rule tested on new data.",
+        "failed; each failure led to a rule tested on new data."
+        + (f" A further pre-registered test limited to HA residual graft on condyle and segmental defects (S1H5, "
+           f"{len(HO['S1H5'].get('rows') or [])} specimens from "
+           f"{len({r['structure'] for r in HO['S1H5'].get('rows') or []})} structures) met the precision criterion "
+           f"(bound {f(HO['S1H5']['analysis']['residual_graft_volume']['structure_upper95'], 3)}); no graft measurement "
+           "failed in that scope, refused or not, so it shows precision for that case, not refusal."
+           if HO.get("S1H5") else ""),
         "<b>The honest consequence.</b> By intensity alone, graft/new-bone separation is supportable only for dense "
         "ceramics at low noise (in S1H4, sintered HA only; BCP and β-TCP at two weeks were never supported); "
         "bone-derived grafts, resorbing materials at later timepoints and uncharacterised (Unspecified) materials are "

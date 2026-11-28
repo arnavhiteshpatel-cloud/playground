@@ -691,5 +691,45 @@
    48,
    48
   ]
+ },
+ "s2v2_dr_synth_k1_s0": {
+  "sha256": "7f9d50a5654bfef59ab29b6d06055398bcaf729f61991db459ee868f038b6a78",
+  "created": "2026-11-28T04:06:04Z",
+  "provenance": [
+   "public-real",
+   "synthetic"
+  ],
+  "licence_tag": "commercial_eligible",
+  "n_train": 1,
+  "cfg": {
+   "patch": [
+    48,
+    48,
+    48
+   ],
+   "batch": 2,
+   "iters": 300,
+   "lr": 0.001,
+   "base": 12,
+   "levels": 4,
+   "threads": 4,
+   "n_classes": 2,
+   "log_every": 300,
+   "seed": 0,
+   "loss": {
+    "dice": 1.0,
+    "ce": 1.0,
+    "boundary_w": 1.0,
+    "boundary_ignore_aware": true
+   },
+   "val_every": 1000000000
+  },
+  "parent": "unet_dr2_mineral_s0",
+  "onnx_sha256": "6c851d3061b415a4e5db5f0ff5e35df7f3f289fe19511ddec599e71859ba0819",
+  "onnx_patch": [
+   48,
+   48,
+   48
+  ]
  }
 }

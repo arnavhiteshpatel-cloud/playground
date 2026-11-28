@@ -55,7 +55,7 @@ Census 2022 data for independent merchant wholesalers:
 - **Ethnic food distribution** (WS16-027): ~3.5% operating margins at scale.
 
 ## Evidence gaps (biggest)
-- **Search ran out early.** The shared WebSearch budget was used up near the start. After that, research relied on direct fetches of known primary URLs, chiefly SEC XBRL/EDGAR, Census AWTS tables and official program pages. Coverage of trade press and anecdotes is thin.
+- **Search ran out early.** The shared WebSearch budget was used up near the start. After that, research relied on direct fetches of known primary URLs, chiefly SEC XBRL/EDGAR, Census AWTS tables and official program pages. Trade-press coverage is thin.
 - **No vertical commission rates.** ERA, MAFSI, NEMRA, gift-industry and food-broker rates were not found. The PMMI and MANA tables are members-only and were not bypassed.
 - **Buying-group terms unknown.** Criteria and fees for AFFLINK, Network Services and packaging groups were not found, nor were supplier trade-credit terms for new distributors or the ASI membership price.
 - **Independent-operator margins missing** for car wash chemicals, filter routes, dispensing programs and rack dealers.

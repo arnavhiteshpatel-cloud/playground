@@ -1,7 +1,7 @@
 # WS02 — Insurance, payments & financial administration: discovery summary
 
 **Records:** 34 opportunities (WS02-001…034), 30 sources (WS02-S001…S030). Access date 2026-11-28.
-**Evidence base:** 7 A-level primary sources: IDOI and NIPR licensing pages, Illinois statutes via FindLaw, and the SEC 10-Ks of Goosehead, TWFG, Priority Technology, SelectQuote, Paychex and CorVel. Plus B/C sources: Brown & Brown and Baldwin results, the Encova commission schedule, OPTIS, Reagan/Big "I", Sica|Fletcher and ATRI. Most new-entrant economics are still **E**.
+**Evidence base:** A-level primary sources (IDOI/NIPR, Illinois statutes via FindLaw, 10-Ks of Goosehead, TWFG, Priority, SelectQuote, Paychex, CorVel) plus B/C sources (Brown & Brown, Baldwin, Encova schedule, OPTIS, Reagan/Big "I", Sica|Fletcher, ATRI). Most new-entrant economics are still **E**.
 
 ## Landscape
 - **Getting licensed is cheap.** Illinois producer licensing needs 20 hours of pre-licensing per line (7.5 of them classroom), General and State exams through Pearson VUE, and $215 per roughly 2-year term. The applicant must be 18 or older. An agency entity costs $150 and needs a designated licensed producer [A, S001–S003].
@@ -15,7 +15,7 @@
   - There were 695 deals in 2025. About 30,000 agencies under $1.25M revenue lack a succession path [C, S006].
   - Best-practice agencies earn 23–31% EBITDA margins [C, S008].
   - Incumbent economics (not new-entrant): Brown & Brown 35.9% adjusted EBITDAC margin; Baldwin 22.7% [B, S009–S010].
-  - Small books trade far below the 11.4x figure. The sub-$1M EBITDA multiple is unverified.
+  - Small books trade far below 11.4x (sub-$1M multiple unverified).
 - **Payments:** an acquirer's 10-K shows a working residual economy. Priority buys ISO residual streams and amortizes them over 3–9 years (6-year weighted average), which means a merchant book is a *wasting* asset [A, S019].
 - **Payroll incumbent (Paychex):** 38.6% operating margin, 82–83% client retention, and more than 50% of payroll clients come from CPA, broker and bank referrals [A, S022].
 
@@ -23,7 +23,7 @@
 1. **WS02-028 Vertical bookkeeping** (construction job-costing/WIP, trucking cost-per-mile/IFTA), score 6.11.
    - No license and almost no capital; billed monthly in advance; standard delegable roles.
    - AI categorization and reconciliation is a real, durable saving.
-   - Ceiling is moderate (gross margin roughly 45–65%, an assumption). It acts as the relationship hub for selling insurance and payroll.
+   - Moderate ceiling (assumed 45–65% gross margin); relationship hub for insurance/payroll cross-sell.
 2. **WS02-001 Trucking/commercial-auto niche agency**, score 5.91.
    - Coverage is mandated and tickets are high: about 10.6¢/mile in premium, about $10k per truck at an assumed 100k miles; small fleets pay roughly double per mile [C, S017].
    - Prospects are identifiable from public FMCSA data.
@@ -38,17 +38,12 @@
 6. **WS02-004 Chicago small-habitational niche**, score 5.67. Lenders and closing deadlines act as a referral channel; whether carriers will give a start-up capacity is unknown.
 7. **WS02-027 401(k) setup/TPA driven by Illinois Secure Choice**, score 5.62, and **WS02-019 COI tracking service**, score 5.58. Both are good bundles, but their pricing and mandate details are unverified.
 
-**Synthesis:** the strongest WS02 *system* for this founder is probably **one vertical (trucking or contractors) served with back-office (bookkeeping/payroll) plus an insurance agency**.
-- The back-office services earn cash in months 1–6 and build trust.
-- The renewal book compounds into a sellable asset.
-- Premium finance (WS02-022) and an MGA/program (WS02-016) are phase-2 adjacencies.
-
-This cross-sell assumption (E) is the main thing to validate.
+**Synthesis:** the strongest WS02 *system* is probably **one vertical (trucking or contractors) served with bookkeeping/payroll plus an insurance agency**: back-office earns cash in months 1–6 and builds trust; the renewal book compounds into a sellable asset; premium finance (022) and an MGA (016) are phase-2 adjacencies. The cross-sell assumption (E) is the main thing to validate.
 
 ## Surprises
 - Goosehead's 10-K confirms franchise royalties of **20% on new business and 50% on renewals**, and that **Goosehead keeps ultimate ownership of the policies**. Franchise count fell 9% in 2025, with 43 franchises in Illinois [A, S011]. Franchising looks attractive but undermines the wealth thesis.
 - Medicare economics are documented: $873 lifetime commission per approved MA policy [A, S020]. But a DOJ False Claims Act intervention against major brokers, and lifetime value falling from $910 to $873 in two years, show policy fragility.
-- Merchant residuals can be sold, but acquirers amortize them over about 6 years. The real value of a merchant book is far below what a naive multiple of its residual suggests.
+- Merchant residuals are sellable, but acquirers amortize them over ~6 years, so book value is far below naive residual multiples.
 
 ## Looked good, but fails or weakens
 - **Rejected for wealth structure:** franchise agencies (015) and captive agencies (014), because the founder does not own the book.

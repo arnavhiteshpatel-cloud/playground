@@ -167,7 +167,7 @@ Many thanks,
 
 ## 7. Dr. Andrew H. Lee (Midwestern University): BONe
 
-**To:** alee712@gmail.com *(the corresponding-author address printed in Front Bioinform 2026; no institutional page was found, so check the latest paper or the Midwestern directory before sending)*
+**To:** [personal address removed; use the institutional route] *(the corresponding-author address printed in Front Bioinform 2026; no institutional page was found, so check the latest paper or the Midwestern directory before sending)*
 **Subject:** BONe as a comparator for bone vs graft segmentation: question about use
 
 Dear Dr. Lee,

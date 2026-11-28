@@ -825,6 +825,39 @@ def caveat(F) -> str:
                     "accuracy on real scans. No physical validation exists.")
 
 
+def reg_word(F, rid) -> str:
+    """Status of one experiment in the registry's own words, shortened (running / queued / done / not registered)."""
+    st = F["reg_status"].get(rid)
+    if not st:
+        return "not registered, not run"
+    low = st.lower()
+    for w in ("running", "queued", "done"):
+        if w in low:
+            return w
+    return st
+
+
+def coverage_facts(F) -> dict:
+    """Per-specimen consequences of the final held-out test (cycle-3 review C3-BIZ-02), read from its rows."""
+    t = final_test(F)
+    if not t or not t["rows"]:
+        return {}
+    rows = t["rows"]
+    none = sum(1 for r in rows if all(r.get(k) not in ("supported", "supported_with_conditions")
+                                      for k in ("status", "status_new", "status_mineral")))
+    return {"id": t["id"], "none_pct": pct(none / len(rows)), "m_cov": pct(t["eps"]["total_mineral_volume"]["cov"]),
+            "nb_never": t["eps"]["new_bone_volume"]["sup"] == 0}
+
+
+def build_line(F) -> str:
+    """What the only packaged build contains, from RELEASE_READINESS.md and build-info.json (C3-BIZ-05)."""
+    adv = F["build_advisor"] or "not recorded"
+    if F["build_date"] and F["build_predates"]:
+        return (f"Linux: one packaged build ({F['build_date']}, advisor version {adv}); it {F['build_predates']} "
+                "and must be rebuilt before any use")
+    return "Linux build: " + PENDING
+
+
 def s_title(d: Deck, subtitle):
     F = d.F
     s = d.p.slides.add_slide(d.blank)
@@ -841,8 +874,8 @@ def s_title(d: Deck, subtitle):
                                 "endpoint only when the scan can support it", 24, NIGHT_TEXT, margin=0)
     text(s, MX, 4.55, CW, 0.5, subtitle, 20, ORANGE, True, margin=0)
     text(s, MX, 6.2, CW, 0.8, [
-        f"Generation 2 · built {BUILD_DATE} · shipped measurement-support advisor {F['adv']} · financial-model outputs "
-        f"SHA-256 {F['fm_sha']}",
+        f"Generation 2 · built {BUILD_DATE} · shipped measurement-support advisor {F['adv']} (source code; no packaged "
+        f"build contains it yet) · financial-model outputs SHA-256 {F['fm_sha']}",
         "Research prototype. Not tested on real graft materials. No GLP or Part 11 claim. SYNTHETIC results are "
         "labelled as such."], 12, RGBColor(0xA9, 0xB7, 0xC3), space=3, margin=0)
     s.notes_slide.notes_text_frame.text = ("Every figure in this deck is read at build time from the repository's "
@@ -855,12 +888,12 @@ def s_summary(d: Deck):
     early = [x for x in F["held"] if x is not t]
     fails = "; ".join(f"{x['id']} (advisor {x['advisor']}) on {' and '.join(failed_endpoints(x)) or 'nothing'}"
                       for x in early) or PENDING
-    if t:
-        all_ref = all(e["fr"] == e["nf"] for e in t["eps"].values())
-        nb_never = t["eps"]["new_bone_volume"]["sup"] == 0
+    cf = coverage_facts(F)
+    if t and cf:
         final = (f"Final {t['id']} (advisor {t['advisor']}): "
-                 + ("every failure refused on every endpoint" if all_ref else "not all failures refused")
-                 + ", at the cost of coverage" + ("; new bone never supported" if nb_never else ""))
+                 + ("new-bone volume never supported; " if cf["nb_never"] else "")
+                 + f"total mineral only with sharp imaging; no volume endpoint supported for {cf['none_pct']} of "
+                 "held-out specimens")
     else:
         final = "Final test: " + PENDING
     nv = F["l3"]["naive_footprint"]
@@ -872,8 +905,7 @@ def s_summary(d: Deck):
             "Offline desktop workstation: import and QC, 2D/3D viewing and editing, analysis, two-person sign-off, "
             "audit trail, reports",
             f"Advisor {F['adv']} decides per scan which endpoints may be reported, and refuses the rest",
-            "Linux build " + ("passes its packaged self-test" if F["selftest_ok"] else "self-test: pending")
-            + "; Windows and macOS never built"]),
+            build_line(F) + "; Windows and macOS never built"]),
         ("What the evidence shows (all SYNTHETIC)", SKY, [
             f"Held-out tests failed first: {fails}. Each failure led to a rule change",
             final,
@@ -887,7 +919,8 @@ def s_summary(d: Deck):
             "No equity now. " + (F["vc_not"] or ""),
             f"Fund three milestones: physical phantom study ({F['phantom_budget'] or PENDING}), first paid pilot, "
             "human expert review",
-            "Advisors in imaging science and bone biology; retrospective pilot partners"]),
+            "Advisors in imaging science and bone biology; later, retrospective pilot partners (no customer data "
+            "before incorporation, a DPA and Gate 1)"]),
     ]
     cw, chh, gap = (CW - 0.3) / 2, 2.38, 0.14
     for i, (head, col, items) in enumerate(cards):
@@ -928,8 +961,8 @@ def s_problem(d: Deck, buyer=False):
 def s_product(d: Deck):
     F = d.F
     s = d.slide("Product", "The product: an offline desktop workstation",
-                ["docs/screenshots/desktop/02_viewer_light.png", "packaging/dist/build-info.json", "tests/",
-                 "docs/qa/coverage_final.txt", "docs/desktop/USER_GUIDE.md"])
+                ["docs/screenshots/desktop/02_viewer_light.png", "packaging/dist/build-info.json",
+                 "RELEASE_READINESS.md", "docs/qa/test_summary.json", "docs/desktop/USER_GUIDE.md"])
     r = picture(s, SHOTS / "02_viewer_light.png", MX, TOP, 7.7, 4.6)
     if r:
         _, (px, py, pw, ph) = r
@@ -941,9 +974,10 @@ def s_product(d: Deck):
         "Linked 2D, oblique and 3D views; brush, region-grow, interpolation, undo; every edit is a new revision "
         "with a reason",
         "Background analysis; a support status per endpoint; PDF and CSV reports",
-        "Linux build " + (f"passes its packaged self-test ({F['bundle_mib']:,.0f} MiB folder)" if F["selftest_ok"]
-                          and F["bundle_mib"] else "self-test: pending") + "; Windows and macOS: configured, never run",
-        f"{F['n_tests']} test functions; {F['coverage'] or PENDING} line+branch coverage (desktop code excluded)",
+        build_line(F) + "; Windows and macOS: configured, never run",
+        f"Tests ({F['tests_date'] or PENDING}): {F['tests_passed'] if F['tests_passed'] is not None else PENDING} "
+        f"passed, {F['tests_skipped'] if F['tests_skipped'] is not None else PENDING} skipped; "
+        f"{F['coverage'] or PENDING} line+branch coverage, desktop UI excluded (test_summary.json)",
     ]
     text(s, 8.6, TOP, 4.15, 4.9, bullets(items), 13, space=7)
 
@@ -990,7 +1024,9 @@ def s_abstention(d: Deck, buyer=False):
               "for this material, scan noise and blur, timepoint and study design."),
         ("2", "Supported: the number. Supported with conditions: the number and its condition. Not supported: "
               "“n/m” with the reason, never a number."),
-        ("3", "Total mineral (graft plus new bone) is reported whenever the scan's noise and blur allow it."),
+        ("3", "Total mineral (graft + new bone) is reported only if noise and blur allow"
+              + (f"; in {coverage_facts(F)['id']} no volume endpoint supported for {coverage_facts(F)['none_pct']} "
+                 "of specimens." if coverage_facts(F) else ".")),
         ("4", f"Every result records the advisor version (shipped: {F['adv']}). Refusals are counted, not hidden."),
     ]
     y = TOP + 0.05
@@ -1011,7 +1047,7 @@ def s_results_screen(d: Deck):
         "Each scan carries a support state: supported, flagged or not supported",
         "Select a row to see every endpoint with its status, value and reasons",
         "Refused endpoints read “not measured” in the table, the CSV and the PDF; no number is printed",
-        "Total mineral stays available when graft and new bone are refused",
+        "Total mineral can still be reported when graft and new bone are refused, but only if blur and noise allow",
     ]
     text(s, 9.2, TOP, 3.55, 4.8, bullets(items), 14, space=9)
 
@@ -1242,11 +1278,14 @@ def s_realdata(d: Deck):
     t3, t6, t7 = F["target"]["B3"], F["target"]["B6"], F["target"]["B7"]
 
     def v(x, nd=3):
-        return num(x, nd) if ok(x) else RUNNING
-    s = d.slide("Real data and running experiments", "Real-data results so far are two-class; more is running",
+        return num(x, nd) if ok(x) else PENDING
+    st_s2, st_s3, st_u1 = reg_word(F, "S2"), reg_word(F, "S3"), reg_word(F, "U1")
+    s = d.slide("Real data and pending experiments", "Real-data results so far are two-class; the rest is not finished",
                 ["experiments/results/exp_H_I_real.json", "exp_G_morphometry.json", "exp_S2v2_sim2real_a.json",
-                 "EXPERIMENT_REGISTRY.md (S2b/c, S3, U1 running)", "BENCHMARK_SCORECARD.md"])
-    k1 = "; ".join(f"{k} {v(x)}" for k, x in F["k1"].items()) if any(ok(x) for x in F["k1"].values()) else RUNNING
+                 "EXPERIMENT_REGISTRY.md (status per experiment)", "BENCHMARK_SCORECARD.md"])
+    k1 = "; ".join(f"{k} {v(x)}" for k, x in F["k1"].items()) if any(ok(x) for x in F["k1"].values()) else PENDING
+    s2bc = f"S2 parts b, c: {st_s2}; S3: {st_s3}"
+    u1 = f"U1: {st_u1}"
     rows = [
         ["REAL dog forelimb\n(5 test specimens)", "Bone vs background (two classes, not graft vs new bone)",
          f"U-Net trained on 10 real scans {num(F['h_real10'], 3)}; synthetic model zero-shot {num(F['h_zero'], 3)}; "
@@ -1258,12 +1297,14 @@ def s_realdata(d: Deck):
           "upsampling (zoom chosen on training scans)") if ok(F["s2_g0_zoom"]) else RUNNING, f"Target {t3}"],
         ["REAL dog forelimb\n(S2v2 parts b, c; S3)", "Domain-randomised and self-supervised pretraining; few-shot "
                                                       "with 1 real scan, 3 seeds",
-         (f"zero-shot {v(F['s2_dr_zero'])}; few-shot {k1}" if ok(F["s2_dr_zero"]) else RUNNING), "Running"],
+         (f"zero-shot {v(F['s2_dr_zero'])}; few-shot {k1}" if ok(F["s2_dr_zero"]) else "No number yet"),
+         f"Registry: {s2bc}"],
         ["SYNTHETIC (U1)", "Ensemble failure detection; conformal 90% graft-volume intervals",
          (f"AUROC {v(F['u1_auroc_id'], 2)} / {v(F['u1_auroc_ood'], 2)}; coverage {v(F['u1_cov_id'], 2)} / "
-          f"{v(F['u1_cov_ood'], 2)}" if ok(F["u1_auroc_id"]) else RUNNING), f"Targets {t6}; {t7}"],
+          f"{v(F['u1_cov_ood'], 2)}" if ok(F["u1_auroc_id"]) else f"No number yet (registry: {u1})"),
+         f"Targets {t6}; {t7}"],
     ]
-    styles = {(i, 2): ST_NONE for i, r in enumerate(rows) if r[2] == RUNNING}
+    styles = {(i, 2): ST_NONE for i, r in enumerate(rows) if r[2].startswith("No number yet")}
     table(s, MX, TOP, CW, ["Data", "Question", "Result", "Note"], rows, col_w=[2.45, 3.25, 4.2, 2.233], size=12,
           head_size=12.5, row_h=0.78, head_h=0.42, styles=styles)
 
@@ -1366,8 +1407,8 @@ def s_pricing(d: Deck, short=False):
     notes = [
         f"No GLP offer: the {F['no_glp']}." if F["no_glp"] else "No GLP offer.",
         f"Published anchor: one academic micro-CT core lists {F['hss'] or PENDING} for analysis (HSS).",
-        f"Decision gate around {F['gate_date'] or PENDING}: a price signal for study analysis (H2) and a separable path "
-        "in the phantom study.",
+        f"Price gate around {F['gate_date'] or PENDING}: a price signal for study analysis (H2). Separability gate "
+        f"({F['sep_gate'] or PENDING}): a separable path in the phantom study.",
     ]
     text(s, MX, TOP + 0.45 + rh * len(rows) + 0.25, CW, 1.05, bullets(notes), 13.5, space=4)
 
@@ -1435,17 +1476,18 @@ def s_team(d: Deck):
         text(s, x + 0.25, TOP + 0.75, cw - 0.45, 4.0, bullets(items, col), 14, space=8)
 
 
-KEY_DATE_LABELS = [(r"Cozad pitch", "Cozad pitch"), (r"phantom scans", "Beckman phantom scans"),
-                   (r"first paid pilot", "earliest first paid pilot"), (r"provisional", "decide on a US provisional"),
-                   (r"bar date", "US patent bar date")]
+KEY_DATE_LABELS = [(r"Cozad registration deadline", "Cozad registration deadline"),
+                   (r"Price gate", "price gate"), (r"phantom scans", "Beckman phantom scans at the earliest"),
+                   (r"Cozad Demo Showcase", "Cozad finals"), (r"first paid pilot", "earliest first paid pilot"),
+                   (r"provisional", "decide on a US provisional"), (r"bar date", "US patent bar date")]
 
 
 def key_dates(F) -> list[tuple[str, str]]:
     out = []
     for pat, label in KEY_DATE_LABELS:
-        hit = next(((dt, w) for dt, w in F["dates"] if re.search(pat, w)), None)
-        if hit:
-            out.append((hit[0], label))
+        for dt, w in F["dates"]:          # every matching row (two bar dates since the 28 Nov pushes)
+            if re.search(pat, w):
+                out.append((dt, label))
     return out
 
 
@@ -1462,6 +1504,8 @@ def s_milestones(d: Deck):
         for k in ("what", "unlocks"):
             if k in m:
                 m[k] = re.sub(r"\s*\([\w/.]+\.md[^)]*\)", "", m[k])
+        if "what" in m:
+            m["what"] = re.split(r"\.\s*Prerequisites", m["what"])[0]
     cards = [
         ("Physical phantom study", SKY, [
             f"**What**: {m2.get('what', PENDING)}",
@@ -1471,12 +1515,13 @@ def s_milestones(d: Deck):
         ("First paid pilot", ORANGE, [
             f"**What**: {m3.get('what', PENDING)}",
             f"**Price hypothesis**: {_col(_offer(F, 'Paid pilot'), 'Price range')} · **When**: {m3.get('when', PENDING)}",
-            "**Needs first**: an entity, the university IP determination and counsel-reviewed contracts",
+            "**Needs first**: M0 (entity, university IP determination, insurance, counsel-reviewed contracts) and "
+            "Gate 2 (real-data validation for one task, closed human expert review); none met",
             f"**Unlocks**: {m3.get('unlocks', PENDING)}"]),
         ("Human expert review", GREEN, [
             f"**Who**: {F['experts'] or PENDING}",
             "**What**: the advisor rules, held-out designs and every external claim",
-            "**Cost**: not yet estimated in any project file",
+            "**Cost**: not yet estimated in any project file (founder decision)",
             "**Unlocks**: replaces reviews by automated agents; required before a pilot-ready release (Gate 2)"]),
     ]
     cw = (CW - 0.6) / 3
@@ -1532,8 +1577,9 @@ def s_collab(d: Deck):
 def s_pilot(d: Deck):
     F = d.F
     price = _col(_offer(F, "Paid pilot"), "Price range")
-    s = d.slide("Pilot offer", "Pilot: a retrospective comparison on scans you already have",
-                ["business/REVENUE_MODEL.md O1, §2a", "docs/user/DATA_PROTECTION.md", "FOUNDER_DECISIONS.md #5, #7"])
+    s = d.slide("Planned pilot", "Planned pilot: a retrospective comparison on scans you already have",
+                ["business/REVENUE_MODEL.md O1, §2a", "docs/user/DATA_PROTECTION.md", "RELEASE_READINESS.md",
+                 "FOUNDER_DECISIONS.md #5, #7, #18"])
     steps = [
         ("1", f"You choose {F['pilot_scans'] or PENDING} completed scans from a finished study"),
         ("2", "We analyse them alongside your own analysis, blind to your results"),
@@ -1550,10 +1596,11 @@ def s_pilot(d: Deck):
         if i < 3:
             connector(s, x + bw + 0.05, TOP + 1.12, x + bw + gap - 0.05, TOP + 1.12, MUTED, 2)
     terms = [
-        "**Until incorporation and IP clearance**: free retrospective evaluation under NDA only.",
-        f"**After that**: a paid pilot at a hypothesised {price}; the price is part of what we are testing.",
-        "**Your data**: analysed on a local, encrypted machine; no training on your scans without your written "
-        "opt-in; adapted models are never used for other customers.",
+        "**Today**: no pilot or evaluation on customer scans is offered, paid or free. Planned only after "
+        "incorporation, a data-processing agreement and Gate 1 (not met); offering it is a founder decision.",
+        f"**Paid pilot (planned)**: a hypothesised {price}, after Gate 2 as well; the price is part of what we are testing.",
+        "**Your data (planned terms)**: a written DPA and data-handling procedure before any scan changes hands; no "
+        "training on your scans without your written opt-in; adapted models never used for other customers.",
         "**Scope**: research use. No GLP or Part 11 claim; not for regulatory submission without your own QA review.",
     ]
     text(s, MX, TOP + 2.8, CW, 2.1, bullets(terms), 16, space=10)
@@ -1583,8 +1630,8 @@ def s_evidence_compact(d: Deck):
         f"Real public data, two-class only: U-Net trained on 10 real scans {num(F['h_real10'], 3)} (bone vs "
         f"background); Tb.Th ICC(2,1) {num(F['g_icc'], 3)} against Scanco IPL on {F['g_n'] or PENDING} cubes (border "
         "convention chosen post hoc).",
-        "No real graft material has been measured yet. A pilot on your scans would be the first real-data test of "
-        "the refusals.",
+        "No real graft material has been measured yet. A pilot on real scans, once possible (after incorporation, a "
+        "DPA and Gate 1), would be the first real-data test of the refusals.",
     ]
     text(s, MX, TOP + 2.4, CW, 2.5, bullets(items, SKY), 13, space=6)
 
@@ -1600,10 +1647,10 @@ def build_investor(F):
     d.dark("What we are asking for", [
         "No equity now. " + (F["vc_not"] or "") + " Raising before the phantom result and a paid pilot would sell "
                                                  "equity at maximum uncertainty.",
-        "Seeking advisors in imaging science and bone biology, retrospective pilot partners, and non-dilutive "
-        "programmes the founder is eligible for.",
-        f"Decision gate around {F['gate_date'] or PENDING}: a price signal for study analysis and a separable path in "
-        "the phantom study.",
+        "Seeking advisors in imaging science and bone biology, later retrospective pilot partners (no customer data "
+        "before incorporation, a DPA and Gate 1), and non-dilutive programmes the founder is eligible for.",
+        f"Price gate around {F['gate_date'] or PENDING}; separability gate {F['sep_gate'] or PENDING}. Both must "
+        "pass before selling study analysis.",
         "Before any external use of this deck: the founder approves the model assumptions and the university "
         "ownership determination is requested (founder decisions).",
     ], kicker="The ask", notes="Sources: investor/FUNDING_STRATEGY.md §1, §4; business/PRICING_VALIDATION_PLAN.md §7; "
@@ -1638,7 +1685,8 @@ def build_pilot(F):
     s_pilot(d)
     s_pricing(d)
     d.dark("Questions for you", [
-        "Which recent study could we analyse retrospectively, and which graft materials and timepoints does it use?",
+        "Which recent study would suit a retrospective comparison once pilots are possible, and which graft "
+        "materials and timepoints does it use?",
         "Do your studies acquire a post-operative (day-0) scan, and do you have matched histology?",
         "Who owns the micro-CT analysis decision and its budget?",
     ], kicker="Next step", notes="Sources: business/INTERVIEW_GUIDE.md; business/templates/PILOT_PROPOSAL.md.")

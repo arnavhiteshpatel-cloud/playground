@@ -76,15 +76,15 @@ break, and how do you fix the clause?
 
 ### A7. Public-repository disclosure
 Everything pushed to the public repository is a public disclosure from its push date. The Generation-1 and most
-Generation-2 work was pushed on 2026-11-27; the advisor 1.4.0–1.4.3 mechanisms (scan-measured blur, blur-scaled
+Generation-2 work was pushed on 2026-11-27; the mechanisms added since advisor 1.4.0 (scan-measured blur, blur-scaled
 ambiguous rim, new-bone error propagation, method binding, read-time support evaluation, unspecified-material rim
 proxy, worst-case mineral rim gate), external audit-chain anchors and fail-closed registration QC were pushed on
 2026-11-28 (`docs/ip/INVENTION_REGISTER.md` §0a). In the US an inventor has a one-year grace period after their own
 disclosure, so the **bar date is 2027-11-27** for the 27 Nov material and **2027-11-28** for the 28 Nov material;
 after it, your own repository is prior art against you (counsel to confirm). Many countries, including the European
 Patent Office and China, require absolute novelty. Some others (for example Japan and Korea) have grace periods for
-the applicant's own disclosure, with conditions such as a declaration at filing; whether any of them still applies
-here is for counsel to confirm. Each new push of inventive work starts its own clock and ends any trade-secret status.
+the applicant's own disclosure, with conditions; whether any of them still applies here is for counsel to
+confirm. Each new push of inventive work starts its own clock and ends any trade-secret status.
 The public repository also exposes a non-privileged patent triage, prospect lists and the full source — which
 undercuts licence revenue (decisions #1, #2, #3 and #17 in `FOUNDER_DECISIONS.md`; `docs/ip/IP_STRATEGY.md`).
 **Self-test:** You want to push a new day-0 tracking method next week. What should happen first, and who do you ask?

@@ -8,11 +8,39 @@
 
 | Topic | Fact (evidence) | Implication |
 |---|---|---|
-| **Creation date** | Git history: first commit `deab961`, 2026-11-27; 15 commits, all dated 2026-11-27 [V: `git log`] | Dated record of reduction to practice (simulation level) |
+| **Creation date** | Git history: first commit `deab961`, 2026-11-27; further commits on 2026-11-27 and 2026-11-28 (`git log` gives the full list) [V: `git log`] | Dated record of reduction to practice (simulation level). Per-invention disclosure dates: §0a |
 | **How code was written** | `docs/security/IP_PROVENANCE.md` §1: all code and documents were generated **by an AI coding tool acting on the founder's written directive**, in a commercial cloud container, not on university computers [V: repo] | **Inventorship risk.** Under the USPTO's revised guidance (published 2025-11-26, rescinding the Feb 2024 guidance), "only natural persons can be properly named as inventors", AI systems "are tools used by human inventors", and "the touchstone of inventorship" is **conception** [V: https://www.uspto.gov/subscription-center/2025/revised-inventorship-guidance-ai-assisted-inventions, accessed 2026-11-27]. For each entry, the founder must be able to show they **personally conceived** the definite and permanent idea (e.g. in the directive or playbook), not just accepted a tool's output. **Attorney question.** |
-| **Repository hosting** | `origin` on **github.com** under a personal account, repository `playground`. **Visibility: PUBLIC** (checked 2026-11-27, `docs/ip/IP_STRATEGY.md` Addendum); the founder decided to keep it public and push all work. Generation-1 and Generation-2 commits were pushed on 2026-11-27 [V] | **Every entry below is publicly disclosed** as of 2026-11-27: single US bar date **2027-11-27** (35 U.S.C. 102(b)(1)(A), INF); foreign rights likely lost; no entry can be a trade secret. New inventive work pushed later starts its own one-year clock. Decision and deadlines: `FOUNDER_DECISIONS.md` |
+| **Repository hosting** | `origin` on **github.com** under a personal account, repository `playground`. **Visibility: PUBLIC** (checked 2026-11-27, `docs/ip/IP_STRATEGY.md` Addendum); the founder decided to keep it public and push all work. Generation-1 and Generation-2 commits were pushed on 2026-11-27 [V] | **Every entry below is publicly disclosed** from its push date (table §0a): US one-year dates **2027-11-27** for material pushed on 2026-11-27 and **2027-11-28** for material pushed on 2026-11-28 (35 U.S.C. 102(b)(1)(A), INF; counsel to confirm). Absolute-novelty jurisdictions (e.g. the EPO, China) are probably closed for disclosed material. Some jurisdictions (e.g. Japan, Korea) have grace periods for the applicant's own disclosure, with conditions; whether they apply here is for counsel to confirm. No pushed entry can be a trade secret. New inventive work pushed later starts its own one-year clock. Decision and deadlines: `FOUNDER_DECISIONS.md` #1, #17, #19 |
 | **Outward-facing drafts in repo** | `web/landing/index.html` mentions a "day-0 baseline scan" benefit and a "Separability check". `investor/ONE_PAGE_OVERVIEW.md` (rewritten in cycle 2) states that day-0 works in simulation only without granule motion. `publications/MANUSCRIPT_1_separability.md` describes the Dice-optimal oracle and the day-0 footprint in detail [V: repo] | Not a disclosure until published or sent. Treat as **do-not-send** until filing decisions are made (see `IP_STRATEGY.md`) |
 | **University context** | Founder is a UIUC undergraduate. `outreach/IP_AND_OTM_QUESTIONS.md` lists open OTM questions. `docs/security/IP_PROVENANCE.md` states no university data, equipment or funds were used [V: repo] | Ownership determination by OTM is pending (do not assume) |
+
+> **Note (2026-11-28).** Recommendations in the entries below that say "keep confidential" or "trade secret" were
+> written before the repository was found to be public. They no longer apply to anything already pushed
+> (`docs/ip/IP_STRATEGY.md` §2); only material never pushed can still be confidential. The novelty assessments below are
+> the founder's own preliminary triage and are as public as the rest of the repository (founder decision #3).
+
+## 0a. Public disclosure dates, per invention (facts; recorded 2026-11-28)
+
+The repository `origin` is public (`docs/ip/IP_STRATEGY.md` Addendum). Each item became public when the commit that
+introduced it was pushed. Commit times are from `git log` (UTC); on 2026-11-28 the local branch was level with
+`origin`. The US one-year dates are the end of the grace period under 35 U.S.C. 102(b)(1)(A) (INF; counsel to confirm).
+No prior-art search has been done for the 2026-11-28 items.
+
+| Item | What became public | Commit (commit time, UTC) | Public from | US one-year date |
+|---|---|---|---|---|
+| INV-01 to INV-07 | As described in the entries below (Generation-1 material and the Generation-2 work present on that day) | `deab961` (first commit) and later commits of 2026-11-27 | 2026-11-27 | 2027-11-27 |
+| INV-08a | Advisor 1.4.0: **scan-measured blur** (blur, granule thickness and graft level measured in each scan, in a blur-aware graft partial-volume model); **new-bone error propagation** (new bone = mineral − graft, graft error carried into new bone); measured ambiguous graft rim | `a22da5a` (2026-11-28 00:25) | 2026-11-28 | 2027-11-28 |
+| INV-08b | Advisor 1.4.1: **blur-scaled ambiguous rim** (rim width follows the measured blur) | `7a3ae70` (2026-11-28 00:30) | 2026-11-28 | 2027-11-28 |
+| INV-08c | Advisor 1.4.2: **method binding** (measurement support applies only to the advisor's own segmentation method) | `cfad464` (2026-11-28 00:34) | 2026-11-28 | 2027-11-28 |
+| INV-08d | **Read-time support evaluation** (support re-evaluated whenever a result is shown or reported; stale advisor or rule versions read "not assessed") | `4b5e84c` (2026-11-28 01:37) | 2026-11-28 | 2027-11-28 |
+| INV-08e | Advisor 1.4.3: **unspecified-material rim proxy**; **worst-case mineral rim gate** | `4b5e84c` (2026-11-28 01:37) | 2026-11-28 | 2027-11-28 |
+| INV-05 (extension) | **External audit-chain anchors** (chain heads anchored outside the project at report generation, signature and export; checked at sign-in; printed on reports) | `4b5e84c` (2026-11-28 01:37) | 2026-11-28 | 2027-11-28 |
+| INV-01 / INV-04 (extension) | **Registration QC that fails closed** on directions it cannot verify (Experiment L5) | `4b5e84c` (2026-11-28 01:37) | 2026-11-28 | 2027-11-28 |
+
+These pushes happened after `FOUNDER_DECISIONS.md` (created 2026-11-28 00:07) listed decision #2 as "now, before the
+next push", and under the founder's recorded 27 Nov instruction to push all work (`docs/ip/IP_STRATEGY.md`
+Addendum). Which instruction governs further pushes is founder decision #17. Record each later push of inventive work
+in this table with its commit and date.
 
 **Status codes:**
 - **RTP-sim**: reduced to practice in simulation/code.
@@ -73,7 +101,7 @@
 **Description:**
 - Given class-conditional intensity histograms for graft and new bone, from phantoms, the material reference library or a labelled calibration subset, sort intensity bins by graft fraction.
 - Scan superlevel sets of the likelihood ratio to find the **Dice-maximising union of bins**. This is an upper bound on graft Dice for *any* voxel-wise intensity rule at that binning.
-- Code: `experiments/recompute_intensity_oracle.py::dice_oracle`. The independent review corrected an earlier accuracy-optimal bound (Q-01).
+- Code: `experiments/recompute_intensity_oracle.py::dice_oracle`. An internal automated review (reviewer agents, not independent experts) corrected an earlier accuracy-optimal bound (Q-01).
 - Proposed product use (**Concept**, not implemented in `osteoquant/`):
   - before a study, or per scan, compute the oracle for the declared material, voxel size and noise;
   - if the bound is below a threshold, the advisor (a) recommends a day-0 scan, morphology features or histology, and (b) forces the report to **abstain** from intensity-based class volumes (see INV-03).

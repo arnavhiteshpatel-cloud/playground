@@ -229,7 +229,7 @@ Second wave (no email drafted): Steven Boyd, Robert Guldberg, Christian Puttlitz
 ### 3.2 Andrew H. Lee, PhD (Midwestern University, Glendale AZ): BONe
 
 - **Role:** listed as Professor, Anatomy, in the Midwestern AZ catalog **[RF]**. Paper affiliations include Anatomy, the Arizona College of Osteopathic Medicine, the College of Veterinary Medicine and Core Facilities–Glendale **[V, paper]**.
-- **Contact:** corresponding-author address printed in the 2026 Front Bioinform paper: **alee712@gmail.com** **[V, as printed in PMC12868216]**. **No institutional profile page was found [UNR].** Prefer this address only because it is the one the author published.
+- **Contact:** corresponding-author address printed in the 2026 Front Bioinform paper: **[personal address removed; use the institutional route]** **[V, as printed in PMC12868216]**. **No institutional profile page was found [UNR].** Prefer this address only because it is the one the author published.
 - **Papers [V]:**
   1. Lee AH, Talluri G, Damani M, …, Al-Nakkash L. *Deep learning software and revised 2D model to segment bone in micro-CT scans.* Front Bioinform 2025/2026. doi:10.3389/fbinf.2025.1677527. The article is CC BY. Models and code are on Dryad, doi:10.5061/dryad.4j0zpc8qq **[V, PMC page]**. Reported grand-mean IoU 0.9133 ± 0.0476 in 5-fold CV **[V, paper]**.
   2. Lee AH, Moore JM, Covarrubias BV, Lynch LM. *Segmentation of cortical bone, trabecular bone, and medullary pores from micro-CT images using 2D and 3D deep learning models.* Anat Rec 2025. doi:10.1002/ar.25633

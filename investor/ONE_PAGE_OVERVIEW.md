@@ -64,6 +64,7 @@ gate** comes after its read-out. No pilot or evaluation on customer data before 
 also needs Gate 2.
 
 **Key dates:** US patent bar dates for material already public: **2027-11-27** (pushed 2026-11-27) and
-**2027-11-28** (advisor 1.4.0–1.4.3 mechanisms and related work pushed 2026-11-28) (`FOUNDER_DECISIONS.md`).
+**2027-11-28** (the mechanisms added since advisor 1.4.0, and related work, pushed 2026-11-28)
+(`FOUNDER_DECISIONS.md`).
 
 **Contact:** [founder name, email] · repository and data room on request.

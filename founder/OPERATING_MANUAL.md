@@ -129,7 +129,8 @@ python packaging/build.py      # -> packaging/dist/OsteoQuant/ and an archive; r
 ```
 `packaging/dist/build-info.json` records the result. The build **fails** on any GPL-only Qt module or unmapped bundled
 library. Do not distribute or use any archive yet: the Linux build on disk (27 Nov) predates the complete notices,
-advisor 1.3.1–1.4.3 and the cycle-2/3 fixes (`docs/desktop/PACKAGING.md` §Distribution status), and the LGPL source
+and it was built before advisor 1.3.1–1.4.3 and the cycle-2/3 fixes (`docs/desktop/PACKAGING.md` §Distribution
+status), and the LGPL source
 arrangement and the EULA are counsel questions (decision #12). Windows/macOS builds run only in CI
 (`.github/workflows/desktop-release.yml`) and have never been run. That workflow creates no GitHub Release, but on a
 manual dispatch or a `desktop-v*` tag it uploads the unsigned application archives as workflow artifacts, which any

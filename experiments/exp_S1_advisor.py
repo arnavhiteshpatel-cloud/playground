@@ -74,6 +74,22 @@ def summarize(rows, method):
     out["p_fail_given_supported"] = (k_f / n_sup) if n_sup else None
     out["p_fail_given_supported_upper95"] = float(_beta.ppf(0.975, k_f + 1, n_sup - k_f)) if n_sup else None
     out["coverage_supported_fraction"] = float((~refused).mean()) if len(r) else None
+    # Per-endpoint evaluation: each endpoint judged by ITS OWN advisor status (graft, new bone, total mineral).
+    out["per_endpoint"] = {}
+    for ep, ek, sk in (("residual_graft_volume", "err", "status"), ("new_bone_volume", "err_new", "status_new"),
+                       ("total_mineral_volume", "err_mineral", "status_mineral")):
+        rr = [x for x in r if sk in x and np.isfinite(x.get(ek, np.nan))]
+        if not rr:
+            continue
+        fl = np.array([abs(x[ek]) > FAIL for x in rr])
+        rf = np.array([x[sk] == NOT_SUPPORTED for x in rr])
+        ns, kf = int((~rf).sum()), int((~rf & fl).sum())
+        out["per_endpoint"][ep] = {
+            "n": len(rr), "n_fail": int(fl.sum()), "failures_refused": int((fl & rf).sum()),
+            "supported_but_failed": kf, "supported_and_ok": int((~rf & ~fl).sum()), "refused_but_ok": int((rf & ~fl).sum()),
+            "p_fail_given_supported_upper95": float(_beta.ppf(0.975, kf + 1, ns - kf)) if ns else None,
+            "abs_err_supported_median": float(np.median([abs(x[ek]) for x, g in zip(rr, rf) if not g])) if ns else None,
+            "abs_err_supported_max": float(np.max([abs(x[ek]) for x, g in zip(rr, rf) if not g])) if ns else None}
     for ep in ("new", "mineral"):
         v = [abs(x.get(f"err_{ep}", np.nan)) for x, f in zip(r, refused) if not f]
         v = [x for x in v if np.isfinite(x)]
@@ -93,6 +109,8 @@ def part_a(rows):
         est = scan_relative_units(c.image, exclude_mask=c.roi)
         sup = support_for_scan(c.image, c.roi, c.spacing, {"material": mat})
         st = sup["endpoints"]["residual_graft_volume"]["status"]
+        st_new = sup["endpoints"]["new_bone_volume"]["status"]
+        st_min = sup["endpoints"]["total_mineral_volume"]["status"]
         a = type("A", (), {"intensity": sup["intensity"]})
         lab_mo, _ = C.seg_multiotsu(c.image, c.roi, True)
         e_mo, vt = graft_err(lab_mo, c.labels, c.roi)
@@ -102,6 +120,7 @@ def part_a(rows):
         true_noise_rel = c.meta["spec"]["imaging"]["noise_sigma"] / max(est["host"] - est["soft"], 1e-6)
         for meth, e, lab_ in (("multiotsu", e_mo, lab_mo), ("unet_synth", e_un, lab_un)):
             rows.append({"part": "A", "case": c.case_id, "material": mat, "method": meth, "err": e, "status": st,
+                         "status_new": st_new, "status_mineral": st_min,
                          **endpoint_errs(lab_, c.labels, c.roi),
                          "oracle_dice": a.intensity.get("dice_graft"), "noise_rel_est": est["noise_rel"],
                          "noise_rel_true_approx": true_noise_rel, "graft_vox": vt})
@@ -125,6 +144,8 @@ def part_b(rows):
                 rows.append({"part": "B", "case": f"X{X}_s{s}_{i}", "graft_mgHA": X, "noise": s, "method": "multiotsu_B",
                              **endpoint_errs(lab, ph.labels, ph.roi_mask),
                              "err": e, "status": sup["endpoints"]["residual_graft_volume"]["status"],
+                             "status_new": sup["endpoints"]["new_bone_volume"]["status"],
+                             "status_mineral": sup["endpoints"]["total_mineral_volume"]["status"],
                              "oracle_dice": a.intensity.get("dice_graft"), "noise_rel_est": est["noise_rel"], "graft_vox": vt})
             print("B", X, s, rows[-1]["status"], round(np.mean([r["err"] for r in rows[-3:]]), 3), flush=True)
 

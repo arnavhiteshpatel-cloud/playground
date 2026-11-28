@@ -32,6 +32,8 @@ def main():
         rows.append({"part": "A", "case": c.case_id, "material": cfg["material"], "method": "advisor_threshold",
                      **endpoint_errs(lab, c.labels, c.roi),
                      "err": e, "advisor_oracle_dice": sup["intensity"].get("dice_graft"),
+                     "status_new": sup["endpoints"]["new_bone_volume"]["status"],
+                     "status_mineral": sup["endpoints"]["total_mineral_volume"]["status"],
                      "true_oracle_dice": tor["dice_graft"], "status": sup["endpoints"]["residual_graft_volume"]["status"], "graft_vox": vt})
         print("A", c.case_id, rows[-1]["status"], round(e, 3), flush=True)
     phs = make_structures(4)
@@ -49,6 +51,8 @@ def main():
                 rows.append({"part": "B", "case": f"X{X}_s{s}_{i}", "graft_mgHA": X, "noise": s,
                              **endpoint_errs(lab, ph.labels, ph.roi_mask),
                              "method": "advisor_threshold_B", "err": e,
+                             "status_new": sup["endpoints"]["new_bone_volume"]["status"],
+                             "status_mineral": sup["endpoints"]["total_mineral_volume"]["status"],
                              "advisor_oracle_dice": sup["intensity"].get("dice_graft"),
                              "true_oracle_dice": tor["dice_graft"], "true_oracle_threshold": tor.get("threshold"),
                              "advisor_threshold_grey": info.get("t_graft"),

@@ -15,7 +15,7 @@ ceramics approach bone density.
 **What exists:** working desktop software (7 input formats incl. Zeiss TXM; QC; automatic defect ROI; classical
 three-class segmentation with an optional locked model; morphometry that agrees with Scanco IPL on 8 public cubes
 (border convention chosen post hoc); measurement-support advisor 1.3.3; viewer with correction and re-authenticated
-sign-off; hash-chained audit trail; reports); an automated test suite (TESTCOUNT tests collected on 2026-11-27); 16+
+sign-off; hash-chained audit trail; reports); an automated test suite (556 tests in the full run of 2026-11-28); 16+
 experiments; internal automated review (reviewer agents, not independent reviewers — `REVIEW_REGISTRY.md`).
 
 **Evidence:**

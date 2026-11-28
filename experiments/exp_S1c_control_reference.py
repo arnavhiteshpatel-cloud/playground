@@ -40,6 +40,8 @@ for X in (2200, 1600, 1300, 1150, 1000, 900, 800, 650):
                 rows.append({"graft_mgHA": X, "noise": s, "specimen": i, "method": tag, "err": e,
                              **endpoint_errs(lab, ph.labels, ph.roi_mask),
                              "status": sup["endpoints"]["residual_graft_volume"]["status"],
+                             "status_new": sup["endpoints"]["new_bone_volume"]["status"],
+                             "status_mineral": sup["endpoints"]["total_mineral_volume"]["status"],
                              "oracle": sup["intensity"].get("dice_graft")})
         print(X, s, [(r["method"][:4], r["status"][:4], round(r["err"], 3)) for r in rows[-2:]], flush=True)
 summ = [summarize(rows, m) for m in ("assumed_range", "control_reference")]

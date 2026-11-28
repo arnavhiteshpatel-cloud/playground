@@ -1,0 +1,32 @@
+# Baseline Comparison — Generation 0 (commit `ee09a70`) vs Generation 2
+
+Generation 0 is the state at the start of this mandate (called "Generation 1" in some earlier documents). Every
+Generation-2 entry points to its evidence. Where Generation 2 found that a Generation-0 result was a best case or
+wrong, the correction is listed: those are improvements in honesty, not in performance.
+
+| Dimension | Generation 0 (commit ee09a70) | Generation 2 (this build) |
+|---|---|---|
+| Product form | FastAPI server + browser workbench; needs a terminal to start | Offline PySide6 + VTK desktop workstation; no server, browser or LLM; Linux one-folder build passes its self-test (`packaging/dist/build-info.json`); Windows/macOS configured in CI, not yet run |
+| Core workflow | Import, QC, automatic ROI, segmentation, brush correction, sign-off, report | Adds import wizard without pre-filled spacing, ROI display and audited acceptance, linked/oblique views, 3D, region-grow, fill, interpolation, compressed undo/redo, background jobs with rollback, measurement tools, presets, colour-blind palette |
+| Governance | RBAC, tenants, blinding, review binding, hash-chained audit | Adds study-director role, two-person report approval with separation of duties, study-level enforced blinding with random codes and signed unblinding, idle lock, password change, audited role changes, hash-protected report bundles/PDFs re-verified before signing, audit export with chain verification |
+| What a report may contain | Any computed graft/new-bone number | Only endpoints the measurement-support advisor supports; refused endpoints print as "n/m" with the reason; conditional values marked with their conditions; evidence stage and analysis parameters printed (`osteoquant/report/defectfill.py`) |
+| Graft vs new-bone separation | Assumed possible; multi-Otsu/U-Net numbers reported for every material | Identifiability decided before reporting (advisor 1.3.3): knowledge-base material profiles with physics cross-check, scan-vs-profile consistency, graft-share robustness, resorbable-timepoint rule, bone-derived and metal refusal, partial-volume rule for new bone and mineral; material characterisation workflow; vendor-signed validation records for learned models |
+| Advisor validation (SYNTHETIC) | n/a | Graft endpoint: every failing measurement refused and no supported measurement failed in all S1b/S1c arms (`exp_S1b_advisor_threshold.json`, `exp_S1c_control_reference.json`); per-endpoint results for new bone and mineral in EXPERIMENT_REGISTRY. Cost: low coverage (≈4% of mixed-material dataset specimens, 12–19% of sweep conditions supported) |
+| Longitudinal day-0 method | Graft Dice 0.915 / 0.816 (granules only shrink in place) | Shown to be a best case: with 50 µm granule motion graft Dice 0.535, 100 µm 0.35 (L3); tracking added but cannot rescue small strut granules in heavy noise; advisor refuses all failing day-0 measurements; displacement-based registration QC (L4) |
+| Segmental ROI after bridging | 50% explicit failures | ROI propagated from an early timepoint by two-pass registration: Dice 0.995 (F2) |
+| Synthetic → real transfer | Zero-shot 0.379; 1 real scan 0.787 (single seed) | Reproduced exactly; Gen-2 diagnosis (test-time zoom: 0.374 → 0.512 at ×2 on training scans), domain-randomised and self-supervised pretraining, fair paired 3-seed few-shot comparison (S2v2, S3) — see EXPERIMENT_REGISTRY |
+| Uncertainty | Single model, OOD AUROC 0.66 | Five-seed ensemble, stratified failure-detection AUROC, conformal graft-volume intervals with recalibrated gating and exact CIs (U1) — see EXPERIMENT_REGISTRY |
+| Inference runtime | PyTorch CPU ≈49k voxels/s; PyTorch required | ONNX Runtime path, identical labels (max prob. diff 5×10⁻⁶), ≈8× faster in a spot check; PyTorch optional (training extra); O2 benchmark |
+| Simulator | Generator v1, granules shrink in place | Generator v2: displacement, fragmentation, resorption variability (v1 output reproduced bit-for-bit with defaults); domain-randomised synthesis |
+| Reproducibility | Bit-identical runs | Gen-0 results reproduced (morphometry, reproducibility exactly; separability ±0.004 Dice; real-data dog results 29/29 rows exactly); results record advisor version, code version and parent-model provenance |
+| Tests | 61 | ≈555 (incl. desktop, property-based, fuzz, destructive); 91% line+branch coverage, critical modules 96–100%; mutation testing on critical modules |
+| CI | none | lint, type check (non-blocking), tests on 3 OS × 2 Python versions with coverage gates, pip-audit; desktop build/self-test workflow |
+| Security | 21 findings, critical fixed | Gen-2 review: Zarr pickle-codec code execution and unbounded allocation fixed, e-signature lockout unified, ONNX verify-then-load, signed licences and validation records, licence-compliant bundle (GPL-only Qt module removed, third-party notices) |
+| Quality documents | Drafts for the web architecture; traceability 12 verified / 24 partial / 45 gap | Re-baselined to the desktop product; traceability 54 / 42 / 33 (129 FS rows); engineering validation dossier; no compliance claimed |
+| Reviews | One security and one scientific review | Three cycles across twelve perspectives by automated reviewer agents (not human experts); ≈250 findings with response logs (`docs/reviews/`) |
+| Data | 5 public datasets | +6 openly licensed datasets (2.9 GB, licence-checked); finding: no open dataset labels residual graft vs new bone voxel-wise |
+| Knowledge base | Science notes | 80 references, each resolved via Crossref or an official source; machine-readable materials knowledge base consumed by the advisor |
+| Commercial | Prices $12K/$25K GLP/$4K/$40K; "≈78% time saving" quoted | Pricing hypotheses (pilot $2.5–5K, study $8–15K, material characterisation $5–15K, licences $4–10K and $30–75K/yr) with validation plan; no GLP offer; time saving relabelled as unmeasured with instrumented timing in the app; revenue model with and without grants |
+| IP / competition | Competitor notes | 38-competitor × 40-dimension matrix, patent landscape, invention register, IP strategy; public-repository disclosure dates recorded for the founder |
+| Website / user docs | Landing page | 9-page offline website and 10 user documents |
+| Honesty corrections | — | Manuscript specimen counts fixed; day-0 and time-saving claims qualified; pre-registration claim for early S1/S1b withdrawn; claims checker in CI-ready form |

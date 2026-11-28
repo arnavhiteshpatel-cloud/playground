@@ -7,7 +7,7 @@
 - Recomputed the CDPH inspection counts from the live Socrata API with my own classifier.
 - Re-fetched 11 cited sources (listed in §12).
 - Re-ran `tools/fin_engine.py` with alternative drivers. Scripts are in `/tmp/claude-0/atlas_scratch/F3/scripts/` (`pest.py`, `reinsp.py`, `rerun2.py`, `rerun3.py`). The finalist's model files were not modified.
-- New sources are F3-S001 to F3-S007 in `07_review/sources_F3.jsonl`.
+- New sources are F3-S001 to F3-S006 in `07_review/sources_F3.jsonl`.
 
 ---
 

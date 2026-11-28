@@ -1,21 +1,27 @@
 {
  "id": "WS18-035",
- "name": "Garage door repair & installation — independent, NW Cook / DuPage (residential + HOA/condo B2B)",
- "summary": "Job-based home service. Each 'customer' is one paid job (monthly churn = 100%, so active customers = jobs in the month; no recurring ARPC). Demand = company inbound leads (Google LSA/search, referrals, HOA/CAM, inspector and realtor requests) handled by the founder, ramping over 30 months (review/ranking build) to a single-territory plateau calibrated to franchise unit revenues (Access, ProLift, Precision FDDs). Technicians are hired by capacity (jobs per month); the founder does the first ~50 jobs/month himself (unpaid inside operating profit). Parts/doors are COGS; technician + van running cost is staff cost. Operating profit is before owner compensation.",
+ "name": "Garage door repair & installation — independent, NW Cook / DuPage (residential + HOA/light-commercial B2B)",
+ "summary": "Job-based home service (Stage E refresh 2026-11-28). Each 'customer' is one paid job (monthly churn = 100%, so active customers = jobs in the month; no recurring ARPC). Demand = company inbound leads (Google LSA/search, GBP, referrals, HOA/CAM, inspector and realtor requests) ramping over 30 months to a single-territory plateau calibrated to franchise unit revenues (Access, ProLift, Precision FDDs). The founder (not yet a technician) trains in months 1-2 and then works the first van; technicians are hired by capacity once jobs exceed ~60/month. Parts/doors are COGS; technician + van running cost is staff cost. Operating profit is before owner compensation and INCLUDES the founder's unpaid field labour (SDE basis).",
  "evidence_notes": [
-  "Revenue density: Access Garage Doors 2025 FDD — franchised units average $226k (yr1), $731k (yr2), $1.02M (yr3); COGS 46-47% of sales [B, DF-S001]. ProLift 2025 FDD — 40 franchised units avg $511k, bottom quartile $162k [B, DF-S002]. Precision 2026 FDD avg ticket $1,213 (2024: $706) [B, C8-S019/C8-S020].",
-  "Owner economics (seller-claimed, D): NW Chicago suburbs garage door firm, 1 employee, revenue $472k, SDE $171k (3-yr avg SDE ~$193k) [DF-S004]; St. Louis firm, 7 employees, revenue $2.27M, cash flow $317k (14%) [DF-S005].",
-  "Technician pay: BLS/O*NET 2025 Mechanical Door Repairers, Chicago MSA median $65,090; 25th pct $51,300 [C, DF-S006]. Loaded +25% (payroll tax, WC, benefits) = E.",
-  "Lead cost: LocaliQ 2025 'Garages' Google search CPL $81.45 [D, DF-S007]; Searchlight data via Valley Marketing: blended $145/lead, non-branded search $173, LSA residential repair $15-35 [D, DF-S008].",
-  "Parts: DDM Garage Doors (West Chicago) public online prices — residential torsion springs median $52 each; LiftMaster head units $456-880 [B, DF-S012]. Dealer accounts (SSC) are application-only [B, DF-S011]; Raynor requires $100k/yr purchases [B, DF-S009].",
-  "Model structure: 'founder_leads_per_month' = all company inbound leads at maturity (not just the founder's own prospecting). Plateau jobs/month = leads x booked% x sold%: cons ~62 jobs x $450 = ~$335k/yr (ProLift median-group avg $424k, bottom quartile $162k [B, DF-S002]); base ~133 x $575 = ~$920k/yr (Access yr-3 avg $1.02M [B, DF-S001]; Precision smallest-territory median $858k [B, C8-S019]); opt ~214 x $700 = ~$1.8M/yr (Precision smallest-territory avg $1.38M). Technicians capacity-triggered (~60 jobs/tech/month). Founder field labour is free inside operating profit, as in SDE.",
-  "Not modelled: maintenance-plan recurring revenue, commercial rolling-door work, seasonality (installs slower in Jan-Feb).",
+  "Revenue density: Access Garage Doors 2025 FDD — franchised units average $226k (yr1), $731k (yr2), $1.02M (yr3); COGS 46-47% of sales [B, DF-S001]. ProLift 2025 FDD — 40 franchised units avg $511k, middle-50% avg $424k, bottom quartile $162k [B, DF-S002]. Precision 2026 FDD smallest territory band (91k-230k single-family homes) median $858k; avg ticket $1,213 (2024: $706) [B, C8-S019/C8-S020].",
+  "Territory size: the 8 launch suburbs (Arlington Heights, Palatine, Schaumburg, Elk Grove Village, Hoffman Estates, Mount Prospect, Rolling Meadows, Lombard) hold ~109k one-unit homes; an 18-suburb NW Cook/central DuPage cluster ~220k [C, E-WS18035-S014] — i.e., inside Precision's smallest band.",
+  "Owner economics (seller-claimed, D): NW Chicago suburbs garage door firm, 1 employee, revenue $472k, SDE $171k [DF-S004]; St. Louis firm, 7 employees, revenue $2.27M, cash flow $317k (14%) [DF-S005].",
+  "Technician pay: BLS/O*NET 2025 Mechanical Door Repairers, Chicago MSA median $65,090; 25th pct $51,300 [C, DF-S006]; PayScale Chicago garage-door technician avg base ~$49.6k [D, E-WS18035-S013]. Loaded +25% = E.",
+  "Lead cost (Stage E re-fetch of DF-S008, Aug 2026): Searchlight LSA average $49/lead entering 2026, Q1 2026 $45, April $59; non-branded search $173/lead; branded $66; blended $145 (11 contractors, Jan-Apr 2026); commercial overhead-door search CPL $300-600 [D, E-WS18035-S006]. CORRECTION: the '38% LSA book rate / $198 per paying customer' figure Stage D attributed to this source is not on the page.",
+  "Channel access: garage-door LSA advertisers in the US must pass Google Advanced Verification (video call; typically 6-8 weeks) plus service-professional background checks [B, E-WS18035-S001/S002] — first LSA lead realistically month 3.",
+  "Gross margin CORRECTION: Stage D's 65% base margin is inconsistent with its own $575 ticket (70/15/15 repair/opener/door mix). Re-derived: repairs ~28-33% parts (DDM public springs median $52 [B, DF-S012]), openers ~55-75% (DDM public $456-880 [B]), doors ~50% (Access COGS 46-47% [B, DF-S001]) => blended parts cost ~42% at $575 (GM 58%); 48% at $450 with public-price parts (GM 52%); ~38% at $700 with dealer pricing (GM 62%).",
+  "Chicago price band: Raynor Door Co. (Northfield) June 2026 guide — torsion pair $250-400, single $200-300, extension pair $150-300 [D, E-WS18035-S009, directly fetched; Stage D had only a search summary].",
+  "Not modelled: light-commercial / HOA preventive-maintenance contracts and NFPA 80 fire-door drop tests (recurring; see playbook side calculation, E), seasonality (installs slower Jan-Feb; spring failures peak in cold snaps, E).",
   "Churn-based stress tests and the churn tornado bar are not meaningful here (churn is structurally 100% in a job-based model); read CAC, ticket, margin, labour, hiring-threshold and demand tests."
  ],
  "drivers": {
-  "sales_start_delay_months": 1,
-  "sales_start_delay_months__evidence": "E",
-  "sales_start_delay_months__source": "Entity, Chicago Regulated Business License (Home Repair Services) or suburban registration, Home Repair Act insurance minimums, van purchase; ~1 month. Chicago licence category documented [A, DF-S014]; processing time MISSING.",
+  "sales_start_delay_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 2
+  },
+  "sales_start_delay_months__evidence": "B",
+  "sales_start_delay_months__source": "Founder must train before selling (C.H.I. 4-day residential course $550 [B, E-WS18035-S010]; DDM in-person training discontinued [B, E-WS18035-S011]) and LSA Advanced Verification typically takes 6-8 weeks [B, E-WS18035-S002]; entity, Home Repair Act insurance, SSC account (5-7 business days [B, E-WS18035-S008]). Stage D used 1 month (Correction).",
   "sales_cycle_months": 0,
   "sales_cycle_months__evidence": "D",
   "sales_cycle_months__source": "Emergency repair calls convert same day (Stage C memo; homeowner urgency).",
@@ -29,17 +35,17 @@
   "founder_leads_per_month": {
    "conservative": 150,
    "base": 240,
-   "optimistic": 330
+   "optimistic": 280
   },
   "founder_leads_per_month__evidence": "B",
-  "founder_leads_per_month__source": "Company inbound leads/month at plateau, back-solved from single-territory franchise revenues (see evidence note) [B, DF-S001, DF-S002, C8-S019]; independent with honest flat-rate positioning assumed to reach franchise-median, not franchise-average, volume in base (E).",
+  "founder_leads_per_month__source": "Company inbound leads/month at plateau, back-solved from single-territory franchise revenues [B, DF-S001, DF-S002, C8-S019]: cons ~58 jobs x $450 = ~$0.31M/yr (ProLift middle-50% avg $424k); base ~133 x $575 = ~$0.92M (Access yr-3 avg $1.02M; Precision smallest-band median $858k); opt ~181 x $700 = ~$1.52M (Precision smallest-band avg $1.38M). CORRECTION: Stage D optimistic 330 leads (~$1.8M/yr, 31% y3 margin) exceeded every comparable; trimmed to 280. Independent without brand/call centre reaches franchise-median, not average, volume in base (E).",
   "lead_to_proposal_pct": {
-   "conservative": 0.55,
+   "conservative": 0.5,
    "base": 0.65,
    "optimistic": 0.72
   },
-  "lead_to_proposal_pct__evidence": "D",
-  "lead_to_proposal_pct__source": "Lead -> booked visit. Searchlight LSA book rate 38% (12 contractors, Jan-Apr 2026) reported in search summary [D, DF-S008]; garage-door emergencies book higher (E).",
+  "lead_to_proposal_pct__evidence": "E",
+  "lead_to_proposal_pct__source": "Lead -> booked visit. Emergency garage-door calls book at high rates (E). CORRECTION: Stage D cited a 'Searchlight LSA book rate 38%' [DF-S008] that is not on the source page when re-fetched (E-WS18035-S006); evidence downgraded D->E. LSA leads include spam/wrong-service calls (disputable).",
   "proposal_to_win_pct": {
    "conservative": 0.75,
    "base": 0.85,
@@ -70,30 +76,30 @@
    "optimistic": 700
   },
   "onetime_revenue_per_new_customer__evidence": "D",
-  "onetime_revenue_per_new_customer__source": "Average ticket. Precision system avg $706 (CY2024) and $1,213 (CY2025) incl. upsell-heavy premium brand [B, C8-S019/S020]; Chicago dealer guide: torsion pair $250-400, cables $150-250 [D, DF-S036]; A1 quotes $350-750 single spring [D, DF-S037]; mix assumed 70% repairs / 15% openers / 15% doors (E).",
+  "onetime_revenue_per_new_customer__source": "Average ticket. Precision system avg $706 (CY2024) and $1,213 (CY2025) incl. upsell-heavy premium brand [B, C8-S019/S020]; Raynor Door (Northfield) June 2026 Chicago guide: torsion pair $250-400 [D, E-WS18035-S009]; A1 quotes $350-750 single spring [D, DF-S037]; mix assumed 70% repairs / 15% openers / 15% doors by count (E).",
   "arpc_annual_growth_pct": 0.03,
   "arpc_annual_growth_pct__evidence": "E",
   "arpc_annual_growth_pct__source": "Inflation pass-through.",
-  "gross_margin_pct": 0.65,
+  "gross_margin_pct": 0.6,
   "gross_margin_pct__evidence": "E",
   "gross_margin_pct__source": "Unused (no recurring revenue); set equal to one-time margin.",
   "onetime_gross_margin_pct": {
-   "conservative": 0.55,
-   "base": 0.65,
-   "optimistic": 0.7
+   "conservative": 0.52,
+   "base": 0.6,
+   "optimistic": 0.64
   },
-  "onetime_gross_margin_pct__evidence": "B",
-  "onetime_gross_margin_pct__source": "Gross margin after parts/doors only (labour is staff). Access Garage Doors COGS 46-47% of sales (install-heavy franchise mix) [B, DF-S001] = conservative bound; repair-heavy mix with $52 springs and $456-880 openers [B, DF-S012] supports 30-40% parts cost (E).",
+  "onetime_gross_margin_pct__evidence": "C",
+  "onetime_gross_margin_pct__source": "Gross margin after parts/doors only (labour is staff). CORRECTION from Stage D (0.55/0.65/0.70): re-derived from the ticket mix — repairs 28-33% parts at DDM public prices [B, DF-S012], openers 55-75% [B, DF-S012], doors ~50% (Access COGS 46-47% [B, DF-S001]); cons assumes public-price parts (no dealer account), opt assumes SSC/Clopay dealer pricing (MISSING). Component prices B; mix E => C overall.",
   "variable_opex_pct_revenue": 0.06,
   "variable_opex_pct_revenue__evidence": "E",
   "variable_opex_pct_revenue__source": "Card processing ~3% + fuel ~3% of revenue (Junk King fuel 3.3% of sales as truck-trade analogue [B, WS18-S001]).",
   "cac_per_new_customer": {
-   "conservative": 150,
-   "base": 100,
-   "optimistic": 65
+   "conservative": 160,
+   "base": 105,
+   "optimistic": 75
   },
   "cac_per_new_customer__evidence": "D",
-  "cac_per_new_customer__source": "Per paid job (applied to all jobs incl. referrals — conservative). Blend: ~60% LSA at $25-49/lead, ~20% Google search at $81-173/lead, ~20% referral/B2B at $0, with ~55% lead-to-job conversion [D, DF-S007, DF-S008] => ~$95-100/job (~17% of ticket). Franchise local marketing ~12% of sales (College Hunks) [B, C8-S017].",
+  "cac_per_new_customer__source": "Per paid job (applied to all jobs incl. referrals). Re-derived with 2026 data [D, E-WS18035-S006]: ~60% LSA at $45-59/lead, ~20% non-branded search at $173/lead, ~20% referral/B2B/GBP organic at $0 => ~$64/lead; at ~55% lead-to-paid-job => ~$115/job (~20% of ticket). Stage D base $100 (Correction: LSA CPL now $45-59, not $15-49). Angi shared leads are worse (vendor says each lead is resold to 3-5 pros [D, E-WS18035-S007]; FTC 2023 order on HomeAdvisor lead-quality claims [A, E-WS18035-S003]) and are not in the base mix.",
   "fixed_marketing_per_month": 600,
   "fixed_marketing_per_month__evidence": "E",
   "fixed_marketing_per_month__source": "Website, Google Business Profile tools, review software, van wrap amortisation, BNI/association dues.",
@@ -109,23 +115,57 @@
   "tax_rate_pct": 0.3,
   "founder_draw_per_month": 4000,
   "founder_draw_start_month": 13,
-  "start_capital_injection": 45000,
+  "start_capital_injection": 93500,
   "start_capital_injection__evidence": "E",
-  "start_capital_injection__source": "Van + tools + opening inventory + 3 months of fixed costs.",
-  "lt_growth_y6_pct": 0.08,
+  "start_capital_injection__source": "Set to the base-case peak funding need (smallest injection keeping base-case cash >= 0) per Stage E standardization.",
+  "lt_growth_y6_pct": {
+   "conservative": 0.02,
+   "base": 0.05,
+   "optimistic": 0.1
+  },
   "lt_growth_decay": 0.85,
-  "incremental_roic_pct": 0.6,
-  "maint_capex_pct_op": 0.08,
-  "reserve_months": 2,
-  "ev_multiple": 3.0,
+  "incremental_roic_pct": {
+   "conservative": 0.3,
+   "base": 0.5,
+   "optimistic": 0.8
+  },
+  "maint_capex_pct_op": {
+   "conservative": 0.15,
+   "base": 0.1,
+   "optimistic": 0.08
+  },
+  "reserve_months": {
+   "conservative": 3,
+   "base": 2,
+   "optimistic": 2
+  },
+  "ev_multiple": {
+   "conservative": 2.0,
+   "base": 2.5,
+   "optimistic": 3.0
+  },
   "ev_multiple__evidence": "D",
-  "ev_multiple__source": "Asking prices: $550k on $171k SDE (3.2x) [DF-S004]; $1.395M on $317k cash flow (4.4x) [DF-S005]. Asking ≠ sold."
+  "ev_multiple__source": "Operating profit here is SDE-like (before owner comp). Asking prices: $550k on $171k SDE = 3.2x [D, DF-S004]; $1.395M on $317k cash flow = 4.4x [D, DF-S005]. Asking > sold and both are mature firms; new-entrant multiple haircut to 2.5x base (E).",
+  "lt_growth_y6_pct__evidence": "E",
+  "lt_growth_y6_pct__source": "Single territory is at plateau by year 3 (Access yr3->yr4 +18% then flattening [B, DF-S001]); years 6+ growth = price (~3%) plus a light-commercial/PM line or adjacent suburbs. Conservative = inflation-only; optimistic = second territory.",
+  "lt_growth_decay__evidence": "E",
+  "lt_growth_decay__source": "Standard Atlas decay; growth fades as the territory saturates.",
+  "incremental_roic_pct__evidence": "E",
+  "incremental_roic_pct__source": "Growth capital = vans ($30k/tech, E), working capital (~2-week cycle) and the ramp losses of a new territory/line. Base y3 op / peak funding in this model ~1.0x for a whole new territory incl. founder labour; a second territory needs a paid manager, so 0.5 base, 0.3 cons, 0.8 opt (E).",
+  "maint_capex_pct_op__evidence": "E",
+  "maint_capex_pct_op__source": "Van replacement ~$30-38k per van every ~6-7 years (E) = ~$5k/van/yr; 3 vans ~$15k vs base y5 op ~$100-150k => ~10%; tools/ladders/racks extra.",
+  "reserve_months__evidence": "E",
+  "reserve_months__source": "Seasonal swings (cold-snap spring failures vs slow late-summer installs, E) and van/insurance shocks; 2 months of cash costs, 3 in conservative.",
+  "founder_draw_per_month__evidence": "E",
+  "founder_draw_per_month__source": "Stage E standardization: $4k/mo from month 13 in all scenarios.",
+  "tax_rate_pct__evidence": "E",
+  "tax_rate_pct__source": "Stage E standardization: 30% blended pass-through estimate."
  },
  "staff": [
   {
    "role": "Field technician + van",
    "trigger": "active_customers",
-   "threshold": 50,
+   "threshold": 60,
    "per": 60,
    "max_count": 6,
    "start_month": 1,
@@ -135,7 +175,7 @@
     "base": 7900,
     "optimistic": 7400
    },
-   "notes": "Hired when jobs/month exceed founder capacity (~50) and every +60 jobs/month (≈3 jobs/day). Loaded pay: Chicago median $65,090 x1.25 [C, DF-S006] = $6.8k/mo + van insurance/maintenance ~$1.1k/mo (E). Capex/hire = used van, racks, tools, opening parts (E)."
+   "notes": "First technician hired when prior-month jobs reach ~60 (founder's own capacity ~3 jobs/day while also selling and dispatching), then one per +60 jobs/month (~3 jobs/day). Loaded pay: Chicago median $65,090 x1.25 [C, DF-S006] = $6.8k/mo + van insurance/maintenance ~$1.1k/mo (E). Capex/hire = used van, racks, tools, opening parts (E). Stage D threshold was 50 (Correction: hired into the conservative plateau of ~62 jobs and produced an artifact loss)."
   },
   {
    "role": "CSR / dispatcher",
@@ -188,7 +228,7 @@
   {
    "item": "Phones, accounting, legal, licences",
    "monthly": 450,
-   "notes": "E; Chicago licence fee MISSING."
+   "notes": "E; Chicago Home Repair licence $1,000 per 2-year term [A, E-WS18035-S004] only if working in Chicago; suburban registrations MISSING."
   },
   {
    "item": "Shop / storage unit for doors and parts",
@@ -210,7 +250,7 @@
     "base": 32000,
     "optimistic": 24000
    },
-   "notes": "E — requires dealer/van quotes; parts priced from DDM catalogue [B, DF-S012]."
+   "notes": "E — used cargo van, racks, spring bars/winding bars, tools, opening spring/roller/cable stock (DDM catalogue [B, DF-S012]); includes founder training (C.H.I. residential 4-day $550 [B, E-WS18035-S010] + travel) and a practice door rig. Requires van/insurance quotes."
   }
  ],
  "transactions": [

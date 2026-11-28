@@ -50,3 +50,6 @@ Each entry: date · decision · rationale · evidence · reversibility.
   fragility), WS05-001 (kept as WS05-007 second license), WS18-004/WS13-016 (low year-3, high funding), WS18-002 (peak
   funding > $100k), WS17-004 (peak funding ~$433k). Models standardized for comparability (owner draw $4k/mo from
   month 13; tax 30%).
+- **2026-11-28 · Stage D complete (25 concepts); Stage E finalists = 11.** DG added WS12-012 (offshore staff for
+  CPA firms; base yr-3 $231k, C) and WS12-014 (controls/automation recruiting; base yr-3 $171k, conservative +$44k, C)
+  as conditional finalists; WS14-008 dropped (free recovery offers by Clairelist/SPS/Glimpse).

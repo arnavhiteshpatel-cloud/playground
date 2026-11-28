@@ -61,6 +61,21 @@ conditions that played no role in tuning:
   3 noise levels); structures are the unit of replication for any CI (bootstrap over the 9 structures).
 * No rule, threshold or parameter of the advisor may be changed in response to S1H; failures are reported as found.
 
+## 8. Second held-out advisor validation S1H2 (registered 2026-11-28, before running; advisor 1.4.0 frozen)
+Advisor 1.4.0 was designed after S1H revealed failures, using S1H conditions for development; S1H therefore no longer
+validates it. S1H2 uses conditions not seen by any advisor version:
+* **Phantoms:** seeds 3000–3002 (condyle), 3100–3102 (segmental), 3200–3202 (calvarial), all with compact granules
+  350–650 µm, graft fill 0.30, healing stage 0.60.
+* **Densities X:** 1200, 1650, 2100, 2900 mgHA/cm³.
+* **Imaging:** PSF σ 25 µm and 40 µm (both, every specimen); correlated noise (white noise smoothed with a 1.2-voxel
+  Gaussian) at σ ∈ {50, 100, 170}.
+* **Advisor:** 1.4.0, characterised-material profile as in §7. Method: advisor threshold segmentation.
+* **Outcome and acceptance:** as §7 (failure = |relative volume error| > 20%; ≥95% of failures refused per endpoint;
+  P(fail | supported) upper 95% bound ≤ 0.10 where ≥30 specimens are supported). 216 specimens (9 structures × 4
+  densities × 2 PSF × 3 noise); bootstrap over the 9 structures.
+* No advisor change in response to S1H2; results reported as found. In-sample re-runs of S1b, S1c and S1H under 1.4.0
+  are labelled development checks.
+
 ## Deviations log
 | Date | Item | Deviation | Justification |
 |---|---|---|---|

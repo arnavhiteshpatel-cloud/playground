@@ -41,7 +41,15 @@ def spec_entry(sid, group, tp, vol, res, truth=None, labels_true=None, source=""
          "scan": {"source": source, "sha256": sha or res["volume_content_sha256"], "shape": list(vol.shape),
                   "spacing_um": list(vol.spacing)},
          "qc": res.get("qc", {}), "roi": res.get("roi", {}), "segmentation": res["segmentation"],
-         "metrics": res["metrics"], "uncertainty": res.get("uncertainty", {}), "plausibility": res["plausibility"],
+         # Gen-2: reports use the measurement-support view (refused endpoints are None, conditions printed)
+         "metrics": res.get("reported_metrics", res["metrics"]), "suppressed_metrics": res.get("suppressed_metrics", []),
+         "measurement_support": {k: {"status": v.get("status"), "reason": v.get("reason"), "mechanism": v.get("mechanism"),
+                                     "conditions": v.get("conditions", [])}
+                                 for k, v in (res.get("measurement_support") or {}).get("endpoints", {}).items()},
+         "advisor_version": (res.get("measurement_support") or {}).get("advisor_version"),
+         "analysis_parameters": {k: v for k, v in res["segmentation"].items()
+                                 if k in ("method", "t_mineral", "t_graft", "model_name", "runtime")},
+         "uncertainty": res.get("uncertainty", {}), "plausibility": res["plausibility"],
          "figure": fig, "corrections": []}
     if truth is not None:
         e["truth"] = truth
@@ -58,7 +66,8 @@ def report1():
         vol = Volume(c.image, c.spacing, meta={"ingest": {"metadata_found": {"spacing_um": list(c.spacing)}}})
         model = c.meta["spec"]["model"]
         cfg = {"defect_model": model, "nominal_diameter_um": c.meta["phantom_config"]["defect_diameter_um"] if model != "segmental" else None,
-               "segmentation": "unet:unet_ctx_s0", "tta": True, "abstain_tau": 0.6}
+               "segmentation": "unet:unet_ctx_s0", "tta": True, "abstain_tau": 0.6,
+               "material": c.meta["spec"]["material"]}            # Gen-2: the advisor needs the graft material
         res = analyze(vol, cfg)
         if res.get("status") != "complete_unreviewed":
             exceptions.append({"specimen_id": c.case_id.replace("test_", "S"), "stage": "ROI detection",
@@ -135,13 +144,14 @@ def report3():
     from osteoquant.phantom import PhantomConfig, generate_phantom, render_fast, ImagingConfig
     specs = []
     for mat, label in (("beta_tcp", "beta-TCP"), ("ha", "HA")):
+        mat_id = mat
         for k in range(3):
             for stage in (0.15, 0.4, 0.65, 0.9):
                 ph = generate_phantom(PhantomConfig(model="condyle", shape=(72, 80, 80), voxel_um=40, defect_diameter_um=2000,
                                                     graft_material=mat, healing_stage=stage, seed=5000 + 10 * k + (mat == "ha")))
                 v = render_fast(ph.mu, 40, ImagingConfig(psf_sigma_um=25, noise_sigma=60, seed=k))
                 v.meta["ingest"] = {"metadata_found": {"spacing_um": list(v.spacing)}}
-                res = analyze(v, {"defect_model": "condyle", "nominal_diameter_um": 2000, "segmentation": "unet:unet_ctx_s0",
+                res = analyze(v, {"defect_model": "condyle", "nominal_diameter_um": 2000, "segmentation": "unet:unet_ctx_s0", "material": mat_id,
                                   "tta": False, "thickness_metrics": False, "qc": False})
                 if res.get("status") != "complete_unreviewed":
                     continue

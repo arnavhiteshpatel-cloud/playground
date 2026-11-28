@@ -633,12 +633,47 @@ class Store:
     def save_measurement(self, user, scan_id, seg_id, roi_id, metrics, software_version, config_id=None):
         sc = self.scan(user, scan_id)
         self.require(user, "write", sc["org_id"])   # QA-012
+        text = json.dumps(metrics, default=float)
         mid = self.exec("INSERT INTO measurements(scan_id,segmentation_id,roi_id,config_id,metrics,software_version,created)"
-                        " VALUES (?,?,?,?,?,?,?)", (scan_id, seg_id, roi_id, config_id,
-                                                    json.dumps(metrics, default=float), software_version, now()))
+                        " VALUES (?,?,?,?,?,?,?)", (scan_id, seg_id, roi_id, config_id, text, software_version, now()))
+        # hash of the exact stored text, so a later direct edit of the row is detectable (dossier D-3)
         self.audit.record("measurement.save", user["id"], sc["org_id"], "measurement", mid,
-                          {"scan": scan_id, "segmentation": seg_id, "roi": roi_id})
+                          {"scan": scan_id, "segmentation": seg_id, "roi": roi_id,
+                           "metrics_sha256": hashlib.sha256(text.encode()).hexdigest()})
         return mid
+
+    def verify_data_rows(self) -> dict:
+        """Compare study data rows with the content hashes recorded in their audit events (dossier D-3): measurement
+        text, segmentation label hashes and ROI definition hashes. A row without its save event, or whose content
+        no longer matches, is a problem; measurements saved before hashes were recorded are counted, not judged."""
+        problems, unverifiable = [], 0
+        with self.lock:
+            ev = {}
+            for otype, oid, details in self.conn.execute(
+                    "SELECT object_type, object_id, details FROM audit_log WHERE action IN "
+                    "('measurement.save','segmentation.save','roi.save')"):
+                ev.setdefault((otype, str(oid)), json.loads(details or "{}"))
+            meas = self.conn.execute("SELECT id, metrics FROM measurements").fetchall()
+            segs = self.conn.execute("SELECT id, labels_sha256 FROM segmentations").fetchall()
+            rois = self.conn.execute("SELECT id, def_sha256 FROM rois").fetchall()
+        for mid, text in meas:
+            d = ev.get(("measurement", str(mid)))
+            if d is None:
+                problems.append(f"measurement {mid}: no audit record of its creation")
+            elif "metrics_sha256" not in d:
+                unverifiable += 1
+            elif hashlib.sha256((text or "").encode()).hexdigest() != d["metrics_sha256"]:
+                problems.append(f"measurement {mid}: stored values differ from those recorded at save")
+        for kind, rows, key, dkey in (("segmentation", segs, "labels_sha256", "labels_sha256"),
+                                      ("roi", rois, "def_sha256", "def_sha256")):
+            for rid, h in rows:
+                d = ev.get((kind, str(rid)))
+                if d is None:
+                    problems.append(f"{kind} {rid}: no audit record of its creation")
+                elif d.get(dkey) is not None and d.get(dkey) != h:
+                    problems.append(f"{kind} {rid}: stored {key} differs from the audited value")
+        return {"ok": not problems, "problems": problems, "unverifiable_measurements": unverifiable,
+                "checked": {"measurements": len(meas), "segmentations": len(segs), "rois": len(rois)}}
 
     def latest_measurements(self, user, sid):
         self.study(user, sid)

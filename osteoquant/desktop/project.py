@@ -166,13 +166,22 @@ class Project:
         self.session_end_reason = None
         # external anchors (C3-PRD-03): a mismatch disables electronic signatures and is recorded
         from .anchors import verify_anchors
-        self.integrity_problems = verify_anchors(self.store)
-        if self.integrity_problems and self.user:
-            try:
-                self.store.audit.record("audit.anchor_mismatch", self.user["id"], self.user["org_id"], "project", None,
-                                        {"problems": self.integrity_problems[:5]})
-            except Exception:  # noqa: BLE001 - recording must not block sign-in
-                pass
+        anchor_problems = verify_anchors(self.store)
+        # study rows against the hashes recorded when they were saved (dossier D-3)
+        try:
+            data_problems = self.store.verify_data_rows()["problems"]
+        except Exception as e:  # noqa: BLE001 - an unreadable table is itself an integrity problem
+            data_problems = [f"study data could not be verified: {e}"]
+        self.integrity_problems = anchor_problems + data_problems
+        if self.user:
+            for action, probs in (("audit.anchor_mismatch", anchor_problems), ("audit.data_mismatch", data_problems)):
+                if not probs:
+                    continue
+                try:
+                    self.store.audit.record(action, self.user["id"], self.user["org_id"], "project", None,
+                                            {"problems": probs[:5], "n": len(probs)})
+                except Exception:  # noqa: BLE001 - recording must not block sign-in
+                    pass
         return self.user is not None
 
     @property

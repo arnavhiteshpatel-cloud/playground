@@ -175,3 +175,29 @@ def test_large_analyses_run_one_at_a_time_and_waiting_is_cancellable(team):
         S._LARGE_ANALYSIS.release()
     assert S._LARGE_ANALYSIS.acquire(blocking=False)                                # released again
     S._LARGE_ANALYSIS.release()
+
+
+def test_edited_measurement_row_is_detected_at_sign_in_and_disables_signing(team):
+    """Dossier D-3: study tables sit outside the hash chain, but each saved row's content hash is in its audit event;
+    a direct database edit of a measurement is found at the next sign-in and signatures are refused."""
+    import sqlite3
+
+    from osteoquant.desktop.project import DB_NAME, Project
+    project, sid, scan, _, _ = team
+    st = project.store
+    assert st.verify_data_rows()["ok"]
+    mid = st.q1("SELECT max(id) m FROM measurements")["m"]
+    folder = project.folder
+    project.close()
+    con = sqlite3.connect(folder / DB_NAME)
+    con.execute("UPDATE measurements SET metrics=replace(metrics, '\"TV_mm3\": ', '\"TV_mm3\": 1') WHERE id=?", (mid,))
+    con.commit()
+    con.close()
+    p2 = Project(folder)
+    assert p2.login("admin", PW)
+    assert any(f"measurement {mid}" in x for x in p2.integrity_problems)
+    acts = [e["action"] for e in p2.store.audit.events(limit=1000)]
+    assert "audit.data_mismatch" in acts
+    with pytest.raises(PermissionError, match="integrity check"):
+        S.sign_review(p2, PW, "report", 1, "approved", "approve the report release")
+    p2.close()

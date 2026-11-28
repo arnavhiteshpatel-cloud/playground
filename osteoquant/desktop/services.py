@@ -859,9 +859,9 @@ def sign_review(project, password: str, object_type: str, object_id: int, decisi
     if not meaning or len(meaning.strip()) < 5:
         raise ValueError("State the meaning of the signature (at least 5 characters)")
     if getattr(project, "integrity_problems", None):
-        raise PermissionError("Electronic signatures are disabled for this project: its audit trail no longer matches "
-                              "an anchor recorded earlier (" + project.integrity_problems[0] + "). An administrator "
-                              "must investigate before anything is signed.")
+        raise PermissionError("Electronic signatures are disabled for this project: an integrity check at sign-in "
+                              "failed (" + project.integrity_problems[0] + "). An administrator must investigate "
+                              "before anything is signed.")
     user = project.require_user()
     project.store.require(user, "review")
     allowed = signature_roles_for(user)

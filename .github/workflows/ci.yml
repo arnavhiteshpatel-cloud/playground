@@ -41,6 +41,10 @@ jobs:
       - name: ruff on the whole package (non-blocking until other workstreams are clean)
         continue-on-error: true
         run: ruff check osteoquant
+      - name: Claims checker (blocking; customer-facing numbers, banned phrases, UI strings, decks and PDFs)
+        run: |
+          python -m pip install python-pptx pypdfium2
+          python scripts/check_claims.py
       - name: mypy (non-blocking while the backlog is burned down)
         continue-on-error: true
         run: |

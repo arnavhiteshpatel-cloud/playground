@@ -240,6 +240,9 @@ VERSION_ALLOW = re.compile(r"history|histor|changelog|earlier|previous|supersede
                            r"stale", re.I)
 
 
+UNREADABLE: set[str] = set()     # decks/PDFs that could not be read are failures, never silently skipped
+
+
 def _read(f: Path) -> str:
     """Text of a checked file. Decks (.pptx) and PDFs are checked on their extracted text (cycle-3 review C3-BIZ-17:
     the generated decks were outside the checker)."""
@@ -257,13 +260,15 @@ def _read(f: Path) -> str:
                         out += [c.text for r in sh.table.rows for c in r.cells]
             return "\n".join(out)
         except Exception as e:  # noqa: BLE001
-            return f"[unreadable deck: {e}]"
+            UNREADABLE.add(f"{f.relative_to(ROOT)} ({type(e).__name__})")
+            return ""
     if suf == ".pdf":
         try:
             import pypdfium2 as pdfium
             doc = pdfium.PdfDocument(str(f))
             return "\n".join(doc[i].get_textpage().get_text_range() for i in range(len(doc)))
-        except Exception:  # noqa: BLE001 - pypdfium2 optional
+        except Exception as e:  # noqa: BLE001
+            UNREADABLE.add(f"{f.relative_to(ROOT)} ({type(e).__name__})")
             return ""
     return f.read_text(errors="ignore")
 
@@ -323,6 +328,30 @@ def check_banned() -> list[str]:
             for rx, why in pats:
                 if rx.search(line) and not ALLOW_LINE.search(line):
                     bad.append(f"BANNED {rel}:{i}: '{rx.search(line).group(0)}' ({why})")
+    return bad
+
+
+# String literals the application shows to people: dialogs, results, refusal reasons and report text (cycle-3 reviews
+# C3-PRD-12, C3-BIZ-17). Docstrings are included, which is stricter than needed.
+UI_GLOBS = ["osteoquant/desktop/*.py", "osteoquant/report/*.py", "osteoquant/advisor/*.py"]
+
+
+def check_ui_strings() -> list[str]:
+    import ast
+    bad = []
+    pats = [(re.compile(p, re.I if "verified" not in p else 0), why) for p, why in BANNED]
+    for f in sorted({p for g in UI_GLOBS for p in ROOT.glob(g) if p.is_file()}):
+        try:
+            tree = ast.parse(f.read_text(encoding="utf-8"))
+        except (SyntaxError, UnicodeDecodeError) as e:
+            bad.append(f"UI {f.relative_to(ROOT)}: unreadable ({e})")
+            continue
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Constant) and isinstance(node.value, str):
+                for rx, why in pats:
+                    m = rx.search(node.value)
+                    if m and not ALLOW_LINE.search(node.value):
+                        bad.append(f"BANNED-UI {f.relative_to(ROOT)}:{node.lineno}: '{m.group(0)}' ({why})")
     return bad
 
 
@@ -431,7 +460,9 @@ def main(paths=None) -> int:
     found.update(mfound)
     if not paths:
         bad += check_banned()
+        bad += check_ui_strings()
         bad += check_versions()
+    bad += [f"UNREADABLE {u}: install python-pptx and pypdfium2" for u in sorted(UNREADABLE)]
     for cid, k in found.items():
         print(f"{cid}: {k} occurrence(s) checked")
     if bad:

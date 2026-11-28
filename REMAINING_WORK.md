@@ -20,7 +20,7 @@ signed, submitted or distributed. Decision numbers refer to `FOUNDER_DECISIONS.m
 | 11 | P1 | ML campaign completion: S2 parts b/c, S3, U1, O2 (running on CPU at the end of Generation 2) and their registry rows | E | CPU time | registry, scorecard (B2, B3, B6, B7, B11) and handoff §3a filled from result files |
 | 12 | P1 | Retrospective pilot on partner scans only after incorporation, a DPA and Gate 1 (#18) | F | partner, DPA | agreed protocol; no customer data before then |
 | 13 | P2 | Study tables inside the audit hash chain (dossier D-3; per-row hashes in audit details and the sign-in check were added on 28 Nov, so direct edits of rows saved since then are detected) | E | — | tables chained, or the residual risk accepted in writing |
-| 14 | P1 | Traceability gaps: 54 verified / 42 partial / 33 gap FS rows (`docs/quality/traceability_matrix.csv`) | E | — | no GAP rows for URS items in the pilot scope |
+| 14 | P1 | Traceability gaps: 58 verified / 47 partial / 24 gap FS rows (`docs/quality/traceability_matrix.csv`) | E | — | no GAP rows for URS items in the pilot scope |
 | 15 | P1 | Remaining low review items: report appendix for technical refusal reasons; second-instance detection; desktop backup/label export; SAP object; offline test with the network blocked; ONNX output-channel check (ARC-06); Windows/macOS owner mapping in the bundle inventory (C3-PRD-10) | E | — | each closed with a test or recorded as accepted |
 | 16 | P1 | Timed reviewer study to replace assumed effort constants (Experiment M) | F+C | 2–3 analysts | measured hands-on time |
 | 17 | P1 | Grant and manuscript drafts rewritten in the founder's own words; AI-assistance disclosure per venue (#23) | F | — | drafts rewritten; submission decisions recorded |

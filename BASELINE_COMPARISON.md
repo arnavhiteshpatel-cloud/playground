@@ -22,7 +22,7 @@ wrong, the correction is listed: those are improvements in honesty, not in perfo
 | Tests | 61 | 611 passed, 1 skipped (incl. desktop, property-based, fuzz, destructive); 93.4% line+branch coverage, 99% on critical modules (`docs/qa/test_summary.json`); AST mutation testing of critical modules on 27 Nov (`docs/qa/QA_REPORT.md` §5) |
 | CI | none | lint, type check (non-blocking), tests on 3 OS × 2 Python versions with coverage gates, pip-audit; desktop build/self-test workflow |
 | Security | 21 findings, critical fixed | Gen-2 review: Zarr pickle-codec code execution and unbounded allocation fixed, e-signature lockout unified, ONNX verify-then-load, signed licences and validation records, licence-compliant bundle (GPL-only Qt module removed, third-party notices) |
-| Quality documents | Drafts for the web architecture; traceability 12 verified / 24 partial / 45 gap | Re-baselined to the desktop product; traceability 54 / 42 / 33 (129 FS rows); engineering validation dossier; no compliance claimed |
+| Quality documents | Drafts for the web architecture; traceability 12 verified / 24 partial / 45 gap | Re-baselined to the desktop product; traceability 58 / 47 / 24 (129 FS rows); engineering validation dossier; no compliance claimed |
 | Reviews | One security and one scientific review | Three cycles across twelve perspectives by automated reviewer agents (not human experts); ≈250 findings with response logs (`docs/reviews/`) |
 | Data | 5 public datasets | +6 openly licensed datasets (2.9 GB, licence-checked); finding: no open dataset labels residual graft vs new bone voxel-wise |
 | Knowledge base | Science notes | 80 references, each resolved via Crossref or an official source; machine-readable materials knowledge base consumed by the advisor |

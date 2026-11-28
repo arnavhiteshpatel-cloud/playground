@@ -18,10 +18,10 @@
 |---|---|---|
 | Active requirements (URS) | 88 (64 retained or revised from v0.1, 24 new); 2 retired | URS.md §5 |
 | Functional specification items | 129 (3 retired) | FUNCTIONAL_SPEC.md |
-| Traceability (FS rows) | **VERIFIED 54 · PARTIAL 42 · GAP 33** (was 12 · 24 · 45 of 81 rows for the Generation-1 baseline) | traceability_matrix.csv |
-| Requirements fully verified (all FS rows VERIFIED) | 22 of 88; 55 mixed; 11 entirely GAP | `scripts/build_traceability.py` output |
+| Traceability (FS rows) | **VERIFIED 58 · PARTIAL 47 · GAP 24** (v0.1: 54 · 42 · 33; Generation-1 baseline 12 · 24 · 45 of 81 rows) | traceability_matrix.csv |
+| Requirements fully verified (all FS rows VERIFIED) | 25 of 88; 53 mixed; 10 entirely GAP | `scripts/build_traceability.py` output |
 | Automated tests | Full suite (library + desktop + licensing): **611 passed, 1 skipped** at `d124ae6` (2026-11-28); CI runs the same suites on Ubuntu, Windows and macOS × Python 3.12/3.13 | `docs/qa/test_summary.json`, `.github/workflows/ci.yml` |
-| Distinct tests cited as evidence | 172 | traceability_matrix.csv |
+| Distinct tests cited as evidence | 208 | traceability_matrix.csv |
 | Library line+branch coverage | **93.4 %** overall, **99 %** on morphometry, stats, metrics, I/O and audit (desktop GUI excluded); v0.1 baseline was 62 % | `docs/qa/test_summary.json` |
 | QA defects | 25 found, 21 fixed with regression tests, 4 assigned (open) | docs/qa/DEFECTS_FOUND.md |
 | Security findings (Gen 2) | 20: 12 fixed (including the critical-conditional G2-01), 3 assigned to the lead, 3 open (low), 2 info | docs/security/SECURITY_REVIEW_GEN2.md |
@@ -58,17 +58,17 @@ Verification status by area (FS rows):
 | Area | VERIFIED | PARTIAL | GAP |
 |---|---|---|---|
 | General, offline | 0 | 4 | 1 |
-| Access control | 5 | 2 | 6 |
+| Access control | 8 | 3 | 2 |
 | Import, QC | 6 | 4 | 5 |
-| ROI, segmentation, editing | 6 | 5 | 2 |
-| Morphometry, statistics, blinding | 6 | 4 | 5 |
+| ROI, segmentation, editing | 7 | 5 | 1 |
+| Morphometry, statistics, blinding | 5 | 5 | 5 |
 | Reporting, signatures | 3 | 5 | 3 |
-| Audit trail | 5 | 4 | 2 |
+| Audit trail | 6 | 4 | 1 |
 | Configuration, models, jobs, data management, security, documentation | 5 | 10 | 4 |
-| Measurement support, validation records, material characterisation, longitudinal QC | 12 | 2 | 5 |
+| Measurement support, validation records, material characterisation, longitudinal QC | 12 | 5 | 2 |
 | Licence, workflow timing | 6 | 2 | 0 |
 
-(Grouped from the per-area counts that the script prints; totals 54 / 42 / 33.)
+(Grouped from the per-area counts that the script prints; totals 58 / 47 / 24, updated 2026-11-28 from 54 / 42 / 33 after mapping the cycle-2/3 tests; one row, FS-075-3, was downgraded to PARTIAL because its audit event is not asserted.)
 
 ## 4. Automated test evidence
 | Test module | What it verifies (main FS links) |

@@ -1,0 +1,39 @@
+{
+ "id": "TEMPLATE",
+ "name": "Template — illustrative recurring B2B service (NOT a researched business)",
+ "summary": "Engine test fixture. Replace every value with researched, evidenced drivers.",
+ "evidence_notes": ["All values are placeholders (E)."],
+ "drivers": {
+  "sales_start_delay_months": {"conservative": 3, "base": 2, "optimistic": 1},
+  "sales_cycle_months": {"conservative": 2, "base": 1, "optimistic": 1},
+  "founder_ramp_months": 6,
+  "founder_leads_per_month": {"conservative": 15, "base": 25, "optimistic": 35},
+  "lead_to_proposal_pct": 0.4,
+  "proposal_to_win_pct": {"conservative": 0.2, "base": 0.3, "optimistic": 0.4},
+  "rep_ramp_months": 3,
+  "rep_new_customers_per_month": 3,
+  "referral_new_per_100_active": 0.8,
+  "monthly_churn_pct": {"conservative": 0.025, "base": 0.015, "optimistic": 0.01},
+  "arpc_monthly": {"conservative": 350, "base": 450, "optimistic": 550},
+  "onetime_revenue_per_new_customer": 600,
+  "gross_margin_pct": {"conservative": 0.42, "base": 0.5, "optimistic": 0.55},
+  "onetime_gross_margin_pct": 0.45,
+  "cac_per_new_customer": 250,
+  "fixed_marketing_per_month": 400,
+  "dso_days": 35, "dpo_days": 20, "inventory_days_cogs": 5,
+  "founder_draw_per_month": 4000, "founder_draw_start_month": 13,
+  "start_capital_injection": 15000
+ },
+ "staff": [
+  {"role": "Field technician", "trigger": "active_customers", "threshold": 40, "per": 90, "start_month": 1, "capex_per_hire": 12000, "monthly_cost": {"conservative": 6500, "base": 6000, "optimistic": 5800}, "notes": "loaded cost"},
+  {"role": "Office coordinator", "trigger": "revenue", "threshold": 40000, "per": 120000, "max_count": 3, "monthly_cost": 4800},
+  {"role": "Sales rep", "trigger": "month", "start_month": 18, "count": 1, "is_sales_rep": true, "monthly_cost": 6000}
+ ],
+ "overhead": [
+  {"item": "Insurance (GL, auto, WC base)", "monthly": {"conservative": 900, "base": 700, "optimistic": 600}, "annual_growth_pct": 0.06},
+  {"item": "Software + AI tools", "monthly": 250, "is_ai": true},
+  {"item": "Vehicle/fuel (founder)", "monthly": 600}
+ ],
+ "capex": [{"item": "Initial equipment", "month": 1, "amount": {"conservative": 8000, "base": 6000, "optimistic": 5000}}],
+ "transactions": [{"name": "Typical monthly service account", "revenue": 450, "lines": [{"item": "Technician time", "amount": 160}, {"item": "Materials", "amount": 45}], "evidence": "E"}]
+}

@@ -400,7 +400,7 @@ The economics column shows each Stage D driver model's **base case**: year-3 op,
   - Price: the $125 restaurant / $105 blended rate rests on a 2021 HomeAdvisor consumer guide that could not be reopened [D-]: https://webcf.waybackmachine.org/web/20211213221203/https://www.homeadvisor.com/cost/environmental-safety/hire-an-insect-control-service
   - 45 founder conversations a month: capping at 15 alone takes Y5 to $38k.
   - Displacement sales to only 112 licences citywide.
-- **Decisive test:** a ≈$100–150 interview sprint. Two thresholds appear in Atlas: the final-status summary says price paid ≥$70/month and ≥10% ever switched; the review says median ≥$90 and ≥25% switching. **This inconsistency is unresolved.**
+- **Decisive test:** a ≈$100–150 interview sprint. Pass = median price paid ≥$90/month and ≥25% switched or considered switching; kill = median <$70/month or <10% ever switched (an earlier summary conflated the kill and pass thresholds; corrected).
 
 ### 5.6 SYN-001: Trucking compliance hub leading to an insurance sub-producer role (validation-only)
 
@@ -805,7 +805,7 @@ All drivers are monthly unless noted. "→" marks a Stage F correction. Values w
 **Data-integrity notes:**
 - The screening database still carries WS18-035 at its Stage E score; the Stage F update was not merged.
 - WS12-014's economics evidence was rated C at Stages C/D and corrected to D at Stage E.
-- Validation thresholds differ between the final-status summary and the reviews for WS05-007 and WS13-014.
+- Validation thresholds: WS05-007's summary previously conflated kill and pass thresholds (now corrected). For WS13-014 the playbook's pilot gate is a ≥$550 half-day median; the reviewer raises it to ≥$600 and moves the pilot out of winter — Atlas adopts the reviewer's stricter gate.
 
 ---
 

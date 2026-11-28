@@ -39,8 +39,8 @@ res["checks"]["unet_probabilities_bit_identical"] = h(p1) == h(p2)
 torch.use_deterministic_algorithms(True)
 tr = load_split("train", limit=2)
 c = dict(ck["cfg"], iters=50, val_every=10 ** 9, log_every=50, seed=123)
-a = train_model(tr, [], c, "repro_a", log=lambda s: None)
-b = train_model(tr, [], c, "repro_b", log=lambda s: None)
+a = train_model(tr, [], c, "repro_a", log=lambda s: None, overwrite=True)
+b = train_model(tr, [], c, "repro_b", log=lambda s: None, overwrite=True)
 wa = torch.load(MODEL_DIR / "repro_a.pt", weights_only=False)["state_dict"]
 wb = torch.load(MODEL_DIR / "repro_b.pt", weights_only=False)["state_dict"]
 res["checks"]["training_weights_identical_fixed_seed"] = all(torch.equal(wa[k], wb[k]) for k in wa)

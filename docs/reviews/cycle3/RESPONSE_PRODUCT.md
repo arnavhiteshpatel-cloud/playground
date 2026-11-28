@@ -28,7 +28,7 @@ limitation documented), **open** (planned; reason given).
 | C3-PRD-19 | Low | open | Timing-dependent tests to be converted to event-based waits. |
 | C3-PRD-20 | Low | partly fixed | Analyses are refused before loading when the estimated peak (≈8 × the float32 volume) exceeds available memory, with a clear message (test `test_memory_preflight_refuses_before_loading`). Open: serialising large jobs and finer-grained cancellation. |
 | C3-PRD-21 | Low | partly fixed | The store refuses a database with a newer schema version (test `test_newer_schema_database_is_refused`). Not done: deferring the desktop's own schema additions until after sign-in. |
-| C3-PRD-22 | Low | open | The mkdir lock fallback is reached only without both `fcntl` and `msvcrt`; existing-name overwrite protection planned. |
+| C3-PRD-22 | Low | fixed | `save_model`/`train_model` refuse an existing model name unless `overwrite=True` is passed (checked before training); an explicit replacement records the replaced hashes under `replaces` and renames the stale ONNX export. The mkdir fallback breaks a lock only when the lock itself is older than 60 s, renaming it away so one waiter removes it. Tests `test_saved_model_names_are_not_overwritten`, `test_mkdir_lock_fallback_breaks_only_stale_locks` (DF-039). |
 
 ## Cycle-2 dispositions the review disputed
 
@@ -37,4 +37,4 @@ limitation documented), **open** (planned; reason given).
 | C2-PRD-04 | Agreed it was partial. Now: one generation record per report from the report's creator, plus external anchors (C3-PRD-03). |
 | C2-PRD-09 | Agreed it was partial. Now: actor-bound audited state (C3-PRD-03). |
 | C2-PRD-13 | Agreed the disposition text was stale (records were already signed). The bypasses found in cycle 3 (C3-PRD-02/05/06/15) are fixed. |
-| ARC-03, ARC-06 | Open (ARC-03 is C3-PRD-22; ONNX output-channel check planned). |
+| ARC-03, ARC-06 | ARC-03 fixed (C3-PRD-22). ARC-06 open (ONNX output-channel check planned). |

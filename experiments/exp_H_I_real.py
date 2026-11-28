@@ -19,7 +19,6 @@ I (cross-domain generalisation): the SYNTHETIC-trained 3-class U-Net (unet_noctx
 Metrics: Dice, HD95 (voxels), relative volume error; specimen-level mean (n = 5 test).
 """
 import csv
-import glob
 
 import numpy as np
 import tifffile
@@ -80,7 +79,7 @@ for c in test:
 cfg = dict(patch=(48, 48, 48), batch=2, iters=800, lr=3e-3, base=12, levels=4, threads=4, n_classes=2, log_every=200,
            val_every=10 ** 9, loss={"dice": 1.0, "ce": 1.0}, seed=0, fg_prob=0.6)
 if not (MODEL_DIR / "unet_dog_bone_real.pt").exists():
-    train_model(train, [], cfg, "unet_dog_bone_real", log=lambda s: print("dog", s, flush=True))
+    train_model(train, [], cfg, "unet_dog_bone_real", log=lambda s: print("dog", s, flush=True), overwrite=True)
 m, ck = load_model("unet_dog_bone_real")
 for c in test:
     add("unet_trained_on_10_real", c, predict_proba(m, c, ck["cfg"]).argmax(0) > 0)
@@ -94,7 +93,8 @@ for k in (1, 3):
     sub3 = [Case(c.case_id, c.image, np.where(c.labels == 1, 3, c.labels).astype(np.uint8), c.roi, c.spacing, c.provenance,
                  c.commercial_use) for c in sub]   # map real bone -> 'host bone' class of the 3-class model
     ft = dict(cks["cfg"], iters=300, lr=1e-3, val_every=10 ** 9, log_every=300, seed=7)
-    train_model(sub3, [], ft, f"unet_synth_ft_dog_k{k}", log=lambda s: None, init_from=str(MODEL_DIR / "unet_noctx_s0.pt"))
+    train_model(sub3, [], ft, f"unet_synth_ft_dog_k{k}", log=lambda s: None, init_from=str(MODEL_DIR / "unet_noctx_s0.pt"),
+                overwrite=True)
     mf, ckf = load_model(f"unet_synth_ft_dog_k{k}")
     for c in test:
         add(f"synthetic_unet_finetuned_k{k}", c, predict_proba(mf, c, ckf["cfg"]).argmax(0) > 0)

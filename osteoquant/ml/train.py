@@ -87,10 +87,12 @@ def _pad_to(x, y, ps):
 
 # ----------------------------------------------------------------------------- training
 def train_model(train_cases: list[Case], val_cases: list[Case], cfg: dict, name: str,
-                log=print, init_from: str | None = None, sample_fn=None) -> dict:
+                log=print, init_from: str | None = None, sample_fn=None, overwrite: bool = False) -> dict:
     """Train a U-Net. ``sample_fn(rng) -> (x[C,Z,Y,X], y[Z,Y,X])`` optionally replaces patch sampling
     + augmentation (used for on-the-fly domain-randomised synthesis); it is recorded in the config
-    by name (``cfg['sampler']``) for provenance."""
+    by name (``cfg['sampler']``) for provenance. An existing model name is refused unless ``overwrite`` is
+    passed (checked before training; see :func:`save_model`)."""
+    _check_name_free(name, overwrite)
     if cfg.get("require_commercial_eligible") and any(c.commercial_use != "allowed" for c in train_cases):
         bad = sorted({c.case_id for c in train_cases if c.commercial_use != "allowed"})[:5]
         raise PermissionError(f"Commercial-release training refused: non-commercial or unresolved licence data {bad}")
@@ -152,7 +154,7 @@ def train_model(train_cases: list[Case], val_cases: list[Case], cfg: dict, name:
             log(json.dumps(rec))
     sampler_manifest = getattr(sample_fn, "manifest", None) if sample_fn is not None else None
     return save_model(model, cfg, name, train_cases, hist, time.time() - t0, parent=parent,
-                      sampler_manifest=sampler_manifest)
+                      sampler_manifest=sampler_manifest, overwrite=overwrite)
 
 
 def evaluate_quick(model, cases, cfg) -> float:
@@ -167,9 +169,23 @@ def evaluate_quick(model, cases, cfg) -> float:
     return float(np.mean(ds))
 
 
+def _check_name_free(name: str, overwrite: bool) -> dict | None:
+    """Locked model versions (cycle-3 review C3-PRD-22, ARC-03): a saved name is never replaced silently. Returns the
+    registry record being replaced when ``overwrite`` is explicit, so the replacement is recorded."""
+    reg = MODEL_DIR / "registry.json"
+    old = (json.loads(reg.read_text()).get(name) if reg.exists() else None)
+    if (MODEL_DIR / f"{name}.pt").exists() or old is not None:
+        if not overwrite:
+            raise FileExistsError(f"model '{name}' already exists; saved model versions are not overwritten "
+                                  "(pass overwrite=True to replace it; the replacement is recorded)")
+        return old or {}
+    return None
+
+
 def save_model(model, cfg, name, train_cases, hist, seconds, parent: dict | None = None,
-               sampler_manifest: list | None = None) -> dict:
+               sampler_manifest: list | None = None, overwrite: bool = False) -> dict:
     MODEL_DIR.mkdir(exist_ok=True)
+    replaced = _check_name_free(name, overwrite)
     prov = sorted({c.provenance for c in train_cases} | set(cfg.get("extra_provenance", []))
                   | set((parent or {}).get("provenance", [])))
     lic = sorted({c.commercial_use for c in train_cases} | ({"allowed"} if cfg.get("extra_provenance") == ["synthetic"] else set()))
@@ -197,9 +213,15 @@ def save_model(model, cfg, name, train_cases, hist, seconds, parent: dict | None
     card["warning"] = ("SYNTHETIC-TRAINED — research prototype, not for study decisions"
                        if prov == ["synthetic"] else "Research prototype — not validated")
     (MODEL_DIR / f"{name}.card.json").write_text(json.dumps(card, indent=1, default=str))
-    update_registry(name, {"sha256": sha, "created": ck["created"], "provenance": prov, "licence_tag": tag,
-                           "n_train": len(train_cases), "cfg": _plain(cfg),
-                           "parent": (parent or {}).get("name")})
+    entry = {"sha256": sha, "created": ck["created"], "provenance": prov, "licence_tag": tag,
+             "n_train": len(train_cases), "cfg": _plain(cfg), "parent": (parent or {}).get("name")}
+    if replaced is not None:
+        # keep the identity of what was replaced; a stale ONNX export no longer matches these weights
+        entry["replaces"] = {k: replaced.get(k) for k in ("sha256", "created", "onnx_sha256")}
+        stale = MODEL_DIR / f"{name}.onnx"
+        if stale.exists():
+            stale.replace(MODEL_DIR / f"{name}.onnx.replaced-{(replaced.get('sha256') or 'unknown')[:12]}")
+    update_registry(name, entry)
     return card
 
 
@@ -246,15 +268,31 @@ def _lock_file(f) -> None:
                 time.sleep(0.05)
     except ImportError:
         d = Path(f.name + ".d")
-        t0 = time.time()
         while True:
             try:
                 d.mkdir()
                 return
             except FileExistsError:
-                if time.time() - t0 > 60:            # stale lock from a crashed writer
-                    d.rmdir()
+                _break_stale_lock(d)
                 time.sleep(0.05)
+
+
+STALE_LOCK_SECONDS = 60.0
+
+
+def _break_stale_lock(d: Path, max_age: float = STALE_LOCK_SECONDS) -> bool:
+    """Remove a lock directory left by a crashed writer (C3-PRD-22). Staleness is judged from the lock's own age, not
+    from how long this waiter has waited, so a lock taken by another waiter a moment ago is never broken; the lock is
+    renamed away first so only one waiter removes it."""
+    try:
+        if time.time() - d.stat().st_mtime <= max_age:
+            return False
+        tomb = d.with_name(f"{d.name}.stale-{os.getpid()}-{time.time_ns()}")
+        os.rename(d, tomb)
+        tomb.rmdir()
+        return True
+    except OSError:          # another waiter won the race, or the lock was released meanwhile
+        return False
 
 
 def _unlock_file(f) -> None:

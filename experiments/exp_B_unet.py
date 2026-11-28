@@ -58,7 +58,7 @@ if __name__ == "__main__":
                         ("unet_noctx_s0", {"roi_distance_channel": False, "seed": 0})]:
         cfg = dict(BASE, **extra)
         t = time.time()
-        card = train_model(train, val[:4], cfg, name, log=lambda s: print(name, s, flush=True))
+        card = train_model(train, val[:4], cfg, name, log=lambda s: print(name, s, flush=True), overwrite=True)
         rows, summ = evaluate(name, test, cfg)
         out["models"][name] = {"train_seconds": time.time() - t, "sha256": card["sha256"], "n_params": card["n_params"],
                                "cfg": cfg, "history": card["history"], "summary": summ, "rows": rows}

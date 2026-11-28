@@ -59,7 +59,7 @@ for k in (1, 3, 5, 10, 20):
         sub = [pool[i] for i in idx]
         cfg = dict(base_cfg, iters=300, lr=1e-3, val_every=10 ** 9, log_every=300, seed=100 + rep)
         name = f"adapt_k{k}_r{rep}"
-        train_model(sub, [], cfg, name, log=lambda s: None, init_from=str(MODEL_DIR / "unet_ctx_s0.pt"))
+        train_model(sub, [], cfg, name, log=lambda s: None, init_from=str(MODEL_DIR / "unet_ctx_s0.pt"), overwrite=True)
         rows.append(summarize("unet_finetune", k, rep, eval_unet(name)))
         rf = C.RFSegmenter(40, 16, 0).fit([c.image for c in sub], [c.labels for c in sub], [c.spacing for c in sub],
                                           [c.roi for c in sub], n_per_class=max(4000, 20000 // k))

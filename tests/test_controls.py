@@ -90,3 +90,45 @@ def test_trained_model_roundtrips_through_safe_loading(tmp_path, monkeypatch):
     (tmp_path / "tiny.pt").write_bytes((tmp_path / "tiny.pt").read_bytes() + b"x")   # tamper
     with pytest.raises(RuntimeError, match="hash"):
         T.load_model("tiny")
+
+
+def test_saved_model_names_are_not_overwritten(monkeypatch, tmp_path):
+    """C3-PRD-22 / ARC-03: a locked model version cannot be replaced silently; an explicit overwrite is recorded."""
+    import json as _json
+
+    import numpy as np
+    import pytest
+
+    import osteoquant.ml.train as T
+    monkeypatch.setattr(T, "MODEL_DIR", tmp_path)
+    img = np.random.default_rng(0).normal(size=(16, 16, 16)).astype(np.float32)
+    lab = (img > 0.5).astype(np.uint8)
+    case = T.Case("a", img, lab, np.ones_like(lab, bool), (10, 10, 10), "synthetic", "allowed")
+    cfg = dict(patch=(16, 16, 16), batch=1, iters=2, base=4, levels=2, threads=1, n_classes=2, log_every=1,
+               val_every=10 ** 9, seed=0)
+    T.train_model([case], [], cfg, "locked", log=lambda s: None)
+    first = _json.loads((tmp_path / "registry.json").read_text())["locked"]["sha256"]
+    T.update_registry("locked", merge={"onnx_sha256": "f" * 64})
+    (tmp_path / "locked.onnx").write_bytes(b"old export")
+    with pytest.raises(FileExistsError):
+        T.train_model([case], [], cfg, "locked", log=lambda s: None)
+    assert _json.loads((tmp_path / "registry.json").read_text())["locked"]["sha256"] == first
+    T.train_model([case], [], {**cfg, "seed": 1}, "locked", log=lambda s: None, overwrite=True)
+    rec = _json.loads((tmp_path / "registry.json").read_text())["locked"]
+    assert rec["replaces"]["sha256"] == first and rec["replaces"]["onnx_sha256"] == "f" * 64
+    assert "onnx_sha256" not in rec and not (tmp_path / "locked.onnx").exists()
+
+
+def test_mkdir_lock_fallback_breaks_only_stale_locks(tmp_path):
+    """C3-PRD-22: the fallback lock is broken only when the lock itself is old, never because a waiter waited long."""
+    import os
+    import time
+
+    import osteoquant.ml.train as T
+    d = tmp_path / ".registry.lock.d"
+    d.mkdir()
+    assert T._break_stale_lock(d) is False and d.exists()          # fresh lock held by someone else
+    old = time.time() - 3600
+    os.utime(d, (old, old))
+    assert T._break_stale_lock(d) is True and not d.exists()       # crashed writer's lock removed
+    assert T._break_stale_lock(d) is False                          # already gone: no error

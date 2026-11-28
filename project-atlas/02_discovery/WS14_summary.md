@@ -44,7 +44,7 @@ The pattern across the recovery cluster is the same every time:
 6. **WS14-019 Niche non-healthcare GPO.** This is the best-evidenced mechanism in the stream.
    - Vendor admin fees average 1–2% of purchase volume, 3% is the most common rate, and about 70% is passed back to members [B, S023, GAO].
    - Premier's net admin fees fell 11% as the share returned to members rose. Premier sold its non-healthcare contracts to OMNIA [A, S024].
-   - The economics only work above roughly $20M of member purchasing [E]. Hold; the cheapest test is becoming an affiliate of a national GPO.
+   - Economics need roughly $20M+ of member purchasing [E]. Hold; test via a national-GPO affiliate.
 7. **WS14-027 ITAD** and **WS14-026 office-furniture decommissioning.** Both are waste-to-value businesses where the client pays a fee and the operator also earns on resale.
    - Green Standards runs a paid decommissioning model: 2,000+ projects, typically around 100k sq ft [D, S027]. That leaves an apparent gap for mid-size Midwest jobs.
 
@@ -68,14 +68,14 @@ The pattern across the recovery cluster is the same every time:
 - **Settlement claims filing (010):** real information asymmetry, but payouts take years.
 
 ## Evidence gaps and limitations
-- **Search budget:** the web-search budget shared across all agents ran out after about 10 searches. After that I could only fetch specific known URLs, about 25 fetches.
+- **Search budget:** the shared web-search budget ran out after about 10 searches; after that I fetched known URLs only (about 25).
 - **Blocked sites:**
   - ilga.gov returned 503 throughout, so I could not read statute text for the ICC energy-broker (ABC) license, the public-adjuster rules, ticket-broker registration or tax-sale penalty rates.
   - eCFR redirected to a bot-check, so the GPO safe harbor rule (42 CFR 1001.952(j)) comes from GAO's description of it.
   - Turo, FedEx, the Cook County Assessor and the payment-card settlement site returned 403.
 - **Missing numbers:**
-  - Fee percentages are missing for parcel negotiation, telecom audit, AP recovery, deduction recovery, lease audit, expense reduction and energy brokerage. I recorded these as E with explicit unanswered questions.
-  - There is no realized-economics evidence for small-entrant recovery firms. All operator data is incumbent marketing (D).
+  - Fee percentages for parcel negotiation, telecom, AP, deduction and lease audits, expense reduction and energy brokerage (recorded as E).
+  - Realized economics for small-entrant recovery firms; all operator data is incumbent marketing (D).
 - **Legal questions still open:**
   - Illinois purchaser-versus-vendor refund mechanics and the claim limitation period (004).
   - Whether leases bar contingency-fee auditors (011).
@@ -91,8 +91,5 @@ The pattern across the recovery cluster is the same every time:
 - **WS02:** public adjusting (WS14-018); employer health-claims audits; R&D credit studies with a CPA partner.
 - **WS07:** customs brokerage itself; freight claims; reverse logistics paired with ITAD.
 - **WS08:** AP recovery audits for municipalities and school districts, bought through public procurement.
-- **WS09:** a settlement-tracking database or newsletter for business class members; a music-royalty administration and recovery niche.
-- **Other ideas not recorded:**
-  - A flat-fee data/analytics product for Cook County tax-appeal law firms (no referral fees).
-  - A GPO for condo associations and HOAs.
-  - Airline-compensation (EU261) claims for U.S. travellers.
+- **WS09:** settlement-tracking newsletter for business class members; music-royalty recovery.
+- **Other ideas not recorded:** flat-fee analytics for Cook County tax-appeal law firms; a GPO for condo associations/HOAs; EU261 airline-compensation claims for U.S. travellers.

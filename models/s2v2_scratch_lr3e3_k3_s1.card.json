@@ -1,0 +1,81 @@
+{
+ "hparams": {
+  "in_ch": 1,
+  "n_classes": 2,
+  "base": 12,
+  "levels": 4,
+  "p_drop": 0.0,
+  "max_ch": 96
+ },
+ "cfg": {
+  "patch": [
+   48,
+   48,
+   48
+  ],
+  "batch": 2,
+  "iters": 300,
+  "lr": 0.003,
+  "base": 12,
+  "levels": 4,
+  "threads": 4,
+  "n_classes": 2,
+  "log_every": 300,
+  "val_every": 1000000000,
+  "seed": 1,
+  "loss": {
+   "dice": 1.0,
+   "ce": 1.0,
+   "boundary_w": 1.0,
+   "boundary_ignore_aware": true
+  }
+ },
+ "name": "s2v2_scratch_lr3e3_k3_s1",
+ "provenance": [
+  "public-real"
+ ],
+ "licence_tag": "commercial_eligible",
+ "train_manifest": [
+  {
+   "case_id": "254861_Beagle.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "f660ff2d69f6af76"
+  },
+  {
+   "case_id": "248812_WHWT.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "6c6c3aadc597af22"
+  },
+  {
+   "case_id": "258467_Dachshund.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "5ee7b99fb2af1f9f"
+  }
+ ],
+ "history": [
+  {
+   "iter": 300,
+   "loss": 0.24500009417533875,
+   "sec": 98.0
+  }
+ ],
+ "parent_model": null,
+ "sampler_manifest": null,
+ "created": "2026-11-28T05:34:11Z",
+ "env": {
+  "torch": "2.15.0+cpu",
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "osteoquant_source_sha256": "b5bb2c489d890a8756165e82e1a1d9e32f0c40ebc0084e3a079d816c1853db20",
+  "git_commit": "8741162c367d640fa0b59755c9ceb3c075c85c21",
+  "git_dirty": false
+ },
+ "n_params": 788594,
+ "train_seconds": 98.0,
+ "sha256": "9b719fdc281ce92b52197e401396e7a26e340846ccc4391784049d1918ba5e94",
+ "path": "models/s2v2_scratch_lr3e3_k3_s1.pt",
+ "warning": "Research prototype \u2014 not validated"
+}

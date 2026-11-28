@@ -1,0 +1,76 @@
+{
+ "hparams": {
+  "in_ch": 1,
+  "n_classes": 2,
+  "base": 12,
+  "levels": 4,
+  "p_drop": 0.0,
+  "max_ch": 96
+ },
+ "cfg": {
+  "patch": [
+   48,
+   48,
+   48
+  ],
+  "batch": 2,
+  "iters": 300,
+  "lr": 0.001,
+  "base": 12,
+  "levels": 4,
+  "threads": 4,
+  "n_classes": 2,
+  "log_every": 300,
+  "val_every": 1000000000,
+  "seed": 0,
+  "loss": {
+   "dice": 1.0,
+   "ce": 1.0,
+   "boundary_w": 1.0,
+   "boundary_ignore_aware": true
+  }
+ },
+ "name": "s3_ssl_k1_s0",
+ "provenance": [
+  "public-real"
+ ],
+ "licence_tag": "commercial_eligible",
+ "train_manifest": [
+  {
+   "case_id": "257593_Dachshund.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "bf3a6146693b7b87"
+  }
+ ],
+ "history": [
+  {
+   "iter": 300,
+   "loss": 0.41124847531318665,
+   "sec": 89.0
+  }
+ ],
+ "parent_model": {
+  "name": "unet_ssl_real_s0",
+  "provenance": [
+   "public-real"
+  ],
+  "licence_tag": "commercial_eligible",
+  "sha256": "7f2986381fd300fe80692f56a981719386c65a5459a22e6c97f90d138e71360b"
+ },
+ "sampler_manifest": null,
+ "created": "2026-11-28T06:24:39Z",
+ "env": {
+  "torch": "2.15.0+cpu",
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "osteoquant_source_sha256": "b5bb2c489d890a8756165e82e1a1d9e32f0c40ebc0084e3a079d816c1853db20",
+  "git_commit": "838ee4f25decb07a71f45286a6172649ea2b76db",
+  "git_dirty": false
+ },
+ "n_params": 788594,
+ "train_seconds": 89.0,
+ "sha256": "72ab0420775f3e3ab59c74d6dab95bc9b90f9f5a33c780c73d1f96f6be2a2f13",
+ "path": "models/s3_ssl_k1_s0.pt",
+ "warning": "Research prototype \u2014 not validated"
+}

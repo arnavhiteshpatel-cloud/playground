@@ -11,7 +11,7 @@ external sign-off.
 
 ## Checklist (updated 2026-11-28, Generation 2)
 - [x] Desktop build Linux (local): rebuilt 28 Nov 2026 from a clean tree (commit `1f568f4`, advisor 1.4.3, recorded in `packaging/dist/build-info.json`); packaged self-test PASS (8 steps), licence check exit 0, 198 licence files, 855 MiB folder, 310 MiB archive. Not distributed (B-016)
-- [ ] Desktop build Windows / macOS: never built; the `desktop-build` workflow has never run (manual dispatch is a founder distribution decision, B-013, decision #21)
+- [ ] Desktop build Windows / macOS: macOS (Apple silicon, macOS 15 runner) **built and passed** in the `desktop-build` workflow run 4 (28 Nov, commit `838ee4f`): desktop tests, licence inventory, ad-hoc signed `.app`, packaged self-test, `.dmg` and zip uploaded (unsigned, not notarised). Windows still fails: a desktop test crashes when the 3D view opens on the headless runner (DF-044); no Windows build yet
 - [x] CI green on Ubuntu, Windows and macOS × Python 3.12 / 3.13 for the library test suite, lint and dependency audit (first green run 2026-11-28, run 59; earlier runs failed: DF-022)
 - [x] Desktop tests in CI: the full suite including desktop and licensing tests is a blocking step; run 86 failed on a macOS/Python 3.13 segfault at test-fixture teardown (shared SQLite connection closed while a job-runner thread was inside a query), fixed in `d124ae6` (DF-043); run 101 (`50f5659`, 2026-11-28) passed on all six OS × Python jobs with both coverage gates
 - [x] Coverage ≥95% critical / ≥90% overall: single source `docs/qa/test_summary.json` (611 passed, 1 skipped; 93.4% line+branch overall and 99% on morphometry, stats, metrics, I/O and audit, desktop UI excluded; local full run at `d124ae6`). The same gates are blocking in CI

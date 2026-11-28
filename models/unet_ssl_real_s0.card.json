@@ -1,0 +1,175 @@
+{
+ "hparams": {
+  "in_ch": 1,
+  "n_classes": 2,
+  "base": 12,
+  "levels": 4,
+  "p_drop": 0.0,
+  "max_ch": 96
+ },
+ "cfg": {
+  "patch": [
+   48,
+   48,
+   48
+  ],
+  "batch": 2,
+  "iters": 800,
+  "lr": 0.003,
+  "base": 12,
+  "levels": 4,
+  "threads": 4,
+  "n_classes": 2,
+  "seed": 0,
+  "pretext": "masked_denoising",
+  "extra_provenance": [
+   "public-real"
+  ]
+ },
+ "name": "unet_ssl_real_s0",
+ "provenance": [
+  "public-real"
+ ],
+ "licence_tag": "commercial_eligible",
+ "train_manifest": [
+  {
+   "case_id": "241035_FB.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "3171181e415f2f32"
+  },
+  {
+   "case_id": "247854_WHWT.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "76fd7b8a776f0d9f"
+  },
+  {
+   "case_id": "248812_WHWT.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "6c6c3aadc597af22"
+  },
+  {
+   "case_id": "250482_WHWT.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "b62bf42358ea0e40"
+  },
+  {
+   "case_id": "250882_BordeCollie.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "f78f2f27f73a2153"
+  },
+  {
+   "case_id": "251908_GD.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "a35e0b0eab470649"
+  },
+  {
+   "case_id": "254861_Beagle.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "f660ff2d69f6af76"
+  },
+  {
+   "case_id": "257593_Dachshund.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "bf3a6146693b7b87"
+  },
+  {
+   "case_id": "258467_Dachshund.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "5ee7b99fb2af1f9f"
+  },
+  {
+   "case_id": "259056_WHWT.tif",
+   "provenance": "public-real",
+   "commercial_use": "allowed",
+   "image_sha256": "ecba1c7fe98fc81e"
+  }
+ ],
+ "history": [
+  {
+   "iter": 200,
+   "mse": 0.026828493922948837,
+   "sec": 69.5
+  },
+  {
+   "iter": 400,
+   "mse": 0.004190162755548954,
+   "sec": 133.1
+  },
+  {
+   "iter": 600,
+   "mse": 0.00481923995539546,
+   "sec": 191.1
+  },
+  {
+   "iter": 800,
+   "mse": 0.0029163139406591654,
+   "sec": 248.5
+  }
+ ],
+ "parent_model": null,
+ "sampler_manifest": [
+  {
+   "case_id": "241035_FB.tif",
+   "labels_used": false
+  },
+  {
+   "case_id": "247854_WHWT.tif",
+   "labels_used": false
+  },
+  {
+   "case_id": "248812_WHWT.tif",
+   "labels_used": false
+  },
+  {
+   "case_id": "250482_WHWT.tif",
+   "labels_used": false
+  },
+  {
+   "case_id": "250882_BordeCollie.tif",
+   "labels_used": false
+  },
+  {
+   "case_id": "251908_GD.tif",
+   "labels_used": false
+  },
+  {
+   "case_id": "254861_Beagle.tif",
+   "labels_used": false
+  },
+  {
+   "case_id": "257593_Dachshund.tif",
+   "labels_used": false
+  },
+  {
+   "case_id": "258467_Dachshund.tif",
+   "labels_used": false
+  },
+  {
+   "case_id": "259056_WHWT.tif",
+   "labels_used": false
+  }
+ ],
+ "created": "2026-11-28T06:23:10Z",
+ "env": {
+  "torch": "2.15.0+cpu",
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "osteoquant_source_sha256": "b5bb2c489d890a8756165e82e1a1d9e32f0c40ebc0084e3a079d816c1853db20",
+  "git_commit": "838ee4f25decb07a71f45286a6172649ea2b76db",
+  "git_dirty": false
+ },
+ "n_params": 788594,
+ "train_seconds": 248.5,
+ "sha256": "7f2986381fd300fe80692f56a981719386c65a5459a22e6c97f90d138e71360b",
+ "path": "models/unet_ssl_real_s0.pt",
+ "warning": "Research prototype \u2014 not validated"
+}

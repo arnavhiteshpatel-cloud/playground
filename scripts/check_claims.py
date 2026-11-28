@@ -297,6 +297,16 @@ def check_versions() -> list[str]:
     return bad
 
 
+RUN_NAME = re.compile(r"\b(S1H[234]?)\b")
+DEFAULT_RUN = "S1H3"     # an anchor with no run named before it is read as the S1H3 standard phrase (back-compatible)
+
+
+def _run_context(text: str, pos: int, span: int = 700) -> str:
+    """The held-out run a quoted number belongs to: the last run named in the ``span`` characters before it."""
+    names = RUN_NAME.findall(text[max(0, pos - span): pos])
+    return names[-1] if names else DEFAULT_RUN
+
+
 def main(paths=None) -> int:
     files = []
     for g in SCAN_GLOBS:
@@ -320,8 +330,11 @@ def main(paths=None) -> int:
         want = round(raw, dec)
         for f in sorted(set(files)):
             text = _read(f)
+            run = cid.split("_")[0] if re.match(r"S1H\d?_", cid) else None
             for a in anchors:
                 for m in re.finditer(a, text):
+                    if run and _run_context(text, m.start()) != run:
+                        continue          # a number quoted for another held-out run (S1H3 vs S1H4)
                     window = text[m.end(): m.end() + 40]
                     n = (num_scaled if scale else num).search(window)
                     if not n:

@@ -201,6 +201,29 @@ def get(d, *path, default=None):
 # ------------------------------------------------------------------------------------------------ facts
 EP = [("total_mineral_volume", "Total mineral"), ("residual_graft_volume", "Residual graft"),
       ("new_bone_volume", "New bone")]
+# result-row fields per endpoint (error, support status)
+EP_ROW = {"residual_graft_volume": ("err_graft", "status"), "new_bone_volume": ("err_new", "status_new"),
+          "total_mineral_volume": ("err_mineral", "status_mineral")}
+SUP_ST = ("supported", "supported_with_conditions")
+
+
+def cp_upper(x: int, n: int, a: float = 0.05):
+    """Clopper-Pearson upper 95% limit."""
+    if not n:
+        return None
+    if x == n:
+        return 1.0
+    from scipy.stats import beta
+    return float(beta.ppf(1 - a / 2, x + 1, n - x))
+
+
+def structure_level(rows, key, fail_frac) -> dict:
+    """Pre-registered unit (§7): phantom structures. A structure fails if any of its supported measurements fails."""
+    ek, sk = EP_ROW[key]
+    sup = [r for r in rows if r.get(sk) in SUP_ST and isinstance(r.get(ek), (int, float)) and math.isfinite(r[ek])]
+    structs = {r.get("structure") for r in sup}
+    failing = {r.get("structure") for r in sup if abs(r[ek]) > fail_frac}
+    return {"k": len(structs), "failing": len(failing), "ub": cp_upper(len(failing), len(structs))}
 
 
 def prereg_criteria() -> dict:
@@ -243,38 +266,39 @@ def heldout_tests(crit) -> list[dict]:
         t = {"id": d.get("experiment", name), "file": f"experiments/results/{name}.json",
              "advisor": d.get("advisor_version", PENDING), "n": s.get("n"), "prereg": d.get("preregistered", ""),
              "eps": {}, "rows": rows, "psf": psf, "dens": dens}
+        fail_frac = float(crit["fail_pct"]) / 100 if crit.get("fail_pct") else 0.2
         for key, lab in EP:
             e = get(s, "per_endpoint", key, default={})
             sbf, sok = e.get("supported_but_failed") or 0, e.get("supported_and_ok") or 0
             sup, nf, fr = sbf + sok, e.get("n_fail"), e.get("failures_refused")
             ub = e.get("p_fail_given_supported_upper95")
             share = fr / nf if nf else None
+            st = structure_level(rows, key, fail_frac)
             t["eps"][key] = dict(label=lab, n=e.get("n"), nf=nf, fr=fr, sup=sup, sbf=sbf, ub=ub, share=share,
-                                 cov=(sup / e["n"]) if e.get("n") else None,
+                                 cov=(sup / e["n"]) if e.get("n") else None, st=st,
                                  med=e.get("abs_err_supported_median"), mx=e.get("abs_err_supported_max"),
-                                 verdict=verdict(nf, share, sup, sbf, ub, crit))
+                                 verdict=verdict(nf, share, sup, sbf, st, crit))
         out.append(t)
     return out
 
 
-def verdict(nf, share, sup, sbf, ub, crit):
-    """Pre-registered acceptance (PREREGISTRATION §7–§9, plus the stricter point-rate rule from its deviations log)
-    applied to one endpoint. Returns (word, style)."""
+def verdict(nf, share, sup, sbf, st, crit):
+    """Pre-registered acceptance applied to one endpoint, with phantom structures as the unit of replication
+    (PREREGISTRATION §7, inherited by §9 and §10; cycle-3 review C3-SCI-05): at least the required share of failures
+    refused, no supported failure, and a Clopper-Pearson 95% upper bound on the structure failure rate within the
+    limit. Returns (word, style)."""
     if not crit["ok"]:
         return PENDING, ST_NONE
-    refuse, bound, min_sup = float(crit["refuse_pct"]) / 100, float(crit["bound"]), int(crit["min_sup"])
-    point = float(crit["point_pct"]) / 100 if crit.get("point_pct") else None
+    refuse, bound = float(crit["refuse_pct"]) / 100, float(crit["bound"])
     if nf and share is not None and share + 1e-9 < refuse:
-        return "FAILED", ST_FAIL
-    if sup >= min_sup and ok(ub) and ub > bound:
         return "FAILED", ST_FAIL
     if sup == 0:
         return "REFUSED EVERY CASE", ST_NONE
-    if point is not None and sbf / sup > point:
-        return "FAILS STRICTER RULE*", ST_FAIL
-    if sup < min_sup:
-        return "SAFE, FEW SUPPORTED", ST_OK
-    return "MET", ST_OK
+    if sbf:
+        return "FAILED", ST_FAIL
+    if st.get("ub") is not None and st["ub"] <= bound:
+        return "MET", ST_OK
+    return f"SAFE; NOT DEMONSTRATED ({st.get('k')} STRUCT.)", ST_OK
 
 
 def gather() -> dict:
@@ -1135,8 +1159,7 @@ def held_table(d: Deck, s, y, size=12, row_h=0.62):
     hdr = ["Pre-registered held-out test (SYNTHETIC)"] + [lab for _, lab in EP]
     rows, styles = [], {}
     for i, t in enumerate(F["held"]):
-        row = [f"**{t['id']}** · advisor {t['advisor']}" + (" · declared final" if t is final_test(F) and F["final_note"]
-                                                             else "")]
+        row = [f"**{t['id']}** · advisor {t['advisor']}" + (" · shipped advisor" if t["advisor"] == F["adv"] else "")]
         for j, (key, _) in enumerate(EP, 1):
             word, st = t["eps"][key]["verdict"]
             row.append(word)
@@ -1156,13 +1179,10 @@ def s_heldout(d: Deck):
                 [t["file"] for t in F["held"]] + ["docs/science/PREREGISTRATION.md §7–9 and deviations log",
                                                    "EXPERIMENT_REGISTRY.md"])
     yb = held_table(d, s, TOP, 12.5, 0.5)
-    star = any(e["verdict"][0].endswith("*") for t in F["held"] for e in t["eps"].values())
     text(s, MX, yb + 0.08, CW, 0.62,
-         f"Each test was registered before it ran; no advisor change was allowed afterwards. Pass: at least "
-         f"{crit['refuse_pct']}% of failures refused and a 95% upper bound on the supported-failure rate of at most "
-         f"{crit['bound']} once enough cases are supported."
-         + (f" * Passed the original rule, fails the stricter rule added after review (at most {crit['point_pct']}% "
-            "failures among supported cases)." if star else ""), 11.5, MUTED)
+         f"Each test was registered before it ran. Pass: at least {crit['refuse_pct']}% of failures refused, no "
+         f"supported failure, and a 95% upper bound of at most {crit['bound']} on the supported-failure rate counting "
+         "phantom structures as the unit; with too few structures the result is 'not demonstrated'.", 11.5, MUTED)
     box(s, MX, yb + 0.8, CW, 2.05)
     text(s, MX + 0.25, yb + 0.9, CW - 0.5, 1.9, [
         {"t": "Final result, in the standard wording", "bold": True, "size": 14, "space": 4},
@@ -1182,12 +1202,18 @@ def s_failures(d: Deck):
         what = ("Failed on " + " and ".join(bad)) if bad else "Nothing failed: every failing measurement was refused"
         cause = F["mech"].get(t["id"]) or ("—" if not bad else PENDING)
         nxt = tests[i + 1] if i + 1 < len(tests) else None
-        if nxt and nxt["advisor"] == "1.4.0":
+        if nxt and nxt["advisor"] == "1.4.3":
+            change = (f"Advisors 1.4.2–1.4.3 (tested in {nxt['id']}), after the cycle-2/3 reviews, not after a "
+                      f"{t['id']} failure: method binding, a rim proxy when the material is unspecified, scan noise and "
+                      "partial volume on measured references, day-0 limits, stricter total-mineral rim gate")
+        elif nxt and nxt["advisor"] == "1.4.0":
             change = (f"Advisor 1.4.0 (tested in {nxt['id']}): measures blur, granule thickness and graft level in each "
                       "scan; propagates error into new bone = mineral − graft; refuses an ambiguous rim around graft")
         elif nxt:
             change = (f"Advisor {nxt['advisor']} (tested in {nxt['id']}): " + (F["s9_change"] or "rule change")
                       + " now follows the measured blur")
+        elif t["advisor"] == F["adv"]:
+            change = "No advisor change after this test (pre-registered: results are not used for tuning)."
         else:
             change = (F["final_note"] + "; declared before the run." if F["final_note"] else "No further change.") + \
                 (f" Shipped {F['adv']} changes only rules {t['id']} does not exercise." if F["adv_note_paths"] else "")

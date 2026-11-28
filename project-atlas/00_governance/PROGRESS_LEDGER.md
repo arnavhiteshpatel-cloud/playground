@@ -10,8 +10,10 @@
 | 2026-11-28 | De-duplication + 7 synthesized cross-stream bundles | done | `03_screening/dedupe_decisions.json`, `synthesized_bundles.json` |
 | 2026-11-28 | Stage B: blind re-scoring of all 630 records (13 packets) + calibration + selection | done | `03_screening/calibration.md`, `screening_dispositions.csv`, `stage_C_selected.json` |
 | 2026-11-28 | Master workbook v1 | done | `10_deliverables/Atlas_Opportunity_Workbook.xlsx` |
-| 2026-11-28 | Stage C: 74 industry investigations in 9 themed batches | in progress | `04_industry_investigations/`, `03_screening/stage_updates/stageC_*.jsonl` |
+| 2026-11-28 | Stage C: 74 industry investigations in 9 themed batches | done | `04_industry_investigations/`, `03_screening/stage_updates/stageC_*.jsonl` |
+| 2026-11-28 | Landscape & rejections chapter; industry + mechanism taxonomies | done | `10_deliverables/sections/LANDSCAPE_AND_REJECTIONS.md`, `01_taxonomy/` |
+| 2026-11-28 | Stage D: 25 commercial deep dives in 9 batches (named prospects/suppliers, transactions, models) | in progress | `05_deep_dives/`, `09_databases/prospects|suppliers/`, `08_financial_models/` |
 
 ## Next step
-When Stage C batches land: `python3 tools/merge.py && python3 tools/score.py` (stage updates override scores) →
-select ~30 for Stage D (deep dives with named suppliers/prospects/transactions + preliminary models).
+When Stage D lands: merge/score → verify all models centrally (`python3 tools/verify_fin_model.py --all`) →
+select 10–15 finalists → Stage E playbooks + materials → Stage F adversarial review → top 5 → final deliverables.

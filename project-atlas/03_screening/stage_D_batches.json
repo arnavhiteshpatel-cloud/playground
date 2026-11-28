@@ -1,0 +1,200 @@
+{
+ "DA": {
+  "name": "Chicago commercial building services",
+  "concepts": [
+   {
+    "id": "WS05-007",
+    "concept": "Commercial pest control for food facilities, with a residential plan line (absorbs WS18-007)",
+    "absorbs": [
+     "WS18-007"
+    ]
+   },
+   {
+    "id": "WS05-026",
+    "concept": "Medical/dental/ambulatory clinic janitorial",
+    "absorbs": []
+   },
+   {
+    "id": "WS05-001",
+    "concept": "Fire extinguisher + emergency lighting inspection route (test a narrow first-aid add-on from WS13-004)",
+    "absorbs": [
+     "WS13-004"
+    ]
+   }
+  ]
+ },
+ "DB": {
+  "name": "Construction-adjacent services",
+  "concepts": [
+   {
+    "id": "SYN-006",
+    "concept": "Construction subcontractor back office: WIP/job-cost bookkeeping for surety + certified payroll (absorbs WS02-028, WS15-023)",
+    "absorbs": [
+     "WS02-028",
+     "WS15-023",
+     "WS02-026"
+    ]
+   },
+   {
+    "id": "WS11-021",
+    "concept": "Construction stormwater (ILR10/SWPPP) inspections and BMP maintenance",
+    "absorbs": [
+     "WS15-021"
+    ]
+   },
+   {
+    "id": "WS10-010",
+    "concept": "Chicago masonry restoration & tuckpointing",
+    "absorbs": []
+   }
+  ]
+ },
+ "DC": {
+  "name": "Fleet & industrial field services",
+  "concepts": [
+   {
+    "id": "SYN-001",
+    "concept": "Insurance-led small-carrier compliance hub (absorbs WS02-001, WS17-001, WS17-002)",
+    "absorbs": [
+     "WS02-001",
+     "WS17-001",
+     "WS17-002",
+     "WS17-031"
+    ]
+   },
+   {
+    "id": "WS17-004",
+    "concept": "Mobile preventive maintenance for light/medium-duty service fleets",
+    "absorbs": []
+   },
+   {
+    "id": "WS03-012",
+    "concept": "Overhead crane & hoist inspection, maintenance and repair",
+    "absorbs": []
+   }
+  ]
+ },
+ "DD": {
+  "name": "Healthcare practice services",
+  "concepts": [
+   {
+    "id": "WS18-002",
+    "concept": "Private-pay non-medical home care agency",
+    "absorbs": [
+     "WS04-001"
+    ]
+   },
+   {
+    "id": "WS04-014",
+    "concept": "Managed IT + HIPAA compliance for independent dental and vet practices",
+    "absorbs": [
+     "WS04-021"
+    ]
+   },
+   {
+    "id": "WS04-010",
+    "concept": "Specialty billing/RCM for behavioral health, ABA, PT practices",
+    "absorbs": []
+   }
+  ]
+ },
+ "DE": {
+  "name": "Veterinary aftercare & outdoor recurring services",
+  "concepts": [
+   {
+    "id": "WS13-028",
+    "concept": "Pet cremation & aftercare for veterinary clinics",
+    "absorbs": [
+     "WS04-032"
+    ]
+   },
+   {
+    "id": "WS13-016",
+    "concept": "Lake, pond & stormwater-basin management for HOAs, park districts, business parks",
+    "absorbs": []
+   },
+   {
+    "id": "WS18-004",
+    "concept": "Lawn fertilization & weed-control subscription route",
+    "absorbs": []
+   }
+  ]
+ },
+ "DF": {
+  "name": "Truck-based local service businesses",
+  "concepts": [
+   {
+    "id": "WS18-035",
+    "concept": "Garage door repair & installation",
+    "absorbs": []
+   },
+   {
+    "id": "WS18-003",
+    "concept": "Junk removal & hauling",
+    "absorbs": []
+   },
+   {
+    "id": "WS13-014",
+    "concept": "Private utility locating & concrete GPR scanning",
+    "absorbs": [
+     "WS10-005",
+     "WS11-023"
+    ]
+   }
+  ]
+ },
+ "DG": {
+  "name": "People & recovery services",
+  "concepts": [
+   {
+    "id": "WS12-012",
+    "concept": "Offshore/nearshore dedicated remote staff for one US SMB vertical",
+    "absorbs": []
+   },
+   {
+    "id": "WS12-014",
+    "concept": "Contingency direct-hire recruiting desk in a technical niche",
+    "absorbs": []
+   },
+   {
+    "id": "WS14-008",
+    "concept": "Retailer/distributor deduction & chargeback recovery for emerging CPG brands",
+    "absorbs": []
+   }
+  ]
+ },
+ "DH": {
+  "name": "Distribution & liquidation",
+  "concepts": [
+   {
+    "id": "WS16-006",
+    "concept": "Promotional products / branded merchandise distributor",
+    "absorbs": []
+   },
+   {
+    "id": "WS07-023",
+    "concept": "Online consignment auctions for business liquidations",
+    "absorbs": []
+   }
+  ]
+ },
+ "DI": {
+  "name": "Energy & water services",
+  "concepts": [
+   {
+    "id": "WS11-017",
+    "concept": "Commercial cooling-tower/boiler water treatment route",
+    "absorbs": []
+   },
+   {
+    "id": "SYN-004",
+    "concept": "Commercial energy cost management (ICC-licensed brokerage + bill audit + demand response)",
+    "absorbs": [
+     "WS11-007",
+     "WS11-010",
+     "WS11-008"
+    ]
+   }
+  ]
+ }
+}

@@ -29,3 +29,12 @@ Each entry: date · decision · rationale · evidence · reversibility.
   ≈5.40 on a 1–10 scale), so each value-capture family (freight, customs, contingency audit, government, GPO,
   recruiting, sourcing brokerage, code-driven trades) gets its best representative tested rather than being
   excluded by sub-0.2-point noise. Organized into 9 themed batches (`03_screening/stage_C_batches.json`).
+- **2026-11-28 · Stage C complete.** 74 investigations (9 batches, ~280 new sources). Almost every opportunity's
+  evidence-adjusted score fell (median ≈ −0.3) once real prices were found; most realistic new-entrant year-3
+  operating-profit ranges sit at ~$25–250k. Bundles: SYN-001 (insurance-led carrier hub) and SYN-006 (construction
+  back office, narrowed) survived; SYN-002/003/005/007 dropped (bundles mixed buyers, licenses or delivery systems).
+- **2026-11-28 · Stage D selection (25 concepts).** All Stage C "advance" verdicts plus "hold" records with
+  adj ≥ 5.25 that were not absorbed into another concept, plus masonry (5.23, C-level permit data). Overlapping
+  survivors are merged into one concept (e.g., WS02-028 + WS15-023 → SYN-006; WS02-001 + WS17-001 → SYN-001;
+  WS18-007 → WS05-007). Batches in `03_screening/stage_D_batches.json`. Chicago open data (food inspections, permits)
+  and the DOT FMCSA census API are reachable and will be used for lawful, business-level prospect lists.

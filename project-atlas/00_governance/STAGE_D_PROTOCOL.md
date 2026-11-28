@@ -51,3 +51,16 @@ Goal: turn the opportunity into something the founder could act on next week, us
 ## Rules
 Read-only research. No contact, forms, accounts, quotes, spending. Never fabricate organizations, prices, or
 contacts; unknown = "MISSING". Distinguish prospects from leads from customers. Final reply ≤200 words.
+
+## Practical notes (added at launch)
+- **Prospect data sources that work from this environment** (Socrata APIs, no key needed for modest use):
+  Chicago food inspections `https://data.cityofchicago.org/resource/4ijn-s7e5.json` (filter with `$where`, e.g.
+  violations like '%pest%'), Chicago building permits `.../resource/ydr8-5enu.json`, Chicago business licenses
+  `.../resource/r5kz-chrr.json`, FMCSA carrier census `https://data.transportation.gov/resource/az4n-8mr2.json`,
+  USASpending `https://api.usaspending.gov`. Cook County and Illinois data portals may also work. Respect rate limits.
+- **Privacy:** prospects are organizations. Record business names, business addresses, websites and business
+  contact pages only. Do not record personal emails, personal cell numbers, or names of individuals (for sole
+  proprietors trading under their own name, record the business/DBA name and a public business contact page only).
+- **Models:** build with `python3 tools/build_fin_model.py 08_financial_models/<ID>_assumptions.json`. Do NOT run
+  `verify_fin_model.py` (LibreOffice cannot run concurrently across agents); verification is run centrally.
+- Helper scripts go in `/tmp/claude-0/atlas_scratch/<batch>/`.

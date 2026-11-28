@@ -4,7 +4,7 @@
 
 ## Landscape and macro context
 - **Housing is weak and rates went up.** The Freddie Mac 30-yr rate was 7.21% on 2026-11-25, against 6.23% a year earlier [S019]. Single-family permits fell 12.9% y/y in Oct 2026, while 5+ unit multifamily starts rose 17.1% y/y [S020, S021]. Chicago issued 32,032 permits in 2025, down from 48,540 in 2019, and 29,067 in 2026 through late November [S010].
-- **Incumbents show the same split.** Builders FirstSource's operating margin fell from 12.7% (2023) to 5.2% (2025). IES Residential revenue fell 6.1% (−11.2% in Q1 FY26). Data-center and commercial MEP work is booming: Comfort Systems' backlog is $11.94B, against $5.99B a year earlier [S028, S025, S023]. A newcomer cannot reach the boom segment, because it requires GC prequalification, bonding and often union labor.
+- **Incumbents show the same split.** Builders FirstSource's operating margin fell from 12.7% (2023) to 5.2% (2025), and IES Residential revenue fell 6.1%. Meanwhile Comfort Systems' backlog doubled to $11.94B on data-center and commercial MEP work [S028, S025, S023]. A newcomer cannot reach that boom (prequalification, bonding, union labor).
 - **Specialty-trade economics (Census 2022, analyst ratios).** Across NAICS 238, receipts break down as 25% payroll, 30% materials and 8% subcontracts. Proxy operating margins (before interest, tax and unincorporated owners' draw): about 17% for specialty trades overall, 19.6% roofing, 20% masonry, 25% painting and 13.5% remodelers [S022]. Public comps earn 10–15% operating margins with scale: EMCOR 10.1%, Comfort Systems 14.4%, IBP 13.0% [S024, S023, S028]. These are incumbent numbers. A new entrant should plan on 8–15%.
 - **Construction working capital is the hidden tax.** Illinois retainage is capped at 10% until 50% completion and 5% after (P.A. 101-432) [S029]. Add pay-when-paid clauses and 60–90 day receivables. Lien rights need a 90-day notice (60 days for owner-occupied residential) and a 4-month recording deadline [S030]. SBA bond guarantees help, but sureties still underwrite personal credit, which is unknown for this founder [S031]. Owner-paid residential and repair work is far more cash-friendly than GC-subcontract work.
 - **Licensing, from primary sources.**
@@ -42,7 +42,7 @@
 - **STR co-hosting (030).** Rules cap the supply of eligible units.
 - **Home inspection (025).** Tied to transactions and capped by the founder's hours.
 - **Generic remodeling (017).** No wedge.
-- **Specialty distribution (026).** Incumbents earn ~5% operating margins and line cards are uncertain.
+- **Specialty distribution (026).** ~5% incumbent operating margins.
 
 ## Evidence gaps (largest)
 - Private-market prices are missing almost everywhere: expediting fees, per-turn prices, takeoff prices, GPR rates, porch and masonry new-entrant margins, sealcoating rates.
@@ -60,8 +60,8 @@
 - Justia, JCHS and amlegal blocked fetches. I contacted no one.
 
 ## Cross-stream leads (not recorded here)
-- **WS15:** Chicago façade-inspection ordinance services; Cook County demolition-debris diversion; Chicago building energy benchmarking.
-- **WS05:** firestop and fire-door annual inspections; commercial roof maintenance programs; parking-lot maintenance (overlaps WS10-008).
+- **WS15:** Chicago façade-inspection services; Cook County demolition-debris diversion.
+- **WS05:** firestop/fire-door inspections; roof maintenance programs; parking-lot maintenance (overlaps WS10-008).
 - **WS12:** certified-payroll / prevailing-wage compliance back office for public-works subcontractors; construction staffing; WIP/job-cost bookkeeping for subcontractors.
 - **WS02:** contractor insurance and surety-bond brokerage; construction collections.
 - **WS14:** surplus/overstock materials aggregation (see WS10-027); contractor lien/payment recovery.

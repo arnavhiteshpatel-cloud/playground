@@ -50,7 +50,7 @@ The pattern across the recovery cluster is the same every time:
 
 ## Surprises
 - **IEEPA tariffs were struck down on 20 February 2026.** About $166B in refunds is flowing through CBP's new CAPE system, with 126k claims by May 2026 [C, S011].
-  - It looks like a contingency jackpot, but it is a one-time window already crowded by brokers and big law firms [C, S012, S013]. Reject.
+  - A one-time window already crowded by brokers and law firms [C, S012, S013]. Reject.
   - Its durable cousin is duty drawback (WS14-013).
 - **WOTC is lapsed.** The IRS page, updated July 2026, still shows authorization only through 31 December 2025 [A, S025].
 - **Illinois unclaimed-property finders face tight rules:** a Treasurer license, a fidelity bond of up to $100k, a $500 application fee, and a fee cap of 10% [A, S004, S005].
@@ -64,7 +64,7 @@ The pattern across the recovery cluster is the same every time:
 - **Amazon reimbursements (009):** depend entirely on Amazon's platform rules.
 - **Rack-jobbing consignment (024):** the founder carries the retailer's inventory risk.
 - **Tax liens (030):** returns are competed away, and it is not an operating business.
-- **Ticket brokerage, car-sharing hosting, passport expediting, dental scrap, print brokerage:** low ceilings, platform or policy dependence, or secular decline.
+- **Tickets, car-sharing, passports, dental scrap, print:** low ceilings, platform dependence or decline.
 - **Settlement claims filing (010):** real information asymmetry, but payouts take years.
 
 ## Evidence gaps and limitations
@@ -89,7 +89,7 @@ The pattern across the recovery cluster is the same every time:
   - HB4931 non-attorney property-tax representation (a regulatory trigger).
   - Customs-broker license as a credential worth getting within 12 months.
 - **WS02:** public adjusting (WS14-018); employer health-claims audits; R&D credit studies with a CPA partner.
-- **WS07:** customs brokerage itself; freight claims; reverse logistics paired with ITAD.
+- **WS07:** customs brokerage; reverse logistics with ITAD.
 - **WS08:** AP recovery audits for municipalities and school districts, bought through public procurement.
 - **WS09:** settlement-tracking newsletter for business class members; music-royalty recovery.
 - **Other ideas not recorded:** flat-fee analytics for Cook County tax-appeal law firms; a GPO for condo associations/HOAs; EU261 airline-compensation claims for U.S. travellers.

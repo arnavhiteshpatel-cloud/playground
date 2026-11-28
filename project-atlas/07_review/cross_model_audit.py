@@ -28,8 +28,8 @@ H = dict(
     #    [D, F6-S004]; the founder also delivers the service. Cap = 1.5x that = 15 (generous: walk-ins/events).
     founder_conv_cap=15,
     # H2 combined conversation->customer conversion (lead_to_proposal x proposal_to_win) cap for an
-    #    unknown newcomer in a displacement sale. 9 of 9 recurring models use ~0.10 = the engine TEMPLATE
-    #    DEFAULTS (0.40 x 0.25), i.e. unevidenced (E). Skeptic cap 0.08 (E, reviewer judgement).
+    #    unknown newcomer in a displacement sale. 7 of 9 recurring models sit at 0.0875-0.105 and four use exactly
+    #    the engine TEMPLATE DEFAULTS (0.40 x 0.25 = 0.10), i.e. unevidenced (E). Skeptic cap 0.08 (E, reviewer judgement).
     conv_cap=0.08,
     # H3 founder ramp >= 6 months (every recurring model but one already uses 6).
     ramp_floor=6,

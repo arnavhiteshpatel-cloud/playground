@@ -117,7 +117,31 @@ def main():
     S2a, S2b, S2c = J("exp_S2v2_sim2real_a"), J("exp_S2v2_sim2real_b"), J("exp_S2v2_sim2real_c")
     S3, U1, O2, G, H = J("exp_S3_selfsupervised"), J("exp_U1_ensemble_conformal"), J("exp_O2_runtime"), \
         J("exp_G_morphometry"), J("exp_H_I_real")
-    HO = {"S1H": J("exp_S1H_heldout"), "S1H2": J("exp_S1H2_heldout"), "S1H3": J("exp_S1H3_heldout")}
+    HO = {"S1H": J("exp_S1H_heldout"), "S1H2": J("exp_S1H2_heldout"), "S1H3": J("exp_S1H3_heldout"),
+          "S1H4": J("exp_S1H4_heldout")}
+    L5 = J("exp_L5_qc_axial")
+
+    def struct_bound(d, ek, sk):
+        """Clopper-Pearson 95% upper bound with phantom structures as the unit (cycle-3 review C3-SCI-05)."""
+        from scipy.stats import beta as _beta
+        rows = d.get("rows") or []
+        sup = [r for r in rows if r.get(sk) in ("supported", "supported_with_conditions") and r.get(ek) is not None]
+        k = len({r["structure"] for r in sup})
+        x = len({r["structure"] for r in sup if abs(r[ek]) > 0.2})
+        if not k:
+            return None, 0
+        return (1.0 if x == k else float(_beta.ppf(0.975, x + 1, k - x))), k
+
+    def per_endpoint(d):
+        if d.get("summary"):
+            return (d.get("summary") or [{}])[0].get("per_endpoint", {})
+        a = d.get("analysis") or {}
+        return {ep: {"n": v["n"], "n_fail": v["n_fail"], "failures_refused": v["failures_refused"],
+                     "supported_and_ok": v["n_supported"] - v["supported_but_failed"],
+                     "supported_but_failed": v["supported_but_failed"], "p_fail_given_supported_upper95": v["row_upper95"],
+                     "abs_err_supported_median": v["abs_err_supported_median"],
+                     "abs_err_supported_max": v["abs_err_supported_max"]}
+                for ep, v in a.items() if isinstance(v, dict) and "n_fail" in v}
     B4 = J("analysis_B4_volume_agreement")
     qs_path = ROOT / "docs/qa/test_summary.json"
     QS = json.loads(qs_path.read_text()) if qs_path.exists() else {}
@@ -263,19 +287,25 @@ def main():
                "support applies only to the advisor-threshold method. Failure = volume error > 20% (per endpoint).", SM),
              P("Held-out validations (pre-registered, conditions unseen by the version tested)", H2)]
     rows = [["Test (advisor)", "Endpoint", "n", "Failures", "Refused failures", "Supported", "Supported & failed",
-             "95% upper bound P(fail|supp.)", "Median / max |err| supported"]]
+             "95% bound: structures (k) / rows", "Median / max |err| supported"]]
     for tid, d in HO.items():
-        pe = (d.get("summary") or [{}])[0].get("per_endpoint", {})
-        for ep, lab in (("residual_graft_volume", "residual graft"), ("new_bone_volume", "new bone"),
-                        ("total_mineral_volume", "total mineral")):
+        if not d:
+            continue
+        pe = per_endpoint(d)
+        for ep, lab, ek, sk in (("residual_graft_volume", "residual graft", "err_graft", "status"),
+                                ("new_bone_volume", "new bone", "err_new", "status_new"),
+                                ("total_mineral_volume", "total mineral", "err_mineral", "status_mineral")):
             e = pe.get(ep)
             if not e:
                 continue
             ns = (e.get("supported_and_ok", 0) or 0) + (e.get("supported_but_failed", 0) or 0)
+            if ek == "err_graft" and d.get("rows") and "err_graft" not in d["rows"][0]:
+                ek = "err"
+            sb, k = struct_bound(d, ek, sk)
             rows.append([f"{tid} ({d.get('advisor_version', '?')})", lab, str(e["n"]), str(e["n_fail"]),
                          str(e["failures_refused"]), str(ns), str(e["supported_but_failed"]),
-                         ("1.000" if ns and e["supported_but_failed"] == ns else      # all supported failed (CP bound 1)
-                          f(e.get("p_fail_given_supported_upper95"), 3)) if ns else "—",
+                         (f"{f(sb, 2)} (k={k}) / " + ("1.000" if e["supported_but_failed"] == ns else
+                                                     f(e.get("p_fail_given_supported_upper95"), 3))) if ns else "—",
                          (f(e.get("abs_err_supported_median"), 3, pct=True) + " / " +
                           f(e.get("abs_err_supported_max"), 3, pct=True)) if ns else "—"])
     flow += [table(rows, [24 * mm, 22 * mm, 10 * mm, 15 * mm, 17 * mm, 16 * mm, 18 * mm, 24 * mm, 32 * mm])]

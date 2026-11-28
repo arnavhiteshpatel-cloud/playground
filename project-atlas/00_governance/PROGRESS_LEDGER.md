@@ -12,8 +12,17 @@
 | 2026-11-28 | Master workbook v1 | done | `10_deliverables/Atlas_Opportunity_Workbook.xlsx` |
 | 2026-11-28 | Stage C: 74 industry investigations in 9 themed batches | done | `04_industry_investigations/`, `03_screening/stage_updates/stageC_*.jsonl` |
 | 2026-11-28 | Landscape & rejections chapter; industry + mechanism taxonomies | done | `10_deliverables/sections/LANDSCAPE_AND_REJECTIONS.md`, `01_taxonomy/` |
-| 2026-11-28 | Stage D: 25 commercial deep dives in 9 batches (named prospects/suppliers, transactions, models) | in progress | `05_deep_dives/`, `09_databases/prospects|suppliers/`, `08_financial_models/` |
+| 2026-11-28 | Stage D: 25 commercial deep dives in 9 batches (named prospects/suppliers, transactions, models) | done | `05_deep_dives/`, `09_databases/prospects|suppliers/`, `08_financial_models/` |
+
+| 2026-11-28 | Stage E: 11 finalist playbooks + draft materials + standardized models | done | `06_playbooks/` |
+| 2026-11-28 | Stage F: 6 adversarial reviews + cross-model audit | done | `07_review/` |
+| 2026-11-28 | Model verification: 25 Stage D + 11 Stage E + 4 post-review models, 0 mismatches | done | `tools/verify_fin_model.py` |
+| 2026-11-28 | Final recommendation + executive decision memo | done | `10_deliverables/EXECUTIVE_DECISION_MEMO.md` |
+| 2026-11-28 | Independent review report; capital allocation report; long-term wealth report; post-review models | done | `10_deliverables/` |
+| 2026-11-28 | Master workbook, supplier/prospect/evidence databases rebuilt | done | `10_deliverables/*.xlsx` |
+| 2026-11-28 | Master research report; ChatGPT Deep Research handoff | in progress | `10_deliverables/` |
 
 ## Next step
-When Stage D lands: merge/score → verify all models centrally (`python3 tools/verify_fin_model.py --all`) →
-select 10–15 finalists → Stage E playbooks + materials → Stage F adversarial review → top 5 → final deliverables.
+After the founder's review: answer the founder questions (`UNRESOLVED_QUESTIONS.md`), run the 60-day validation sprint
+(founder actions only; nothing has been sent), optionally run ChatGPT Deep Research with the handoff, then re-score with
+real evidence (`03_screening/stage_updates/` → `tools/merge.py` → `tools/score.py`).

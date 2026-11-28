@@ -300,8 +300,9 @@ def _append_notices(app: Path, inv: dict) -> None:
             "(e.g. libgcrypt, libgpg-error, libsystemd) are dynamically linked shared objects that you may replace;",
             "their source code is available from the distribution archive of the build system (Ubuntu:",
             "https://launchpad.net/ubuntu/+source/<source package>) for the exact package version listed. On written request within three",
-            "years of distribution we will provide the corresponding source code of these libraries for no more",
-            "than the cost of physically performing the distribution."]
+            "years of distribution the licensor named in the end-user licence agreement (once incorporated) will",
+            "provide the corresponding source code of these libraries for no more than the cost of physically",
+            "performing the distribution."]
     for pkg, info in sorted(inv["system_packages"].items()):
         out.append(f"  - {pkg} {info['version']}: {', '.join(sorted(info['files']))}  [{info.get('licence_file') or 'NO LICENCE FILE'}]")
     out += ["", "ICU (inside the PySide6 / Qt wheel): Unicode licence (ICU License). Text: licenses/ICU-LICENSE.txt.",

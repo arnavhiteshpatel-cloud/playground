@@ -53,6 +53,26 @@ def console_exe() -> Path:
     return app_dir() / name
 
 
+def _provenance() -> dict:
+    """Commit and advisor version the bundle was built from (cycle-3 review C3-BIZ-05: a build must say which code
+    state it contains)."""
+    import re
+    import subprocess
+    root = Path(__file__).resolve().parents[1]
+    out = {}
+    try:
+        out["git_commit"] = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True,
+                                           cwd=root).stdout.strip()
+        dirty = subprocess.run(["git", "status", "--porcelain", "--", "osteoquant"], capture_output=True, text=True,
+                               cwd=root).stdout.strip()
+        out["osteoquant_dirty"] = bool(dirty)
+    except OSError:
+        pass
+    m = re.search(r'ADVISOR_VERSION = "([^"]+)"', (root / "osteoquant" / "advisor" / "separability.py").read_text())
+    out["advisor_version"] = m.group(1) if m else None
+    return out
+
+
 def dir_size(p: Path) -> int:
     return sum(f.stat().st_size for f in p.rglob("*") if f.is_file() and not f.is_symlink())
 
@@ -188,7 +208,7 @@ def main(argv=None) -> int:
             "bundle_torch": os.environ.get("OQ_BUNDLE_TORCH", "0") == "1",
             "bundle_simpleitk": os.environ.get("OQ_BUNDLE_SITK", "0") == "1",
             "size_bytes": dir_size(app_dir()), "licence_files": sum(len(x["files"]) for x in lic),
-            "licence_check": info_lic}
+            "licence_check": info_lic, **_provenance()}
     print(f"bundle size: {info['size_bytes'] / 2**20:,.0f} MiB", flush=True)
     rc = 0 if info_lic["exit_code"] == 0 else 2
     if rc:

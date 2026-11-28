@@ -16,3 +16,8 @@
    exact location within Illinois, available hours, network. Opportunities depending on these are flagged.
 7. **Desk research cannot measure sales skill or local relationship advantages**; customer-acquisition estimates are
    ranges with stated evidence levels and must be tested with the validation experiments.
+8. **Shared web-search budget.** The WebSearch tool's budget is shared across parallel agents and was exhausted
+   during Stage A (WS09 reported exhaustion after ~10 searches). Agents switched to direct fetches of known
+   primary-source pages (agency sites, filings, program pages). Later stages are instructed to prefer direct fetches
+   of known URLs and reserve search for discovery of unknown sources. Some Illinois sites (ilga.gov statutes, IBHE)
+   returned HTTP 503 during the research window; affected statute details are marked unverified.

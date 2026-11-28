@@ -286,7 +286,7 @@
     "base": 21657,
     "optimistic": 13100
    },
-   "notes": "Base: concrete GPR system ~$16k (GPRS: complete system $12-19k [D, E-WS13014-S004]) + RD7200+TX5 $5,657 [B, DF-S026]. Conservative: $17k GPR + RD8200+TX10 $9,592 [B]. Optimistic: used StructureScan Mini LT (~$10.8k asking, D, search result) + used RD7000 DL+TX5 $2,300 [B, E-WS13014-S007]."
+   "notes": "Base: concrete GPR system ~$16k (GPRS: complete system $12-19k [D, E-WS13014-S004]) + RD7200+TX5 $5,657 [B, DF-S026]. Conservative: $17k GPR + RD8200+TX10 $9,592 [B]. Optimistic: used StructureScan Mini LT (~$10.8k asking [D, E-WS13014-S017]) + used RD7000 DL+TX5 $2,300 [B, E-WS13014-S007]."
   },
   {
    "item": "Utility (ground) GPR cart lease deposit (first + last payment), month 13",

@@ -96,7 +96,7 @@ The technician scans the area, marks the slab or ground with paint or tape ("no-
 | Concrete GPR (rental) | CSDS (Sensors & Software Conquest 100) | $125 per day, 3-day minimum; California dealer, shipping cost MISSING | [B, E-WS13014-S001] |
 | Concrete GPR (rental) | Field Environmental (GSSI StructureScan Mini XT 3D) | $450 per day, $1,050 per week, $3,000 per month | [D, DF-S038] |
 | Utility GPR (rental) | CSDS (LMX200 bundle) | $155 per day, 3-day minimum | [B, E-WS13014-S001] |
-| Concrete GPR (buy) | GSSI, Proceq, Hilti, Leica via dealers | Complete system $12–19k [D, E-WS13014-S004]; handheld $11–17k [D, C3-S024]; used StructureScan Mini LT around $10.8k asking (D, search result) | D |
+| Concrete GPR (buy) | GSSI, Proceq, Hilti, Leica via dealers | Complete system $12–19k [D, E-WS13014-S004]; handheld $11–17k [D, C3-S024]; used StructureScan Mini LT around $10.8k asking [D, E-WS13014-S017] | D |
 | Utility GPR cart (buy or lease) | UCG | LMX100 $20,508; LMX200 $36,476; ImpulseRadar PinPointR $18,444 | [B, DF-S026] |
 | Equipment lease | KWIPPED marketplace (Leica C-Thrue) | $825.30 a month for 36 months; first and last month upfront; the schedule implies about 7% APR | [B, E-WS13014-S006] (APR is analyst arithmetic) |
 | Training: EM | CSDS NULCA-certified course | $500 per person, 1 day in person plus 1–2 h online | [B, E-WS13014-S002] |
@@ -589,7 +589,7 @@ The "win rate" and "recession" rows look benign in year 3 only because fewer acc
 | **$500–2k** | NULCA EM course $500 [B]; hands-on GPR training ~$1,000 [D]; LLC; PPE and marking ~$400 | E1 pass (median ≥ $550, ≥ 3 dated bookings) and E2 indication ≤ $10k a year | Training sunk if demand later fails |
 | **$2–5k** | Insurance binding deposit (~$1.5–2.5k, E); first rental month (EM $599 + one GPR week $1,050 + one utility block $465) | ≥ 3 booked jobs on the calendar; COI accepted by the first customer's GC form | Rental and premium sunk if bookings cancel |
 | **$5–10k** | The rest of the 60-day pilot (rentals to ~$4.1–5.2k total; insurance for the quarter) | First 3 paid jobs delivered cleanly; ≥ 1 rebooking by day 30 | Low price or no rebooking means ≈ $4–5k net loss |
-| **$10–25k** | Buy the founder kit: $21,657 new, or $13,100 used | **Promotion gate:** ≥ 10 paid visits, median ≥ $550, ≥ 3 repeat accounts in 60 days, zero strikes, first invoices paid ≤ 45 days | Accounts stall. Kit resale is partial (used EM kits $2.3–4.5k [B, E-WS13014-S007]; used GPR ~$10.8k asking [D]) |
+| **$10–25k** | Buy the founder kit: $21,657 new, or $13,100 used | **Promotion gate:** ≥ 10 paid visits, median ≥ $550, ≥ 3 repeat accounts in 60 days, zero strikes, first invoices paid ≤ 45 days | Accounts stall. Kit resale is partial (used EM kits $2.3–4.5k [B, E-WS13014-S007]; used GPR ~$10.8k asking [D, E-WS13014-S017]) |
 | **$25–50k** | Months 4–12 operating losses and receivables (model trough –$48,622 at month 8) plus technician #1 ($3,000 capex and lease) | Month-6 gate (≥ 6 accounts, ARPC ≥ $600) then hire gate E7 | Hiring before backlog; a strike claim; DSO > 60 |
 | **$50–100k** | Technicians #2–3, cart lease, CCTV adjacency ($9,347 [B]); receivables growth | Technician #1 contribution ≥ $3k/mo for 3 months, DSO ≤ 45, clean insurance renewal; **cumulative owner capital capped at ~$60k (base peak $51,180)** | Price war with GPRS or coring firms; a recession; over-hiring (the "hires 30% sooner" stress drives peak funding to $551k) |
 
@@ -739,3 +739,5 @@ The "win rate" and "recession" rows look benign in year 3 only because fewer acc
 6. **BD hire** is triggered by demand (45 accounts), not the calendar (§7.1).
 7. **Tornado:** the gross-margin bar is an artifact (§7.5).
 8. **Ceiling** is cut from $500k a year to about $250k a year for Chicago alone (§9).
+
+**Stage E scores:** fcf 5, roic 6 (up from 5: base year-3 operating profit ÷ peak funding = 2.08), access 6, scale 6, resilience 4, entry 4, delegation 6, cash 5, feasibility 8 (down from 9: insurance availability and the PE/quality-level boundary), ai 4. That gives a raw composite of 5.37 and an evidence-adjusted 5.26 (D), against 5.27 / 5.19 at Stage D.

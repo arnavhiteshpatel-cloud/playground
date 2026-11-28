@@ -1,6 +1,6 @@
 # Measurement Support (Identifiability) Policy
 
-Implementation: `osteoquant/advisor/` (version **1.3.3**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
+Implementation: `osteoquant/advisor/` (version **1.4.0**; every assessment records `advisor_version`). Validation: Experiments S1, S1b, S1c (`experiments/exp_S1*.py`).
 
 ## Why
 Graft and new bone are both mineral. For many materials their X-ray attenuation overlaps (Experiments C, C2; the
@@ -48,6 +48,15 @@ by which mechanism, and under which conditions — and abstains otherwise.
 7c. **Resorbable materials** (β-TCP, calcium sulfate, bioactive glasses, polymer–ceramic composites) are intensity-
     supported only at a known timepoint ≤4 weeks after implantation: resorbing granules become microporous and enter
     the bone intensity range.
+10. **Scan-measured imaging** (1.4.0): total blur σ is estimated from host-bone/soft-tissue edges outside the defect
+    (edge-spread fit; conservatively inflated above 0.6 voxel); graft granule thickness (local thickness) and the deep
+    graft level are measured in the scan and drive a blur-aware partial-volume model of the graft (two-sided edge model
+    Φ(δ/σ) + Φ((T−δ)/σ) − 1).
+11. **New-bone error propagation** (1.4.0): new bone = mineral − graft, so new-bone endpoints require
+    |new-bone/soft ratio − 1| + (p/(1−p))·max(|graft ratio − 1|, 0.20) ≤ 10%, p = the scan's graft share of mineral.
+12. **Ambiguous graft rim** (1.4.0): mineral that is not graft-like but touches graft-like voxels may be new-bone coating
+    or graft halo. New-bone endpoints are refused if this rim exceeds 10% of the would-be new bone; total mineral is
+    refused if the worst-case rim error (rim / mineral) could exceed 20%.
 9. **New bone vs soft tissue** (advisor ≥1.2.0): the mineral threshold and the new-bone/mineral endpoints are gated by
    a partial-volume model of soft tissue next to dense phases, using the surface-shell fraction measured in the scan.
 8. **Density**: only with HA calibration.

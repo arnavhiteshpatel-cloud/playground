@@ -307,3 +307,42 @@ def test_bone_derived_not_supported_by_day0():
     for m in ("autograft", "allograft", "xenograft_dbbm"):
         a = assess_support(m, noise_rel=0.05, voxel_um=20, day0=full)
         assert a.status("residual_graft_volume") == NOT_SUPPORTED
+
+
+def test_new_bone_error_propagation_refuses_when_graft_dominates():
+    a = assess_support("ha", noise_rel=0.03, voxel_um=20, graft_prior=0.7)
+    assert a.status("new_bone_volume") == NOT_SUPPORTED
+    assert "mineral minus graft" in a.endpoints["new_bone_volume"].reason
+    b = assess_support("ha", noise_rel=0.03, voxel_um=20, graft_prior=0.15)
+    assert b.intensity["new_bone_error_budget"]["propagated_rel_error"] < a.intensity["new_bone_error_budget"]["propagated_rel_error"]
+
+
+def test_ambiguous_rim_refuses_new_bone_and_bounds_mineral():
+    a = assess_support("ha", noise_rel=0.03, voxel_um=20, graft_prior=0.2, rim_fraction_new=0.3, rim_fraction_mineral=0.05)
+    assert a.status("new_bone_volume") == NOT_SUPPORTED and "rim" in a.endpoints["new_bone_volume"].reason
+    assert a.status("total_mineral_volume") != NOT_SUPPORTED
+    b = assess_support("ha", noise_rel=0.03, voxel_um=20, graft_prior=0.2, rim_fraction_new=0.3, rim_fraction_mineral=0.15)
+    assert b.status("total_mineral_volume") == NOT_SUPPORTED
+
+
+def test_blur_estimator_tracks_known_psf():
+    from osteoquant.advisor.integration import estimate_blur
+    rng = np.random.default_rng(0)
+    z = np.zeros((40, 64, 64), np.float32)
+    z[:, :, 32:] = 1.0                                   # thick bone half-space, soft elsewhere
+    roi = np.zeros(z.shape, bool)
+    out = []
+    for sig in (0.5, 0.8):
+        img = ndi.gaussian_filter(z, sig) * 1000 + 100 + rng.normal(0, 10, z.shape)
+        out.append(estimate_blur(img.astype(np.float32), roi, 100.0, 1100.0)["sigma_vox_raw"])
+    assert out[0] == pytest.approx(0.5, abs=0.15) and out[1] == pytest.approx(0.8, abs=0.2) and out[1] > out[0]
+
+
+def test_blur_own_fraction_bounds():
+    from osteoquant.advisor.separability import blur_own_fraction, blur_surface_fraction
+    rng = np.random.default_rng(1)
+    f = blur_own_fraction(10000, rng, 0.8, 6.0)
+    assert f.min() >= 0.49 and f.max() <= 1.0
+    thin = blur_own_fraction(10000, rng, 0.8, 1.5)
+    assert thin.mean() < f.mean()                         # thin structures lose more intensity to blur
+    assert blur_surface_fraction(2.0, 0.8) == 1.0 and blur_surface_fraction(20.0, 0.5) < 0.5

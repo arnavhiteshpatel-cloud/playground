@@ -59,6 +59,13 @@ def _assess_scan(image: np.ndarray, roi_mask: np.ndarray, spacing, cfg: dict):
             g = ((rel_img > t) if a.intensity.get("graft_brighter", True) else (rel_img < t)) & mineral
         if "graft_prior" not in cfg and t is not None and mineral.any():
             prior = float(np.clip(g.sum() / mineral.sum(), 0.005, 0.95))
+        # ≥1.4.0 ambiguous graft rim: mineral that is not graft-like but touches graft-like voxels is either new bone
+        # coating the granules (osteoconduction) or partial-volume halo of the graft — indistinguishable by intensity.
+        if g.any():
+            nb_like = mineral & ~g
+            rim = nb_like & ndi.binary_dilation(g, iterations=1)
+            kw["rim_fraction_new"] = float(rim.sum() / max(1, nb_like.sum()))
+            kw["rim_fraction_mineral"] = float(0.5 * rim.sum() / max(1, mineral.sum()))
         # partial-volume halo and new-bone share measured from the scan (advisor ≥1.2.0)
         # surface shell of mineral structures (any phase), estimated with a conservative core threshold so that
         # the halo itself is not counted as structure; the share of non-core ROI voxels in that shell
@@ -70,9 +77,33 @@ def _assess_scan(image: np.ndarray, roi_mask: np.ndarray, spacing, cfg: dict):
         # scan-vs-profile consistency (advisor 1.3.1): interior voxels brighter than mature bone are graft-like;
         # their median is compared with the profile's graft level
         interior = ndi.binary_erosion(roi, iterations=1)
-        bright = rel_img[interior & (rel_img > 1.1)]
+        bright_mask = interior & (rel_img > 1.1)
+        bright = rel_img[bright_mask]
         if bright.size >= 200:
             kw["observed_graft_level"] = float(np.median(bright))
+            # ≥1.4.0: deep graft-like voxels (one erosion inside the bright mask) give the material's level in THIS scan
+            deep = rel_img[ndi.binary_erosion(bright_mask, iterations=1)]
+            if deep.size >= 200:
+                kw["graft_level_deep"] = float(np.median(deep))
+            # measured graft structure thickness (µm) of the graft-like component
+            try:
+                from ..morphometry import local_thickness
+                zz, yy, xx = np.nonzero(bright_mask)
+                sl = (slice(zz.min(), zz.max() + 1), slice(yy.min(), yy.max() + 1), slice(xx.min(), xx.max() + 1))
+                bm = ndi.binary_opening(bright_mask[sl], iterations=1)
+                if bm.sum() >= 200:
+                    th = local_thickness(bm, float(np.mean(spacing)), border="background")
+                    kw["graft_struct_um"] = float(np.median(th[bm]))
+            except Exception:
+                pass
+            # share of the soft-tissue shell around mineral that borders graft-like voxels (halo composition)
+            shell_all = ndi.binary_dilation((rel_img > 0.5) & roi, iterations=1) & ~((rel_img > 0.5) & roi) & roi
+            if shell_all.sum() > 0:
+                kw["halo_graft_fraction"] = float((ndi.binary_dilation(bright_mask, iterations=1) & shell_all).sum()
+                                                  / shell_all.sum())
+        blur = estimate_blur(image, roi, est["soft"], est["host"])
+        if blur.get("sigma_vox"):
+            kw["blur_sigma_vox"] = float(blur["sigma_vox"])
         a = assess_support(material, graft_prior=prior, **kw)
     return a, est, prior, material
 
@@ -174,3 +205,61 @@ def advisor_threshold_segmentation(image: np.ndarray, roi_mask: np.ndarray, spac
                      "threshold_rule_dice": a.intensity.get("dice_graft_threshold_rule")})
     lab = C.compose_three_class(mineral, g, roi_mask)
     return lab, info
+
+
+# ----------------------------------------------------------------------------- scan-measured imaging properties (≥1.4.0)
+def estimate_blur(image: np.ndarray, roi_mask: np.ndarray | None, soft: float, host: float, margin_vox: int = 3) -> dict:
+    """Edge-spread estimate of the scan's total blur (PSF ⊗ voxel), in voxels, from host-bone/soft-tissue edges
+    outside the defect.
+
+    Signed distance to the thresholded host-bone surface is computed (positive inside bone); only edges between
+    *thick* bone and *thick* soft tissue are used (both sides have a ≥2-voxel core within 4 voxels), so thin
+    trabeculae do not bias the profile. The mean relative intensity per 0.25-voxel distance bin is fitted with a
+    blurred step Φ(d/σ) by least squares over σ ∈ [0.2, 3] voxels. Returns {"sigma_vox", "n_edge_voxels", "rmse"}.
+    """
+    from scipy.special import ndtr
+    rel = to_relative(image, soft, host)
+    keep = np.ones(image.shape, bool) if roi_mask is None else ~ndi_binary_dilation(roi_mask, margin_vox)
+    keep &= image != image.min()                      # drop reconstruction padding
+    H = (rel > 0.5) & keep
+    S = (rel <= 0.5) & keep
+    if H.sum() < 500 or S.sum() < 500:
+        return {"sigma_vox": None, "n_edge_voxels": 0, "rmse": None, "note": "too little bone or soft tissue outside ROI"}
+    from scipy import ndimage as ndi
+    core_b = ndi.binary_erosion(H, iterations=3)
+    core_s = ndi.binary_erosion(S, iterations=3)
+    near_b = ndi.distance_transform_edt(~core_b) <= 6
+    near_s = ndi.distance_transform_edt(~core_s) <= 6
+    d_in = ndi.distance_transform_edt(H)
+    d_out = ndi.distance_transform_edt(~H)
+    d = np.where(H, d_in - 0.5, -(d_out - 0.5))
+    band = keep & near_b & near_s & (np.abs(d) <= 5.0)
+    if band.sum() < 200:
+        return {"sigma_vox": None, "n_edge_voxels": int(band.sum()), "rmse": None, "note": "too few thick edges"}
+    dv, iv = d[band], np.clip(rel[band], -0.5, 1.5)
+    bins = np.arange(-5.0, 5.01, 0.25)
+    idx = np.digitize(dv, bins)
+    centers, means, counts = [], [], []
+    for k in range(1, len(bins)):
+        m = idx == k
+        if m.sum() >= 20:
+            centers.append(float(dv[m].mean()))     # mean distance in the bin (distances are discrete; bin centres bias)
+            means.append(float(iv[m].mean()))
+            counts.append(int(m.sum()))
+    centers, means, w = np.array(centers), np.array(means), np.sqrt(np.array(counts))
+    best = (None, np.inf)
+    for sig in np.linspace(0.2, 4.0, 77):
+        pred = ndtr(centers / sig)
+        err = float(np.sqrt(np.average((means - pred) ** 2, weights=w)))
+        if err < best[1]:
+            best = (float(sig), err)
+    raw = best[0]
+    # Conservative calibration (development phantoms, seed 4321, PSF 10–60 µm; not the S1H/S1H2 validation sets):
+    # the edge fit under-reads heavy blur (thin structures, merged edges), so estimates above 0.6 voxel are inflated.
+    cal = raw * (1.0 + max(0.0, raw - 0.6) * 1.5)
+    return {"sigma_vox": cal, "sigma_vox_raw": raw, "n_edge_voxels": int(band.sum()), "rmse": best[1]}
+
+
+def ndi_binary_dilation(mask, it):
+    from scipy import ndimage as ndi
+    return ndi.binary_dilation(mask, iterations=it)

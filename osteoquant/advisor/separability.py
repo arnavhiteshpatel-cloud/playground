@@ -47,8 +47,9 @@ MIN_STRUCT_VOXELS = 3.0         # thickness endpoints need structures ≥3 voxel
 HOST_REL_MATURE = 1.0
 MIN_REFERENCE_SAMPLES = 500     # measured reference distributions need at least this many voxels
 MIN_GRAFT_FRACTION = 0.05       # below this share of mineral, relative graft-volume error is unbounded
-ADVISOR_VERSION = "1.3.3"
+ADVISOR_VERSION = "1.4.0"
 PROFILE_SCAN_MISMATCH_TOL = 0.15   # observed bright-mode vs profile graft level (relative)
+RIM_TOL = 0.10                     # ≥1.4.0: max ambiguous graft-rim share of new bone / half-rim share of mineral
 # Resorbable materials whose granules become microporous/fragmented and enter the bone intensity range as they
 # resorb (knowledge base: beta-TCP almost fully resorbed by 8 weeks in minipig; CaSO4 and glasses similar or faster).
 RESORBABLE_EARLY_ONLY = {"beta_tcp", "calcium_sulfate", "bioglass_45s5", "s53p4", "polymer_ceramic_composite"}
@@ -67,6 +68,11 @@ EARLY_WEEKS_MAX = 4.0
 # 1.3.2: measured new-bone references (empty-defect controls) get graft-adjacent partial-volume mixing (S1c: control
 # new bone is dimmer than new bone next to dense graft; threshold too low → graft +24%).
 # 1.3.3: bone-derived grafts are not supported by the day-0 mechanism either (remodelling).
+# 1.4.0: scan-measured imaging: blur σ from host-bone edges (edge-spread fit, conservative calibration), graft granule
+# thickness (local thickness) and deep graft level replace assumed values in a blur-aware partial-volume model of the
+# GRAFT; measured halo composition; new-bone/mineral partial volume unchanged from 1.3.3
+# (S1H held-out failure: wider PSF + small granules → graft −21…−28%, new bone +20…+50% while supported); new-bone
+# endpoints gated by propagation of graft-volume error (new bone = mineral − graft).
 
 # Assumed new-bone maturity range in relative units. Early/mid healing: woven 650–1000 mgHA/cm³ vs
 # mature host ≈1075 → (0.60, 0.93) (SCIENTIFIC_EVIDENCE row 4, assumption anchored to a published callus
@@ -157,6 +163,8 @@ class ClassModel:
     b: float = 0.0            # uniform high / normal sd
     samples: np.ndarray | None = None
     surface_fraction: float = 0.2   # fraction of voxels partially mixed with soft tissue
+    blur_sigma_vox: float | None = None   # ≥1.4.0: measured total blur; with thickness_vox enables the blur model
+    thickness_vox: float | None = None
 
     def draw(self, n: int, rng: np.random.Generator, neighbors=((0.0, 1.0),)) -> np.ndarray:
         """Draw n values. ``neighbors`` = ((level, weight), ...) of adjacent phases; surface voxels mix
@@ -174,13 +182,19 @@ class ClassModel:
                 return v
         else:
             raise ValueError(self.kind)
-        pv = rng.random(n) < self.surface_fraction
+        if self.blur_sigma_vox and self.thickness_vox:
+            pv = rng.random(n) < blur_surface_fraction(self.thickness_vox, self.blur_sigma_vox)
+        else:
+            pv = rng.random(n) < self.surface_fraction
         k = int(pv.sum())
         if k:
             levels = np.array([lv for lv, _ in neighbors], float)
             w = np.array([wt for _, wt in neighbors], float)
             nb = levels[rng.choice(len(levels), k, p=w / w.sum())]
-            f = rng.uniform(0.5, 1.0, k)
+            if self.blur_sigma_vox and self.thickness_vox:
+                f = blur_own_fraction(k, rng, self.blur_sigma_vox, self.thickness_vox)
+            else:
+                f = rng.uniform(0.5, 1.0, k)
             v[pv] = f * v[pv] + (1 - f) * nb
         return v
 
@@ -191,6 +205,28 @@ def surface_fraction(struct_size_um: float, voxel_um: float) -> float:
     d = max(struct_size_um, 1e-6)
     inner = max(0.0, (d - 2 * voxel_um) / d)
     return float(np.clip(1 - inner ** 3, 0.05, 1.0))
+
+
+def _blur_shell(sigma_vox: float) -> float:
+    return max(0.5, 2.0 * sigma_vox)
+
+
+def blur_surface_fraction(thickness_vox: float, sigma_vox: float) -> float:
+    """Fraction of a structure's voxels within the blur shell (2σ, ≥0.5 voxel) of its surface (sphere-like)."""
+    T, sh = max(thickness_vox, 1e-6), _blur_shell(sigma_vox)
+    if T <= 2 * sh:
+        return 1.0
+    return float(1 - ((T - 2 * sh) / T) ** 3)
+
+
+def blur_own_fraction(k: int, rng: np.random.Generator, sigma_vox: float, thickness_vox: float) -> np.ndarray:
+    """Effective own-class fraction of surface-shell voxels of a structure of thickness T blurred by σ (voxels):
+    a voxel centred at depth δ inside sees Φ(δ/σ) + Φ((T−δ)/σ) − 1 of its own class (planar two-sided edge model).
+    Calibrated against phantoms in the 1.4.0 development notes (Experiment S1H diagnosis)."""
+    from scipy.special import ndtr
+    T, sh = max(thickness_vox, 1e-6), _blur_shell(sigma_vox)
+    d = rng.uniform(0.0, min(sh, T / 2), k)
+    return np.clip(ndtr(d / sigma_vox) + ndtr((T - d) / sigma_vox) - 1.0, 0.0, 1.0)
 
 
 def intensity_separability(graft: ClassModel, new: ClassModel, noise_rel: float, graft_prior: float = 0.5,
@@ -327,7 +363,10 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
                    no_graft: bool = False, validated_texture_model: bool = False,
                    graft_prior: float = 0.5, energy_keV: float = 40.0, seed: int = 0,
                    new_bone_rel_range: tuple | None = None, healing_weeks: float | None = None,
-                   observed_graft_level: float | None = None) -> SupportAssessment:
+                   observed_graft_level: float | None = None, blur_sigma_vox: float | None = None,
+                   graft_struct_um: float | None = None, graft_level_deep: float | None = None,
+                   halo_graft_fraction: float | None = None, rim_fraction_new: float | None = None,
+                   rim_fraction_mineral: float | None = None) -> SupportAssessment:
     """Decide which endpoints can be reported.
 
     noise_rel          scan noise σ divided by (host − soft) grey contrast.
@@ -423,12 +462,22 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
     if graft_samples_rel is not None:
         gm = ClassModel("samples", samples=np.asarray(graft_samples_rel, float), surface_fraction=0.0)
     else:
-        gm = ClassModel("normal", prof.rel_mean, prof.rel_sd,
-                        surface_fraction=surface_fraction(prof.struct_um, voxel_um))
+        # ≥1.4.0: the scan's own deep graft-like level (if consistent with the profile, checked below) and measured
+        # granule thickness replace the profile's assumed values; blur from the scan drives partial volume
+        level = prof.rel_mean
+        if graft_level_deep is not None and prof.rel_mean > HOST_REL_MATURE and \
+                abs(graft_level_deep - prof.rel_mean) / prof.rel_mean <= PROFILE_SCAN_MISMATCH_TOL:
+            level = graft_level_deep
+        struct = graft_struct_um if graft_struct_um else prof.struct_um
+        gm = ClassModel("normal", level, prof.rel_sd * level / max(prof.rel_mean, 1e-6),
+                        surface_fraction=surface_fraction(struct, voxel_um),
+                        blur_sigma_vox=blur_sigma_vox, thickness_vox=struct / max(voxel_um, 1e-6) if blur_sigma_vox else None)
     if new_samples_rel is not None:
         # control-derived new bone lacks graft-adjacent blur: add it (S1c; advisor 1.3.2)
         nm = ClassModel("samples", samples=np.asarray(new_samples_rel, float), surface_fraction=0.2)
     else:
+        # new-bone partial volume stays on the voxel-shell model: its trabecular thickness is not measured, and an
+        # assumed-thickness blur model biased the mineral boundary in development (1.4.0 notes)
         nm = ClassModel("uniform", *nb_range, surface_fraction=surface_fraction(150.0, voxel_um))
     # Support must hold at the graft share expected in THIS scan and at half of it: the volume error of a
     # threshold rule grows as residual graft becomes scarce (review IMG-01).
@@ -455,9 +504,11 @@ def _assess_core(material, *, noise_rel: float, voxel_um: float, graft_samples_r
     if prof is not None and prof.uncertain and graft_samples_rel is None:
         intensity_ok = False
         intensity["uncertain_profile_rule"] = prof.source
-    if (prof is not None and graft_samples_rel is None and observed_graft_level is not None
+    obs_level = graft_level_deep if graft_level_deep is not None else observed_graft_level
+    if (prof is not None and graft_samples_rel is None and obs_level is not None
             and prof.rel_mean > HOST_REL_MATURE):
-        mism = abs(observed_graft_level - prof.rel_mean) / prof.rel_mean
+        observed_graft_level = obs_level
+        mism = abs(obs_level - prof.rel_mean) / prof.rel_mean
         intensity["profile_scan_mismatch"] = float(mism)
         if mism > PROFILE_SCAN_MISMATCH_TOL:
             intensity_ok = False
@@ -581,7 +632,8 @@ def to_relative(x, soft: float, host: float):
 
 def mineral_rule(material, *, noise_rel: float, voxel_um: float, graft_samples_rel=None, new_samples_rel=None,
                  new_bone_rel_range=None, soft_halo_fraction: float = 0.10, new_bone_share: float = 0.3,
-                 energy_keV: float = 40.0, seed: int = 0) -> dict:
+                 energy_keV: float = 40.0, seed: int = 0, blur_sigma_vox: float | None = None,
+                 halo_graft_fraction: float | None = None, graft_level: float | None = None) -> dict:
     """New bone vs soft tissue (the mineral boundary), advisor ≥1.2.0.
 
     S1b (advisor 1.1.0 re-run) found new-bone volume +22…60% and total mineral +15…23% on graft-supported
@@ -601,8 +653,12 @@ def mineral_rule(material, *, noise_rel: float, voxel_um: float, graft_samples_r
     halo = rng.random(n_soft) < soft_halo_fraction
     # neighbours of soft-tissue surface voxels: mostly new-bone trabeculae, also host bone and graft
     nb_mid = float(np.mean(nb_range))
+    if graft_level is not None:
+        g_level = graft_level
     levels = np.array([nb_mid, HOST_REL_MATURE, max(g_level, nb_mid)])
-    nbr = levels[rng.choice(3, int(halo.sum()), p=[0.6, 0.2, 0.2])]
+    # ≥1.4.0: share of halo voxels bordering graft measured in the scan (default assumption 0.2)
+    pg = 0.2 if halo_graft_fraction is None else float(np.clip(halo_graft_fraction, 0.0, 1.0))
+    nbr = levels[rng.choice(3, int(halo.sum()), p=[0.75 * (1 - pg), 0.25 * (1 - pg), pg])]
     soft[halo] = rng.uniform(0.0, 0.5, int(halo.sum())) * nbr       # minority (<50%) mineral phase in the voxel
     soft = soft + rng.normal(0, noise_rel, n_soft)
     if new_samples_rel is not None and np.size(new_samples_rel) >= MIN_REFERENCE_SAMPLES:
@@ -628,7 +684,10 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
                    graft_prior: float = 0.5, energy_keV: float = 40.0, seed: int = 0,
                    new_bone_rel_range: tuple | None = None, soft_halo_fraction: float = 0.10,
                    new_bone_share: float = 0.3, healing_weeks: float | None = None,
-                   observed_graft_level: float | None = None) -> SupportAssessment:
+                   observed_graft_level: float | None = None, blur_sigma_vox: float | None = None,
+                   graft_struct_um: float | None = None, graft_level_deep: float | None = None,
+                   halo_graft_fraction: float | None = None, rim_fraction_new: float | None = None,
+                   rim_fraction_mineral: float | None = None) -> SupportAssessment:
     """Decide which endpoints can be reported (see module docstring and docs/science/MEASUREMENT_SUPPORT.md).
 
     noise_rel          scan noise σ divided by (host − soft) grey contrast.
@@ -643,13 +702,51 @@ def assess_support(material, *, noise_rel: float, voxel_um: float, graft_samples
                      new_samples_rel=new_samples_rel, day0=day0, calibrated=calibrated, no_graft=no_graft,
                      validated_texture_model=validated_texture_model, graft_prior=graft_prior,
                      energy_keV=energy_keV, seed=seed, new_bone_rel_range=new_bone_rel_range,
-                     healing_weeks=healing_weeks, observed_graft_level=observed_graft_level)
+                     healing_weeks=healing_weeks, observed_graft_level=observed_graft_level,
+                     blur_sigma_vox=blur_sigma_vox, graft_struct_um=graft_struct_um, graft_level_deep=graft_level_deep)
     mr = mineral_rule(None if no_graft else material, noise_rel=noise_rel, voxel_um=voxel_um,
                       graft_samples_rel=graft_samples_rel, new_samples_rel=new_samples_rel,
                       new_bone_rel_range=new_bone_rel_range, soft_halo_fraction=soft_halo_fraction,
-                      new_bone_share=new_bone_share, energy_keV=energy_keV, seed=seed)
+                      new_bone_share=new_bone_share, energy_keV=energy_keV, seed=seed, blur_sigma_vox=blur_sigma_vox,
+                      halo_graft_fraction=halo_graft_fraction, graft_level=graft_level_deep)
     a.intensity["mineral_rule"] = mr
     a.policy["soft_halo_fraction"] = soft_halo_fraction
+    # ≥1.4.0 error propagation: new bone = mineral − graft, so graft-volume error transfers into new bone scaled by
+    # graft:new-bone. New-bone endpoints need |new-bone/soft ratio − 1| + (p/(1−p))·max(|graft ratio − 1|, 0.20) ≤ 10%,
+    # where p is the scan's graft share of mineral and 0.20 is the failure threshold (the largest graft error that
+    # still counts as "not failed"). Not applied when no graft is present.
+    # ≥1.4.0 ambiguous rim (measured on the scan's own segmentation): if more than RIM_TOL of the would-be new bone, or
+    # half the rim as a share of total mineral, lies in the one-voxel rim around graft-like voxels, the endpoint is not
+    # identifiable (coating vs halo)
+    if rim_fraction_new is not None and not no_graft:
+        a.intensity["ambiguous_rim"] = {"fraction_of_new_bone": rim_fraction_new, "half_rim_fraction_of_mineral": rim_fraction_mineral}
+        if rim_fraction_new > RIM_TOL:
+            why = (f"{rim_fraction_new:.0%} of the would-be new bone is a one-voxel rim touching graft-like voxels: new-bone "
+                   "coating cannot be told from graft partial-volume halo at this resolution")
+            for e in ("new_bone_volume", "new_bone_fraction_of_defect"):
+                if e in a.endpoints and a.endpoints[e].status != NOT_SUPPORTED:
+                    a.endpoints[e] = EndpointSupport(e, NOT_SUPPORTED, None, why)
+            _thickness_endpoint(a.endpoints, voxel_um)
+        if rim_fraction_mineral is not None and rim_fraction_mineral > RIM_TOL:
+            why = (f"the graft partial-volume rim makes ≈{rim_fraction_mineral:.0%} of total mineral ambiguous "
+                   f"(limit {RIM_TOL:.0%})")
+            for e in MINERAL_ENDPOINTS:
+                if a.endpoints[e].status != NOT_SUPPORTED:
+                    a.endpoints[e] = EndpointSupport(e, NOT_SUPPORTED, None, why)
+    # only when a visible graft is modelled (radiolucent, unknown and metal paths return an empty intensity model)
+    if not no_graft and graft_prior > 0 and a.intensity.get("dice_graft") is not None:
+        p_ = float(np.clip(graft_prior, 0.0, 0.95))
+        g_vr = a.intensity.get("graft_volume_ratio_threshold_rule", a.intensity.get("graft_volume_ratio"))
+        g_err = max(abs((g_vr if g_vr is not None else 1.0) - 1.0), 0.20)
+        nb_err = abs((mr.get("new_volume_ratio") or 1.0) - 1.0) + p_ / max(1e-6, 1 - p_) * g_err
+        a.intensity["new_bone_error_budget"] = {"graft_share": p_, "propagated_rel_error": float(nb_err)}
+        if nb_err > ORACLE_VOLUME_TOL:
+            why = (f"new bone is derived as mineral minus graft: with graft {p_:.0%} of mineral, a graft-volume error of "
+                   f"up to {g_err:.0%} propagates to ≈{nb_err:.0%} new-bone error (limit {ORACLE_VOLUME_TOL:.0%})")
+            for e in ("new_bone_volume", "new_bone_fraction_of_defect"):
+                if e in a.endpoints and a.endpoints[e].status != NOT_SUPPORTED:
+                    a.endpoints[e] = EndpointSupport(e, NOT_SUPPORTED, None, why)
+            _thickness_endpoint(a.endpoints, voxel_um)
     if not mr["passes_policy"]:
         why = (f"new bone vs soft tissue not reliably separable (threshold-rule Dice {mr['dice_new_vs_soft'] or 0:.2f}, "
                f"new-bone volume ratio {mr['new_volume_ratio'] or 0:.2f}): partial-volume halos of dense phases "

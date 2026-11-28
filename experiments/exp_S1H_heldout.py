@@ -18,7 +18,8 @@ from osteoquant.advisor.integration import advisor_threshold_segmentation, suppo
 from osteoquant.advisor.separability import ADVISOR_VERSION
 from osteoquant.phantom import ImagingConfig, PhantomConfig, generate_phantom, render_fast
 
-assert ADVISOR_VERSION == "1.3.3", "S1H is pre-registered for advisor 1.3.3"
+import os
+DEV = os.environ.get("OQ_S1H_DEV") == "1"     # development re-use of the S1H conditions under a newer advisor
 STRUCTS = [("condyle", s, dict(shape=(56, 72, 72), defect_diameter_um=2000, graft_diam_um=(300, 600))) for s in (2000, 2001, 2002)] + \
           [("calvarial", s, dict(shape=(40, 96, 96), defect_diameter_um=2400, graft_diam_um=(120, 250), graft_roughness=0.6,
                                  graft_fill=0.3)) for s in (2100, 2101, 2102)] + \
@@ -34,6 +35,8 @@ def correlated_noise(shape, sigma, seed):
 
 
 def main():
+    if not DEV:
+        assert ADVISOR_VERSION == "1.3.3", "S1H is pre-registered for advisor 1.3.3 (set OQ_S1H_DEV=1 for development use)"
     t0 = time.time()
     rows = []
     for model, seed, kw in STRUCTS:
@@ -70,7 +73,9 @@ def main():
                 vals.append(np.mean([abs(r[ek]) > 0.2 for r in sup_]))
         boot[ep] = {"fail_rate_among_supported_boot95": [float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))] if vals else None}
     print(summ)
-    save_result("exp_S1H_heldout", {"experiment": "S1H", "preregistered": "docs/science/PREREGISTRATION.md §7",
+    name = f"exp_S1H_dev_advisor_{ADVISOR_VERSION.replace('.', '_')}" if DEV else "exp_S1H_heldout"
+    save_result(name, {"experiment": "S1H" + (" (DEVELOPMENT re-use — not a held-out validation)" if DEV else ""),
+                                    "preregistered": "docs/science/PREREGISTRATION.md §7",
                                     "advisor_version": ADVISOR_VERSION, "summary": [summ], "bootstrap_by_structure": boot,
                                     "rows": rows, "seconds": time.time() - t0})
 

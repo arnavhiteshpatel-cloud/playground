@@ -1,155 +1,111 @@
-# Founder Handoff — OsteoQuant (27 November 2026)
+# Founder Handoff — OsteoQuant (28 November 2026, end of Generation 2)
 
-This is the exact state of the project after the autonomous build session, written for you to act on. Every number
-comes from a result file in this repository; synthetic results are labelled. Start with §1, then §16 (next actions).
+Written for you to act on. Every number comes from a file in this repository; SYNTHETIC results are labelled. Read §1,
+§2 and §15 first. Nothing has been sent, bought, signed, submitted or incorporated. The repository is public (your
+decision, `docs/ip/IP_STRATEGY.md`).
 
-## 1. What I completed
-* A working, tested research prototype: analysis library + web workbench + reports (`osteoquant/`, `web/static/`).
-* 16 computational experiments (A–P), several re-run after an independent review corrected my mistakes.
-* Seven research packages written by parallel research streams: bone science, micro-CT physics and calibration,
-  competitors (36), datasets (41), customers (103 prospects), funding (27 programmes), collaborators and a physical
-  phantom protocol, quality/regulatory drafts (URS/FS/risk/IQ/OQ/PQ/9 SOPs).
-* Deliverables: technical & commercial report PDF, master spreadsheet, financial model, 3 decks, 3 sample reports,
-  3 manuscript drafts, landing page, operating manual, curriculum, demo script (index: `deliverables/README.md`).
+## 1. The situation in five sentences
+1. OsteoQuant is now an offline desktop workstation (PySide6 + VTK) for preclinical micro-CT of bone-graft defects, with
+   study management, editing with undo, two-person sign-off, a hash-chained audit trail with external anchors, offline
+   licences (test keys only) and PDF/CSV reports.
+2. Its scientific core is a **measurement-support advisor** (version 1.4.3) that decides, per scan, whether graft,
+   new-bone and mineral volumes are identifiable before reporting them, and refuses otherwise.
+3. In the final pre-registered held-out **simulation** (S1H3) no supported measurement failed, but coverage is low: new
+   bone was never supported, total mineral only with sharp imaging, and for 58% of specimens no volume endpoint at all;
+   with 9 phantom structures the evidence bounds the supported-failure rate only below 0.34 (`EXPERIMENT_REGISTRY.md`).
+4. Nothing has been tested on real graft material; the advisor and the simulator share attenuation physics, so the
+   simulation shows internal safety, not accuracy.
+5. The next value comes from physical evidence (a phantom study) and ten customer conversations — not more software.
 
-## 2. What genuinely works (tested)
-| Works | How tested |
-|---|---|
-| Reading real vendor data (Zeiss TXM 2.1 GB slice-lazily, DICOM 829 slices, NIfTI/NRRD/TIFF/OME/Zarr) | real public files; tests |
-| QC incl. missing slices, saturation/metal, rings, cupping, CNR | synthetic artefacts + real ovine scans |
-| Automatic defect ROI for plate defects (condyle, calvarial) | Dice 0.97–0.98 with nominal diameter (Exp F) |
-| Morphometry (BV/TV, Tb.Th/Sp/N, Conn.D, BS) | exact on analytic objects; ICC 0.98 vs Scanco IPL on 8 public samples |
-| Three-class segmentation on synthetic data | U-Net graft Dice 0.92 / new bone 0.87 (Exp B) |
-| Viewer, correction with versioning, re-authenticated sign-off, audit trail, PDF/CSV reports | 58 automated tests + a real headless-browser session |
+## 2. What exists and works (tested)
+| Area | State | Evidence |
+|---|---|---|
+| Desktop app | Import (7 formats, slab-wise for large scans) → QC → linked 2D/3D views → editing with undo and audited revisions → background analysis → ROI acceptance → review and sign-off → reports | `tests/desktop/` (run in CI), `docs/desktop/USER_GUIDE.md` |
+| Measurement support | Advisor 1.4.3 bound to its own threshold method; evaluated at read time (old results are "not assessed"); refused values never printed or used in statistics | `osteoquant/advisor/`, `docs/science/MEASUREMENT_SUPPORT.md` |
+| Audit and integrity | Hash-chained trail; authority-bound role changes; one generation record per report; chain heads anchored outside the project and printed on reports; signatures disabled on an anchor mismatch | `tests/desktop/test_cycle3_fixes.py`, `osteoquant/desktop/anchors.py` |
+| Tests and CI | 597 passed, 1 skipped (local, 2026-11-28); 90.8% line+branch coverage of the library (desktop UI excluded); CI green on Ubuntu, Windows and macOS × Python 3.12/3.13 since 2026-11-28 (earlier runs never passed) | `docs/qa/test_summary.json`, `.github/workflows/ci.yml` |
+| Packaging | Linux one-folder bundle built once (27 Nov; predates advisor 1.3.1–1.4.3 — **rebuild before any use**); Windows/macOS never built | `packaging/`, `BLOCKERS.md` B-013/B-016 |
+| Morphometry | Exact on analytic objects; Tb.Th ICC 0.983 vs Scanco IPL on 8 public cubes (convention chosen post hoc) | `experiments/results/exp_G_morphometry.json` |
 
-## 3. What was tested — and how many tests
-61 pytest tests (unit, integration, end-to-end API, security regressions, numerical reference values); 16 experiments;
-a headless-browser run of the full UI workflow; an independent adversarial review (21 security + 18 scientific findings).
+## 3. What the experiments showed
+* **Abstention works in simulation, at a high price** (SYNTHETIC). Held-out series: S1H (advisor 1.3.3) and S1H2 (1.4.0)
+  found supported measurements that failed; each failure produced a rule tested on new data; S1H3 (1.4.1) had none.
+  See the standard sentence in `EXPERIMENT_REGISTRY.md` and the per-material table in `docs/user/MATERIALS_AND_SUPPORT.md`.
+* **New bone next to dense graft is not identifiable by intensity** at 20–40 µm voxels: every held-out run refused it.
+* **Day-0 registration is fragile** under granule motion (naive footprint graft Dice 0.80 → 0.535 → 0.35 at 0/50/100 µm,
+  SYNTHETIC) and registration QC cannot verify alignment along a featureless bone axis (L5). There is no desktop day-0
+  workflow.
+* **Synthetic → real** (REAL dog forelimb, 5 test scans): the synthetic model reaches Dice 0.377 zero-shot and 0.513 with
+  2× upsampling; domain-randomised pretraining did not improve the zero-shot curve on the training scans; few-shot,
+  self-supervised, ensemble/conformal and runtime results: §3a.
+* **Morphometry** agrees with Scanco IPL on public cubes; graft-specific endpoints have no real reference yet.
 
-## 4. Models trained (all CPU, all research prototypes)
-| Model | Data | Use | Status |
-|---|---|---|---|
-| `unet_noctx_s0` | 48 synthetic phantoms | 3-class, no ROI input (fairest) | SYNTHETIC-TRAINED |
-| `unet_ctx_s0` | same + ROI channel | context ablation | SYNTHETIC-TRAINED |
-| `adapt_k{1,3,5,10,20}_*` | fine-tuned on held-out simulated materials | Exp J | SYNTHETIC-TRAINED |
-| `unet_dog_bone_real` | 10 real dog-forelimb micro-CT (CC-BY-4.0) | real bone segmentation (Exp H): Dice 0.826 | research |
-| `unet_synth_ft_dog_k{1,3}` | synthetic model fine-tuned on 1/3 real scans | transfer (Exp I) | research |
-Registry with SHA-256: `models/registry.json` (model files are git-ignored; regenerate with the experiment scripts).
+### 3a. ML campaign (filled from the result files when the runs finish)
+See `EXPERIMENT_REGISTRY.md` rows S2, S3, U1 and O2.
 
-## 5. Data used
-Real public (all CC-BY-4.0): ovine distraction callus (Zenodo 17255310), Scanco-IPL trabecular references (11061947),
-dog forelimb micro-CT (24047383), mouse knee DICOM (3909552), NuInsSeg H&E nuclei (10518968). Plus 120 synthetic
-specimens. **No customer, university or restricted data.** Blocked: BONe (Dryad token), MarrowQuant H&E (EBI TLS).
+## 4. Assumptions that failed
+* "Intensity can separate graft from new bone for common materials" — only for dense ceramics, and never for new bone next
+  to them in held-out simulation.
+* "Total mineral is always a safe fallback" — supported in 10% of held-out specimens (sharp imaging only).
+* "A day-0 scan rescues separation" — only without granule motion, and not for remodelling bone-derived grafts.
+* "Row-level confidence bounds are enough" — with 9 phantom structures the honest bound is 0.34, not 0.045.
+* "CI is configured, so it works" — it had never passed until 28 November.
 
-## 6. What the experiments showed (short version)
-1. **Thresholding is fine only while the graft is clearly denser than new bone.** Once densities overlap, the best
-   possible intensity-only rule falls to graft Dice 0.52–0.77 (0.36 when granules are bone-like). [SYNTHETIC]
-2. **Shape/texture helps only if granules look different from new bone** (0.86–0.89 compact vs 0.65–0.70 strut-like). [SYNTHETIC]
-3. **A registered day-0 scan is the most robust strategy** (graft Dice 0.82 where single-scan methods give 0.66), but
-   it needs an in-vivo post-op scan and is best-case in simulation. [SYNTHETIC]
-4. **Adaptation to a new simulated material needs 1–3 labelled scans** — optimistic; real materials will need more. [SYNTHETIC]
-   On **real** micro-CT (dog forelimb bone), synthetic-only training failed zero-shot (Dice 0.38) but synthetic pre-training
-   plus **one** labelled real scan reached 0.79 vs 0.83 for a model trained on 10 real scans. [REAL] — strongest evidence so
-   far that a "phantom-pretrained + few customer labels" workflow is viable; never use synthetic-only models on real scans.
-5. **Morphometry matches Scanco IPL** once the border convention is handled (−2.4% Tb.Th) — but I chose the convention
-   after seeing the data, so confirm on new references. [REAL]
-6. **Real scans break naive code**: zero padding, saturated hardware, unlabelled anatomy. Fixed or made explicit. [REAL]
-Full table: `EXPERIMENT_REGISTRY.md`. Figures: `experiments/results/figures/`.
+## 5. What is genuinely differentiated
+A separability check that refuses unsupported numbers, explains why, and binds support to the method validated, plus a
+reviewable, anchored audit trail in an offline desktop tool. Competitors (38 mapped, `docs/research/COMPETITOR_MATRIX.md`)
+offer segmentation and reporting; none found offers material-aware abstention. The moat is evidence, which does not
+exist yet.
 
-## 7. Assumptions that failed
-* "Explicit spatial context improves the model" — not supported (U-Net without ROI input was as good).
-* "Context can always rescue overlapping densities" — fails when graft morphology mimics bone.
-* Playbook: ovine dataset voxel 3.72 µm → actually **24.6 µm**; Mark Anastasio moved to WashU (2025); Dragonfly *does*
-  have bone reports; graft-defect reports alone are a **low-single-digit-$M/yr** market at playbook prices.
-* My own errors caught by review: the "Bayes bound" was not a Dice bound; RF baselines were under-trained; report
-  statistics could pseudo-replicate; two critical security holes. All fixed; see `docs/security/REVIEW_RESPONSE.md`.
+## 6. What only physical work can answer (validation stages B–F, `validation/VALIDATION_PROGRAM.md`)
+* Stage B/C: physical phantoms with known graft fractions and characterised materials on your scanner — tests the advisor's
+  profiles, blur model and refusals against truth.
+* Stage D: ex vivo specimens with histology — the first real three-class truth.
+* None of this may start without your authorisation, a collaborator, and (for animal tissue) the owner's permission.
 
-## 8. Most promising technical approaches
-1. **Material separability assessment** with physical phantoms + the simulator (tells a sponsor *before* a study what
-   micro-CT can and cannot measure for their graft).
-2. **Longitudinal day-0 protocol** (study-design guidance + registration) for resorbable/bone-like grafts.
-3. **nnU-Net-scale models trained on real labelled phantom/pilot data**, with uncertainty-guided review.
-4. Histology as the fallback modality where micro-CT is underdetermined (integrate Cellpose/StarDist/QuPath).
+## 7. Founder decisions waiting for you
+`FOUNDER_DECISIONS.md` lists them with options. The most urgent: IP (public disclosures on 27–28 November start one-year
+US clocks; foreign rights need counsel now), whether any evaluation on customer data is offered before incorporation and
+Gate 1, and how to position the product given the S1H3 coverage.
 
-## 9. What competitors already do / what remains differentiated
-Dragonfly (DL + bone analysis + reports), CTAn/IPL (standard morphometry), CROs (Part 11 algorithms, histology endpoints)
-already exist. Still differentiated (no public evidence of others): known-truth per-material separability benchmarking,
-the day-0 graft-propagation protocol, and audit-ready per-study reports sold to firms without imaging staff.
+## 8. What to learn first
+`founder/LEARNING_CURRICULUM.md` (seven concepts with self-tests): partial volume and blur, why new bone is not
+identifiable next to dense graft, pre-registration and held-out tests, clustered data and confidence bounds, measurement
+support versus accuracy, audit trails and their limits, and what GLP/Part 11 do and do not require.
 
-## 10. Requires physical experiments
-Real graft-vs-new-bone separability (phantom protocol `validation/`), calibration (HA phantom), real cross-scanner
-transfer, analyst time saving (timed study), micro-CT vs histology agreement.
+## 9. Who to talk to (nothing has been sent)
+Draft messages are in `outreach/`; no email address in this repository is fabricated, and none has been contacted. Start
+with an imaging scientist with a phantom-capable micro-CT and a bone biologist with histomorphometry, then ten discovery
+calls by segment (`business/PROSPECT_SEGMENTATION.md`).
 
-## 11. Requires a research collaborator
-Imaging scientist to sign the 14 phantom decisions (`validation/DECISIONS_FOR_IMAGING_SCIENTIST.md`) — first choice
-**Mariana Kersh** (MechSE; Beckman-based; lab uses the Versa 630). Bone-biology/histomorphometry adjudicator. A CRO
-(CSU PSRL) for real study scans. For NIH STTR: a UIUC faculty PI.
+## 10. Money
+Nothing has been spent. The first spend worth considering is a small physical-phantom study (bill of materials in
+`validation/BILL_OF_MATERIALS.csv`), only after you approve it. Pricing remains a set of hypotheses (pilot $2.5–5K,
+non-GLP study $8–15K, material characterisation $5–15K, academic $4–10K/yr, enterprise $30–75K/yr).
 
-## 12. Requires funding
-Phantom pilot ≈$2.1–3.8K; minimal phantom design ≈$4.8–9.8K; full ≈$10.8–19.7K (`validation/BILL_OF_MATERIALS.csv`;
-Beckman rates from 2021 may be stale). Cloud GPU ≈$3–8K once real labels exist. Legal/IP ≈$10–25K at incorporation.
+## 11. How to demonstrate it
+`founder/DEMO_SCRIPT.md` (10 minutes, synthetic demo project). Show a refusal first: it is the product. Sample reports in
+`reports_samples/` are watermarked and SYNTHETIC.
 
-## 13. What you should learn (in order)
-`founder/LEARNING_CURRICULUM.md` — weeks 1–4 (bone biology, graft materials, micro-CT physics, calibration) while
-interviewing; then morphometry standards (Bouxsein 2010), statistics (ICC/Bland–Altman), regulation (Part 11/58, OECD 17).
+## 12. How to resume engineering
+`EXECUTION_STATE.md` ("How to resume"); `RELEASE_READINESS.md` for gates (Gate 1 not met: Windows/macOS builds, rebuilt
+Linux bundle; Gate 2 not met: no real-data validation; Gate 3 never self-declared); `BLOCKERS.md`.
 
-## 14. Who to contact first (drafts in `outreach/OUTREACH_EMAILS.md`; nothing has been sent)
-1. **UIUC OTM** (otm@illinois.edu) and **Landuyt IP Clinic** (landuyt@illinois.edu) — ownership before using Beckman equipment.
-2. **Beckman Microscopy Suite** (itg-ms@beckman.illinois.edu) — Versa 630 access, billing category, training, current rates.
-3. **Mariana Kersh** (mkersh@illinois.edu) — advisor for phantom design and endpoints.
-4. Customer interviews, top 5: **Kuros Biosciences, Geistlich, Bone Solutions, Prosidyan, CSU PSRL** (`business/PROSPECTS.md`).
-5. Then Amy Wagoner Johnson, Brendan Harley, Kirk McGilvray (CSU), BONe author Andrew H. Lee.
+## 13. Reviews
+Three review cycles across twelve perspectives by **automated reviewer agents** (not human experts):
+`REVIEW_REGISTRY.md`, `docs/reviews/`. Cycle 3 found two critical science issues (unspecified material; API edits) and
+three high product issues; all are fixed or mitigated with tests, and the open items are listed in the response files.
+Human expert review remains an open action for you.
 
-## 15. What to spend money on first
-Nothing on software. First: the **pilot phantom** (~$2–4K: graft samples, ex vivo bone, scan hours) — only after OTM
-clarifies ownership. Second: legal/IP at incorporation. Do **not** pay for MedTech Innovator/BioTools fees ($15K) now.
+## 14. Honest bottom line
+The software is serious and its refusals are trustworthy in simulation; its usefulness on real grafts is unknown and,
+by its own held-out evidence, narrow. A company built on it should sell a separability assessment and audited reporting
+to a small niche first, and earn any broader claim with physical evidence.
 
-## 16. Exact next actions (dates)
-| By | Action |
-|---|---|
-| **Mon 30 Nov** | Email OTM + book Landuyt IP Clinic; email Beckman for Versa access/rates; send Kersh the advisor email (edit drafts in your words). Decide *not* to enter MedTech/BioTools Innovator (Dec 1; fee, too early). |
-| **Tue 1 Dec** | Cozad 2027 registration opens — register (window to Feb 2, 2027). |
-| **1–11 Dec** | Send 15 discovery emails (top 15 prospects; template in `business/INTERVIEW_GUIDE.md`). Book ≥5 interviews. |
-| **by 18 Dec** | Run the demo (`founder/DEMO_SCRIPT.md`) for Kersh/advisors; finalise phantom decisions; order pilot materials if OTM clears. |
-| **Jan 2027** | Pilot phantom scan (3 materials, 1 voxel size); run `osteoquant analyze`; code interviews; decide PI route (co-founder vs NIH STTR with faculty). |
-| **31 Jan** | AO Innovation Funding (if a faculty/collaborator route exists) [deadline per page; verify]. |
-| **by 2 Feb** | Cozad application written in your own words from `grants/COZAD_APPLICATION_PACKAGE.md`. |
-| **25 Feb (gate)** | Go/pivot: ≥3/15 buyers at ≥$10K/study **and** phantom shows a separable path (single-scan or day-0). Else pivot per playbook §15. |
-| **Mar–Jul** | Retrospective pilot (20–30 scans) → ICC, Bland–Altman, timed analysts → LOI; NSF Project Pitch → Phase I (Jul 7) if PI eligible, or NIH STTR (Apr 5 / Sep). |
-
-## 17. How to demonstrate the product
-`OQ_DEMO_PASSWORD=<pick> python scripts/demo_seed.py` → `OQ_DB=runtime/demo.db osteoquant serve` → follow
-`founder/DEMO_SCRIPT.md`. Show the sample reports in `reports_samples/` and Figure `exp_C_separability.png`.
-Say clearly: research prototype; synthetic results; real validation pending.
-
-## 18. How to pursue the first paying study
-Interview → offer a **free/discounted retrospective pilot** (template `business/templates/PILOT_PROPOSAL.md`) under a
-DPA (`business/templates/DPA_ISSUES_CHECKLIST.md`) → deliver agreement statistics + time per scan + a separability
-assessment for their graft → ask for an LOI or a paid next non-GLP study (price ladder from interviews; playbook
-hypothesis ≈$12K). Incorporate before signing anything paid.
-
-## 19. How to prepare the first grant application
-Cozad first (no company needed). For federal: read `grants/NSF_vs_NIH_ELIGIBILITY.md`; the PI constraint decides NSF
-SBIR (needs >50% company-employed PI — not you while a full-time student) vs **NIH STTR with a UIUC faculty PI**.
-Rewrite `grants/SPECIFIC_AIMS_DRAFT.md` in your own words (NIH AI-authorship policy) and replace each
-`[PENDING RESULT]` with phantom data. SAM.gov registration takes ≥6 weeks — start right after incorporation.
-
-## 20. How to turn this into a legitimate company
-OTM disclosure → IP Clinic → incorporate (Delaware C-corp typical for venture; LLC acceptable for a services lab — get
-counsel) → founder IP assignment → EIN, bank, SAM.gov/UEI → MSA/DPA/quality-agreement templates reviewed
-(`business/templates/LEGAL_REVIEW_TERMS.md`) → insurance → first pilot contract. Keep company code on personal/company
-accounts, not university computing (already the case).
-
-## 21. Honest bottom line
-The software is far ahead of the evidence. The next bottleneck is not code: it is (a) one physical phantom study and
-(b) fifteen conversations with buyers. Both are achievable by February 2027.
-
-## 22. Cycle-2 entry (2026-11-27): dates and corrections
-* **US bar date 2027-11-27.** Every invention in the repository was made public on 2026-11-27; the US one-year grace
-  period for the founder's own disclosure ends on **2027-11-27**. Apply for the spring 2027 IP Clinic intake and treat
-  **2027-09** as the practical decision date for a provisional. Foreign rights are likely already lost. Details and
-  every other open founder decision, earliest deadline first: `FOUNDER_DECISIONS.md`.
-* Corrections to earlier sections of this handoff: the "58 automated tests" figure is out of date (use the count from
-  the current test run); the decision gate is the single combined gate in `business/PRICING_VALIDATION_PLAN.md` §7
-  (the "≥3/15 buyers at ≥$10K" gate is retired); the financial model now books no revenue before incorporation and a
-  first signed pilot and treats grants as conditional, restricted funds (`business/REVENUE_MODEL.md` §5).
+## 15. Next actions
+1. Decide the IP questions with counsel (dates in `FOUNDER_DECISIONS.md`).
+2. Approve or decline a physical phantom study (stage B) and identify the collaborator.
+3. Hold ten discovery conversations before any further product work.
+4. Run the `desktop-build` workflow by manual dispatch when you accept public artefacts (B-013), then test on your own
+   Windows/Mac machines.
+5. Commission human expert review of the advisor rules.

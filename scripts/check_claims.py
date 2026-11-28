@@ -171,7 +171,8 @@ VERSION_GLOBS = ["website/*.html", "docs/user/*.md", "docs/quality/*.md", "inves
                  "grants/*.md", "FOUNDER_EXECUTIVE_SUMMARY.md", "deliverables/README.md", "investor/*.pptx",
                  "publications/*.md", "web/landing/*.html"]   # scope widened (C3-BIZ-17)
 VERSION_RE = re.compile(r"(?:[Aa]dvisor(?: version)?|ADVISOR_VERSION = \")\s*\**(\d+\.\d+\.\d+)")
-VERSION_ALLOW = re.compile(r"history|histor|changelog|earlier|previous|superseded|since|until|before|motivated", re.I)
+VERSION_ALLOW = re.compile(r"history|histor|changelog|earlier|previous|superseded|since|until|before|motivated|predat|older|"
+                           r"stale", re.I)
 
 
 def _read(f: Path) -> str:

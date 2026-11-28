@@ -23,7 +23,7 @@ given), **accepted** (limitation stated).
 | C3-SCI-14 | Medium | fixed | Registry wording for S1H3, L4, F2, S1b/S1c and the status entry corrected. |
 | C3-SCI-15 | Medium | partly fixed | S2 part a wording softened ("consistent with"); the 5-specimen limitation is stated; no CI is quoted. |
 | C3-SCI-16 | Low | fixed | Boolean binding (C3-PRD-02) and the mechanism of a validated model's graft endpoints is `validated_texture_model`. |
-| C3-SCI-17 | Low | open | Bias of the share estimate under blur in the new-bone error budget. |
+| C3-SCI-17 | Low | open | Bias of the share estimate under blur in the new-bone error budget. Not changed in 1.4.3 because advisor 1.4.3 is frozen for the pre-registered S1H4; the fix (an upper confidence bound on the share) can only make new bone stricter, and new bone has never been supported in a held-out run. It belongs to the next advisor version, which needs its own held-out test. |
 | C3-SCI-18 | Low | partly fixed | Documentation drift corrected where found (versions, rules, QC text, noise sentence). |
 
 ## Cycle-2 dispositions the review disputed

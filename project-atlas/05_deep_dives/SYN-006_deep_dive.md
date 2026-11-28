@@ -85,7 +85,7 @@ All prospects are drawn from public award records, are "prospect — not contact
 - Shine On Group;
 - Bi-State Masonry and Goetz Concrete (Quad Cities).
 
-Websites were recorded only where the page was fetched and matched the name. Fourteen are "MISSING".
+Websites were recorded only where the page was fetched and matched the name. Seventeen are "MISSING".
 
 ## 5. Representative transactions (monthly unless stated)
 | Transaction | Revenue | Direct cost (labour at loaded rates + software) | Contribution | Evidence |

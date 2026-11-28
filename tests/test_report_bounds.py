@@ -170,3 +170,23 @@ def test_report_without_groups_and_legacy_specimen_without_support(tmp_path):
     b["specimens"][0]["analysis_parameters"] = {"method": "multiotsu"}
     text = _pdf_text(build_pdf(b, tmp_path / "n.pdf")["pdf"])
     assert "No group statistics: no specimen is assigned to a group." in text
+
+
+def test_renderer_enforces_refusal_in_group_stats_and_csv(tmp_path):
+    """C3-PRD-07: even when a caller passes raw numbers for refused endpoints, no group mean, CI or p-value is
+    computed from them and the CSV cell is empty; C3-PRD-08: a flagged value is exported as 'flagged' and marked."""
+    import csv as _csv
+    b = _supported_bundle()
+    table, comps = group_stats(b)
+    for row in table:
+        assert row["class_volumes.new_bone_volume_mm3"].get("n", 0) == 0
+    assert not [c for c in comps if c["endpoint"].startswith("class_volumes.new_bone")]
+    b["specimens"][0]["metric_status"] = {"class_volumes.residual_graft_fraction": {"status": "flagged",
+                                                                                 "reasons": ["QC verdict review"]}}
+    r = build_pdf(b, tmp_path / "g.pdf", tmp_path / "g.csv")
+    rows = list(_csv.DictReader(x for x in open(r["csv"]) if not x.startswith("#")))
+    assert all(x["class_volumes.new_bone_volume_mm3"] == "" for x in rows)
+    assert rows[0]["class_volumes.residual_graft_fraction__support"] == "flagged"
+    text = _pdf_text(r["pdf"])
+    assert "(f)" in text and "7.267" not in text and "7.567" not in text
+

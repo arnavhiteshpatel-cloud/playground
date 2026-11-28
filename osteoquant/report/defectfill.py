@@ -69,6 +69,24 @@ def _get(d, path, default=float("nan")):
     return cur
 
 
+REFUSED = ("not_supported", "not_assessed")
+
+
+def _status(s: dict, key: str) -> str | None:
+    """Status of metric ``key`` for a specimen: the per-metric status the application computed (``metric_status``,
+    e.g. the desktop's *flagged*) wins over the advisor endpoint status (cycle-3 review C3-PRD-08)."""
+    ms = s.get("metric_status") or {}
+    if isinstance(ms.get(key), dict):
+        return ms[key].get("status")
+    return _support(s, key)
+
+
+def _value(s: dict, key: str):
+    """The reportable value: None whenever the metric is refused or not assessed, whatever the caller put in the
+    metrics (the renderer enforces the rule itself, cycle-3 review C3-PRD-07)."""
+    return None if _status(s, key) in REFUSED else _get(s["metrics"], key)
+
+
 def _per_animal(specimens, eps):
     """Collapse multiple scans of the same animal at the same timepoint to one mean value per
     endpoint (the animal is the experimental unit; review Q-05)."""
@@ -80,7 +98,7 @@ def _per_animal(specimens, eps):
     for (aid, g, tp), ss in by.items():
         m = {}
         for k, _, _ in eps:
-            vals = [_get(x["metrics"], k) for x in ss]
+            vals = [_value(x, k) for x in ss]
             vals = [v for v in vals if isinstance(v, (int, float)) and np.isfinite(v)]
             node = m
             parts = k.split(".")
@@ -145,7 +163,7 @@ def group_stats(bundle):
     for (g, tp), ss in sorted(groups.items(), key=lambda x: (str(x[0][1]), str(x[0][0]))):
         row = {"group": g, "timepoint": tp, "n": len(ss)}
         for key, label, unit in eps:
-            row[key] = bounded_describe([_get(s["metrics"], key) for s in ss], key, unit)
+            row[key] = bounded_describe([_value(s, key) for s in ss], key, unit)
         table.append(row)
     comps = []
     ref = bundle.get("reference_group")
@@ -159,8 +177,8 @@ def group_stats(bundle):
                     continue
                 for key, label, unit in eps:
                     # only measured (finite) values: refused endpoints are None and must not count (C2-SCI-14)
-                    a = [v for v in (_get(s["metrics"], key) for s in ss) if _finite(v)]
-                    b = [v for v in (_get(s["metrics"], key) for s in groups[(ref, tp)]) if _finite(v)]
+                    a = [v for v in (_value(s, key) for s in ss) if _finite(v)]
+                    b = [v for v in (_value(s, key) for s in groups[(ref, tp)]) if _finite(v)]
                     if len(a) >= 2 and len(b) >= 2:
                         c = compare_two_groups(a, b)
                         c["n_group"], c["n_reference"] = len(a), len(b)
@@ -200,10 +218,12 @@ def _support(s: dict, key: str) -> str | None:
 
 
 def _fmt_support(v, status):
-    if status in ("not_supported", "not_assessed"):
+    if status in REFUSED:
         return "n/m"
     t = _fmt(v)
-    return t + " (c)" if status == "supported_with_conditions" else t
+    if status == "supported_with_conditions":
+        return t + " (c)"
+    return t + " (f)" if status == "flagged" else t
 
 
 def write_csv(bundle, path):
@@ -220,8 +240,8 @@ def write_csv(bundle, path):
             w.writerow([_csv_safe(x) for x in [bundle["data_class"], bundle["review_status"], s["specimen_id"], s.get("group"), s.get("timepoint"),
                         _get(s, "scan.sha256", ""), _get(s, "roi.definition_sha256", ""),
                         _get(s, "segmentation.method", ""), _get(s, "segmentation.model_sha256", ""),
-                        _get(s, "qc.verdict", "")] + [_get(s["metrics"], k) for k, _, _ in eps]
-                        + [_support(s, k) or "not_assessed" for k, _, _ in eps]])
+                        _get(s, "qc.verdict", "")] + [_value(s, k) for k, _, _ in eps]
+                        + [_status(s, k) or "not_assessed" for k, _, _ in eps]])
 
 
 def _txt(v) -> str:
@@ -381,7 +401,7 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
         for s in bundle["specimens"]:
             g = UNASSIGNED if _is_unassigned(s.get("group")) else str(s.get("group"))
             rows.append([str(s["specimen_id"]), g, str(s.get("timepoint")), _get(s, "qc.verdict", "—")] +
-                        [_fmt_support(_get(s["metrics"], k), _support(s, k)) for k, _, _ in chunk])
+                        [_fmt_support(_get(s["metrics"], k), _status(s, k)) for k, _, _ in chunk])
         flow.append(table(rows))
         flow.append(Spacer(1, 3))
     if any("truth" in s for s in bundle["specimens"]):
@@ -393,8 +413,8 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
                 # measured values follow the support status: a refused value is "n/m" here too
                 nbk, gfk = "class_volumes.new_bone_fraction", "class_volumes.residual_graft_fraction"
                 rows.append([str(s["specimen_id"]),
-                             f"{_fmt_support(_get(s['metrics'], nbk), _support(s, nbk))} / {_fmt(s['truth'].get('new_bone_fraction'))}",
-                             f"{_fmt_support(_get(s['metrics'], gfk), _support(s, gfk))} / {_fmt(s['truth'].get('graft_fraction'))}",
+                             f"{_fmt_support(_get(s['metrics'], nbk), _status(s, nbk))} / {_fmt(s['truth'].get('new_bone_fraction'))}",
+                             f"{_fmt_support(_get(s['metrics'], gfk), _status(s, gfk))} / {_fmt(s['truth'].get('graft_fraction'))}",
                              f"{_fmt(_get(s,'eval.dice_new'))} / {_fmt(_get(s,'eval.dice_graft'))}"])
         flow.append(table(rows))
 
@@ -483,7 +503,9 @@ def build_pdf(bundle, pdf_path, csv_path=None, watermark: str | None = None) -> 
     flow.append(Paragraph(
         "Each endpoint is classified by the measurement-support advisor before it is reported: <b>supported</b>, "
         "<b>supported with conditions</b> (values marked '(c)'; the conditions below are part of the result) or "
-        "<b>not supported</b> (shown as 'n/m' = not measured; raw values are retained in the audit record only). "
+        "<b>not supported</b> or <b>not assessed</b> (shown as 'n/m' = not measured; raw values are retained in the audit "
+        "record only and never enter group statistics). Values the application flagged for review (for example QC "
+        "verdict 'review' or an automatic ROI not yet accepted) are marked '(f)'. "
         "Evidence stage of the advisor and models: computational (stage A of the validation programme) — no physical "
         "or in-vivo validation of graft/new-bone separation has been performed.", SM))
     sup_rows = []

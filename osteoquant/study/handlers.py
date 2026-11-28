@@ -51,23 +51,51 @@ def job_analyze(store, user, params, ctx):
     res = analyze(vol, params.get("config", {}), roi_dict, progress=lambda f, m: ctx.progress(f, m))
     if res.get("status") == "needs_manual_roi":
         return {"status": "needs_manual_roi", "error": res.get("roi_error")}
-    if roi_dict is None:
-        rid, _ = store.save_roi(user, scan_id, res["roi"], reason="automatic detection")
-    else:
-        rid = store.latest_roi(user, scan_id)["id"] if store.latest_roi(user, scan_id) else None
+    import uuid
     seg = res["segmentation"]
-    sid, v = store.save_segmentation(user, scan_id, "automatic", "seg_v", res["labels_sha256"], method=seg["method"],
-                                     model_name=seg.get("model_name"), model_sha256=seg.get("model_sha256"), roi_id=rid)
-    key = f"seg_v{v}"
-    store.exec("UPDATE segmentations SET labels_key=? WHERE id=?", (key, sid))
+    # data first, rows last (C2-PRD-10 pattern, cycle-3 review C3-PRD-16): the labels go under a new unique key; the
+    # ROI, segmentation and measurement rows and the scan status are committed in ONE transaction; on failure the
+    # array is removed, so a half-written analysis never becomes the current version
+    key = f"seg_a{uuid.uuid4().hex[:12]}"
     write_labels_zarr(sc["store_path"], key, res["_labels"])
-    write_labels_zarr(sc["store_path"], "roi_current", res["_roi_mask"].astype(np.uint8))
-    write_labels_zarr(sc["store_path"], f"roi_v{v}", res["_roi_mask"].astype(np.uint8))
-    if "_entropy" in res:
-        write_labels_zarr(sc["store_path"], f"unc_v{v}", np.clip(res["_entropy"] * 255, 0, 255).astype(np.uint8))
-    store.save_measurement(user, scan_id, sid, rid, public(res), __version__)
-    store.exec("UPDATE scans SET status='analyzed' WHERE id=?", (scan_id,))
-    return {"segmentation_id": sid, "version": v, "status": res["status"], "timings": res["timings"]}
+    try:
+        with store.transaction():
+            if roi_dict is None:
+                rid, _ = store.save_roi(user, scan_id, res["roi"], reason="automatic detection")
+            else:
+                lr = store.latest_roi(user, scan_id)
+                rid = lr["id"] if lr else None
+            sid, v = store.save_segmentation(user, scan_id, "automatic", key, res["labels_sha256"],
+                                             method=seg["method"], model_name=seg.get("model_name"),
+                                             model_sha256=seg.get("model_sha256"), roi_id=rid)
+            store.exec("UPDATE segmentations SET labels_key=? WHERE id=?", (key, sid))
+            store.save_measurement(user, scan_id, sid, rid, public(res), __version__)
+            store.exec("UPDATE scans SET status='analyzed' WHERE id=?", (scan_id,))
+    except BaseException:
+        _remove_arrays(sc["store_path"], [key])
+        raise
+    # derived masks named by version, written after commit (an error here leaves the committed analysis intact)
+    warnings = []
+    try:
+        write_labels_zarr(sc["store_path"], "roi_current", res["_roi_mask"].astype(np.uint8))
+        write_labels_zarr(sc["store_path"], f"roi_v{v}", res["_roi_mask"].astype(np.uint8))
+        if "_entropy" in res:
+            write_labels_zarr(sc["store_path"], f"unc_v{v}", np.clip(res["_entropy"] * 255, 0, 255).astype(np.uint8))
+    except OSError as e:
+        warnings.append(f"ROI/uncertainty layers not written: {e}")
+    return {"segmentation_id": sid, "version": v, "status": res["status"], "timings": res["timings"],
+            "warnings": warnings}
+
+
+def _remove_arrays(store_path, names):
+    try:
+        import zarr
+        g = zarr.open_group(str(store_path), mode="a")
+        for n in names:
+            if f"labels/{n}" in g:
+                del g[f"labels/{n}"]
+    except Exception:  # noqa: BLE001 - best effort; the rows were rolled back
+        pass
 
 
 def job_report(store, user, params, ctx):

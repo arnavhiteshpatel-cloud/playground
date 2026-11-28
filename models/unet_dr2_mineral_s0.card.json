@@ -1,0 +1,397 @@
+{
+ "hparams": {
+  "in_ch": 1,
+  "n_classes": 2,
+  "base": 12,
+  "levels": 4,
+  "p_drop": 0.0,
+  "max_ch": 96
+ },
+ "cfg": {
+  "patch": [
+   48,
+   48,
+   48
+  ],
+  "batch": 2,
+  "iters": 1500,
+  "lr": 0.003,
+  "base": 12,
+  "levels": 4,
+  "threads": 4,
+  "n_classes": 2,
+  "log_every": 250,
+  "seed": 0,
+  "sampler": "dr_v2",
+  "sampler_description": {
+   "name": "dr_v2",
+   "config": {
+    "patch": [
+     48,
+     48,
+     48
+    ],
+    "scale_range": [
+     0.6,
+     2.0
+    ],
+    "soft_range": [
+     0.0,
+     0.35
+    ],
+    "mineral_contrast_min": 0.2,
+    "bone_range": [
+     0.45,
+     1.0
+    ],
+    "graft_range": [
+     0.3,
+     1.8
+    ],
+    "texture_cv": [
+     0.0,
+     0.15
+    ],
+    "blur_vox": [
+     0.0,
+     1.5
+    ],
+    "noise_white": [
+     0.0,
+     0.12
+    ],
+    "noise_corr": [
+     0.0,
+     0.1
+    ],
+    "noise_corr_sigma": [
+     0.6,
+     2.0
+    ],
+    "bias_amp": [
+     0.0,
+     0.15
+    ],
+    "gamma": [
+     0.75,
+     1.35
+    ],
+    "background_gap": [
+     0.0,
+     0.9
+    ],
+    "top_scale": [
+     0.9,
+     1.3
+    ],
+    "target": "mineral"
+   },
+   "n_sources": 48,
+   "sources_sha256": "0f32dd4d3f4f84f71ee6ff65d8646f6617f4e64247fd931275ff88a99cbca1b6"
+  },
+  "extra_provenance": [
+   "synthetic"
+  ],
+  "loss": {
+   "dice": 1.0,
+   "ce": 1.0,
+   "boundary_w": 1.0,
+   "boundary_ignore_aware": true
+  }
+ },
+ "name": "unet_dr2_mineral_s0",
+ "provenance": [
+  "synthetic"
+ ],
+ "licence_tag": "commercial_eligible",
+ "train_manifest": [],
+ "history": [
+  {
+   "iter": 250,
+   "loss": 0.5911729335784912,
+   "sec": 714.8
+  },
+  {
+   "iter": 500,
+   "loss": 0.5400670170783997,
+   "sec": 859.7
+  },
+  {
+   "iter": 750,
+   "loss": 0.651067852973938,
+   "sec": 1002.0
+  },
+  {
+   "iter": 1000,
+   "loss": 0.5282859802246094,
+   "sec": 1244.8
+  },
+  {
+   "iter": 1250,
+   "loss": 0.5114637017250061,
+   "sec": 1638.8
+  },
+  {
+   "iter": 1500,
+   "loss": 0.20306634902954102,
+   "sec": 1996.8
+  }
+ ],
+ "parent_model": null,
+ "sampler_manifest": [
+  {
+   "case_id": "train_000_condyle_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_001_calvarial_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_002_segmental_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_003_condyle_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_004_calvarial_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_005_segmental_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_006_condyle_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_007_calvarial_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_008_segmental_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_009_condyle_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_010_calvarial_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_011_segmental_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_012_condyle_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_013_calvarial_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_014_segmental_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_015_condyle_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_016_calvarial_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_017_segmental_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_018_condyle_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_019_calvarial_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_020_segmental_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_021_condyle_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_022_calvarial_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_023_segmental_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_024_condyle_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_025_calvarial_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_026_segmental_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_027_condyle_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_028_calvarial_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_029_segmental_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_030_condyle_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_031_calvarial_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_032_segmental_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_033_condyle_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_034_calvarial_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_035_segmental_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_036_condyle_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_037_calvarial_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_038_segmental_beta_tcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_039_condyle_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_040_calvarial_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_041_segmental_bcp",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_042_condyle_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_043_calvarial_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_044_segmental_ha",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_045_condyle_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_046_calvarial_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  },
+  {
+   "case_id": "train_047_segmental_calcium_sulfate",
+   "provenance": "synthetic",
+   "commercial_use": "allowed"
+  }
+ ],
+ "created": "2026-11-28T01:08:12Z",
+ "env": {
+  "torch": "2.15.0+cpu",
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "osteoquant_source_sha256": "cd11f8afc0421d94c2f8391e15a00ddc2424d5e0997db456514620790d86ff2e",
+  "git_commit": "b55c459bb49f9c02eb7c3af94cd7b90343f5aabb",
+  "git_dirty": false
+ },
+ "n_params": 788594,
+ "train_seconds": 1996.8,
+ "sha256": "316854142ad7bb1c6550b8ccc8f8125f2ca904d2052927463f518a27b9d53927",
+ "path": "models/unet_dr2_mineral_s0.pt",
+ "warning": "SYNTHETIC-TRAINED \u2014 research prototype, not for study decisions"
+}

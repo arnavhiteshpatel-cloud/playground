@@ -207,7 +207,8 @@ def test_end_to_end(client, tmp_path):
     assert app_runner.wait(j, 120) == "done", client.get(f"/api/jobs/{j}", headers=A).json()
     info = client.get(f"/api/scans/{scan}", headers=A).json()
     assert info["segmentations"] and info["roi"]
-    img = client.get(f"/api/scans/{scan}/slice?axis=0&index=10&layer=labels/seg_v1", headers=A)
+    key = info["segmentations"][-1]["labels_key"]           # clients use the stored key (unique since C3-PRD-16)
+    img = client.get(f"/api/scans/{scan}/slice?axis=0&index=10&layer=labels/{key}", headers=A)
     assert img.status_code == 200 and img.headers["content-type"] == "image/png"
     assert client.get(f"/api/scans/{scan}/slice?axis=0&index=10&layer=../../etc", headers=A).status_code == 400
     ed = client.post(f"/api/scans/{scan}/segmentations/edits", headers=A, json={

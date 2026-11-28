@@ -1021,8 +1021,10 @@ class MainWindow(QMainWindow):
             return []
         if config is None:
             sid = self.tree.current_study_id()
-            dm = self.project.store.study(self.project.user, sid).get("defect_model") if sid else "condyle"
-            dlg = self._own(AnalysisDialog(len(ids), dm or "condyle", self))
+            st_ = self.project.store.study(self.project.user, sid) if sid else {}
+            dm = st_.get("defect_model") if sid else "condyle"
+            dlg = self._own(AnalysisDialog(len(ids), dm or "condyle", self,
+                                           study_materials=str(st_.get("graft_materials") or "")))
             if not dlg.exec():
                 return []
             config, use_saved_roi = dlg.config(), dlg.saved_roi.isChecked()

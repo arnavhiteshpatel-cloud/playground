@@ -263,3 +263,14 @@ def test_scan_info_survives_nan_qc_values(client, tmp_path):
     client.app.state.runner.wait(r.json()["qc_job"], 60)
     sc = client.get(f"/api/scans/{r.json()['scan_id']}", headers=A).json()
     assert sc["shape"] == [8, 12, 12] and sc["spacing_um"] == pytest.approx([20, 20, 20])
+
+
+def test_newer_schema_database_is_refused(tmp_path):
+    """C3-PRD-21: an older application refuses a database written by a newer one."""
+    from osteoquant.study.db import MIGRATIONS, Store
+    st = Store(tmp_path / "x.db", tmp_path / "data")
+    st.conn.execute("INSERT INTO schema_version VALUES (?)", (max(MIGRATIONS) + 1,))
+    st.conn.commit()
+    st.conn.close()
+    with pytest.raises(RuntimeError, match="newer OsteoQuant"):
+        Store(tmp_path / "x.db", tmp_path / "data")

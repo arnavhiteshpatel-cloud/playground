@@ -157,7 +157,7 @@ class NewStudyDialog(_Dialog):
 
 
 class AnalysisDialog(_Dialog):
-    def __init__(self, n_scans: int, defect_model: str = "condyle", parent=None):
+    def __init__(self, n_scans: int, defect_model: str = "condyle", parent=None, study_materials: str = ""):
         super().__init__("Run defect-fill analysis", parent, 480)
         self.lay.addWidget(muted(f"{n_scans} scan(s) selected. Each scan runs as a background job; you can keep "
                                  "working and cancel from the Jobs panel."))
@@ -172,12 +172,17 @@ class AnalysisDialog(_Dialog):
         self.diam.setSuffix(" µm")
         self.diam.setSpecialValueText("not specified")
         self.seg = QComboBox()
-        self.seg.addItem("Advisor threshold (validated with measurement support) — recommended", "advisor_threshold")
-        self.seg.addItem("Multi-Otsu (classical; no measurement support)", "multiotsu")
+        # cycle-3 review C3-PRD-12: say what carries support, and that its validation is simulation-only
+        self.seg.addItem("Advisor threshold — the only method with measurement support", "advisor_threshold")
+        self.seg.setItemData(0, "Graft, new-bone and mineral values carry measurement support only with this method. "
+                                "Its support rules were tested in simulation only (held-out test S1H3); no physical "
+                                "validation exists.", Qt.ToolTipRole)
+        self.seg.addItem("Multi-Otsu (classical) — no measurement support", "multiotsu")
         from .services import SYNTHETIC_CHIP, available_models
         self._synthetic = {}
         for m in available_models():
-            label = f"U-Net {m['name']} (locked model)" + (f" — {SYNTHETIC_CHIP}" if m.get("synthetic") else "")
+            label = (f"U-Net {m['name']} (locked model) — no measurement support"
+                     + (f" — {SYNTHETIC_CHIP}" if m.get("synthetic") else ""))
             self.seg.addItem(label, m["id"])
             tip = m.get("provenance_text", "") + (": not validated on real tissue" if m.get("synthetic") else "")
             self.seg.setItemData(self.seg.count() - 1, tip[:300], Qt.ToolTipRole)
@@ -192,6 +197,21 @@ class AnalysisDialog(_Dialog):
         for k, label in GRAFT_MATERIALS:
             self.material.addItem(label, k)
         self.material.addItem("No graft (empty defect)", "__no_graft__")
+        # pre-select the study's graft material when it names one we know (C3-PRD-12); otherwise stay on Unspecified,
+        # which refuses graft and new-bone endpoints (a warning is shown)
+        sm = (study_materials or "").lower().replace("-", "").replace(" ", "")
+        for i in range(self.material.count()):
+            k, lab = self.material.itemData(i), self.material.itemText(i).lower().replace("-", "").replace(" ", "")
+            if k and k != "__no_graft__" and sm and (sm == str(k).replace("_", "") or sm in lab or lab.startswith(sm)):
+                self.material.setCurrentIndex(i)
+                break
+        self.unspec_warn = QLabel("Graft material unspecified: graft and new-bone endpoints will be reported as not "
+                                  "measured. Choose the material if you know it.")
+        self.unspec_warn.setWordWrap(True)
+        self.unspec_warn.setProperty("role", "chip-warn")
+        self.unspec_warn.setVisible(self.material.currentData() is None)
+        self.material.currentIndexChanged.connect(
+            lambda *_: self.unspec_warn.setVisible(self.material.currentData() is None))
         self.bright = QCheckBox("Graft is brighter than new bone")
         self.bright.setChecked(False)
         self.bright.setToolTip("Only meaningful for radiopaque graft materials (calcium phosphates, calcium sulfate, "
@@ -222,6 +242,7 @@ class AnalysisDialog(_Dialog):
         f.addRow("Nominal defect diameter", self.diam)
         f.addRow("Segmentation", self.seg)
         f.addRow("Graft material", self.material)
+        f.addRow("", self.unspec_warn)
         f.addRow("", self.bright)
         f.addRow("Time since implantation", self.tp_mode)
         f.addRow("", self.tp_weeks)

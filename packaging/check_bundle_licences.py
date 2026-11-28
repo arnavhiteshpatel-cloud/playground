@@ -44,6 +44,10 @@ GPL_ONLY = {
     "ApplicationManager", "InsightTracker", "CanvasPainter", "LabsStyleKit",
 }
 QT_LIB_RE = re.compile(r"(?:lib)?Qt6([A-Za-z0-9]+?)(?:\.so|\.dylib|\.dll|$|\.)")
+# macOS frameworks (QtCharts.framework/Versions/A/QtCharts: no suffix, no "6") and PySide6 binding modules
+# (PySide6/QtCharts.abi3.so, QtCharts.pyd) — cycle-3 review C3-PRD-10: the check passed vacuously on a macOS layout
+QT_FRAMEWORK_RE = re.compile(r"(?:^|/)Qt([A-Za-z0-9]+)\.framework/")
+PYSIDE_MOD_RE = re.compile(r"(?:^|/)PySide6/Qt([A-Za-z0-9]+)\.(?:abi3\.so|pyd|so|cpython-[^/]*\.so)$")
 QT_PLUGIN_GPL = {"platforminputcontexts/libqtvirtualkeyboardplugin", "qtvirtualkeyboard"}
 LIB_SUFFIX = re.compile(r"\.(so(\.\d+)*|dylib|dll|pyd)$", re.I)
 
@@ -51,7 +55,16 @@ LIB_SUFFIX = re.compile(r"\.(so(\.\d+)*|dylib|dll|pyd)$", re.I)
 def scan(root: Path) -> dict:
     libs, qt_mods, violations, host_libs = [], {}, [], []
     for f in sorted(root.rglob("*")):
-        if not f.is_file() or not LIB_SUFFIX.search(f.name):
+        if not f.is_file():
+            continue
+        rel0 = f.relative_to(root).as_posix()
+        mf = QT_FRAMEWORK_RE.search(rel0)
+        if mf and f.name == f"Qt{mf.group(1)}":              # framework binary
+            qt_mods.setdefault(mf.group(1), []).append(rel0)
+        mp = PYSIDE_MOD_RE.search(rel0)
+        if mp:
+            qt_mods.setdefault(mp.group(1), []).append(rel0)
+        if not LIB_SUFFIX.search(f.name):
             continue
         rel = f.relative_to(root).as_posix()
         libs.append({"path": rel, "bytes": 0 if f.is_symlink() else f.stat().st_size, "symlink": f.is_symlink()})
@@ -66,6 +79,9 @@ def scan(root: Path) -> dict:
         elif "/" not in rel.replace("_internal/", "", 1) and not rel.endswith((".pyd",)) \
                 and ".cpython-" not in f.name and not f.name.startswith(("libpython", "python3")):
             host_libs.append(rel)
+    if not any(m == "Core" for m in qt_mods):
+        # a Qt bundle without a detected QtCore means the scan did not recognise the layout: never pass vacuously
+        violations.append("no Qt Core module detected: the licence scan did not recognise this bundle layout")
     for mod, files in sorted(qt_mods.items()):
         if mod in GPL_ONLY:
             violations += [f"GPL-only Qt module {mod}: {p}" for p in files]

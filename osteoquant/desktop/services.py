@@ -539,10 +539,10 @@ def segmentation_method_info(seg: dict | None, result: dict | None = None) -> di
         text = f"U-Net {name}" + (f" ({SYNTHETIC_CHIP})" if synth else "")
         return {"text": text, "short": f"U-Net {name}", "synthetic": synth, "provenance": provenance_words(prov)}
     if method == "advisor_threshold":
-        return {"text": "Advisor threshold (measurement-support validated)", "short": "Advisor threshold",
+        return {"text": "Advisor threshold (carries measurement support)", "short": "Advisor threshold",
                 "synthetic": False, "provenance": "thresholds from the measurement-support advisor (no trained model)"}
     if method in ("multiotsu", ""):
-        return {"text": "Multi-Otsu (classical)" if method else "-", "short": "Multi-Otsu" if method else "-",
+        return {"text": "Multi-Otsu (classical; no measurement support)" if method else "-", "short": "Multi-Otsu" if method else "-",
                 "synthetic": False, "provenance": "classical thresholding (no trained model)"}
     return {"text": method, "short": method, "synthetic": False, "provenance": ""}
 
@@ -973,15 +973,22 @@ def _enforce_support(project, bundle: dict, meas_rows: list[dict]):
     """Apply the desktop support rule to the report bundle: an endpoint that is *not supported*
     (desktop rule: uncertain fraction, missing thickness, no-graft, advisor) is reported without a
     number, with its reason, exactly as in the Results table."""
-    from .support import ENDPOINTS, NO_NUMBER, NOT_ASSESSED
+    from .support import ENDPOINTS, FLAGGED, NO_NUMBER, NOT_ASSESSED
     by_path = {path: (key, label) for key, label, _u, path, _s in ENDPOINTS}
     for spec, m in _specimen_rows(bundle, meas_rows):
         sup = measurement_support_for(project, m["metrics"], m["roi_id"])
         sup_paths = {d.get("metric") for d in spec.get("suppressed_metrics") or []}
         for path, (key, label) in by_path.items():
             e = sup["endpoints"][key]
+            # exports carry the status the analyst saw in Results (cycle-3 review C3-PRD-08)
+            if e["status"] == FLAGGED:
+                spec.setdefault("metric_status", {})[path] = {"status": "flagged",
+                                                              "reasons": list(e.get("reasons") or [])}
             if e["status"] not in NO_NUMBER:
                 continue
+            spec.setdefault("metric_status", {})[path] = {
+                "status": "not_assessed" if e["status"] == NOT_ASSESSED else "not_supported",
+                "reasons": list(e.get("reasons") or [])}
             _set_path(spec["metrics"], path, None)
             if key == "mineralized_fraction":
                 _set_path(spec["metrics"], "class_volumes.mineral_volume_mm3", None)

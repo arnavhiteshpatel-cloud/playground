@@ -141,6 +141,12 @@ class Store:
     def migrate(self):
         self.conn.execute("CREATE TABLE IF NOT EXISTS schema_version (v INTEGER)")
         r = self.conn.execute("SELECT max(v) FROM schema_version").fetchone()[0] or 0
+        known = max(MIGRATIONS) if MIGRATIONS else 0
+        if r > known:
+            # cycle-3 review C3-PRD-21: an older application must not open (and silently ignore the newer controls
+            # of) a database written by a newer one
+            raise RuntimeError(f"This project database has schema version {r}; this OsteoQuant supports up to "
+                               f"{known}. Open it with the newer OsteoQuant version that created it.")
         for v in sorted(MIGRATIONS):
             if v > r:
                 self.conn.executescript(MIGRATIONS[v])

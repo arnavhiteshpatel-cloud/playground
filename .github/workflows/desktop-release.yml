@@ -46,8 +46,10 @@ jobs:
       QT_QPA_PLATFORM: offscreen
       OQ_BUNDLE_TORCH: "0"
       PYTHONUTF8: "1"
-      HAS_WIN_SIGNING: ${{ secrets.WINDOWS_CERT_PFX_BASE64 != '' }}
-      HAS_MAC_SIGNING: ${{ secrets.MACOS_CERT_P12_BASE64 != '' }}
+      # cycle-3 review C3-PRD-11: never sign in a pull_request run (a branch could get its own binary signed);
+      # signing only for tags or a manual dispatch
+      HAS_WIN_SIGNING: ${{ github.event_name != 'pull_request' && secrets.WINDOWS_CERT_PFX_BASE64 != '' }}
+      HAS_MAC_SIGNING: ${{ github.event_name != 'pull_request' && secrets.MACOS_CERT_P12_BASE64 != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -119,7 +121,21 @@ jobs:
           rm -f packaging/dist/OsteoQuant-desktop-macos-*.zip
           ditto -c -k --keepParent packaging/dist/OsteoQuant.app packaging/dist/OsteoQuant-desktop-macos-arm64-signed.zip
 
+      # On this public repository an uploaded archive is a distributed copy (LGPL source offer, B-016): pull-request
+      # runs upload only the licence report and build info, never the application (C3-PRD-11)
+      - name: Upload licence report (pull requests)
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: licence-report-${{ matrix.label }}
+          path: |
+            packaging/dist/build-info.json
+            packaging/dist/licence-check.txt
+          if-no-files-found: warn
+          retention-days: 7
+
       - name: Upload application archive
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: OsteoQuant-desktop-${{ matrix.label }}

@@ -220,8 +220,9 @@ def main():
         f"{f(lt_none, 0, pct=True)} of specimens. Earlier held-out tests (S1H, S1H2) found supported measurements that "
         "failed; each failure led to a rule tested on new data.",
         "<b>The honest consequence.</b> By intensity alone, graft/new-bone separation is supportable only for dense "
-        "calcium phosphates at low noise and known early timepoints; bone-derived grafts, resorbing materials at later "
-        "timepoints and uncharacterised materials are refused. The product's value is therefore a <i>separability "
+        "ceramics at low noise (in S1H4, sintered HA only; BCP and β-TCP at two weeks were never supported); "
+        "bone-derived grafts, resorbing materials at later timepoints and uncharacterised (Unspecified) materials are "
+        "refused. The product's value is therefore a <i>separability "
         "assessment</i> (material characterisation, study-design advice, abstention) plus audited reporting — not "
         "universal automatic three-class segmentation.",
         f"<b>Longitudinal day-0 method.</b> The Gen-0 result was a no-motion best case. With post-implantation granule motion "

@@ -71,7 +71,8 @@
    48,
    48,
    48
-  ]
+  ],
+  "onnx_int8_sha256": "0f5cc422f8d7f1417788a6ea52b50a69b80b5fce81fb91939b3a4cf321a69445"
  },
  "adapt_k1_r0": {
   "sha256": "dc80bdbc4a2bfa08f1c90e00748fae089de50d39c462990598f35cf3dc039f0c",

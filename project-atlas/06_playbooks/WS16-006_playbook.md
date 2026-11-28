@@ -438,8 +438,8 @@ Sources: prices [B, E-WS16006-S001/S002]; blanks [B/D, E-WS16006-S004/S005]; dec
 - **Fallback:** supplier tools (SAGE, commonsku) do quoting and mockups without AI.
 
 ## 6. Growth
-- **First 10 customers (months 2–7 in base):** permit-list outbound, Safety Week pre-sell, and one introduction requested from every first customer.
-- **First 100 (around month 40 in base; 109 active at the end of year 4):**
+- **First 10 customers (model months 3–8; 10 active accounts in month 8):** permit-list outbound, Safety Week pre-sell, and one introduction requested from every first customer.
+- **First 100 (model month 45; 109 active at the end of year 4):**
   - company stores for the top 10;
   - association events;
   - suburban permit portals;
@@ -609,7 +609,7 @@ Gross margin dominates.
 | EV multiple | 1.5× | 2.5× | 3.0× | E: no completed-sale multiple found; promo books are less sticky than insurance books at 5–7× [C, C5-S021] |
 
 ### 7.7 Owner distributions and downside
-- In base, the $4,000/month draw is affordable from year 2. Retained cash still hovers around zero until year 5, because growth absorbs it.
+- In base, free cash flow first covers the $4,000/month draw in year 3 ($49,068 FCF vs $48,000 draw); in year 2 the draw exceeds FCF by $13,002. Retained cash then hovers around zero until year 5, because growth absorbs it.
 - Real distributable surplus beyond the draw begins in year 6.
 - **Downside:** in the conservative case the draw is not earned. In the GM −10 pt case, peak funding exceeds $270k. Both are prevented by the V1–V3 gates and by stopping early.
 
@@ -690,7 +690,7 @@ Gross margin dominates.
 
 ### First year (to Dec 2027)
 **Milestones (base model):**
-- 5 accounts by month 5–6;
+- 5 active accounts by month 7 and 10 by month 8 (model);
 - about 21 active accounts and about $22k monthly revenue by month 12 (model: 21.4 accounts; $21,859);
 - two company stores or kit programs live by month 9;
 - coordinator only when revenue is ≥$35k/month (base month 21, i.e., year 2).

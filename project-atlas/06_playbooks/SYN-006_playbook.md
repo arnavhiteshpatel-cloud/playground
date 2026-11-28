@@ -446,7 +446,7 @@ The **$450 WIP & Surety-Readiness Check**, delivered from read-only QBO access p
 
 **Staffing path:** headcount at year-end is 1, 2, 5, 7 and 8 in years 1–5 (base, counting the reviewer).
 
-**Why year 3 dips:** base year-2 operating profit **$124,997** is higher than year 3's **$94,734**. In year 2 the founder is still doing unpaid production, review and compliance. Price that founder labour at bookkeeper cost and year 2 would be roughly $50–70k lower. Year 3 is the first honest "staffed" year.
+**Why year 3 dips:** base year-2 operating profit **$124,997** is higher than year 3's **$94,734**. In year 2 the founder is still doing unpaid production, review and compliance. Price that founder labour and year 2 would be roughly $45–90k lower: about $45k at the hourly rates in §3, about $90k at full-time-hire cost. Year 3 is the first honest "staffed" year.
 
 ### 6.4 Capacity limits
 - The founder: about 200 h/month in months 10–24 (production for about 12 clients + sales + review).

@@ -173,7 +173,8 @@ def test_onnx_small_volume_is_padded_and_int8_quantisation_registers(tiny_model,
     small = _case(7, shape=(10, 12, 16))                  # smaller than the patch in two axes: edge padding path
     p = seg.predict_proba(small)
     assert p.shape == (4, 10, 12, 16) and np.allclose(p.sum(0), 1, atol=1e-4)
-    q = quantize_int8_static("tiny", [_case(0), _case(1)], n_patches=4)
+    # a calibration case smaller than the patch must be padded too (O2 failed on a 40-voxel case with a 48³ model)
+    q = quantize_int8_static("tiny", [_case(0), _case(1), _case(2, shape=(10, 12, 16))], n_patches=6)
     reg = json.loads((model_dir / "registry.json").read_text())
     assert reg["tiny"]["onnx_int8_sha256"] == q["sha256"] and (model_dir / "tiny.int8.onnx").exists()
 

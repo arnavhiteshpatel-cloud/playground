@@ -117,7 +117,11 @@ def quantize_int8_static(name: str, calib_cases: list[Case], n_patches: int = 32
                 c = calib_cases[rng.integers(len(calib_cases))]
                 x = build_input(c, cfg)
                 o = [int(rng.integers(0, max(1, s - p + 1))) for s, p in zip(x.shape[1:], patch)]
-                xs.append(x[:, o[0]:o[0] + patch[0], o[1]:o[1] + patch[1], o[2]:o[2] + patch[2]][None])
+                crop = x[:, o[0]:o[0] + patch[0], o[1]:o[1] + patch[1], o[2]:o[2] + patch[2]]
+                # a case smaller than the exported patch along an axis is edge-padded to the fixed input size
+                # (the O2 run failed on a 40-voxel case with a 48³ model)
+                pad = [(0, 0)] + [(0, p - c) for c, p in zip(crop.shape[1:], patch)]
+                xs.append(np.pad(crop, pad, mode="edge")[None])
             self.it = iter([{"x": v.astype(np.float32)} for v in xs])
 
         def get_next(self):

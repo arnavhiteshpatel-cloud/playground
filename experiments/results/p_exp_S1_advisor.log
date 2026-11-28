@@ -47,3 +47,45 @@ A ood_mat_029_segmental_xenograft_dbbm not_supported -0.152 0.02 0.04
 A ood_mat_030_condyle_bioglass_45s5 not_supported 0.172 -0.14 0.172
 A ood_mat_031_calvarial_bioglass_45s5 not_supported 1.731 -0.311 0.111
 A ood_mat_032_segmental_bioglass_45s5 not_supported 0.357 -0.036 0.104
+A ood_mat_033_condyle_xenograft_dbbm not_supported 0.107 -0.13 0.196
+A ood_mat_034_calvarial_xenograft_dbbm not_supported 0.113 -0.092 0.083
+A ood_mat_035_segmental_xenograft_dbbm not_supported -0.227 -0.003 0.038
+A ood_mat_036_condyle_bioglass_45s5 not_supported 0.548 -0.104 0.18
+A ood_mat_037_calvarial_bioglass_45s5 not_supported 0.686 -0.137 0.072
+A ood_mat_038_segmental_bioglass_45s5 not_supported 1.106 -0.225 0.058
+A ood_mat_039_condyle_xenograft_dbbm not_supported 0.348 -0.089 0.096
+B 2200 30 supported 0.018
+B 2200 80 supported 0.018
+B 2200 150 supported 0.008
+B 2200 250 not_supported -0.005
+B 1600 30 supported 0.027
+B 1600 80 not_supported 0.03
+B 1600 150 not_supported 0.038
+B 1600 250 not_supported 0.045
+B 1300 30 not_supported 0.085
+B 1300 80 not_supported 0.118
+B 1300 150 not_supported 0.146
+B 1300 250 not_supported 0.138
+B 1150 30 not_supported 0.223
+B 1150 80 not_supported 0.259
+B 1150 150 not_supported 0.229
+B 1150 250 not_supported 0.184
+B 1000 30 not_supported 0.457
+B 1000 80 not_supported 0.476
+B 1000 150 not_supported 0.61
+B 1000 250 not_supported 0.867
+B 900 30 not_supported 0.267
+B 900 80 not_supported 0.383
+B 900 150 not_supported 0.621
+B 900 250 not_supported 0.877
+B 800 30 not_supported 0.131
+B 800 80 not_supported 0.401
+B 800 150 not_supported 0.652
+B 800 250 not_supported 0.888
+B 650 30 not_supported 0.781
+B 650 80 not_supported 0.718
+B 650 150 not_supported 0.728
+B 650 250 not_supported 0.875
+{'method': 'multiotsu', 'n': 56, 'n_fail': 32, 'n_refused': 54, 'failures_refused': 32, 'sensitivity_refuse_given_fail': 1.0, 'refused_but_ok': 22, 'supported_and_ok': 2, 'supported_but_failed': 0, 'abs_err_supported_median': 0.14776955982715645, 'abs_err_refused_median': 0.23236992876619023, 'p_fail_given_supported': 0.0, 'p_fail_given_supported_upper95': 0.841886116991581, 'coverage_supported_fraction': 0.03571428571428571, 'per_endpoint': {'residual_graft_volume': {'n': 56, 'n_fail': 32, 'failures_refused': 32, 'supported_but_failed': 0, 'supported_and_ok': 2, 'refused_but_ok': 22, 'p_fail_given_supported_upper95': 0.841886116991581, 'abs_err_supported_median': 0.14776955982715645, 'abs_err_supported_max': 0.1816685584562997}, 'new_bone_volume': {'n': 56, 'n_fail': 30, 'failures_refused': 30, 'supported_but_failed': 0, 'supported_and_ok': 0, 'refused_but_ok': 26, 'p_fail_given_supported_upper95': None, 'abs_err_supported_median': None, 'abs_err_supported_max': None}, 'total_mineral_volume': {'n': 56, 'n_fail': 4, 'failures_refused': 0, 'supported_but_failed': 4, 'supported_and_ok': 46, 'refused_but_ok': 6, 'p_fail_given_supported_upper95': 0.19234278359596277, 'abs_err_supported_median': 0.05980334500649792, 'abs_err_supported_max': 0.24992819334454885}}, 'abs_err_new_supported_median': 0.07669863159217094, 'abs_err_new_supported_max': 0.07672710924621606, 'abs_err_mineral_supported_median': 0.0827772827292666, 'abs_err_mineral_supported_max': 0.09539780137879639}
+{'method': 'unet_synth', 'n': 56, 'n_fail': 6, 'n_refused': 54, 'failures_refused': 6, 'sensitivity_refuse_given_fail': 1.0, 'refused_but_ok': 48, 'supported_and_ok': 2, 'supported_but_failed': 0, 'abs_err_supported_median': 0.016915965243130326, 'abs_err_refused_median': 0.09241808050176004, 'p_fail_given_supported': 0.0, 'p_fail_given_supported_upper95': 0.841886116991581, 'coverage_supported_fraction': 0.03571428571428571, 'per_endpoint': {'residual_graft_volume': {'n': 56, 'n_fail': 6, 'failures_refused': 6, 'supported_but_failed': 0, 'supported_and_ok': 2, 'refused_but_ok': 48, 'p_fail_given_supported_upper95': 0.841886116991581, 'abs_err_supported_median': 0.016915965243130326, 'abs_err_supported_max': 0.021573133664467337}, 'new_bone_volume': {'n': 56, 'n_fail': 2, 'failures_refused': 2, 'supported_but_failed': 0, 'supported_and_ok': 0, 'refused_but_ok': 54, 'p_fail_given_supported_upper95': None, 'abs_err_supported_median': None, 'abs_err_supported_max': None}, 'total_mineral_volume': {'n': 56, 'n_fail': 0, 'failures_refused': 0, 'supported_but_failed': 0, 'supported_and_ok': 50, 'refused_but_ok': 6, 'p_fail_given_supported_upper95': 0.07112173646419764, 'abs_err_supported_median': 0.015687102299380806, 'abs_err_supported_max': 0.10391733009964677}}, 'abs_err_new_supported_median': 0.01790473426272543, 'abs_err_new_supported_max': 0.030189807203706565, 'abs_err_mineral_supported_median': 0.014023949625998289, 'abs_err_mineral_supported_max': 0.01999870976066065}
+{'method': 'multiotsu_B', 'n': 96, 'n_fail': 54, 'n_refused': 84, 'failures_refused': 54, 'sensitivity_refuse_given_fail': 1.0, 'refused_but_ok': 30, 'supported_and_ok': 12, 'supported_but_failed': 0, 'abs_err_supported_median': 0.019015782695806394, 'abs_err_refused_median': 0.32898516301490366, 'p_fail_given_supported': 0.0, 'p_fail_given_supported_upper95': 0.2646484693970512, 'coverage_supported_fraction': 0.125, 'per_endpoint': {'residual_graft_volume': {'n': 96, 'n_fail': 54, 'failures_refused': 54, 'supported_but_failed': 0, 'supported_and_ok': 12, 'refused_but_ok': 30, 'p_fail_given_supported_upper95': 0.2646484693970512, 'abs_err_supported_median': 0.019015782695806394, 'abs_err_supported_max': 0.03601265309433055}, 'new_bone_volume': {'n': 96, 'n_fail': 44, 'failures_refused': 43, 'supported_but_failed': 1, 'supported_and_ok': 8, 'refused_but_ok': 44, 'p_fail_given_supported_upper95': 0.48249651491733697, 'abs_err_supported_median': 0.17850175575497462, 'abs_err_supported_max': 0.21226322983792223}, 'total_mineral_volume': {'n': 96, 'n_fail': 0, 'failures_refused': 0, 'supported_but_failed': 0, 'supported_and_ok': 40, 'refused_but_ok': 56, 'p_fail_given_supported_upper95': 0.08809730287880237, 'abs_err_supported_median': 0.023074253229959707, 'abs_err_supported_max': 0.13495739399677575}}, 'abs_err_new_supported_median': 0.19111316113161136, 'abs_err_new_supported_max': 0.2221831673501269, 'abs_err_mineral_supported_median': 0.12248011474768544, 'abs_err_mineral_supported_max': 0.1442718595665191}

@@ -27,4 +27,7 @@ ledger `SCIENTIFIC_EVIDENCE.md` (rows 1–7, R1–R12, which remain valid with t
 | G2-007 | ONNX Runtime inference matches PyTorch (max probability difference 5×10⁻⁶, identical labels) and is ≈8× faster on this CPU | E3/E4 (spot check, 1 specimen) | O2 queued for the full benchmark |
 | G2-008 | No openly downloadable dataset labels residual graft vs new bone voxel-wise (12 sources searched) | E1 | docs/research/DATASET_DISCOVERY_R2.md |
 
+| G2-009 | On a pre-registered held-out simulation (unseen blur, noise texture, densities, phantoms), the advisor kept total-mineral measurements safe (0/47 supported failed) but did not keep new-bone (10/10 supported failed) or all graft measurements (4/16) safe | E4 | exp_S1H_heldout.json; PREREGISTRATION §7 |
+| G2-010 | Within the tuning simulator, advisor 1.3.3 refused every failing measurement for all endpoints (S1b/S1c) — an in-sample result | E4 | exp_S1b_advisor_threshold.json, exp_S1c_control_reference.json |
+
 (Entries are appended as Generation-2 experiments complete.)

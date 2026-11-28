@@ -3,7 +3,7 @@
  "specVersion": "1.5",
  "version": 1,
  "metadata": {
-  "timestamp": "2026-11-27T23:43Z",
+  "timestamp": "2026-11-28T03:05Z",
   "component": {
    "type": "application",
    "name": "osteoquant-desktop",
@@ -760,19 +760,6 @@
   },
   {
    "type": "library",
-   "name": "ast_serialize",
-   "version": "0.11.2",
-   "purl": "pkg:pypi/ast_serialize@0.11.2",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
    "name": "attrs",
    "version": "26.1.0",
    "purl": "pkg:pypi/attrs@26.1.0",
@@ -802,32 +789,6 @@
    "name": "charset-normalizer",
    "version": "3.5.1",
    "purl": "pkg:pypi/charset-normalizer@3.5.1",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "hypothesis",
-   "version": "6.170.22",
-   "purl": "pkg:pypi/hypothesis@6.170.22",
-   "licenses": [
-    {
-     "license": {
-      "name": "MPL-2.0"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "librt",
-   "version": "0.15.0",
-   "purl": "pkg:pypi/librt@0.15.0",
    "licenses": [
     {
      "license": {
@@ -890,35 +851,9 @@
   },
   {
    "type": "library",
-   "name": "mypy",
-   "version": "2.3.1",
-   "purl": "pkg:pypi/mypy@2.3.1",
-   "licenses": [
-    {
-     "license": {
-      "name": "MIT"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
    "name": "onnx",
    "version": "1.23.2",
    "purl": "pkg:pypi/onnx@1.23.2",
-   "licenses": [
-    {
-     "license": {
-      "name": "Apache-2.0"
-     }
-    }
-   ]
-  },
-  {
-   "type": "library",
-   "name": "opentelemetry-api",
-   "version": "1.45.0",
-   "purl": "pkg:pypi/opentelemetry-api@1.45.0",
    "licenses": [
     {
      "license": {

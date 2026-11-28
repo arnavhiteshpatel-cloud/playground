@@ -9,9 +9,8 @@ interviews or pilots, and no test on real graft materials.
   imports scans with mandatory voxel-size confirmation and quality checks, shows linked 2D/3D views, lets an analyst
   correct the segmentation (every edit saved as a new version with a reason), runs the analysis in the background,
   requires a second person to sign off, keeps a hash-chained audit trail and writes PDF/CSV reports
-  (`docs/desktop/USER_GUIDE.md`). The only packaged build is a local Linux build of 27 November; it passed its
-  self-test then (`packaging/dist/build-info.json`), but it predates advisor 1.3.1–1.4.3 and the cycle-2/3 fixes and
-  must be rebuilt before any use. Windows and macOS builds are configured but have never been built or run
+  (`docs/desktop/USER_GUIDE.md`). The only packaged build is a local Linux build of 28 November (commit `1f568f4`, advisor 1.4.3); it
+  passed its packaged self-test and licence check (`packaging/dist/build-info.json`) and is not distributed. Windows and macOS builds are configured but have never been built or run
   (`docs/user/INSTALLATION.md`).
 * **The core idea, the measurement-support advisor** (shipped version 1.4.3 in the source,
   `osteoquant/advisor/separability.py`; no packaged build contains it yet). Before reporting graft, new-bone or total

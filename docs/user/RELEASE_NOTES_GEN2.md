@@ -96,8 +96,8 @@ from [TASK_REGISTRY.md](../../TASK_REGISTRY.md).
   artifacts that any signed-in GitHub user can download from this public repository, so starting it is a distribution
   decision for the founder (B-013). It has never run. Signing and notarisation steps are present but inactive until the
   publisher's credentials exist.
-* The only packaged build is a local Linux build of 27 November 2026. It predates advisor 1.3.1–1.4.3 and the
-  cycle-2/3 fixes and must be rebuilt before any use.
+* The only packaged build is a local Linux build of 28 November 2026 (advisor 1.4.3); it passed its packaged
+  self-test and licence check and is not distributed.
 
 ### Quality, security and evidence (FA-10, FA-18, FA-19, FA-27; T4.1–T4.3)
 * Second security review: 20 findings; the conditional critical (pickle codec in uploaded Zarr stores), four medium and

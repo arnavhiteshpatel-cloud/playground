@@ -18,8 +18,8 @@ whenever a number is on screen.
    Sign in as `analyst`. Keep the `reviewer` password at hand (both are demo-only constants in
    `osteoquant/desktop/demo.py`; they are public, so never reuse them).
 2. Run `python -m osteoquant.desktop --selftest` once from the source checkout; it must end with `"selftest": "PASS"`.
-   Do not demo the packaged Linux build in `packaging/dist/`: it was built on 27 Nov, predates advisor 1.3.1–1.4.3 and
-   the cycle-2/3 fixes, and must be rebuilt before any use.
+   The packaged Linux build in `packaging/dist/` (28 Nov, commit `1f568f4`, advisor 1.4.3) passed its self-test; check
+   `build-info.json` against the current commit before demoing it, and do not hand the archive out (B-016).
 3. Open in a second window the two sample reports (regenerated at commit `14141db` under advisor 1.4.3, watermarked
    "SAMPLE - SYNTHETIC DATA - NOT FOR STUDY DECISIONS"):
    * `reports_samples/DefectFill_SAMPLE4_gen2_synthetic_betatcp.pdf` (β-TCP, week 4): graft and new-bone endpoints

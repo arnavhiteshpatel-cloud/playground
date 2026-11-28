@@ -6,7 +6,9 @@ Primary analysis with phantom structures as the unit. Advisor 1.4.3 frozen.
 """
 from __future__ import annotations
 
+import json
 import time
+from pathlib import Path
 
 import numpy as np
 from scipy import ndimage as ndi
@@ -86,12 +88,33 @@ def analyse(rows):
     return out
 
 
+PARTIAL = Path(__file__).resolve().parent / "results" / "exp_S1H4_partial.jsonl"
+
+
+def _load_partial():
+    """Rows of structures completed before an interruption (container restarts killed the first attempt at 24/36
+    structures). Execution only: rows are deterministic per structure, and nothing is analysed until all are done."""
+    done = {}
+    if PARTIAL.exists():
+        for line in PARTIAL.read_text().splitlines():
+            if line.strip():
+                rec = json.loads(line)
+                if rec.get("advisor_version") == ADVISOR_VERSION:
+                    done[rec["structure"]] = rec["rows"]
+    return done
+
+
 def main():
     assert ADVISOR_VERSION == "1.4.3", "S1H4 is pre-registered for advisor 1.4.3"
     t0 = time.time()
     rows = []
+    done = _load_partial()
     for model, (seeds, kw) in MODELS.items():
         for seed in seeds:
+            if f"{model}_{seed}" in done:
+                rows += done[f"{model}_{seed}"]
+                continue
+            n0 = len(rows)
             for mat in MATERIALS:
                 ph = generate_phantom(PhantomConfig(model=model, voxel_um=40, supersample=2, graft_material=mat,
                                                     healing_stage=0.50, seed=seed, periodic_texture=False, **kw))
@@ -112,6 +135,9 @@ def main():
                                          "status_new": ep["new_bone_volume"]["status"],
                                          "status_mineral": ep["total_mineral_volume"]["status"],
                                          "scan_measured": (sup.get("inputs") or {}).get("scan_measured")})
+            with PARTIAL.open("a") as f:
+                f.write(json.dumps({"structure": f"{model}_{seed}", "advisor_version": ADVISOR_VERSION,
+                                    "rows": rows[n0:]}, default=float) + "\n")
             print(model, seed, len(rows), round(time.time() - t0), flush=True)
     res = analyse(rows)
     for ep, _, _ in EPS:
